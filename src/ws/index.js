@@ -6,10 +6,10 @@ class WS {
 
     getGateway() {
 
-        this.request.addRequest("getGatewayBot");
-        this.request.addRequest("getGatewayBot");
-        this.request.addRequest("getGatewayBot");
-        this.request.addRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
         // this.request.addRequest(gateway.getGatewayBot);
         // this.request.addRequest(gateway.getGatewayBot);
         // this.request.addRequest(gateway.getGatewayBot);
