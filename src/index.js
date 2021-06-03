@@ -1,6 +1,6 @@
 const WebSocket = require("ws");
 const Request = require("./request/index");
-const WS = require("./ws/index");
+const WS = require("./gateway/index");
 
 class Client {
 
