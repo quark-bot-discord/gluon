@@ -15,12 +15,13 @@ class RequestHandler {
 
         this.endpoints = endpoints;
 
-        this.inProgress = [];
+        this.inProgressRequests = [];
+        this.inProgressBuckets = [];
 
     }
 
     handleBucket(requestName, ratelimitBucket, ratelimitRemaining, ratelimitReset) {
-        console.log(ratelimitBucket);
+
         this.bucket[ratelimitBucket] = {
             remaining: ratelimitRemaining,
             reset: ratelimitReset
@@ -43,11 +44,23 @@ class RequestHandler {
     }
 
     async makeRequest(request, params, body) {
+        
+        // if there are none of the same bucket (or request if bucket is null) in progress, and also that the bucket has requests remaining
+        if (
+            (this.endpoints[request].bucket != null ? !this.inProgressBuckets.includes(this.endpoints[request].bucket) : !this.inProgressRequests.includes(request))
+            &&
+            (this.endpoints[request].bucket != null ? 
+                (this.bucket[this.endpoints[request].bucket]?.remaining != 0 ?
+                    (true) :
+                    (new Date().getTime() > this.bucket[this.endpoints[request]]?.reset)) : 
+                (true))
+            ) {
 
-        if (!this.inProgress.includes(request) && !(this.bucket[this.endpoints[request].bucket]?.remaining == 0 && new Date().getTime() < this.bucket[this.endpoints[request]]?.reset)) {
+            this.inProgressRequests.push(request);
 
-            this.inProgress.push(request);
-
+            if (this.endpoints[request].bucket) 
+                this.inProgressBuckets.push(this.endpoints[request].bucket);
+            
             const actualRequest = this.endpoints[request];
 
             const res = await fetch(`${this.requestURL}${actualRequest.path()}`, {
@@ -58,12 +71,13 @@ class RequestHandler {
             });
             console.log(res.status);
             const json = await res.json();
-            // console.log(res.headers);
             console.log(json);
-    
-            this.handleBucket(request, res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"));
+            this.inProgressRequests.splice(this.inProgressRequests.indexOf(request), 1);
 
-            this.inProgress.splice(this.inProgress.indexOf(request), 1);
+            if (this.endpoints[request].bucket)
+                this.inProgressBuckets.splice(this.inProgressBuckets.indexOf(this.endpoints[request].bucket), 1);
+
+            this.handleBucket(request, res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"));
 
             this.nextRequest();
 

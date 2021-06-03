@@ -10,12 +10,10 @@ class WS {
         this.request.makeRequest("getGatewayBot");
         this.request.makeRequest("getGatewayBot");
         this.request.makeRequest("getGatewayBot");
-        // this.request.addRequest(gateway.getGatewayBot);
-        // this.request.addRequest(gateway.getGatewayBot);
-        // this.request.addRequest(gateway.getGatewayBot);
-        // this.request.addRequest(gateway.getGatewayBot);
-        // this.request.addRequest(gateway.getGatewayBot);
-        console.log("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot");
 
     }
 
