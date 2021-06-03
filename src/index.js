@@ -1,5 +1,5 @@
 const WebSocket = require("ws");
-const Request = require("./request/index");
+const Request = require("./rest/requestHandler");
 const WS = require("./gateway/index");
 const {BASE_URL, VERSION} = require('./constants');
 

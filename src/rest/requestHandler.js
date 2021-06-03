@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const endpoints = require("./endpoints/endpoints");
+const endpoints = require("./endpoints");
 
 class RequestHandler {
     constructor(baseURL, version, token) {
