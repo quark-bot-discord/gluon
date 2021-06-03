@@ -1,13 +1,14 @@
 const WebSocket = require("ws");
 const Request = require("./request/index");
 const WS = require("./gateway/index");
+const {BASE_URL, VERSION} = require('./constants');
 
 class Client {
 
     constructor() {
 
-        this.baseURL = "https://discord.com/api";
-        this.version = "9";
+        this.baseURL = BASE_URL;
+        this.version = VERSION;
 
     }
 
