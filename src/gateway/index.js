@@ -4,7 +4,7 @@ class WS {
 
         this.WebsSocket = WebSocket;
         this.request = request;
-    
+
     }
 
     /**
@@ -12,14 +12,38 @@ class WS {
      */
     getGateway() {
 
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
-        this.request.makeRequest("getGatewayBot");
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
+        this.request.makeRequest("getGatewayBot")
+            .then(res => {
+                console.log(res);
+            });
 
     }
 
