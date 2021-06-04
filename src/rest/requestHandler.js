@@ -45,7 +45,7 @@ class RequestHandler {
     }
 
     /**
-    * Attempts the next queued request and removed the current one from the "in-progress" list
+    * Attempts the next queued request and removes the current one from the "in-progress" list
     */
     nextRequest(currentRequest) {
         /* stops blocking new requests made */
