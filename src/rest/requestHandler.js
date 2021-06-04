@@ -66,6 +66,8 @@ class RequestHandler {
      * @param {string} request Name of the request, defined in ./endpoints.js
      * @param {string[]} params Array of params to include in the URL, in the order they should be in
      * @param {object} body The request body
+     * @param {function} resolve The function to resolve the promise, so the data can be returned to the correct place
+     * @param {function} reject The function to reject the promise, to make clear the request has failed
      */
     async makeRequest(request, params, body, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
