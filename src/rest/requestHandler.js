@@ -19,6 +19,8 @@ class RequestHandler {
         this.inProgressRequests = [];
         this.inProgressBuckets = [];
 
+        this.delayInitiated = false;
+
     }
 
     /**
@@ -32,7 +34,7 @@ class RequestHandler {
 
         this.bucket[ratelimitBucket] = {
             remaining: ratelimitRemaining,
-            reset: ratelimitReset
+            reset: parseFloat(ratelimitReset)
         };
 
         /* sets the bucket id of the endpoint that was just requested */
@@ -63,15 +65,11 @@ class RequestHandler {
         if (this.requestQueue.length != 0) {
 
             const nextRequest = this.requestQueue.shift();
-
             this.makeRequest(nextRequest.request, nextRequest.params, nextRequest.body);
 
         }
 
     }
-    /* and we'll need to call this function some other way too in order to clear the remaining requests queue */
-    /* otherwise requests become stagnant until more requests are made (which is obviously not what we want) */
-    /* currently is only ever called at the end of a request */
 
     /**
      * Makes the request if possible, otherwise will queue the request for later
@@ -102,7 +100,7 @@ class RequestHandler {
                     /* otherwise check if the bucket reset time has reset */
                     /* which would reset our remaining requests back to the original value */
                     /* so we can proceed with the request if this is the case */
-                    (new Date().getTime() > this.bucket[this.endpoints[request]]?.reset)) :
+                    ((new Date().getTime() / 1000) > this.bucket[this.endpoints[request].bucket]?.reset)) :
                     /* yeah im so lost but i am 99% sure this works */
                 (true)
             )
@@ -143,6 +141,17 @@ class RequestHandler {
                 params: params,
                 body: body
             });
+
+            if (this.delayInitiated == false) {
+
+                this.delayInitiated = true;
+
+                setTimeout(() => {
+                    this.delayInitiated = false;
+                    this.nextRequest();
+                }, 1000);
+
+            }
 
         }
 
