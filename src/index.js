@@ -12,8 +12,12 @@ class Client {
 
     }
 
+    /**
+     * Initiates the login sequence
+     * @param {string} token The authorization token
+     */
     login(token) {
-        
+        /* sets the token and starts logging the bot in to the gateway, shard by shard */
         this.token = token;
 
         this.request = new Request(this.baseURL, this.version, this.token);
