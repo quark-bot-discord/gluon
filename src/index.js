@@ -1,7 +1,6 @@
-const WebSocket = require("ws");
 const Request = require("./rest/requestHandler");
 const WS = require("./gateway/index");
-const {BASE_URL, VERSION} = require('./constants');
+const { BASE_URL, VERSION } = require('./constants');
 
 class Client {
 
@@ -21,9 +20,23 @@ class Client {
         this.token = token;
 
         this.request = new Request(this.baseURL, this.version, this.token);
-        
-        this.ws = new WS(WebSocket, this.request);
-        this.ws.getGateway();
+
+        this.request.makeRequest("getGatewayBot")
+            .then(gatewayInfo => {
+                console.log(gatewayInfo);
+                let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
+
+                for (let i = 0; i < gatewayInfo.shards; i++, remainingSessionStarts--) {
+
+                    for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
+
+                        new WS(this.request, `${gatewayInfo.url}?v=${VERSION}&encoding=etf`, [i, gatewayInfo.shards], this.token);
+
+                    }
+
+                }
+
+            });
 
     }
 
