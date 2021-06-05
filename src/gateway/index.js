@@ -21,10 +21,16 @@ class WS {
 
         });
 
+        this.ws.on("close", data => {
+
+            console.log(`Websocket for shard ${shard[0]} closed with code ${data}`);
+
+        });
+
         this.ws.on("message", data => {
-
+            
             if (!Buffer.isBuffer(data)) data = Buffer.from(new Uint8Array(data));
-
+            
             this.handleIncoming(erlpack.unpack(data));
 
         });
@@ -32,9 +38,10 @@ class WS {
     }
 
     handleIncoming(data) {
+        console.log(1);
         console.log(data);
         if (!data) return;
-        console.log(1);
+        
         switch (data.op) {
             // Dispatch
             case 0: {
@@ -67,6 +74,12 @@ class WS {
                 
                 this.ws.send(new Heartbeat());
 
+                setInterval((() => {
+
+                    this.ws.send(new Heartbeat());
+
+                }), data.d.heartbeat_interval);
+
                 break;
 
             }
@@ -76,7 +89,7 @@ class WS {
                 if (this.isInitialHeartbeat == true) {
 
                     this.isInitialHeartbeat = false;
-
+                    console.log(erlpack.unpack(new Identify(this.token, this.shard)));
                     this.ws.send(new Identify(this.token, this.shard));
 
                 }
