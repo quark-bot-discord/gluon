@@ -1,3 +1,4 @@
+/* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
 const { BASE_URL, VERSION } = require('./constants');
 
 const EventsEmitter = require("events");
