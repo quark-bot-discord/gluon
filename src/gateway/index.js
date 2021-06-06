@@ -2,7 +2,7 @@ const WebSocket = require("ws");
 const erlpack = require("erlpack");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
-const { EVENTS } = require("../constants");
+const EventHandler = require("./eventHandler");
 
 class WS {
 
@@ -15,6 +15,8 @@ class WS {
         this.request = client.request;
 
         this.client = client;
+
+        this.eventHandler = new EventHandler(client, this);
 
         this.sessionId = null;
 
@@ -43,14 +45,14 @@ class WS {
     }
 
     handleIncoming(data) {
-        console.log(data);
+        // console.log(data);
         if (!data) return;
         
         switch (data.op) {
             // Dispatch
             case 0: {
 
-                this.handleEvent(data.t, data.d);
+                this.eventHandler[data.t](data.d);
 
                 break;
 
@@ -101,32 +103,6 @@ class WS {
                 }
 
                 break;
-
-            }
-
-        }
-
-    }
-
-    handleEvent(type, data) {
-
-        switch (type) {
-
-            case "READY": {
-
-                this.sessionId = data.session_id;
-
-                this.client.user = data.user;
-                
-                this.client.emit(EVENTS.READY);
-
-                break;
-
-            }
-
-            case "GUILD_CREATE": {
-
-                
 
             }
 
