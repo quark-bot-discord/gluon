@@ -1,13 +1,20 @@
+const EventsEmitter = require("events");
 const Request = require("./rest/requestHandler");
 const WS = require("./gateway/index");
 const { BASE_URL, VERSION } = require('./constants');
 
-class Client {
+
+
+class Client extends EventsEmitter {
 
     constructor() {
 
+        super();
+
         this.baseURL = BASE_URL;
         this.version = VERSION;
+
+        this.user = null;
 
     }
 

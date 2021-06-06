@@ -102,6 +102,25 @@ class WS {
 
     }
 
+    handleEvent(type, data) {
+
+        switch (type) {
+
+            case "READY": {
+
+                this.sessionId = data.session_id;
+
+                this.client.user = data.user;
+                // console.log(this.client);
+                this.client.emit("ready");
+                break;
+
+            }
+
+        }
+
+    }
+
     connect() {
 
     }
