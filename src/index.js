@@ -35,16 +35,20 @@ class Client extends EventsEmitter {
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
-                console.log(gatewayInfo);
+                // console.log(gatewayInfo);
                 let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
-                for (let i = 0; i < gatewayInfo.shards; i++, remainingSessionStarts--) {
+                for (let i = 0; i < gatewayInfo.shards && remainingSessionStarts != 0; i++, remainingSessionStarts--) {
 
-                    for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
+                    setTimeout(() => {
 
-                        new WS(this.request, `${gatewayInfo.url}?v=${VERSION}&encoding=etf`, [i, gatewayInfo.shards], this.token);
+                        for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
 
-                    }
+                            new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf`, [i, gatewayInfo.shards]);
+    
+                        }
+
+                    }, 5000 * i);
 
                 }
 
