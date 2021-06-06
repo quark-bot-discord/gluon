@@ -95,7 +95,7 @@ class WS {
                 if (this.isInitialHeartbeat == true) {
 
                     this.isInitialHeartbeat = false;
-                    // console.log(erlpack.unpack(new Identify(this.token, this.shard)));
+                    
                     this.ws.send(new Identify(this.token, this.shard));
 
                 }
