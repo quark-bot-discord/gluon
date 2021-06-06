@@ -2,8 +2,12 @@ class UserManager {
 
     constructor(client) {
 
+        this.cache = {};
 
+    }
 
+    async fetch() {
+        
     }
 
 }
