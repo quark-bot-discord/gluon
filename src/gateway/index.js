@@ -5,25 +5,29 @@ const Identify = require("./structures/_2");
 
 class WS {
 
-    constructor(request, url, shard, token) {
+    constructor(client, url, shard) {
 
-        this.token = token;
+        this.token = client.token;
         this.shard = shard;
 
         this.ws = new WebSocket(url);
-        this.request = request;
+        this.request = client.request;
+
+        this.client = client;
+
+        this.sessionId = null;
 
         this.isInitialHeartbeat = true;
 
         this.ws.on("open", () => {
 
-            console.log(`Websocket opened for shard ${shard[0]}`);
+            console.log(`Websocket opened for shard ${this.shard[0]}`);
 
         });
 
         this.ws.on("close", data => {
 
-            console.log(`Websocket for shard ${shard[0]} closed with code ${data}`);
+            console.log(`Websocket for shard ${this.shard[0]} closed with code ${data}`);
 
         });
 
@@ -38,13 +42,15 @@ class WS {
     }
 
     handleIncoming(data) {
-        console.log(1);
-        console.log(data);
+        // console.log(1);
+        // console.log(data);
         if (!data) return;
         
         switch (data.op) {
             // Dispatch
             case 0: {
+
+                this.handleEvent(data.t, data.d);
 
                 break;
 
@@ -89,7 +95,7 @@ class WS {
                 if (this.isInitialHeartbeat == true) {
 
                     this.isInitialHeartbeat = false;
-                    console.log(erlpack.unpack(new Identify(this.token, this.shard)));
+                    // console.log(erlpack.unpack(new Identify(this.token, this.shard)));
                     this.ws.send(new Identify(this.token, this.shard));
 
                 }
