@@ -6,6 +6,7 @@ const Request = require("./rest/requestHandler");
 const WS = require("./gateway/index");
 
 const UserManager = require("./managers/UserManager");
+const GuildManager = require('./managers/GuildManager');
 
 
 class Client extends EventsEmitter {
@@ -20,6 +21,7 @@ class Client extends EventsEmitter {
         this.user = null;
 
         this.users = new UserManager(this);
+        this.guilds = new GuildManager(this);
 
     }
 
