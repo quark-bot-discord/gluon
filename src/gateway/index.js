@@ -43,8 +43,7 @@ class WS {
     }
 
     handleIncoming(data) {
-        // console.log(1);
-        // console.log(data);
+        console.log(data);
         if (!data) return;
         
         switch (data.op) {
@@ -122,6 +121,12 @@ class WS {
                 this.client.emit(EVENTS.READY);
 
                 break;
+
+            }
+
+            case "GUILD_CREATE": {
+
+                
 
             }
 
