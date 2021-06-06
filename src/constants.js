@@ -24,3 +24,6 @@ module.exports.CALCULATED_INTENTS = (0b1 << this.INTENTS.GUILDS) |
     (0b1 << this.INTENTS.GUILD_INVITES) |
     (0b1 << this.INTENTS.GUILD_VOICE_STATES) |
     (0b1 << this.INTENTS.GUILD_MESSAGES);
+module.exports.EVENTS = {
+    READY: "ready"
+};

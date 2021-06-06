@@ -117,8 +117,9 @@ class WS {
                 this.sessionId = data.session_id;
 
                 this.client.user = data.user;
-                // console.log(this.client);
-                this.client.emit("ready");
+                
+                this.client.emit(EVENTS.READY);
+
                 break;
 
             }
