@@ -1,8 +1,11 @@
-const EventsEmitter = require("events");
-const Request = require("./rest/requestHandler");
-const WS = require("./gateway/index");
 const { BASE_URL, VERSION } = require('./constants');
 
+const EventsEmitter = require("events");
+
+const Request = require("./rest/requestHandler");
+const WS = require("./gateway/index");
+
+const UserManager = require("./managers/UserManager");
 
 
 class Client extends EventsEmitter {
@@ -15,6 +18,8 @@ class Client extends EventsEmitter {
         this.version = VERSION;
 
         this.user = null;
+
+        this.users = new UserManager(this);
 
     }
 
