@@ -2,6 +2,7 @@ const WebSocket = require("ws");
 const erlpack = require("erlpack");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
+const { EVENTS } = require("../constants");
 
 class WS {
 
