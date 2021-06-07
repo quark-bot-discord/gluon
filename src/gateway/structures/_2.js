@@ -24,9 +24,9 @@ class Identify {
                         name: `Starting shard ${shard[0]}...`,
                         type: 0
                     }],
-                    status: "online",
+                    status: "idle",
                     since: null,
-                    afk: false
+                    afk: true
                 },
                 intents: CALCULATED_INTENTS
             }
