@@ -111,7 +111,8 @@ class RequestHandler {
                 const res = await fetch(`${this.requestURL}${actualRequest.path()}`, {
                     method: actualRequest.method,
                     headers: {
-                        "Authorization": this.authorization
+                        "Authorization": this.authorization,
+                        "User-Agent": this.name
                     }
                 });
                 // console.log(res.status);
