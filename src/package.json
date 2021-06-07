@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test/bot"
+    "test": "node ../test/bot"
   },
   "author": "Starman",
   "license": "UNLICENSED",
   "dependencies": {
-    "ws": "^7.4.6",
+    "erlpack": "github:discord/erlpack",
     "node-fetch": "^2.6.1",
-    "erlpack": "github:discord/erlpack"
+    "ws": "^7.4.6"
   }
 }
