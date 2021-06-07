@@ -1,4 +1,5 @@
 const { EVENTS } = require("../constants");
+const Guild = require("../structures/Guild");
 
 class EventHandler {
 
@@ -22,7 +23,17 @@ class EventHandler {
 
     GUILD_CREATE(data) {
 
-        console.log(data);
+        if (data.unavailable == false) {
+
+            new Guild(this.client, data);
+
+        }
+
+    }
+
+    MESSAGE_CREATE(data) {
+
+        this.client.emit(EVENTS.MESSAGE_CREATE, data);
 
     }
 
