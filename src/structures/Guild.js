@@ -1,9 +1,13 @@
+const { CHANNEL_TYPES } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildThreadsManager = require("../managers/GuildThreadsManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const Channel = require("./Channel");
 const Member = require("./Member");
+const TextChannel = require("./TextChannel");
+const Thread = require("./Thread");
+const VoiceChannel = require("./VoiceChannel");
 
 class Guild {
 
@@ -28,22 +32,46 @@ class Guild {
 
         this.member_count = data.member_count || null;
 
-        this.voice_states = new GuildVoiceStatesManager(client, data.voice_states);
+        // this.voice_states = new GuildVoiceStatesManager(client, data.voice_states); i think this should be on a per-member basis instead
 
-        this.members = new GuildMemberManager(client, data.members);
+        this.members = new GuildMemberManager(client);
 
         this.channels = new GuildChannelsManager(client);
 
-        this.threads = new GuildThreadsManager(client, data.threads);
+        this.threads = new GuildThreadsManager(client);
 
         this.preferred_locale = data.preferred_locale;
 
         this.client.guilds.cache[this.id] = this;
 
 
-        data.members.map(member => new Member(client, member, member.user.id, this.id));
+        data.members.map(member => new Member(this.client, member, member.user.id, this.id));
 
-        data.channels.map(channel => new Channel(client, channel, this.id));
+        data.channels.map(channel => {
+
+            switch (channel.type) {
+
+                case CHANNEL_TYPES.GUILD_TEXT: {
+
+                    new TextChannel(this.client, channel, this.id);
+
+                    break;
+
+                }
+
+                case CHANNEL_TYPES.GUILD_VOICE:
+                case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
+
+                    new VoiceChannel(this.client, channel, this.id);
+
+                    break;
+
+                }
+
+            }
+        });
+
+        data.threads.map(thread => new Thread(this.client, thread, this.id));
 
     }
 
