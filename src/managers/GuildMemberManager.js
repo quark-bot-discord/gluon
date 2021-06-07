@@ -2,7 +2,7 @@ class GuildMemberManager {
 
     constructor() {
 
-
+        this.cache = {};
 
     }
 
