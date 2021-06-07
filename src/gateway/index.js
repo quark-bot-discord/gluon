@@ -29,19 +29,16 @@ class WS {
         this.hearbeatSetInterval = null;
 
         this.ws.on("open", () => {
-
-            console.log(`Websocket opened for shard ${this.shard[0]}`);
-
+            this.client.emit("debug", `Websocket opened for shard ${this.shard[0]}`)
         });
 
         this.ws.on("close", data => {
-
-            console.log(`Websocket for shard ${this.shard[0]} closed with code ${data}`);
+            this.client.emit("debug", `Websocket for shard ${this.shard[0]} closed with code ${data}`);
 
         });
 
         this.ws.on("message", data => {
-            console.log("message");
+            this.client.emit("debug", `Incoming message`)
             if (!Buffer.isBuffer(data)) data = Buffer.from(new Uint8Array(data));
             
             this.handleIncoming(erlpack.unpack(data));
@@ -49,8 +46,7 @@ class WS {
         });
 
         this.ws.on("error", data => {
-            console.log("error");
-            console.log(data);
+            this.client.emit("error", `error: ${data}`)
         });
 
     }
