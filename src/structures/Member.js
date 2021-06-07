@@ -9,8 +9,7 @@ class Member {
 
         if (data.user)
             new User(client, data.user);
-        /* should check whether member actually *needs* to be cached */
-        /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
+        
         this.id = user_id;
 
         if (data.nick)
@@ -32,6 +31,8 @@ class Member {
 
         this.guild = client.guilds.cache[guild_id];
 
+        /* should check whether member actually *needs* to be cached */
+        /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
         this.client.guilds.cache[guild_id].members.cache[user_id] = this;
 
     }
