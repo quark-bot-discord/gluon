@@ -3,7 +3,7 @@ const endpoints = require("./endpoints");
 
 class RequestHandler {
 
-    constructor(baseURL, version, token) {
+    constructor(baseURL, name, version, token) {
 
         this.baseURL = baseURL;
         this.version = version;
@@ -13,6 +13,7 @@ class RequestHandler {
 
         this.token = token;
         this.authorization = `Bot ${this.token}`;
+        this.name = name;
 
         this.endpoints = endpoints;
 
