@@ -15,7 +15,7 @@ class Guild {
 
         this.owner_id = data.owner_id;
 
-        this.joined_at = data.joined_at || null;
+        this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
 
         if (data.unavailable == true)
             this.unavailable = data.unavailable;
