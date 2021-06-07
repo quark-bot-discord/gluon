@@ -2,7 +2,7 @@ class GuildThreadsManager {
 
     constructor() {
 
-
+        this.cache = {};
 
     }
 
