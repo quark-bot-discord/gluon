@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION } = require('./constants');
+const { BASE_URL, VERSION, NAME } = require('./constants');
 
 const EventsEmitter = require("events");
 
@@ -18,6 +18,7 @@ class Client extends EventsEmitter {
 
         this.baseURL = BASE_URL;
         this.version = VERSION;
+        this.name = NAME;
 
         this.user = null;
 
@@ -34,7 +35,7 @@ class Client extends EventsEmitter {
         /* sets the token and starts logging the bot in to the gateway, shard by shard */
         this.token = token;
 
-        this.request = new Request(this.baseURL, this.version, this.token);
+        this.request = new Request(this.baseURL, this.name, this.version, this.token);
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
