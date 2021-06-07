@@ -15,8 +15,6 @@ class User {
 
         client.users.cache[this.id] = this;
 
-        return this;
-
     }
 
 }
