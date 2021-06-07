@@ -2,6 +2,8 @@ class GuildChannelsManager {
 
     constructor(client) {
 
+        this.client = client;
+
         this.cache = {};
 
     }

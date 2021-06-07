@@ -1,6 +1,8 @@
 class GuildThreadsManager {
 
-    constructor() {
+    constructor(client) {
+
+        this.client = client;
 
         this.cache = {};
 
