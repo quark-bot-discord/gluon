@@ -2,6 +2,8 @@ class User {
 
     constructor(client, data) {
 
+        this.client = client;
+
         this.avatar = data.avatar || null;
 
         if (data.bot == true)

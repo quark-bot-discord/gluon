@@ -9,6 +9,8 @@ class Guild {
 
     constructor(client, data) {
 
+        this.client = client;
+
         this.id = data.id;
         // needed for join/leave logging
         this.name = data.name;
@@ -36,7 +38,7 @@ class Guild {
 
         this.preferred_locale = data.preferred_locale;
 
-        client.guilds.cache[this.id] = this;
+        this.client.guilds.cache[this.id] = this;
 
 
         data.members.map(member => new Member(client, member, member.user.id, this.id));

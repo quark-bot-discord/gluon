@@ -4,6 +4,8 @@ class Member {
 
     constructor(client, data, user_id, guild_id) {
 
+        this.client = client;
+
         if (data.user)
             new User(client, data.user);
         /* should check whether member actually *needs* to be cached */
@@ -26,7 +28,7 @@ class Member {
 
         this.guild = client.guilds.cache[guild_id];
 
-        client.guilds.cache[guild_id].members.cache[user_id] = this;
+        this.client.guilds.cache[guild_id].members.cache[user_id] = this;
 
     }
 

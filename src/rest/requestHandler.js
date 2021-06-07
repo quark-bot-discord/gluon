@@ -109,7 +109,7 @@ class RequestHandler {
                 /* important it is fetched from there, as bucket ids are also stored there with that data */
                 const actualRequest = this.endpoints[request];
                 /* actually make the request */
-                const res = await fetch(`${this.requestURL}${actualRequest.path()}`, {
+                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}`, {
                     method: actualRequest.method,
                     headers: {
                         "Authorization": this.authorization,
