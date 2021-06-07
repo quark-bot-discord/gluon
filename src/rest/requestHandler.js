@@ -113,8 +113,10 @@ class RequestHandler {
                     method: actualRequest.method,
                     headers: {
                         "Authorization": this.authorization,
-                        "User-Agent": this.name
-                    }
+                        "User-Agent": this.name,
+                        "Content-Type": "application/json" // this needs to be variable tho
+                    },
+                    body: body ? JSON.stringify(body) : undefined
                 });
                 // console.log(res.status);
                 const json = await res.json();
