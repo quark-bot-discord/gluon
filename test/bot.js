@@ -1,6 +1,7 @@
 const Client = require("../src/index");
 const ActionRow = require("../src/util/actionRowBuilder");
 const Component = require("../src/util/componentBuilder");
+const Embed = require("../src/util/embedBuilder");
 const MessageComponents = require("../src/util/messageComponents");
 const client = new Client();
 
@@ -40,6 +41,15 @@ client.on("messageCreate", message => {
         })
         .catch(e => {
             console.log(e.errors);
+        });
+    }
+    if (message.content == "embed") {
+        const embed = new Embed()
+            .setTitle("pog?")
+            .setColor("5865F2")
+            .setDescription("pog i guess");
+        message.channel.send("", {
+            embed
         });
     }
 });
