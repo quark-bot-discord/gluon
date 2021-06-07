@@ -1,4 +1,5 @@
 module.exports.BASE_URL = 'https://discord.com/api';
+module.exports.CDN_BASE_URL = "https://cdn.discordapp.com";
 module.exports.VERSION = 9;
 module.exports.NAME = "gluon";
 module.exports.INTENTS = {

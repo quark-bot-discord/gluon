@@ -1,3 +1,5 @@
+const { CDN_BASE_URL } = require("../constants");
+
 class User {
 
     constructor(client, data) {
@@ -16,6 +18,14 @@ class User {
         this.discriminator = data.discriminator;
 
         client.users.cache[this.id] = this;
+
+    }
+    // better to use the one in the member class, as it accounts for guild avatars too
+    get displayAvatarURL() {
+
+        return this.avatar ?
+            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatar}.png` :
+            `${CDN_BASE_URL}/embed/avatars/${this.discriminator % 5}.png`;
 
     }
 

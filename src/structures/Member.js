@@ -1,3 +1,4 @@
+const { CDN_BASE_URL } = require("../constants");
 const User = require("./User");
 
 class Member {
@@ -24,11 +25,24 @@ class Member {
         if (data.pending == false)
             this.pending = data.pending;
 
+        if (data.avatar)
+            this.avatar = data.avatar;
+
         this.user = client.users.cache[user_id];
 
         this.guild = client.guilds.cache[guild_id];
 
         this.client.guilds.cache[guild_id].members.cache[user_id] = this;
+
+    }
+    /* https://github.com/discord/discord-api-docs/pull/3081/files 👀 */
+    get displayAvatarURL() {
+
+        return this.avatar ? 
+            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatar}.png` : 
+            this.user.avatar ?
+                `${CDN_BASE_URL}/avatars/${this.user.id}/${this.user.avatar}.png` :
+                `${CDN_BASE_URL}/embed/avatars/${this.user.discriminator % 5}.png`;
 
     }
 

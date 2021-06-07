@@ -6,6 +6,14 @@ client.on("ready", () => {
     console.log(client.user);
 });
 
+client.on("raw", raw => {
+    console.log(raw);
+});
+
+client.on("debug", data => {
+    console.log(data);
+});
+
 client.on("messageCreate", message => {
     console.log("messageCreate");
     console.log(message);
