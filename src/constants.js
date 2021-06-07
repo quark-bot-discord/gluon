@@ -28,5 +28,15 @@ module.exports.CALCULATED_INTENTS = (0b1 << this.INTENTS.GUILDS) |
 module.exports.EVENTS = {
     READY: "ready",
     MESSAGE_CREATE: "messageCreate",
-    MESSAGE_UPDATE: "messageUpdate"
+    MESSAGE_UPDATE: "messageUpdate",
+    MESSAGE_DELETE: "messageDelete"
+};
+module.exports.CHANNEL_TYPES = {
+    GUILD_TEXT: 0,
+    GUILD_VOICE: 2,
+    GUILD_NEWS: 5,
+    GUILD_NEWS_THREAD: 10,
+    GUILD_PUBLIC_THREAD: 11,
+    GUILD_PRIVATE_THREAD: 12,
+    GUILD_STAGE_VOICE: 13
 };
