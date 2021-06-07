@@ -1,7 +1,8 @@
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 
 class Channel {
-
+    /* this should probably be separated out into the different channel types */
+    /* i.e. a class for TextChannel, VoiceChannel, etc. */
     constructor(client, data, guild_id) {
 
         this.client = client;
@@ -92,7 +93,7 @@ class Channel {
 
         this.guild = client.guilds.cache[guild_id];
 
-        client.guilds.cache[guild_id].channels.cache[this.id] = this;
+        this.client.guilds.cache[guild_id].channels.cache[this.id] = this;
 
     }
 
