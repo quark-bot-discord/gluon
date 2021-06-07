@@ -3,7 +3,7 @@ const client = new Client();
 
 client.on("ready", () => {
     console.log("ready");
-    // console.log(client.user);
+    console.log(client.user);
 });
 
 client.on("messageCreate", message => {
