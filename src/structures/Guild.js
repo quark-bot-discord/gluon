@@ -2,6 +2,8 @@ const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildThreadsManager = require("../managers/GuildThreadsManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
+const Channel = require("./Channel");
+const Member = require("./Member");
 
 class Guild {
 
@@ -24,17 +26,22 @@ class Guild {
 
         this.member_count = data.member_count || null;
 
-        this.voice_states = new GuildVoiceStatesManager(data.voice_states);
+        this.voice_states = new GuildVoiceStatesManager(client, data.voice_states);
 
-        this.members = new GuildMemberManager(data.members);
+        this.members = new GuildMemberManager(client, data.members);
 
-        this.channels = new GuildChannelsManager(data.channels);
+        this.channels = new GuildChannelsManager(client);
 
-        this.threads = new GuildThreadsManager(data.threads);
+        this.threads = new GuildThreadsManager(client, data.threads);
 
         this.preferred_locale = data.preferred_locale;
 
         client.guilds.cache[this.id] = this;
+
+
+        data.members.map(member => new Member(client, member, member.user.id, this.id));
+
+        data.channels.map(channel => new Channel(client, channel, this.id));
 
     }
 
