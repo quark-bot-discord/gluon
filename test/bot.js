@@ -23,8 +23,6 @@ client.on("messageCreate", message => {
     console.log("messageCreate");
     console.log(message);
     if (message.author.bot == true) return;
-    if (message.content == "amogus")
-        message.reply("https://www.youtube.com/watch?v=1KaecOQKNaM");
     if (message.content == "button") {
         const actionRow = new ActionRow();
         const button = new Component()
