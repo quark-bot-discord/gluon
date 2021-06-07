@@ -4,6 +4,9 @@ const Member = require("./Member");
 class Message {
 
     constructor(client, data) {
+
+        this.client = client;
+
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         new User(client, data.author);
