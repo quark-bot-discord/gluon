@@ -36,6 +36,8 @@ class Message {
 
         this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
+        this.channel = client.guilds.cache[data.guild_id].channels.cache[data.channel_id];
+
         client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[this.id] = this;
 
     }
