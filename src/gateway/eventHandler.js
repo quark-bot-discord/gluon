@@ -52,6 +52,15 @@ class EventHandler {
 
     }
 
+    MESSAGE_DELETE(data) {
+
+        const message = this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id] || null;
+        delete this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id];
+
+        this.client.emit(EVENTS.MESSAGE_DELETE, message);
+
+    }
+
 }
 
 module.exports = EventHandler;
