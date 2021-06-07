@@ -11,20 +11,25 @@ class Message {
         new Member(client, data.member, data.author.id, data.guild_id);
 
         this.id = data.id;
-
-        this.attachments = data.attachments;
+        // should only be stored if file logging is enabled
+        if (data.attachments.length != 0)
+            this.attachments = data.attachments;
 
         this.author = data.author.id;
 
         this.content = data.content || null;
 
-        this.embeds = data.embeds;
+        if (data.embeds.length != 0)
+            this.embeds = data.embeds;
 
-        this.mentions = data.mentions;
+        if (data.mentions.length != 0)
+            this.mentions = data.mentions;
 
-        this.mention_roles = [];
+        if (data.mention_roles.length != 0)
+            this.mention_roles = data.mention_roles;
 
-        this.referenced_message = data.referenced_message;
+        if (data.referenced_message)
+            this.referenced_message = data.referenced_message;
 
         this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
