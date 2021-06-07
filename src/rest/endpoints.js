@@ -1,4 +1,4 @@
-/* of course, stick to this format of "requestPath1Path2" */
+/* of course, stick to this format of "methodPath1Path2" */
 /* the arguments passed to the path() function should simply become the parameters of the request */
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
 /* though in terms of ratelimiting, we may need to figure something out since i think the bucket id can even change depending on what exactly the request is doing? */
@@ -11,6 +11,13 @@ module.exports = {
             return "/gateway/bot";
         },
         method: "GET",
+        bucket: null
+    },
+    postCreateMessage: {
+        path: (channel_id) => {
+            return `/channels/${channel_id}/messages`;
+        },
+        method: "POST",
         bucket: null
     }
 };
