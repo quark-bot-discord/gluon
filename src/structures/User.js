@@ -4,13 +4,18 @@ class User {
 
         this.avatar = data.avatar || null;
 
-        this.bot = data.bot || false;
+        if (data.bot == true)
+            this.bot = data.bot;
 
         this.id = data.id;
 
         this.username = data.username;
 
+        this.discriminator = data.discriminator;
+
         client.users.cache[this.id] = this;
+
+        return this;
 
     }
 
