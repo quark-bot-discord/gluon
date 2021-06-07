@@ -14,7 +14,7 @@ module.exports = {
         bucket: null
     },
     postCreateMessage: {
-        path: (channel_id) => {
+        path: ([channel_id]) => {
             return `/channels/${channel_id}/messages`;
         },
         method: "POST",
