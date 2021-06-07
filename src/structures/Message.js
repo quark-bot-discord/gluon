@@ -4,6 +4,9 @@ const Member = require("./Member");
 class Message {
 
     constructor(client, data) {
+
+        this.client = client;
+
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         new User(client, data.author);
@@ -32,6 +35,8 @@ class Message {
             this.referenced_message = data.referenced_message;
 
         this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
+
+        this.channel = client.guilds.cache[data.guild_id].channels.cache[data.channel_id];
 
         client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[this.id] = this;
 

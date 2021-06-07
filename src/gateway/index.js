@@ -3,6 +3,7 @@ const erlpack = require("erlpack");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
 const EventHandler = require("./eventHandler");
+const Resume = require("./structures/_6");
 
 class WS {
 
@@ -10,6 +11,8 @@ class WS {
 
         this.token = client.token;
         this.shard = shard;
+
+        this.url = url;
 
         this.ws = new WebSocket(url);
         this.request = client.request;
@@ -19,8 +22,11 @@ class WS {
         this.eventHandler = new EventHandler(client, this);
 
         this.sessionId = null;
+        this.s = null;
 
         this.isInitialHeartbeat = true;
+
+        this.hearbeatSetInterval = null;
 
         this.ws.on("open", () => {
 
@@ -35,19 +41,24 @@ class WS {
         });
 
         this.ws.on("message", data => {
-            
+            console.log("message");
             if (!Buffer.isBuffer(data)) data = Buffer.from(new Uint8Array(data));
             
             this.handleIncoming(erlpack.unpack(data));
 
         });
 
+        this.ws.on("error", data => {
+            console.log("error");
+            console.log(data);
+        });
+
     }
 
     handleIncoming(data) {
-        // console.log(data);
+        console.log(data);
         if (!data) return;
-        
+        if (data.s) this.s = data.s;
         switch (data.op) {
             // Dispatch
             case 0: {
@@ -68,6 +79,9 @@ class WS {
             // Reconnect
             case 7: {
 
+                // reconnect to websocket with session id
+                this.reconnect();
+
                 break;
 
             }
@@ -80,11 +94,11 @@ class WS {
             // Hello
             case 10: {
                 
-                this.ws.send(new Heartbeat());
+                this.heartbeat();
 
-                setInterval((() => {
+                this.hearbeatSetInterval = setInterval((() => {
 
-                    this.ws.send(new Heartbeat());
+                    this.heartbeat();
 
                 }), data.d.heartbeat_interval);
 
@@ -98,7 +112,7 @@ class WS {
 
                     this.isInitialHeartbeat = false;
                     
-                    this.ws.send(new Identify(this.token, this.shard));
+                    this.identify();
 
                 }
 
@@ -110,11 +124,27 @@ class WS {
 
     }
 
-    connect() {
+    heartbeat() {
+
+        this.ws.send(new Heartbeat());
+
+    }
+
+    identify() {
+
+        this.ws.send(new Identify(this.token, this.shard));
 
     }
 
     reconnect() {
+
+        clearInterval(this.hearbeatSetInterval);
+
+        this.ws.terminate();
+
+        this.ws = new WebSocket(this.url);
+        console.log(`Shard ${this.shard[0]} reconnecting...`);
+        this.ws.send(new Resume(this.token, this.sessionId, this.s));
 
     }
 }
