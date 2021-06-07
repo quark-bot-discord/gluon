@@ -1,7 +1,13 @@
+const User = require("./User");
+
 class Member {
 
     constructor(client, data, user_id, guild_id) {
 
+        if (data.user)
+            new User(client, data.user);
+        /* should check whether member actually *needs* to be cached */
+        /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
         this.id = user_id;
 
         if (data.nick)
