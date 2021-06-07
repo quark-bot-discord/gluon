@@ -1,6 +1,7 @@
 const { CHANNEL_TYPES } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
+const Message = require("./Message");
 
 class TextChannel extends Channel {
 
@@ -22,7 +23,16 @@ class TextChannel extends Channel {
         if (options.embed) body.embed = options.embed.toJSON();
         if (options.components) body.components = options.components.toJSON();
 
-        return await this.client.request.makeRequest("postCreateMessage", [this.channel.id], body);
+        try {
+
+            const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
+            return new Message(this.client, data);
+
+        } catch (error) {
+
+            throw error;
+
+        }
 
     }
 
