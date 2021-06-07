@@ -88,6 +88,8 @@ class Channel {
             }
         }
 
+        this.guild = client.guilds.cache[guild_id];
+
         client.guilds.cache[guild_id].channels.cache[this.id] = this;
 
     }
