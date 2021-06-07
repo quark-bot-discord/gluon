@@ -9,9 +9,11 @@ class Message {
 
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
-        this.author = new User(client, data.author);
+        if (data.author)
+            this.author = new User(client, data.author);
 
-        this.member = new Member(client, data.member, data.author.id, data.guild_id);
+        if (data.member)
+            this.member = new Member(client, data.member, data.author.id, data.guild_id);
 
         this.id = data.id;
         // should only be stored if file logging is enabled
@@ -32,11 +34,44 @@ class Message {
         if (data.referenced_message)
             this.referenced_message = data.referenced_message;
 
-        this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
+        if (data.timestamp)
+            this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
-        this.channel = client.guilds.cache[data.guild_id].channels.cache[data.channel_id];
+        if (data.guild_id && data.channel_id) {
 
-        client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[this.id] = this;
+            this.channel = client.guilds.cache[data.guild_id].channels.cache[data.channel_id];
+
+            this.guild = client.guilds.cache[data.guild_id];
+
+            client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[this.id] = this;
+
+        }
+
+    }
+    /* https://discord.com/developers/docs/resources/channel#create-message */
+    async reply(content, options = {}) {
+
+        const body = {};
+
+        if (content) body.content = content;
+        if (options.embed) body.embed = options.embed.toJSON();
+        if (options.components) body.components = options.components.toJSON();
+        body.message_reference = {
+            message_id: this.id,
+            channel_id: this.channel.id,
+            guild_id: this.channel.guild.id
+        };
+        console.log(body);
+        try {
+            
+            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel.id], body);
+            return new Message(this.client, data);
+
+        } catch (error) {
+
+            throw error;
+
+        }
 
     }
 
