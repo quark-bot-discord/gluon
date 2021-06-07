@@ -52,7 +52,7 @@ class WS {
     }
 
     handleIncoming(data) {
-        console.log(data);
+        this.client.emit("debug", data)
         if (!data) return;
         if (data.s) this.s = data.s;
         switch (data.op) {
