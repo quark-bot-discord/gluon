@@ -52,9 +52,13 @@ class WS {
     }
 
     handleIncoming(data) {
-        console.log(data);
+
         if (!data) return;
+
         if (data.s) this.s = data.s;
+
+        this.client.emit("raw", data);
+
         switch (data.op) {
             // Dispatch
             case 0: {
