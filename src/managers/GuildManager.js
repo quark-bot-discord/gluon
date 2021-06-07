@@ -3,7 +3,7 @@ class GuildManager {
     constructor(client) {
 
         this.cache = {};
-
+        
     }
 
 }
