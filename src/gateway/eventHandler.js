@@ -1,5 +1,7 @@
 const { EVENTS } = require("../constants");
 const Guild = require("../structures/Guild");
+const Message = require("../structures/Message");
+const User = require("../structures/User");
 
 class EventHandler {
 
@@ -15,7 +17,9 @@ class EventHandler {
 
         this.ws.sessionId = data.session_id;
 
-        this.client.user = data.user;
+        const user = new User(this.client, data.user);
+        
+        this.client.user = user;
         
         this.client.emit(EVENTS.READY);
 
@@ -33,7 +37,9 @@ class EventHandler {
 
     MESSAGE_CREATE(data) {
 
-        this.client.emit(EVENTS.MESSAGE_CREATE, data);
+        const message = new Message(this.client, data);
+
+        this.client.emit(EVENTS.MESSAGE_CREATE, message);
 
     }
 
