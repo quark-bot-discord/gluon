@@ -24,21 +24,29 @@ class WS {
         this.sessionId = null;
         this.s = null;
 
+        this.resuming = false;
+
         this.isInitialHeartbeat = true;
 
         this.hearbeatSetInterval = null;
 
         this.ws.on("open", () => {
-            this.client.emit("debug", `Websocket opened for shard ${this.shard[0]}`)
+
+            this.client.emit("debug", `Websocket opened for shard ${this.shard[0]}`);
+
+            if (this.resuming == true)
+                this.ws.send(new Resume(this.token, this.sessionId, this.s));
+
         });
 
         this.ws.on("close", data => {
-            this.client.emit("debug", `Websocket for shard ${this.shard[0]} closed with code ${data}`);
 
+            this.client.emit("debug", `Websocket for shard ${this.shard[0]} closed with code ${data}`);
+        
         });
 
         this.ws.on("message", data => {
-            this.client.emit("debug", `Incoming message`)
+
             if (!Buffer.isBuffer(data)) data = Buffer.from(new Uint8Array(data));
             
             this.handleIncoming(erlpack.unpack(data));
@@ -46,12 +54,15 @@ class WS {
         });
 
         this.ws.on("error", data => {
-            this.client.emit("error", `error: ${data}`)
+
+            this.client.emit("error", `error: ${data}`);
+            
         });
 
     }
 
     handleIncoming(data) {
+
         if (!data) return;
 
         if (data.s) this.s = data.s;
@@ -141,9 +152,11 @@ class WS {
 
         this.ws.terminate();
 
+        this.resuming = true;
+
         this.ws = new WebSocket(this.url);
-        console.log(`Shard ${this.shard[0]} reconnecting...`);
-        this.ws.send(new Resume(this.token, this.sessionId, this.s));
+        
+        this.client.emit("debug", `Shard ${this.shard[0]} reconnecting...`);
 
     }
 }
