@@ -8,14 +8,16 @@ class Guild {
     constructor(client, data) {
 
         this.id = data.id;
-
+        // needed for join/leave logging
         this.name = data.name;
-
+        // needed for join/leave logging
         this.icon = data.icon;
-
+        // needed for permissions checking and join/leave logging
         this.owner_id = data.owner_id;
-
+        // useful to see how long a guild keeps the bot for
         this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
+        // only needed if file logging is enabled
+        this.premium_tier = data.premium_tier || 0;
 
         if (data.unavailable == true)
             this.unavailable = data.unavailable;
