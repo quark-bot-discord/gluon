@@ -56,12 +56,13 @@ class Message {
         if (content) body.content = content;
         if (options.embed) body.embed = options.embed.toJSON();
         if (options.components) body.components = options.components.toJSON();
+        
         body.message_reference = {
             message_id: this.id,
             channel_id: this.channel.id,
             guild_id: this.channel.guild.id
         };
-        console.log(body);
+        
         try {
             
             const data = await this.client.request.makeRequest("postCreateMessage", [this.channel.id], body);
