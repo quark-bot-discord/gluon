@@ -9,16 +9,14 @@ class Message {
 
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
-        new User(client, data.author);
+        this.author = new User(client, data.author);
 
-        new Member(client, data.member, data.author.id, data.guild_id);
+        this.member = new Member(client, data.member, data.author.id, data.guild_id);
 
         this.id = data.id;
         // should only be stored if file logging is enabled
         if (data.attachments.length != 0)
             this.attachments = data.attachments;
-
-        this.author = data.author.id;
 
         this.content = data.content || null;
 
