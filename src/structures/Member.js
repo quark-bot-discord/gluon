@@ -16,6 +16,10 @@ class Member {
         if (data.pending == false)
             this.pending = data.pending;
 
+        this.user = client.users.cache[user_id];
+
+        this.guild = client.guilds.cache[guild_id];
+
         client.guilds.cache[guild_id].members.cache[user_id] = this;
 
     }
