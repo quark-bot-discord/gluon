@@ -7,9 +7,14 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", message => {
+    console.log("messageCreate");
     console.log(message);
+});
 
-    console.log(client.guilds.cache["721401585300930562"]);
+client.on("messageUpdate", (oldMessage, newMessage) => {
+    console.log("messageUpdate");
+    console.log(oldMessage);
+    console.log(newMessage);
 });
 
 client.login("ODQ5NzM0MjM0MzM5NjcyMDg0.YLferA.RYFIAP-qz_U-wJB-qXmTD87p5gA");

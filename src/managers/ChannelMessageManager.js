@@ -2,7 +2,7 @@ class ChannelMessageManager {
 
     constructor() {
 
-        this.cache = [];
+        this.cache = {};
 
     }
 

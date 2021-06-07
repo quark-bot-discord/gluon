@@ -43,6 +43,15 @@ class EventHandler {
 
     }
 
+    MESSAGE_UPDATE(data) {
+
+        const oldMessage = this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id] || null;
+        const newMessage = new Message(this.client, data);
+
+        this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+
+    }
+
 }
 
 module.exports = EventHandler;
