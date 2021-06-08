@@ -85,10 +85,10 @@ class Message {
         }
 
     }
-    
+
     async edit(content, options = {}) {
 
-        if (this.client.id !== this.author.id) return Error("Can't edit another members message.");
+        if (this.client.id !== this.author.id) return Error("Can't edit another member's message.");
 
         const body = {};
 
