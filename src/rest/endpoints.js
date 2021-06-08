@@ -19,5 +19,12 @@ module.exports = {
         },
         method: "POST",
         bucket: null
+    },
+    patchEditMessage: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/messages`;
+        },
+        method: "PATCH",
+        bucket: null
     }
 };
