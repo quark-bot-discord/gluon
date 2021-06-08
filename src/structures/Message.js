@@ -17,18 +17,18 @@ class Message {
 
         this.id = data.id;
         // should only be stored if file logging is enabled
-        if (data.attachments.length != 0)
+        if (data.attachments)
             this.attachments = data.attachments;
 
         this.content = data.content || null;
 
-        if (data.embeds.length != 0)
+        if (data.embeds)
             this.embeds = data.embeds;
 
-        if (data.mentions.length != 0)
+        if (data.mentions)
             this.mentions = data.mentions;
 
-        if (data.mention_roles.length != 0)
+        if (data.mention_roles)
             this.mention_roles = data.mention_roles;
 
         if (data.referenced_message)
