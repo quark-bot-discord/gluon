@@ -21,8 +21,8 @@ module.exports = {
         bucket: null
     },
     patchEditMessage: {
-        path: ([channel_id]) => {
-            return `/channels/${channel_id}/messages`;
+        path: ([channel_id, message_id]) => {
+            return `/channels/${channel_id}/messages/${message_id}`;
         },
         method: "PATCH",
         bucket: null

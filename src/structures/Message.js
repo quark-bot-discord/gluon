@@ -75,6 +75,34 @@ class Message {
         }
 
     }
+    async edit(content, options = {}) {
+
+        const body = {};
+
+        if (content) body.content = content;
+        if (options.embed) body.embed = options.embed.toJSON();
+        if (options.components) body.components = options.components.toJSON();
+        console.log('------------------------------------------')
+        console.log(this)
+        body.message_reference = {
+            message_id: this.id,
+            /* Not sure why but both the channel id dont exist in the object */
+            channel_id: this.channel.id,
+            guild_id: this.channel.guild.id
+        };
+        
+        try {
+            
+            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel.id, this.id], body);
+            return new Message(this.client, data);
+
+        } catch (error) {
+
+            throw error;
+
+        }
+
+    }
 
 }
 
