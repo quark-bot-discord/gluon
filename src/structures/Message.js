@@ -58,7 +58,6 @@ class Message {
     /* https://discord.com/developers/docs/resources/channel#create-message */
     async reply(content, options = {}) {
 
-        if (this.client.id !== this.author.id) return Error("Can't edit another members message.")
         const body = {};
 
         if (content)
@@ -86,7 +85,10 @@ class Message {
         }
 
     }
+    
     async edit(content, options = {}) {
+
+        if (this.client.id !== this.author.id) return Error("Can't edit another members message.");
 
         const body = {};
 
