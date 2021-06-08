@@ -87,9 +87,8 @@ class Message {
     }
 
     async edit(content, options = {}) {
-
-        if (this.client.id !== this.author.id) return Error("Can't edit another member's message.");
-
+       
+        if (!this.client.user.id === this.author.id) throw Error("Can't edit another member's message.");
         const body = {};
 
         if (content)
@@ -98,8 +97,6 @@ class Message {
             body.embed = options.embed.toJSON();
         if (options.components)
             body.components = options.components.toJSON();
-        console.log('------------------------------------------')
-        console.log(this)
         if (this.referenced_message)
             body.message_reference = {
                 message_id: this.id,
