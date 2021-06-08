@@ -19,14 +19,17 @@ class TextChannel extends Channel {
         // need something for files too
         const body = {};
 
-        if (content) body.content = content;
-        if (options.embed) body.embed = options.embed.toJSON();
-        if (options.components) body.components = options.components.toJSON();
+        if (content) 
+            body.content = content;
+        if (options.embed) 
+            body.embed = options.embed.toJSON();
+        if (options.components) 
+            body.components = options.components.toJSON();
 
         try {
 
             const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
-            return new Message(this.client, data);
+            return new Message(this.client, data, this.id, this.guild.id);
 
         } catch (error) {
 

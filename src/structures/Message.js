@@ -3,7 +3,7 @@ const Member = require("./Member");
 
 class Message {
 
-    constructor(client, data) {
+    constructor(client, data, channel_id, guild_id) {
 
         this.client = client;
 
@@ -31,21 +31,28 @@ class Message {
         if (data.mention_roles)
             this.mention_roles = data.mention_roles;
 
-        if (data.referenced_message)
-            this.referenced_message = data.referenced_message;
+        if (data.referenced_message) {
+
+            this.message_reference = {};
+
+            this.message_reference.message_id = data.referenced_message.id;
+
+            if (data.referenced_message.channel_id)
+                this.message_reference.channel_id = data.referenced_message.channel_id;
+
+            if (data.referenced_message.guild_id)
+                this.message_reference.guild_id = data.referenced_message.guild_id;
+
+        }
 
         if (data.timestamp)
             this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
-        if (data.guild_id && data.channel_id) {
+        this.channel = client.guilds.cache[guild_id].channels.cache[channel_id];
 
-            this.channel = client.guilds.cache[data.guild_id].channels.cache[data.channel_id];
+        this.guild = client.guilds.cache[guild_id];
 
-            this.guild = client.guilds.cache[data.guild_id];
-
-            client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[this.id] = this;
-
-        }
+        client.guilds.cache[guild_id].channels.cache[channel_id].messages.cache[this.id] = this;
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
@@ -53,20 +60,23 @@ class Message {
 
         const body = {};
 
-        if (content) body.content = content;
-        if (options.embed) body.embed = options.embed.toJSON();
-        if (options.components) body.components = options.components.toJSON();
-        
+        if (content)
+            body.content = content;
+        if (options.embed)
+            body.embed = options.embed.toJSON();
+        if (options.components)
+            body.components = options.components.toJSON();
+
         body.message_reference = {
             message_id: this.id,
             channel_id: this.channel.id,
-            guild_id: this.channel.guild.id
+            guild_id: this.guild.id
         };
-        
+
         try {
-            
+
             const data = await this.client.request.makeRequest("postCreateMessage", [this.channel.id], body);
-            return new Message(this.client, data);
+            return new Message(this.client, data, this.channel.id, this.guild.id);
 
         } catch (error) {
 
@@ -79,22 +89,26 @@ class Message {
 
         const body = {};
 
-        if (content) body.content = content;
-        if (options.embed) body.embed = options.embed.toJSON();
-        if (options.components) body.components = options.components.toJSON();
+        if (content)
+            body.content = content;
+        if (options.embed)
+            body.embed = options.embed.toJSON();
+        if (options.components)
+            body.components = options.components.toJSON();
         console.log('------------------------------------------')
         console.log(this)
-        body.message_reference = {
-            message_id: this.id,
-            /* Not sure why but both the channel id dont exist in the object */
-            channel_id: this.channel.id,
-            guild_id: this.channel.guild.id
-        };
-        
+        if (this.referenced_message)
+            body.message_reference = {
+                message_id: this.id,
+                /* Not sure why but both the channel id dont exist in the object */
+                channel_id: this.channel.id,
+                guild_id: this.guild.id
+            };
+
         try {
-            
+
             const data = await this.client.request.makeRequest("patchEditMessage", [this.channel.id, this.id], body);
-            return new Message(this.client, data);
+            return new Message(this.client, data, this.channel.id, this.guild.id);
 
         } catch (error) {
 

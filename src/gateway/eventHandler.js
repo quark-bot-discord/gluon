@@ -37,7 +37,7 @@ class EventHandler {
 
     MESSAGE_CREATE(data) {
 
-        const message = new Message(this.client, data);
+        const message = new Message(this.client, data, data.channel_id, data.guild_id);
 
         this.client.emit(EVENTS.MESSAGE_CREATE, message);
 
@@ -46,7 +46,7 @@ class EventHandler {
     MESSAGE_UPDATE(data) {
 
         const oldMessage = this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id] || null;
-        const newMessage = new Message(this.client, data);
+        const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
 
         this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
