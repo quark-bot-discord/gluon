@@ -97,10 +97,10 @@ class Message {
             body.embed = options.embed.toJSON();
         if (options.components)
             body.components = options.components.toJSON();
+            
         if (this.referenced_message)
             body.message_reference = {
                 message_id: this.id,
-                /* Not sure why but both the channel id dont exist in the object */
                 channel_id: this.channel.id,
                 guild_id: this.guild.id
             };
