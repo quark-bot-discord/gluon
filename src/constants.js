@@ -29,7 +29,8 @@ module.exports.EVENTS = {
     READY: "ready",
     MESSAGE_CREATE: "messageCreate",
     MESSAGE_UPDATE: "messageUpdate",
-    MESSAGE_DELETE: "messageDelete"
+    MESSAGE_DELETE: "messageDelete",
+    GUILD_BAN_ADD: "guildBanAdd",
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT: 0,

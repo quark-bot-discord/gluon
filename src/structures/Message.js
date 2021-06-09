@@ -46,6 +46,7 @@ class Message {
         }
 
         if (data.timestamp)
+            // When the message was created
             this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
         this.channel = client.guilds.cache[guild_id].channels.cache[channel_id];

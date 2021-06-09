@@ -74,6 +74,25 @@ class Guild {
         data.threads.map(thread => new Thread(this.client, thread, this.id));
 
     }
+    async ban(user_id, options = {}) {
+        if (!user_id) throw Error('No userID was provided');
+        const body = {};
+
+        if (options.reason) body.reason = options.reason;
+        // number of days to delete messages for (0-7) 
+        if (options.days) body.delete_message_days;
+
+        try {
+
+            const data = await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
+            return;
+
+        } catch (error) {
+            console.log(error)
+            throw error;
+
+        }
+    }
 
 }
 
