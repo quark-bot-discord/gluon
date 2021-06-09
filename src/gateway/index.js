@@ -73,7 +73,15 @@ class WS {
             // Dispatch
             case 0: {
 
-                this.eventHandler[data.t](data.d);
+                try {
+
+                    this.eventHandler[data.t](data.d);
+
+                } catch (error) {
+
+                    this.client.emit("debug", `Unknown event ${data.t}`);
+
+                }
 
                 break;
 
