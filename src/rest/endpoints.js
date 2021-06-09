@@ -26,5 +26,12 @@ module.exports = {
         },
         method: "PATCH",
         bucket: null
+    },
+    putCreateGuildBan: {
+        path: ([guild_id, user_id]) => {
+            return `/guilds/${guild_id}/bans/${user_id}`;
+        },
+        method: "PUT",
+        bucket: null
     }
 };
