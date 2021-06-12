@@ -109,18 +109,15 @@ class RequestHandler {
                 /* important it is fetched from there, as bucket ids are also stored there with that data */
                 const actualRequest = this.endpoints[request];
                 /* actually make the request */
-                const options = {
+                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}`, {
                     method: actualRequest.method,
                     headers: {
                         "Authorization": this.authorization,
-                        "User-Agent": this.name
-                    }
-                };
-                if (body) {
-                    options.headers["Content-Type"] = "application/json"; // needs to be variable
-                    options.body = JSON.stringify(body);
-                }
-                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}`, options);
+                        "User-Agent": this.name,
+                        "Content-Type": "application/json" // this needs to be variable tho
+                    },
+                    body: body ? JSON.stringify(body) : undefined
+                });
                 // console.log(res.status);
                 const json = await res.json();
 
