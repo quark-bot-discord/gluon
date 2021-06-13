@@ -32,7 +32,7 @@ class WS {
         
         this.ws.on("open", () => {
 
-            this.client.emit("debug", `Websocket opened for shard ${this.shard[0]}`);
+            this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket opened`);
 
             if (this.resuming == true)
                 this.ws.send(new Resume(this.token, this.sessionId, this.s));
@@ -41,7 +41,7 @@ class WS {
 
         this.ws.on("close", data => {
 
-            this.client.emit("debug", `Websocket for shard ${this.shard[0]} closed with code ${data}`);
+            this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket closed with code ${data}`);
 
             this.ws = new WebSocket(this.url);
         
@@ -81,7 +81,7 @@ class WS {
 
                 } catch (error) {
                     console.log(error);
-                    this.client.emit("debug", `Unknown event ${data.t}`);
+                    this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Unknown event ${data.t}`);
 
                 }
 
@@ -122,7 +122,7 @@ class WS {
 
                 }), data.d.heartbeat_interval);
 
-                this.client.emit("debug", "HELLO");
+                this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => HELLO`);
 
                 break;
 
@@ -138,7 +138,7 @@ class WS {
 
                 }
 
-                this.client.emit("debug", "Hearbeat acknowledged");
+                this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Hearbeat acknowledged`);
 
                 break;
 
@@ -168,7 +168,7 @@ class WS {
 
         this.resuming = true;
         
-        this.client.emit("debug", `Shard ${this.shard[0]} reconnecting...`);
+        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Shard reconnecting`);
 
     }
 }
