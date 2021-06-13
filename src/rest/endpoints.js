@@ -68,5 +68,12 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    postInteractionResponse: {
+        path: ([interaction_id, interaction_token]) => {
+            return `/interactions/${interaction_id}/${interaction_token}/callback`;
+        },
+        method: "POST",
+        bucket: null
     }
 };
