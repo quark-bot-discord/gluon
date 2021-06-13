@@ -36,6 +36,12 @@ class User {
 
     }
 
+    get createdTimestamp() {
+
+        return (((this.id >> 22) + 1420070400000) / 1000) | 0;
+
+    }
+
 }
 
 module.exports = User;
