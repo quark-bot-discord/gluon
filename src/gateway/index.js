@@ -150,11 +150,15 @@ class WS {
 
     heartbeat() {
 
+        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Sending heartbeat...`);
+
         this.ws.send(new Heartbeat(this.s));
 
     }
 
     identify() {
+
+        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => IDENTIFY`);
 
         this.ws.send(new Identify(this.token, this.shard));
 
