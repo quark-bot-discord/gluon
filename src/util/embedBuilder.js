@@ -97,7 +97,7 @@ class Embed {
             type: this.type,
             description: this.description,
             url: this.url,
-            timestemp: this.timestamp,
+            timestamp: this.timestamp,
             color: this.color,
             footer: this.footer,
             author: this.author,
