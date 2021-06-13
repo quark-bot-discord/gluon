@@ -1,5 +1,6 @@
 const { EVENTS } = require("../constants");
 const Guild = require("../structures/Guild");
+const Member = require("../structures/Member");
 const Message = require("../structures/Message");
 const User = require("../structures/User");
 
@@ -47,7 +48,6 @@ class EventHandler {
 
         const oldMessage = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
-        console.log(this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.size);
         this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
     }
@@ -56,20 +56,21 @@ class EventHandler {
 
         const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
         this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.id);
-        console.log(this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.size);
         this.client.emit(EVENTS.MESSAGE_DELETE, message);
 
     }
 
     GUILD_MEMBER_ADD(data) {
 
-
+        new User(this.client, data.user);
+        const member = new Member(this.client, data, data.user.id, data.guild_id);
+        this.client.emit("guildMemberAdd", member);
 
     }
 
     GUILD_MEMBER_REMOVE(data) {
 
-        
+
 
     }
 
