@@ -42,6 +42,8 @@ class WS {
         this.ws.on("close", data => {
 
             this.client.emit("debug", `Websocket for shard ${this.shard[0]} closed with code ${data}`);
+
+            this.ws = new WebSocket(this.url);
         
         });
 
@@ -89,7 +91,7 @@ class WS {
             // Heartbeat
             case 1: {
 
-                this.ws.send(new Heartbeat(data.s));
+                this.heartbeat();
 
                 break;
 
@@ -120,6 +122,8 @@ class WS {
 
                 }), data.d.heartbeat_interval);
 
+                this.client.emit("debug", "HELLO");
+
                 break;
 
             }
@@ -134,6 +138,8 @@ class WS {
 
                 }
 
+                this.client.emit("debug", "Hearbeat acknowledged");
+
                 break;
 
             }
@@ -144,7 +150,7 @@ class WS {
 
     heartbeat() {
 
-        this.ws.send(new Heartbeat());
+        this.ws.send(new Heartbeat(this.s));
 
     }
 
@@ -161,8 +167,6 @@ class WS {
         this.ws.terminate();
 
         this.resuming = true;
-
-        this.ws = new WebSocket(this.url);
         
         this.client.emit("debug", `Shard ${this.shard[0]} reconnecting...`);
 
