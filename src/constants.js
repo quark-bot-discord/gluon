@@ -41,3 +41,6 @@ module.exports.CHANNEL_TYPES = {
     GUILD_PRIVATE_THREAD: 12,
     GUILD_STAGE_VOICE: 13
 };
+module.exports.AUDIT_LOG_TYPES = {
+    MESSAGE_DELETE: 72
+};
