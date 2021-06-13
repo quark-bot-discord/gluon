@@ -128,7 +128,6 @@ class Guild {
         try {
 
             const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
-            console.log(data);
             return data;
 
         } catch (error) {
