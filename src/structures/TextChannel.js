@@ -1,4 +1,3 @@
-const { CHANNEL_TYPES } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
 const Message = require("./Message");
@@ -17,7 +16,7 @@ class TextChannel extends Channel {
     /* https://discord.com/developers/docs/resources/channel#create-message */
     async send(content, options = {}) {
         // need something for files too
-        if (content.length > 2000) throw Error('Message exceeds 2000 characters.')
+        if (content.length > 2000) throw Error('Message exceeds 2000 characters.');
         const body = {};
 
         if (content) 
