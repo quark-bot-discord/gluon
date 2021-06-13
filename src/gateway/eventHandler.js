@@ -1,7 +1,9 @@
-const { EVENTS } = require("../constants");
+const { EVENTS, INTERACTION_TYPES } = require("../constants");
+const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 const Message = require("../structures/Message");
+const SlashCommand = require("../structures/SlashCommand");
 const User = require("../structures/User");
 
 class EventHandler {
@@ -75,6 +77,30 @@ class EventHandler {
         else
             member = new Member(this.client, data, data.user.id, data.guild_id, true);
         this.client.emit("guildMemberRemove", member);
+
+    }
+
+    INTERACTION_CREATE(data) {
+
+        switch (data.type) {
+
+            case INTERACTION_TYPES.COMPONENT: {
+
+                const componentInteraction = new ButtonClick(this.client, data);
+                this.client.emit("buttonClick", componentInteraction);
+                break;
+
+            }
+
+            case INTERACTION_TYPES.COMMAND: {
+
+                const commandInteraction = new SlashCommand();
+                this.client.emit("slashCommand", commandInteraction);
+                break;
+
+            }
+
+        }
 
     }
 
