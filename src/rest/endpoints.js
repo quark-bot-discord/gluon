@@ -47,5 +47,19 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    getChannelMessages: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/messages`;
+        },
+        method: "GET",
+        bucket: null
+    },
+    getChannelMessage: {
+        path: ([channel_id, message_id]) => {
+            return `/channels/${channel_id}/messages/${message_id}`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
