@@ -126,8 +126,18 @@ class RequestHandler {
                     },
                     body: body && actualRequest.method != "GET" ? JSON.stringify(body) : undefined
                 });
-                // console.log(res.status);
-                const json = await res.json();
+
+                let json;
+                
+                try {
+
+                    json = await res.json();
+
+                } catch (error) {
+
+                    json = null;
+
+                }
 
                 /* update the bucket data */
                 this.handleBucket(request, res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"));

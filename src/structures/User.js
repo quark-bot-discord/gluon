@@ -2,7 +2,7 @@ const { CDN_BASE_URL } = require("../constants");
 
 class User {
 
-    constructor(client, data) {
+    constructor(client, data, nocache = false) {
 
         this.client = client;
 
@@ -18,7 +18,8 @@ class User {
         this.discriminator = data.discriminator;
 
         // should only cache if actually needed - TBD
-        this.client.users.cache.set(this.id, this);
+        if (!nocache)
+            this.client.users.cache.set(this.id, this);
 
     }
     // better to use the one in the member class, as it accounts for guild avatars too

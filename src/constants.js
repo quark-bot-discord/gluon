@@ -44,3 +44,7 @@ module.exports.CHANNEL_TYPES = {
 module.exports.AUDIT_LOG_TYPES = {
     MESSAGE_DELETE: 72
 };
+module.exports.INTERACTION_TYPES = {
+    COMMAND: 2,
+    COMPONENT: 3
+};

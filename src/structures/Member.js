@@ -3,12 +3,12 @@ const User = require("./User");
 
 class Member {
 
-    constructor(client, data, user_id, guild_id) {
+    constructor(client, data, user_id, guild_id, nocache = false) {
 
         this.client = client;
 
         if (data.user)
-            new User(this.client, data.user);
+            new User(this.client, data.user, nocache);
         
         this.id = user_id;
 
@@ -33,7 +33,8 @@ class Member {
 
         /* should check whether member actually *needs* to be cached */
         /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
-        this.client.guilds.cache.get(guild_id).members.cache.set(user_id, this);
+        if (!nocache)
+            this.client.guilds.cache.get(guild_id).members.cache.set(user_id, this);
 
     }
     /* https://github.com/discord/discord-api-docs/pull/3081/files 👀 */
