@@ -42,6 +42,9 @@ class Embed {
     }
 
     setColor(hex) {
+
+        if (hex[0] == "#")
+            hex.slice(0, 1);
         
         this.color = hexToInt(hex);
 
