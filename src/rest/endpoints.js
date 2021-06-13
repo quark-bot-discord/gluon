@@ -33,5 +33,19 @@ module.exports = {
         },
         method: "PUT",
         bucket: null
+    },
+    getGuildAuditLog: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/audit-logs`;
+        },
+        method: "GET",
+        bucket: null
+    },
+    getChannel: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
