@@ -17,6 +17,11 @@ class GuildChannelsManager {
 
     async fetch(channel_id) {
 
+        const cachedChannel = this.guild.channels.cache.get(channel_id);
+        if (cachedChannel)
+            return cachedChannel;
+
+
         try {
 
             const data = await this.client.request.makeRequest("getChannel", [channel_id]);
