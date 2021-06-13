@@ -108,15 +108,23 @@ class RequestHandler {
                 /* fetch the request data from ./endpoints.js */
                 /* important it is fetched from there, as bucket ids are also stored there with that data */
                 const actualRequest = this.endpoints[request];
+                const serialize = (obj) => {
+                    let str = [];
+                    for (let p in obj)
+                      if (obj.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                      }
+                    return str.join("&");
+                };
                 /* actually make the request */
-                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}`, {
+                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}${body && actualRequest.method == "GET" ? "?" + serialize(body) : ""}`, {
                     method: actualRequest.method,
                     headers: {
                         "Authorization": this.authorization,
                         "User-Agent": this.name,
                         "Content-Type": "application/json" // this needs to be variable tho
                     },
-                    body: body ? JSON.stringify(body) : undefined
+                    body: body && actualRequest.method != "GET" ? JSON.stringify(body) : undefined
                 });
                 // console.log(res.status);
                 const json = await res.json();
