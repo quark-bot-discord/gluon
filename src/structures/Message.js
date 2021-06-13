@@ -1,5 +1,6 @@
 const User = require("./User");
 const Member = require("./Member");
+const Attachment = require("./Attachment");
 
 class Message {
 
@@ -18,7 +19,8 @@ class Message {
         this.id = data.id;
         // should only be stored if file logging is enabled
         if (data.attachments)
-            this.attachments = data.attachments;
+            for (let i = 0; i < data.attachments.length; i++)
+                this.attachments.length == 0 ? this.attachments = [new Attachment(client, data.attachments[i])] : this.attachments.push(new Attachment(client, data.attachments[i]));
 
         this.content = data.content || null;
 
@@ -33,15 +35,15 @@ class Message {
 
         if (data.referenced_message) {
 
-            this.message_reference = {};
+            this.reference = {};
 
-            this.message_reference.message_id = data.referenced_message.id;
+            this.reference.message_id = data.referenced_message.id;
 
             if (data.referenced_message.channel_id)
-                this.message_reference.channel_id = data.referenced_message.channel_id;
+                this.reference.channel_id = data.referenced_message.channel_id;
 
             if (data.referenced_message.guild_id)
-                this.message_reference.guild_id = data.referenced_message.guild_id;
+                this.reference.guild_id = data.referenced_message.guild_id;
 
         }
 
