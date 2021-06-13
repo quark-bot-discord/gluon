@@ -8,7 +8,7 @@ class SlashCommand {
 
     reply(content, options = {}) {
 
-
+        
 
     }
 
