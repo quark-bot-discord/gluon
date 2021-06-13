@@ -35,7 +35,10 @@ class Embed {
 
     setTimestamp(timestamp) {
 
-        this.timestamp = new Date(timestamp * 1000).toISOString();
+        if (timestamp)
+            this.timestamp = new Date(timestamp * 1000).toISOString();
+        else
+            this.timestamp = new Date().toISOString();
 
         return this;
 
