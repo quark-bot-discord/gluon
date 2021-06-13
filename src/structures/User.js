@@ -30,6 +30,12 @@ class User {
 
     }
 
+    get tag() {
+        
+        return this.username + "#" + this.discriminator;
+
+    }
+
 }
 
 module.exports = User;
