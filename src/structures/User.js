@@ -18,7 +18,7 @@ class User {
         this.discriminator = data.discriminator;
 
         // should only cache if actually needed - TBD
-        client.users.cache[this.id] = this;
+        this.client.users.cache.set(this.id, this);
 
     }
     // better to use the one in the member class, as it accounts for guild avatars too

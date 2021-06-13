@@ -8,7 +8,7 @@ class Member {
         this.client = client;
 
         if (data.user)
-            new User(client, data.user);
+            new User(this.client, data.user);
         
         this.id = user_id;
 
@@ -27,13 +27,13 @@ class Member {
         if (data.avatar)
             this.avatar = data.avatar;
 
-        this.user = client.users.cache[user_id];
+        this.user = this.client.users.cache.get(user_id);
 
-        this.guild = client.guilds.cache[guild_id];
+        this.guild = this.client.guilds.cache.get(guild_id);
 
         /* should check whether member actually *needs* to be cached */
         /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
-        this.client.guilds.cache[guild_id].members.cache[user_id] = this;
+        this.client.guilds.cache.get(guild_id).members.cache.set(user_id, this);
 
     }
     /* https://github.com/discord/discord-api-docs/pull/3081/files 👀 */

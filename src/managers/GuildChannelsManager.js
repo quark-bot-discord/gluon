@@ -11,7 +11,7 @@ class GuildChannelsManager {
 
         this.guild = guild;
 
-        this.cache = {};
+        this.cache = new Map();
 
     }
 

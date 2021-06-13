@@ -8,7 +8,7 @@ class ChannelMessageManager {
 
         this.channel = channel;
 
-        this.cache = {};
+        this.cache = new Map();
 
     }
 

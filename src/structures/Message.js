@@ -11,16 +11,16 @@ class Message {
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
-            this.author = new User(client, data.author);
+            this.author = new User(this.client, data.author);
 
         if (data.member)
-            this.member = new Member(client, data.member, data.author.id, data.guild_id);
+            this.member = new Member(this.client, data.member, data.author.id, data.guild_id);
 
         this.id = data.id;
         // should only be stored if file logging is enabled
         if (data.attachments)
             for (let i = 0; i < data.attachments.length; i++)
-                this.attachments.length == 0 ? this.attachments = [new Attachment(client, data.attachments[i])] : this.attachments.push(new Attachment(client, data.attachments[i]));
+                this.attachments.length == 0 ? this.attachments = [new Attachment(this.client, data.attachments[i])] : this.attachments.push(new Attachment(this.client, data.attachments[i]));
 
         this.content = data.content || null;
 
@@ -46,16 +46,15 @@ class Message {
                 this.reference.guild_id = data.referenced_message.guild_id;
 
         }
-
         if (data.timestamp)
             // When the message was created
             this.timestamp = parseInt(new Date(data.timestamp).getTime() / 1000);
 
-        this.channel = client.guilds.cache[guild_id].channels.cache[channel_id];
+        this.channel = this.client.guilds.cache.get(guild_id).channels.cache.get(channel_id);
+        this.guild = this.client.guilds.cache.get(guild_id);
 
-        this.guild = client.guilds.cache[guild_id];
-
-        client.guilds.cache[guild_id].channels.cache[channel_id].messages.cache[this.id] = this;
+        if (this.author.bot != true)
+            this.guild.channels.cache.get(channel_id).messages.cache.set(this.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */

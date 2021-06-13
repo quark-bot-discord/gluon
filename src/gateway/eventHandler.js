@@ -45,18 +45,18 @@ class EventHandler {
 
     MESSAGE_UPDATE(data) {
 
-        const oldMessage = this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id] || null;
+        const oldMessage = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
-
+        console.log(this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.size);
         this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
     }
 
     MESSAGE_DELETE(data) {
 
-        const message = this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id] || null;
-        delete this.client.guilds.cache[data.guild_id].channels.cache[data.channel_id].messages.cache[data.id];
-
+        const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
+        this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.id);
+        console.log(this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.size);
         this.client.emit(EVENTS.MESSAGE_DELETE, message);
 
     }

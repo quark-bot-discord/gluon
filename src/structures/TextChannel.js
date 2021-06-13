@@ -10,7 +10,7 @@ class TextChannel extends Channel {
 
         this.messages = new ChannelMessageManager(client, this);
         
-        this.client.guilds.cache[guild_id].channels.cache[this.id] = this;
+        this.client.guilds.cache.get(guild_id).channels.cache.set(this.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */

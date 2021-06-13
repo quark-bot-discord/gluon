@@ -2,7 +2,7 @@ class GuildManager {
 
     constructor(client) {
 
-        this.cache = {};
+        this.cache = new Map();
         
     }
 

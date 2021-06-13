@@ -9,7 +9,7 @@ class Channel {
 
         this.permission_overwrites = data.permission_overwrites;
 
-        this.guild = client.guilds.cache[guild_id];
+        this.guild = this.client.guilds.cache.get(guild_id);
 
         this.type = data.type;
 

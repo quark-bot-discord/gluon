@@ -4,7 +4,6 @@ const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildThreadsManager = require("../managers/GuildThreadsManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const AuditLog = require("./AuditLog");
-const Channel = require("./Channel");
 const Member = require("./Member");
 const TextChannel = require("./TextChannel");
 const Thread = require("./Thread");
@@ -35,15 +34,15 @@ class Guild {
 
         // this.voice_states = new GuildVoiceStatesManager(client, data.voice_states); i think this should be on a per-member basis instead
 
-        this.members = new GuildMemberManager(client);
+        this.members = new GuildMemberManager(this.client);
 
-        this.channels = new GuildChannelsManager(client, this);
+        this.channels = new GuildChannelsManager(this.client, this);
 
-        this.threads = new GuildThreadsManager(client);
+        this.threads = new GuildThreadsManager(this.client);
 
         this.preferred_locale = data.preferred_locale;
 
-        this.client.guilds.cache[this.id] = this;
+        this.client.guilds.cache.set(this.id, this);
 
 
         data.members.map(member => new Member(this.client, member, member.user.id, this.id));

@@ -4,7 +4,7 @@ class GuildThreadsManager {
 
         this.client = client;
 
-        this.cache = {};
+        this.cache = new Map();
 
     }
 
