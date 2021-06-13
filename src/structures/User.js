@@ -38,7 +38,7 @@ class User {
 
     get createdTimestamp() {
 
-        return (((this.id >> 22) + 1420070400000) / 1000) | 0;
+        return ((Number((BigInt.asUintN(64, this.id)) >> 22n) + 1420070400000) / 1000) | 0;
 
     }
 
