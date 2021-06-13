@@ -48,7 +48,7 @@ class Client extends EventsEmitter {
 
                         for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
 
-                            new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf`, [i, gatewayInfo.shards]);
+                            new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]);
     
                         }
 

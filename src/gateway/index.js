@@ -1,5 +1,6 @@
 const WebSocket = require("ws");
 const erlpack = require("erlpack");
+const ZlibSync = require("zlib-sync");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
 const EventHandler = require("./eventHandler");
@@ -29,7 +30,11 @@ class WS {
         this.isInitialHeartbeat = true;
         
         this.hearbeatSetInterval = null;
-        
+
+        this.zlib = new ZlibSync.Inflate({
+            chunkSize: 128 * 1024
+        });
+
         this.ws.on("open", () => {
 
             this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket opened`);
@@ -48,12 +53,25 @@ class WS {
         });
 
         this.ws.on("message", data => {
-
-            if (!Buffer.isBuffer(data)) data = Buffer.from(new Uint8Array(data));
-            
-            this.handleIncoming(erlpack.unpack(data));
-
-        });
+        /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
+        if(data instanceof ArrayBuffer) {
+             data = Buffer.from(data);
+        } else if(Array.isArray(data)) { 
+            data = Buffer.concat(data); 
+        }
+            if(data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xFFFF) {
+                this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
+                    if(this.zlib.err) {
+                        this.client.emit("error", `Error using zlib ${this.zlib.msg}`)
+                        return;
+                    }
+    
+                    data = Buffer.from(this.zlib.result);
+                    return this.handleIncoming(erlpack.unpack(data));
+             } else {
+                this.zlib.push(data, false);
+             }
+        })
 
         this.ws.on("error", data => {
 
