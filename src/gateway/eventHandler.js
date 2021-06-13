@@ -61,6 +61,18 @@ class EventHandler {
 
     }
 
+    GUILD_MEMBER_ADD(data) {
+
+
+
+    }
+
+    GUILD_MEMBER_REMOVE(data) {
+
+        
+
+    }
+
 }
 
 module.exports = EventHandler;
