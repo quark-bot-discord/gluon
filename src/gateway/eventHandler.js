@@ -62,7 +62,6 @@ class EventHandler {
 
     GUILD_MEMBER_ADD(data) {
 
-        new User(this.client, data.user);
         const member = new Member(this.client, data, data.user.id, data.guild_id);
         this.client.emit("guildMemberAdd", member);
 
