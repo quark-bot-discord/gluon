@@ -14,22 +14,22 @@ class WS {
 
         this.url = url;
 
-        this.ws = new WebSocket(url);
-        this.request = client.request;
-
         this.client = client;
 
-        this.eventHandler = new EventHandler(client, this);
+        this.ws = new WebSocket(url);
+        this.request = this.client.request;
 
+        this.eventHandler = new EventHandler(this.client, this);
+        
         this.sessionId = null;
         this.s = null;
 
         this.resuming = false;
 
         this.isInitialHeartbeat = true;
-
+        
         this.hearbeatSetInterval = null;
-
+        
         this.ws.on("open", () => {
 
             this.client.emit("debug", `Websocket opened for shard ${this.shard[0]}`);
@@ -78,7 +78,7 @@ class WS {
                     this.eventHandler[data.t](data.d);
 
                 } catch (error) {
-
+                    console.log(error);
                     this.client.emit("debug", `Unknown event ${data.t}`);
 
                 }
