@@ -61,5 +61,12 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    getGuildInvites: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/invites`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
