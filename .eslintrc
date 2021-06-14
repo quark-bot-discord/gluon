@@ -25,7 +25,8 @@
         "brace-style": ["error", "1tbs"],
         "comma-dangle": ["error", "never"],
         "computed-property-spacing": ["error", "never"],
-        "indent": ["error", "4"]
+        "indent": ["error", "4"],
+        "no-var": "error"
     },
     "parserOptions": {
         "ecmaVersion": 2021
