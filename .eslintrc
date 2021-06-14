@@ -1,0 +1,36 @@
+{
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "no-console": "warn",
+        "no-unreachable": "warn",
+        "no-unreachable-loop": "error",
+        "valid-typeof": "error",
+        "accessor-pairs": "error",
+        "class-methods-use-this": "error",
+        "consistent-return": "error",
+        "curly": ["error", "multi-or-nest"],
+        "default-case": "error",
+        "default-case-last": "error",
+        "default-param-last": "error",
+        "dot-notation": "error",
+        "guard-for-in": "error",
+        "no-case-declarations": "error",
+        "no-constructor-return": "error",
+        "no-empty-function": "error",
+        "no-multi-spaces": "error",
+        "no-useless-catch": "error",
+        "array-bracket-spacing": ["error", "always"],
+        "block-spacing": "error",
+        "brace-style": ["error", "1tbs"],
+        "comma-dangle": ["error", "never"],
+        "computed-property-spacing": ["error", "never"],
+        "indent": ["error", "4"]
+    },
+    "parserOptions": {
+        "ecmaVersion": 2021
+    },
+    "env": {
+        "es6": true
+    }
+}
