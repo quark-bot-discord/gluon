@@ -3,7 +3,7 @@ class GuildVoiceStatesManager {
 
     constructor() {
 
-
+        this.cache = new Map();
 
     }
 
