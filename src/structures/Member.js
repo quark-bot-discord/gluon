@@ -17,10 +17,6 @@ class Member {
 
         this.joined_at = parseInt(new Date(data.joined_at).getTime() / 1000);
 
-        this.deaf = data.deaf;
-
-        this.mute = data.mute;
-
         if (data.pending == false)
             this.pending = data.pending;
 
