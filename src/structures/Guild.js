@@ -8,6 +8,7 @@ const Member = require("./Member");
 const TextChannel = require("./TextChannel");
 const Thread = require("./Thread");
 const VoiceChannel = require("./VoiceChannel");
+const VoiceState = require("./VoiceState");
 
 class Guild {
 
@@ -44,16 +45,16 @@ class Guild {
 
         this.client.guilds.cache.set(this.id, this);
 
+        for (let i = 0; i < data.members.length; i++)
+            new Member(this.client, data.members[i], data.members[i].user.id, this.id);
 
-        data.members.map(member => new Member(this.client, member, member.user.id, this.id));
+        for (let i = 0; i < data.channels.length; i++) {
 
-        data.channels.map(channel => {
-
-            switch (channel.type) {
+            switch (data.channels[i].type) {
 
                 case CHANNEL_TYPES.GUILD_TEXT: {
 
-                    new TextChannel(this.client, channel, this.id);
+                    new TextChannel(this.client, data.channels[i], this.id);
 
                     break;
 
@@ -62,16 +63,20 @@ class Guild {
                 case CHANNEL_TYPES.GUILD_VOICE:
                 case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
 
-                    new VoiceChannel(this.client, channel, this.id);
+                    new VoiceChannel(this.client, data.channels[i], this.id);
 
                     break;
 
                 }
 
             }
-        });
+        }
 
-        data.threads.map(thread => new Thread(this.client, thread, this.id));
+        for (let i = 0; i < data.threads.length; i++)
+            new Thread(this.client, data.threads[i], this.id);
+
+        for (let i = 0; i < data.voice_states.length; i++)
+            new VoiceState(this.client, data.voice_states[i], this.id);
 
     }
 
