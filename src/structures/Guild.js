@@ -32,7 +32,7 @@ class Guild {
 
         this.member_count = data.member_count || null;
 
-        // this.voice_states = new GuildVoiceStatesManager(client, data.voice_states); i think this should be on a per-member basis instead
+        this.voice_states = new GuildVoiceStatesManager(this.client, data.voice_states);
 
         this.members = new GuildMemberManager(this.client);
 
