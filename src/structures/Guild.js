@@ -79,14 +79,15 @@ class Guild {
         if (!user_id) throw Error('No userID was provided');
         const body = {};
 
-        if (options.reason) body.reason = options.reason;
+        if (options.reason) 
+            body.reason = options.reason;
         // number of days to delete messages for (0-7) 
-        if (options.days) body.delete_message_days;
+        if (options.days) 
+            body.delete_message_days;
 
         try {
 
             await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
-            return;
 
         } catch (error) {
 
