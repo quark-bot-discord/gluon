@@ -13,7 +13,7 @@ const VoiceState = require("./VoiceState");
 
 class Guild {
 
-    constructor(client, data) {
+    constructor(client, data, nocache = false) {
 
         this.client = client;
 
@@ -44,19 +44,20 @@ class Guild {
 
         this.preferred_locale = data.preferred_locale;
 
-        this.client.guilds.cache.set(this.id, this);
+        if (nocache == false)
+            this.client.guilds.cache.set(this.id, this);
 
         for (let i = 0; i < data.members.length; i++)
-            new Member(this.client, data.members[i], data.members[i].user.id, this.id);
+            new Member(this.client, data.members[i], data.members[i].user.id, this.id, nocache);
 
         for (let i = 0; i < data.channels.length; i++) 
-            cacheChannel(this.client, data.channels[i], this.id);
+            cacheChannel(this.client, data.channels[i], this.id, nocache);
 
         for (let i = 0; i < data.threads.length; i++)
-            new Thread(this.client, data.threads[i], this.id);
+            new Thread(this.client, data.threads[i], this.id, nocache);
 
         for (let i = 0; i < data.voice_states.length; i++)
-            new VoiceState(this.client, data.voice_states[i], this.id);
+            new VoiceState(this.client, data.voice_states[i], this.id, nocache);
 
     }
 
