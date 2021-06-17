@@ -5,6 +5,8 @@ const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
 const EventHandler = require("./eventHandler");
 const Resume = require("./structures/_6");
+const chalk = require("chalk");
+const { NAME } = require("../constants");
 
 class WS {
 
@@ -31,19 +33,24 @@ class WS {
 
         this.hearbeatSetInterval = null;
 
+        this.libName = chalk.bgMagenta.bold(`[${NAME.toUpperCase()}]`);
+        this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
+        this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
+        this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
+
         this.zlib = new ZlibSync.Inflate({
             chunkSize: 128 * 1024
         });
 
         this.ws.on("open", () => {
 
-            this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket opened`);
+            this.client.emit("debug", `${this.libName} ${this.shardNorminal} => Websocket opened`);
 
         });
 
         this.ws.on("close", data => {
 
-            this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket closed with code ${data}`);
+            this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} => Websocket closed with code ${data}`);
 
             this.ws = new WebSocket(this.url);
 
@@ -51,7 +58,7 @@ class WS {
 
         this.ws.on("message", data => {
             /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
-            
+
             if (data instanceof ArrayBuffer)
                 data = Buffer.from(data);
             else if (Array.isArray(data))
@@ -101,7 +108,7 @@ class WS {
 
                 } catch (error) {
                     console.log(error);
-                    this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Unknown event ${data.t}`);
+                    this.client.emit("debug", `${this.libName} ${this.shardWarning} => Unknown event ${data.t}`);
 
                 }
 
@@ -128,6 +135,7 @@ class WS {
             // Invalid Session
             case 9: {
 
+
                 break;
 
             }
@@ -142,7 +150,7 @@ class WS {
 
                 }), data.d.heartbeat_interval);
 
-                this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => HELLO`);
+                this.client.emit("debug", `${this.libName} ${this.shardNorminal} => HELLO`);
 
                 break;
 
@@ -161,9 +169,9 @@ class WS {
                     this.resume();
 
                 }
-                
 
-                this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Hearbeat acknowledged`);
+
+                this.client.emit("debug", `${this.libName} ${this.shardNorminal} => Hearbeat acknowledged`);
 
                 break;
 
@@ -175,7 +183,7 @@ class WS {
 
     heartbeat() {
 
-        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Sending heartbeat...`);
+        this.client.emit("debug", `${this.libName} ${this.shardNorminal} => Sending heartbeat...`);
 
         this.ws.send(new Heartbeat(this.s));
 
@@ -183,7 +191,7 @@ class WS {
 
     identify() {
 
-        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => IDENTIFY`);
+        this.client.emit("debug", `${this.libName} ${this.shardNorminal} => IDENTIFY`);
 
         this.ws.send(new Identify(this.token, this.shard));
 
@@ -197,7 +205,7 @@ class WS {
 
         this.ws.close();
 
-        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Shard reconnecting`);
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} => Shard reconnecting`);
 
     }
 
@@ -205,11 +213,12 @@ class WS {
 
         this.resuming = false;
 
-        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => RESUMING`);
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} => RESUMING`);
 
         this.ws.send(new Resume(this.token, this.sessionId, this.s));
 
     }
+
 }
 
 module.exports = WS;
