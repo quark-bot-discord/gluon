@@ -26,7 +26,7 @@ class ButtonClick {
 
         this.token = data.token;
 
-        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id);
+        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, true);
 
     }
 
