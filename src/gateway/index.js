@@ -82,6 +82,7 @@ class WS {
                 this.zlib.push(data, false);
 
             }
+
         });
 
         this.ws.on("error", data => {
