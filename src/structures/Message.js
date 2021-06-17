@@ -4,7 +4,7 @@ const Attachment = require("./Attachment");
 
 class Message {
 
-    constructor(client, data, channel_id, guild_id) {
+    constructor(client, data, channel_id, guild_id, nocache = false) {
 
         this.client = client;
 
@@ -53,7 +53,7 @@ class Message {
         this.channel = this.client.guilds.cache.get(guild_id).channels.cache.get(channel_id);
         this.guild = this.client.guilds.cache.get(guild_id);
 
-        if (this.author.bot != true)
+        if (this.author.bot != true && nocache == false)
             this.guild.channels.cache.get(channel_id).messages.cache.set(this.id, this);
 
     }
