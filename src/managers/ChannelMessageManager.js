@@ -46,6 +46,10 @@ class ChannelMessageManager {
 
         } else if (typeof options == "string") {
 
+            const cachedMessage = this.channel.cache.get(options);
+            if (cachedMessage)
+                return cachedMessage;
+
             try {
 
                 const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
@@ -58,6 +62,21 @@ class ChannelMessageManager {
             }
 
         }
+
+    }
+
+    sweepMessages() {
+
+        this.cache.forEach((message, id) => {
+
+            const x = this.channel.guild.member_count < 500000 ? this.channel.guild.member_count / 500000 : 499999;
+            /* creates an "S-Curve" for how many messages should be cached */
+            /* more members => assume more activity => therefore more messages to be cached */
+            /* minimum of 50 messages to be cached, and a maximum of 1000 */
+            /* having greater than 500000 members has no effect */
+            const cache = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+
+        });
 
     }
 
