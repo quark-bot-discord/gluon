@@ -138,6 +138,7 @@ class WS {
             // Invalid Session
             case 9: {
 
+                this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} => INVALID SESSION`);
 
                 break;
 
