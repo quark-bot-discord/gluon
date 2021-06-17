@@ -4,13 +4,14 @@ const Message = require("./Message");
 
 class TextChannel extends Channel {
 
-    constructor(client, data, guild_id) {
+    constructor(client, data, guild_id, nocache = false) {
 
         super(client, data, guild_id);
 
         this.messages = new ChannelMessageManager(client, this);
         
-        this.client.guilds.cache.get(guild_id).channels.cache.set(this.id, this);
+        if (nocache == false)
+            this.client.guilds.cache.get(guild_id).channels.cache.set(this.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
