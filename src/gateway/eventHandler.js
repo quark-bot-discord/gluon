@@ -7,6 +7,7 @@ const Message = require("../structures/Message");
 const SlashCommand = require("../structures/SlashCommand");
 const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
+const cacheChannel = require("../util/cacheChannel");
 
 class EventHandler {
 
@@ -117,6 +118,29 @@ class EventHandler {
             this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
         }
         this.client.emit("voiceStateUpdate", oldVoiceState, newVoiceState);
+
+    }
+
+    CHANNEL_CREATE(data) {
+
+        const channel = cacheChannel(this.client, data);
+        this.client.emit("channelCreate", channel);
+
+    }
+
+    CHANNEL_UPDATE(data) {
+
+        const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const newChannel = cacheChannel(this.client, data);
+        this.client.emit("channelUpdate", oldChannel, newChannel);
+
+    }
+
+    CHANNEL_DELETE(data) {
+
+        const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+        this.client.emit("channelDelete", channel);
 
     }
 
