@@ -21,14 +21,14 @@ class WS {
         this.request = this.client.request;
 
         this.eventHandler = new EventHandler(this.client, this);
-        
+
         this.sessionId = null;
         this.s = null;
 
         this.resuming = false;
 
         this.isInitialHeartbeat = true;
-        
+
         this.hearbeatSetInterval = null;
 
         this.zlib = new ZlibSync.Inflate({
@@ -39,9 +39,6 @@ class WS {
 
             this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket opened`);
 
-            if (this.resuming == true)
-                this.ws.send(new Resume(this.token, this.sessionId, this.s));
-
         });
 
         this.ws.on("close", data => {
@@ -49,34 +46,39 @@ class WS {
             this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Websocket closed with code ${data}`);
 
             this.ws = new WebSocket(this.url);
-        
+
         });
 
         this.ws.on("message", data => {
-        /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
-        if(data instanceof ArrayBuffer) {
-             data = Buffer.from(data);
-        } else if(Array.isArray(data)) { 
-            data = Buffer.concat(data); 
-        }
-            if(data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xFFFF) {
+            /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
+            
+            if (data instanceof ArrayBuffer)
+                data = Buffer.from(data);
+            else if (Array.isArray(data))
+                data = Buffer.concat(data);
+
+            if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xFFFF) {
+
                 this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-                    if(this.zlib.err) {
-                        this.client.emit("error", `Error using zlib ${this.zlib.msg}`)
-                        return;
-                    }
-    
-                    data = Buffer.from(this.zlib.result);
-                    return this.handleIncoming(erlpack.unpack(data));
-             } else {
+                if (this.zlib.err) {
+                    this.client.emit("error", `Error using zlib ${this.zlib.msg}`)
+                    return;
+                }
+
+                data = Buffer.from(this.zlib.result);
+                return this.handleIncoming(erlpack.unpack(data));
+
+            } else {
+
                 this.zlib.push(data, false);
-             }
-        })
+
+            }
+        });
 
         this.ws.on("error", data => {
 
             this.client.emit("error", `error: ${data}`);
-            
+
         });
 
     }
@@ -131,7 +133,7 @@ class WS {
             }
             // Hello
             case 10: {
-                
+
                 this.heartbeat();
 
                 this.hearbeatSetInterval = setInterval((() => {
@@ -151,10 +153,15 @@ class WS {
                 if (this.isInitialHeartbeat == true) {
 
                     this.isInitialHeartbeat = false;
-                    
+
                     this.identify();
 
+                } else if (this.resuming == true) {
+
+                    this.resume();
+
                 }
+                
 
                 this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Hearbeat acknowledged`);
 
@@ -186,11 +193,21 @@ class WS {
 
         clearInterval(this.hearbeatSetInterval);
 
-        this.ws.terminate();
-
         this.resuming = true;
-        
+
+        this.ws.close();
+
         this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => Shard reconnecting`);
+
+    }
+
+    resume() {
+
+        this.resuming = false;
+
+        this.client.emit("debug", `[GLUON] [Shard: ${this.shard[0]}] => RESUMING`);
+
+        this.ws.send(new Resume(this.token, this.sessionId, this.s));
 
     }
 }
