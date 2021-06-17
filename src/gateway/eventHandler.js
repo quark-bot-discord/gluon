@@ -5,6 +5,7 @@ const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 const Message = require("../structures/Message");
 const SlashCommand = require("../structures/SlashCommand");
+const Thread = require("../structures/Thread");
 const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
@@ -31,6 +32,12 @@ class EventHandler {
 
     }
 
+    RESUMED(data) {
+
+        this.client.emit("debug", `RESUMED`);
+
+    }
+
     GUILD_CREATE(data) {
 
         if (data.unavailable == false) {
@@ -38,6 +45,13 @@ class EventHandler {
             new Guild(this.client, data);
 
         }
+
+    }
+
+    GUILD_DELETE(data) {
+
+        if (data.unavailable != true)
+            this.client.guilds.cache.delete(data.id);
 
     }
 
@@ -53,6 +67,7 @@ class EventHandler {
 
         const oldMessage = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
+
         this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
     }
@@ -61,13 +76,21 @@ class EventHandler {
 
         const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
         this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.id);
+        
         this.client.emit(EVENTS.MESSAGE_DELETE, message);
+
+    }
+
+    MESSAGE_DELETE_BULK(data) {
+
+        console.log(data);
 
     }
 
     GUILD_MEMBER_ADD(data) {
 
         const member = new Member(this.client, data, data.user.id, data.guild_id);
+        
         this.client.emit("guildMemberAdd", member);
 
     }
@@ -79,6 +102,7 @@ class EventHandler {
             this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
         else
             member = new Member(this.client, data, data.user.id, data.guild_id, true);
+        
         this.client.emit("guildMemberRemove", member);
 
     }
@@ -90,7 +114,9 @@ class EventHandler {
             case INTERACTION_TYPES.COMPONENT: {
 
                 const componentInteraction = new ButtonClick(this.client, data);
+                
                 this.client.emit("buttonClick", componentInteraction);
+
                 break;
 
             }
@@ -98,7 +124,9 @@ class EventHandler {
             case INTERACTION_TYPES.COMMAND: {
 
                 const commandInteraction = new SlashCommand();
+
                 this.client.emit("slashCommand", commandInteraction);
+
                 break;
 
             }
@@ -117,13 +145,15 @@ class EventHandler {
             newVoiceState = null;
             this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
         }
+
         this.client.emit("voiceStateUpdate", oldVoiceState, newVoiceState);
 
     }
 
     CHANNEL_CREATE(data) {
 
-        const channel = cacheChannel(this.client, data);
+        const channel = cacheChannel(this.client, data, data.guild_id);
+
         this.client.emit("channelCreate", channel);
 
     }
@@ -131,7 +161,8 @@ class EventHandler {
     CHANNEL_UPDATE(data) {
 
         const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        const newChannel = cacheChannel(this.client, data);
+        const newChannel = cacheChannel(this.client, data, data.guild_id, true);
+
         this.client.emit("channelUpdate", oldChannel, newChannel);
 
     }
@@ -140,13 +171,22 @@ class EventHandler {
 
         const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
         this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+
         this.client.emit("channelDelete", channel);
 
     }
 
-    RESUMED(data) {
+    THREAD_CREATE(data) {
 
-        this.client.emit("debug", `RESUMED`);
+        const thread = new Thread(this.client, data, data.guild_id);
+
+        this.client.emit("threadCreate");
+
+    }
+
+    THREAD_UPDATE(data) {
+
+
 
     }
 
