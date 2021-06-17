@@ -8,6 +8,8 @@ const Resume = require("./structures/_6");
 const chalk = require("chalk");
 const { NAME } = require("../constants");
 
+/* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
+
 class WS {
 
     constructor(client, url, shard) {
