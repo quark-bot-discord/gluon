@@ -21,7 +21,6 @@ class GuildChannelsManager {
         if (cachedChannel)
             return cachedChannel;
 
-
         try {
 
             const data = await this.client.request.makeRequest("getChannel", [channel_id]);
