@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 const { EVENTS, INTERACTION_TYPES } = require("../constants");
 const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
@@ -116,6 +117,12 @@ class EventHandler {
             this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
         }
         this.client.emit("voiceStateUpdate", oldVoiceState, newVoiceState);
+
+    }
+
+    RESUMED(data) {
+
+        this.client.emit("debug", `RESUMED`);
 
     }
 
