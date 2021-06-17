@@ -2,7 +2,7 @@ const Member = require("./Member");
 
 class VoiceState {
 
-    constructor(client, data, guild_id) {
+    constructor(client, data, guild_id, nocache = false) {
 
         this.client = client;
 
@@ -26,7 +26,8 @@ class VoiceState {
 
         this.user = this.client.users.cache.get(data.user_id);
 
-        this.guild.voice_states.cache.set(data.user_id, this);
+        if (nocache == false)
+            this.guild.voice_states.cache.set(data.user_id, this);
 
     }
 
