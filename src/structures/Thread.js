@@ -4,7 +4,7 @@ const Channel = require("./Channel");
 
 class Thread extends Channel {
 
-    constructor(client, data, guild_id) {
+    constructor(client, data, guild_id, nocache = false) {
 
         super(client, data, guild_id);
 
@@ -15,7 +15,8 @@ class Thread extends Channel {
         this.parent_id = data.parent_id;
         
         /* probably shouldnt cache archived threads */
-        this.client.guilds.cache[guild_id].threads.cache[this.id] = this;
+        if (nocache == false)
+            this.client.guilds.cache.get(guild_id).threads.cache.set(this.id, this);
 
     }
 
