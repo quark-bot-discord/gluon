@@ -3,6 +3,7 @@ const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildThreadsManager = require("../managers/GuildThreadsManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
+const cacheChannel = require("../util/cacheChannel");
 const AuditLog = require("./AuditLog");
 const Member = require("./Member");
 const TextChannel = require("./TextChannel");
@@ -48,29 +49,8 @@ class Guild {
         for (let i = 0; i < data.members.length; i++)
             new Member(this.client, data.members[i], data.members[i].user.id, this.id);
 
-        for (let i = 0; i < data.channels.length; i++) {
-
-            switch (data.channels[i].type) {
-
-                case CHANNEL_TYPES.GUILD_TEXT: {
-
-                    new TextChannel(this.client, data.channels[i], this.id);
-
-                    break;
-
-                }
-
-                case CHANNEL_TYPES.GUILD_VOICE:
-                case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
-
-                    new VoiceChannel(this.client, data.channels[i], this.id);
-
-                    break;
-
-                }
-
-            }
-        }
+        for (let i = 0; i < data.channels.length; i++) 
+            cacheChannel(this.client, data.channels[i], this.id);
 
         for (let i = 0; i < data.threads.length; i++)
             new Thread(this.client, data.threads[i], this.id);
