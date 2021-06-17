@@ -5,6 +5,7 @@ const Member = require("../structures/Member");
 const Message = require("../structures/Message");
 const SlashCommand = require("../structures/SlashCommand");
 const User = require("../structures/User");
+const VoiceState = require("../structures/VoiceState");
 
 class EventHandler {
 
@@ -101,6 +102,20 @@ class EventHandler {
             }
 
         }
+
+    }
+
+    VOICE_STATE_UPDATE(data) {
+
+        const oldVoiceState = this.client.guilds.cache.get(data.guild_id).voice_states.cache.get(data.user_id) || null;
+        let newVoiceState;
+        if (data.channel_id) {
+            newVoiceState = new VoiceState(this.client, data, data.guild_id);
+        } else {
+            newVoiceState = null;
+            this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
+        }
+        this.client.emit("voiceStateUpdate", oldVoiceState, newVoiceState);
 
     }
 

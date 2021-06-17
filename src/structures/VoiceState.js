@@ -1,3 +1,5 @@
+const Member = require("./Member");
+
 class VoiceState {
 
     constructor(client, data, guild_id) {
@@ -16,9 +18,11 @@ class VoiceState {
 
         this.self_mute = data.self_mute;
 
+        this.self_stream = data.self_stream || false;
+
         this.self_video = data.self_video;
 
-        this.member = this.guild.members.cache.get(data.user_id);
+        this.member = this.guild.members.cache.get(data.user_id) || new Member(this.client, data.member, data.user_id, data.guild_id);
 
         this.user = this.client.users.cache.get(data.user_id);
 
