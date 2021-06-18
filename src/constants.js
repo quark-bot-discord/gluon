@@ -56,3 +56,4 @@ module.exports.INTERACTION_TYPES = {
     COMMAND: 2,
     COMPONENT: 3
 };
+module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 8; // 8 hours
