@@ -1,3 +1,4 @@
+const { DEFAULT_MESSAGE_EXPIRY_SECONDS } = require("../constants");
 const Message = require("../structures/Message");
 
 class ChannelMessageManager {
@@ -67,16 +68,29 @@ class ChannelMessageManager {
 
     sweepMessages() {
 
+        const x = this.channel.guild.member_count < 500000 ? this.channel.guild.member_count / 500000 : 499999;
+        /* creates an "S-Curve" for how many messages should be cached */
+        /* more members => assume more activity => therefore more messages to be cached */
+        /* minimum of 50 messages to be cached, and a maximum of 1000 */
+        /* having greater than 500000 members has no effect */
+        const shouldCacheCount = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+        let counter = 0;
+        const currentTime = Math.floor(new Date().getTime() / 1000);
+
+        const newCache = new Map();
+
         this.cache.forEach((message, id) => {
 
-            const x = this.channel.guild.member_count < 500000 ? this.channel.guild.member_count / 500000 : 499999;
-            /* creates an "S-Curve" for how many messages should be cached */
-            /* more members => assume more activity => therefore more messages to be cached */
-            /* minimum of 50 messages to be cached, and a maximum of 1000 */
-            /* having greater than 500000 members has no effect */
-            const cache = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+            if (message.timestamp + DEFAULT_MESSAGE_EXPIRY_SECONDS < currentTime && counter < shouldCacheCount) {
+                
+                newCache.set(id, message);
+                counter++;
+
+            }
 
         });
+
+        this.cache = newCache;
 
     }
 
