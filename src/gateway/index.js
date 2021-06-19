@@ -40,10 +40,6 @@ class WS {
         this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
         this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
 
-        this.zlib = new ZlibSync.Inflate({
-            chunkSize: 128 * 1024
-        });
-
         this.addListeners();
 
     }
@@ -185,6 +181,10 @@ class WS {
     }
 
     addListeners() {
+
+        this.zlib = new ZlibSync.Inflate({
+            chunkSize: 128 * 1024
+        });
 
         this.ws.on("open", () => {
 
