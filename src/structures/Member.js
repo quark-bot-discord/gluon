@@ -8,7 +8,7 @@ class Member {
         this.client = client;
 
         if (data.user)
-            new User(this.client, data.user, nocache);
+            this.user = new User(this.client, data.user, nocache);
         
         this.id = user_id;
 
@@ -23,7 +23,8 @@ class Member {
         if (data.avatar)
             this.avatar = data.avatar;
 
-        this.user = this.client.users.cache.get(user_id);
+        if (!this.user)
+            this.user = this.client.users.cache.get(user_id);
 
         this.guild = this.client.guilds.cache.get(guild_id);
 
