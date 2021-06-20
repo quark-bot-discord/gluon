@@ -70,6 +70,8 @@ class Message {
             body.embed = options.embed.toJSON();
         if (options.components)
             body.components = options.components.toJSON();
+        if (options.files)
+            body.files = options.files;
 
         body.message_reference = {
             message_id: this.id,

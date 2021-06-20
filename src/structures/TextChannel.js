@@ -29,6 +29,8 @@ class TextChannel extends Channel {
             body.embed = options.embed.toJSON();
         if (options.components) 
             body.components = options.components.toJSON();
+        if (options.files)
+            body.files = options.files;
 
         try {
 
