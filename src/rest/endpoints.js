@@ -75,5 +75,12 @@ module.exports = {
         },
         method: "POST",
         bucket: null
+    },
+    postBulkDelete: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/messages/bulk-delete`;
+        },
+        method: "POST",
+        bucket: null
     }
 };
