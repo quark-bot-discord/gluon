@@ -54,6 +54,14 @@ class Component {
 
     }
 
+    setDisabled(disabled) {
+
+        this.disabled = disabled;
+
+        return this;
+
+    }
+
     toJSON() {
 
         return {
@@ -62,7 +70,8 @@ class Component {
             emoji: this.emoji,
             style: this.style,
             custom_id: this.custom_id,
-            url: this.url
+            url: this.url,
+            disabled: this.disabled
         };
 
     }
