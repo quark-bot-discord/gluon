@@ -27,6 +27,8 @@ module.exports.CALCULATED_INTENTS = (0b1 << this.INTENTS.GUILDS) |
     (0b1 << this.INTENTS.GUILD_MESSAGES);
 module.exports.EVENTS = {
     READY: "ready",
+    GUILD_CREATE: "guildCreate",
+    GUILD_DELETE: "guildDelete",
     MESSAGE_CREATE: "messageCreate",
     MESSAGE_UPDATE: "messageUpdate",
     MESSAGE_DELETE: "messageDelete",
