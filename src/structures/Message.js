@@ -18,9 +18,11 @@ class Message {
 
         this.id = data.id;
         // should only be stored if file logging is enabled
-        if (data.attachments)
+        if (data.attachments) {
+            this.attachments = [];
             for (let i = 0; i < data.attachments.length; i++)
-                this.attachments.length == 0 ? this.attachments = [new Attachment(this.client, data.attachments[i])] : this.attachments.push(new Attachment(this.client, data.attachments[i]));
+                this.attachments.push(new Attachment(this.client, data.attachments[i]));
+        }
 
         this.content = data.content || null;
 
