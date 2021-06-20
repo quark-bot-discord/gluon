@@ -32,6 +32,7 @@ module.exports.EVENTS = {
     MESSAGE_CREATE: "messageCreate",
     MESSAGE_UPDATE: "messageUpdate",
     MESSAGE_DELETE: "messageDelete",
+    MESSAGE_DELETE_BULK: "messageDeleteBulk",
     GUILD_BAN_ADD: "guildBanAdd",
     GUILD_MEMBER_ADD: "guildMemberAdd",
     GUILD_MEMBER_REMOVE: "guildMemberRemove",

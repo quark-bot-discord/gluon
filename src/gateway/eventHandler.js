@@ -91,7 +91,16 @@ class EventHandler {
 
     MESSAGE_DELETE_BULK(data) {
 
-        console.log(data);
+        let messages = [];
+        for (let i = 0; i < data.ids.length; i++) {
+            const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.ids[i]);
+            if (message) {
+                messages.push(message);
+                this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.ids[i]);
+            }
+        }
+
+        this.client.emit(EVENTS.MESSAGE_DELETE_BULK, messages);
 
     }
 
