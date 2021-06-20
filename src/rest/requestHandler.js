@@ -1,5 +1,7 @@
 const fetch = require("node-fetch");
+const FormData = require("form-data");
 const endpoints = require("./endpoints");
+const { createReadStream } = require("fs");
 
 class RequestHandler {
 
@@ -108,6 +110,7 @@ class RequestHandler {
                 /* fetch the request data from ./endpoints.js */
                 /* important it is fetched from there, as bucket ids are also stored there with that data */
                 const actualRequest = this.endpoints[request];
+
                 const serialize = (obj) => {
                     let str = [];
                     for (let p in obj)
@@ -116,15 +119,31 @@ class RequestHandler {
                       }
                     return str.join("&");
                 };
+
+                let headers = {
+                    "Authorization": this.authorization,
+                    "User-Agent": this.name,
+                    "Accept": "application/json"
+                };
+
+                let form;
+                if (body && body.files) {
+                    form = new FormData();
+                    for (let i = 0; i < body.files.length; i++)
+                        form.append(body.files[i].name, createReadStream(body.files[i].attachment), body.files[i].name);
+                    delete body.files;
+                    form.append("payload_json", JSON.stringify(body));
+                    Object.assign(headers, form.getHeaders());
+                } else {
+                    headers["Content-Type"] = "application/json";
+                }
+
                 /* actually make the request */
                 const res = await fetch(`${this.requestURL}${actualRequest.path(params)}${body && actualRequest.method == "GET" ? "?" + serialize(body) : ""}`, {
                     method: actualRequest.method,
-                    headers: {
-                        "Authorization": this.authorization,
-                        "User-Agent": this.name,
-                        "Content-Type": "application/json" // this needs to be variable tho
-                    },
-                    body: body && actualRequest.method != "GET" ? JSON.stringify(body) : undefined
+                    headers: headers,
+                    body: form ? form : (body && actualRequest.method != "GET" ? JSON.stringify(body) : undefined),
+                    compress: true
                 });
 
                 let json;
