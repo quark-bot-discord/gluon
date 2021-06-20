@@ -110,7 +110,7 @@ class EventHandler {
             this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
         else
             member = new Member(this.client, data, data.user.id, data.guild_id, true);
-        
+
         this.client.emit("guildMemberRemove", member);
 
     }
@@ -195,6 +195,12 @@ class EventHandler {
     THREAD_UPDATE(data) {
 
 
+
+    }
+
+    INVITE_CREATE(data) {
+
+        console.log(data);
 
     }
 
