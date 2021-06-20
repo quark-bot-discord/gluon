@@ -27,6 +27,13 @@ class Client extends EventsEmitter {
 
     }
 
+    setStatus(status) {
+
+        for (let i = 0; i < this.shards.length; i++)
+            this.shards[i].updatePresence(status.name, status.type, status.status, status.afk, status.since);
+
+    }
+
     /**
      * Initiates the login sequence
      * @param {string} token The authorization token
@@ -39,7 +46,9 @@ class Client extends EventsEmitter {
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
-                // console.log(gatewayInfo);
+
+                this.shards = [];
+
                 let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
                 for (let i = 0; i < gatewayInfo.shards && remainingSessionStarts != 0; i++, remainingSessionStarts--) {
@@ -48,7 +57,7 @@ class Client extends EventsEmitter {
 
                         for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
 
-                            new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]);
+                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]));
     
                         }
 

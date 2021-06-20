@@ -7,6 +7,7 @@ const EventHandler = require("./eventHandler");
 const Resume = require("./structures/_6");
 const chalk = require("chalk");
 const { NAME } = require("../constants");
+const UpdatePresence = require("./structures/_3");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -133,6 +134,12 @@ class WS {
             }
 
         }
+
+    }
+
+    updatePresence(name, type, status, afk, since) {
+
+        this.ws.send(new UpdatePresence(name, type, status, afk, since));
 
     }
 
