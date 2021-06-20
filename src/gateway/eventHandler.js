@@ -99,7 +99,7 @@ class EventHandler {
 
         const member = new Member(this.client, data, data.user.id, data.guild_id);
         
-        this.client.emit("guildMemberAdd", member);
+        this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
 
     }
 
@@ -111,7 +111,7 @@ class EventHandler {
         else
             member = new Member(this.client, data, data.user.id, data.guild_id, true);
 
-        this.client.emit("guildMemberRemove", member);
+        this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
     }
 
@@ -123,7 +123,7 @@ class EventHandler {
 
                 const componentInteraction = new ButtonClick(this.client, data);
                 
-                this.client.emit("buttonClick", componentInteraction);
+                this.client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
 
                 break;
 
@@ -133,7 +133,7 @@ class EventHandler {
 
                 const commandInteraction = new SlashCommand();
 
-                this.client.emit("slashCommand", commandInteraction);
+                this.client.emit(EVENTS.SLASH_COMMAND, commandInteraction);
 
                 break;
 
@@ -154,7 +154,7 @@ class EventHandler {
             this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
         }
 
-        this.client.emit("voiceStateUpdate", oldVoiceState, newVoiceState);
+        this.client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
 
     }
 
@@ -162,7 +162,7 @@ class EventHandler {
 
         const channel = cacheChannel(this.client, data, data.guild_id);
 
-        this.client.emit("channelCreate", channel);
+        this.client.emit(EVENTS.CHANNEL_CREATE, channel);
 
     }
 
@@ -171,7 +171,7 @@ class EventHandler {
         const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
         const newChannel = cacheChannel(this.client, data, data.guild_id, true);
 
-        this.client.emit("channelUpdate", oldChannel, newChannel);
+        this.client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
 
     }
 
@@ -180,7 +180,7 @@ class EventHandler {
         const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
         this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
 
-        this.client.emit("channelDelete", channel);
+        this.client.emit(EVENTS.CHANNEL_DELETE, channel);
 
     }
 
@@ -188,7 +188,7 @@ class EventHandler {
 
         const thread = new Thread(this.client, data, data.guild_id);
 
-        this.client.emit("threadCreate", thread);
+        this.client.emit(EVENTS.THREAD_CREATE, thread);
 
     }
 
