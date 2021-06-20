@@ -61,8 +61,6 @@ class Client extends EventsEmitter {
                 console.log(`error: ${error}`);
             });
 
-        
-
     }
 
 }
