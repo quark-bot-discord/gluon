@@ -35,7 +35,7 @@ class WS {
 
         this.hearbeatSetInterval = null;
 
-        this.libName = chalk.bgMagenta.bold(`[${NAME.toUpperCase()}]`);
+        this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
         this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
         this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
         this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
@@ -176,7 +176,7 @@ class WS {
 
     time() {
 
-        return chalk.inverse(new Date().toGMTString());
+        return chalk.magenta(new Date().toGMTString());
 
     }
 
