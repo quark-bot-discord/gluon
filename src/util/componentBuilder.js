@@ -1,3 +1,5 @@
+const resolveEmoji = require("./resolveEmoji");
+
 class Component {
 
     constructor() {
@@ -24,7 +26,7 @@ class Component {
 
     setEmoji(emoji) {
 
-        this.emoji = emoji;
+        this.emoji = resolveEmoji(emoji);
 
         return this;
 
