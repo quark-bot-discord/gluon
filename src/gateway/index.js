@@ -61,8 +61,8 @@ class WS {
                     this.eventHandler[data.t](data.d);
 
                 } catch (error) {
-                    console.log(error);
-                    this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Unknown event ${data.t}`);
+
+                    this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ERROR at ${data.t}: ${error}`);
 
                 }
 
