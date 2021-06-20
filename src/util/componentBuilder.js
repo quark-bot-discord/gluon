@@ -22,6 +22,14 @@ class Component {
 
     }
 
+    setEmoji(emoji) {
+
+        this.emoji = emoji;
+
+        return this;
+
+    }
+
     setStyle(style) {
 
         this.style = style;
@@ -51,6 +59,7 @@ class Component {
         return {
             type: this.type,
             label: this.label,
+            emoji: this.emoji,
             style: this.style,
             custom_id: this.custom_id,
             url: this.url
