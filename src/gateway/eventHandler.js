@@ -188,7 +188,7 @@ class EventHandler {
 
         const thread = new Thread(this.client, data, data.guild_id);
 
-        this.client.emit("threadCreate");
+        this.client.emit("threadCreate", thread);
 
     }
 
