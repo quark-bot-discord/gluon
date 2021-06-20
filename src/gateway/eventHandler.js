@@ -42,7 +42,9 @@ class EventHandler {
 
         if (data.unavailable == false) {
 
-            new Guild(this.client, data);
+            const guild = new Guild(this.client, data);
+
+            this.client.emit(EVENTS.GUILD_CREATE, guild);
 
         }
 
@@ -50,8 +52,14 @@ class EventHandler {
 
     GUILD_DELETE(data) {
 
-        if (data.unavailable != true)
+        if (data.unavailable != true) {
+
+            const guild = this.client.guilds.cache.get(data.id);
             this.client.guilds.cache.delete(data.id);
+
+            this.client.emit(EVENTS.GUILD_DELETE, guild);
+
+        }
 
     }
 
