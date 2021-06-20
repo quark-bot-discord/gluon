@@ -200,7 +200,7 @@ class EventHandler {
 
     INVITE_CREATE(data) {
 
-        console.log(data);
+        this.client.emit(EVENTS.INVITE_CREATE, data);
 
     }
 
