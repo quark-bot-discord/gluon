@@ -33,6 +33,16 @@ module.exports.EVENTS = {
     MESSAGE_UPDATE: "messageUpdate",
     MESSAGE_DELETE: "messageDelete",
     GUILD_BAN_ADD: "guildBanAdd",
+    GUILD_MEMBER_ADD: "guildMemberAdd",
+    GUILD_MEMBER_REMOVE: "guildMemberRemove",
+    BUTTON_CLICK: "buttonClick",
+    SLASH_COMMAND: "slashCommand",
+    VOICE_STATE_UPDATE: "voiceStateUpdate",
+    CHANNEL_CREATE: "channelCreate",
+    CHANNEL_UPDATE: "channelUpdate",
+    CHANNEL_DELETE: "channelDelete",
+    THREAD_CREATE: "threadCreate",
+    INVITE_CREATE: "inviteCreate"
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT: 0,
