@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION, NAME } = require('./constants');
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require('./constants');
 
 const EventsEmitter = require("events");
 
@@ -64,6 +64,36 @@ class Client extends EventsEmitter {
                     }, 5000 * i);
 
                 }
+
+                setInterval(() => {
+
+                    const currentTime = Math.floor(new Date().getTime() / 1000);
+
+                    this.guilds.cache.forEach(guild => {
+
+                        this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
+
+                        const cacheCount = guild.calculateCacheCount();
+
+                        this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
+
+                        guild.channels.cache.forEach(channel => {
+
+                            if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
+
+                                this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+
+                                const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
+
+                                this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+
+                            }
+
+                        });
+
+                    });
+
+                }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
 
             })
             .catch(error => {
