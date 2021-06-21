@@ -44,7 +44,7 @@ class Guild {
 
         this.preferred_locale = data.preferred_locale;
 
-        if (nocache == false)
+        if (nocache == false && this.client.cacheGuilds == true)
             this.client.guilds.cache.set(this.id, this);
 
         for (let i = 0; i < data.members.length; i++)

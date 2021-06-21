@@ -18,7 +18,7 @@ class User {
         this.discriminator = data.discriminator;
 
         // should only cache if actually needed - TBD
-        if (nocache == false)
+        if (nocache == false && this.client.cacheUsers == true)
             this.client.users.cache.set(this.id, this);
 
     }

@@ -30,7 +30,7 @@ class Member {
 
         /* should check whether member actually *needs* to be cached */
         /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
-        if (nocache == false)
+        if (nocache == false && this.client.cacheMembers == true)
             this.client.guilds.cache.get(guild_id).members.cache.set(user_id, this);
 
     }

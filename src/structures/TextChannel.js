@@ -10,7 +10,7 @@ class TextChannel extends Channel {
 
         this.messages = new ChannelMessageManager(client, this);
         
-        if (nocache == false)
+        if (nocache == false && this.client.cacheChannels == true)
             this.client.guilds.cache.get(guild_id).channels.cache.set(this.id, this);
 
     }

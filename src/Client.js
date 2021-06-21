@@ -12,7 +12,7 @@ const GuildManager = require('./managers/GuildManager');
 
 class Client extends EventsEmitter {
 
-    constructor() {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false }) {
 
         super();
 
@@ -24,6 +24,12 @@ class Client extends EventsEmitter {
 
         this.users = new UserManager(this);
         this.guilds = new GuildManager(this);
+
+        this.cacheMessages = cacheMessages;
+        this.cacheUsers = cacheUsers;
+        this.cacheMembers = cacheMembers;
+        this.cacheChannels = cacheChannels;
+        this.cacheGuilds = cacheGuilds;
 
     }
 
@@ -58,42 +64,46 @@ class Client extends EventsEmitter {
                         for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
 
                             this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]));
-    
+
                         }
 
                     }, 5000 * i);
 
                 }
 
-                setInterval(() => {
+                if (this.cacheMessages == true) {
 
-                    const currentTime = Math.floor(new Date().getTime() / 1000);
+                    setInterval(() => {
 
-                    this.guilds.cache.forEach(guild => {
+                        const currentTime = Math.floor(new Date().getTime() / 1000);
 
-                        this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
+                        this.guilds.cache.forEach(guild => {
 
-                        const cacheCount = guild.calculateCacheCount();
+                            this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
 
-                        this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
+                            const cacheCount = guild.calculateCacheCount();
 
-                        guild.channels.cache.forEach(channel => {
+                            this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
-                            if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
+                            guild.channels.cache.forEach(channel => {
 
-                                this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+                                if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
 
-                                const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
+                                    this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
 
-                                this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+                                    const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
 
-                            }
+                                    this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+
+                                }
+
+                            });
 
                         });
 
-                    });
+                    }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
 
-                }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
+                }
 
             })
             .catch(error => {

@@ -55,7 +55,7 @@ class Message {
         this.channel = this.client.guilds.cache.get(guild_id).channels.cache.get(channel_id);
         this.guild = this.client.guilds.cache.get(guild_id);
 
-        if (this.author.bot != true && nocache == false)
+        if (this.author.bot != true && nocache == false && this.client.cacheMessages == true)
             this.guild.channels.cache.get(channel_id).messages.cache.set(this.id, this);
 
     }
