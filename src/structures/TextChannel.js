@@ -45,6 +45,25 @@ class TextChannel extends Channel {
 
     }
 
+    async bulkDelete(messages) {
+
+        const body = {};
+
+        body.messages = messages;
+
+        try {
+
+            await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
+            return true;
+
+        } catch (error) {
+
+            throw error;
+
+        }
+
+    }
+
 }
 
 module.exports = TextChannel;
