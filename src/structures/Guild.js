@@ -50,7 +50,7 @@ class Guild {
         for (let i = 0; i < data.members.length; i++)
             new Member(this.client, data.members[i], data.members[i].user.id, this.id, nocache);
 
-        for (let i = 0; i < data.channels.length; i++) 
+        for (let i = 0; i < data.channels.length; i++)
             cacheChannel(this.client, data.channels[i], this.id, nocache);
 
         for (let i = 0; i < data.threads.length; i++)
@@ -65,10 +65,10 @@ class Guild {
         if (!user_id) throw Error('No userID was provided');
         const body = {};
 
-        if (options.reason) 
+        if (options.reason)
             body.reason = options.reason;
         // number of days to delete messages for (0-7) 
-        if (options.days) 
+        if (options.days)
             body.delete_message_days;
 
         try {
@@ -122,6 +122,19 @@ class Guild {
             throw error;
 
         }
+
+    }
+
+    calculateCacheCount() {
+
+        const x = this.member_count < 500000 ? this.member_count / 500000 : 499999;
+        /* creates an "S-Curve" for how many messages should be cached */
+        /* more members => assume more activity => therefore more messages to be cached */
+        /* minimum of 50 messages to be cached, and a maximum of 1000 */
+        /* having greater than 500000 members has no effect */
+        const shouldCacheCount = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+
+        return shouldCacheCount;
 
     }
 
