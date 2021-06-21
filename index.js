@@ -4,7 +4,7 @@ const Component = require("./src/util/componentBuilder");
 const Embed = require("./src/util/embedBuilder");
 const MessageComponents = require("./src/util/messageComponents");
 
-exports = {
+module.exports = {
     Client,
     Embed,
     ActionRow,
