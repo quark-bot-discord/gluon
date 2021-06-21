@@ -1,4 +1,4 @@
-const { CHANNEL_TYPES, AUDIT_LOG_TYPES } = require("../constants");
+const { AUDIT_LOG_TYPES } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildThreadsManager = require("../managers/GuildThreadsManager");
@@ -6,9 +6,7 @@ const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const AuditLog = require("./AuditLog");
 const Member = require("./Member");
-const TextChannel = require("./TextChannel");
 const Thread = require("./Thread");
-const VoiceChannel = require("./VoiceChannel");
 const VoiceState = require("./VoiceState");
 
 class Guild {
@@ -17,30 +15,32 @@ class Guild {
 
         this.client = client;
 
+        const existing = this.client.guilds.cache.get(data.id);
+
         this.id = data.id;
         // needed for join/leave logging
-        this.name = data.name;
+        this.name = data.name ?? existing.name;
         // needed for join/leave logging
         this.icon = data.icon;
         // needed for permissions checking and join/leave logging
-        this.owner_id = data.owner_id;
+        this.owner_id = data.owner_id ?? existing.owner_id;
         // useful to see how long a guild keeps the bot for
         this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
         // only needed if file logging is enabled
-        this.premium_tier = data.premium_tier || 0;
+        this.premium_tier = (data.premium_tier ?? existing.premium_tier) || 0;
 
         if (data.unavailable == true)
             this.unavailable = data.unavailable;
 
-        this.member_count = data.member_count || null;
+        this.member_count = (data.member_count ?? existing.premium_tier) || 1;
 
-        this.voice_states = new GuildVoiceStatesManager(this.client, data.voice_states);
+        this.voice_states = existing ? existing.voice_states : new GuildVoiceStatesManager(this.client, data.voice_states);
 
-        this.members = new GuildMemberManager(this.client);
+        this.members = existing ? existing.members : new GuildMemberManager(this.client);
 
-        this.channels = new GuildChannelsManager(this.client, this);
+        this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
 
-        this.threads = new GuildThreadsManager(this.client);
+        this.threads = existing ? existing.threads : new GuildThreadsManager(this.client);
 
         this.preferred_locale = data.preferred_locale;
 
