@@ -66,31 +66,30 @@ class ChannelMessageManager {
 
     }
 
-    sweepMessages() {
+    sweepMessages(cacheCount, currentTime) {
 
-        const x = this.channel.guild.member_count < 500000 ? this.channel.guild.member_count / 500000 : 499999;
-        /* creates an "S-Curve" for how many messages should be cached */
-        /* more members => assume more activity => therefore more messages to be cached */
-        /* minimum of 50 messages to be cached, and a maximum of 1000 */
-        /* having greater than 500000 members has no effect */
-        const shouldCacheCount = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
-        let counter = 0;
-        const currentTime = Math.floor(new Date().getTime() / 1000);
+        if (this.cache.size == 0)
+            return;
+
+        let counter = this.cache.size;
 
         const newCache = new Map();
 
         this.cache.forEach((message, id) => {
 
-            if (message.timestamp + DEFAULT_MESSAGE_EXPIRY_SECONDS < currentTime && counter < shouldCacheCount) {
-                
+            if (message.timestamp + DEFAULT_MESSAGE_EXPIRY_SECONDS > currentTime && counter <= cacheCount) {
+
                 newCache.set(id, message);
-                counter++;
 
             }
+
+            counter--;
 
         });
 
         this.cache = newCache;
+
+        return this.cache.size;
 
     }
 
