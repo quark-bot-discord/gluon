@@ -33,8 +33,8 @@ class Member {
         else if (data.avatar !== null && existing && existing.avatar != undefined)
             this.avatar = existing.avatar;
 
-        if (typeof data.permissions == "number")
-            this.permissions = data.permissions;
+        if (typeof data.permissions == "string")
+            this.permissions = parseInt(data.permissions);
         else if (existing && typeof existing.permissions == "number")
             this.permissions = existing.permissions;
 
