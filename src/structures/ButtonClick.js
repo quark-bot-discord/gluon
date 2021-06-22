@@ -19,7 +19,7 @@ class ButtonClick {
         this.channel = this.guild.channels.cache.get(data.channel_id);
 
         if (data.member)
-            this.member = new Member(this.client, data.member, data.member.id, this.guild.id);
+            this.member = new Member(this.client, data.member, data.member.user.id, this.guild.id);
 
         if (data.user)
             this.user = new User(this.client, data.user);
