@@ -90,7 +90,12 @@ class WS {
             // Invalid Session
             case 9: {
 
-                this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => INVALID SESSION`);
+                this.client.emit("debug", `${this.libName} ${data.d == false ? this.shardCatastrophic : this.shardWarning} @ ${this.time()} => INVALID SESSION`);
+
+                if (data.d != false)
+                    this.reconnect();
+                else
+                    process.exit(1);
 
                 break;
 
