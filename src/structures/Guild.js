@@ -19,20 +19,29 @@ class Guild {
 
         this.id = data.id;
         // needed for join/leave logging
-        this.name = data.name ?? existing.name;
+        this.name = data.name;
         // needed for join/leave logging
-        this.icon = data.icon;
+        if (data.icon != null)
+            this.icon = data.icon;
         // needed for permissions checking and join/leave logging
-        this.owner_id = data.owner_id ?? existing.owner_id;
+        this.owner_id = data.owner_id;
         // useful to see how long a guild keeps the bot for
-        this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
+        if (data.joined_at)
+            this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
+        else if (existing.joined_at)
+            this.joined_at = existing.joined_at;
         // only needed if file logging is enabled
-        this.premium_tier = (data.premium_tier ?? existing.premium_tier) || 0;
+        this.premium_tier = data.premium_tier;
 
         if (data.unavailable == true)
             this.unavailable = data.unavailable;
 
-        this.member_count = (data.member_count ?? existing.premium_tier) || 1;
+        if (data.member_count)
+            this.member_count = data.member_count;
+        else if (existing.member_count)
+            this.member_count = existing.member_count;
+        else
+            this.member_count = 2;
 
         this.voice_states = existing ? existing.voice_states : new GuildVoiceStatesManager(this.client, data.voice_states);
 
@@ -47,16 +56,16 @@ class Guild {
         if (nocache == false && this.client.cacheGuilds == true)
             this.client.guilds.cache.set(this.id, this);
 
-        for (let i = 0; i < data.members.length; i++)
+        for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
             new Member(this.client, data.members[i], data.members[i].user.id, this.id, nocache);
 
-        for (let i = 0; i < data.channels.length; i++)
+        for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
             cacheChannel(this.client, data.channels[i], this.id, nocache);
 
-        for (let i = 0; i < data.threads.length; i++)
+        for (let i = 0; i < data.threads.length && this.client.cacheChannels == true; i++)
             new Thread(this.client, data.threads[i], this.id, nocache);
 
-        for (let i = 0; i < data.voice_states.length; i++)
+        for (let i = 0; i < data.voice_states.length && this.client.cacheVoiceStates == true; i++)
             new VoiceState(this.client, data.voice_states[i], this.id, nocache);
 
     }

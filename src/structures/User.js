@@ -6,12 +6,17 @@ class User {
 
         this.client = client;
 
-        this.avatar = data.avatar || null;
+        const existing = this.client.users.cache.get(data.id);
+
+        this.id = data.id;
+
+        if (data.avatar != undefined)
+            this.avatar = data.avatar;
+        else if (data.avatar !== null && existing.avatar)
+            this.avatar = existing.avatar;
 
         if (data.bot == true)
             this.bot = data.bot;
-
-        this.id = data.id;
 
         this.username = data.username;
 
