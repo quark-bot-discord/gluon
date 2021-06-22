@@ -208,9 +208,22 @@ class WS {
 
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
 
-            this.ws = new WebSocket(this.url);
+            if (data < 2000)
+                this.resuming = false;
+            else
+                this.resuming = true;
 
-            this.addListeners();
+            if (this.resuming == true) {
+
+                this.ws = new WebSocket(this.url);
+
+                this.addListeners();
+
+            } else {
+
+                process.exit(1);
+
+            }
 
         });
 
