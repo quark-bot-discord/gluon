@@ -209,9 +209,9 @@ class WS {
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
 
             if (data < 2000)
-                this.resuming = false;
-            else
                 this.resuming = true;
+            else
+                this.resuming = false;
 
             if (this.resuming == true) {
 
