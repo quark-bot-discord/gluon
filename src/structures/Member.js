@@ -7,24 +7,36 @@ class Member {
 
         this.client = client;
 
-        if (data.user)
-            this.user = new User(this.client, data.user, nocache);
-        
+        const existing = this.client.guilds.cache.get(guild_id).members.cache.get(user_id);
+
         this.id = user_id;
 
-        if (data.nick)
+        if (data.user)
+            this.user = new User(this.client, data.user, nocache);
+        else if (existing.user)
+            this.user = existing.user;
+        else
+            this.user = this.client.users.cache.get(user_id);
+
+        if (data.nick != undefined)
             this.nick = data.nick;
+        else if (data.nick !== null && existing.nick != undefined)
+            this.nick = existing.nick;
 
         this.joined_at = parseInt(new Date(data.joined_at).getTime() / 1000);
 
-        if (data.pending == false)
+        if (typeof data.pending == "boolean" && data.pending == true)
             this.pending = data.pending;
 
-        if (data.avatar)
+        if (data.avatar != undefined)
             this.avatar = data.avatar;
+        else if (data.avatar !== null && existing.avatar != undefined)
+            this.avatar = existing.avatar;
 
-        if (!this.user)
-            this.user = this.client.users.cache.get(user_id);
+        if (typeof data.permissions == "number")
+            this.permissions = data.permissions;
+        else if (typeof existing.permissions == "number")
+            this.permissions = existing.permissions;
 
         this.guild = this.client.guilds.cache.get(guild_id);
 
