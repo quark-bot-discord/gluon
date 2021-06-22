@@ -5,7 +5,8 @@ const VoiceChannel = require("../structures/VoiceChannel");
 function cacheChannel(client, data, guild_id, nocache = false) {
     switch (data.type) {
 
-        case CHANNEL_TYPES.GUILD_TEXT: {
+        case CHANNEL_TYPES.GUILD_TEXT:
+        case CHANNEL_TYPES.GUILD_NEWS: {
 
             return new TextChannel(client, data, guild_id, nocache);
 
