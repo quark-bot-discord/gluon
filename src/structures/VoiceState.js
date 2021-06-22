@@ -26,7 +26,7 @@ class VoiceState {
 
         this.user = this.client.users.cache.get(data.user_id);
 
-        if (nocache == false)
+        if (nocache == false && this.client.cacheVoiceStates == true)
             this.guild.voice_states.cache.set(data.user_id, this);
 
     }

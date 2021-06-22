@@ -12,7 +12,7 @@ const GuildManager = require('./managers/GuildManager');
 
 class Client extends EventsEmitter {
 
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false }) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false }) {
 
         super();
 
@@ -30,6 +30,7 @@ class Client extends EventsEmitter {
         this.cacheMembers = cacheMembers;
         this.cacheChannels = cacheChannels;
         this.cacheGuilds = cacheGuilds;
+        this.cacheVoiceStates = cacheVoiceStates;
 
     }
 
