@@ -13,14 +13,14 @@ class Member {
 
         if (data.user)
             this.user = new User(this.client, data.user, nocache);
-        else if (existing.user)
+        else if (existing && existing.user)
             this.user = existing.user;
         else
             this.user = this.client.users.cache.get(user_id);
 
         if (data.nick != undefined)
             this.nick = data.nick;
-        else if (data.nick !== null && existing.nick != undefined)
+        else if (data.nick !== null && existing && existing.nick != undefined)
             this.nick = existing.nick;
 
         this.joined_at = parseInt(new Date(data.joined_at).getTime() / 1000);
@@ -30,12 +30,12 @@ class Member {
 
         if (data.avatar != undefined)
             this.avatar = data.avatar;
-        else if (data.avatar !== null && existing.avatar != undefined)
+        else if (data.avatar !== null && existing && existing.avatar != undefined)
             this.avatar = existing.avatar;
 
         if (typeof data.permissions == "number")
             this.permissions = data.permissions;
-        else if (typeof existing.permissions == "number")
+        else if (existing && typeof existing.permissions == "number")
             this.permissions = existing.permissions;
 
         this.guild = this.client.guilds.cache.get(guild_id);

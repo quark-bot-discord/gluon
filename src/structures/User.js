@@ -12,7 +12,7 @@ class User {
 
         if (data.avatar != undefined)
             this.avatar = data.avatar;
-        else if (data.avatar !== null && existing.avatar)
+        else if (data.avatar !== null && existing && existing.avatar)
             this.avatar = existing.avatar;
 
         if (data.bot == true)

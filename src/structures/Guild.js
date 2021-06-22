@@ -28,7 +28,7 @@ class Guild {
         // useful to see how long a guild keeps the bot for
         if (data.joined_at)
             this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
-        else if (existing.joined_at)
+        else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
         // only needed if file logging is enabled
         this.premium_tier = data.premium_tier;
@@ -38,7 +38,7 @@ class Guild {
 
         if (data.member_count)
             this.member_count = data.member_count;
-        else if (existing.member_count)
+        else if (existing && existing.member_count)
             this.member_count = existing.member_count;
         else
             this.member_count = 2;
