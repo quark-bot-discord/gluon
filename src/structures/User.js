@@ -31,7 +31,7 @@ class User {
     get displayAvatarURL() {
 
         return this.avatar ?
-            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatar}.png` :
+            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatar}.${this.avatar.startsWith("a_") ? "gif" : "png"}` :
             `${CDN_BASE_URL}/embed/avatars/${this.discriminator % 5}.png`;
 
     }
