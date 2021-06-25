@@ -131,7 +131,6 @@ class WS {
 
                 }
 
-
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Hearbeat acknowledged`);
 
                 break;
@@ -165,8 +164,6 @@ class WS {
     }
 
     reconnect() {
-
-        clearInterval(this.hearbeatSetInterval);
 
         this.resuming = true;
 
@@ -207,6 +204,8 @@ class WS {
         this.ws.on("close", data => {
 
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
+
+            clearInterval(this.hearbeatSetInterval);
 
             if (data < 2000)
                 this.resuming = true;
