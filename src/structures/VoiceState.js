@@ -22,7 +22,7 @@ class VoiceState {
 
         this.self_video = data.self_video;
 
-        this.member = this.guild.members.cache.get(data.user_id) || new Member(this.client, data.member, data.user_id, data.guild_id);
+        this.member = this.guild.members.cache.get(data.user_id) || new Member(this.client, data.member, data.user_id, data.guild_id, undefined, nocache);
 
         this.user = this.client.users.cache.get(data.user_id);
 

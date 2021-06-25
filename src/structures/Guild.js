@@ -57,7 +57,7 @@ class Guild {
             this.client.guilds.cache.set(this.id, this);
 
         for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
-            new Member(this.client, data.members[i], data.members[i].user.id, this.id, nocache);
+            new Member(this.client, data.members[i], data.members[i].user.id, this.id, data.members[i].user, nocache);
 
         for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
             cacheChannel(this.client, data.channels[i], this.id, nocache);

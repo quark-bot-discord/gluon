@@ -14,7 +14,7 @@ class Message {
             this.author = new User(this.client, data.author, !data.webhook_id);
 
         if (data.member)
-            this.member = new Member(this.client, data.member, data.author.id, data.guild_id);
+            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
 
         this.id = data.id;
         // should only be stored if file logging is enabled

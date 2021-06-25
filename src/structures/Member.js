@@ -3,7 +3,7 @@ const User = require("./User");
 
 class Member {
 
-    constructor(client, data, user_id, guild_id, nocache = false) {
+    constructor(client, data, user_id, guild_id, user, nocache = false) {
 
         this.client = client;
 
@@ -15,6 +15,8 @@ class Member {
             this.user = new User(this.client, data.user, nocache);
         else if (existing && existing.user)
             this.user = existing.user;
+        else if (user)
+            this.user = user;
         else
             this.user = this.client.users.cache.get(user_id);
 
@@ -51,7 +53,7 @@ class Member {
 
         return this.avatar ? 
             `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatar}.png` : 
-            this.user.avatar ?
+            this.user?.avatar ?
                 `${CDN_BASE_URL}/avatars/${this.user.id}/${this.user.avatar}.png` :
                 `${CDN_BASE_URL}/embed/avatars/${this.user.discriminator % 5}.png`;
 

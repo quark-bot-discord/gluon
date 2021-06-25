@@ -106,7 +106,7 @@ class EventHandler {
 
     GUILD_MEMBER_ADD(data) {
 
-        const member = new Member(this.client, data, data.user.id, data.guild_id);
+        const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
         
         this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
 
@@ -118,7 +118,7 @@ class EventHandler {
         if (member)
             this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
         else
-            member = new Member(this.client, data, data.user.id, data.guild_id, true);
+            member = new Member(this.client, data, data.user.id, data.guild_id, data.user, true);
 
         this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
