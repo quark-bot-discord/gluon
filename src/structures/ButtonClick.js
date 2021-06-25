@@ -30,7 +30,7 @@ class ButtonClick {
 
     }
 
-    async reply(content, options = {}) {
+    async reply(content, { embed, components, quiet }) {
 
         const body = {};
 
@@ -39,11 +39,11 @@ class ButtonClick {
 
         if (content)
             body.data.content = content;
-        if (options.embed) 
-            body.data.embed = options.embed.toJSON();
-        if (options.components) 
-            body.data.components = options.components.toJSON();
-        if (options.quiet == true)
+        if (embed) 
+            body.data.embed = embed.toJSON();
+        if (components) 
+            body.data.components = components.toJSON();
+        if (quiet == true)
             body.data.flags = 64;
 
         try {

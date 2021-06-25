@@ -15,7 +15,7 @@ class TextChannel extends Channel {
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
-    async send(content, options = {}) {
+    async send(content, { embed, components, files }) {
         // need something for files too
         const body = {};
 
@@ -25,12 +25,12 @@ class TextChannel extends Channel {
             else
                 body.content = content;
         }
-        if (options.embed) 
-            body.embed = options.embed.toJSON();
-        if (options.components) 
-            body.components = options.components.toJSON();
-        if (options.files)
-            body.files = options.files;
+        if (embed) 
+            body.embed = embed.toJSON();
+        if (components) 
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
 
         try {
 

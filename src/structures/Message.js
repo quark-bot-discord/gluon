@@ -58,18 +58,18 @@ class Message {
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
-    async reply(content, options = {}) {
+    async reply(content, { embed, components, files }) {
 
         const body = {};
 
         if (content)
             body.content = content;
-        if (options.embed)
-            body.embed = options.embed.toJSON();
-        if (options.components)
-            body.components = options.components.toJSON();
-        if (options.files)
-            body.files = options.files;
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
 
         body.message_reference = {
             message_id: this.id,
@@ -90,17 +90,17 @@ class Message {
 
     }
 
-    async edit(content, options = {}) {
+    async edit(content, { embed, components }) {
        
         if (!this.client.user.id === this.author.id) throw Error("Can't edit another member's message.");
         const body = {};
 
         if (content)
             body.content = content;
-        if (options.embed)
-            body.embed = options.embed.toJSON();
-        if (options.components)
-            body.components = options.components.toJSON();
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
             
         if (this.referenced_message)
             body.message_reference = {

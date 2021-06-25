@@ -70,15 +70,15 @@ class Guild {
 
     }
 
-    async ban(user_id, options = {}) {
+    async ban(user_id, { reason, days }) {
         if (!user_id) throw Error('No userID was provided');
         const body = {};
 
-        if (options.reason)
-            body.reason = options.reason;
+        if (reason)
+            body.reason = reason;
         // number of days to delete messages for (0-7) 
-        if (options.days)
-            body.delete_message_days;
+        if (days)
+            body.delete_message_days = days;
 
         try {
 

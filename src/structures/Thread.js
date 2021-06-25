@@ -20,7 +20,7 @@ class Thread extends Channel {
 
     }
 
-    async send(content, options) {
+    async send(content, { }) {
 
         return await this.client.request.makeRequest("postCreateMessage", [this.id]);
 
