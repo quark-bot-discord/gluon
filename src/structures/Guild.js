@@ -91,25 +91,30 @@ class Guild {
         }
     }
 
-    async fetchAuditLogs(options) {
+    async fetchAuditLogs({ limit, type }) {
 
         const body = {};
 
-        if (options.limit)
-            body.limit = options.limit;
+        if (limit)
+            body.limit = limit;
         else
             body.limit = 1;
 
-        if (options.type)
-            body.type = options.type;
+        if (type)
+            body.type = AUDIT_LOG_TYPES[type];
 
         try {
 
             const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
-            if (options.type && AUDIT_LOG_TYPES[options.type] && data.action_type != AUDIT_LOG_TYPES[options.type])
+
+            if (type && AUDIT_LOG_TYPES[type] && data.action_type != AUDIT_LOG_TYPES[type])
                 return null;
+
+            if (!data)
+                return null;
+
             // currently only one log is ever fetched, but best to make it easy to allow multiple if needed in the future
-            return [new AuditLog(this.client, data)];
+            return [new AuditLog(this.client, data.audit_log_entries[0])];
 
         } catch (error) {
 
