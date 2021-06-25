@@ -107,7 +107,7 @@ class Guild {
 
             const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
 
-            if (type && AUDIT_LOG_TYPES[type] && data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
+            if (type && AUDIT_LOG_TYPES[type] && data && data.audit_log_entries[0] && data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
                 return null;
 
             if (!data)
