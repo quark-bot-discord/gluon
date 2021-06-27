@@ -140,7 +140,9 @@ class Client extends EventsEmitter {
 
             })
             .catch(error => {
-                console.log(`error: ${error}`);
+                
+                this.error(error.stack.toString());
+
             });
 
     }
