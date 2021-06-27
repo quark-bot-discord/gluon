@@ -58,7 +58,7 @@ class Message {
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
-    async reply(content, { embed, components, files }) {
+    async reply(content, { embed, components, files } = {}) {
 
         const body = {};
 
@@ -91,7 +91,7 @@ class Message {
 
     }
 
-    async edit(content, { embed, components }) {
+    async edit(content, { embed, components } = {}) {
        
         if (!this.client.user.id === this.author.id) throw Error("Can't edit another member's message.");
         const body = {};

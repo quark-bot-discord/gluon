@@ -30,7 +30,7 @@ class ButtonClick {
 
     }
 
-    async reply(content, { embed, components, quiet }) {
+    async reply(content, { embed, components, quiet } = {}) {
 
         const body = {};
 

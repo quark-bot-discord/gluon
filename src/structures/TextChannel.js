@@ -15,8 +15,8 @@ class TextChannel extends Channel {
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
-    async send(content, { embed, components, files }) {
-        // need something for files too
+    async send(content, { embed, components, files } = {}) {
+
         const body = {};
 
         if (content) 
