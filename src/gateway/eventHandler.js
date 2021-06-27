@@ -124,6 +124,15 @@ class EventHandler {
 
     }
 
+    GUILD_MEMBER_UPDATE(data) {
+
+        const oldMember = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
+        const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
+
+        this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+
+    }
+
     INTERACTION_CREATE(data) {
 
         switch (data.type) {
