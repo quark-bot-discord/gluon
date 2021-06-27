@@ -52,6 +52,7 @@ class ButtonClick {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }

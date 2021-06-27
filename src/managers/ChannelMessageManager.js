@@ -41,6 +41,7 @@ class ChannelMessageManager {
 
             } catch (error) {
 
+                this.client.error(error.stack.toString());
                 throw error;
 
             }
@@ -58,6 +59,7 @@ class ChannelMessageManager {
 
             } catch (error) {
 
+                this.client.error(error.stack.toString());
                 throw error;
 
             }

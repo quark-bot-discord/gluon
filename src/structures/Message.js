@@ -84,6 +84,7 @@ class Message {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }
@@ -116,6 +117,7 @@ class Message {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }

@@ -86,6 +86,7 @@ class Guild {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }
@@ -118,6 +119,7 @@ class Guild {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }
@@ -133,6 +135,7 @@ class Guild {
 
         } catch (error) {
 
+            this.client.error(error.stack.toString());
             throw error;
 
         }

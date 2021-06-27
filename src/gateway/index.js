@@ -64,6 +64,7 @@ class WS {
                 } catch (error) {
 
                     this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ERROR at ${data.t}: ${error}`);
+                    this.client.error(error.stack.toString());
 
                 }
 
@@ -91,6 +92,7 @@ class WS {
             case 9: {
 
                 this.client.emit("debug", `${this.libName} ${data.d == false ? this.shardCatastrophic : this.shardWarning} @ ${this.time()} => INVALID SESSION`);
+                this.client.error("INVALID SESSION");
 
                 if (data.d != false)
                     this.reconnect();
@@ -238,7 +240,7 @@ class WS {
 
                 this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
                 if (this.zlib.err) {
-                    this.client.emit("error", `Error using zlib ${this.zlib.msg}`)
+                    this.client.error(this.zlib.msg);
                     return;
                 }
 
@@ -255,7 +257,7 @@ class WS {
 
         this.ws.on("error", data => {
 
-            this.client.emit("error", `error: ${data}`);
+            this.client.error(data.stack.toString());
 
         });
 
