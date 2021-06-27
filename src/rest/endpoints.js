@@ -82,5 +82,12 @@ module.exports = {
         },
         method: "POST",
         bucket: null
+    },
+    postExecuteWebhook: {
+        path: ([webhook_id, webhook_token]) => {
+            return `/webhooks/${webhook_id}/${webhook_token}`;
+        },
+        method: "POST",
+        bucket: null
     }
 };

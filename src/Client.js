@@ -34,6 +34,38 @@ class Client extends EventsEmitter {
 
     }
 
+    error(error) {
+
+        this.emit("error", `\`\`\`js\n${error.substring(0, 2000)}\`\`\``);
+
+    }
+
+    async postWebhook({ id, token }, content, { embeds, components, files } = {}) {
+
+        const body = {};
+
+        if (content) 
+            body.content = content;
+
+        if (embeds) 
+            body.embeds = embeds.map(embed => embed.toJSON());
+        if (components) 
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
+
+        try {
+
+            await this.request.makeRequest("postExecuteWebhook", [id, token], body);
+
+        } catch (error) {
+
+            throw error;
+
+        }
+
+    }
+
     setStatus(status) {
 
         for (let i = 0; i < this.shards.length; i++)
