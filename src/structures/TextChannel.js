@@ -19,12 +19,9 @@ class TextChannel extends Channel {
         // need something for files too
         const body = {};
 
-        if (content) {
-            if (content.length > 2000) 
-                throw Error('Message exceeds 2000 characters.');
-            else
-                body.content = content;
-        }
+        if (content) 
+            body.content = content;
+
         if (embed) 
             body.embed = embed.toJSON();
         if (components) 
