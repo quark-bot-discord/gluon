@@ -53,7 +53,7 @@ class Message {
         
         this.guild = this.client.guilds.cache.get(guild_id);
 
-        if (this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
+        if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
             this.guild.channels.cache.get(channel_id).messages.cache.set(this.id, this);
 
     }
