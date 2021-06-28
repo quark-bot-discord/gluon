@@ -27,16 +27,16 @@ class GuildChannelsManager {
             switch (data.type) {
                 case CHANNEL_TYPES.GUILD_TEXT:
                 case CHANNEL_TYPES.GUILD_NEWS: {
-                    return new TextChannel(this.client, data, this.guild.id);
+                    return new TextChannel(this.client, data, this.guild.id.toString());
                 }
                 case CHANNEL_TYPES.GUILD_VOICE:
                 case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
-                    return new VoiceChannel(this.client, data, this.guild.id);
+                    return new VoiceChannel(this.client, data, this.guild.id.toString());
                 }
                 case CHANNEL_TYPES.GUILD_NEWS_THREAD:
                 case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
                 case CHANNEL_TYPES.GUILD_PRIVATE_THREAD: {
-                    return new Thread(this.client, data, this.guild.id);
+                    return new Thread(this.client, data, this.guild.id.toString());
                 }
             }
 

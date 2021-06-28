@@ -36,7 +36,7 @@ class ChannelMessageManager {
                 const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
                 let messages = [];
                 for (let i = 0; i < data.length; i++)
-                    messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id));
+                    messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
                 return messages;
 
             } catch (error) {
