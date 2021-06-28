@@ -7,7 +7,7 @@ class Thread extends Channel {
 
         super(client, data, guild_id);
 
-        this.messages = new ChannelMessageManager();
+        this.messages = new ChannelMessageManager(client, this);
 
         this.owner_id = BigInt(data.owner_id);
 

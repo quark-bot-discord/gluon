@@ -46,16 +46,16 @@ class ChannelMessageManager {
 
             }
 
-        } else if (typeof options == "string") {
+        } else if (typeof options == "string" || typeof options == "bigint") {
 
-            const cachedMessage = this.channel.cache.get(options);
+            const cachedMessage = this.cache.get(options);
             if (cachedMessage)
                 return cachedMessage;
 
             try {
 
                 const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
-                return new Message(this.client, data, this.channel);
+                return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
 
             } catch (error) {
 
