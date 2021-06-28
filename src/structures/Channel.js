@@ -3,7 +3,7 @@ class Channel {
 
         this.client = client;
 
-        this.id = data.id;
+        this.id = BigInt(data.id);
 
         // uhh not sure if it is worth keeping this for now, might need it in the future though
         // this.permission_overwrites = data.permission_overwrites;

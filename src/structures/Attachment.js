@@ -4,7 +4,7 @@ class Attachment {
 
         this.client = client;
 
-        this.id = data.id;
+        this.id = BigInt(data.id);
 
         this.name = data.filename;
 

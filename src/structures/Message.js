@@ -8,6 +8,8 @@ class Message {
 
         this.client = client;
 
+        this.id = BigInt(data.id);
+
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
@@ -16,7 +18,6 @@ class Message {
         if (data.member)
             this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
 
-        this.id = data.id;
         // should only be stored if file logging is enabled
         if (data.attachments) {
             this.attachments = [];
@@ -54,7 +55,7 @@ class Message {
         this.guild = this.client.guilds.cache.get(guild_id);
 
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
-            this.guild.channels.cache.get(channel_id).messages.cache.set(this.id, this);
+            this.guild.channels.cache.get(channel_id).messages.cache.set(data.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */

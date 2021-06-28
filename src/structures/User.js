@@ -8,7 +8,7 @@ class User {
 
         const existing = this.client.users.cache.get(data.id);
 
-        this.id = data.id;
+        this.id = BigInt(data.id);
 
         if (data.avatar != undefined)
             this.avatar = data.avatar;
@@ -24,7 +24,7 @@ class User {
 
         // should only cache if actually needed - TBD
         if (nocache == false && this.client.cacheUsers == true)
-            this.client.users.cache.set(this.id, this);
+            this.client.users.cache.set(data.id, this);
 
     }
     // better to use the one in the member class, as it accounts for guild avatars too

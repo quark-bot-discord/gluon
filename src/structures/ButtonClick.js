@@ -8,7 +8,7 @@ class ButtonClick {
 
         this.client = client;
 
-        this.id = data.id;
+        this.id = BigInt(data.id);
 
         this.type = data.type;
 

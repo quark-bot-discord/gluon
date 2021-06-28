@@ -10,13 +10,13 @@ class Thread extends Channel {
 
         this.messages = new ChannelMessageManager();
 
-        this.owner_id = data.owner_id;
+        this.owner_id = BigInt(data.owner_id);
 
-        this.parent_id = data.parent_id;
+        this.parent_id = BigInt(data.parent_id);
         
         /* probably shouldnt cache archived threads */
         if (nocache == false)
-            this.client.guilds.cache.get(guild_id).threads.cache.set(this.id, this);
+            this.client.guilds.cache.get(guild_id).threads.cache.set(data.id, this);
 
     }
 

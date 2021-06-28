@@ -9,7 +9,7 @@ class Member {
 
         const existing = this.client.guilds.cache.get(guild_id).members.cache.get(user_id);
 
-        this.id = user_id;
+        this.id = BigInt(user_id);
 
         if (data.user)
             this.user = new User(this.client, data.user, nocache);

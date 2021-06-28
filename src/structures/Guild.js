@@ -17,14 +17,14 @@ class Guild {
 
         const existing = this.client.guilds.cache.get(data.id);
 
-        this.id = data.id;
+        this.id = BigInt(data.id);
         // needed for join/leave logging
         this.name = data.name;
         // needed for join/leave logging
         if (data.icon != null)
             this.icon = data.icon;
         // needed for permissions checking and join/leave logging
-        this.owner_id = data.owner_id;
+        this.owner_id = BigInt(data.owner_id);
         // useful to see how long a guild keeps the bot for
         if (data.joined_at)
             this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
@@ -54,19 +54,19 @@ class Guild {
         this.preferred_locale = data.preferred_locale;
 
         if (nocache == false && this.client.cacheGuilds == true)
-            this.client.guilds.cache.set(this.id, this);
+            this.client.guilds.cache.set(data.id, this);
 
         for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
-            new Member(this.client, data.members[i], data.members[i].user.id, this.id, data.members[i].user, nocache);
+            new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
 
         for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
-            cacheChannel(this.client, data.channels[i], this.id, nocache);
+            cacheChannel(this.client, data.channels[i], data.id, nocache);
 
         for (let i = 0; i < data.threads.length && this.client.cacheChannels == true; i++)
-            new Thread(this.client, data.threads[i], this.id, nocache);
+            new Thread(this.client, data.threads[i], data.id, nocache);
 
         for (let i = 0; i < data.voice_states.length && this.client.cacheVoiceStates == true; i++)
-            new VoiceState(this.client, data.voice_states[i], this.id, nocache);
+            new VoiceState(this.client, data.voice_states[i], data.id, nocache);
 
     }
 
