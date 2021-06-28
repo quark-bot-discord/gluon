@@ -32,7 +32,7 @@ class TextChannel extends Channel {
         try {
 
             const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
-            return new Message(this.client, data, this.id, this.guild.id);
+            return new Message(this.client, data, data.id, this.guild.id.toString());
 
         } catch (error) {
 
