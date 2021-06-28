@@ -1,4 +1,3 @@
-const { CHANNEL_TYPES } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
 
@@ -12,11 +11,11 @@ class Thread extends Channel {
 
         this.owner_id = BigInt(data.owner_id);
 
-        this.parent_id = BigInt(data.parent_id);
+        this.parent = this.guild.channels.cache.get(data.parent_id);
         
         /* probably shouldnt cache archived threads */
-        if (nocache == false)
-            this.client.guilds.cache.get(guild_id).threads.cache.set(data.id, this);
+        if (nocache == false && data.archived != true)
+            this.guild.channels.cache.set(data.id, this);
 
     }
 

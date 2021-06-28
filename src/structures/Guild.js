@@ -1,7 +1,6 @@
 const { AUDIT_LOG_TYPES } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
-const GuildThreadsManager = require("../managers/GuildThreadsManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const AuditLog = require("./AuditLog");
@@ -48,8 +47,6 @@ class Guild {
         this.members = existing ? existing.members : new GuildMemberManager(this.client);
 
         this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
-
-        this.threads = existing ? existing.threads : new GuildThreadsManager(this.client);
 
         this.preferred_locale = data.preferred_locale;
 

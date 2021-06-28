@@ -212,7 +212,19 @@ class EventHandler {
 
     THREAD_UPDATE(data) {
 
+        const oldThread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const newThread = new Thread(this.client, data, data.guild_id);
 
+        this.client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
+
+    }
+
+    THREAD_DELETE(data) {
+
+        const thread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+
+        this.client.emit(EVENTS.THREAD_DELETE, thread);
 
     }
 

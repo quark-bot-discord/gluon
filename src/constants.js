@@ -44,6 +44,8 @@ module.exports.EVENTS = {
     CHANNEL_UPDATE: "channelUpdate",
     CHANNEL_DELETE: "channelDelete",
     THREAD_CREATE: "threadCreate",
+    THREAD_UPDATE: "threadUpdate",
+    THREAD_DELETE: "threadDelete",
     INVITE_CREATE: "inviteCreate"
 };
 module.exports.CHANNEL_TYPES = {
