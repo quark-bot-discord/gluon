@@ -50,6 +50,12 @@ class EventHandler {
 
     }
 
+    GUILD_UPDATE(data) {
+
+
+
+    }
+
     GUILD_DELETE(data) {
 
         if (data.unavailable != true) {
@@ -60,6 +66,187 @@ class EventHandler {
             this.client.emit(EVENTS.GUILD_DELETE, guild);
 
         }
+
+    }
+
+    GUILD_ROLE_CREATE(data) {
+
+
+
+    }
+
+    GUILD_ROLE_UPDATE(data) {
+
+
+
+    }
+
+    GUILD_ROLE_DELETE(data) {
+
+
+
+
+    }
+
+    CHANNEL_CREATE(data) {
+
+        const channel = cacheChannel(this.client, data, data.guild_id);
+
+        this.client.emit(EVENTS.CHANNEL_CREATE, channel);
+
+    }
+
+    CHANNEL_UPDATE(data) {
+
+        const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const newChannel = cacheChannel(this.client, data, data.guild_id, true);
+
+        this.client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
+
+    }
+
+    CHANNEL_DELETE(data) {
+
+        const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+
+        this.client.emit(EVENTS.CHANNEL_DELETE, channel);
+
+    }
+
+    CHANNEL_PINS_UPDATE(data) {
+
+
+
+    }
+
+    THREAD_CREATE(data) {
+
+        const thread = new Thread(this.client, data, data.guild_id);
+
+        this.client.emit(EVENTS.THREAD_CREATE, thread);
+
+    }
+
+    THREAD_UPDATE(data) {
+
+        const oldThread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const newThread = new Thread(this.client, data, data.guild_id);
+
+        this.client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
+
+    }
+
+    THREAD_DELETE(data) {
+
+        const thread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+
+        this.client.emit(EVENTS.THREAD_DELETE, thread);
+
+    }
+
+    THREAD_LIST_SYNC(data) {
+
+
+
+    }
+
+    THREAD_MEMBER_UPDATE(data) {
+
+
+
+    }
+
+    THREAD_MEMBERS_UPDATE(data) {
+
+
+
+    }
+
+    STAGE_INSTANCE_CREATE(data) {
+
+
+
+    }
+
+    STAGE_INSTANCE_UPDATE(data) {
+
+
+
+    }
+
+    STAGE_INSTANCE_DELETE(data) {
+
+
+
+    }
+
+    GUILD_MEMBER_ADD(data) {
+
+        const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
+        
+        this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
+
+    }
+
+    GUILD_MEMBER_REMOVE(data) {
+
+        let member = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
+        if (member)
+            this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
+        else
+            member = new Member(this.client, data, data.user.id, data.guild_id, data.user, true);
+
+        this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
+
+    }
+
+    GUILD_MEMBER_UPDATE(data) {
+
+        const oldMember = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
+        const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
+
+        this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+
+    }
+
+    GUILD_BAN_ADD(data) {
+
+
+
+    }
+
+    GUILD_BAN_REMOVE(data) {
+
+
+
+    }
+
+    INVITE_CREATE(data) {
+
+        this.client.emit(EVENTS.INVITE_CREATE, data);
+
+    }
+
+    INVITE_DELETE(data) {
+
+
+
+    }
+
+    VOICE_STATE_UPDATE(data) {
+
+        const oldVoiceState = this.client.guilds.cache.get(data.guild_id).voice_states.cache.get(data.user_id) || null;
+        let newVoiceState;
+        if (data.channel_id) {
+            newVoiceState = new VoiceState(this.client, data, data.guild_id);
+        } else {
+            newVoiceState = null;
+            this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
+        }
+
+        this.client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
 
     }
 
@@ -104,35 +291,6 @@ class EventHandler {
 
     }
 
-    GUILD_MEMBER_ADD(data) {
-
-        const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
-        
-        this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
-
-    }
-
-    GUILD_MEMBER_REMOVE(data) {
-
-        let member = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
-        if (member)
-            this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
-        else
-            member = new Member(this.client, data, data.user.id, data.guild_id, data.user, true);
-
-        this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
-
-    }
-
-    GUILD_MEMBER_UPDATE(data) {
-
-        const oldMember = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
-        const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
-
-        this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
-
-    }
-
     INTERACTION_CREATE(data) {
 
         switch (data.type) {
@@ -158,79 +316,6 @@ class EventHandler {
             }
 
         }
-
-    }
-
-    VOICE_STATE_UPDATE(data) {
-
-        const oldVoiceState = this.client.guilds.cache.get(data.guild_id).voice_states.cache.get(data.user_id) || null;
-        let newVoiceState;
-        if (data.channel_id) {
-            newVoiceState = new VoiceState(this.client, data, data.guild_id);
-        } else {
-            newVoiceState = null;
-            this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
-        }
-
-        this.client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
-
-    }
-
-    CHANNEL_CREATE(data) {
-
-        const channel = cacheChannel(this.client, data, data.guild_id);
-
-        this.client.emit(EVENTS.CHANNEL_CREATE, channel);
-
-    }
-
-    CHANNEL_UPDATE(data) {
-
-        const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        const newChannel = cacheChannel(this.client, data, data.guild_id, true);
-
-        this.client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
-
-    }
-
-    CHANNEL_DELETE(data) {
-
-        const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
-
-        this.client.emit(EVENTS.CHANNEL_DELETE, channel);
-
-    }
-
-    THREAD_CREATE(data) {
-
-        const thread = new Thread(this.client, data, data.guild_id);
-
-        this.client.emit(EVENTS.THREAD_CREATE, thread);
-
-    }
-
-    THREAD_UPDATE(data) {
-
-        const oldThread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        const newThread = new Thread(this.client, data, data.guild_id);
-
-        this.client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
-
-    }
-
-    THREAD_DELETE(data) {
-
-        const thread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
-
-        this.client.emit(EVENTS.THREAD_DELETE, thread);
-
-    }
-
-    INVITE_CREATE(data) {
-
-        this.client.emit(EVENTS.INVITE_CREATE, data);
 
     }
 
