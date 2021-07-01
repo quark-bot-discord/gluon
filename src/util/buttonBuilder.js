@@ -1,18 +1,11 @@
+const { COMPONENT_TYPES } = require("../constants");
 const resolveEmoji = require("./resolveEmoji");
 
-class Component {
+class Button {
 
     constructor() {
 
-        this.type = 2;
-
-    }
-
-    setType(type) {
-
-        this.type = type;
-
-        return this;
+        this.type = COMPONENT_TYPES.BUTTON;
 
     }
 
@@ -80,4 +73,4 @@ class Component {
 
 }
 
-module.exports = Component;
+module.exports = Button;

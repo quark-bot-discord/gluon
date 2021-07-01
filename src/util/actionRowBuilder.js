@@ -1,8 +1,10 @@
+const { COMPONENT_TYPES } = require("../constants");
+
 class ActionRow {
 
     constructor() {
 
-        this.type = 1;
+        this.type = COMPONENT_TYPES.ACTION_ROW;
         this.components = [];
 
     }
