@@ -38,6 +38,7 @@ module.exports.EVENTS = {
     GUILD_MEMBER_UPDATE: "guildMemberUpdate",
     GUILD_MEMBER_REMOVE: "guildMemberRemove",
     BUTTON_CLICK: "buttonClick",
+    MENU_SELECT: "menuSelect",
     SLASH_COMMAND: "slashCommand",
     VOICE_STATE_UPDATE: "voiceStateUpdate",
     CHANNEL_CREATE: "channelCreate",
@@ -87,5 +88,10 @@ module.exports.AUDIT_LOG_TYPES = {
 module.exports.INTERACTION_TYPES = {
     COMMAND: 2,
     COMPONENT: 3
+};
+module.exports.COMPONENT_TYPES = {
+    ACTION_ROW: 1,
+    BUTTON: 2,
+    SELECT_MENU: 3
 };
 module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 8; // 8 hours
