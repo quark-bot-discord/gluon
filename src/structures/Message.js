@@ -114,7 +114,7 @@ class Message {
         try {
 
             const data = await this.client.request.makeRequest("patchEditMessage", [this.channel.id, this.id], body);
-            return new Message(this.client, data, this.channel.id, this.guild.id);
+            return new Message(this.client, data, this.channel.id.toString(), this.guild.id.toString());
 
         } catch (error) {
 
