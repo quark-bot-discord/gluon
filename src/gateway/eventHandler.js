@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const { EVENTS, INTERACTION_TYPES } = require("../constants");
+const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
 const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
@@ -297,9 +297,27 @@ class EventHandler {
 
             case INTERACTION_TYPES.COMPONENT: {
 
-                const componentInteraction = new ButtonClick(this.client, data);
+                switch (data.type.data.component_type) {
+
+                    case COMPONENT_TYPES.BUTTON: {
+
+                        const componentInteraction = new ButtonClick(this.client, data);
                 
-                this.client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
+                        this.client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
+
+                        break;
+
+                    }
+
+                    case COMPONENT_TYPES.SELECT_MENU: {
+
+                        this.client.emit(EVENTS.MENU_SELECT, data);
+
+                        break;
+
+                    }
+
+                }
 
                 break;
 
