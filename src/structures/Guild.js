@@ -26,7 +26,7 @@ class Guild {
         this.owner_id = BigInt(data.owner_id);
         // useful to see how long a guild keeps the bot for
         if (data.joined_at)
-            this.joined_at = data.joined_at ? parseInt(new Date(data.joined_at).getTime() / 1000) : null;
+            this.joined_at = data.joined_at ? (new Date(data.joined_at).getTime() / 1000) | 0 : null;
         else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
         // only needed if file logging is enabled

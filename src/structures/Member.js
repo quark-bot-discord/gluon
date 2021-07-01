@@ -25,7 +25,7 @@ class Member {
         else if (data.nick !== null && existing && existing.nick != undefined)
             this.nick = existing.nick;
 
-        this.joined_at = parseInt(new Date(data.joined_at).getTime() / 1000);
+        this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
 
         if (typeof data.pending == "boolean" && data.pending == true)
             this.pending = data.pending;
