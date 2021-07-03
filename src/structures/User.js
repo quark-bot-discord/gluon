@@ -6,7 +6,7 @@ class User {
 
         this.client = client;
 
-        const existing = this.client.users.cache.get(data.id);
+        const existing = this.client.users.cache.get(data.id) || null;
 
         this.id = BigInt(data.id);
 

@@ -13,7 +13,7 @@ class Message {
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
-            this.author = new User(this.client, data.author, !data.webhook_id);
+            this.author = new User(this.client, data.author, !data.webhook_id || nocache);
 
         if (data.member)
             this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
@@ -50,12 +50,12 @@ class Message {
         // When the message was created
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
 
-        this.channel = this.client.guilds.cache.get(guild_id).channels.cache.get(channel_id);
+        this.channel = this.client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id) || null;
         
-        this.guild = this.client.guilds.cache.get(guild_id);
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
-            this.guild.channels.cache.get(channel_id).messages.cache.set(data.id, this);
+            this.guild.channels.cache.get(channel_id)?.messages.cache.set(data.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */

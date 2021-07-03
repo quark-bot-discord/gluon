@@ -6,9 +6,9 @@ class VoiceState {
 
         this.client = client;
 
-        this.guild = this.client.guilds.cache.get(guild_id);
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
 
-        this.channel = this.guild.channels.cache.get(data.channel_id);
+        this.channel = this.guild.channels.cache.get(data.channel_id) || null;
 
         this.deaf = data.deaf;
 
@@ -25,12 +25,12 @@ class VoiceState {
         if (data.member)
             this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, nocache);
         else
-            this.member = this.guild.members.cache.get(data.user_id);
+            this.member = this.guild.members.cache.get(data.user_id) || null;
 
-        this.user = this.client.users.cache.get(data.user_id);
+        this.user = this.client.users.cache.get(data.user_id) || null;
 
         if (nocache == false && this.client.cacheVoiceStates == true)
-            this.guild.voice_states.cache.set(data.user_id, this);
+            this.guild?.voice_states.cache.set(data.user_id, this);
 
     }
 

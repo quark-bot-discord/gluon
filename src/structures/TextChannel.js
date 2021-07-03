@@ -11,7 +11,7 @@ class TextChannel extends Channel {
         this.messages = new ChannelMessageManager(client, this);
         
         if (nocache == false && this.client.cacheChannels == true)
-            this.client.guilds.cache.get(guild_id).channels.cache.set(data.id, this);
+            this.client.guilds.cache.get(guild_id)?.channels.cache.set(data.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
@@ -32,7 +32,7 @@ class TextChannel extends Channel {
         try {
 
             const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
-            return new Message(this.client, data, this.id.toString(), this.guild.id.toString());
+            return new Message(this.client, data, this.id.toString(), this.guild.id.toString(), false);
 
         } catch (error) {
 

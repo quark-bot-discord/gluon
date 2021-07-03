@@ -14,9 +14,9 @@ class ButtonClick {
 
         this.custom_id = data.data.custom_id;
 
-        this.guild = this.client.guilds.cache.get(data.guild_id);
+        this.guild = this.client.guilds.cache.get(data.guild_id) || null;
 
-        this.channel = this.guild.channels.cache.get(data.channel_id);
+        this.channel = this.guild.channels.cache.get(data.channel_id) || null;
 
         if (data.member)
             this.member = new Member(this.client, data.member, data.member.user.id, this.guild.id.toString());
@@ -26,7 +26,7 @@ class ButtonClick {
 
         this.token = data.token;
 
-        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, true);
+        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, this.client.cacheMessages);
 
     }
 

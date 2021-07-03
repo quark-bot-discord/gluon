@@ -14,7 +14,7 @@ class Guild {
 
         this.client = client;
 
-        const existing = this.client.guilds.cache.get(data.id);
+        const existing = this.client.guilds.cache.get(data.id) || null;
 
         this.id = BigInt(data.id);
         // needed for join/leave logging

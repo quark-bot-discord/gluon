@@ -7,7 +7,7 @@ class Member {
 
         this.client = client;
 
-        const existing = this.client.guilds.cache.get(guild_id).members.cache.get(user_id);
+        const existing = this.client.guilds.cache.get(guild_id)?.members.cache.get(user_id) || null;
 
         this.id = BigInt(user_id);
 
@@ -18,7 +18,7 @@ class Member {
         else if (user)
             this.user = user;
         else
-            this.user = this.client.users.cache.get(user_id);
+            this.user = this.client.users.cache.get(user_id) || null;
 
         if (data.nick != undefined)
             this.nick = data.nick;
@@ -40,12 +40,12 @@ class Member {
         else if (existing && typeof existing.permissions == "number")
             this.permissions = existing.permissions;
 
-        this.guild = this.client.guilds.cache.get(guild_id);
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         /* should check whether member actually *needs* to be cached */
         /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
         if (nocache == false && this.client.cacheMembers == true)
-            this.client.guilds.cache.get(guild_id).members.cache.set(user_id, this);
+            this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
     }
     /* https://github.com/discord/discord-api-docs/pull/3081/files 👀 */
