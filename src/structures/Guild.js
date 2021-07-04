@@ -68,7 +68,7 @@ class Guild {
     }
 
     async ban(user_id, { reason, days }) {
-        if (!user_id) throw Error('No userID was provided');
+
         const body = {};
 
         if (reason)

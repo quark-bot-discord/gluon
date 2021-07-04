@@ -42,6 +42,9 @@ class Member {
 
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
+
         /* should check whether member actually *needs* to be cached */
         /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
         if (nocache == false && this.client.cacheMembers == true)

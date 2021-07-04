@@ -47,12 +47,18 @@ class Message {
 
         }
 
-        // When the message was created
+        // when the message was created
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
 
         this.channel = this.client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id) || null;
+
+        if (!this.channel)
+            this.channel_id = BigInt(channel_id);
         
         this.guild = this.client.guilds.cache.get(guild_id) || null;
+    
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
 
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
             this.guild.channels.cache.get(channel_id)?.messages.cache.set(data.id, this);
@@ -74,14 +80,14 @@ class Message {
 
         body.message_reference = {
             message_id: this.id,
-            channel_id: this.channel.id,
-            guild_id: this.guild.id
+            channel_id: this.channel?.id || this.channel_id,
+            guild_id: this.guild?.id || this.guild_id
         };
 
         try {
 
-            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel.id], body);
-            return new Message(this.client, data, this.channel.id.toString(), this.guild.id.toString());
+            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel?.id || this.channel_id], body);
+            return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
         } catch (error) {
 
@@ -107,14 +113,14 @@ class Message {
         if (this.referenced_message)
             body.message_reference = {
                 message_id: this.id,
-                channel_id: this.channel.id,
-                guild_id: this.guild.id
+                channel_id: this.channel?.id || this.channel_id,
+                guild_id: this.guild?.id || this.guild_id
             };
 
         try {
 
-            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel.id, this.id], body);
-            return new Message(this.client, data, this.channel.id.toString(), this.guild.id.toString());
+            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body);
+            return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
         } catch (error) {
 

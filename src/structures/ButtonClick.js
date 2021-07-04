@@ -16,7 +16,13 @@ class ButtonClick {
 
         this.guild = this.client.guilds.cache.get(data.guild_id) || null;
 
+        if (!this.guild)
+            this.guild_id = BigInt(data.guild_id);
+
         this.channel = this.guild.channels.cache.get(data.channel_id) || null;
+
+        if (!this.channel)
+            this.channel_id = BigInt(data.channel_id);
 
         if (data.member)
             this.member = new Member(this.client, data.member, data.member.user.id, this.guild.id.toString());

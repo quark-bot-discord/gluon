@@ -10,6 +10,9 @@ class Channel {
 
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
+        if (!guild)
+            this.guild_id = BigInt(guild_id);
+
         this.type = data.type;
 
     }
