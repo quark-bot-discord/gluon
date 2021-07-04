@@ -12,7 +12,7 @@ const GuildManager = require('./managers/GuildManager');
 
 class Client extends EventsEmitter {
 
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false }) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}) {
 
         super();
 
@@ -44,12 +44,12 @@ class Client extends EventsEmitter {
 
         const body = {};
 
-        if (content) 
+        if (content)
             body.content = content;
 
-        if (embeds) 
+        if (embeds)
             body.embeds = embeds.map(embed => embed.toJSON());
-        if (components) 
+        if (components)
             body.components = components.toJSON();
         if (files)
             body.files = files;
@@ -140,7 +140,7 @@ class Client extends EventsEmitter {
 
             })
             .catch(error => {
-                
+
                 this.error(error.stack.toString());
 
             });
