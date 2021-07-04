@@ -297,7 +297,7 @@ class EventHandler {
 
             case INTERACTION_TYPES.COMPONENT: {
 
-                switch (data.type.data.component_type) {
+                switch (data.data.component_type) {
 
                     case COMPONENT_TYPES.BUTTON: {
 
