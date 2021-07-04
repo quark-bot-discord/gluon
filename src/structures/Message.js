@@ -79,9 +79,9 @@ class Message {
             body.files = files;
 
         body.message_reference = {
-            message_id: this.id,
-            channel_id: this.channel?.id || this.channel_id,
-            guild_id: this.guild?.id || this.guild_id
+            message_id: this.id.toString(),
+            channel_id: this.channel?.id.toString() || this.channel_id.toString(),
+            guild_id: this.guild?.id.toString() || this.guild_id.toString()
         };
 
         try {
@@ -112,9 +112,9 @@ class Message {
             
         if (this.referenced_message)
             body.message_reference = {
-                message_id: this.id,
-                channel_id: this.channel?.id || this.channel_id,
-                guild_id: this.guild?.id || this.guild_id
+                message_id: this.id.toString(),
+                channel_id: this.channel?.id.toString() || this.channel_id.toString(),
+                guild_id: this.guild?.id.toString() || this.guild_id.toString()
             };
 
         try {
