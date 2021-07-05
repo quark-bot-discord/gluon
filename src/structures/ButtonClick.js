@@ -19,13 +19,13 @@ class ButtonClick {
         if (!this.guild)
             this.guild_id = BigInt(data.guild_id);
 
-        this.channel = this.guild.channels.cache.get(data.channel_id) || null;
+        this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
 
         if (!this.channel)
             this.channel_id = BigInt(data.channel_id);
 
         if (data.member)
-            this.member = new Member(this.client, data.member, data.member.user.id, this.guild.id.toString());
+            this.member = new Member(this.client, data.member, data.member.user.id, data.guild_id);
 
         if (data.user)
             this.user = new User(this.client, data.user);
@@ -45,9 +45,9 @@ class ButtonClick {
 
         if (content)
             body.data.content = content;
-        if (embed) 
+        if (embed)
             body.data.embed = embed.toJSON();
-        if (components) 
+        if (components)
             body.data.components = components.toJSON();
         if (quiet == true)
             body.data.flags = 64;

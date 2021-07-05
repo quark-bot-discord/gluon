@@ -11,7 +11,7 @@ class VoiceState {
         if (!this.guild)
             this.guild_id = BigInt(guild_id);
 
-        this.channel = this.guild.channels.cache.get(data.channel_id) || null;
+        this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
 
         if (!this.channel)
             this.channel_id = BigInt(data.channel_id);
@@ -31,7 +31,7 @@ class VoiceState {
         if (data.member)
             this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, nocache);
         else
-            this.member = this.guild.members.cache.get(data.user_id) || null;
+            this.member = this.guild?.members.cache.get(data.user_id) || null;
 
         this.user = this.client.users.cache.get(data.user_id) || null;
 

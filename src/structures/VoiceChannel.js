@@ -7,11 +7,11 @@ class VoiceChannel extends Channel {
 
         super(client, data, guild_id);
 
-        if (data.type == CHANNEL_TYPES.GUILD_STAGE_VOICE) 
+        if (data.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)
             this.stage = true;
 
         if (nocache == false && this.client.cacheChannels == true)
-            this.client.guilds.cache.get(guild_id)?.channels.cache.set(data.id, this);
+            this.guild?.channels.cache.set(data.id, this);
 
     }
 

@@ -11,14 +11,14 @@ class Thread extends Channel {
 
         this.owner_id = BigInt(data.owner_id);
 
-        this.parent = this.guild.channels.cache.get(data.parent_id) || null;
+        this.parent = this.guild?.channels.cache.get(data.parent_id) || null;
 
         if (!this.parent)
             this.parent_id = BigInt(data.parent_id);
-        
+
         /* probably shouldnt cache archived threads */
         if (nocache == false && data.archived != true)
-            this.guild.channels.cache.set(data.id, this);
+            this.guild?.channels.cache.set(data.id, this);
 
     }
 

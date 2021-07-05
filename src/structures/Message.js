@@ -50,15 +50,15 @@ class Message {
         // when the message was created
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
 
-        this.channel = this.client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id) || null;
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
+
+        this.channel = this.guild?.channels.cache.get(channel_id) || null;
 
         if (!this.channel)
             this.channel_id = BigInt(channel_id);
-        
-        this.guild = this.client.guilds.cache.get(guild_id) || null;
-    
-        if (!this.guild)
-            this.guild_id = BigInt(guild_id);
 
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
             this.guild.channels.cache.get(channel_id)?.messages.cache.set(data.id, this);
@@ -99,7 +99,7 @@ class Message {
     }
 
     async edit(content, { embed, components } = {}) {
-       
+
         if (!this.client.user.id === this.author.id) throw Error("Can't edit another member's message.");
         const body = {};
 
@@ -109,7 +109,7 @@ class Message {
             body.embed = embed.toJSON();
         if (components)
             body.components = components.toJSON();
-            
+
         if (this.referenced_message)
             body.message_reference = {
                 message_id: this.id.toString(),

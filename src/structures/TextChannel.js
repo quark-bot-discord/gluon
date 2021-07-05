@@ -9,9 +9,9 @@ class TextChannel extends Channel {
         super(client, data, guild_id);
 
         this.messages = new ChannelMessageManager(client, this);
-        
+
         if (nocache == false && this.client.cacheChannels == true)
-            this.client.guilds.cache.get(guild_id)?.channels.cache.set(data.id, this);
+            this.guild?.channels.cache.set(data.id, this);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
@@ -19,12 +19,12 @@ class TextChannel extends Channel {
 
         const body = {};
 
-        if (content) 
+        if (content)
             body.content = content;
 
-        if (embed) 
+        if (embed)
             body.embed = embed.toJSON();
-        if (components) 
+        if (components)
             body.components = components.toJSON();
         if (files)
             body.files = files;
