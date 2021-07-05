@@ -98,7 +98,7 @@ class EventHandler {
 
     CHANNEL_UPDATE(data) {
 
-        const oldChannel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const oldChannel = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         const newChannel = cacheChannel(this.client, data, data.guild_id, true);
 
         this.client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
@@ -107,8 +107,8 @@ class EventHandler {
 
     CHANNEL_DELETE(data) {
 
-        const channel = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+        const channel = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id)?.channels.cache.delete(data.id);
 
         this.client.emit(EVENTS.CHANNEL_DELETE, channel);
 
@@ -130,7 +130,7 @@ class EventHandler {
 
     THREAD_UPDATE(data) {
 
-        const oldThread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
+        const oldThread = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         const newThread = new Thread(this.client, data, data.guild_id);
 
         this.client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
@@ -139,8 +139,8 @@ class EventHandler {
 
     THREAD_DELETE(data) {
 
-        const thread = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.id);
-        this.client.guilds.cache.get(data.guild_id).channels.cache.delete(data.id);
+        const thread = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id)?.channels.cache.delete(data.id);
 
         this.client.emit(EVENTS.THREAD_DELETE, thread);
 
@@ -192,9 +192,9 @@ class EventHandler {
 
     GUILD_MEMBER_REMOVE(data) {
 
-        let member = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
+        let member = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
         if (member)
-            this.client.guilds.cache.get(data.guild_id).members.cache.delete(data.user.id);
+            this.client.guilds.cache.get(data.guild_id)?.members.cache.delete(data.user.id);
         else
             member = new Member(this.client, data, data.user.id, data.guild_id, data.user, true);
 
@@ -204,7 +204,7 @@ class EventHandler {
 
     GUILD_MEMBER_UPDATE(data) {
 
-        const oldMember = this.client.guilds.cache.get(data.guild_id).members.cache.get(data.user.id);
+        const oldMember = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
         const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
 
         this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
@@ -237,13 +237,13 @@ class EventHandler {
 
     VOICE_STATE_UPDATE(data) {
 
-        const oldVoiceState = this.client.guilds.cache.get(data.guild_id).voice_states.cache.get(data.user_id) || null;
+        const oldVoiceState = this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.get(data.user_id) || null;
         let newVoiceState;
         if (data.channel_id) {
             newVoiceState = new VoiceState(this.client, data, data.guild_id);
         } else {
             newVoiceState = null;
-            this.client.guilds.cache.get(data.guild_id).voice_states.cache.delete(data.user_id);
+            this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.delete(data.user_id);
         }
 
         this.client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
@@ -260,7 +260,7 @@ class EventHandler {
 
     MESSAGE_UPDATE(data) {
 
-        const oldMessage = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
+        const oldMessage = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
 
         this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
@@ -269,8 +269,8 @@ class EventHandler {
 
     MESSAGE_DELETE(data) {
 
-        const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.id) || null;
-        this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.id);
+        const message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
+        this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.id);
         
         this.client.emit(EVENTS.MESSAGE_DELETE, message);
 
@@ -280,10 +280,10 @@ class EventHandler {
 
         let messages = [];
         for (let i = 0; i < data.ids.length; i++) {
-            const message = this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.get(data.ids[i]);
+            const message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.ids[i]);
             if (message) {
                 messages.push(message);
-                this.client.guilds.cache.get(data.guild_id).channels.cache.get(data.channel_id).messages.cache.delete(data.ids[i]);
+                this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.ids[i]);
             }
         }
 
