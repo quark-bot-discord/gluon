@@ -1,14 +1,12 @@
-class SlashCommand {
+const Interaction = require("./Interaction");
 
-    constructor() {
+class SlashCommand extends Interaction {
 
-        
+    constructor(client, data) {
 
-    }
+        super(client, data);
 
-    reply(content, options = {}) {
-
-        
+        this.data = data.data;
 
     }
 
