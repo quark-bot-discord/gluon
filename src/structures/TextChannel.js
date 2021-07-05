@@ -36,7 +36,7 @@ class TextChannel extends Channel {
 
         } catch (error) {
 
-            this.client.error((error.stack || error).toString());
+            this.client.error(error.stack?.toString() || JSON.parse(error) || error.toString());
             throw error;
 
         }
@@ -56,7 +56,7 @@ class TextChannel extends Channel {
 
         } catch (error) {
 
-            this.client.error((error.stack || error).toString());
+            this.client.error(error.stack?.toString() || JSON.parse(error) || error.toString());
             throw error;
 
         }
