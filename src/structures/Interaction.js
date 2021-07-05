@@ -37,7 +37,7 @@ class Interaction {
         if (content)
             body.data.content = content;
         if (embed)
-            body.data.embed = embed.toJSON();
+            body.data.embeds = [embed.toJSON()];
         if (components)
             body.data.components = components.toJSON();
         if (quiet == true)
