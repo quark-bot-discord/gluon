@@ -325,7 +325,7 @@ class EventHandler {
 
             case INTERACTION_TYPES.COMMAND: {
 
-                const commandInteraction = new SlashCommand();
+                const commandInteraction = new SlashCommand(this.client, data);
 
                 this.client.emit(EVENTS.SLASH_COMMAND, commandInteraction);
 
