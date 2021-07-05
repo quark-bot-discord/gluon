@@ -1,4 +1,5 @@
 class Channel {
+    
     constructor(client, data, guild_id) {
 
         this.client = client;
