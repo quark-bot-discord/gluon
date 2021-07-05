@@ -49,7 +49,7 @@ class Interaction {
 
         } catch (error) {
 
-            this.client.error(error.stack.toString());
+            this.client.error((error.stack || error).toString());
             throw error;
 
         }

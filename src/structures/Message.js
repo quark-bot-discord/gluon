@@ -91,7 +91,7 @@ class Message {
 
         } catch (error) {
 
-            this.client.error(error.stack.toString());
+            this.client.error((error.stack || error).toString());
             throw error;
 
         }
@@ -124,7 +124,7 @@ class Message {
 
         } catch (error) {
 
-            this.client.error(error.stack.toString());
+            this.client.error((error.stack || error).toString());
             throw error;
 
         }
