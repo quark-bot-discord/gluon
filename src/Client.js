@@ -8,6 +8,7 @@ const WS = require("./gateway/index");
 
 const UserManager = require("./managers/UserManager");
 const GuildManager = require('./managers/GuildManager');
+const Message = require('./structures/Message');
 
 
 class Client extends EventsEmitter {
@@ -64,6 +65,34 @@ class Client extends EventsEmitter {
 
         }
 
+    }
+
+    async sendMessage(channel_id, guild_id, content, { embed, components, files } = {}) {
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
+
+        try {
+
+            const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
+            return new Message(this, data, channel_id.toString(), guild_id.toString(), false);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+        
     }
 
     setStatus(status) {
