@@ -57,24 +57,19 @@ class Interaction {
 
     }
 
-    async edit(content, { embed, components, quiet } = {}) {
+    async edit(content, { embed, components } = {}) {
 
         const body = {};
 
-        body.type = 4;
-        body.data = {};
-
         if (content)
-            body.data.content = content;
+            body.content = content;
         if (embed)
-            body.data.embeds = [embed.toJSON()];
+            body.embeds = [embed.toJSON()];
         if (components)
-            body.data.components = components.toJSON();
-        if (quiet == true)
-            body.data.flags = 64;
+            body.components = components.toJSON();
 
         try {
-
+            
             await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
             return this;
 
