@@ -76,6 +76,13 @@ module.exports = {
         method: "POST",
         bucket: null
     },
+    patchOriginalInteractionResponse: {
+        path: ([interaction_id, interaction_token]) => {
+            return `/webhooks/${interaction_id}/${interaction_token}/messages/@original`;
+        },
+        method: "PATCH",
+        bucket: null
+    },
     postBulkDeleteMessages: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages/bulk-delete`;

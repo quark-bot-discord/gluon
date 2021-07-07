@@ -46,6 +46,37 @@ class Interaction {
         try {
 
             await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
+            return this;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async edit(content, { embed, components, quiet } = {}) {
+
+        const body = {};
+
+        body.type = 4;
+        body.data = {};
+
+        if (content)
+            body.data.content = content;
+        if (embed)
+            body.data.embeds = [embed.toJSON()];
+        if (components)
+            body.data.components = components.toJSON();
+        if (quiet == true)
+            body.data.flags = 64;
+
+        try {
+
+            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.id, this.token], body);
+            return this;
 
         } catch (error) {
 
