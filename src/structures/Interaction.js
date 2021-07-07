@@ -75,7 +75,7 @@ class Interaction {
 
         try {
 
-            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.id, this.token], body);
+            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
             return this;
 
         } catch (error) {
