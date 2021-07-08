@@ -146,7 +146,7 @@ class Guild {
             const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
             let channels = [];
             for (let i = 0; i < data.length; i++)
-                channels.push(cacheChannel(client, data, this.id.toString()));
+                channels.push(cacheChannel(this.client, data, this.id.toString()));
             return channels;
 
         } catch (error) {
