@@ -56,7 +56,7 @@ class Guild {
         for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
             new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
 
-        for (let i = 0; i < data.channels.length; i++)
+        for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
             cacheChannel(this.client, data.channels[i], data.id, nocache);
 
         for (let i = 0; i < data.threads.length && this.client.cacheChannels == true; i++)
@@ -129,6 +129,25 @@ class Guild {
 
             const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
             return data;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async fetchChannels() {
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
+            let channels = [];
+            for (let i = 0; i < data.length; i++)
+                channels.push(cacheChannel(client, data, this.id.toString()));
+            return channels;
 
         } catch (error) {
 

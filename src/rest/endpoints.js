@@ -96,5 +96,12 @@ module.exports = {
         },
         method: "POST",
         bucket: null
+    },
+    getGuildChannels: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/channels`;
+        },
+        method: "GET",
+        bucket: null
     }
 };

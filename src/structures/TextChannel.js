@@ -12,8 +12,6 @@ class TextChannel extends Channel {
 
         if (nocache == false && this.client.cacheChannels == true)
             this.guild?.channels.cache.set(data.id, this);
-        else if (this.client.cacheChannels != true)
-            this.guild?.channels.cache.set(data.id, data.name);
 
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
