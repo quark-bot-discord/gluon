@@ -52,6 +52,7 @@ class Dropdown {
     toJSON() {
 
         return {
+            type: this.type,
             custom_id: this.custom_id,
             options: this.options,
             placeholder: this.placeholder,
