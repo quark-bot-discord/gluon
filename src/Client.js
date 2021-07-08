@@ -10,6 +10,7 @@ const UserManager = require("./managers/UserManager");
 const GuildManager = require('./managers/GuildManager');
 const Message = require('./structures/Message');
 
+const Redis = require("ioredis");
 
 class Client extends EventsEmitter {
 
@@ -32,6 +33,8 @@ class Client extends EventsEmitter {
         this.cacheChannels = cacheChannels;
         this.cacheGuilds = cacheGuilds;
         this.cacheVoiceStates = cacheVoiceStates;
+
+        this.redis = new Redis();
 
     }
 
