@@ -69,8 +69,28 @@ class Interaction {
             body.components = components.toJSON();
 
         try {
-            
+
             await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
+            return this;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async acknowledge() {
+
+        const body = {};
+
+        body.type = 6;
+
+        try {
+
+            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
             return this;
 
         } catch (error) {
