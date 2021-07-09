@@ -4,6 +4,7 @@ const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 const Message = require("../structures/Message");
+const OptionSelect = require("../structures/OptionSelect");
 const SlashCommand = require("../structures/SlashCommand");
 const Thread = require("../structures/Thread");
 const User = require("../structures/User");
@@ -311,7 +312,9 @@ class EventHandler {
 
                     case COMPONENT_TYPES.SELECT_MENU: {
 
-                        this.client.emit(EVENTS.MENU_SELECT, data);
+                        const componentInteraction = new OptionSelect(this.client, data);
+
+                        this.client.emit(EVENTS.MENU_SELECT, componentInteraction);
 
                         break;
 
