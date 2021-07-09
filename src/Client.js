@@ -118,12 +118,12 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.client.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
-            return new Message(this.client, data, channel_id, guild_id);
+            const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
+            return new Message(this, data, channel_id, guild_id);
 
         } catch (error) {
 
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
             throw error;
 
         }
