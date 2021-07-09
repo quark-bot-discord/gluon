@@ -100,7 +100,6 @@ class Message {
 
     async edit(content, { embed, components } = {}) {
 
-        if (!this.client.user.id === this.author.id) throw Error("Can't edit another member's message.");
         const body = {};
 
         if (content)
