@@ -11,6 +11,8 @@ class OptionSelect extends Interaction {
         
         this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, this.client.cacheMessages);
 
+        this.data = data;
+
     }
 
 }
