@@ -98,6 +98,38 @@ class Client extends EventsEmitter {
         
     }
 
+    async editMessage(channel_id, guild_id, message_id, content, { embed, components } = {}) {
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
+
+        if (this.referenced_message)
+            body.message_reference = {
+                message_id: message_id,
+                channel_id: channel_id,
+                guild_id: guild_id
+            };
+
+        try {
+
+            const data = await this.client.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
+            return new Message(this.client, data, channel_id, guild_id);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
     setStatus(status) {
 
         for (let i = 0; i < this.shards.length; i++)
