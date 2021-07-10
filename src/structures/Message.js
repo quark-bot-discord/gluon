@@ -50,9 +50,6 @@ class Message {
         // when the message was created
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
 
-        if (data.mention_channels)
-            this.mention_channels = data.mention_channels;
-
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         if (!this.guild)
