@@ -6,9 +6,9 @@ class AuditLog {
 
         this.id = BigInt(data.id);
 
-        this.target_id = BigInt(data.target_id);
+        this.target_id = data.target_id ? BigInt(data.target_id) : null;
 
-        this.executor_id = BigInt(data.user_id);
+        this.executor_id = data.user_id ? BigInt(data.user_id) : null;
 
         if (data.options) {
 
