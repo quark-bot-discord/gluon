@@ -11,11 +11,11 @@ const GuildManager = require('./managers/GuildManager');
 const Message = require('./structures/Message');
 
 const Redis = require("ioredis");
-const { MongoClient } = require('mongodb');
+/* const { MongoClient } = require('mongodb'); */
 
 class Client extends EventsEmitter {
 
-    async constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}, { dbURI, dbName, collectionName } = {}) {
+    /*async*/ constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}/*, { dbURI, dbName, collectionName } = {}*/) {
 
         super();
 
@@ -37,10 +37,12 @@ class Client extends EventsEmitter {
 
         this.redis = new Redis();
 
+        /*
         const dbClient = new MongoClient(dbURI);
         await dbClient.connect();
         const database = dbClient.db(dbName);
         this.db = database.collection(collectionName);
+        */
 
     }
 
