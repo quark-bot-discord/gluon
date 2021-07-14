@@ -16,7 +16,7 @@ class AuditLog {
                 this.channel_id = BigInt(data.options.channel_id);
 
             if (data.options.count)
-                this.count = data.options.count;
+                this.count = parseInt(data.options.count);
 
         }
 
