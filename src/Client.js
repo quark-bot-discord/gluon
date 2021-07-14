@@ -15,7 +15,7 @@ const { MongoClient } = require('mongodb');
 
 class Client extends EventsEmitter {
 
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}, { dbURI, dbName, collectionName } = {}) {
+    async constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}, { dbURI, dbName, collectionName } = {}) {
 
         super();
 
