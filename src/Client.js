@@ -138,6 +138,24 @@ class Client extends EventsEmitter {
 
     }
 
+    async followStatusChannel(channel_id) {
+
+        const body = {};
+
+        body.webhook_channel_id = channel_id;
+
+        try {
+
+            await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+    }
+
     setStatus(status) {
 
         for (let i = 0; i < this.shards.length; i++)

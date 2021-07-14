@@ -103,5 +103,12 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    postFollowNewsChannel: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/followers`;
+        },
+        method: "POST",
+        bucket: null
     }
 };
