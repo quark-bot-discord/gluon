@@ -110,5 +110,12 @@ module.exports = {
         },
         method: "POST",
         bucket: null
+    },
+    getGuildMember: {
+        path: ([guild_id, user_id]) => {
+            return `/guilds/${guild_id}/members/${user_id}`;
+        },
+        method: "GET",
+        bucket: null
     }
 };

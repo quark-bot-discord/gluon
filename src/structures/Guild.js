@@ -46,7 +46,7 @@ class Guild {
 
         this.voice_states = existing ? existing.voice_states : new GuildVoiceStatesManager(this.client, data.voice_states);
 
-        this.members = existing ? existing.members : new GuildMemberManager(this.client);
+        this.members = existing ? existing.members : new GuildMemberManager(this.client, this);
 
         this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
 
