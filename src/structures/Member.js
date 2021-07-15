@@ -71,7 +71,7 @@ class Member {
 
     }
 
-    addRole(role_id, { reason }) {
+    async addRole(role_id, { reason }) {
 
         const body = {};
 
@@ -91,7 +91,7 @@ class Member {
 
     }
 
-    removeRole(role_id, { reason }) {
+    async removeRole(role_id, { reason }) {
 
         const body = {};
 
