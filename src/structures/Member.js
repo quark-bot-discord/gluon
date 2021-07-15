@@ -46,7 +46,7 @@ class Member {
             this.guild_id = BigInt(guild_id);
 
         if (this.guild) {
-            const roles = guild.roles.cache.map(role => data.roles.includes(role.id.toString()));
+            const roles = this.guild.roles.cache.map(role => data.roles.includes(role.id.toString()));
             this.highestRolePosition = roles.reduce((p, c) => p.position > c.position ? p : c)?.position || 0;
         } else {
             this.highestRolePosition = 0;
