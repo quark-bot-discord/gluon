@@ -148,7 +148,7 @@ module.exports = {
     },
     deleteRemoveMemberRole: {
         path: ([guild_id, user_id, role_id]) => {
-            return `/guilds/${guild_id}/members/${user_id}/${role_id}`;
+            return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "DELETE",
         bucket: null
