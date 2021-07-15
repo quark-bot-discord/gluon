@@ -45,8 +45,13 @@ class Member {
         if (!this.guild)
             this.guild_id = BigInt(guild_id);
 
-        /* should check whether member actually *needs* to be cached */
-        /* only really needed if serverlog or modlog is enabled, otherwise kinda irrelevant */
+        if (this.guild) {
+            const roles = guild.roles.cache.map(role => data.roles.includes(role.id.toString()));
+            this.highestRolePosition = roles.reduce((p, c) => p.position > c.position ? p : c)?.position || 0;
+        } else {
+            this.highestRolePosition = 0;
+        }
+
         if (nocache == false && this.client.cacheMembers == true)
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
