@@ -131,5 +131,26 @@ module.exports = {
         },
         method: "DELETE",
         bucket: null
+    },
+    deleteRemoveGuildBan: {
+        path: ([guild_id, user_id]) => {
+            return `/guilds/${guild_id}/members/${user_id}`;
+        },
+        method: "DELETE",
+        bucket: null
+    },
+    putAddGuildMemberRole: {
+        path: ([guild_id, user_id, role_id]) => {
+            return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
+        },
+        method: "PUT",
+        bucket: null
+    },
+    deleteRemoveMemberRole: {
+        path: ([guild_id, user_id, role_id]) => {
+            return `/guilds/${guild_id}/members/${user_id}/${role_id}`;
+        },
+        method: "DELETE",
+        bucket: null
     }
 };
