@@ -1,4 +1,5 @@
 class Role {
+    
     constructor(client, data, guild_id, nocache) {
 
         this.client = client;
@@ -14,6 +15,7 @@ class Role {
             this.client.guilds.cache.get(guild_id)?.roles.cache.set(data.id, this);
 
     }
+
 }
 
 module.exports = Role;
