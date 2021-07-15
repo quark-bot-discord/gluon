@@ -144,6 +144,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "PUT",
+        useHeaders: true,
         bucket: null
     },
     deleteRemoveMemberRole: {
@@ -151,6 +152,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "DELETE",
+        useHeaders: true,
         bucket: null
     },
     getUser: {

@@ -78,7 +78,7 @@ class Member {
         const body = {};
 
         if (reason)
-            body.reason = reason;
+            body["X-Audit-Log-Reason"] = reason;
 
         try {
 
@@ -98,7 +98,7 @@ class Member {
         const body = {};
 
         if (reason)
-            body.reason = reason;
+            body["X-Audit-Log-Reason"] = reason;
 
         try {
 
