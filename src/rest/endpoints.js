@@ -134,7 +134,7 @@ module.exports = {
     },
     deleteRemoveGuildBan: {
         path: ([guild_id, user_id]) => {
-            return `/guilds/${guild_id}/members/${user_id}`;
+            return `/guilds/${guild_id}/bans/${user_id}`;
         },
         method: "DELETE",
         bucket: null
