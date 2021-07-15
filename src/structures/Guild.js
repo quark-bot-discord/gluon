@@ -115,6 +115,21 @@ class Guild {
         }
     }
 
+    async kick(user_id) {
+
+        try {
+
+            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id]);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
     async fetchAuditLogs({ limit, type }) {
 
         const body = {};
