@@ -16,7 +16,7 @@ class GuildMemberManager {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id], body);
+            const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
             return new Member(this.client, data, user_id, this.guild.id, data.user);
 
         } catch (error) {
