@@ -34,7 +34,7 @@ class Client extends EventsEmitter {
         this.cacheChannels = cacheChannels;
         this.cacheGuilds = cacheGuilds;
         this.cacheVoiceStates = cacheVoiceStates;
-        this.cacheROles = cacheRoles;
+        this.cacheRoles = cacheRoles;
 
         this.redis = new Redis();
 
