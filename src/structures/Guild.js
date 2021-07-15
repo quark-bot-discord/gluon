@@ -115,11 +115,16 @@ class Guild {
         }
     }
 
-    async kick(user_id) {
+    async kick(user_id, { reason }) {
+
+        const body = {};
+
+        if (reason)
+            body.reason = reason;
 
         try {
 
-            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id]);
+            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
 
         } catch (error) {
 
