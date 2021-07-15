@@ -47,7 +47,10 @@ module.exports.EVENTS = {
     THREAD_CREATE: "threadCreate",
     THREAD_UPDATE: "threadUpdate",
     THREAD_DELETE: "threadDelete",
-    INVITE_CREATE: "inviteCreate"
+    INVITE_CREATE: "inviteCreate",
+    GUILD_ROLE_CREATE: "roleCreate",
+    GUILD_ROLE_UPDATE: "roleUpdate",
+    GUILD_ROLE_DELETE: "roleDelete"
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT: 0,

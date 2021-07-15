@@ -15,7 +15,7 @@ const Redis = require("ioredis");
 
 class Client extends EventsEmitter {
 
-    /*async*/ constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false } = {}/*, { dbURI, dbName, collectionName } = {}*/) {
+    /*async*/ constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false } = {}/*, { dbURI, dbName, collectionName } = {}*/) {
 
         super();
 
@@ -34,6 +34,7 @@ class Client extends EventsEmitter {
         this.cacheChannels = cacheChannels;
         this.cacheGuilds = cacheGuilds;
         this.cacheVoiceStates = cacheVoiceStates;
+        this.cacheROles = cacheRoles;
 
         this.redis = new Redis();
 

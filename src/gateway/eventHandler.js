@@ -5,6 +5,7 @@ const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 const Message = require("../structures/Message");
 const OptionSelect = require("../structures/OptionSelect");
+const Role = require("../structures/Role");
 const SlashCommand = require("../structures/SlashCommand");
 const Thread = require("../structures/Thread");
 const User = require("../structures/User");
@@ -72,20 +73,27 @@ class EventHandler {
 
     GUILD_ROLE_CREATE(data) {
 
+        const role = new Role(this.client, data, data.guild_id);
 
+        this.client.emit(EVENTS.GUILD_ROLE_CREATE, role);
 
     }
 
     GUILD_ROLE_UPDATE(data) {
 
+        const oldRole = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.id);
+        const newRole = new Role(this.client, data, data.guild_id);
 
+        this.client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
 
     }
 
     GUILD_ROLE_DELETE(data) {
 
+        const role = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.id);
+        this.client.guilds.cache.get(data.guild_id)?.roles.cache.delete(data.id);
 
-
+        this.client.emit(EVENTS.GUILD_ROLE_DELETE, role);
 
     }
 

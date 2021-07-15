@@ -1,6 +1,8 @@
+const { Role } = require("discord.js");
 const { AUDIT_LOG_TYPES } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
+const GuildRoleManager = require("../managers/GuildRoleManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const AuditLog = require("./AuditLog");
@@ -48,6 +50,8 @@ class Guild {
 
         this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
 
+        this.roles = existing ? existing.roles : new GuildRoleManager(this.client);
+
         this.preferred_locale = data.preferred_locale;
 
         if (nocache == false && this.client.cacheGuilds == true)
@@ -64,6 +68,9 @@ class Guild {
 
         for (let i = 0; i < data.voice_states.length && this.client.cacheVoiceStates == true; i++)
             new VoiceState(this.client, data.voice_states[i], data.id, nocache);
+
+        for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
+            new Role(this.client, data.roles[i], data.id, nocache);
 
     }
 
