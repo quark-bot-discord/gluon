@@ -48,7 +48,7 @@ class Member {
         if (this.guild && this.client.cacheRoles == true) {
             this.highestRolePosition = 0;
             for (let i = 0; i < data.roles.length; i++) {
-                const role = this.guild.roles.cache.get(data.roles[i].id);
+                const role = this.guild.roles.cache.get(data.roles[i]);
                 if (role.position > this.highestRolePosition)
                     this.highestRolePosition = role.position;
             }
