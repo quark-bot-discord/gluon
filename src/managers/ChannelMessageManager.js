@@ -41,7 +41,7 @@ class ChannelMessageManager {
 
             } catch (error) {
 
-                this.client.error(error.stack.toString());
+                this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
                 throw error;
 
             }
@@ -59,7 +59,7 @@ class ChannelMessageManager {
 
             } catch (error) {
 
-                this.client.error(error.stack.toString());
+                this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
                 throw error;
 
             }

@@ -42,7 +42,7 @@ class GuildChannelsManager {
 
         } catch (error) {
 
-            this.client.error(error.stack.toString());
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
             throw error;
 
         }
