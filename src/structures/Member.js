@@ -56,7 +56,7 @@ class Member {
             this.highestRolePosition = 0;
         }
 
-        if (nocache == false && this.client.cacheMembers == true)
+        if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
     }
