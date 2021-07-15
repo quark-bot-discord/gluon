@@ -1,4 +1,3 @@
-const { Role } = require("discord.js");
 const { AUDIT_LOG_TYPES } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
@@ -7,6 +6,7 @@ const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const AuditLog = require("./AuditLog");
 const Member = require("./Member");
+const Role = require("./Role");
 const Thread = require("./Thread");
 const VoiceState = require("./VoiceState");
 
