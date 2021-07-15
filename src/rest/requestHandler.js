@@ -134,7 +134,7 @@ class RequestHandler {
                     delete body.files;
                     form.append("payload_json", JSON.stringify(body));
                     Object.assign(headers, form.getHeaders());
-                } else {
+                } else if (actualRequest.method != "GET" && actualRequest.method != "DELETE") {
                     headers["Content-Type"] = "application/json";
                 }
 
