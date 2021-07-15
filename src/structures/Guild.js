@@ -74,6 +74,25 @@ class Guild {
 
     }
 
+    async me() {
+        
+        const cached = this.members.cache.get(this.client.user.id.toString());
+
+        if (cached)
+            return cached;
+
+        try {
+
+            return await this.members.fetch(this.client.user.id);
+
+        } catch (error) {
+
+            throw error;
+
+        }
+
+    }
+
     async ban(user_id, { reason, days }) {
 
         const body = {};
