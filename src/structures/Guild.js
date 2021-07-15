@@ -165,6 +165,22 @@ class Guild {
 
     }
 
+    async fetchBan(user_id) {
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
+            return data;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
     calculateCacheCount() {
 
         const x = this.member_count < 500000 ? this.member_count / 500000 : 499999;

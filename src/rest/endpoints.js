@@ -117,5 +117,12 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    getGuildBan: {
+        path: ([guild_id, user_id]) => {
+            return `/guilds/${guild_id}/bans/${user_id}`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
