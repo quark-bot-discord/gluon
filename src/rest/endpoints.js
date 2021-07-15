@@ -152,5 +152,12 @@ module.exports = {
         },
         method: "DELETE",
         bucket: null
+    },
+    getUser: {
+        path: ([user_id]) => {
+            return `/users/${user_id}`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
