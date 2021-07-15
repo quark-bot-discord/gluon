@@ -113,6 +113,27 @@ class Guild {
             throw error;
 
         }
+
+    }
+
+    async unban(user_id, { reason }) {
+
+        const body = {};
+
+        if (reason)
+            body.reason = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+        
     }
 
     async kick(user_id, { reason }) {
