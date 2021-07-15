@@ -5,6 +5,7 @@ const Dropdown = require("./src/util/dropdownBuilder");
 const DropdownOption = require("./src/util/dropdownOption");
 const Embed = require("./src/util/embedBuilder");
 const MessageComponents = require("./src/util/messageComponents");
+const { PERMISSIONS } = require("./src/constants");
 
 module.exports = {
     Client,
@@ -13,5 +14,6 @@ module.exports = {
     Dropdown,
     DropdownOption,
     Embed,
-    MessageComponents
+    MessageComponents,
+    PERMISSIONS
 };
