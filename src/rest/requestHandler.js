@@ -139,10 +139,10 @@ class RequestHandler {
                 }
 
                 /* actually make the request */
-                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}${body && actualRequest.method == "GET" ? "?" + serialize(body) : ""}`, {
+                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") ? "?" + serialize(body) : ""}`, {
                     method: actualRequest.method,
                     headers: headers,
-                    body: form ? form : (body && actualRequest.method != "GET" ? JSON.stringify(body) : undefined),
+                    body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
                     compress: true
                 });
 
