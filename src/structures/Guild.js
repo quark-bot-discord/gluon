@@ -254,6 +254,18 @@ class Guild {
 
     }
 
+    calculateMemberCacheCount() {
+
+        const x = this.member_count < 500000 ? this.member_count : 499999;
+        /* creates a slope for how many members should stay cached */
+        /* more members => smaller percentage of users active => a smaller percentage of users should be cached */
+        /* a maximum of 500 seems suitable */
+        const shouldCacheCount = Math.floor((1 - Math.sqrt(x / 501000)) * x);
+
+        return shouldCacheCount;
+
+    }
+
 }
 
 module.exports = Guild;
