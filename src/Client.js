@@ -157,6 +157,58 @@ class Client extends EventsEmitter {
         }
     }
 
+    async purgeChannelMessages(channel_id, messages) {
+
+        const body = {};
+
+        body.messages = messages;
+
+        try {
+
+            await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async fetchChannelMessages(guild_id, channel_id, { around, before, after, limit }) {
+
+        const body = {};
+
+        if (around)
+            body.around = around;
+
+        if (before)
+            body.before = before;
+
+        if (after)
+            body.after = after;
+
+        if (limit)
+            body.limit = limit;
+
+        try {
+
+            const data = await this.request.makeRequest("getChannelMessages", [channel_id], body);
+            let messages = [];
+            for (let i = 0; i < data.length; i++)
+                messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
+            return messages;
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
     setStatus(status) {
 
         for (let i = 0; i < this.shards.length; i++)
