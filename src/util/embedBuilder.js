@@ -99,6 +99,8 @@ class Embed {
             url: url
         };
 
+        return this;
+
     }
 
     toJSON() {
