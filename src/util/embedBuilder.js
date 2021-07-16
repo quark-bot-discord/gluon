@@ -93,6 +93,14 @@ class Embed {
 
     }
 
+    setImage(url) {
+
+        this.image = {
+            url: url
+        };
+
+    }
+
     toJSON() {
 
         return {
@@ -104,7 +112,8 @@ class Embed {
             color: this.color,
             footer: this.footer,
             author: this.author,
-            fields: this.fields
+            fields: this.fields,
+            image: this.image
         };
 
     }
