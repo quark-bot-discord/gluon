@@ -52,7 +52,6 @@ class TextChannel extends Channel {
         try {
 
             await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
-            return true;
 
         } catch (error) {
 
