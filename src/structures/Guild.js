@@ -241,9 +241,9 @@ class Guild {
 
     }
 
-    calculateCacheCount() {
+    calculateMessageCacheCount() {
 
-        const x = this.member_count < 500000 ? this.member_count / 500000 : 499999;
+        const x = (this.member_count < 500000 ? this.member_count : 499999) / 500000;
         /* creates an "S-Curve" for how many messages should be cached */
         /* more members => assume more activity => therefore more messages to be cached */
         /* minimum of 50 messages to be cached, and a maximum of 1000 */
