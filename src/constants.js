@@ -98,6 +98,7 @@ module.exports.COMPONENT_TYPES = {
     SELECT_MENU: 3
 };
 module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 8; // 8 hours
+module.exports.DEFAULT_USER_EXPIRY_SECONDS = 3600 * 4; // 4 hours
 module.exports.PERMISSIONS = {
     CREATE_INSTANT_INVITE: (1 << 0),
     KICK_MEMBERS: (1 << 1),
