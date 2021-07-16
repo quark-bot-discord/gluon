@@ -22,7 +22,10 @@ class User {
 
         this.discriminator = data.discriminator;
 
-        // should only cache if actually needed - TBD
+        this.cached = (new Date().getTime() / 1000) | 0;
+
+        this.client.users.cache.delete(data.id);
+
         if (nocache == false && this.client.cacheUsers == true)
             this.client.users.cache.set(data.id, this);
 
