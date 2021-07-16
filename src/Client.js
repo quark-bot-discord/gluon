@@ -104,7 +104,7 @@ class Client extends EventsEmitter {
             throw error;
 
         }
-        
+
     }
 
     async editMessage(channel_id, guild_id, message_id, content, { embed, components } = {}) {
@@ -195,35 +195,69 @@ class Client extends EventsEmitter {
 
                 }
 
-                if (this.cacheMessages == true) {
+                if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true) {
 
                     setInterval(() => {
 
-                        const currentTime = Math.floor(new Date().getTime() / 1000);
+                        if (this.cacheMessages == true || this.cacheMembers == true) {
 
-                        this.guilds.cache.forEach(guild => {
+                            const currentTime = Math.floor(new Date().getTime() / 1000);
 
-                            this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
+                            this.guilds.cache.forEach(guild => {
 
-                            const cacheCount = guild.calculateCacheCount();
+                                if (this.cacheMessages == true) {
 
-                            this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
+                                    this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
 
-                            guild.channels.cache.forEach(channel => {
+                                    const cacheCount = guild.calculateMessageCacheCount();
 
-                                if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
+                                    this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
-                                    this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+                                    guild.channels.cache.forEach(channel => {
 
-                                    const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
+                                        if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
 
-                                    this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+                                            this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+
+                                            const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
+
+                                            this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+
+                                        }
+
+                                    });
+
+                                }
+
+                                if (this.cacheMembers == true) {
+
+                                    this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
+
+                                    const cacheCount = guild.calculateMemberCacheCount();
+
+                                    this.emit("debug", `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`);
+
+                                    this.emit("debug", `Sweeping members for GUILD ${channel.id}...`);
+
+                                    const nowCached = guild.members.sweepMembers(cacheCount);
+
+                                    this.emit("debug", `New cache size of ${nowCached || 0} for GUILD ${guild.id}...`);
 
                                 }
 
                             });
 
-                        });
+                        }
+
+                        if (this.cacheUsers == true) {
+
+                            this.emit("debug", `Sweeping users...`);
+
+                            const nowCached = this.users.sweepUsers();
+
+                            this.emit("debug", `New user cache size is ${nowCached || 0}...`);
+
+                        }
 
                     }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
 
