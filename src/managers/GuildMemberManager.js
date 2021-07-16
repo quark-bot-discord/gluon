@@ -28,6 +28,33 @@ class GuildMemberManager {
 
     }
 
+    sweepMembers(cacheCount) {
+
+        if (this.cache.size == 0)
+            return;
+
+        let counter = this.cache.size;
+
+        const newCache = new Map();
+
+        this.cache.forEach((member, id) => {
+
+            if (counter <= cacheCount) {
+
+                newCache.set(id, member);
+
+            }
+
+            counter--;
+
+        });
+
+        this.cache = newCache;
+
+        return this.cache.size;
+
+    }
+
 }
 
 module.exports = GuildMemberManager;
