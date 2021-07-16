@@ -1,3 +1,4 @@
+const { DEFAULT_USER_EXPIRY_SECONDS } = require("../constants");
 const User = require("../structures/User");
 
 class UserManager {
@@ -23,6 +24,29 @@ class UserManager {
             throw error;
 
         }
+
+    }
+
+    sweepUsers() {
+
+        if (this.cache.size == 0)
+            return;
+
+        const newCache = new Map();
+
+        this.cache.forEach((user, id) => {
+
+            if (user.cached + DEFAULT_USER_EXPIRY_SECONDS > currentTime) {
+
+                newCache.set(id, user);
+
+            }
+
+        });
+
+        this.cache = newCache;
+
+        return this.cache.size;
 
     }
 
