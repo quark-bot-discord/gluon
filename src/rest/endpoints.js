@@ -161,5 +161,19 @@ module.exports = {
         },
         method: "GET",
         bucket: null
+    },
+    getChannelWebhooks: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/webhooks`;
+        },
+        method: "GET",
+        bucket: null
+    },
+    deleteWebhook: {
+        path: ([webhook_id]) => {
+            return `/webhooks/${webhook_id}`;
+        },
+        method: "DELETE",
+        bucket: null
     }
 };
