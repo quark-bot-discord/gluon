@@ -161,7 +161,8 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("getChannelWebhooks", [channel_id]);
+            const data = await this.request.makeRequest("getChannelWebhooks", [channel_id]);
+            return data;
 
         } catch (error) {
 
