@@ -161,7 +161,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("getChannelWebhooks", [channel_id], body);
+            await this.request.makeRequest("getChannelWebhooks", [channel_id]);
 
         } catch (error) {
 
@@ -176,7 +176,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("deleteWebhook", [webhook_id], body);
+            await this.request.makeRequest("deleteWebhook", [webhook_id]);
 
         } catch (error) {
 
