@@ -320,7 +320,7 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`);
 
-                                    this.emit("debug", `Sweeping members for GUILD ${channel.id}...`);
+                                    this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
 
                                     const nowCached = guild.members.sweepMembers(cacheCount);
 
