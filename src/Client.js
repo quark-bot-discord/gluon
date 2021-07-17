@@ -157,6 +157,36 @@ class Client extends EventsEmitter {
         }
     }
 
+    async fetchChannelWebhooks(channel_id) {
+
+        try {
+
+            await this.request.makeRequest("getChannelWebhooks", [channel_id], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async deleteWebhook(webhook_id) {
+
+        try {
+
+            await this.request.makeRequest("deleteWebhook", [webhook_id], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
     async purgeChannelMessages(channel_id, messages) {
 
         const body = {};
