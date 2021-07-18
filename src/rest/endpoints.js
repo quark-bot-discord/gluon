@@ -175,5 +175,12 @@ module.exports = {
         },
         method: "DELETE",
         bucket: null
+    },
+    getSearchGuildMembers: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/members/search`;
+        },
+        method: "GET",
+        bucket: null
     }
 };
