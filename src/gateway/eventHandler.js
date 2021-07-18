@@ -72,7 +72,7 @@ class EventHandler {
     }
 
     GUILD_JOIN_REQUEST_DELETE(data) {
-        
+
     }
 
     GUILD_ROLE_CREATE(data) {
@@ -350,6 +350,10 @@ class EventHandler {
 
         }
 
+    }
+
+    APPLICATION_COMMAND_UPDATE() {
+        
     }
 
 }
