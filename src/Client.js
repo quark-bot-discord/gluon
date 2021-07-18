@@ -49,7 +49,7 @@ class Client extends EventsEmitter {
 
     error(error) {
 
-        this.emit("error", `\`\`\`js\n${error.substring(0, 2000)}\`\`\``);
+        this.emit("error", `\`\`\`js\n${error.substring(0, 4000)}\`\`\``);
 
     }
 
