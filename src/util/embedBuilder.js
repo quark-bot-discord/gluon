@@ -44,12 +44,20 @@ class Embed {
 
     }
 
-    setColor(hex) {
+    setColor(colour) {
 
-        if (hex[0] == "#")
-            hex = hex.substring(1);
-        
-        this.color = hexToInt(hex);
+        if (typeof colour == "string") {
+
+            if (colour[0] == "#")
+                colour = colour.substring(1);
+
+            this.color = hexToInt(colour);
+
+        } else if (typeof colour == "number") {
+
+            this.color = colour;
+
+        }
 
         return this;
 
