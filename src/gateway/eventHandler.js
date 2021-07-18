@@ -226,7 +226,7 @@ class EventHandler {
 
     GUILD_BAN_ADD(data) {
 
-        const user = new User(this.client, data);
+        const user = new User(this.client, data.user);
         user.guild = this.client.guilds.cache.get(data.guild_id) || null;
         if (!user.guild)
             user.guild_id = BigInt(data.guild_id);
@@ -237,7 +237,7 @@ class EventHandler {
 
     GUILD_BAN_REMOVE(data) {
 
-        const user = new User(this.client, data);
+        const user = new User(this.client, data.user);
         user.guild = this.client.guilds.cache.get(data.guild_id) || null;
         if (!user.guild)
             user.guild_id = BigInt(data.guild_id);
