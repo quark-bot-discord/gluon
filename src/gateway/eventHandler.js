@@ -226,13 +226,19 @@ class EventHandler {
 
     GUILD_BAN_ADD(data) {
 
+        const user = new User(client, data);
+        user.guild_id = BigInt(data.guild_id);
 
+        this.client.emit(EVENTS.GUILD_BAN_ADD, user);
 
     }
 
     GUILD_BAN_REMOVE(data) {
 
+        const user = new User(client, data);
+        user.guild_id = BigInt(data.guild_id);
 
+        this.client.emit(EVENTS.GUILD_BAN_ADD, user);
 
     }
 
@@ -244,7 +250,7 @@ class EventHandler {
 
     INVITE_DELETE(data) {
 
-
+        this.client.emit(EVENTS.INVITE_DELETE, data);
 
     }
 
@@ -353,7 +359,7 @@ class EventHandler {
     }
 
     APPLICATION_COMMAND_UPDATE() {
-        
+
     }
 
 }
