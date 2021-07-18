@@ -13,6 +13,10 @@ class UserManager {
 
     async fetch(user_id) {
 
+        const cachedUser = this.cache.get(user_id);
+        if (cachedUser)
+            return cachedUser;
+
         try {
 
             const data = await this.client.request.makeRequest("getUser", [user_id]);
