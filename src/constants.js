@@ -48,6 +48,7 @@ module.exports.EVENTS = {
     THREAD_UPDATE: "threadUpdate",
     THREAD_DELETE: "threadDelete",
     INVITE_CREATE: "inviteCreate",
+    INVITE_DELETE: "inviteDelete",
     GUILD_ROLE_CREATE: "roleCreate",
     GUILD_ROLE_UPDATE: "roleUpdate",
     GUILD_ROLE_DELETE: "roleDelete"
