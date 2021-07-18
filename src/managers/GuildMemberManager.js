@@ -27,6 +27,26 @@ class GuildMemberManager {
         }
 
     }
+    
+    async search(query) {
+
+        const body = {};
+
+        body.query = query;
+
+        try {
+
+            const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
+            return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
 
     sweepMembers(cacheCount) {
 
