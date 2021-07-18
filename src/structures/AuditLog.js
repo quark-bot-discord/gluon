@@ -10,6 +10,8 @@ class AuditLog {
 
         this.executor_id = data.user_id ? BigInt(data.user_id) : null;
 
+        this.reason = data.reason || null;
+
         if (data.options) {
 
             if (data.options.channel_id)
