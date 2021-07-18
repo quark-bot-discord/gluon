@@ -71,6 +71,10 @@ class EventHandler {
 
     }
 
+    GUILD_JOIN_REQUEST_DELETE(data) {
+        
+    }
+
     GUILD_ROLE_CREATE(data) {
 
         const role = new Role(this.client, data, data.guild_id);
