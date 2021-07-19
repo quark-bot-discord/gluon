@@ -179,7 +179,7 @@ class Guild {
                 return null;
 
             // currently only one log is ever fetched, but best to make it easy to allow multiple if needed in the future
-            return [new AuditLog(this.client, data.audit_log_entries[0])];
+            return [new AuditLog(this.client, data.audit_log_entries[0], data.users)];
 
         } catch (error) {
 
