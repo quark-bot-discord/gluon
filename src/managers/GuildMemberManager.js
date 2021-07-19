@@ -37,8 +37,8 @@ class GuildMemberManager {
         try {
 
             const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
-            if (data && data.length != 0)
-                return new Member(this.client, data[0], data[0].id, this.guild.id.toString(), data[0].user);
+            if (data.length != 0)
+                return new Member(this.client, data[0], data[0].user.id, this.guild.id.toString(), data[0].user);
             else
                 return null;
 
