@@ -1,4 +1,5 @@
 const { CDN_BASE_URL } = require("../constants");
+const getTimestamp = require("../util/getTimestampFromSnowflake");
 
 class User {
 
@@ -47,7 +48,7 @@ class User {
 
     get createdTimestamp() {
 
-        return ((Number(this.id >> 22n) + 1420070400000) / 1000) | 0;
+        return getTimestamp(this.id);
 
     }
 

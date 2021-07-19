@@ -22,6 +22,7 @@ const User = require("./src/structures/User");
 const VoiceChannel = require("./src/structures/VoiceChannel");
 const VoiceState = require("./src/structures/VoiceState");
 const { PERMISSIONS } = require("./src/constants");
+const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 
 module.exports = {
     Client,
@@ -47,5 +48,6 @@ module.exports = {
     User,
     VoiceChannel,
     VoiceState,
+    getTimestampFromSnowflake: getTimestamp,
     PERMISSIONS
 };
