@@ -242,7 +242,7 @@ class EventHandler {
         if (!user.guild)
             user.guild_id = BigInt(data.guild_id);
 
-        this.client.emit(EVENTS.GUILD_BAN_ADD, user);
+        this.client.emit(EVENTS.GUILD_BAN_REMOVE, user);
 
     }
 
