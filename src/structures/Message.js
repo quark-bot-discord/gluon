@@ -1,9 +1,22 @@
 const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
+const { PERMISSIONS } = require("../constants");
 
+/**
+ * A message belonging to a channel within a guild.
+ */
 class Message {
 
+    /**
+     * Creates the structure for a message.
+     * @constructor
+     * @param {Client} client The client instance.
+     * @param {object} data Message data returned from Discord. {@link https://discord.com/developers/docs/resources/channel#message-object}
+     * @param {string} channel_id The id of the channel that the message belongs to.
+     * @param {string} guild_id The id of the guild that the channel belongs to.
+     * @param {boolean?} nocache Whether this message should be cached or not.
+     */
     constructor(client, data, channel_id, guild_id, nocache = false) {
 
         this.client = client;
@@ -67,6 +80,9 @@ class Message {
     /* https://discord.com/developers/docs/resources/channel#create-message */
     async reply(content, { embed, components, files } = {}) {
 
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+            return null;
+
         const body = {};
 
         if (content)
@@ -99,6 +115,9 @@ class Message {
     }
 
     async edit(content, { embed, components } = {}) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+            return null;
 
         const body = {};
 

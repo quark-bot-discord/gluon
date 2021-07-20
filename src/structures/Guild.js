@@ -1,9 +1,10 @@
-const { AUDIT_LOG_TYPES } = require("../constants");
+const { AUDIT_LOG_TYPES, PERMISSIONS } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildRoleManager = require("../managers/GuildRoleManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
+const checkPermission = require("../util/checkPermission");
 const AuditLog = require("./AuditLog");
 const Member = require("./Member");
 const Role = require("./Role");
@@ -87,6 +88,7 @@ class Guild {
 
         } catch (error) {
 
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
             throw error;
 
         }
@@ -94,6 +96,9 @@ class Guild {
     }
 
     async ban(user_id, { reason, days }) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
 
         const body = {};
 
@@ -118,6 +123,9 @@ class Guild {
 
     async unban(user_id, { reason }) {
 
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
+
         const body = {};
 
         if (reason)
@@ -138,6 +146,9 @@ class Guild {
 
     async kick(user_id, { reason }) {
 
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.KICK_MEMBERS))
+            return null;
+
         const body = {};
 
         if (reason)
@@ -157,6 +168,9 @@ class Guild {
     }
 
     async fetchAuditLogs({ limit, type }) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.VIEW_AUDIT_LOG))
+            return null;
 
         const body = {};
 
@@ -192,6 +206,9 @@ class Guild {
 
     async fetchInvites() {
 
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
+            return null;
+
         try {
 
             const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
@@ -226,6 +243,9 @@ class Guild {
     }
 
     async fetchBan(user_id) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
 
         try {
 

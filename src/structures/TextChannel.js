@@ -1,3 +1,4 @@
+const { PERMISSIONS } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
 const Message = require("./Message");
@@ -16,6 +17,9 @@ class TextChannel extends Channel {
     }
     /* https://discord.com/developers/docs/resources/channel#create-message */
     async send(content, { embed, components, files } = {}) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+            return null;
 
         const body = {};
 
@@ -44,6 +48,9 @@ class TextChannel extends Channel {
     }
 
     async bulkDelete(messages) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_MESSAGES))
+            return null;
 
         const body = {};
 

@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+const { CDN_BASE_URL, PERMISSIONS } = require("../constants");
 const User = require("./User");
 
 class Member {
@@ -54,9 +54,8 @@ class Member {
                 if (role.position > this.highestRolePosition)
                     this.highestRolePosition = role.position;
             }
-        } else {
+        } else
             this.highestRolePosition = 0;
-        }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
@@ -74,6 +73,9 @@ class Member {
     }
 
     async addRole(role_id, { reason }) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
 
         const body = {};
 
@@ -94,6 +96,9 @@ class Member {
     }
 
     async removeRole(role_id, { reason }) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
 
         const body = {};
 
