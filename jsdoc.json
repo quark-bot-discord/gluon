@@ -1,18 +1,8 @@
 {
-    "source": {
-        "include": [
-            "src",
-            "package.json",
-            "README.md"
-        ],
-        "includePattern": ".js$",
-        "excludePattern": "(node_modules/|docs)"
-    },
     "plugins": [
         "plugins/markdown"
     ],
     "opts": {
-        "destination": "./out/",
         "encoding": "utf8",
         "recurse": true,
         "theme_opts": {
