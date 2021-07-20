@@ -2,9 +2,6 @@ const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
 const { PERMISSIONS } = require("../constants");
-const Client = require("../Client");
-const Guild = require("./Guild");
-const Channel = require("./Channel");
 const checkPermission = require("../util/checkPermission");
 
 /**
