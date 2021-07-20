@@ -79,11 +79,8 @@ class ChannelMessageManager {
 
         this.cache.forEach((message, id) => {
 
-            if (message.timestamp + DEFAULT_MESSAGE_EXPIRY_SECONDS > currentTime && counter <= cacheCount) {
-
+            if (message.timestamp + DEFAULT_MESSAGE_EXPIRY_SECONDS > currentTime && counter <= cacheCount)
                 newCache.set(id, message);
-
-            }
 
             counter--;
 

@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require('./constants');
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require("./constants");
 
 const EventsEmitter = require("events");
 
@@ -7,8 +7,8 @@ const Request = require("./rest/requestHandler");
 const WS = require("./gateway/index");
 
 const UserManager = require("./managers/UserManager");
-const GuildManager = require('./managers/GuildManager');
-const Message = require('./structures/Message');
+const GuildManager = require("./managers/GuildManager");
+const Message = require("./structures/Message");
 
 const Redis = require("ioredis");
 
@@ -83,6 +83,7 @@ class Client extends EventsEmitter {
 
         } catch (error) {
 
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
             throw error;
 
         }
@@ -320,22 +321,15 @@ class Client extends EventsEmitter {
 
                 let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
-                for (let i = 0; i < gatewayInfo.shards && remainingSessionStarts != 0; i++, remainingSessionStarts--) {
-
+                for (let i = 0; i < gatewayInfo.shards && remainingSessionStarts != 0; i++, remainingSessionStarts--)
                     setTimeout(() => {
 
-                        for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++) {
-
+                        for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
                             this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]));
-
-                        }
 
                     }, 5000 * i);
 
-                }
-
-                if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true) {
-
+                if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true)
                     setInterval(() => {
 
                         if (this.cacheMessages == true || this.cacheMembers == true) {
@@ -390,7 +384,7 @@ class Client extends EventsEmitter {
 
                         if (this.cacheUsers == true) {
 
-                            this.emit("debug", `Sweeping users...`);
+                            this.emit("debug", "Sweeping users...");
 
                             const nowCached = this.users.sweepUsers();
 
@@ -399,8 +393,6 @@ class Client extends EventsEmitter {
                         }
 
                     }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
-
-                }
 
             })
             .catch(error => {

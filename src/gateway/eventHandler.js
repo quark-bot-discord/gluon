@@ -1,3 +1,5 @@
+/* eslint-disable no-empty-function */
+/* eslint-disable class-methods-use-this */
 const chalk = require("chalk");
 const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
 const ButtonClick = require("../structures/ButtonClick");
@@ -27,16 +29,16 @@ class EventHandler {
         this.ws.sessionId = data.session_id;
 
         const user = new User(this.client, data.user);
-        
+
         this.client.user = user;
-        
+
         this.client.emit(EVENTS.READY);
 
     }
 
     RESUMED(data) {
 
-        this.client.emit("debug", `RESUMED`);
+        this.client.emit("debug", "RESUMED");
 
     }
 
@@ -72,6 +74,8 @@ class EventHandler {
     }
 
     GUILD_JOIN_REQUEST_DELETE(data) {
+
+
 
     }
 
@@ -198,7 +202,7 @@ class EventHandler {
     GUILD_MEMBER_ADD(data) {
 
         const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
-        
+
         this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
 
     }
@@ -262,9 +266,9 @@ class EventHandler {
 
         const oldVoiceState = this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.get(data.user_id) || null;
         let newVoiceState;
-        if (data.channel_id) {
+        if (data.channel_id) 
             newVoiceState = new VoiceState(this.client, data, data.guild_id);
-        } else {
+        else {
             newVoiceState = null;
             this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.delete(data.user_id);
         }
@@ -294,7 +298,7 @@ class EventHandler {
 
         const message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
         this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.id);
-        
+
         this.client.emit(EVENTS.MESSAGE_DELETE, message);
 
     }
@@ -325,7 +329,7 @@ class EventHandler {
                     case COMPONENT_TYPES.BUTTON: {
 
                         const componentInteraction = new ButtonClick(this.client, data);
-                
+
                         this.client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
 
                         break;
@@ -362,7 +366,7 @@ class EventHandler {
 
     }
 
-    APPLICATION_COMMAND_UPDATE() {
+    APPLICATION_COMMAND_UPDATE(data) {
 
     }
 

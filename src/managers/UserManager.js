@@ -40,11 +40,8 @@ class UserManager {
 
         this.cache.forEach((user, id) => {
 
-            if (user.cached + DEFAULT_USER_EXPIRY_SECONDS > currentTime) {
-
+            if (user.cached + DEFAULT_USER_EXPIRY_SECONDS > currentTime)
                 newCache.set(id, user);
-
-            }
 
         });
 

@@ -62,11 +62,8 @@ class GuildMemberManager {
 
         this.cache.forEach((member, id) => {
 
-            if (counter <= cacheCount) {
-
+            if (counter <= cacheCount)
                 newCache.set(id, member);
-
-            }
 
             counter--;
 

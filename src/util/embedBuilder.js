@@ -53,11 +53,8 @@ class Embed {
 
             this.color = hexToInt(colour);
 
-        } else if (typeof colour == "number") {
-
+        } else if (typeof colour == "number")
             this.color = colour;
-
-        }
 
         return this;
 

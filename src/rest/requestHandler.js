@@ -114,9 +114,8 @@ class RequestHandler {
                 const serialize = (obj) => {
                     let str = [];
                     for (let p in obj)
-                      if (obj.hasOwnProperty(p)) {
-                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                      }
+                        if (obj.hasOwnProperty(p))
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
                     return str.join("&");
                 };
 
@@ -134,9 +133,8 @@ class RequestHandler {
                     delete body.files;
                     form.append("payload_json", JSON.stringify(body));
                     Object.assign(headers, form.getHeaders());
-                } else if (actualRequest.method != "GET" && actualRequest.method != "DELETE") {
+                } else if (actualRequest.method != "GET" && actualRequest.method != "DELETE")
                     headers["Content-Type"] = "application/json";
-                }
 
                 if (actualRequest.useHeaders)
                     for (const [key, value] of Object.entries(body))
