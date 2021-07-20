@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>rest/requestHandler.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Client.html">Client</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#deleteWebhook">deleteWebhook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#deleteWebhook">deleteWebhook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#editMessage">editMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#editMessage">editMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#followStatusChannel">followStatusChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#followStatusChannel">followStatusChannel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#login">login</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#login">login</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#postWebhook">postWebhook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#postWebhook">postWebhook</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#sendMessage">sendMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#sendMessage">sendMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#setStatus">setStatus</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Client.html#setStatus">setStatus</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Message.html">Message</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">rest/requestHandler.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const fetch = require("node-fetch");
+const FormData = require("form-data");
+const endpoints = require("./endpoints");
+const { createReadStream } = require("fs");
+
+class RequestHandler {
+
+    constructor(baseURL, name, version, token) {
+
+        this.baseURL = baseURL;
+        this.version = version;
+        this.requestURL = `${this.baseURL}/v${this.version}`;
+        this.requestQueue = [];
+        this.bucket = {};
+
+        this.token = token;
+        this.authorization = `Bot ${this.token}`;
+        this.name = name;
+
+        this.endpoints = endpoints;
+
+        this.inProgressRequests = [];
+        this.inProgressBuckets = [];
+
+        this.delayInitiated = false;
+
+    }
+
+    /**
+     * Sets the bucket information, should be called after every request to keep data up-to-date
+     * @param {string} requestName Name of the request, defined in ./endpoints.js
+     * @param {string} ratelimitBucket Ratelimit bucket id
+     * @param {integer} ratelimitRemaining Number of requests remaining until 429s will be hit
+     * @param {integer} ratelimitReset Unix timestamp of when the ratelimitRemaining will reset
+     */
+    handleBucket(requestName, ratelimitBucket, ratelimitRemaining, ratelimitReset) {
+
+        this.bucket[ratelimitBucket] = {
+            remaining: ratelimitRemaining,
+            reset: parseFloat(ratelimitReset)
+        };
+
+        /* sets the bucket id of the endpoint that was just requested */
+        /* bucket ids can be the same per endpoint */
+        /* they can also change without notice */
+        /* best to keep updating it to ensure it always stays up-to-date for each endpoint */
+        /* crucial for if the bot is running for extended periods of time without restarts too */
+        this.endpoints[requestName].bucket = ratelimitBucket;
+
+    }
+
+    /**
+    * Attempts the next queued request and removes the current one from the "in-progress" list
+    */
+    nextRequest() {
+
+        /* if there are remaining requests in the request queue, they can be attempted */
+        if (this.requestQueue.length != 0) {
+
+            const nextRequest = this.requestQueue.shift();
+            this.makeRequest(nextRequest.request, nextRequest.params, nextRequest.body, nextRequest.resolve, nextRequest.reject);
+
+        }
+
+    }
+
+    /**
+     * Makes the request if possible, otherwise will queue the request for later
+     * @param {string} request Name of the request, defined in ./endpoints.js
+     * @param {string[]} params Array of params to include in the URL, in the order they should be in
+     * @param {object} body The request body
+     * @param {function} resolve The function to resolve the promise, so the data can be returned to the correct place
+     * @param {function} reject The function to reject the promise, to make clear the request has failed
+     */
+    async makeRequest(request, params, body, resolve, reject) {
+        return new Promise(async (_resolve, _reject) => {
+
+            /* if there are none of the same bucket (or request if bucket is null) in progress, and also that the bucket has requests remaining */
+            if (
+                /* checks if there is actually a set bucket id for this request yet */
+                /* there won't be if this is the first request */
+                (this.endpoints[request].bucket != null ?
+                    !this.inProgressBuckets.includes(this.endpoints[request].bucket) :
+                    /* if there isn't, simply check the requests that are in progress */
+                    /* this should not be completely relied on as I believe bucket ids *can* also vary on the same endpoint */
+                    /* but with different params */
+                    /* either way, the bucket id is the only truly reliable way of monitoring ratelimits */
+                    !this.inProgressRequests.includes(request)
+                )
+                &amp;&amp;
+                /* again, check if there is a valid bucket id attached to this request */
+                (this.endpoints[request].bucket != null ?
+                    /* now check if there are greater than 0 remaining requests available for this bucket */
+                    (this.bucket[this.endpoints[request].bucket]?.remaining != 0 ?
+                        /* if there are, this should return true so the request can be made */
+                        (true) :
+                        /* otherwise check if the bucket reset time has reset */
+                        /* which would reset our remaining requests back to the original value */
+                        /* so we can proceed with the request if this is the case */
+                        ((new Date().getTime() / 1000) > this.bucket[this.endpoints[request].bucket]?.reset)) :
+                    /* yeah im so lost but i am 99% sure this works */
+                    (true)
+                )
+            ) {
+                /* add the current request to the "in-progress" list*/
+                /* only one request of each bucket id should ever take place at a time */
+                this.inProgressRequests.push(request);
+                if (this.endpoints[request].bucket)
+                    this.inProgressBuckets.push(this.endpoints[request].bucket);
+                /* fetch the request data from ./endpoints.js */
+                /* important it is fetched from there, as bucket ids are also stored there with that data */
+                const actualRequest = this.endpoints[request];
+
+                const serialize = (obj) => {
+                    let str = [];
+                    for (let p in obj)
+                        if (obj.hasOwnProperty(p))
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&amp;");
+                };
+
+                let headers = {
+                    "Authorization": this.authorization,
+                    "User-Agent": this.name,
+                    "Accept": "application/json"
+                };
+
+                let form;
+                if (body &amp;&amp; body.files) {
+                    form = new FormData();
+                    for (let i = 0; i &lt; body.files.length; i++)
+                        form.append(body.files[i].name, createReadStream(body.files[i].attachment), body.files[i].name);
+                    delete body.files;
+                    form.append("payload_json", JSON.stringify(body));
+                    Object.assign(headers, form.getHeaders());
+                } else if (actualRequest.method != "GET" &amp;&amp; actualRequest.method != "DELETE")
+                    headers["Content-Type"] = "application/json";
+
+                if (actualRequest.useHeaders)
+                    for (const [key, value] of Object.entries(body))
+                        headers[key] = value;
+
+                /* actually make the request */
+                const res = await fetch(`${this.requestURL}${actualRequest.path(params)}${body &amp;&amp; (actualRequest.method == "GET" || actualRequest.method == "DELETE") &amp;&amp; actualRequest.useHeaders != true ? "?" + serialize(body) : ""}`, {
+                    method: actualRequest.method,
+                    headers: headers,
+                    body: form ? form : (body &amp;&amp; (actualRequest.method != "GET" &amp;&amp; actualRequest.method != "DELETE") &amp;&amp; actualRequest.useHeaders != true ? JSON.stringify(body) : undefined),
+                    compress: true
+                });
+
+                let json;
+                
+                try {
+
+                    json = await res.json();
+
+                } catch (error) {
+
+                    json = null;
+
+                }
+
+                /* update the bucket data */
+                this.handleBucket(request, res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"));
+
+                /* stops blocking new requests made */
+                /* ideally, the next request that should be made should be one in the queue */
+                /* however, at just the wrong timing, a newer request can "slip in" */
+                /* not the largest issue in the world, but it makes sense to follow the queue */
+                /* so removing the current request from the "in-progress" list should be done as late as possible */
+                this.inProgressRequests.splice(this.inProgressRequests.indexOf(request), 1);
+                if (this.endpoints[request].bucket)
+                    this.inProgressBuckets.splice(this.inProgressBuckets.indexOf(this.endpoints[request].bucket), 1);
+
+                this.nextRequest();
+
+                if (res.status >= 200 &amp;&amp; res.status &lt; 300)
+                    return resolve ? resolve(json) : _resolve(json);
+                else
+                    return reject ? reject(json) : _reject(json);
+
+            } else {
+                /* i am wondering if it would make more sense to have a request queue per bucket id? */
+                this.requestQueue.push({
+                    request: request,
+                    params: params,
+                    body: body,
+                    resolve: resolve ? resolve : _resolve,
+                    reject: reject ? reject : _reject
+                });
+
+                if (this.delayInitiated == false) {
+
+                    this.delayInitiated = true;
+
+                    setTimeout((async () => {
+
+                        this.delayInitiated = false;
+                        this.nextRequest();
+
+                    }), 1000);
+
+                }
+
+            }
+
+        });
+    }
+
+}
+
+module.exports = RequestHandler;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Jul 20 2021 19:59:00 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
