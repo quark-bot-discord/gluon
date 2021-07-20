@@ -1,7 +1,7 @@
-function checkPermission(permissions, permission) {
-    if (!permissions || !permission)
+function checkPermission(member, permission) {
+    if (!member.permissions || !permission)
         return true;
-    return (permissions & permission) == permission;
+    return (member.permissions & permission) == permission;
 }
 
 module.exports = checkPermission;
