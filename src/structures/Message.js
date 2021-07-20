@@ -2,6 +2,9 @@ const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
 const { PERMISSIONS } = require("../constants");
+const Client = require("../Client");
+const Guild = require("./Guild");
+const Channel = require("./Channel");
 
 /**
  * A message belonging to a channel within a guild.
@@ -12,43 +15,83 @@ class Message {
      * Creates the structure for a message.
      * @constructor
      * @param {Client} client The client instance.
-     * @param {object} data Message data returned from Discord.
-     * @param {string} channel_id The id of the channel that the message belongs to.
-     * @param {string} guild_id The id of the guild that the channel belongs to.
-     * @param {boolean?} nocache Whether this message should be cached or not.
+     * @param {Object} data Message data returned from Discord.
+     * @param {String} channel_id The id of the channel that the message belongs to.
+     * @param {String} guild_id The id of the guild that the channel belongs to.
+     * @param {Boolean?} nocache Whether this message should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
      */
     constructor(client, data, channel_id, guild_id, nocache = false) {
 
+        /**
+         * The client instance.
+         * @type {Client}
+         */
         this.client = client;
 
+        /**
+         * The id of the message.
+         * @type {BigInt}
+         */
         this.id = BigInt(data.id);
 
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
+            /**
+             * The message author.
+             * @type {User?}
+             */
             this.author = new User(this.client, data.author, !data.webhook_id || nocache);
 
         if (data.member)
+            /**
+             * The member who sent the message.
+             * @type {Member?}
+             */
             this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
 
         // should only be stored if file logging is enabled
         if (data.attachments) {
+            /**
+             * The message attachments.
+             * @type {Attachment[]?}
+             */
             this.attachments = [];
             for (let i = 0; i < data.attachments.length; i++)
                 this.attachments.push(new Attachment(this.client, data.attachments[i]));
         }
 
+        /**
+         * The message content.
+         * @type {String?}
+         */
         this.content = data.content || null;
 
+        /**
+         * The message embeds.
+         * @type {Object[]}
+         */
         this.embeds = data.embeds;
 
+        /**
+         * The message mentions.
+         * @type {Object[]}
+         */
         this.mentions = data.mentions;
 
+        /**
+         * Roles mentioned within the message.
+         * @type {Object[]}
+         */
         this.mention_roles = data.mention_roles;
 
         if (data.referenced_message) {
 
+            /**
+             * The message that this message references.
+             * @type {Object}
+             */
             this.reference = {};
 
             this.reference.message_id = data.referenced_message.id;
@@ -62,16 +105,36 @@ class Message {
         }
 
         // when the message was created
+        /**
+         * The UNIX (seconds) timestamp for when this message was created.
+         * @type {Number}
+         */
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
 
+        /**
+         * The guild that this message belongs to.
+         * @type {Guild?}
+         */
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         if (!this.guild)
+            /**
+             * The id of the guild that this message belongs to.
+             * @type {BigInt?}
+             */
             this.guild_id = BigInt(guild_id);
 
+        /**
+         * The channel that this message belongs to.
+         * @type {Channel?}
+         */
         this.channel = this.guild?.channels.cache.get(channel_id) || null;
 
         if (!this.channel)
+            /**
+             * The id of the channel that this message belongs to.
+             * @type {BigInt?}
+             */
             this.channel_id = BigInt(channel_id);
 
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
@@ -81,8 +144,8 @@ class Message {
     
     /**
      * Replies to the message.
-     * @param {string} content The message content.
-     * @param {object} param1 Embeds, components and files to attach to the message.
+     * @param {String} content The message content.
+     * @param {Object} param1 Embeds, components and files to attach to the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      */
@@ -124,8 +187,8 @@ class Message {
 
     /**
      * Edits the message, assuming it is sent by the client user.
-     * @param {string} content The message content.
-     * @param {object} param1 Embeds and components to attach to the message.
+     * @param {String} content The message content.
+     * @param {Object} param1 Embeds and components to attach to the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */
