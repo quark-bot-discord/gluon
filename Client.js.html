@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Adding meta -->
+    
+
+    <!-- Adding external script-->
+    
+
+    <!-- Adding external style-->
+    
+
+    <!-- Adding scripts-->
+    
+
+    <!-- Adding style-->
+    
+
+    <!-- Adding overlay script-->
+    
+
+    <!-- Adding overlay style-->
+    
+
+
+    <title>
+      Client.js
+    </title>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/third-party/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/third-party/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/reset.css">
+    <link type="text/css" rel="stylesheet" href="styles/heading.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-base.css">
+    <link type="text/css" rel="stylesheet" href="styles/clean-jsdoc-theme-light.css">
+    
+    <svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    style="display:none">
+    <defs>
+        <symbol id="copy-icon" viewbox="0 0 488.3 488.3">
+            <g>
+                <path
+                    d="M314.25,85.4h-227c-21.3,0-38.6,17.3-38.6,38.6v325.7c0,21.3,17.3,38.6,38.6,38.6h227c21.3,0,38.6-17.3,38.6-38.6V124    C352.75,102.7,335.45,85.4,314.25,85.4z M325.75,449.6c0,6.4-5.2,11.6-11.6,11.6h-227c-6.4,0-11.6-5.2-11.6-11.6V124    c0-6.4,5.2-11.6,11.6-11.6h227c6.4,0,11.6,5.2,11.6,11.6V449.6z" />
+                <path
+                    d="M401.05,0h-227c-21.3,0-38.6,17.3-38.6,38.6c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5c0-6.4,5.2-11.6,11.6-11.6h227    c6.4,0,11.6,5.2,11.6,11.6v325.7c0,6.4-5.2,11.6-11.6,11.6c-7.5,0-13.5,6-13.5,13.5s6,13.5,13.5,13.5c21.3,0,38.6-17.3,38.6-38.6    V38.6C439.65,17.3,422.35,0,401.05,0z" />
+            </g>
+        </symbol>
+        <symbol id='search-icon' viewBox="0 0 512 512">
+            <g>
+                <g>
+                    <path
+                        d="M225.474,0C101.151,0,0,101.151,0,225.474c0,124.33,101.151,225.474,225.474,225.474    c124.33,0,225.474-101.144,225.474-225.474C450.948,101.151,349.804,0,225.474,0z M225.474,409.323    c-101.373,0-183.848-82.475-183.848-183.848S124.101,41.626,225.474,41.626s183.848,82.475,183.848,183.848    S326.847,409.323,225.474,409.323z" />
+                </g>
+            </g>
+            <g>
+                <g>
+                    <path
+                        d="M505.902,476.472L386.574,357.144c-8.131-8.131-21.299-8.131-29.43,0c-8.131,8.124-8.131,21.306,0,29.43l119.328,119.328    c4.065,4.065,9.387,6.098,14.715,6.098c5.321,0,10.649-2.033,14.715-6.098C514.033,497.778,514.033,484.596,505.902,476.472z" />
+                </g>
+            </g>
+        </symbol>
+        <symbol id="down-icon" viewBox="0 0 16 16">
+            <path 
+                fill-rule="evenodd" 
+                clip-rule="evenodd" 
+                d="M12.7803 6.21967C13.0732 6.51256 13.0732 6.98744 12.7803 7.28033L8.53033 11.5303C8.23744 11.8232 7.76256 11.8232 7.46967 11.5303L3.21967 7.28033C2.92678 6.98744 2.92678 6.51256 3.21967 6.21967C3.51256 5.92678 3.98744 5.92678 4.28033 6.21967L8 9.93934L11.7197 6.21967C12.0126 5.92678 12.4874 5.92678 12.7803 6.21967Z"
+            >
+            </path>
+        </symbol>
+    </defs>
+</svg>
+  </head>
+
+  <body>
+
+    <nav class="navbar" id="navbar">
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Home</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><div class="accordion collapsed" id="9850562" > <h3 class="accordion-heading">Classes<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=2733466><div class="accordion-heading child"><a href="Client.html">Client</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#error">error</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li></ul> </div></div>
+      
+
+    </nav>
+    <div class="navbar-ham" id="navbar-ham">
+      <div>
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </div>
+    </div>
+
+    <div id="main" class="main-content">
+      
+      <h1 id='page-title' class="page-title">
+        Client.js
+      </h1>
+      
+
+      
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require("./constants");
+
+const EventsEmitter = require("events");
+
+const Request = require("./rest/requestHandler");
+const WS = require("./gateway/index");
+
+const UserManager = require("./managers/UserManager");
+const GuildManager = require("./managers/GuildManager");
+const Message = require("./structures/Message");
+
+const Redis = require("ioredis");
+
+/**
+ * A client user, which is able to handle multiple shards.
+ */
+class Client extends EventsEmitter {
+
+    /**
+     * Creates the client and sets the default options.
+     * @constructor
+     * @param {object?} options The options to pass to the client. 
+     */
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false } = {}) {
+
+        super();
+
+        this.baseURL = BASE_URL;
+        this.version = VERSION;
+        this.name = NAME;
+
+        this.user = null;
+
+        this.users = new UserManager(this);
+        this.guilds = new GuildManager(this);
+
+        this.cacheMessages = cacheMessages;
+        this.cacheUsers = cacheUsers;
+        this.cacheMembers = cacheMembers;
+        this.cacheChannels = cacheChannels;
+        this.cacheGuilds = cacheGuilds;
+        this.cacheVoiceStates = cacheVoiceStates;
+        this.cacheRoles = cacheRoles;
+
+        this.redis = new Redis();
+
+    }
+
+    /**
+     * Emits an "error" even with the error provided.
+     * @param {string} error The error to emit, as a string.
+     */
+    error(error) {
+
+        this.emit("error", `\`\`\`js\n${error.substring(0, 4000)}\`\`\``);
+
+    }
+
+    /**
+     * Posts a webhook with the provided webhook id and token.
+     * @param {object} referenceData An object with the webhook id and token.
+     * @param {string?} content The message to send with the webhook.
+     * @param {object?} options Embeds, components and files to attach to the webhook.
+     */
+    async postWebhook({ id, token }, content, { embeds, components, files } = {}) {
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+
+        if (embeds)
+            body.embeds = embeds.map(embed => embed.toJSON());
+        if (components)
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
+
+        try {
+
+            await this.request.makeRequest("postExecuteWebhook", [id, token], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Posts a message to the specified channel.
+     * @param {bigint} channel_id The id of the channel to send the message to.
+     * @param {bigint} guild_id The id of the guild which the channel belongs to.
+     * @param {string?} content The message content.
+     * @param {object?} options Embeds, components and files to attach to the message.
+     * @returns {Promise&lt;Message>}
+     */
+    async sendMessage(channel_id, guild_id, content, { embed, components, files } = {}) {
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
+
+        try {
+
+            const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
+            return new Message(this, data, channel_id.toString(), guild_id.toString(), false);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Edits a specified message.
+     * @param {bigint} channel_id The id of the channel that the message belongs to.
+     * @param {bigint} guild_id The id of the guild that the channel belongs to.
+     * @param {bigint} message_id The id of the message to edit.
+     * @param {string?} content The message content.
+     * @param {object?} options Embeds, components and files to attach to the message.
+     * @returns {Promise&lt;Message>}
+     */
+    async editMessage(channel_id, guild_id, message_id, content, { embed, components } = {}) {
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+        if (embed)
+            body.embed = embed.toJSON();
+        if (components)
+            body.components = components.toJSON();
+
+        if (this.referenced_message)
+            body.message_reference = {
+                message_id: message_id.toString(),
+                channel_id: channel_id.toString(),
+                guild_id: guild_id.toString()
+            };
+
+        try {
+
+            const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
+            return new Message(this, data, channel_id, guild_id);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Adds a specified channel as a follower to Quark's status channel.
+     * @param {bigint} channel_id The id of the channel to add as a follower.
+     */
+    async followStatusChannel(channel_id) {
+
+        const body = {};
+
+        body.webhook_channel_id = channel_id;
+
+        try {
+
+            await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+    }
+
+    /**
+     * Fetches the webhooks for a specified channel.
+     * @param {bigint} channel_id The id of the channel to fetch the webhooks from.
+     * @returns {object[]}
+     */
+    async fetchChannelWebhooks(channel_id) {
+
+        try {
+
+            const data = await this.request.makeRequest("getChannelWebhooks", [channel_id]);
+            return data;
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Deletes a webhook.
+     * @param {bigint} webhook_id The id of the webhook to delete.
+     */
+    async deleteWebhook(webhook_id) {
+
+        try {
+
+            await this.request.makeRequest("deleteWebhook", [webhook_id]);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Bulk deletes channel messages.
+     * @param {bigint} channel_id The id of the channel to purge messages in.
+     * @param {string[]} messages An array of message ids to delete.
+     */
+    async purgeChannelMessages(channel_id, messages) {
+
+        const body = {};
+
+        body.messages = messages;
+
+        try {
+
+            await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches messages from a specified channel.
+     * @param {bigint} guild_id The id of the guild that the channel belongs to.
+     * @param {bigint} channel_id The id of the channel to fetch messages from.
+     * @param {object} options The filter options to determine which messages should be returned.
+     * @returns {Message[]}
+     */
+    async fetchChannelMessages(guild_id, channel_id, { around, before, after, limit }) {
+
+        const body = {};
+
+        if (around)
+            body.around = around;
+
+        if (before)
+            body.before = before;
+
+        if (after)
+            body.after = after;
+
+        if (limit)
+            body.limit = limit;
+
+        try {
+
+            const data = await this.request.makeRequest("getChannelMessages", [channel_id], body);
+            let messages = [];
+            for (let i = 0; i &lt; data.length; i++)
+                messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
+            return messages;
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Sets the bot's status across all shards.
+     * @param {object} status Status options.
+     */
+    setStatus(status) {
+
+        for (let i = 0; i &lt; this.shards.length; i++)
+            this.shards[i].updatePresence(status.name, status.type, status.status, status.afk, status.since);
+
+    }
+
+    /**
+     * Initiates the login sequence
+     * @param {string} token The authorization token
+     */
+    login(token) {
+        /* sets the token and starts logging the bot in to the gateway, shard by shard */
+        this.token = token;
+
+        this.request = new Request(this.baseURL, this.name, this.version, this.token);
+
+        this.request.makeRequest("getGatewayBot")
+            .then(gatewayInfo => {
+
+                this.shards = [];
+
+                let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
+
+                for (let i = 0; i &lt; gatewayInfo.shards &amp;&amp; remainingSessionStarts != 0; i++, remainingSessionStarts--)
+                    setTimeout(() => {
+
+                        for (let n = 0; n &lt; gatewayInfo.session_start_limit.max_concurrency; n++)
+                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&amp;encoding=etf&amp;compress=zlib-stream`, [i, gatewayInfo.shards]));
+
+                    }, 5000 * i);
+
+                if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true)
+                    setInterval(() => {
+
+                        if (this.cacheMessages == true || this.cacheMembers == true) {
+
+                            const currentTime = Math.floor(new Date().getTime() / 1000);
+
+                            this.guilds.cache.forEach(guild => {
+
+                                if (this.cacheMessages == true) {
+
+                                    this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
+
+                                    const cacheCount = guild.calculateMessageCacheCount();
+
+                                    this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
+
+                                    guild.channels.cache.forEach(channel => {
+
+                                        if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
+
+                                            this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+
+                                            const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
+
+                                            this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+
+                                        }
+
+                                    });
+
+                                }
+
+                                if (this.cacheMembers == true) {
+
+                                    this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
+
+                                    const cacheCount = guild.calculateMemberCacheCount();
+
+                                    this.emit("debug", `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`);
+
+                                    this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
+
+                                    const nowCached = guild.members.sweepMembers(cacheCount);
+
+                                    this.emit("debug", `New cache size of ${nowCached || 0} for GUILD ${guild.id}...`);
+
+                                }
+
+                            });
+
+                        }
+
+                        if (this.cacheUsers == true) {
+
+                            this.emit("debug", "Sweeping users...");
+
+                            const nowCached = this.users.sweepUsers();
+
+                            this.emit("debug", `New user cache size is ${nowCached || 0}...`);
+
+                        }
+
+                    }, 1000 * 60 * 60 * 3); // every 3 hours 1000 * 60 * 60 * 3
+
+            })
+            .catch(error => {
+
+                this.error(error.stack.toString());
+
+            });
+
+    }
+
+}
+
+module.exports = Client;</code></pre>
+        </article>
+    </section>
+
+
+
+
+    </div>
+
+    <footer class="footer" id="footer">
+      
+    </footer>
+
+    <script src="scripts/third-party/prettify.js"></script>
+    <script src="scripts/third-party/lang-css.js"></script>
+    <script type="text/javascript" src="scripts/misc.js"></script>
+
+    <script>prettyPrint();</script>
+    <script src="scripts/linenumber.js"></script>
+    <script src="scripts/fix-code-block.js"></script>
+    <script src="scripts/fix-navbar.js"></script>
+    
+      <script src="scripts/search.js"></script>
+      <script src="scripts/third-party/fuse.js"></script>
+      <script>
+        var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#deleteWebhook","link":"<a href=\"Client.html#deleteWebhook\">Client &rtrif; deleteWebhook</a>"},{"title":"Client#editMessage","link":"<a href=\"Client.html#editMessage\">Client &rtrif; editMessage</a>"},{"title":"Client#error","link":"<a href=\"Client.html#error\">Client &rtrif; error</a>"},{"title":"Client#fetchChannelMessages","link":"<a href=\"Client.html#fetchChannelMessages\">Client &rtrif; fetchChannelMessages</a>"},{"title":"Client#fetchChannelWebhooks","link":"<a href=\"Client.html#fetchChannelWebhooks\">Client &rtrif; fetchChannelWebhooks</a>"},{"title":"Client#followStatusChannel","link":"<a href=\"Client.html#followStatusChannel\">Client &rtrif; followStatusChannel</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#postWebhook","link":"<a href=\"Client.html#postWebhook\">Client &rtrif; postWebhook</a>"},{"title":"Client#purgeChannelMessages","link":"<a href=\"Client.html#purgeChannelMessages\">Client &rtrif; purgeChannelMessages</a>"},{"title":"Client#sendMessage","link":"<a href=\"Client.html#sendMessage\">Client &rtrif; sendMessage</a>"},{"title":"Client#setStatus","link":"<a href=\"Client.html#setStatus\">Client &rtrif; setStatus</a>"}];
+        var options = 
+          setupSearch(list, options)
+      </script>
+    
+
+    
+
+    
+
+    
+
+    
+
+
+  </body>
+
+</html>
