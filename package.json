@@ -15,10 +15,14 @@
     "ioredis": "^4.27.6",
     "node-fetch": "^2.6.1",
     "ws": "^7.4.6",
-    "zlib-sync": "^0.1.7"
+    "zlib-sync": "^0.1.7",
+    "clean-jsdoc-theme": "^3.2.7"
   },
   "devDependencies": {
     "eslint": "^7.28.0"
+  },
+  "script": {
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "private": true
 }
