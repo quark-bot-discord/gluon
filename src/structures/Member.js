@@ -1,5 +1,6 @@
 const { CDN_BASE_URL, PERMISSIONS } = require("../constants");
 const User = require("./User");
+const checkPermission = require("../util/checkPermission");
 
 class Member {
 

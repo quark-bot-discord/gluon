@@ -2,6 +2,7 @@ const { PERMISSIONS } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
 const Message = require("./Message");
+const checkPermission = require("../util/checkPermission");
 
 class TextChannel extends Channel {
 

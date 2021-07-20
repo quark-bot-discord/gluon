@@ -5,6 +5,7 @@ const { PERMISSIONS } = require("../constants");
 const Client = require("../Client");
 const Guild = require("./Guild");
 const Channel = require("./Channel");
+const checkPermission = require("../util/checkPermission");
 
 /**
  * A message belonging to a channel within a guild.
