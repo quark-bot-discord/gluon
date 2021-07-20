@@ -3,7 +3,7 @@ name: GitHub pages
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -15,8 +15,8 @@ jobs:
       - name: Build
         uses: andstor/jsdoc-action@v1
         with:
-          source_dir: ../../src
-          output_dir: ../../out
+          source_dir: ./src
+          output_dir: ./out
           config_file: conf.json
           template: minami
           front_page: README.md
