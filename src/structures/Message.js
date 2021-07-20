@@ -12,10 +12,11 @@ class Message {
      * Creates the structure for a message.
      * @constructor
      * @param {Client} client The client instance.
-     * @param {object} data Message data returned from Discord. {@link https://discord.com/developers/docs/resources/channel#message-object}
+     * @param {object} data Message data returned from Discord.
      * @param {string} channel_id The id of the channel that the message belongs to.
      * @param {string} guild_id The id of the guild that the channel belongs to.
      * @param {boolean?} nocache Whether this message should be cached or not.
+     * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
      */
     constructor(client, data, channel_id, guild_id, nocache = false) {
 
@@ -77,7 +78,14 @@ class Message {
             this.guild.channels.cache.get(channel_id)?.messages.cache.set(data.id, this);
 
     }
-    /* https://discord.com/developers/docs/resources/channel#create-message */
+    
+    /**
+     * Replies to the message.
+     * @param {string} content The message content.
+     * @param {object} param1 Embeds, components and files to attach to the message.
+     * @returns {Promise<Message>}
+     * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
+     */
     async reply(content, { embed, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
@@ -114,6 +122,13 @@ class Message {
 
     }
 
+    /**
+     * Edits the message, assuming it is sent by the client user.
+     * @param {string} content The message content.
+     * @param {object} param1 Embeds and components to attach to the message.
+     * @returns {Promise<Message>}
+     * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
+     */
     async edit(content, { embed, components } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
