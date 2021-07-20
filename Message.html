@@ -81,7 +81,7 @@
   <body>
 
     <nav class="navbar" id="navbar">
-      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Home</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><div class="accordion collapsed" id="5097652" > <h3 class="accordion-heading">Classes<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=3096727><div class="accordion-heading child"><a href="Client.html">Client</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#error">error</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li><li class="accordion-list" id=""><a href="Message.html">Message</a></li></ul> </div></div>
+      <div class="navbar-heading" id="navbar-heading"><a href="index.html"><h2 class="navbar-heading-text">Home</h2></a></div><div class="search-box" id="search-box"><div class="search-box-input-container"><input class="search-box-input" type="text" placeholder="Search..." id="search-box-input" /><svg class="search-icon" alt="search-icon"><use xlink:href="#search-icon"></use></svg></div><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-main-content" id="sidebar-main-content"><div class="accordion collapsed" id="1048234" > <h3 class="accordion-heading">Classes<svg><use xlink:href="#down-icon"></use></svg></h3><ul class="accordion-content"><li class="accordion collapsed child" id=5471314><div class="accordion-heading child"><a href="Client.html">Client</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#error">error</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li><li class="accordion collapsed child" id=2864566><div class="accordion-heading child"><a href="Message.html">Message</a><svg><use xlink:href="#down-icon"></use></svg></div><ul class='methods accordion-content'><li data-type='method'><a href="Message.html#edit">edit</a></li><li data-type='method'><a href="Message.html#reply">reply</a></li></ul></li></ul> </div></div>
       
 
     </nav>
@@ -247,7 +247,7 @@
                 </td>
             
 
-            <td class="description last"><p>Message data returned from Discord. <a href="https://discord.com/developers/docs/resources/channel#message-object">https://discord.com/developers/docs/resources/channel#message-object</a></p></td>
+            <td class="description last"><p>Message data returned from Discord.</p></td>
         </tr>
 
     
@@ -401,13 +401,22 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line20">line 20</a>
+                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line21">line 21</a>
             </li></ul></dd>
         </div>
     
 
     
 
+    
+        <div class="details-item-container">
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+                <ul>
+                    <li><a href="https://discord.com/developers/docs/resources/channel#message-object">https://discord.com/developers/docs/resources/channel#message-object</a></li>
+                </ul>
+            </dd>
+        </div>
     
 
     
@@ -446,6 +455,400 @@
     
 
     
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="edit">
+        <a href="#edit">#</a>
+        <span class="type-signature">(async) </span>edit<span class="signature">(content, param1)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span>
+    </h4>
+
+    
+
+
+
+    <div class="description">
+        <p>Edits the message, assuming it is sent by the client user.</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message content.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Embeds and components to attach to the message.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line132">line 132</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+                <ul>
+                    <li><a href="https://discord.com/developers/docs/resources/channel#edit-message">https://discord.com/developers/docs/resources/channel#edit-message</a></li>
+                </ul>
+            </dd>
+        </div>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+
+
+    </dd>
+</dl>
+
+            
+    </div>
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="reply">
+        <a href="#reply">#</a>
+        <span class="type-signature">(async) </span>reply<span class="signature">(content, param1)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span>
+    </h4>
+
+    
+
+
+
+    <div class="description">
+        <p>Replies to the message.</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message content.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Embeds, components and files to attach to the message.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line89">line 89</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-see">See:</dt>
+            <dd class="tag-see">
+                <ul>
+                    <li><a href="https://discord.com/developers/docs/resources/channel#create-message">https://discord.com/developers/docs/resources/channel#create-message</a></li>
+                </ul>
+            </dd>
+        </div>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+
+
+    </dd>
+</dl>
+
+            
+    </div>
+
+
+
+
+        
+    
 
     
 
@@ -475,7 +878,7 @@
       <script src="scripts/search.js"></script>
       <script src="scripts/third-party/fuse.js"></script>
       <script>
-        var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#deleteWebhook","link":"<a href=\"Client.html#deleteWebhook\">Client &rtrif; deleteWebhook</a>"},{"title":"Client#editMessage","link":"<a href=\"Client.html#editMessage\">Client &rtrif; editMessage</a>"},{"title":"Client#error","link":"<a href=\"Client.html#error\">Client &rtrif; error</a>"},{"title":"Client#fetchChannelMessages","link":"<a href=\"Client.html#fetchChannelMessages\">Client &rtrif; fetchChannelMessages</a>"},{"title":"Client#fetchChannelWebhooks","link":"<a href=\"Client.html#fetchChannelWebhooks\">Client &rtrif; fetchChannelWebhooks</a>"},{"title":"Client#followStatusChannel","link":"<a href=\"Client.html#followStatusChannel\">Client &rtrif; followStatusChannel</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#postWebhook","link":"<a href=\"Client.html#postWebhook\">Client &rtrif; postWebhook</a>"},{"title":"Client#purgeChannelMessages","link":"<a href=\"Client.html#purgeChannelMessages\">Client &rtrif; purgeChannelMessages</a>"},{"title":"Client#sendMessage","link":"<a href=\"Client.html#sendMessage\">Client &rtrif; sendMessage</a>"},{"title":"Client#setStatus","link":"<a href=\"Client.html#setStatus\">Client &rtrif; setStatus</a>"},{"title":"Message","link":"<a href=\"Message.html\">Message</a>"}];
+        var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#deleteWebhook","link":"<a href=\"Client.html#deleteWebhook\">Client &rtrif; deleteWebhook</a>"},{"title":"Client#editMessage","link":"<a href=\"Client.html#editMessage\">Client &rtrif; editMessage</a>"},{"title":"Client#error","link":"<a href=\"Client.html#error\">Client &rtrif; error</a>"},{"title":"Client#fetchChannelMessages","link":"<a href=\"Client.html#fetchChannelMessages\">Client &rtrif; fetchChannelMessages</a>"},{"title":"Client#fetchChannelWebhooks","link":"<a href=\"Client.html#fetchChannelWebhooks\">Client &rtrif; fetchChannelWebhooks</a>"},{"title":"Client#followStatusChannel","link":"<a href=\"Client.html#followStatusChannel\">Client &rtrif; followStatusChannel</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#postWebhook","link":"<a href=\"Client.html#postWebhook\">Client &rtrif; postWebhook</a>"},{"title":"Client#purgeChannelMessages","link":"<a href=\"Client.html#purgeChannelMessages\">Client &rtrif; purgeChannelMessages</a>"},{"title":"Client#sendMessage","link":"<a href=\"Client.html#sendMessage\">Client &rtrif; sendMessage</a>"},{"title":"Client#setStatus","link":"<a href=\"Client.html#setStatus\">Client &rtrif; setStatus</a>"},{"title":"Message","link":"<a href=\"Message.html\">Message</a>"},{"title":"Message#edit","link":"<a href=\"Message.html#edit\">Message &rtrif; edit</a>"},{"title":"Message#reply","link":"<a href=\"Message.html#reply\">Message &rtrif; reply</a>"}];
         var options = 
           setupSearch(list, options)
       </script>
