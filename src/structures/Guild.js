@@ -273,6 +273,8 @@ class Guild {
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
             return null;
 
+        const body = {};
+
         if (reason)
             body["X-Audit-Log-Reason"] = reason;
 
