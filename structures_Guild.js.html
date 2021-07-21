@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> structures/Guild.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Message.html">Message</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>structures/Guild.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { AUDIT_LOG_TYPES, PERMISSIONS } = require("../constants");
+const GuildChannelsManager = require("../managers/GuildChannelsManager");
+const GuildMemberManager = require("../managers/GuildMemberManager");
+const GuildRoleManager = require("../managers/GuildRoleManager");
+const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
+const cacheChannel = require("../util/cacheChannel");
+const checkPermission = require("../util/checkPermission");
+const AuditLog = require("./AuditLog");
+const Member = require("./Member");
+const Role = require("./Role");
+const Thread = require("./Thread");
+const VoiceState = require("./VoiceState");
+
+/**
+ * Represents a Discord guild.
+ */
+class Guild {
+
+    /**
+     * Creates the structure for a guild.
+     * @constructor
+     * @param {Client} client The client instance.
+     * @param {Object} data Raw guild data.
+     * @param {Boolean?} nocache Whether this guild should be cached or not.
+     */
+    constructor(client, data, nocache = false) {
+
+        /**
+         * The client instance.
+         * @type {Client}
+         */
+        this.client = client;
+
+        const existing = this.client.guilds.cache.get(data.id) || null;
+
+        /**
+         * The id of the message.
+         * @type {BigInt}
+         */
+        this.id = BigInt(data.id);
+
+        // needed for join/leave logging
+        /**
+         * The name of the guild.
+         * @type {String}
+         */
+        this.name = data.name;
+
+        // needed for join/leave logging
+        if (data.icon != null)
+            /**
+             * The guild icon hash.
+             * @type {String?}
+             */
+            this.icon = data.icon;
+
+        // needed for permissions checking and join/leave logging
+        /**
+         * The id of the guild owner.
+         * @type {BigInt}
+         */
+        this.owner_id = BigInt(data.owner_id);
+
+        // useful to see how long a guild keeps the bot for
+        if (data.joined_at)
+            /**
+             * UNIX (seconds) timestamp for when the bot user was added to this guild.
+             * @type {Number?}
+             */
+            this.joined_at = data.joined_at ? (new Date(data.joined_at).getTime() / 1000) | 0 : null;
+        else if (existing &amp;&amp; existing.joined_at)
+            this.joined_at = existing.joined_at;
+
+        // only needed if file logging is enabled
+        /**
+         * The premium tier level of this guild.
+         * @type {Number}
+         */
+        this.premium_tier = data.premium_tier;
+
+        if (data.unavailable == true)
+            /**
+             * Whether this guild is unavailable or not.
+             * @type {Boolean?}
+             */
+            this.unavailable = data.unavailable;
+
+        if (data.member_count)
+            /**
+             * The member count of this guild.
+             * @type {Number}
+             */
+            this.member_count = data.member_count;
+        else if (existing &amp;&amp; existing.member_count)
+            this.member_count = existing.member_count;
+        else
+            this.member_count = 2;
+
+        /**
+         * The voice state manager of this guild.
+         * @type {GuildVoiceStatesManager}
+         */
+        this.voice_states = existing ? existing.voice_states : new GuildVoiceStatesManager(this.client, data.voice_states);
+
+        /**
+         * The member manager of this guild.
+         * @type {GuildMemberManager}
+         */
+        this.members = existing ? existing.members : new GuildMemberManager(this.client, this);
+
+        /**
+         * The channel manager of this guild.
+         * @type {GuildChannelsManager}
+         */
+        this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
+
+        /**
+         * The role manager of this guild.
+         * @type {GuildRoleManager}
+         */
+        this.roles = existing ? existing.roles : new GuildRoleManager(this.client);
+
+        /**
+         * The locale of this guild, if set up as a community.
+         * @type {String}
+         */
+        this.preferred_locale = data.preferred_locale;
+
+        if (nocache == false &amp;&amp; this.client.cacheGuilds == true)
+            this.client.guilds.cache.set(data.id, this);
+
+        for (let i = 0; i &lt; data.members.length &amp;&amp; this.client.cacheMembers == true; i++)
+            new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
+
+        for (let i = 0; i &lt; data.channels.length &amp;&amp; this.client.cacheChannels == true; i++)
+            cacheChannel(this.client, data.channels[i], data.id, nocache);
+
+        for (let i = 0; i &lt; data.threads.length &amp;&amp; this.client.cacheChannels == true; i++)
+            new Thread(this.client, data.threads[i], data.id, nocache);
+
+        for (let i = 0; i &lt; data.voice_states.length &amp;&amp; this.client.cacheVoiceStates == true; i++)
+            new VoiceState(this.client, data.voice_states[i], data.id, nocache);
+
+        for (let i = 0; i &lt; data.roles.length &amp;&amp; this.client.cacheRoles == true; i++)
+            new Role(this.client, data.roles[i], data.id, nocache);
+
+    }
+
+    /**
+     * Returns the client member for this guild.
+     * @returns {Promise&lt;Member>}
+     */
+    async me() {
+
+        const cached = this.members.cache.get(this.client.user.id.toString());
+
+        if (cached)
+            return cached;
+
+        try {
+
+            return await this.members.fetch(this.client.user.id);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Bans a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to ban.
+     * @param {Object?} options Ban options.
+     * @returns {void?}
+     */
+    async ban(user_id, { reason, days } = {}) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body.reason = reason;
+        // number of days to delete messages for (0-7) 
+        if (days)
+            body.delete_message_days = days;
+
+        try {
+
+            await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Unbans a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to unban.
+     * @param {Object?} options Unban options.
+     * @returns {void?}
+     */
+    async unban(user_id, { reason } = {}) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body.reason = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Kicks a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to kick.
+     * @param {Object?} options Kick options.
+     * @returns {void?}
+     */
+    async kick(user_id, { reason } = {}) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.KICK_MEMBERS))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body.reason = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Removes the given role from the given member.
+     * @param {BigInt} user_id The id of the user.
+     * @param {BigInt} role_id The id of the role.
+     * @param {Object?} options Remove role options.
+     * @returns {void?}
+     */
+    async removeMemberRole(user_id, role_id, { reason } = {}) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches audit logs.
+     * @param {Object?} options Audit log fetch options.
+     * @returns {Promise&lt;AuditLog[]?>}
+     */
+    async fetchAuditLogs({ limit, type }) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.VIEW_AUDIT_LOG))
+            return null;
+
+        const body = {};
+
+        if (limit)
+            body.limit = limit;
+        else
+            body.limit = 1;
+
+        if (type)
+            body.type = AUDIT_LOG_TYPES[type];
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
+
+            if (type &amp;&amp; AUDIT_LOG_TYPES[type] &amp;&amp; data &amp;&amp; data.audit_log_entries[0] &amp;&amp; data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
+                return null;
+
+            if (!data)
+                return null;
+
+            // currently only one log is ever fetched, but best to make it easy to allow multiple if needed in the future
+            return [new AuditLog(this.client, data.audit_log_entries[0], data.users)];
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches the guild invites.
+     * @returns {Promise&lt;Object[]?>}
+     */
+    async fetchInvites() {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
+            return null;
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
+            return data;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches all the guild channels.
+     * @returns {Promise&lt;Channel[]>}
+     */
+    async fetchChannels() {
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
+            let channels = [];
+            for (let i = 0; i &lt; data.length; i++)
+                channels.push(cacheChannel(this.client, data[i], this.id.toString()));
+            return channels;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches the ban for the provided user id.
+     * @param {BigInt} user_id The id of the user to fetch the ban of.
+     * @returns {Promise&lt;Object?>}
+     */
+    async fetchBan(user_id) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
+            return null;
+
+        try {
+
+            const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
+            return data;
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Calculates the number of messages that should be cached per channel for this guild.
+     * @returns {Number}
+     */
+    calculateMessageCacheCount() {
+
+        const x = (this.member_count &lt; 500000 ? this.member_count : 499999) / 500000;
+        /* creates an "S-Curve" for how many messages should be cached */
+        /* more members => assume more activity => therefore more messages to be cached */
+        /* minimum of 50 messages to be cached, and a maximum of 1000 */
+        /* having greater than 500000 members has no effect */
+        const shouldCacheCount = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+
+        return shouldCacheCount;
+
+    }
+
+    /**
+     * Calculates the number of members that should be cached for this guild.
+     * @returns {Number}
+     */
+    calculateMemberCacheCount() {
+
+        const x = this.member_count &lt; 500000 ? this.member_count : 499999;
+        /* creates a slope for how many members should stay cached */
+        /* more members => smaller percentage of users active => a smaller percentage of users should be cached */
+        /* a maximum of 500 seems suitable */
+        const shouldCacheCount = Math.floor((1 - Math.sqrt(x / 501000)) * x);
+
+        return shouldCacheCount;
+
+    }
+
+}
+
+module.exports = Guild;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
