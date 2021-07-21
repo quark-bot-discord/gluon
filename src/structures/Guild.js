@@ -11,48 +11,119 @@ const Role = require("./Role");
 const Thread = require("./Thread");
 const VoiceState = require("./VoiceState");
 
+/**
+ * Represents a Discord guild.
+ */
 class Guild {
 
+    /**
+     * Creates the structure for a guild.
+     * @constructor
+     * @param {Client} client The client instance.
+     * @param {Object} data Raw guild data.
+     * @param {Boolean?} nocache Whether this guild should be cached or not.
+     */
     constructor(client, data, nocache = false) {
 
+        /**
+         * The client instance.
+         * @type {Client}
+         */
         this.client = client;
 
         const existing = this.client.guilds.cache.get(data.id) || null;
 
+        /**
+         * The id of the message.
+         * @type {BigInt}
+         */
         this.id = BigInt(data.id);
+
         // needed for join/leave logging
+        /**
+         * The name of the guild.
+         * @type {String}
+         */
         this.name = data.name;
+
         // needed for join/leave logging
         if (data.icon != null)
+            /**
+             * The guild icon hash.
+             * @type {String?}
+             */
             this.icon = data.icon;
+
         // needed for permissions checking and join/leave logging
+        /**
+         * The id of the guild owner.
+         * @type {BigInt}
+         */
         this.owner_id = BigInt(data.owner_id);
+
         // useful to see how long a guild keeps the bot for
         if (data.joined_at)
+            /**
+             * UNIX (seconds) timestamp for when the bot user was added to this guild.
+             * @type {Number?}
+             */
             this.joined_at = data.joined_at ? (new Date(data.joined_at).getTime() / 1000) | 0 : null;
         else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
+
         // only needed if file logging is enabled
+        /**
+         * The premium tier level of this guild.
+         * @type {Number}
+         */
         this.premium_tier = data.premium_tier;
 
         if (data.unavailable == true)
+            /**
+             * Whether this guild is unavailable or not.
+             * @type {Boolean?}
+             */
             this.unavailable = data.unavailable;
 
         if (data.member_count)
+            /**
+             * The member count of this guild.
+             * @type {Number}
+             */
             this.member_count = data.member_count;
         else if (existing && existing.member_count)
             this.member_count = existing.member_count;
         else
             this.member_count = 2;
 
+        /**
+         * The voice state manager of this guild.
+         * @type {GuildVoiceStatesManager}
+         */
         this.voice_states = existing ? existing.voice_states : new GuildVoiceStatesManager(this.client, data.voice_states);
 
+        /**
+         * The member manager of this guild.
+         * @type {GuildMemberManager}
+         */
         this.members = existing ? existing.members : new GuildMemberManager(this.client, this);
 
+        /**
+         * The channel manager of this guild.
+         * @type {GuildChannelsManager}
+         */
         this.channels = existing ? existing.channels : new GuildChannelsManager(this.client, this);
 
+        /**
+         * The role manager of this guild.
+         * @type {GuildRoleManager}
+         */
         this.roles = existing ? existing.roles : new GuildRoleManager(this.client);
 
+        /**
+         * The locale of this guild, if set up as a community.
+         * @type {String}
+         */
         this.preferred_locale = data.preferred_locale;
 
         if (nocache == false && this.client.cacheGuilds == true)
@@ -80,7 +151,7 @@ class Guild {
      * @returns {Promise<Member>}
      */
     async me() {
-        
+
         const cached = this.members.cache.get(this.client.user.id.toString());
 
         if (cached)
@@ -100,12 +171,12 @@ class Guild {
     }
 
     /**
-     * Bans a user with the given id from the guild
-     * @param {BigInt} user_id The id of the user to ban
-     * @param {Object} options Ban options
-     * @returns 
+     * Bans a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to ban.
+     * @param {Object?} options Ban options.
+     * @returns {void?}
      */
-    async ban(user_id, { reason, days }) {
+    async ban(user_id, { reason, days } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
             return null;
@@ -131,7 +202,13 @@ class Guild {
 
     }
 
-    async unban(user_id, { reason }) {
+    /**
+     * Unbans a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to unban.
+     * @param {Object?} options Unban options.
+     * @returns {void?}
+     */
+    async unban(user_id, { reason } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
             return null;
@@ -151,10 +228,16 @@ class Guild {
             throw error;
 
         }
-        
+
     }
 
-    async kick(user_id, { reason }) {
+    /**
+     * Kicks a user with the given id from the guild.
+     * @param {BigInt} user_id The id of the user to kick.
+     * @param {Object?} options Kick options.
+     * @returns {void?}
+     */
+    async kick(user_id, { reason } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.KICK_MEMBERS))
             return null;
@@ -247,6 +330,10 @@ class Guild {
 
     }
 
+    /**
+     * Fetches the guild invites.
+     * @returns {Promise<Object[]?>}
+     */
     async fetchInvites() {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
@@ -266,6 +353,10 @@ class Guild {
 
     }
 
+    /**
+     * Fetches all the guild channels.
+     * @returns {Promise<Channel[]>}
+     */
     async fetchChannels() {
 
         try {
@@ -285,6 +376,11 @@ class Guild {
 
     }
 
+    /**
+     * Fetches the ban for the provided user id.
+     * @param {BigInt} user_id The id of the user to fetch the ban of.
+     * @returns {Promise<Object?>}
+     */
     async fetchBan(user_id) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
@@ -304,6 +400,10 @@ class Guild {
 
     }
 
+    /**
+     * Calculates the number of messages that should be cached per channel for this guild.
+     * @returns {Number}
+     */
     calculateMessageCacheCount() {
 
         const x = (this.member_count < 500000 ? this.member_count : 499999) / 500000;
@@ -317,6 +417,10 @@ class Guild {
 
     }
 
+    /**
+     * Calculates the number of members that should be cached for this guild.
+     * @returns {Number}
+     */
     calculateMemberCacheCount() {
 
         const x = this.member_count < 500000 ? this.member_count : 499999;
