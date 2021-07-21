@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Message.html">Message</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Message.html">Message</a></li><li><a href="User.html">User</a></li></ul></div>
                 
             </nav>
         </div>
@@ -100,6 +100,7 @@ const VoiceState = require("./VoiceState");
 
 /**
  * Represents a Discord guild.
+ * @see {@link https://discord.com/developers/docs/resources/guild}
  */
 class Guild {
 
@@ -109,6 +110,7 @@ class Guild {
      * @param {Client} client The client instance.
      * @param {Object} data Raw guild data.
      * @param {Boolean?} nocache Whether this guild should be cached or not.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
      */
     constructor(client, data, nocache = false) {
 
@@ -134,12 +136,11 @@ class Guild {
         this.name = data.name;
 
         // needed for join/leave logging
-        if (data.icon != null)
-            /**
-             * The guild icon hash.
-             * @type {String?}
-             */
-            this.icon = data.icon;
+        /**
+         * The guild icon hash.
+         * @type {String?}
+         */
+        this.icon = data.icon;
 
         // needed for permissions checking and join/leave logging
         /**
