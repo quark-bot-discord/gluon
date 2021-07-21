@@ -13,6 +13,7 @@ const VoiceState = require("./VoiceState");
 
 /**
  * Represents a Discord guild.
+ * @see {@link https://discord.com/developers/docs/resources/guild}
  */
 class Guild {
 
@@ -22,6 +23,7 @@ class Guild {
      * @param {Client} client The client instance.
      * @param {Object} data Raw guild data.
      * @param {Boolean?} nocache Whether this guild should be cached or not.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
      */
     constructor(client, data, nocache = false) {
 
