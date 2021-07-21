@@ -28,13 +28,10 @@ class Member {
 
         this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
 
-        if (typeof data.pending == "boolean" && data.pending == true)
+        if (data.pending == true)
             this.pending = data.pending;
 
-        if (data.avatar != undefined)
-            this.avatar = data.avatar;
-        else if (data.avatar !== null && existing && existing.avatar != undefined)
-            this.avatar = existing.avatar;
+        this.avatar = data.avatar;
 
         if (typeof data.permissions == "string")
             this.permissions = parseInt(data.permissions);
