@@ -75,6 +75,10 @@ class Guild {
 
     }
 
+    /**
+     * Returns the client member for this guild.
+     * @returns {Promise<Member>}
+     */
     async me() {
         
         const cached = this.members.cache.get(this.client.user.id.toString());
@@ -95,6 +99,12 @@ class Guild {
 
     }
 
+    /**
+     * Bans a user with the given id from the guild
+     * @param {BigInt} user_id The id of the user to ban
+     * @param {Object} options Ban options
+     * @returns 
+     */
     async ban(user_id, { reason, days }) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
