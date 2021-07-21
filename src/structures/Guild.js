@@ -177,6 +177,39 @@ class Guild {
 
     }
 
+    /**
+     * Removes the given role from the given member.
+     * @param {BigInt} user_id The id of the user.
+     * @param {BigInt} role_id The id of the role.
+     * @param {Object?} options Remove role options.
+     * @returns {void?}
+     */
+    async removeMemberRole(user_id, role_id, { reason } = {}) {
+
+        if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Fetches audit logs.
+     * @param {Object?} options Audit log fetch options.
+     * @returns {Promise<AuditLog[]?>}
+     */
     async fetchAuditLogs({ limit, type }) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.VIEW_AUDIT_LOG))
