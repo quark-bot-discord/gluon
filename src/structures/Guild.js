@@ -49,12 +49,11 @@ class Guild {
         this.name = data.name;
 
         // needed for join/leave logging
-        if (data.icon != null)
-            /**
-             * The guild icon hash.
-             * @type {String?}
-             */
-            this.icon = data.icon;
+        /**
+         * The guild icon hash.
+         * @type {String?}
+         */
+        this.icon = data.icon;
 
         // needed for permissions checking and join/leave logging
         /**
