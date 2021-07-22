@@ -83,6 +83,7 @@ module.exports.AUDIT_LOG_TYPES = {
     MEMBER_BAN_ADD:             (22),
     MEMBER_BAN_REMOVE:          (23),
     MEMBER_UPDATE:              (24),
+    MEMBER_ROLE_UPDATE:         (25),
     MEMBER_MOVE:                (26),
     MEMBER_DISCONNECT:          (27),
     BOT_ADD:                    (28),
