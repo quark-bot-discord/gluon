@@ -296,7 +296,7 @@ class Guild {
      * @param {Object?} options Audit log fetch options.
      * @returns {Promise<AuditLog[]?>}
      */
-    async fetchAuditLogs({ limit, type }) {
+    async fetchAuditLogs({ limit, type, user_id, before }) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.VIEW_AUDIT_LOG))
             return null;
@@ -309,7 +309,13 @@ class Guild {
             body.limit = 1;
 
         if (type)
-            body.type = AUDIT_LOG_TYPES[type];
+            body.action_type = AUDIT_LOG_TYPES[type];
+
+        if (user_id)
+            body.user_id = user_id.toString();
+
+        if (before)
+            body.before = before.toString();
 
         try {
 
