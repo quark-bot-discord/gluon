@@ -34,6 +34,9 @@ class AuditLog {
 
         }
 
+        if (data.changes)
+            this.changes = data.changes;
+
     }
 
 }
