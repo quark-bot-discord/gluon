@@ -80,6 +80,10 @@ class RequestHandler {
     async makeRequest(request, params, body, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
 
+            /* fetch the request data from ./endpoints.js */
+            /* important it is fetched from there, as bucket ids are also stored there with that data */
+            const actualRequest = this.endpoints[request];
+
             /* determines the path of the request, needed for handling ratelimit buckets */
             const path = actualRequest.path(params);
 
@@ -117,9 +121,6 @@ class RequestHandler {
                 this.inProgressRequests.push(request);
                 if (bucket)
                     this.inProgressBuckets.push(bucket);
-                /* fetch the request data from ./endpoints.js */
-                /* important it is fetched from there, as bucket ids are also stored there with that data */
-                const actualRequest = this.endpoints[request];
 
                 const serialize = (obj) => {
                     let str = [];
