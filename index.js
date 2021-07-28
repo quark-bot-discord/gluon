@@ -52,5 +52,6 @@ module.exports = {
     getTimestampFromSnowflake: getTimestamp,
     checkPermission: checkPermission,
     PERMISSIONS,
-    INTENTS
+    INTENTS,
+    VERSION: require("./package.json").version
 };
