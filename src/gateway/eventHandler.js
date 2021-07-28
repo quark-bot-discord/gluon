@@ -373,6 +373,10 @@ class EventHandler {
 
     }
 
+    APPLICATION_COMMAND_DELETE(data) {
+        
+    }
+
 }
 
 module.exports = EventHandler;
