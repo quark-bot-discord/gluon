@@ -34,6 +34,8 @@ class EventHandler {
 
         this.client.ready = true;
 
+        this.initialGuilds = data.guilds.map(g => g.id);
+
         this.client.emit(EVENTS.READY);
 
     }
@@ -50,8 +52,10 @@ class EventHandler {
 
             const guild = new Guild(this.client, data);
 
-            if (data.lazy != true)
+            if (!this.initialGuilds.includes(data.id))
                 this.client.emit(EVENTS.GUILD_CREATE, guild);
+            else
+                this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
 
         }
 
