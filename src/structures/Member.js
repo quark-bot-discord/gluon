@@ -116,6 +116,34 @@ class Member {
 
     }
 
+    /**
+     * Sets the member's nickname.
+     * @param {String} nickname The new nickname to give the member.
+     * @returns {Member}
+     */
+    async setNickname(nickname) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_NICKNAMES))
+            return null;
+
+        const body = {};
+
+        body.nick = nickname;
+
+        try {
+
+            const data = await this.client.request.makeRequest("patchModifyGuildMember", [this.guild?.id || this.guild_id, this.id], body);
+            return new Member(this.client, data, this.id.toString(), this.guild?.id.toString() || this.guild_id.toString(), data.user);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
 }
 
 module.exports = Member;
