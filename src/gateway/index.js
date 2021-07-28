@@ -14,10 +14,12 @@ const UpdatePresence = require("./structures/_3");
 
 class WS {
 
-    constructor(client, url, shard) {
+    constructor(client, url, shard, intents) {
 
         this.token = client.token;
         this.shard = shard;
+
+        this.intents = intents;
 
         this.url = url;
 
@@ -159,7 +161,7 @@ class WS {
 
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => IDENTIFY`);
 
-        this.ws.send(new Identify(this.token, this.shard));
+        this.ws.send(new Identify(this.token, this.shard, this.intents));
 
     }
 

@@ -22,13 +22,14 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents } = {}) {
 
         super();
 
         this.baseURL = BASE_URL;
         this.version = VERSION;
         this.name = NAME;
+        this.intents = intents;
 
         this.user = null;
 
@@ -325,7 +326,7 @@ class Client extends EventsEmitter {
                     setTimeout(() => {
 
                         for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
-                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards]));
+                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards], this.intents));
 
                     }, 5000 * i);
 
