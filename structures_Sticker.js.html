@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/User.js</title>
+  <title> structures/Sticker.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/User.js</h1>
+                    <h1>structures/Sticker.js</h1>
                 </header>
                 
 
@@ -85,24 +85,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { CDN_BASE_URL } = require("../constants");
-const getTimestamp = require("../util/getTimestampFromSnowflake");
+            <pre class="prettyprint source linenums"><code>const { STICKER_FORMATS, CDN_BASE_URL, STICKER_FORMATS_ENUM } = require("../constants");
+const fetch = require("node-fetch");
+const renderLottie = require("puppeteer-lottie");
 
 /**
- * Represents a Discord user.
- * @see {@link https://discord.com/developers/docs/resources/user}
+ * Represents an sticker.
  */
-class User {
+class Sticker {
 
     /**
-     * Creates a structure for a user.
-     * @constructor
+     * 
      * @param {Client} client The client instance.
-     * @param {Object} data The raw user data.
-     * @param {Boolean?} nocache Whether the user should be cached or not.
-     * @see {@link https://discord.com/developers/docs/resources/user#user-object}
+     * @param {Object} data Sticker data from Discord.
      */
-    constructor(client, data, nocache = false) {
+    constructor(client, data) {
 
         /**
          * The client instance.
@@ -111,85 +108,93 @@ class User {
         this.client = client;
 
         /**
-         * The id of the user.
+         * The id of the sticker.
          * @type {BigInt}
          */
         this.id = BigInt(data.id);
 
         /**
-         * The avatar of the user.
-         * @type {String?}
-         */
-        this.avatar = data.avatar;
-
-        if (data.bot == true)
-            /**
-             * Whether the user is a bot or not.
-             * @type {Boolean?}
-             */
-            this.bot = data.bot;
-
-        /**
-         * The username of the user.
+         * The name of the sticker.
          * @type {String}
          */
-        this.username = data.username;
+        this.name = data.name;
 
         /**
-         * The discriminator of the user.
-         * @type {String}
-         */
-        this.discriminator = data.discriminator;
-
-        /**
-         * The UNIX (seconds) timestamp when this user was last cached.
+         * The format type of the sticker.
          * @type {Number}
          */
-        this.cached = (new Date().getTime() / 1000) | 0;
-
-        if (nocache == false &amp;&amp; this.client.cacheUsers == true)
-            this.client.users.cache.set(data.id, this);
+        this.format_type = data.format_type;
 
     }
-    
+
     /**
-     * The avatar URL of the user.
-     * @readonly
+     * The format of the sticker.
      * @type {String}
+     * @readonly
      */
-    get displayAvatarURL() {
+    get format() {
 
-        return this.avatar ?
-            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatar}.${this.avatar.startsWith("a_") ? "gif" : "png"}` :
-            `${CDN_BASE_URL}/embed/avatars/${this.discriminator % 5}.png`;
+        return STICKER_FORMATS[this.format_type];
 
     }
 
     /**
-     * The username#discriminator of the user.
+     * The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.
+     * @type {String?}
      * @readonly
-     * @type {String}
      */
-    get tag() {
+    get previewImageURL() {
 
-        return this.username + "#" + this.discriminator;
+        let cdnImageFormat;
+
+        switch (this.format_type) {
+            case STICKER_FORMATS_ENUM.LOTTIE: {
+                return null;
+            }
+            case STICKER_FORMATS_ENUM.PNG:
+            case STICKER_FORMATS_ENUM.APNG:
+            default: {
+                cdnImageFormat = "png";
+                break;
+            }
+        }
+
+        return `${CDN_BASE_URL}/stickers/${this.id}.${cdnImageFormat}`;
 
     }
 
     /**
-     * The UNIX (seconds) timestamp of when this user created their Discord account.
-     * @readonly
-     * @type {Number}
+     * Converts a LOTTIE sticker to PNG and returns the file path to it.
+     * @returns {String}
      */
-    get createdTimestamp() {
+    async getLottiePNG() {
 
-        return getTimestamp(this.id);
+        if (this.format_type != STICKER_FORMATS_ENUM.LOTTIE)
+            return null;
+
+        const res = await fetch(`${CDN_BASE_URL}/stickers/${this.id}.json`);
+
+        if (!res || res.status != 200)
+            return null;
+
+        const json = await res.json();
+
+        const output = `../../temp/${this.id}.png`;
+
+        await renderLottie({
+            animationData: json,
+            output: output,
+            height: 320,
+            width: 320
+        });
+
+        return output;
 
     }
 
 }
 
-module.exports = User;</code></pre>
+module.exports = Sticker;</code></pre>
         </article>
     </section>
 

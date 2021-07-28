@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Message.html">Message</a></li><li><a href="User.html">User</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Message.html">Message</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="User.html">User</a></li></ul></div>
                 
             </nav>
         </div>
@@ -90,6 +90,7 @@ const Member = require("./Member");
 const Attachment = require("./Attachment");
 const { PERMISSIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
+const Sticker = require("./Sticker");
 
 /**
  * A message belonging to a channel within a guild.
@@ -195,6 +196,16 @@ class Message {
          * @type {Number}
          */
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
+
+        if (data.sticker_items) {
+            /**
+             * Stickers sent with this message.
+             * @type {Sticker[]?}
+             */
+            this.sticker_items = [];
+            for (let i = 0; i &lt; data.sticker_items.length; i++)
+                this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
+        }
 
         /**
          * The guild that this message belongs to.
