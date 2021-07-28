@@ -32,6 +32,8 @@ class EventHandler {
 
         this.client.user = user;
 
+        this.client.ready = true;
+
         this.client.emit(EVENTS.READY);
 
     }
@@ -48,7 +50,7 @@ class EventHandler {
 
             const guild = new Guild(this.client, data);
 
-            if (this.client.user)
+            if (this.client.ready == true)
                 this.client.emit(EVENTS.GUILD_CREATE, guild);
 
         }
