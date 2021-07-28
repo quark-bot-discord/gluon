@@ -48,7 +48,8 @@ class EventHandler {
 
             const guild = new Guild(this.client, data);
 
-            this.client.emit(EVENTS.GUILD_CREATE, guild);
+            if (this.client.user)
+                this.client.emit(EVENTS.GUILD_CREATE, guild);
 
         }
 
