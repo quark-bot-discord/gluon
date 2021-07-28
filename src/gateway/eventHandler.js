@@ -46,7 +46,7 @@ class EventHandler {
 
     GUILD_CREATE(data) {
 
-        if (data.unavailable == false) {
+        if (data.unavailable != true) {
 
             const guild = new Guild(this.client, data);
 
