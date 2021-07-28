@@ -6,16 +6,21 @@ class UpdatePresence {
 
         this.op = 3;
 
+        let activities = [];
+
+        if (name)
+            activities.push({
+                name,
+                type
+            });
+
         return erlpack.pack({
             op: this.op,
             d: {
-                since: since,
-                activities: [{
-                    name: name,
-                    type: type
-                }],
-                status: status,
-                afk: afk
+                since,
+                activities,
+                status,
+                afk
             }
         });
 
