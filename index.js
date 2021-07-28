@@ -21,7 +21,7 @@ const Thread = require("./src/structures/Thread");
 const User = require("./src/structures/User");
 const VoiceChannel = require("./src/structures/VoiceChannel");
 const VoiceState = require("./src/structures/VoiceState");
-const { PERMISSIONS } = require("./src/constants");
+const { PERMISSIONS, INTENTS } = require("./src/constants");
 const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 const checkPermission = require("./src/util/checkPermission");
 
@@ -51,5 +51,6 @@ module.exports = {
     VoiceState,
     getTimestampFromSnowflake: getTimestamp,
     checkPermission: checkPermission,
-    PERMISSIONS
+    PERMISSIONS,
+    INTENTS
 };

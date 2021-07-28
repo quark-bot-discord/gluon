@@ -3,28 +3,28 @@ module.exports.CDN_BASE_URL = ("https://cdn.discordapp.com");
 module.exports.VERSION = (9);
 module.exports.NAME = ("gluon");
 module.exports.INTENTS = {
-    GUILDS:                     (0),
-    GUILD_MEMBERS:              (1),
-    GUILD_BANS:                 (2),
-    GUILD_EMOJIS:               (3),
-    GUILD_INTEGRATIONS:         (4),
-    GUILD_WEBHOOKS:             (5),
-    GUILD_INVITES:              (6),
-    GUILD_VOICE_STATES:         (7),
-    GUILD_PRESENCES:            (8),
-    GUILD_MESSAGES:             (9),
-    GUILD_MESSAGE_REACTIONS:    (10),
-    GUILD_MESSAGE_TYPING:       (11),
-    DIRECT_MESSAGES:            (12),
-    DIRECT_MESSAGE_REACTIONS:   (13),
-    DIRECT_MESSAGE_TYPING:      (14)
+    GUILDS:                     (1 << 0),
+    GUILD_MEMBERS:              (1 << 1),
+    GUILD_BANS:                 (1 << 2),
+    GUILD_EMOJIS:               (1 << 3),
+    GUILD_INTEGRATIONS:         (1 << 4),
+    GUILD_WEBHOOKS:             (1 << 5),
+    GUILD_INVITES:              (1 << 6),
+    GUILD_VOICE_STATES:         (1 << 7),
+    GUILD_PRESENCES:            (1 << 8),
+    GUILD_MESSAGES:             (1 << 9),
+    GUILD_MESSAGE_REACTIONS:    (1 << 10),
+    GUILD_MESSAGE_TYPING:       (1 << 11),
+    DIRECT_MESSAGES:            (1 << 12),
+    DIRECT_MESSAGE_REACTIONS:   (1 << 13),
+    DIRECT_MESSAGE_TYPING:      (1 << 14)
 };
-module.exports.CALCULATED_INTENTS = (0b1 << this.INTENTS.GUILDS) |
-                                    (0b1 << this.INTENTS.GUILD_MEMBERS) |
-                                    (0b1 << this.INTENTS.GUILD_BANS) |
-                                    (0b1 << this.INTENTS.GUILD_INVITES) |
-                                    (0b1 << this.INTENTS.GUILD_VOICE_STATES) |
-                                    (0b1 << this.INTENTS.GUILD_MESSAGES);
+module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
+                                    this.INTENTS.GUILD_MEMBERS |
+                                    this.INTENTS.GUILD_BANS |
+                                    this.INTENTS.GUILD_INVITES |
+                                    this.INTENTS.GUILD_VOICE_STATES |
+                                    this.INTENTS.GUILD_MESSAGES;
 module.exports.EVENTS = {
     READY:                      ("ready"),
     GUILD_CREATE:               ("guildCreate"),
