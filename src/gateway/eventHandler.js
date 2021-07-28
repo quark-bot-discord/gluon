@@ -50,7 +50,7 @@ class EventHandler {
 
             const guild = new Guild(this.client, data);
 
-            if (this.client.ready == true)
+            if (data.lazy != true)
                 this.client.emit(EVENTS.GUILD_CREATE, guild);
 
         }
@@ -269,7 +269,7 @@ class EventHandler {
 
         const oldVoiceState = this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.get(data.user_id) || null;
         let newVoiceState;
-        if (data.channel_id) 
+        if (data.channel_id)
             newVoiceState = new VoiceState(this.client, data, data.guild_id);
         else {
             newVoiceState = null;
@@ -374,7 +374,7 @@ class EventHandler {
     }
 
     APPLICATION_COMMAND_DELETE(data) {
-        
+
     }
 
 }
