@@ -31,12 +31,14 @@ class RequestHandler {
 
     /**
      * Sets the bucket information, should be called after every request to keep data up-to-date
-     * @param {string} requestName Name of the request, defined in ./endpoints.js
      * @param {string} ratelimitBucket Ratelimit bucket id
      * @param {integer} ratelimitRemaining Number of requests remaining until 429s will be hit
      * @param {integer} ratelimitReset Unix timestamp of when the ratelimitRemaining will reset
      */
-    handleBucket(requestName, ratelimitBucket, ratelimitRemaining, ratelimitReset, path) {
+    handleBucket(ratelimitBucket, ratelimitRemaining, ratelimitReset, path) {
+
+        if (!ratelimitBucket)
+            return;
 
         const bucket = {
             remaining: ratelimitRemaining,
@@ -172,7 +174,7 @@ class RequestHandler {
                 }
 
                 /* update the bucket data */
-                this.handleBucket(request, res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), path);
+                this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), path);
 
                 /* stops blocking new requests made */
                 /* ideally, the next request that should be made should be one in the queue */
