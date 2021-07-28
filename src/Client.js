@@ -297,10 +297,10 @@ class Client extends EventsEmitter {
      * Sets the bot's status across all shards.
      * @param {object} status Status options.
      */
-    setStatus(status) {
+    setStatus({ name, type, status, afk, since } = {}) {
 
         for (let i = 0; i < this.shards.length; i++)
-            this.shards[i].updatePresence(status.name, status.type, status.status, status.afk, status.since);
+            this.shards[i].updatePresence(name, type, status, afk, since);
 
     }
 
