@@ -9,9 +9,9 @@ class Resume {
         return erlpack.pack({
             op: this.op,
             d: {
-                token: token,
-                session_id: session_id,
-                seq: seq
+                token,
+                session_id,
+                seq
             }
         });
 

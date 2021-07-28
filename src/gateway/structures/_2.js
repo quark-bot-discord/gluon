@@ -10,7 +10,7 @@ class Identify {
         return erlpack.pack({
             op: this.op,
             d: {
-                token: token,
+                token,
                 properties: {
                     $os: "linux",
                     /* Could potentially add this as a client option as setting this to specific values triggers there to be a mobile indicator */
@@ -18,7 +18,7 @@ class Identify {
                     $device: NAME
                 },
                 large_threshold: 250,
-                shard: shard,
+                shard,
                 presence: {
                     activities: [{
                         name: `Starting shard ${shard[0]}...`,
