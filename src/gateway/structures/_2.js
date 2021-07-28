@@ -3,7 +3,7 @@ const { NAME, CALCULATED_INTENTS } = require("../../constants");
 
 class Identify {
 
-    constructor(token, shard) {
+    constructor(token, shard, intents = CALCULATED_INTENTS) {
 
         this.op = 2;
 
@@ -28,7 +28,7 @@ class Identify {
                     since: null,
                     afk: true
                 },
-                intents: CALCULATED_INTENTS
+                intents
             }
         });
 
