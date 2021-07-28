@@ -235,6 +235,19 @@ class Guild {
     }
 
     /**
+     * The icon URL of the guild.
+     * @readonly
+     * @type {String?}
+     */
+    get displayIconURL() {
+
+        return this.icon ?
+            `${CDN_BASE_URL}/icons/${this.id}/${this.icon}.${this.icon.startsWith("a_") ? "gif" : "png"}` :
+            null;
+
+    }
+
+    /**
      * Returns the client member for this guild.
      * @returns {Promise&lt;Member>}
      */
