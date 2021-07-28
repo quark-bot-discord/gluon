@@ -10,177 +10,152 @@ module.exports = {
         path: () => {
             return "/gateway/bot";
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     postCreateMessage: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages`;
         },
-        method: "POST",
-        bucket: null
+        method: "POST"
     },
     patchEditMessage: {
         path: ([channel_id, message_id]) => {
             return `/channels/${channel_id}/messages/${message_id}`;
         },
-        method: "PATCH",
-        bucket: null
+        method: "PATCH"
     },
     putCreateGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "PUT",
-        bucket: null
+        method: "PUT"
     },
     getGuildAuditLog: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/audit-logs`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getChannel: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getChannelMessages: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getChannelMessage: {
         path: ([channel_id, message_id]) => {
             return `/channels/${channel_id}/messages/${message_id}`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getGuildInvites: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/invites`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     postInteractionResponse: {
         path: ([interaction_id, interaction_token]) => {
             return `/interactions/${interaction_id}/${interaction_token}/callback`;
         },
-        method: "POST",
-        bucket: null
+        method: "POST"
     },
     patchOriginalInteractionResponse: {
         path: ([interaction_id, interaction_token]) => {
             return `/webhooks/${interaction_id}/${interaction_token}/messages/@original`;
         },
-        method: "PATCH",
-        bucket: null
+        method: "PATCH"
     },
     postBulkDeleteMessages: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages/bulk-delete`;
         },
-        method: "POST",
-        bucket: null
+        method: "POST"
     },
     postExecuteWebhook: {
         path: ([webhook_id, webhook_token]) => {
             return `/webhooks/${webhook_id}/${webhook_token}`;
         },
-        method: "POST",
-        bucket: null
+        method: "POST"
     },
     getGuildChannels: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/channels`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     postFollowNewsChannel: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/followers`;
         },
-        method: "POST",
-        bucket: null
+        method: "POST"
     },
     getGuildMember: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     deleteGuildMember: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
-        method: "DELETE",
-        bucket: null
+        method: "DELETE"
     },
     deleteRemoveGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "DELETE",
-        bucket: null
+        method: "DELETE"
     },
     putAddGuildMemberRole: {
         path: ([guild_id, user_id, role_id]) => {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "PUT",
-        useHeaders: true,
-        bucket: null
+        useHeaders: true
     },
     deleteRemoveMemberRole: {
         path: ([guild_id, user_id, role_id]) => {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "DELETE",
-        useHeaders: true,
-        bucket: null
+        useHeaders: true
     },
     getUser: {
         path: ([user_id]) => {
             return `/users/${user_id}`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     getChannelWebhooks: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/webhooks`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     },
     deleteWebhook: {
         path: ([webhook_id]) => {
             return `/webhooks/${webhook_id}`;
         },
-        method: "DELETE",
-        bucket: null
+        method: "DELETE"
     },
     getSearchGuildMembers: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/members/search`;
         },
-        method: "GET",
-        bucket: null
+        method: "GET"
     }
 };
