@@ -109,13 +109,14 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents } = {}) {
 
         super();
 
         this.baseURL = BASE_URL;
         this.version = VERSION;
         this.name = NAME;
+        this.intents = intents;
 
         this.user = null;
 
@@ -384,10 +385,10 @@ class Client extends EventsEmitter {
      * Sets the bot's status across all shards.
      * @param {object} status Status options.
      */
-    setStatus(status) {
+    setStatus({ name, type, status, afk, since } = {}) {
 
         for (let i = 0; i &lt; this.shards.length; i++)
-            this.shards[i].updatePresence(status.name, status.type, status.status, status.afk, status.since);
+            this.shards[i].updatePresence(name, type, status, afk, since);
 
     }
 
@@ -412,7 +413,7 @@ class Client extends EventsEmitter {
                     setTimeout(() => {
 
                         for (let n = 0; n &lt; gatewayInfo.session_start_limit.max_concurrency; n++)
-                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&amp;encoding=etf&amp;compress=zlib-stream`, [i, gatewayInfo.shards]));
+                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&amp;encoding=etf&amp;compress=zlib-stream`, [i, gatewayInfo.shards], this.intents));
 
                     }, 5000 * i);
 
