@@ -137,7 +137,7 @@ class RequestHandler {
         /* they can also change without notice */
         /* best to keep updating it to ensure it always stays up-to-date for each endpoint */
         /* crucial for if the bot is running for extended periods of time without restarts too */
-        this.endpoints[requestName].buckets.set(path, ratelimitBucket, Math.ceil(ratelimitReset - new Date().getTime() / 1000));
+        this.buckets.set(path, ratelimitBucket, Math.ceil(ratelimitReset - new Date().getTime() / 1000));
 
     }
 
