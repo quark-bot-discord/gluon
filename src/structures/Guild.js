@@ -1,4 +1,4 @@
-const { AUDIT_LOG_TYPES, PERMISSIONS } = require("../constants");
+const { AUDIT_LOG_TYPES, PERMISSIONS, CDN_BASE_URL } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildRoleManager = require("../managers/GuildRoleManager");
