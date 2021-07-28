@@ -70,7 +70,7 @@ class Member {
 
     }
 
-    async addRole(role_id, { reason }) {
+    async addRole(role_id, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
             return null;
@@ -93,7 +93,7 @@ class Member {
 
     }
 
-    async removeRole(role_id, { reason }) {
+    async removeRole(role_id, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
             return null;
