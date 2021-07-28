@@ -1,0 +1,1 @@
+# Directory to temporarily store converted LOTTIE files to PNG

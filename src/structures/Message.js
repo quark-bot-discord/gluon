@@ -3,6 +3,7 @@ const Member = require("./Member");
 const Attachment = require("./Attachment");
 const { PERMISSIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
+const Sticker = require("./Sticker");
 
 /**
  * A message belonging to a channel within a guild.
@@ -108,6 +109,16 @@ class Message {
          * @type {Number}
          */
         this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
+
+        if (data.sticker_items) {
+            /**
+             * Stickers sent with this message.
+             * @type {Sticker[]?}
+             */
+            this.sticker_items = [];
+            for (let i = 0; i < data.sticker_items.length; i++)
+                this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
+        }
 
         /**
          * The guild that this message belongs to.

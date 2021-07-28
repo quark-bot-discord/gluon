@@ -139,3 +139,9 @@ module.exports.PERMISSIONS = {
     USE_PUBLIC_THREADS:         (1 << 35),
     USE_PRIVATE_THREADS:        (1 << 36)
 };
+module.exports.STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
+module.exports.STICKER_FORMATS_ENUM = {
+    PNG: 1,
+    APNG: 2,
+    LOTTIE: 3
+};
