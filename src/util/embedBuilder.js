@@ -60,6 +60,16 @@ class Embed {
 
     }
 
+    setThumbnail(url) {
+
+        this.thumbnail = {
+            url: url
+        };
+
+        return this;
+
+    }
+
     setFooter(text, icon) {
 
         this.footer = {
@@ -120,7 +130,8 @@ class Embed {
             footer: this.footer,
             author: this.author,
             fields: this.fields,
-            image: this.image
+            image: this.image,
+            thumbnail: this.thumbnail
         };
 
     }
