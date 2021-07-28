@@ -176,8 +176,15 @@ class RequestHandler {
 
                 if (res.status >= 200 && res.status < 300)
                     return resolve ? resolve(json) : _resolve(json);
-                else
-                    return reject ? reject(json) : _reject(json);
+                else {
+                    const requestResult = {
+                        status: res.status,
+                        json: json,
+                        method: actualRequest.method,
+                        endpoint: actualRequest.path(params)
+                    };
+                    return reject ? reject(requestResult) : _reject(requestResult);
+                }
 
             } else {
                 /* i am wondering if it would make more sense to have a request queue per bucket id? */
