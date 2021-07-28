@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 const WebSocket = require("ws");
 const erlpack = require("erlpack");
 const ZlibSync = require("zlib-sync");
@@ -127,11 +128,8 @@ class WS {
 
                     this.identify();
 
-                } else if (this.resuming == true) {
-
+                } else if (this.resuming == true)
                     this.resume();
-
-                }
 
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Hearbeat acknowledged`);
 
@@ -220,11 +218,8 @@ class WS {
 
                 this.addListeners();
 
-            } else {
-
+            } else
                 process.exit(1);
-
-            }
 
         });
 
@@ -247,11 +242,8 @@ class WS {
                 data = Buffer.from(this.zlib.result);
                 return this.handleIncoming(erlpack.unpack(data));
 
-            } else {
-
+            } else
                 this.zlib.push(data, false);
-
-            }
 
         });
 
