@@ -60,9 +60,9 @@ class Client extends EventsEmitter {
 
     /**
      * Fetches a message from a specific channel.
-     * @param {String} guild_id The ID of the guild that the message belongs to.
-     * @param {String} channel_id The ID of the channel that the message belongs to.
-     * @param {String} message_id The ID of the message to return.
+     * @param {BigInt} guild_id The ID of the guild that the message belongs to.
+     * @param {BigInt} channel_id The ID of the channel that the message belongs to.
+     * @param {BigInt} message_id The ID of the message to return.
      * @returns {Promise<Message>}
      */
     async fetchMessage(guild_id, channel_id, message_id) {
@@ -70,11 +70,11 @@ class Client extends EventsEmitter {
         try {
 
             const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id]);
-            return new Message(this, data, channel_id, guild_id);
+            return new Message(this, data, channel_id.toString(), guild_id.toString());
 
         } catch (error) {
 
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
             throw error;
 
         }

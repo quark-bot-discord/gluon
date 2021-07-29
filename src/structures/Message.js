@@ -197,7 +197,7 @@ class Message {
     /**
      * Edits the message, assuming it is sent by the client user.
      * @param {String} content The message content.
-     * @param {Object} param1 Embeds and components to attach to the message.
+     * @param {Object} options Embeds and components to attach to the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */
