@@ -20,7 +20,7 @@ class Client extends EventsEmitter {
     /**
      * Creates the client and sets the default options.
      * @constructor
-     * @param {object?} options The options to pass to the client. 
+     * @param {Object?} options The options to pass to the client. 
      */
     constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents } = {}) {
 
@@ -50,7 +50,7 @@ class Client extends EventsEmitter {
 
     /**
      * Emits an "error" even with the error provided.
-     * @param {string} error The error to emit, as a string.
+     * @param {String} error The error to emit, as a string.
      */
     error(error) {
 
@@ -59,10 +59,33 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Fetches a message from a specific channel.
+     * @param {String} guild_id The ID of the guild that the message belongs to.
+     * @param {String} channel_id The ID of the channel that the message belongs to.
+     * @param {String} message_id The ID of the message to return.
+     * @returns {Promise<Message>}
+     */
+    async fetchMessage(guild_id, channel_id, message_id) {
+
+        try {
+
+            const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id]);
+            return new Message(this, data, channel_id, guild_id);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
      * Posts a webhook with the provided webhook id and token.
-     * @param {object} referenceData An object with the webhook id and token.
-     * @param {string?} content The message to send with the webhook.
-     * @param {object?} options Embeds, components and files to attach to the webhook.
+     * @param {Object} referenceData An object with the webhook id and token.
+     * @param {String?} content The message to send with the webhook.
+     * @param {Object?} options Embeds, components and files to attach to the webhook.
      */
     async postWebhook({ id, token }, content, { embeds, components, files } = {}) {
 
@@ -93,10 +116,10 @@ class Client extends EventsEmitter {
 
     /**
      * Posts a message to the specified channel.
-     * @param {bigint} channel_id The id of the channel to send the message to.
-     * @param {bigint} guild_id The id of the guild which the channel belongs to.
-     * @param {string?} content The message content.
-     * @param {object?} options Embeds, components and files to attach to the message.
+     * @param {BigInt} channel_id The id of the channel to send the message to.
+     * @param {BigInt} guild_id The id of the guild which the channel belongs to.
+     * @param {String?} content The message content.
+     * @param {Object?} options Embeds, components and files to attach to the message.
      * @returns {Promise<Message>}
      */
     async sendMessage(channel_id, guild_id, content, { embed, components, files } = {}) {
@@ -129,11 +152,11 @@ class Client extends EventsEmitter {
 
     /**
      * Edits a specified message.
-     * @param {bigint} channel_id The id of the channel that the message belongs to.
-     * @param {bigint} guild_id The id of the guild that the channel belongs to.
-     * @param {bigint} message_id The id of the message to edit.
-     * @param {string?} content The message content.
-     * @param {object?} options Embeds, components and files to attach to the message.
+     * @param {BigInt} channel_id The id of the channel that the message belongs to.
+     * @param {BigInt} guild_id The id of the guild that the channel belongs to.
+     * @param {BigInt} message_id The id of the message to edit.
+     * @param {String?} content The message content.
+     * @param {Object?} options Embeds, components and files to attach to the message.
      * @returns {Promise<Message>}
      */
     async editMessage(channel_id, guild_id, message_id, content, { embed, components } = {}) {
@@ -170,7 +193,7 @@ class Client extends EventsEmitter {
 
     /**
      * Adds a specified channel as a follower to Quark's status channel.
-     * @param {bigint} channel_id The id of the channel to add as a follower.
+     * @param {BigInt} channel_id The id of the channel to add as a follower.
      */
     async followStatusChannel(channel_id) {
 
@@ -192,8 +215,8 @@ class Client extends EventsEmitter {
 
     /**
      * Fetches the webhooks for a specified channel.
-     * @param {bigint} channel_id The id of the channel to fetch the webhooks from.
-     * @returns {object[]}
+     * @param {BigInt} channel_id The id of the channel to fetch the webhooks from.
+     * @returns {Object[]}
      */
     async fetchChannelWebhooks(channel_id) {
 
@@ -213,7 +236,7 @@ class Client extends EventsEmitter {
 
     /**
      * Deletes a webhook.
-     * @param {bigint} webhook_id The id of the webhook to delete.
+     * @param {BigInt} webhook_id The id of the webhook to delete.
      */
     async deleteWebhook(webhook_id) {
 
@@ -232,8 +255,8 @@ class Client extends EventsEmitter {
 
     /**
      * Bulk deletes channel messages.
-     * @param {bigint} channel_id The id of the channel to purge messages in.
-     * @param {string[]} messages An array of message ids to delete.
+     * @param {BigInt} channel_id The id of the channel to purge messages in.
+     * @param {String[]} messages An array of message ids to delete.
      */
     async purgeChannelMessages(channel_id, messages) {
 
@@ -256,9 +279,9 @@ class Client extends EventsEmitter {
 
     /**
      * Fetches messages from a specified channel.
-     * @param {bigint} guild_id The id of the guild that the channel belongs to.
-     * @param {bigint} channel_id The id of the channel to fetch messages from.
-     * @param {object} options The filter options to determine which messages should be returned.
+     * @param {BigInt} guild_id The id of the guild that the channel belongs to.
+     * @param {BigInt} channel_id The id of the channel to fetch messages from.
+     * @param {Object} options The filter options to determine which messages should be returned.
      * @returns {Message[]}
      */
     async fetchChannelMessages(guild_id, channel_id, { around, before, after, limit }) {
@@ -296,7 +319,7 @@ class Client extends EventsEmitter {
 
     /**
      * Sets the bot's status across all shards.
-     * @param {object} status Status options.
+     * @param {Object} status Status options.
      */
     setStatus({ name, type, status, afk, since } = {}) {
 
@@ -307,7 +330,7 @@ class Client extends EventsEmitter {
 
     /**
      * Initiates the login sequence
-     * @param {string} token The authorization token
+     * @param {String} token The authorization token
      */
     login(token) {
         /* sets the token and starts logging the bot in to the gateway, shard by shard */
