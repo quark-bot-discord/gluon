@@ -62,7 +62,7 @@ class WS {
 
                 try {
 
-                    this.eventHandler[data.t](data.d);
+                    this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
 
                 } catch (error) {
 

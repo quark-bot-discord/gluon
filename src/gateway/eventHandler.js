@@ -80,12 +80,6 @@ class EventHandler {
 
     }
 
-    GUILD_JOIN_REQUEST_DELETE(data) {
-
-
-
-    }
-
     GUILD_ROLE_CREATE(data) {
 
         const role = new Role(this.client, data, data.guild_id);
@@ -138,12 +132,6 @@ class EventHandler {
 
     }
 
-    CHANNEL_PINS_UPDATE(data) {
-
-
-
-    }
-
     THREAD_CREATE(data) {
 
         const thread = new Thread(this.client, data, data.guild_id);
@@ -167,42 +155,6 @@ class EventHandler {
         this.client.guilds.cache.get(data.guild_id)?.channels.cache.delete(data.id);
 
         this.client.emit(EVENTS.THREAD_DELETE, thread);
-
-    }
-
-    THREAD_LIST_SYNC(data) {
-
-
-
-    }
-
-    THREAD_MEMBER_UPDATE(data) {
-
-
-
-    }
-
-    THREAD_MEMBERS_UPDATE(data) {
-
-
-
-    }
-
-    STAGE_INSTANCE_CREATE(data) {
-
-
-
-    }
-
-    STAGE_INSTANCE_UPDATE(data) {
-
-
-
-    }
-
-    STAGE_INSTANCE_DELETE(data) {
-
-
 
     }
 
@@ -370,14 +322,6 @@ class EventHandler {
             }
 
         }
-
-    }
-
-    APPLICATION_COMMAND_UPDATE(data) {
-
-    }
-
-    APPLICATION_COMMAND_DELETE(data) {
 
     }
 
