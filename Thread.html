@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> AuditLog</title>
+  <title> Thread</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>AuditLog</h1>
+                    <h1>Thread</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>AuditLog<span class="signature">(client, data, users)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Thread<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><p>Represents an audit log entry.</p></div>
+            <div class="class-description"><p>Represents a thread within Discord.</p></div>
         
     
 </header>
@@ -106,18 +106,22 @@
 
 
     
-    <h4 class="name" id="AuditLog">
-        <a class="href-link" href="#AuditLog">#</a>
+    <h4 class="name" id="Thread">
+        <a class="href-link" href="#Thread">#</a>
         
         <span class="code-name">
             
-                new AuditLog<span class="signature">(client, data, users)</span><span class="type-signature"></span>
+                new Thread<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span>
             
         </span>
     </h4>
     
 
     
+    
+    <div class="description">
+        <p>Creates the structure for a thread.</p>
+    </div>
     
 
 
@@ -141,7 +145,11 @@
             <th>Type</th>
 
             
+            <th>Attributes</th>
+            
 
+            
+            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -167,7 +175,19 @@
   </td>
 
   
+      <td class="attributes">
+      
 
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
   
 
   <td class="description last"><p>The client instance.</p></td>
@@ -192,10 +212,22 @@
   </td>
 
   
+      <td class="attributes">
+      
 
+      
+
+      
+      </td>
   
 
-  <td class="description last"><p>Audit log data from Discord.</p></td>
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Raw channel data.</p></td>
 </tr>
 
 
@@ -204,23 +236,76 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>users</code></td>
+      <td class="name"><code>guild_id</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">String</span>
 
 
   
   </td>
 
   
+      <td class="attributes">
+      
 
+      
+
+      
+      </td>
   
 
-  <td class="description last"><p>Resolved users who are involved with the audit log entries.</p></td>
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>The ID of the guild that this thread belongs to.</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>nocache</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Boolean</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+          &lt;nullable><br>
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last"><p>Whether this thread should be cached or not.</p></td>
 </tr>
 
 
@@ -261,14 +346,21 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel">https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel</a></li>
+        </ul>
+    </dd>
+    
 
     
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Thread.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line14">line 14</a>
+                <a href="structures_Thread.js.html">structures/Thread.js</a>, <a href="structures_Thread.js.html#line20">line 20</a>
             </span>
         </p>
     
@@ -303,6 +395,17 @@
     </div>
     
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Channel.html">Channel</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -318,168 +421,6 @@
         <div class='vertical-section'>
             <h1>Members</h1>
             <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">Object</span>
-
-
-    </span>
-
-<h4 class="name" id="changes">
-    <a class="href-link" href="#changes">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        changes
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The changes in this audit log entry.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line87">line 87</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">BigInt</span>
-
-
-    </span>
-
-<h4 class="name" id="channel_id">
-    <a class="href-link" href="#channel_id">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        channel_id
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The channel id involved with this audit log entry.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line71">line 71</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
             
                 <div class="member">
 
@@ -520,6 +461,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#client">Channel#client</a>
+    </li></ul></dd>
+    
 
     
 
@@ -544,9 +490,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Channel.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line20">line 20</a>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line21">line 21</a>
             </span>
         </p>
     
@@ -563,20 +509,20 @@
     <span class="method-parameter is-pulled-right">
         <label>Type:</label>
         
-<span class="param-type">Number</span>
+<span class="param-type"><a href="Guild.html">Guild</a></span>
 
 
     </span>
 
-<h4 class="name" id="count">
-    <a class="href-link" href="#count">#</a>
+<h4 class="name" id="guild">
+    <a class="href-link" href="#guild">#</a>
     
         
             <span class='tag'>nullable</span>
         
     
     <span class="code-name">
-        count
+        guild
     </span>
     
 </h4>
@@ -585,7 +531,7 @@
 
 
 <div class="description">
-    <p>The count of this type of audit log entry.</p>
+    <p>The guild that this channel belongs to.</p>
 </div>
 
 
@@ -600,6 +546,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#guild">Channel#guild</a>
+    </li></ul></dd>
     
 
     
@@ -625,90 +576,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Channel.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line78">line 78</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type"><a href="User.html">User</a></span>
-
-
-    </span>
-
-<h4 class="name" id="executor">
-    <a class="href-link" href="#executor">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        executor
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The resolved executor user.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line55">line 55</a>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line39">line 39</a>
             </span>
         </p>
     
@@ -730,15 +600,15 @@
 
     </span>
 
-<h4 class="name" id="executor_id">
-    <a class="href-link" href="#executor_id">#</a>
+<h4 class="name" id="guild_id">
+    <a class="href-link" href="#guild_id">#</a>
     
         
             <span class='tag'>nullable</span>
         
     
     <span class="code-name">
-        executor_id
+        guild_id
     </span>
     
 </h4>
@@ -747,7 +617,7 @@
 
 
 <div class="description">
-    <p>The id of the executor user.</p>
+    <p>The ID of the guild that this channel belongs to.</p>
 </div>
 
 
@@ -762,6 +632,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#guild_id">Channel#guild_id</a>
+    </li></ul></dd>
     
 
     
@@ -787,9 +662,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Channel.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line47">line 47</a>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line46">line 46</a>
             </span>
         </p>
     
@@ -824,7 +699,89 @@
 
 
 <div class="description">
-    <p>The id of the audit log entry.</p>
+    <p>The id of the channel.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#id">Channel#id</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_Channel.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line27">line 27</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">ChannelMessageManager</span>
+
+
+    </span>
+
+<h4 class="name" id="messages">
+    <a class="href-link" href="#messages">#</a>
+    
+    <span class="code-name">
+        messages
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>The message manager for this channel.</p>
 </div>
 
 
@@ -864,9 +821,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Thread.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line26">line 26</a>
+                <a href="structures_Thread.js.html">structures/Thread.js</a>, <a href="structures_Thread.js.html#line30">line 30</a>
             </span>
         </p>
     
@@ -888,15 +845,11 @@
 
     </span>
 
-<h4 class="name" id="reason">
-    <a class="href-link" href="#reason">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
+<h4 class="name" id="name">
+    <a class="href-link" href="#name">#</a>
     
     <span class="code-name">
-        reason
+        name
     </span>
     
 </h4>
@@ -905,7 +858,7 @@
 
 
 <div class="description">
-    <p>The reason for this audit log entry.</p>
+    <p>The name of the channel.</p>
 </div>
 
 
@@ -920,6 +873,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#name">Channel#name</a>
+    </li></ul></dd>
     
 
     
@@ -945,90 +903,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Channel.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line62">line 62</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type"><a href="User.html">User</a></span>
-
-
-    </span>
-
-<h4 class="name" id="target">
-    <a class="href-link" href="#target">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        target
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The resolved target user.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line40">line 40</a>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line33">line 33</a>
             </span>
         </p>
     
@@ -1050,15 +927,11 @@
 
     </span>
 
-<h4 class="name" id="target_id">
-    <a class="href-link" href="#target_id">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
+<h4 class="name" id="owner_id">
+    <a class="href-link" href="#owner_id">#</a>
     
     <span class="code-name">
-        target_id
+        owner_id
     </span>
     
 </h4>
@@ -1067,7 +940,7 @@
 
 
 <div class="description">
-    <p>The id of the target user.</p>
+    <p>The ID of the user who created this thread.</p>
 </div>
 
 
@@ -1107,9 +980,253 @@
 
     
         <p class="tag-source">
-            <a href="structures_AuditLog.js.html" class="button">View Source</a>
+            <a href="structures_Thread.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line32">line 32</a>
+                <a href="structures_Thread.js.html">structures/Thread.js</a>, <a href="structures_Thread.js.html#line36">line 36</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="TextChannel.html">TextChannel</a></span>
+
+
+    </span>
+
+<h4 class="name" id="parent">
+    <a class="href-link" href="#parent">#</a>
+    
+        
+            <span class='tag'>nullable</span>
+        
+    
+    <span class="code-name">
+        parent
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>The text channel that this thread belongs to.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_Thread.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_Thread.js.html">structures/Thread.js</a>, <a href="structures_Thread.js.html#line42">line 42</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">BigInt</span>
+
+
+    </span>
+
+<h4 class="name" id="parent_id">
+    <a class="href-link" href="#parent_id">#</a>
+    
+        
+            <span class='tag'>nullable</span>
+        
+    
+    <span class="code-name">
+        parent_id
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>The ID of the text channel that this thread belongs to.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_Thread.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_Thread.js.html">structures/Thread.js</a>, <a href="structures_Thread.js.html#line49">line 49</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">Number</span>
+
+
+    </span>
+
+<h4 class="name" id="type">
+    <a class="href-link" href="#type">#</a>
+    
+    <span class="code-name">
+        type
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>The type of channel.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Channel.html#type">Channel#type</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_Channel.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_Channel.js.html">structures/Channel.js</a>, <a href="structures_Channel.js.html#line52">line 52</a>
             </span>
         </p>
     

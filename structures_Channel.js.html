@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/AuditLog.js</title>
+  <title> structures/Channel.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/AuditLog.js</h1>
+                    <h1>structures/Channel.js</h1>
                 </header>
                 
 
@@ -85,20 +85,21 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const User = require("./User");
-
-/**
- * Represents an audit log entry.
+            <pre class="prettyprint source linenums"><code>/**
+ * Represents a channel within Discord.
+ * @see {@link https://discord.com/developers/docs/resources/channel}
  */
-class AuditLog {
-
+class Channel {
+    
     /**
-     * 
+     * Creates the base structure for a channel.
+     * @constructor
      * @param {Client} client The client instance.
-     * @param {Object} data Audit log data from Discord.
-     * @param {Object[]} users Resolved users who are involved with the audit log entries. 
+     * @param {Object} data Raw channel data.
+     * @param {String} guild_id The ID of the guild that this channel belongs to.
+     * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
      */
-    constructor(client, data, users) {
+    constructor(client, data, guild_id) {
 
         /**
          * The client instance.
@@ -107,77 +108,41 @@ class AuditLog {
         this.client = client;
 
         /**
-         * The id of the audit log entry.
+         * The id of the channel.
          * @type {BigInt}
          */
         this.id = BigInt(data.id);
 
         /**
-         * The id of the target user.
-         * @type {BigInt?}
+         * The name of the channel.
+         * @type {String}
          */
-        this.target_id = data.target_id ? BigInt(data.target_id) : null;
-
-        if (users &amp;&amp; users.length != 0 &amp;&amp; this.target_id) {
-            const user = users.find(u => u.id == this.target_id);
-            /**
-             * The resolved target user.
-             * @type {User?}
-             */
-            this.target = new User(this.client, user);
-        }
+        this.name = data.name;
 
         /**
-         * The id of the executor user.
-         * @type {BigInt?}
+         * The guild that this channel belongs to.
+         * @type {Guild?}
          */
-        this.executor_id = data.user_id ? BigInt(data.user_id) : null;
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
 
-        if (users &amp;&amp; users.length != 0 &amp;&amp; this.executor_id) {
-            const user = users.find(u => u.id == this.executor_id);
+        if (!this.guild)
             /**
-             * The resolved executor user.
-             * @type {User?}
+             * The ID of the guild that this channel belongs to.
+             * @type {BigInt?}
              */
-            this.executor = new User(this.client, user);
-        }
+            this.guild_id = BigInt(guild_id);
 
         /**
-         * The reason for this audit log entry.
-         * @type {String?}
+         * The type of channel.
+         * @type {Number}
          */
-        this.reason = data.reason || null;
-
-        if (data.options) {
-
-            if (data.options.channel_id)
-                /**
-                 * The channel id involved with this audit log entry.
-                 * @type {BigInt?}
-                 */
-                this.channel_id = BigInt(data.options.channel_id);
-
-            if (data.options.count)
-                /**
-                 * The count of this type of audit log entry.
-                 * @type {Number?}
-                 */
-                this.count = parseInt(data.options.count);
-
-        }
-
-        if (data.changes)
-            /**
-             * The changes in this audit log entry.
-             * @type {Object?}
-             */
-            this.changes = data.changes;
+        this.type = data.type;
 
     }
 
 }
 
-module.exports = AuditLog;</code></pre>
+module.exports = Channel;</code></pre>
         </article>
     </section>
 
