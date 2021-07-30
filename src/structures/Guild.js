@@ -130,20 +130,25 @@ class Guild {
         if (nocache == false && this.client.cacheGuilds == true)
             this.client.guilds.cache.set(data.id, this);
 
-        for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
-            new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
+        if (data.members)
+            for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
+                new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
 
-        for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
-            cacheChannel(this.client, data.channels[i], data.id, nocache);
+        if (data.channels)
+            for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
+                cacheChannel(this.client, data.channels[i], data.id, nocache);
 
-        for (let i = 0; i < data.threads.length && this.client.cacheChannels == true; i++)
-            new Thread(this.client, data.threads[i], data.id, nocache);
+        if (data.threads)
+            for (let i = 0; i < data.threads.length && this.client.cacheChannels == true; i++)
+                new Thread(this.client, data.threads[i], data.id, nocache);
 
-        for (let i = 0; i < data.voice_states.length && this.client.cacheVoiceStates == true; i++)
-            new VoiceState(this.client, data.voice_states[i], data.id, nocache);
+        if (data.voice_states)
+            for (let i = 0; i < data.voice_states.length && this.client.cacheVoiceStates == true; i++)
+                new VoiceState(this.client, data.voice_states[i], data.id, nocache);
 
-        for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
-            new Role(this.client, data.roles[i], data.id, nocache);
+        if (data.roles)
+            for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
+                new Role(this.client, data.roles[i], data.id, nocache);
 
     }
 
