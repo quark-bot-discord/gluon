@@ -439,7 +439,7 @@ class Client extends EventsEmitter {
                         // for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
                         this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [this.shardIds[i], this.totalShards], this.intents));
 
-                    }, 5000 * i);
+                    }, 6000 * i);
 
                 if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true)
                     setInterval(() => {
