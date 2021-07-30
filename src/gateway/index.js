@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 const WebSocket = require("ws");
-const erlpack = require("erlpack");
 const ZlibSync = require("zlib-sync");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
@@ -14,7 +13,9 @@ const UpdatePresence = require("./structures/_3");
 
 class WS {
 
-    constructor(client, url, shard, intents) {
+    constructor(client, url, shard, intents, providedErlpack) {
+
+        this.erlpack = providedErlpack || require("erlpack");
 
         this.token = client.token;
         this.shard = shard;
@@ -145,7 +146,7 @@ class WS {
 
     updatePresence(name, type, status, afk, since) {
 
-        this.ws.send(new UpdatePresence(name, type, status, afk, since));
+        this.ws.send(new UpdatePresence(this.erlpack, name, type, status, afk, since));
 
     }
 
@@ -153,7 +154,7 @@ class WS {
 
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Sending heartbeat...`);
 
-        this.ws.send(new Heartbeat(this.s));
+        this.ws.send(new Heartbeat(this.erlpack, this.s));
 
     }
 
@@ -161,7 +162,7 @@ class WS {
 
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => IDENTIFY`);
 
-        this.ws.send(new Identify(this.token, this.shard, this.intents));
+        this.ws.send(new Identify(this.erlpack, this.token, this.shard, this.intents));
 
     }
 
@@ -181,7 +182,7 @@ class WS {
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => RESUMING`);
 
-        this.ws.send(new Resume(this.token, this.sessionId, this.s));
+        this.ws.send(new Resume(this.erlpack, this.token, this.sessionId, this.s));
 
     }
 
@@ -242,7 +243,7 @@ class WS {
                 }
 
                 data = Buffer.from(this.zlib.result);
-                return this.handleIncoming(erlpack.unpack(data));
+                return this.handleIncoming(this.erlpack.unpack(data));
 
             } else
                 this.zlib.push(data, false);

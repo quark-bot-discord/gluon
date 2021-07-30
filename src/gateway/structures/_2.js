@@ -1,9 +1,8 @@
-const erlpack = require("erlpack");
 const { NAME, CALCULATED_INTENTS } = require("../../constants");
 
 class Identify {
 
-    constructor(token, shard, intents = CALCULATED_INTENTS) {
+    constructor(erlpack, token, shard, intents = CALCULATED_INTENTS) {
 
         this.op = 2;
 

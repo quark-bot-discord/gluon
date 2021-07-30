@@ -1,8 +1,6 @@
-const erlpack = require("erlpack");
-
 class UpdatePresence {
 
-    constructor(name, type = 0, status = "online", afk = false, since = null) {
+    constructor(erlpack, name, type = 0, status = "online", afk = false, since = null) {
 
         this.op = 3;
 

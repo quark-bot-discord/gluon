@@ -1,8 +1,6 @@
-const erlpack = require("erlpack");
-
 class Resume {
 
-    constructor(token, session_id, seq) {
+    constructor(erlpack, token, session_id, seq) {
 
         this.op = 6;
 
