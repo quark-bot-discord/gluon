@@ -63,7 +63,10 @@ class EventHandler {
 
     GUILD_UPDATE(data) {
 
+        const oldGuild = this.client.guilds.cache.get(data.id);
+        const newGuild = new Guild(this.client, data);
 
+        this.client.emit(EVENTS.GUILD_UPDATE, oldGuild, newGuild);
 
     }
 
