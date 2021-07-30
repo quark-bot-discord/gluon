@@ -175,7 +175,7 @@ class EventHandler {
         if (member)
             this.client.guilds.cache.get(data.guild_id)?.members.cache.delete(data.user.id);
         else
-            member = new Member(this.client, data, data.user.id, data.guild_id, data.user, true);
+            member = new Member(this.client, data, data.id, data.guild_id, data, true);
 
         this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
