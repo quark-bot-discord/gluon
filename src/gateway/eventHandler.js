@@ -82,7 +82,7 @@ class EventHandler {
 
     GUILD_ROLE_CREATE(data) {
 
-        const role = new Role(this.client, data, data.guild_id);
+        const role = new Role(this.client, data.role, data.guild_id);
 
         this.client.emit(EVENTS.GUILD_ROLE_CREATE, role);
 
@@ -90,8 +90,8 @@ class EventHandler {
 
     GUILD_ROLE_UPDATE(data) {
 
-        const oldRole = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.id);
-        const newRole = new Role(this.client, data, data.guild_id);
+        const oldRole = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.role.id);
+        const newRole = new Role(this.client, data.role, data.guild_id);
 
         this.client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
 
@@ -99,8 +99,8 @@ class EventHandler {
 
     GUILD_ROLE_DELETE(data) {
 
-        const role = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.id);
-        this.client.guilds.cache.get(data.guild_id)?.roles.cache.delete(data.id);
+        const role = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.role_id);
+        this.client.guilds.cache.get(data.guild_id)?.roles.cache.delete(data.role_id);
 
         this.client.emit(EVENTS.GUILD_ROLE_DELETE, role);
 
