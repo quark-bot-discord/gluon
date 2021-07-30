@@ -22,7 +22,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds, erlpack } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds } = {}) {
 
         super();
 
@@ -127,8 +127,6 @@ class Client extends EventsEmitter {
          * @type {Redis}
          */
         this.redis = new Redis();
-
-        this.erlpack = erlpack;
 
     }
 
@@ -439,7 +437,7 @@ class Client extends EventsEmitter {
                     setTimeout(() => {
 
                         // for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
-                        this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [this.shardIds[i], this.totalShards], this.intents, this.erlpack));
+                        this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [this.shardIds[i], this.totalShards], this.intents));
 
                     }, 6000 * i);
 
