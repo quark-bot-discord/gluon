@@ -174,8 +174,13 @@ class EventHandler {
         let member = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
         if (member)
             this.client.guilds.cache.get(data.guild_id)?.members.cache.delete(data.user.id);
-        else
-            member = new Member(this.client, data, data.id, data.guild_id, data, true);
+        else {
+            member = new User(this.client, data.user, true);
+            member.user = member;
+            member.guild = this.client.guilds.cache.get(data.guild_id) || null;
+            if (!member.guild)
+                member.guild_id = BigInt(data.guild_id);
+        }
 
         this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
