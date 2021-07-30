@@ -22,28 +22,110 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds } = {}) {
 
         super();
 
+        /**
+         * The Discord API base URL.
+         * @type {String}
+         */
         this.baseURL = BASE_URL;
+
+        /**
+         * The Discord API version to use.
+         * @type {String}
+         */
         this.version = VERSION;
+
+        /**
+         * The name of this lib.
+         * @type {String}
+         */
         this.name = NAME;
+
+        /**
+         * The intents to use when connecting with this client.
+         * @type {Number?}
+         */
         this.intents = intents;
 
+        /**
+         * The client user.
+         * @type {User?}
+         */
         this.user = null;
 
+        /**
+         * The user manager for this client.
+         * @type {UserManager}
+         */
         this.users = new UserManager(this);
+
+        /**
+         * The guild manager for this client.
+         * @type {GuildManager}
+         */
         this.guilds = new GuildManager(this);
 
+        /**
+         * Whether this client should cache messages.
+         * @type {Boolean}
+         */
         this.cacheMessages = cacheMessages;
+
+        /**
+         * Whether this client should cache users.
+         * @type {Boolean}
+         */
         this.cacheUsers = cacheUsers;
+
+        /**
+         * Whether this client should cache members.
+         * @type {Boolean}
+         */
         this.cacheMembers = cacheMembers;
+
+        /**
+         * Whether this client should cache channels.
+         * @type {Boolean}
+         */
         this.cacheChannels = cacheChannels;
+
+        /**
+         * Whether this client should cache guilds.
+         * @type {Boolean}
+         */
         this.cacheGuilds = cacheGuilds;
+
+        /**
+         * Whether this client should cache voice states.
+         * @type {Boolean}
+         */
         this.cacheVoiceStates = cacheVoiceStates;
+
+        /**
+         * Whether this client should cache roles.
+         * @type {Boolean}
+         */
         this.cacheRoles = cacheRoles;
 
+        /**
+         * An array of the shard ids that this client is handling.
+         * @type {Number[]?}
+         */
+        this.shardIds = shardIds;
+
+        /**
+         * The total shards the bot is using.
+         * @type {Number?}
+         */
+        this.totalShards = totalShards;
+
+        /**
+         * A redis client for this client.
+         * @type {Redis}
+         */
         this.redis = new Redis();
 
     }
@@ -345,11 +427,17 @@ class Client extends EventsEmitter {
 
                 let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
-                for (let i = 0; i < gatewayInfo.shards && remainingSessionStarts != 0; i++, remainingSessionStarts--)
+                if (!this.shardIds || this.shardIds.length == 0)
+                    this.shardIds = [...Array(gatewayInfo.shards).keys()];
+
+                if (!this.totalShards)
+                    this.totalShards = gatewayInfo.shards;
+
+                for (let i = 0; i < this.shardIds.length && remainingSessionStarts != 0; i++, remainingSessionStarts--)
                     setTimeout(() => {
 
-                        for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
-                            this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [i, gatewayInfo.shards], this.intents));
+                        // for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
+                        this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [this.shardIds[i], this.totalShards], this.intents));
 
                     }, 5000 * i);
 
