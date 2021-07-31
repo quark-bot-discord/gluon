@@ -85,8 +85,7 @@ class RequestHandler {
         return new Promise(async (_resolve, _reject) => {
 
             if (this.client.ready != true)
-                if (request != "getGatewayBot")
-                    return _reject(new Error("Client is not ready"));
+                return _reject("Client is not ready");
 
             /* fetch the request data from ./endpoints.js */
             /* important it is fetched from there, as bucket ids are also stored there with that data */
