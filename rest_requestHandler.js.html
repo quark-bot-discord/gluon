@@ -93,7 +93,9 @@ const NodeCache = require("node-cache");
 
 class RequestHandler {
 
-    constructor(baseURL, name, version, token) {
+    constructor(client, baseURL, name, version, token) {
+
+        this.client = client;
 
         this.baseURL = baseURL;
         this.version = version;
@@ -177,8 +179,14 @@ class RequestHandler {
             /* determines the path of the request, needed for handling ratelimit buckets */
             const path = actualRequest.path(params);
 
-            if (this.ratelimited.get(path))
-                return _reject("Ratelimited");
+            if (this.ratelimited.get(path)) {
+                const rateLimitNotice = {
+                    path: path,
+                    info: "RATELIMITED",
+                    shards: this.client.shardIds
+                };
+                return reject ? reject(rateLimitNotice) : _reject(rateLimitNotice);
+            }
 
             const bucket = this.buckets.get(path);
 
@@ -289,7 +297,8 @@ class RequestHandler {
                         status: res.status,
                         json: json,
                         method: actualRequest.method,
-                        endpoint: actualRequest.path(params)
+                        endpoint: actualRequest.path(params),
+                        shards: this.client.shardIds
                     };
                     return reject ? reject(requestResult) : _reject(requestResult);
                 }
