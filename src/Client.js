@@ -509,7 +509,8 @@ class Client extends EventsEmitter {
             })
             .catch(error => {
 
-                this.error(error.stack.toString());
+                this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+                throw error;
 
             });
 
