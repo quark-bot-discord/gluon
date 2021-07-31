@@ -48,6 +48,8 @@ class Member {
             this.roles = [];
             for (let i = 0; i < data.roles.length; i++) {
                 const role = this.guild.roles.cache.get(data.roles[i]);
+                if (!role)
+                    continue;
                 this.roles.push(role);
                 if (role.position > this.highestRolePosition)
                     this.highestRolePosition = role.position;
