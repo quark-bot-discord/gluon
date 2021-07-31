@@ -6,9 +6,7 @@ const NodeCache = require("node-cache");
 
 class RequestHandler {
 
-    constructor(client, baseURL, name, version, token) {
-
-        this.client = client;
+    constructor(baseURL, name, version, token) {
 
         this.baseURL = baseURL;
         this.version = version;
@@ -83,9 +81,6 @@ class RequestHandler {
      */
     async makeRequest(request, params, body, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
-
-            if (this.client.ready != true)
-                return _reject("Client is not ready");
 
             /* fetch the request data from ./endpoints.js */
             /* important it is fetched from there, as bucket ids are also stored there with that data */
