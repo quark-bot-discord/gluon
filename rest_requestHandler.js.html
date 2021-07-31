@@ -200,7 +200,7 @@ class RequestHandler {
                         /* otherwise check if the bucket reset time has reset */
                         /* which would reset our remaining requests back to the original value */
                         /* so we can proceed with the request if this is the case */
-                        ((new Date().getTime() / 1000) > this.bucket.get(bucket)?.reset)) :
+                        (((new Date().getTime() / 1000) - 2) > this.bucket.get(bucket)?.reset)) :
                     /* yeah im so lost but i am 99% sure this works */
                     (true)
                 )
