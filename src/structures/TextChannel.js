@@ -63,7 +63,7 @@ class TextChannel extends Channel {
 
         try {
 
-            const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
+            const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body, new Error().stack);
             return new Message(this.client, data, this.id.toString(), this.guild?.id.toString() || this.guild_id.toString(), false);
 
         } catch (error) {
@@ -91,7 +91,7 @@ class TextChannel extends Channel {
 
         try {
 
-            await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
+            await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body, new Error().stack);
 
         } catch (error) {
 

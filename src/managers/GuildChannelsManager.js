@@ -23,7 +23,7 @@ class GuildChannelsManager {
 
         try {
 
-            const data = await this.client.request.makeRequest("getChannel", [channel_id]);
+            const data = await this.client.request.makeRequest("getChannel", [channel_id], null, new Error().stack);
             switch (data.type) {
                 case CHANNEL_TYPES.GUILD_TEXT:
                 case CHANNEL_TYPES.GUILD_NEWS: {

@@ -210,7 +210,7 @@ class Guild {
 
         try {
 
-            await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
+            await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body, new Error().stack);
 
         } catch (error) {
 
@@ -239,7 +239,7 @@ class Guild {
 
         try {
 
-            await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
+            await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body, new Error().stack);
 
         } catch (error) {
 
@@ -268,7 +268,7 @@ class Guild {
 
         try {
 
-            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
+            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body, new Error().stack);
 
         } catch (error) {
 
@@ -298,7 +298,7 @@ class Guild {
 
         try {
 
-            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body);
+            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body, new Error().stack);
 
         } catch (error) {
 
@@ -337,7 +337,7 @@ class Guild {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
+            const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body, new Error().stack);
 
             if (type && AUDIT_LOG_TYPES[type] && data && data.audit_log_entries[0] && data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
                 return null;
@@ -368,7 +368,7 @@ class Guild {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
+            const data = await this.client.request.makeRequest("getGuildInvites", [this.id], null, new Error().stack);
             return data;
 
         } catch (error) {
@@ -388,7 +388,7 @@ class Guild {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
+            const data = await this.client.request.makeRequest("getGuildChannels", [this.id], null, new Error().stack);
             let channels = [];
             for (let i = 0; i < data.length; i++)
                 channels.push(cacheChannel(this.client, data[i], this.id.toString()));
@@ -415,7 +415,7 @@ class Guild {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
+            const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id], null, new Error().stack);
             return data;
 
         } catch (error) {

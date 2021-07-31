@@ -151,7 +151,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id]);
+            const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id], null, new Error().stack);
             return new Message(this, data, channel_id.toString(), guild_id.toString());
 
         } catch (error) {
@@ -185,7 +185,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("postExecuteWebhook", [id, token], body);
+            await this.request.makeRequest("postExecuteWebhook", [id, token], body, new Error().stack);
 
         } catch (error) {
 
@@ -220,7 +220,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
+            const data = await this.request.makeRequest("postCreateMessage", [channel_id], body, new Error().stack);
             return new Message(this, data, channel_id.toString(), guild_id.toString(), false);
 
         } catch (error) {
@@ -261,7 +261,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
+            const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body, new Error().stack);
             return new Message(this, data, channel_id, guild_id);
 
         } catch (error) {
@@ -285,7 +285,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body);
+            await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body, new Error().stack);
 
         } catch (error) {
 
@@ -304,7 +304,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.request.makeRequest("getChannelWebhooks", [channel_id]);
+            const data = await this.request.makeRequest("getChannelWebhooks", [channel_id], null, new Error().stack);
             return data;
 
         } catch (error) {
@@ -324,7 +324,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("deleteWebhook", [webhook_id]);
+            await this.request.makeRequest("deleteWebhook", [webhook_id], null, new Error().stack);
 
         } catch (error) {
 
@@ -348,7 +348,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
+            await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body, new Error().stack);
 
         } catch (error) {
 
@@ -384,7 +384,7 @@ class Client extends EventsEmitter {
 
         try {
 
-            const data = await this.request.makeRequest("getChannelMessages", [channel_id], body);
+            const data = await this.request.makeRequest("getChannelMessages", [channel_id], body, new Error().stack);
             let messages = [];
             for (let i = 0; i < data.length; i++)
                 messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
@@ -420,7 +420,7 @@ class Client extends EventsEmitter {
 
         this.request = new Request(this.baseURL, this.name, this.version, this.token);
 
-        this.request.makeRequest("getGatewayBot")
+        this.request.makeRequest("getGatewayBot", null, null, new Error().stack)
             .then(gatewayInfo => {
 
                 this.shards = [];
