@@ -153,7 +153,7 @@ class RequestHandler {
         if (this.requestQueue.length != 0) {
 
             const nextRequest = this.requestQueue.shift();
-            this.makeRequest(nextRequest.request, nextRequest.params, nextRequest.body, nextRequest.resolve, nextRequest.reject);
+            this.makeRequest(nextRequest.request, nextRequest.params, nextRequest.body, nextRequest.stack, nextRequest.resolve, nextRequest.reject);
 
         }
 
@@ -167,7 +167,7 @@ class RequestHandler {
      * @param {function} resolve The function to resolve the promise, so the data can be returned to the correct place
      * @param {function} reject The function to reject the promise, to make clear the request has failed
      */
-    async makeRequest(request, params, body, resolve, reject) {
+    async makeRequest(request, params, body, stack, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
 
             /* fetch the request data from ./endpoints.js */
@@ -289,7 +289,8 @@ class RequestHandler {
                         status: res.status,
                         json: json,
                         method: actualRequest.method,
-                        endpoint: actualRequest.path(params)
+                        endpoint: actualRequest.path(params),
+                        stack: stack
                     };
                     return reject ? reject(requestResult) : _reject(requestResult);
                 }
@@ -300,6 +301,7 @@ class RequestHandler {
                     request: request,
                     params: params,
                     body: body,
+                    stack: stack,
                     resolve: resolve ? resolve : _resolve,
                     reject: reject ? reject : _reject
                 });
