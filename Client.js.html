@@ -487,6 +487,77 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Creates a webhook in the given channel with the name "Quark"
+     * @param {BigInt} channel_id The id of the channel to create the webhook in.
+     * @returns {Object}
+     */
+    async createWebhook(channel_id) {
+
+        const body = {};
+
+        body.name = "Quark";
+
+        try {
+
+            const data = await this.request.makeRequest("postCreateWebhook", [channel_id], body);
+            return data;
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Modified a webhook with the given webhook id.
+     * @param {BigInt} webhook_id The id of the webhook to modify.
+     * @param {Object} options The options to modify the webhook with.
+     * @returns {Object}
+     */
+    async modifyWebhook(webhook_id, { channel_id }) {
+
+        const body = {};
+
+        body.channel_id = channel_id.toString();
+
+        try {
+
+            const data = await this.request.makeRequest("patchModifyWebhook", [webhook_id], body);
+            return data;
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
+     * Deletes a given webhook.
+     * @param {BigInt} webhook_id The id of the webhook to delete.
+     * @param {String} webhook_token The webhook token of the webhook to delete.
+     */
+    async deleteWebhook(webhook_id, webhook_token) {
+
+        try {
+
+            await this.request.makeRequest("deleteWebhook", [webhook_id, webhook_token], null);
+
+        } catch (error) {
+
+            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
      */
