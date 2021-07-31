@@ -26,6 +26,7 @@ class RequestHandler {
         this.delayInitiated = false;
 
         this.buckets = new NodeCache({ checkperiod: 60, stdTTL: 600 });
+        this.ratelimited = new NodeCache({ checkperiod: 15, stdTTL: 30 });
 
     }
 
@@ -88,6 +89,9 @@ class RequestHandler {
 
             /* determines the path of the request, needed for handling ratelimit buckets */
             const path = actualRequest.path(params);
+
+            if (this.ratelimited.get(path))
+                return _reject("Ratelimited");
 
             const bucket = this.buckets.get(path);
 
@@ -190,8 +194,10 @@ class RequestHandler {
                 if (res.status >= 200 && res.status < 300)
                     return resolve ? resolve(json) : _resolve(json);
                 else {
-                    if (res.status == 429)
+                    if (res.status == 429) {
                         this.handleBucket(res.headers.get("x-ratelimit-bucket"), 0, (new Date().getTime() / 1000) + json.retry_after + 5, path);
+                        this.ratelimited.set(path, true);
+                    }
                     const requestResult = {
                         status: res.status,
                         json: json,
