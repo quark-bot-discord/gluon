@@ -505,7 +505,7 @@ class Client extends EventsEmitter {
         /* sets the token and starts logging the bot in to the gateway, shard by shard */
         this.token = token;
 
-        this.request = new Request(this.baseURL, this.name, this.version, this.token);
+        this.request = new Request(this, this.baseURL, this.name, this.version, this.token);
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
