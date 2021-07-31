@@ -25,7 +25,7 @@ class RequestHandler {
 
         this.delayInitiated = false;
 
-        this.buckets = new NodeCache({ checkperiod: 60, stdTTL: 600 });;
+        this.buckets = new NodeCache({ checkperiod: 60, stdTTL: 600 });
 
     }
 
