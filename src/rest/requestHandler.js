@@ -101,7 +101,7 @@ class RequestHandler {
                     /* this should not be completely relied on as I believe bucket ids *can* also vary on the same endpoint */
                     /* but with different params */
                     /* either way, the bucket id is the only truly reliable way of monitoring ratelimits */
-                    !this.inProgressRequests.includes(request)
+                    !this.inProgressRequests.includes(path)
                 )
                 &&
                 /* again, check if there is a valid bucket id attached to this request */
@@ -120,7 +120,7 @@ class RequestHandler {
             ) {
                 /* add the current request to the "in-progress" list*/
                 /* only one request of each bucket id should ever take place at a time */
-                this.inProgressRequests.push(request);
+                this.inProgressRequests.push(path);
                 if (bucket)
                     this.inProgressBuckets.push(bucket);
 
@@ -181,7 +181,7 @@ class RequestHandler {
                 /* however, at just the wrong timing, a newer request can "slip in" */
                 /* not the largest issue in the world, but it makes sense to follow the queue */
                 /* so removing the current request from the "in-progress" list should be done as late as possible */
-                this.inProgressRequests.splice(this.inProgressRequests.indexOf(request), 1);
+                this.inProgressRequests.splice(this.inProgressRequests.indexOf(path), 1);
                 if (bucket)
                     this.inProgressBuckets.splice(this.inProgressBuckets.indexOf(bucket), 1);
 
@@ -190,6 +190,8 @@ class RequestHandler {
                 if (res.status >= 200 && res.status < 300)
                     return resolve ? resolve(json) : _resolve(json);
                 else {
+                    if (res.status == 429)
+                        this.handleBucket(res.headers.get("x-ratelimit-bucket"), 0, (new Date().getTime() / 1000) + json.retry_after + 5, path);
                     const requestResult = {
                         status: res.status,
                         json: json,
