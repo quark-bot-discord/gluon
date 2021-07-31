@@ -1,12 +1,10 @@
-const erlpack = require("erlpack");
-
 class Heartbeat {
 
     constructor(d) {
 
         this.op = 1;
 
-        return erlpack.pack({
+        return require("erlpack").pack({
             op: this.op,
             d: d ? d : null
         });

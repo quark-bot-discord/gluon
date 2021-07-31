@@ -1,4 +1,3 @@
-const erlpack = require("erlpack");
 const { NAME, CALCULATED_INTENTS } = require("../../constants");
 
 class Identify {
@@ -7,7 +6,7 @@ class Identify {
 
         this.op = 2;
 
-        return erlpack.pack({
+        return require("erlpack").pack({
             op: this.op,
             d: {
                 token,

@@ -1,5 +1,3 @@
-const erlpack = require("erlpack");
-
 class UpdatePresence {
 
     constructor(name, type = 0, status = "online", afk = false, since = null) {
@@ -14,7 +12,7 @@ class UpdatePresence {
                 type
             });
 
-        return erlpack.pack({
+        return require("erlpack").pack({
             op: this.op,
             d: {
                 since,
