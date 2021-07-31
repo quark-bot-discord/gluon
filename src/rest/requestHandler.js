@@ -25,9 +25,7 @@ class RequestHandler {
 
         this.delayInitiated = false;
 
-        this.buckets = new NodeCache({ checkperiod: 60, stdTTL: 600 });
-
-        this.ratelimited = new NodeCache({ checkperiod: 15, stdTTL: 30 });
+        this.buckets = new NodeCache({ checkperiod: 60, stdTTL: 600 });;
 
     }
 
@@ -118,7 +116,7 @@ class RequestHandler {
                         (((new Date().getTime() / 1000) - 2) > this.bucket.get(bucket)?.reset)) :
                     /* yeah im so lost but i am 99% sure this works */
                     (true)
-                ) || !this.ratelimited.get(path)
+                )
             ) {
                 /* add the current request to the "in-progress" list*/
                 /* only one request of each bucket id should ever take place at a time */
@@ -192,10 +190,8 @@ class RequestHandler {
                 if (res.status >= 200 && res.status < 300)
                     return resolve ? resolve(json) : _resolve(json);
                 else {
-                    if (res.status == 429) {
+                    if (res.status == 429)
                         this.handleBucket(res.headers.get("x-ratelimit-bucket"), 0, (new Date().getTime() / 1000) + json.retry_after + 5, path);
-                        this.ratelimited.set(path, true);
-                    }
                     const requestResult = {
                         status: res.status,
                         json: json,
