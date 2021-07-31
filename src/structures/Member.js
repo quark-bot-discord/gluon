@@ -84,7 +84,7 @@ class Member {
 
         try {
 
-            await this.client.request.makeRequest("putAddGuildMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body, new Error().stack);
+            await this.client.request.makeRequest("putAddGuildMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
 
         } catch (error) {
 
@@ -107,7 +107,7 @@ class Member {
 
         try {
 
-            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body, new Error().stack);
+            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
 
         } catch (error) {
 

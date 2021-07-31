@@ -182,7 +182,7 @@ class Message {
 
         try {
 
-            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel?.id || this.channel_id], body, new Error().stack);
+            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel?.id || this.channel_id], body);
             return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
         } catch (error) {
@@ -224,7 +224,7 @@ class Message {
 
         try {
 
-            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body, new Error().stack);
+            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body);
             return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
         } catch (error) {

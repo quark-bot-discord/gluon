@@ -45,7 +45,7 @@ class Interaction {
 
         try {
 
-            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body, new Error().stack);
+            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
             return this;
 
         } catch (error) {
@@ -70,7 +70,7 @@ class Interaction {
 
         try {
 
-            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body, new Error().stack);
+            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
             return this;
 
         } catch (error) {
@@ -90,7 +90,7 @@ class Interaction {
 
         try {
 
-            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body, new Error().stack);
+            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
             return this;
 
         } catch (error) {

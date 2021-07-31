@@ -19,7 +19,7 @@ class UserManager {
 
         try {
 
-            const data = await this.client.request.makeRequest("getUser", [user_id], null, new Error().stack);
+            const data = await this.client.request.makeRequest("getUser", [user_id]);
             return new User(this.client, data);
 
         } catch (error) {

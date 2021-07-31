@@ -41,7 +41,7 @@ class ChannelMessageManager {
 
             try {
 
-                const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body, new Error().stack);
+                const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
                 let messages = [];
                 for (let i = 0; i < data.length; i++)
                     messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
@@ -62,7 +62,7 @@ class ChannelMessageManager {
 
             try {
 
-                const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options], new Error().stack);
+                const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
                 return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
 
             } catch (error) {

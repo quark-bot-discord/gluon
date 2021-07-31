@@ -16,7 +16,7 @@ class GuildMemberManager {
 
         try {
 
-            const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id], null, new Error().stack);
+            const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
             return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
 
         } catch (error) {
@@ -36,7 +36,7 @@ class GuildMemberManager {
 
         try {
 
-            const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body, new Error().stack);
+            const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
             if (data.length != 0)
                 return new Member(this.client, data[0], data[0].user.id, this.guild.id.toString(), data[0].user);
             else
