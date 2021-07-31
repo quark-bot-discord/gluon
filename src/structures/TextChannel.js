@@ -44,7 +44,7 @@ class TextChannel extends Channel {
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      */
-    async send(content, { embed, components, files } = {}) {
+    async send(content, { embed, components, files, embeds } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
             return null;
@@ -56,6 +56,8 @@ class TextChannel extends Channel {
 
         if (embed)
             body.embed = embed.toJSON();
+        else if (embeds && embeds.length != 0)
+            body.embeds = embeds.map(e => e.toJSON());
         if (components)
             body.components = components.toJSON();
         if (files)
