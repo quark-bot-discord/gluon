@@ -17,6 +17,14 @@ class ChannelMessageManager {
 
         if (typeof options == "object") {
 
+            if (this.cache.size != 0) {
+                let cachedMessages = [];
+                this.cache.forEach((key, value) => {
+                    if (options.before && value.id < options.before)
+                        cachedMessages.push(value);
+                });
+            }
+
             const body = {};
 
             if (options.around)
