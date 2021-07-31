@@ -157,5 +157,23 @@ module.exports = {
             return `/guilds/${guild_id}/members/search`;
         },
         method: "GET"
+    },
+    postCreateWebhook: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/webhooks`;
+        },
+        method: "POST"
+    },
+    patchModifyWebhook: {
+        path: ([webhook_id]) => {
+            return `/webhooks/${webhook_id}`;
+        },
+        method: "PATCH"
+    },
+    deleteWebhook: {
+        path: ([webhook_id, webhook_token]) => {
+            return `/webhooks/${webhook_id}/${webhook_token}`;
+        },
+        method: "DELETE"
     }
 };
