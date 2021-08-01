@@ -451,26 +451,6 @@ class Client extends EventsEmitter {
     }
 
     /**
-     * Deletes a given webhook.
-     * @param {BigInt} webhook_id The id of the webhook to delete.
-     * @param {String} webhook_token The webhook token of the webhook to delete.
-     */
-    async deleteWebhook(webhook_id, webhook_token) {
-
-        try {
-
-            await this.request.makeRequest("deleteWebhook", [webhook_id, webhook_token], null);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
-
-    }
-
-    /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
      */
