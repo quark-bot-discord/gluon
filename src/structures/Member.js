@@ -1,6 +1,7 @@
 const { CDN_BASE_URL, PERMISSIONS } = require("../constants");
 const User = require("./User");
 const checkPermission = require("../util/checkPermission");
+const Role = require("./Role");
 
 class Member {
 
@@ -56,6 +57,12 @@ class Member {
             }
         } else
             this.highestRolePosition = 0;
+
+        if (this.roles && this.roles.length != 0 && !this.permissions) {
+            this.permissions = 0;
+            for (let i = 0; i < this.roles.length; i++)
+                this.permissions |= this.roles[i].permissions;
+        }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
