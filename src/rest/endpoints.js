@@ -169,11 +169,5 @@ module.exports = {
             return `/webhooks/${webhook_id}`;
         },
         method: "PATCH"
-    },
-    deleteWebhook: {
-        path: ([webhook_id, webhook_token]) => {
-            return `/webhooks/${webhook_id}/${webhook_token}`;
-        },
-        method: "DELETE"
     }
 };
