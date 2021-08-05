@@ -77,7 +77,7 @@ class Interaction {
      * Replies to an interaction.
      * @param {String?} content The message content to send in the response to the interaction.
      * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message. 
-     * @returns {Interaction}
+     * @returns {Promise<Interaction>}
      */
     async reply(content, { embed, components, quiet } = {}) {
 
@@ -113,7 +113,7 @@ class Interaction {
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
      * @param {String?} content The new interaction response content.
      * @param {Object?} options The new interaction response options.
-     * @returns {Interaction}
+     * @returns {Promise<Interaction>}
      */
     async edit(content, { embed, components } = {}) {
 
@@ -142,7 +142,7 @@ class Interaction {
 
     /**
      * Silently acknowledges an interaction.
-     * @returns {Interaction}
+     * @returns {Promise<Interaction>}
      */
     async acknowledge() {
 
