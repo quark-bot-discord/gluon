@@ -1,32 +1,84 @@
 const Member = require("./Member");
 
+/**
+ * Represents an interaction received over the gateway.
+ * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
+ */
 class Interaction {
 
+    /**
+     * Creates the structure for an interaction.
+     * @param {Client} client The client instance.
+     * @param {Object} data The interaction data from Discord.
+     */
     constructor(client, data) {
 
+        /**
+         * The client instance.
+         * @type {Client}
+         */
         this.client = client;
 
+        /**
+         * The id of the message.
+         * @type {BigInt}
+         */
         this.id = BigInt(data.id);
 
+        /**
+         * The type of interaction.
+         * @type {Number}
+         * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-type}
+         */
         this.type = data.type;
 
+        /**
+         * The guild that this interaction belongs to.
+         * @type {Guild?}
+         */
         this.guild = this.client.guilds.cache.get(data.guild_id) || null;
 
         if (!this.guild)
+            /**
+             * The id of the guild that this interaction belongs to.
+             * @type {BigInt?}
+             */
             this.guild_id = BigInt(data.guild_id);
 
+        /**
+         * The channel that this interaction belongs to.
+         * @type {TextChannel?}
+         */
         this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
 
         if (!this.channel)
+            /**
+             * The id of the channel that this interaction belongs to.
+             * @type {BigInt}
+             */
             this.channel_id = BigInt(data.channel_id);
 
         if (data.member)
+            /**
+             * The member that triggered the interaction, if it was run in a guild.
+             * @type {Member?}
+             */
             this.member = new Member(this.client, data.member, data.member.user.id, data.guild_id);
 
+        /**
+         * The interaction token, needed to respond to it.
+         * @type {String}
+         */
         this.token = data.token;
 
     }
 
+    /**
+     * Replies to an interaction.
+     * @param {String?} content The message content to send in the response to the interaction.
+     * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message. 
+     * @returns {Interaction}
+     */
     async reply(content, { embed, components, quiet } = {}) {
 
         const body = {};
@@ -57,6 +109,12 @@ class Interaction {
 
     }
 
+    /**
+     * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
+     * @param {String?} content The new interaction response content.
+     * @param {Object?} options The new interaction response options.
+     * @returns {Interaction}
+     */
     async edit(content, { embed, components } = {}) {
 
         const body = {};
@@ -82,6 +140,10 @@ class Interaction {
 
     }
 
+    /**
+     * Silently acknowledges an interaction.
+     * @returns {Interaction}
+     */
     async acknowledge() {
 
         const body = {};
