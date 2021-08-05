@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> structures/SlashCommand.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -73,41 +75,42 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p></p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>structures/SlashCommand.js</h1>
                 </header>
                 
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><h1>Gluon</h1>
-<h2>Simple Discord API Library for Quark</h2>
-<h1>Info</h1>
-<h3>IDs for related structures</h3>
-<p>Where possible, Gluon will try to attach the structure of related resources. For example, attaching a channel object to a message. However, if these related structures are not being actively cached (the channel not being cached in this example), it is not possible to attach these structures. If that structure is not present, Gluon will <strong>always provide the id of the related structure instead</strong> (either/or).</p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Interaction = require("./Interaction");
+
+/**
+ * Represents a slash command.
+ * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
+ */
+class SlashCommand extends Interaction {
+
+    constructor(client, data) {
+
+        super(client, data);
+
+        /**
+         * Raw slash command data from discord.
+         * @type {Object?}
+         * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}
+         */
+        this.data = data.data;
+
+    }
+
+}
+
+module.exports = SlashCommand;</code></pre>
+        </article>
     </section>
-
-
 
 
 
