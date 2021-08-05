@@ -97,8 +97,6 @@ const UserManager = require("./managers/UserManager");
 const GuildManager = require("./managers/GuildManager");
 const Message = require("./structures/Message");
 
-const Redis = require("ioredis");
-
 /**
  * A client user, which is able to handle multiple shards.
  */
@@ -208,12 +206,6 @@ class Client extends EventsEmitter {
          * @type {Number?}
          */
         this.totalShards = totalShards;
-
-        /**
-         * A redis client for this client.
-         * @type {Redis}
-         */
-        this.redis = new Redis();
 
     }
 
