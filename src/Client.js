@@ -4,6 +4,7 @@ const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require("./constants");
 const EventsEmitter = require("events");
 
 const Request = require("./rest/requestHandler");
+const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
 
 const UserManager = require("./managers/UserManager");
@@ -461,7 +462,7 @@ class Client extends EventsEmitter {
         /* sets the token and starts logging the bot in to the gateway, shard by shard */
         this.token = token;
 
-        this.request = new Request(this, this.baseURL, this.name, this.version, this.token);
+        this.request = this.redis ? new BetterRequestHandler(this, this.baseURL, this.name, this.version, this.token) : new Request(this, this.baseURL, this.name, this.version, this.token);
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
