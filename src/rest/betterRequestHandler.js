@@ -64,7 +64,7 @@ class BetterRequestHandler {
 
             let stack;
             try {
-                new Error();
+                stack = new Error().stack;
             } catch (e) {
                 stack = e.stack;
             }
