@@ -50,7 +50,7 @@ class BetterRequestHandler {
 
     }
 
-    async makeRequest(request, params, body, resolve, reject) {
+    async makeRequest(request, params, body, stack, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
 
             const actualRequest = this.endpoints[request];
@@ -62,20 +62,13 @@ class BetterRequestHandler {
             if (!this.limiter[pathMethod])
                 this.limiter[pathMethod] = new Bottleneck({ maxConcurrent: 1, minTime: 500 });
 
-            let stack;
-            try {
-                new Error();
-            } catch (e) {
-                stack = e.stack;
-            }
-
             this.limiter[pathMethod].schedule(() => this.requestQueue.add(pathMethod, {
                 request: request,
                 params: params,
                 body: body,
                 resolve: resolve ? resolve : _resolve,
                 reject: reject ? reject : _reject,
-                stack: stack
+                stack: new Error().stack
             }));
 
         });
