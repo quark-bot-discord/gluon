@@ -27,7 +27,7 @@ class BetterRequestHandler {
 
         this.requestQueue.on("next", (routePath, data) => {
             try {
-                this.http(routePath, data.request, data.params, data.body, data.resolve, data.reject);
+                this.http(routePath, data.request, data.params, data.body, data.stack, data.resolve, data.reject);
             } catch (_) {
 
             }
@@ -50,7 +50,7 @@ class BetterRequestHandler {
 
     }
 
-    async makeRequest(request, params, body, resolve, reject) {
+    async makeRequest(request, params, body, stack, resolve, reject) {
         return new Promise(async (_resolve, _reject) => {
 
             const actualRequest = this.endpoints[request];
@@ -67,7 +67,8 @@ class BetterRequestHandler {
                 params: params,
                 body: body,
                 resolve: resolve ? resolve : _resolve,
-                reject: reject ? reject : _reject
+                reject: reject ? reject : _reject,
+                stack: new Error().stack
             }));
 
         });
@@ -142,7 +143,8 @@ class BetterRequestHandler {
                     json: json,
                     method: actualRequest.method,
                     endpoint: actualRequest.path(params),
-                    shards: this.client.shardIds
+                    shards: this.client.shardIds,
+                    stack: stack
                 };
                 reject(requestResult);
             }
