@@ -74,7 +74,7 @@ class BetterRequestHandler {
         });
     }
 
-    async http(routePath, request, params, body, resolve, reject) {
+    async http(routePath, request, params, body, stack, resolve, reject) {
 
         const actualRequest = this.endpoints[request];
 
