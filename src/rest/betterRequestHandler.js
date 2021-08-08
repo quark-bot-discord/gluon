@@ -27,7 +27,7 @@ class BetterRequestHandler {
 
         this.requestQueue.on("next", (routePath, data) => {
             try {
-                this.http(routePath, data.request, data.params, data.body, data.resolve, data.reject);
+                this.http(routePath, data.request, data.params, data.body, data.stack, data.resolve, data.reject);
             } catch (_) {
 
             }
@@ -62,18 +62,26 @@ class BetterRequestHandler {
             if (!this.limiter[pathMethod])
                 this.limiter[pathMethod] = new Bottleneck({ maxConcurrent: 1, minTime: 500 });
 
+            let stack;
+            try {
+                throw new Error("Stack trace");
+            } catch (e) {
+                stack = e.stack;
+            }
+
             this.limiter[pathMethod].schedule(() => this.requestQueue.add(pathMethod, {
                 request: request,
                 params: params,
                 body: body,
                 resolve: resolve ? resolve : _resolve,
-                reject: reject ? reject : _reject
+                reject: reject ? reject : _reject,
+                stack: stack
             }));
 
         });
     }
 
-    async http(routePath, request, params, body, resolve, reject) {
+    async http(routePath, request, params, body, stack, resolve, reject) {
 
         const actualRequest = this.endpoints[request];
 
@@ -142,7 +150,8 @@ class BetterRequestHandler {
                     json: json,
                     method: actualRequest.method,
                     endpoint: actualRequest.path(params),
-                    shards: this.client.shardIds
+                    shards: this.client.shardIds,
+                    stack: stack
                 };
                 reject(requestResult);
             }
