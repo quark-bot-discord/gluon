@@ -163,7 +163,7 @@ class RequestHandler {
 
                 if (actualRequest.useHeaders)
                     for (const [key, value] of Object.entries(body))
-                        headers[key] = value;
+                        headers[key] = encodeURIComponent(value);
 
                 /* actually make the request */
                 const res = await fetch(`${this.requestURL}${path}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") && actualRequest.useHeaders != true ? "?" + serialize(body) : ""}`, {
