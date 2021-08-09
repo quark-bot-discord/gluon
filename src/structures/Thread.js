@@ -30,10 +30,17 @@ class Thread extends Channel {
         this.messages = existing ? existing.messages : new ChannelMessageManager(client, this);
 
         /**
-         * The ID of the user who created this thread.
-         * @type {BigInt}
+         * The member who created this thread.
+         * @type {Member?}
          */
-        this.owner_id = BigInt(data.owner_id);
+        this.owner = this.guild.members.cache.get(data.owner_id) || null;
+
+        if (!this.owner)
+            /**
+             * The ID of the user who created this thread.
+            * @type {BigInt?}
+            */
+            this.owner_id = BigInt(data.owner_id);
 
         /**
          * The text channel that this thread belongs to.
