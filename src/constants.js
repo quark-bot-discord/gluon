@@ -88,7 +88,9 @@ module.exports.AUDIT_LOG_TYPES = {
     MEMBER_DISCONNECT:          (27),
     BOT_ADD:                    (28),
     MESSAGE_DELETE:             (72),
-    MESSAGE_BULK_DELETE:        (73)
+    MESSAGE_BULK_DELETE:        (73),
+    THREAD_UPDATE:              (111),
+    THREAD_DELETE:              (112)
 };
 module.exports.INTERACTION_TYPES = {
     COMMAND:                    (2),
