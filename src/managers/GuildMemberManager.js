@@ -14,6 +14,10 @@ class GuildMemberManager {
 
     async fetch(user_id) {
 
+        const cached = this.cache.get(user_id.toString);
+        if (cached)
+            return cached;
+
         try {
 
             const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
