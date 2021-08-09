@@ -33,11 +33,12 @@ class AuditLog {
 
         if (users && users.length != 0 && this.target_id) {
             const user = users.find(u => u.id == this.target_id);
-            /**
-             * The resolved target user.
-             * @type {User?}
-             */
-            this.target = new User(this.client, user);
+            if (user)
+                /**
+                 * The resolved target user.
+                 * @type {User?}
+                 */
+                this.target = new User(this.client, user);
         }
 
         /**
@@ -48,11 +49,12 @@ class AuditLog {
 
         if (users && users.length != 0 && this.executor_id) {
             const user = users.find(u => u.id == this.executor_id);
-            /**
-             * The resolved executor user.
-             * @type {User?}
-             */
-            this.executor = new User(this.client, user);
+            if (user)
+                /**
+                 * The resolved executor user.
+                 * @type {User?}
+                 */
+                this.executor = new User(this.client, user);
         }
 
         /**
