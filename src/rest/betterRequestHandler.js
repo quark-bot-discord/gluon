@@ -2,7 +2,8 @@ const fetch = require("node-fetch");
 const FormData = require("form-data");
 const { createReadStream } = require("fs");
 const RequestQueue = require("request-queue");
-const { default: Bottleneck } = require("bottleneck");
+const calculateHash = require("hash-sum");
+const NodeCache = require("node-cache");
 
 class BetterRequestHandler {
 
@@ -15,19 +16,21 @@ class BetterRequestHandler {
         this.baseURL = baseURL;
         this.version = version;
         this.requestURL = `${this.baseURL}/v${this.version}`;
-        this.requestQueue = new RequestQueue(this.client.redis);
+        this.requestQueue = new RequestQueue();
+        if (!this.client.redis)
+            this.localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
         this.token = token;
         this.authorization = `Bot ${this.token}`;
         this.name = name;
 
-        this.limiter = {};
+        this.latency = 1;
 
         this.endpoints = require("./endpoints");
 
-        this.requestQueue.on("next", (routePath, data) => {
+        this.requestQueue.on("next", (hash, data) => {
             try {
-                this.http(routePath, data.request, data.params, data.body, data.resolve, data.reject);
+                this.http(hash, data.request, data.params, data.body, data.resolve, data.reject);
             } catch (_) {
 
             }
@@ -35,7 +38,7 @@ class BetterRequestHandler {
 
     }
 
-    async handleBucket(ratelimitBucket, ratelimitRemaining, ratelimitReset, method, path) {
+    async handleBucket(ratelimitBucket, ratelimitRemaining, ratelimitReset, hash) {
 
         if (!ratelimitBucket)
             return;
@@ -46,7 +49,11 @@ class BetterRequestHandler {
             bucket: ratelimitBucket
         };
 
-        await this.client.redis.set(`gluon.paths.${path}.${method}`, JSON.stringify(bucket), "EX", Math.ceil(ratelimitReset - (new Date().getTime() / 1000)) + 2);
+        const expireFromCache = Math.ceil((ratelimitReset + this.latency) - (new Date().getTime() / 1000)) + 60;
+
+        this.client.redis ?
+            await this.client.redis.set(`gluon.paths.${hash}`, JSON.stringify(bucket), "EX", expireFromCache)
+            : this.localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
 
     }
 
@@ -55,33 +62,39 @@ class BetterRequestHandler {
 
             const actualRequest = this.endpoints[request];
 
-            const path = actualRequest.path(params);
+            let toHash = actualRequest.method + actualRequest.path([]);
+            if (params)
+                toHash += (params.map((value, index) => {
+                    if (actualRequest.majorParams.includes(index))
+                        return value;
+                // eslint-disable-next-line quotes
+                }).join(''));
+            const hash = calculateHash(toHash);
 
-            const pathMethod = `${actualRequest.method}_${path}`;
-
-            if (!this.limiter[pathMethod])
-                this.limiter[pathMethod] = new Bottleneck({ maxConcurrent: 1, minTime: 500 });
-
-            this.limiter[pathMethod].schedule(() => this.requestQueue.add(pathMethod, {
+            this.requestQueue.add(hash, {
                 request: request,
                 params: params,
                 body: body,
                 resolve: resolve ? resolve : _resolve,
                 reject: reject ? reject : _reject
-            }));
+            });
 
         });
     }
 
-    async http(routePath, request, params, body, resolve, reject) {
+    async http(hash, request, params, body, resolve, reject) {
 
         const actualRequest = this.endpoints[request];
 
         const path = actualRequest.path(params);
 
-        const bucket = JSON.parse(await this.client.redis.get(`gluon.paths.${path}.${actualRequest.method}`) || "{}") || {};
+        let bucket;
+        if (this.client.redis)
+            bucket = JSON.parse(await this.client.redis.get(`gluon.paths.${hash}`) || "{}");
+        else
+            bucket = this.localRatelimitCache.get(`gluon.paths.${hash}`);
 
-        if (!bucket || bucket.remaining != 0 || (bucket.remaining == 0 && (new Date().getTime() / 1000) > bucket.reset)) {
+        if (!bucket || bucket.remaining != 0 || (bucket.remaining == 0 && (new Date().getTime() / 1000) > bucket.reset + this.latency)) {
 
             const serialize = (obj) => {
                 let str = [];
@@ -132,7 +145,7 @@ class BetterRequestHandler {
 
             }
 
-            await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), actualRequest.method, path);
+            await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash);
 
             if (res.status >= 200 && res.status < 300)
                 resolve(json);
@@ -147,10 +160,14 @@ class BetterRequestHandler {
                 reject(requestResult);
             }
 
-            this.requestQueue.completed(routePath);
+            this.requestQueue.completed(hash);
 
-        } else
-            this.limiter[routePath].schedule(() => this.requestQueue.retryLater(routePath, false, ((bucket.reset + 2) - (new Date().getTime() / 1000))));
+        } else {
+            let retryNextIn = Math.ceil(bucket.reset - (new Date().getTime() / 1000));
+            if (retryNextIn < 1)
+                retryNextIn = 1;
+            this.requestQueue.retryLater(hash, false, retryNextIn);
+        }
     }
 
 }
