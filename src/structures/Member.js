@@ -9,7 +9,12 @@ class Member {
 
         this.client = client;
 
-        const existing = this.client.guilds.cache.get(guild_id)?.members.cache.get(user_id) || null;
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
+
+        const existing = this.guild?.members.cache.get(user_id) || null;
 
         this.id = BigInt(user_id);
 
@@ -38,11 +43,6 @@ class Member {
             this.permissions = parseInt(data.permissions);
         else if (existing && typeof existing.permissions == "number")
             this.permissions = existing.permissions;
-
-        this.guild = this.client.guilds.cache.get(guild_id) || null;
-
-        if (!this.guild)
-            this.guild_id = BigInt(guild_id);
 
         if (data.roles && this.guild && this.client.cacheRoles == true) {
             this.highestRolePosition = 0;
