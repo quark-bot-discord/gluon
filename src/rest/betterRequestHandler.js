@@ -114,7 +114,7 @@ class BetterRequestHandler {
             if (body && body.files) {
                 form = new FormData();
                 for (let i = 0; i < body.files.length; i++)
-                    form.append(body.files[i].name, typeof body.files[i].attachment == "string" ? createReadStream(body.files[i].attachment) : body.files[i].attachment, body.files[i].name);
+                    form.append(body.files[i].name, body.files[i].stream ? body.files[i].attachment : createReadStream(body.files[i].attachment), body.files[i].name);
                 delete body.files;
                 form.append("payload_json", JSON.stringify(body));
                 Object.assign(headers, form.getHeaders());
