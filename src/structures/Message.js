@@ -34,6 +34,32 @@ class Message {
          */
         this.id = BigInt(data.id);
 
+        /**
+         * The guild that this message belongs to.
+         * @type {Guild?}
+         */
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            /**
+             * The id of the guild that this message belongs to.
+             * @type {BigInt?}
+             */
+            this.guild_id = BigInt(guild_id);
+
+        /**
+         * The channel that this message belongs to.
+         * @type {Channel?}
+         */
+        this.channel = this.guild?.channels.cache.get(channel_id) || null;
+
+        if (!this.channel)
+            /**
+             * The id of the channel that this message belongs to.
+             * @type {BigInt?}
+             */
+            this.channel_id = BigInt(channel_id);
+
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
@@ -48,7 +74,9 @@ class Message {
              * The member who sent the message.
              * @type {Member?}
              */
-            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
+            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache) || this.guild ? this.guild.members.cache.get(data.author.id) : null;
+        else
+            this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
 
         // should only be stored if file logging is enabled
         if (data.attachments) {
@@ -103,7 +131,6 @@ class Message {
 
         }
 
-        // when the message was created
         /**
          * The UNIX (seconds) timestamp for when this message was created.
          * @type {Number}
@@ -120,37 +147,11 @@ class Message {
                 this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
         }
 
-        /**
-         * The guild that this message belongs to.
-         * @type {Guild?}
-         */
-        this.guild = this.client.guilds.cache.get(guild_id) || null;
-
-        if (!this.guild)
-            /**
-             * The id of the guild that this message belongs to.
-             * @type {BigInt?}
-             */
-            this.guild_id = BigInt(guild_id);
-
-        /**
-         * The channel that this message belongs to.
-         * @type {Channel?}
-         */
-        this.channel = this.guild?.channels.cache.get(channel_id) || null;
-
-        if (!this.channel)
-            /**
-             * The id of the channel that this message belongs to.
-             * @type {BigInt?}
-             */
-            this.channel_id = BigInt(channel_id);
-
         if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
-            this.guild.channels.cache.get(channel_id)?.messages.cache.set(data.id, this);
+            this.channel?.messages.cache.set(data.id, this);
 
     }
-    
+
     /**
      * Replies to the message.
      * @param {String} content The message content.
