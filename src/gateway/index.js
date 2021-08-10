@@ -14,7 +14,7 @@ const UpdatePresence = require("./structures/_3");
 
 class WS {
 
-    constructor(client, url, shard, intents) {
+    constructor(client, url, shard, intents, sessionId = null, sequence = null) {
 
         this.token = client.token;
         this.shard = shard;
@@ -30,12 +30,12 @@ class WS {
 
         this.eventHandler = new EventHandler(this.client, this);
 
-        this.sessionId = null;
-        this.s = null;
+        this.sessionId = sessionId;
+        this.s = sequence;
 
-        this.resuming = false;
+        this.resuming = sessionId && sequence != null ? true : false;
 
-        this.isInitialHeartbeat = true;
+        this.isInitialHeartbeat = sessionId && sequence != null ? false : true;
 
         this.hearbeatSetInterval = null;
 
