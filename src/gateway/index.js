@@ -44,21 +44,27 @@ class WS {
         this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
         this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
 
+        this.retries = 0;
+
         this.addListeners();
 
     }
 
     handleIncoming(data) {
 
-        if (!data) return;
+        if (!data) 
+            return;
 
-        if (data.s) this.s = data.s;
+        if (data.s)
+            this.s = data.s;
 
         this.client.emit("raw", data);
 
         switch (data.op) {
             // Dispatch
             case 0: {
+
+                this.retries = 0;
 
                 try {
 
@@ -214,7 +220,9 @@ class WS {
             else
                 this.resuming = false;
 
-            if (this.resuming == true) {
+            if (this.resuming == true && this.retries < 5) {
+
+                this.retries++;
 
                 this.ws = new WebSocket(this.url);
 
