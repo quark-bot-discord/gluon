@@ -29,12 +29,6 @@ class Message {
         this.client = client;
 
         /**
-         * The id of the message.
-         * @type {BigInt}
-         */
-        this.id = BigInt(data.id);
-
-        /**
          * The guild that this message belongs to.
          * @type {Guild?}
          */
@@ -60,6 +54,14 @@ class Message {
              */
             this.channel_id = BigInt(channel_id);
 
+        const existing = this.channel?.messages.cache.get(data.id) || null;
+
+        /**
+         * The id of the message.
+         * @type {BigInt}
+         */
+        this.id = BigInt(data.id);
+
         // messages only ever need to be cached if logging is enabled
         // but this should always return a "refined" message, so commands can be handled
         if (data.author)
@@ -68,6 +70,8 @@ class Message {
              * @type {User?}
              */
             this.author = new User(this.client, data.author, !data.webhook_id || nocache);
+        else if (existing && existing.author)
+            this.author = existing.author;
 
         if (data.member)
             /**
@@ -77,6 +81,8 @@ class Message {
             this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache) || this.guild ? this.guild.members.cache.get(data.author.id) : null;
         else if (data.author)
             this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
+        else if (existing && existing.member)
+            this.member = existing.member;
 
         // should only be stored if file logging is enabled
         if (data.attachments) {
@@ -105,13 +111,13 @@ class Message {
          * The message mentions.
          * @type {Object[]}
          */
-        this.mentions = data.mentions;
+        this.mentions = data.mentions?.length != 0 || false;
 
         /**
          * Roles mentioned within the message.
          * @type {Object[]}
          */
-        this.mention_roles = data.mention_roles;
+        this.mention_roles = data.mention_roles?.length != 0 || false;
 
         if (data.referenced_message) {
 
@@ -122,12 +128,6 @@ class Message {
             this.reference = {};
 
             this.reference.message_id = data.referenced_message.id;
-
-            if (data.referenced_message.channel_id)
-                this.reference.channel_id = data.referenced_message.channel_id;
-
-            if (data.referenced_message.guild_id)
-                this.reference.guild_id = data.referenced_message.guild_id;
 
         }
 
