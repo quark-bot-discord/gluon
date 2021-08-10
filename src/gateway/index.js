@@ -64,8 +64,6 @@ class WS {
             // Dispatch
             case 0: {
 
-                this.retries = 0;
-
                 try {
 
                     this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;

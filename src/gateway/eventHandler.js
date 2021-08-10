@@ -28,6 +28,8 @@ class EventHandler {
 
         this.ws.sessionId = data.session_id;
 
+        this.ws.retries = 0;
+
         const user = new User(this.client, data.user);
 
         this.client.user = user;
