@@ -127,9 +127,15 @@ class Message {
              */
             this.reference = {};
 
-            this.reference.message_id = data.referenced_message.id;
+            this.reference.message_id = BigInt(data.referenced_message.id);
 
         }
+
+        /**
+         * The type of message.
+         * @type {Number}
+         */
+        this.type = data.type;
 
         /**
          * The UNIX (seconds) timestamp for when this message was created.
