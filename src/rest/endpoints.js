@@ -10,164 +10,191 @@ module.exports = {
         path: () => {
             return "/gateway/bot";
         },
-        method: "GET"
+        method: "GET",
+        majorParams: []
     },
     postCreateMessage: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: [0]
     },
     patchEditMessage: {
         path: ([channel_id, message_id]) => {
             return `/channels/${channel_id}/messages/${message_id}`;
         },
-        method: "PATCH"
+        method: "PATCH",
+        majorParams: [0]
     },
     putCreateGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "PUT"
+        method: "PUT",
+        majorParams: [0]
     },
     getGuildAuditLog: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/audit-logs`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     getChannel: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     getChannelMessages: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     getChannelMessage: {
         path: ([channel_id, message_id]) => {
             return `/channels/${channel_id}/messages/${message_id}`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     getGuildInvites: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/invites`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     postInteractionResponse: {
         path: ([interaction_id, interaction_token]) => {
             return `/interactions/${interaction_id}/${interaction_token}/callback`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: []
     },
     patchOriginalInteractionResponse: {
         path: ([interaction_id, interaction_token]) => {
             return `/webhooks/${interaction_id}/${interaction_token}/messages/@original`;
         },
-        method: "PATCH"
+        method: "PATCH",
+        majorParams: [0, 1]
     },
     postBulkDeleteMessages: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/messages/bulk-delete`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: [0]
     },
     postExecuteWebhook: {
         path: ([webhook_id, webhook_token]) => {
             return `/webhooks/${webhook_id}/${webhook_token}`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: [0, 1]
     },
     getGuildChannels: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/channels`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     postFollowNewsChannel: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/followers`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: [0]
     },
     getGuildMember: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     getGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     deleteGuildMember: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
-        method: "DELETE"
+        method: "DELETE",
+        majorParams: [0]
     },
     deleteRemoveGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
-        method: "DELETE"
+        method: "DELETE",
+        majorParams: [0]
     },
     putAddGuildMemberRole: {
         path: ([guild_id, user_id, role_id]) => {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "PUT",
-        useHeaders: true
+        useHeaders: true,
+        majorParams: [0]
     },
     deleteRemoveMemberRole: {
         path: ([guild_id, user_id, role_id]) => {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "DELETE",
-        useHeaders: true
+        useHeaders: true,
+        majorParams: [0]
     },
     getUser: {
         path: ([user_id]) => {
             return `/users/${user_id}`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: []
     },
     getChannelWebhooks: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/webhooks`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     deleteWebhook: {
         path: ([webhook_id]) => {
             return `/webhooks/${webhook_id}`;
         },
-        method: "DELETE"
+        method: "DELETE",
+        majorParams: [0]
     },
     getSearchGuildMembers: {
         path: ([guild_id]) => {
             return `/guilds/${guild_id}/members/search`;
         },
-        method: "GET"
+        method: "GET",
+        majorParams: [0]
     },
     postCreateWebhook: {
         path: ([channel_id]) => {
             return `/channels/${channel_id}/webhooks`;
         },
-        method: "POST"
+        method: "POST",
+        majorParams: [0]
     },
     patchModifyWebhook: {
         path: ([webhook_id]) => {
             return `/webhooks/${webhook_id}`;
         },
-        method: "PATCH"
+        method: "PATCH",
+        majorParams: [0]
     }
 };
