@@ -139,31 +139,6 @@ class Client extends EventsEmitter {
         this.intents = intents;
 
         /**
-         * The client user.
-         * @type {User?}
-         */
-        this.user = null;
-
-        if (initCache?.clientUser)
-            this.user = new User(this, initCache.clientUser);
-
-        /**
-         * The user manager for this client.
-         * @type {UserManager}
-         */
-        this.users = new UserManager(this);
-
-        /**
-         * The guild manager for this client.
-         * @type {GuildManager}
-         */
-        this.guilds = new GuildManager(this);
-
-        if (initCache?.guilds)
-            for (let i = 0; i &lt; initCache.guilds.length; i++)
-                new Guild(this, initCache.guilds[i]);
-
-        /**
          * Whether this client should cache messages.
          * @type {Boolean}
          */
@@ -218,6 +193,31 @@ class Client extends EventsEmitter {
         this.totalShards = totalShards;
 
         this._sessionData = sessionData;
+
+        /**
+         * The client user.
+         * @type {User?}
+         */
+        this.user = null;
+
+        if (initCache?.clientUser)
+            this.user = new User(this, initCache.clientUser);
+
+        /**
+         * The user manager for this client.
+         * @type {UserManager}
+         */
+        this.users = new UserManager(this);
+
+        /**
+         * The guild manager for this client.
+         * @type {GuildManager}
+         */
+        this.guilds = new GuildManager(this);
+
+        if (initCache?.guilds)
+            for (let i = 0; i &lt; initCache.guilds.length; i++)
+                new Guild(this, initCache.guilds[i]);
 
     }
 
