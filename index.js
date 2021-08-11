@@ -24,6 +24,7 @@ const VoiceState = require("./src/structures/VoiceState");
 const { PERMISSIONS, INTENTS } = require("./src/constants");
 const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 const checkPermission = require("./src/util/checkPermission");
+const bundleUser = require("./src/util/bundleUser");
 
 module.exports = {
     Client,
@@ -53,5 +54,6 @@ module.exports = {
     checkPermission: checkPermission,
     PERMISSIONS,
     INTENTS,
-    VERSION: require("./package.json").version
+    VERSION: require("./package.json").version,
+    bundleUser
 };
