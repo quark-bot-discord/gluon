@@ -107,7 +107,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds, sessionData } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
 
         super();
 
@@ -147,11 +147,17 @@ class Client extends EventsEmitter {
          */
         this.users = new UserManager(this);
 
+        if (initCache.users)
+            this.users.cache = initCache.users;
+
         /**
          * The guild manager for this client.
          * @type {GuildManager}
          */
         this.guilds = new GuildManager(this);
+
+        if (initCache.guilds)
+            this.guilds.cache = initCache.guilds;
 
         /**
          * Whether this client should cache messages.
