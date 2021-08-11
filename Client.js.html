@@ -147,7 +147,7 @@ class Client extends EventsEmitter {
          */
         this.users = new UserManager(this);
 
-        if (initCache.users)
+        if (initCache?.users)
             this.users.cache = initCache.users;
 
         /**
@@ -156,7 +156,7 @@ class Client extends EventsEmitter {
          */
         this.guilds = new GuildManager(this);
 
-        if (initCache.guilds)
+        if (initCache?.guilds)
             this.guilds.cache = initCache.guilds;
 
         /**
