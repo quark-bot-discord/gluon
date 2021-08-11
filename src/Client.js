@@ -56,7 +56,7 @@ class Client extends EventsEmitter {
          */
         this.user = null;
 
-        if (initCache.clientUser)
+        if (initCache?.clientUser)
             this.user = initCache.clientUser;
 
         /**
