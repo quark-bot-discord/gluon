@@ -147,7 +147,7 @@ class BetterRequestHandler {
 
             await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash);
 
-            if (res.status >= 200 && res.status < 300)
+            if (res.ok)
                 resolve(json);
             else {
                 const requestResult = {
@@ -159,6 +159,8 @@ class BetterRequestHandler {
                 };
                 reject(requestResult);
             }
+
+            this.client.emit("requestCompleted", { status: res.status, method: res.method, endpoint: actualRequest.path(params), hash: hash });
 
             this.requestQueue.completed(hash);
 
