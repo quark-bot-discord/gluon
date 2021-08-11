@@ -10,6 +10,7 @@ const UserManager = require("./managers/UserManager");
 const GuildManager = require("./managers/GuildManager");
 const Message = require("./structures/Message");
 const bundleGuild = require("./util/bundleGuild");
+const Guild = require("./structures/Guild");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -61,9 +62,6 @@ class Client extends EventsEmitter {
          */
         this.users = new UserManager(this);
 
-        if (initCache?.users)
-            this.users.cache = initCache.users;
-
         /**
          * The guild manager for this client.
          * @type {GuildManager}
@@ -71,7 +69,8 @@ class Client extends EventsEmitter {
         this.guilds = new GuildManager(this);
 
         if (initCache?.guilds)
-            this.guilds.cache = initCache.guilds;
+            for (let i = 0; i < initCache.guilds.length; i++)
+                new Guild(this, initCache.guilds[i]);
 
         /**
          * Whether this client should cache messages.
