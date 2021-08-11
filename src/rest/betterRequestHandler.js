@@ -160,7 +160,7 @@ class BetterRequestHandler {
                 reject(requestResult);
             }
 
-            this.client.emit("requestCompleted", { status: res.status, method: res.method, endpoint: actualRequest.path(params), hash: hash });
+            this.client.emit("requestCompleted", { status: res.status, method: actualRequest.method, endpoint: actualRequest.path(params), hash: hash });
 
             this.requestQueue.completed(hash);
 
