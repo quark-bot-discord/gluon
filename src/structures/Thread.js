@@ -21,7 +21,7 @@ class Thread extends Channel {
 
         super(client, data, guild_id);
 
-        const existing = client.guilds.cache.get(guild_id)?.channels.cache.get(data.id) || null;
+        const existing = this.guild?.channels.cache.get(data.id) || null;
 
         /**
          * The message manager for this channel.
@@ -55,7 +55,6 @@ class Thread extends Channel {
              */
             this.parent_id = BigInt(data.parent_id);
 
-        /* probably shouldnt cache archived threads */
         if (nocache == false && data.archived != true)
             this.guild?.channels.cache.set(data.id, this);
 
