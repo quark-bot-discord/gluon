@@ -9,6 +9,7 @@ const WS = require("./gateway/index");
 const UserManager = require("./managers/UserManager");
 const GuildManager = require("./managers/GuildManager");
 const Message = require("./structures/Message");
+const bundleGuild = require("./util/bundleGuild");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -127,6 +128,17 @@ class Client extends EventsEmitter {
         this.totalShards = totalShards;
 
         this._sessionData = sessionData;
+
+    }
+
+    bundleCache() {
+
+        const bundle = [];
+
+        for (const guild of this.guilds.cache.values())
+            bundle.push(bundleGuild(guild));
+
+        return bundle;
 
     }
 

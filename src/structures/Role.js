@@ -10,7 +10,7 @@ class Role {
 
         this.permissions = parseInt(data.permissions);
 
-        if (data.name == "Muted")
+        if (data.name == "Muted" || data.defaultMuteRole == true)
             this.defaultMuteRole = true;
 
         if (nocache == false && this.client.cacheRoles == true)
