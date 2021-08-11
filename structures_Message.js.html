@@ -91,6 +91,7 @@ const Attachment = require("./Attachment");
 const { PERMISSIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
+const getTimestamp = require("../util/getTimestampFromSnowflake");
 
 /**
  * A message belonging to a channel within a guild.
@@ -165,80 +166,98 @@ class Message {
              * The member who sent the message.
              * @type {Member?}
              */
-            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache) || this.guild ? this.guild.members.cache.get(data.author.id) : null;
+            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache);
         else if (data.author)
             this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
         else if (existing &amp;&amp; existing.member)
             this.member = existing.member;
 
         // should only be stored if file logging is enabled
-        if (data.attachments) {
-            /**
-             * The message attachments.
-             * @type {Attachment[]?}
-             */
-            this.attachments = [];
+        /**
+         * The message attachments.
+         * @type {Attachment[]?}
+         */
+        this.attachments = [];
+        if (data.attachments != undefined)
             for (let i = 0; i &lt; data.attachments.length; i++)
                 this.attachments.push(new Attachment(this.client, data.attachments[i]));
-        }
+        else if (existing &amp;&amp; existing.attachments)
+            this.attachments = existing.attachments;
 
         /**
          * The message content.
          * @type {String?}
          */
-        this.content = data.content || null;
+        this.content = data.content;
+        if (!this.content &amp;&amp; existing &amp;&amp; existing.content)
+            this.content = existing.content;
+        else if (!this.content)
+            this.content = null;
 
         /**
          * The message embeds.
          * @type {Object[]}
          */
         this.embeds = data.embeds;
+        if (this.embeds == undefined &amp;&amp; existing &amp;&amp; existing.embeds != undefined)
+            this.embeds = existing.embeds;
+        else if (this.embeds == undefined)
+            this.embeds = [];
 
         /**
          * The message mentions.
          * @type {Object[]}
          */
-        this.mentions = data.mentions?.length != 0 || false;
+        this.mentions = data.mentions?.length != 0 || undefined;
+        if (this.mentions == undefined &amp;&amp; existing &amp;&amp; existing.mentions != undefined)
+            this.mentions = existing.mentions;
+        else
+            this.mentions = false;
 
         /**
          * Roles mentioned within the message.
          * @type {Object[]}
          */
-        this.mention_roles = data.mention_roles?.length != 0 || false;
+        this.mention_roles = data.mention_roles?.length != 0 || undefined;
+        if (this.mention_roles == undefined &amp;&amp; existing &amp;&amp; existing.mention_roles != undefined)
+            this.mention_roles = existing.mention_roles;
+        else
+            this.mention_roles = false;
 
-        if (data.referenced_message) {
-
-            /**
-             * The message that this message references.
-             * @type {Object}
-             */
-            this.reference = {};
-
+        /**
+         * The message that this message references.
+         * @type {Object}
+         */
+        this.reference = {};
+        if (data.referenced_message)
             this.reference.message_id = BigInt(data.referenced_message.id);
-
-        }
+        else if (existing &amp;&amp; existing.reference?.message_id)
+            this.reference.message_id = existing.reference.message_id;
 
         /**
          * The type of message.
          * @type {Number}
          */
         this.type = data.type;
+        if (typeof this.type != "number" &amp;&amp; existing &amp;&amp; typeof existing.type == "number")
+            this.type = existing.type;
 
         /**
          * The UNIX (seconds) timestamp for when this message was created.
          * @type {Number}
          */
-        this.timestamp = (new Date(data.timestamp).getTime() / 1000) | 0;
+        this.timestamp = (new Date(getTimestamp(this.id)).getTime() / 1000) | 0;
 
-        if (data.sticker_items) {
-            /**
-             * Stickers sent with this message.
-             * @type {Sticker[]?}
-             */
-            this.sticker_items = [];
+        /**
+         * Stickers sent with this message.
+         * @type {Sticker[]}
+         */
+        this.sticker_items = [];
+        if (data.sticker_items != undefined)
             for (let i = 0; i &lt; data.sticker_items.length; i++)
                 this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
-        }
+        else if (existing &amp;&amp; existing.sticker_items != undefined)
+            this.sticker_items = existing.sticker_items;
 
         if (this.author &amp;&amp; this.author.bot != true &amp;&amp; !data.webhook_id &amp;&amp; nocache == false &amp;&amp; this.client.cacheMessages == true)
             this.channel?.messages.cache.set(data.id, this);
