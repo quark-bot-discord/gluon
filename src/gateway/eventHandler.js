@@ -289,6 +289,9 @@ class EventHandler {
 
     INTERACTION_CREATE(data) {
 
+        if (!data.guild_id)
+            return;
+
         switch (data.type) {
 
             case INTERACTION_TYPES.COMPONENT: {
