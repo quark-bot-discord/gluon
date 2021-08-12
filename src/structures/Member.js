@@ -89,9 +89,11 @@ class Member {
 
         let permissions = 0n;
 
-        if (this.roles && this.roles.length != 0) {
-            for (let i = 0; i < this.roles.length; i++)
-                permissions |= this.roles[i].permissions;
+        const roles = this.roles;
+
+        if (roles.length != 0) {
+            for (let i = 0; i < roles.length; i++)
+                permissions |= roles[i].permissions;
             return permissions;
         } else
             return 0n;
