@@ -60,7 +60,7 @@ class Member {
         if (this.roles && this.roles.length != 0 && !this.permissions) {
             this.permissions = 0n;
             for (let i = 0; i < this.roles.length; i++)
-                this.permissions |= BigInt(this.roles[i].permissions);
+                this.permissions |= this.roles[i].permissions;
         }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))

@@ -8,7 +8,7 @@ class Role {
 
         this.position = data.position;
 
-        this.permissions = parseInt(data.permissions);
+        this.permissions = BigInt(data.permissions);
 
         if (data.name == "Muted" || data.defaultMuteRole == true)
             this.defaultMuteRole = true;
