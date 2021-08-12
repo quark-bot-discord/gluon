@@ -22,6 +22,8 @@ class EventHandler {
 
         this.ws = ws;
 
+        this.initialGuilds = [];
+
     }
 
     READY(data) {
