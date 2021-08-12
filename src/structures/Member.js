@@ -46,7 +46,7 @@ class Member {
         if (data.roles && this.guild && this.client.cacheRoles == true) {
             this._roles = [];
             for (let i = 0; i < data.roles.length; i++)
-                this._roles.push(BigInt(role));
+                this._roles.push(BigInt(data.roles[i]));
         }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
