@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const FormData = require("form-data");
 const { createReadStream } = require("fs");
 const RequestQueue = require("request-queue");
-const calculateHash = require("hash-sum");
+const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 
 class BetterRequestHandler {
@@ -69,7 +69,7 @@ class BetterRequestHandler {
                         return value;
                 // eslint-disable-next-line quotes
                 }).join(''));
-            const hash = calculateHash(toHash);
+            const hash = calculateHash().update(toHash).digest("hex");
 
             this.requestQueue.add(hash, {
                 request: request,
