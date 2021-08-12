@@ -44,27 +44,51 @@ class Member {
             this.permissions = existing.permissions;
 
         if (data.roles && this.guild && this.client.cacheRoles == true) {
-            this.highestRolePosition = 0;
-            this.roles = [];
-            for (let i = 0; i < data.roles.length; i++) {
-                const role = this.guild.roles.cache.get(data.roles[i]);
-                if (!role)
-                    continue;
-                this.roles.push(role);
-                if (role.position > this.highestRolePosition)
-                    this.highestRolePosition = role.position;
-            }
-        } else
-            this.highestRolePosition = 0;
+            this._roles = [];
+            for (let i = 0; i < data.roles.length; i++)
+                this._roles.push(BigInt(role));
+        }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
     }
 
+    get roles() {
+
+        if (!this._roles)
+            return [];
+
+        let roles = [];
+
+        for (let i = 0; i < this._roles.length; i++) {
+            const role = this.guild.roles.cache.get(this._roles[i].toString());
+            if (role)
+                roles.push(role);
+        }
+
+        return roles;
+
+    }
+
+    get highestRolePosition() {
+
+        let highestPosition = 0;
+
+        const roles = this.roles;
+
+        for (let i = 0; i < roles.length; i++)
+            if (roles[i].position > highestPosition)
+                highestPosition = roles[i].position;
+
+        return highestPosition;
+
+    }
+
     get permissions() {
 
         let permissions = 0n;
+
         if (this.roles && this.roles.length != 0) {
             for (let i = 0; i < this.roles.length; i++)
                 permissions |= this.roles[i].permissions;
