@@ -4,6 +4,7 @@ const { createReadStream } = require("fs");
 const RequestQueue = require("request-queue");
 const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
+const { VERSION } = require("../..");
 
 class BetterRequestHandler {
 
@@ -104,7 +105,7 @@ class BetterRequestHandler {
 
             let headers = {
                 "Authorization": this.authorization,
-                "User-Agent": this.name,
+                "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(4)}, ${VERSION}) ${this.name}`,
                 "Accept": "application/json"
             };
 
