@@ -65,7 +65,7 @@ class Member {
     get permissions() {
 
         let permissions = 0n;
-        if (this.roles && this.roles.length != 0 && !this.permissions) {
+        if (this.roles && this.roles.length != 0) {
             for (let i = 0; i < this.roles.length; i++)
                 permissions |= this.roles[i].permissions;
             return permissions;
