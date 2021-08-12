@@ -39,9 +39,7 @@ class Member {
         this.avatar = data.avatar;
 
         if (typeof data.permissions == "string")
-            this.permissions = parseInt(data.permissions);
-        else if (existing && typeof existing.permissions == "number")
-            this.permissions = existing.permissions;
+            this._permissions = BigInt(data.permissions);
 
         if (data.roles && this.guild && this.client.cacheRoles == true) {
             this._roles = [];
