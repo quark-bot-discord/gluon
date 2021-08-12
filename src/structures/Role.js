@@ -1,6 +1,6 @@
 class Role {
     
-    constructor(client, data, guild_id, nocache) {
+    constructor(client, data, guild_id, nocache = false) {
 
         this.client = client;
 
