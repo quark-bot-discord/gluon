@@ -57,14 +57,20 @@ class Member {
         } else
             this.highestRolePosition = 0;
 
-        if (this.roles && this.roles.length != 0 && !this.permissions) {
-            this.permissions = 0n;
-            for (let i = 0; i < this.roles.length; i++)
-                this.permissions |= this.roles[i].permissions;
-        }
-
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
+
+    }
+
+    get permissions() {
+
+        let permissions = 0n;
+        if (this.roles && this.roles.length != 0 && !this.permissions) {
+            for (let i = 0; i < this.roles.length; i++)
+                permissions |= this.roles[i].permissions;
+            return permissions;
+        } else
+            return 0n;
 
     }
 
