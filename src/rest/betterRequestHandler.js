@@ -9,8 +9,6 @@ class BetterRequestHandler {
 
     constructor(client, baseURL, name, version, token) {
 
-        console.log("BETTER REQUEST HANDLER");
-
         this.client = client;
 
         this.baseURL = baseURL;
