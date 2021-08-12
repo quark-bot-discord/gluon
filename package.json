@@ -6,8 +6,16 @@
   "scripts": {
     "test": "node ../test/bot"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quark-bot-discord/gluon.git"
+  },
   "author": "Starman",
   "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/quark-bot-discord/gluon/issues"
+  },
+  "homepage": "https://github.com/quark-bot-discord/gluon#readme",
   "dependencies": {
     "chalk": "^4.1.1",
     "clean-jsdoc-theme": "^3.2.7",
