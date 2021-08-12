@@ -58,16 +58,16 @@ class Member {
             this.highestRolePosition = 0;
 
         if (this.roles && this.roles.length != 0 && !this.permissions) {
-            this.permissions = 0;
+            this.permissions = 0n;
             for (let i = 0; i < this.roles.length; i++)
-                this.permissions |= this.roles[i].permissions;
+                this.permissions |= BigInt(this.roles[i].permissions);
         }
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
     }
-    /* https://github.com/discord/discord-api-docs/pull/3081/files 👀 */
+
     get displayAvatarURL() {
 
         return this.avatar ?
