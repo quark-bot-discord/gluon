@@ -159,7 +159,7 @@ class Message {
          * The UNIX (seconds) timestamp for when this message was created.
          * @type {Number}
          */
-        this.timestamp = (new Date(getTimestamp(this.id)).getTime() / 1000) | 0;
+        this.timestamp = getTimestamp(this.id);
 
         /**
          * Stickers sent with this message.
