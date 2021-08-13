@@ -85,6 +85,9 @@ class Member {
 
     get permissions() {
 
+        if (this.id == this.guild.owner_id)
+            return PERMISSIONS.ADMINISTRATOR;
+
         let permissions = 0n;
 
         const roles = this.roles;
