@@ -218,15 +218,17 @@ class WS {
             else
                 this.resuming = false;
 
-            if (this.resuming == true && this.retries < 5) {
+            if (this.resuming == true && this.retries < 5)
+                setTimeout(() => {
 
-                this.retries++;
+                    this.retries++;
 
-                this.ws = new WebSocket(this.url);
+                    this.ws = new WebSocket(this.url);
 
-                this.addListeners();
+                    this.addListeners();
 
-            } else
+                }, 1000);
+            else
                 process.exit(1);
 
         });
