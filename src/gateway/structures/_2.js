@@ -13,9 +13,8 @@ class Identify {
                 token,
                 properties: {
                     $os: "linux",
-                    /* Could potentially add this as a client option as setting this to specific values triggers there to be a mobile indicator */
-                    $browser: NAME,
-                    $device: NAME
+                    $browser: `${NAME} (${require("../../../package.json").version})`,
+                    $device: `${NAME} (${require("../../../package.json").version})`
                 },
                 large_threshold: 250,
                 shard,
