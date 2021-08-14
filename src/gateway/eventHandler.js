@@ -46,6 +46,8 @@ class EventHandler {
 
     RESUMED(data) {
 
+        this.ws.retries = 0;
+
         this.client.emit("debug", "RESUMED");
 
     }
