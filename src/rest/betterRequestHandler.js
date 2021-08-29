@@ -60,13 +60,7 @@ class BetterRequestHandler {
 
             const actualRequest = this.endpoints[request];
 
-            let toHash = actualRequest.method + actualRequest.path([]);
-            if (params)
-                toHash += (params.map((value, index) => {
-                    if (actualRequest.majorParams.includes(index))
-                        return value;
-                // eslint-disable-next-line quotes
-                }).join(''));
+            const toHash = actualRequest.method + actualRequest.path(params ? params.map((v, i) => actualRequest.majorParams.includes(i) ? v : null) : []);
             const hash = calculateHash().update(toHash).digest("hex");
 
             this.requestQueue.add(hash, {
