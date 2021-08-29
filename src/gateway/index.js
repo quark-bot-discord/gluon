@@ -38,6 +38,7 @@ class WS {
         this.isInitialHeartbeat = sessionId && sequence != null ? false : true;
 
         this.hearbeatSetInterval = null;
+        this.waitingForHeartbeatACK = false;
 
         this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
         this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
@@ -137,6 +138,8 @@ class WS {
                 } else if (this.resuming == true)
                     this.resume();
 
+                this.waitingForHeartbeatACK = false;
+
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Hearbeat acknowledged`);
 
                 break;
@@ -157,7 +160,14 @@ class WS {
 
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Sending heartbeat...`);
 
+        this.waitingForHeartbeatACK = true;
+
         this.ws.send(new Heartbeat(this.s));
+        // we'll close the websocket if a heartbeat ACK is not received 
+        setTimeout(() => {
+            if (this.waitingForHeartbeatACK == true)
+                this.ws.close(4000);
+        }, 2000);
 
     }
 
