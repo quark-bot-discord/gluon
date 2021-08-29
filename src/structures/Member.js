@@ -54,10 +54,15 @@ class Member {
 
     get roles() {
 
-        if (!this._roles)
+        if (this.client.cacheRoles != true)
             return [];
 
         let roles = [];
+
+        roles.push(this.guild.roles.cache.get(this.guild?.id.toString() || this.guild_id?.toString()));
+
+        if (!this._roles)
+            return roles;
 
         for (let i = 0; i < this._roles.length; i++) {
             const role = this.guild.roles.cache.get(this._roles[i].toString());
