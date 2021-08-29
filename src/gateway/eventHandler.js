@@ -54,16 +54,18 @@ class EventHandler {
 
     GUILD_CREATE(data) {
 
-        if (data.unavailable != true) {
+        let guild;
 
-            const guild = new Guild(this.client, data);
+        if (this.client.guilds.cache.get(data.id)?.unavailable == true && data.unavailable != true) {
+            guild = new Guild(this.client, data);
+            return;
+        } else
+            guild = new Guild(this.client, data);
 
-            if (!this.initialGuilds.includes(data.id))
-                this.client.emit(EVENTS.GUILD_CREATE, guild);
-            else
-                this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
-
-        }
+        if (!this.initialGuilds.includes(data.id))
+            this.client.emit(EVENTS.GUILD_CREATE, guild);
+        else
+            this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
 
     }
 

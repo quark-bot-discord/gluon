@@ -27,6 +27,17 @@ class Guild {
      */
     constructor(client, data, nocache = false) {
 
+        if (data.unavailable == true) {
+
+            this.id = BigInt(data.id);
+            
+            this.unavailable = true;
+
+            if (nocache == false && this.client.cacheGuilds == true)
+                this.client.guilds.cache.set(data.id, this);
+            
+        }
+
         /**
          * The client instance.
          * @type {Client}
