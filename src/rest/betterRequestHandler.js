@@ -36,18 +36,17 @@ class BetterRequestHandler {
 
     }
 
-    async handleBucket(ratelimitBucket, ratelimitRemaining, ratelimitReset, hash) {
+    async handleBucket(ratelimitBucket, ratelimitRemaining, ratelimitReset, hash, retryAfter = 0) {
 
         if (!ratelimitBucket)
             return;
 
         const bucket = {
-            remaining: parseInt(ratelimitRemaining),
-            reset: parseFloat(ratelimitReset),
-            bucket: ratelimitBucket
+            remaining: retryAfter != 0 ? 0 : parseInt(ratelimitRemaining),
+            reset: retryAfter != 0 ? (new Date().getTime() / 1000) + retryAfter + this.latency : parseFloat(ratelimitReset)
         };
 
-        const expireFromCache = Math.ceil((ratelimitReset + this.latency) - (new Date().getTime() / 1000)) + 60;
+        const expireFromCache = Math.ceil(bucket.reset - (new Date().getTime() / 1000)) + 60;
 
         this.client.redis ?
             await this.client.redis.set(`gluon.paths.${hash}`, JSON.stringify(bucket), "EX", expireFromCache)
@@ -137,7 +136,7 @@ class BetterRequestHandler {
 
             }
 
-            await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash);
+            await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash, res.status == 429 ? json.retry_after : 0);
 
             if (res.ok)
                 resolve(json);
