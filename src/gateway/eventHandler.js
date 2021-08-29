@@ -85,6 +85,9 @@ class EventHandler {
             const guild = this.client.guilds.cache.get(data.id);
             this.client.guilds.cache.delete(data.id);
 
+            if (!guild)
+                return;
+
             this.client.emit(EVENTS.GUILD_DELETE, guild);
 
         }
