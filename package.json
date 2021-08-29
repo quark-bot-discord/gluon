@@ -1,6 +1,6 @@
 {
   "name": "gluon",
-  "version": "1.10.21",
+  "version": "1.10.22",
   "description": "Discord API library for Quark",
   "main": "./index.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/quark-bot-discord/gluon#readme",
   "dependencies": {
+    "bufferutil": "^4.0.3",
     "chalk": "^4.1.1",
     "clean-jsdoc-theme": "^3.2.7",
     "erlpack": "github:quark-bot-discord/erlpack",
@@ -25,6 +26,7 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
     "request-queue": "github:Starman3787/request-queue",
+    "utf-8-validate": "^5.0.5",
     "ws": "^7.4.6",
     "zlib-sync": "^0.1.7"
   },
