@@ -132,6 +132,9 @@ class Client extends EventsEmitter {
             for (let i = 0; i < initCache.guilds.length; i++)
                 new Guild(this, initCache.guilds[i]);
 
+        this.increasedCache = new Map();
+        this.increaseCacheBy = 1000;
+
     }
 
     bundleCache() {
@@ -520,7 +523,9 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `Sweeping messages for GUILD ${guild.id}...`);
 
-                                    const cacheCount = guild.calculateMessageCacheCount();
+                                    let cacheCount = guild.calculateMessageCacheCount();
+                                    if (this.increasedCache.get(guild.id.toString()))
+                                        cacheCount *= this.increaseCacheBy;
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
@@ -544,7 +549,9 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
 
-                                    const cacheCount = guild.calculateMemberCacheCount();
+                                    let cacheCount = guild.calculateMemberCacheCount();
+                                    if (this.increasedCache.get(guild.id.toString()))
+                                        cacheCount *= this.increaseCacheBy;
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`);
 
