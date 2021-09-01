@@ -118,24 +118,34 @@ class Message {
             this.embeds = [];
 
         /**
-         * The message mentions.
-         * @type {Object[]}
+         * Whether any users were mentioned within the message.
+         * @type {Boolean}
          */
         this.mentions = data.mentions?.length != 0 || undefined;
         if (this.mentions == undefined && existing && existing.mentions != undefined)
             this.mentions = existing.mentions;
-        else
+        else if (this.mentions == undefined)
             this.mentions = false;
 
         /**
-         * Roles mentioned within the message.
-         * @type {Object[]}
+         * Whether any roles were mentioned within the message.
+         * @type {Boolean}
          */
         this.mention_roles = data.mention_roles?.length != 0 || undefined;
         if (this.mention_roles == undefined && existing && existing.mention_roles != undefined)
             this.mention_roles = existing.mention_roles;
-        else
+        else if (this.mention_roles == undefined)
             this.mention_roles = false;
+
+        /**
+         * Whether everyone was mentioned within the message.
+         * @type {Boolean}
+         */
+        this.mention_everyone = data.mention_everyone || undefined;
+        if (this.mention_everyone == undefined && existing && existing.mention_everyone != undefined)
+            this.mention_everyone = existing.mention_everyone;
+        else if (this.mention_everyone == undefined)
+            this.mention_everyone = false;
 
         /**
          * The message that this message references.
