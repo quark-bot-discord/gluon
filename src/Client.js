@@ -222,7 +222,7 @@ class Client extends EventsEmitter {
      * @param {Object?} options Embeds, components and files to attach to the message.
      * @returns {Promise<Message>}
      */
-    async sendMessage(channel_id, guild_id, content, { embed, components, files } = {}) {
+    async sendMessage(channel_id, guild_id, content, { embed, embeds, components, files } = {}) {
 
         const body = {};
 
@@ -231,6 +231,8 @@ class Client extends EventsEmitter {
 
         if (embed)
             body.embed = embed.toJSON();
+        else if (embeds && embeds.length != 0)
+            body.embeds = embeds.map(e => e.toJSON());
         if (components)
             body.components = components.toJSON();
         if (files)
