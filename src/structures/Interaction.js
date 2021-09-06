@@ -79,7 +79,7 @@ class Interaction {
      * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message. 
      * @returns {Promise<Interaction>}
      */
-    async reply(content, { embed, _embed, components, quiet } = {}) {
+    async reply(content, { embed, _embed, _embeds, components, quiet } = {}) {
 
         const body = {};
 
@@ -92,6 +92,8 @@ class Interaction {
             body.data.embeds = [embed.toJSON()];
         else if (_embed)
             body.data.embeds = [_embed];
+        else if (_embeds)
+            body.data.embeds = _embeds;
         if (components)
             body.data.components = components.toJSON();
         if (quiet == true)
@@ -117,7 +119,7 @@ class Interaction {
      * @param {Object?} options The new interaction response options.
      * @returns {Promise<Interaction>}
      */
-    async edit(content, { embed, _embed, components } = {}) {
+    async edit(content, { embed, _embed, _embeds, components } = {}) {
 
         const body = {};
 
@@ -127,6 +129,8 @@ class Interaction {
             body.embeds = [embed.toJSON()];
         else if (_embed)
             body.embeds = [_embed];
+        else if (_embeds)
+            body.data.embeds = _embeds;
         if (components)
             body.components = components.toJSON();
 
