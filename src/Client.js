@@ -133,7 +133,7 @@ class Client extends EventsEmitter {
                 new Guild(this, initCache.guilds[i]);
 
         this.increasedCache = new Map();
-        this.increaseCacheBy = 1000;
+        this.increaseCacheBy = 9;
 
     }
 
