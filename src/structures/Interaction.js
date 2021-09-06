@@ -130,7 +130,7 @@ class Interaction {
         else if (_embed)
             body.embeds = [_embed];
         else if (_embeds)
-            body.data.embeds = _embeds;
+            body.embeds = _embeds;
         if (components)
             body.components = components.toJSON();
 
