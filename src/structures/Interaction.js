@@ -95,7 +95,7 @@ class Interaction {
         else if (_embeds)
             body.data.embeds = _embeds;
         if (components)
-            body.data.components = components.toJSON();
+            body.data.components = components?.toJSON() || [];
         if (quiet == true)
             body.data.flags = 64;
 
@@ -132,7 +132,7 @@ class Interaction {
         else if (_embeds)
             body.embeds = _embeds;
         if (components)
-            body.components = components.toJSON();
+            body.components = components?.toJSON() || [];
 
         try {
 
