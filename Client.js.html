@@ -614,7 +614,7 @@ class Client extends EventsEmitter {
 
                                     let cacheCount = guild.calculateMessageCacheCount();
                                     if (this.increasedCache.get(guild.id.toString()))
-                                        cacheCount *= this.increaseCacheBy;
+                                        cacheCount = 0;
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
