@@ -87,7 +87,7 @@ class ChannelMessageManager {
 
         this.cache.forEach((message, id) => {
 
-            if (message.timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) > currentTime && counter <= cacheCount)
+            if (message.timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) > currentTime && (cacheCount != 0 ? counter <= cacheCount : true))
                 newCache.set(id, message);
 
             counter--;
