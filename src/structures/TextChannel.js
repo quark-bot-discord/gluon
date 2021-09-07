@@ -32,6 +32,10 @@ class TextChannel extends Channel {
          */
         this.messages = existing ? existing.messages : new ChannelMessageManager(client, this);
 
+        if (data.messages)
+            for (let i = 0; i < data.messages.length; i++)
+                new Message(this.client, data, this.id.toString(), guild_id);
+
         if (nocache == false && this.client.cacheChannels == true)
             this.guild?.channels.cache.set(data.id, this);
 
