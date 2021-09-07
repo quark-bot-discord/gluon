@@ -438,6 +438,24 @@ class Guild {
     }
 
     /**
+     * Leaves the guild.
+     */
+    async leave() {
+
+        try {
+
+            await this.client.request.makeRequest("deleteLeaveGuild", [this.id]);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    /**
      * Calculates the number of messages that should be cached per channel for this guild.
      * @returns {Number}
      */

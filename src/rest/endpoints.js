@@ -196,5 +196,12 @@ module.exports = {
         },
         method: "PATCH",
         majorParams: [0]
+    },
+    deleteLeaveGuild: {
+        path: ([guild_id]) => {
+            return `/users/@me/guilds/${guild_id}`;
+        },
+        method: "DELETE",
+        majorParams: [0]
     }
 };
