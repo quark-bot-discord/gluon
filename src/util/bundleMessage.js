@@ -15,6 +15,7 @@ function bundleMessage(message) {
         data.attachments.push(bundleAttachment(message.attachments[i]));
     data.embeds = message.embeds;
     data.type = message.type;
+    data.referenced_message = {};
     data.referenced_message.id = message.reference?.message_id?.toString() || {};
     data.sticker_items = [];
     for (let i = 0; i < message.sticker_items.length; i++)
