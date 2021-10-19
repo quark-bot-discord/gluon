@@ -37,7 +37,7 @@ class WS {
 
         this.isInitialHeartbeat = sessionId && sequence != null ? false : true;
 
-        this.hearbeatSetInterval = null;
+        this.heartbeatSetInterval = null;
         this.waitingForHeartbeatACK = false;
 
         this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
@@ -115,7 +115,7 @@ class WS {
 
                 this.heartbeat();
 
-                this.hearbeatSetInterval = setInterval((() => {
+                this.heartbeatSetInterval = setInterval((() => {
 
                     this.heartbeat();
 
@@ -140,7 +140,7 @@ class WS {
 
                 this.waitingForHeartbeatACK = false;
 
-                this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Hearbeat acknowledged`);
+                this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Heartbeat acknowledged`);
 
                 break;
 
@@ -221,7 +221,7 @@ class WS {
 
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
 
-            clearInterval(this.hearbeatSetInterval);
+            clearInterval(this.heartbeatSetInterval);
 
             if (data < 2000)
                 this.resuming = true;
