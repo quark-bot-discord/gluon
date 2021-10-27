@@ -83,6 +83,18 @@ class User {
 
     }
 
+    get discriminatorString() {
+
+        let discriminatorString = this.discriminator.toString();
+
+        while (discriminatorString.length != 4)
+            // eslint-disable-next-line quotes
+            discriminatorString = '0' + discriminatorString;
+
+        return discriminatorString;
+
+    }
+
     /**
      * The username#discriminator of the user.
      * @readonly
@@ -90,7 +102,7 @@ class User {
      */
     get tag() {
 
-        return this.username + "#" + this.discriminator.toString();
+        return this.username + "#" + this.discriminatorString;
 
     }
 

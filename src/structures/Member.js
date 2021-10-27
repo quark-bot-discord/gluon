@@ -110,9 +110,7 @@ class Member {
 
         return this.avatar ?
             `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatar}.${this.avatar.startsWith("a_") ? "gif" : "png"}` :
-            this.user?.avatar ?
-                `${CDN_BASE_URL}/avatars/${this.user.id}/${this.user.avatar}.${this.user.avatar.startsWith("a_") ? "gif" : "png"}` :
-                `${CDN_BASE_URL}/embed/avatars/${this.user.discriminator % 5}.png`;
+            this.user.displayAvatarURL;
 
     }
 
