@@ -33,10 +33,18 @@ class Member {
 
         this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
 
-        if (data.pending == true)
-            this.pending = data.pending;
+        this._attributes = 0;
 
-        this.avatar = data.avatar;
+        if (data.pending == true)
+            this._attributes |= (0b1 << 0);
+
+        if (data.avatar && data.avatar.startsWith("a_") == true) {
+            this._attributes |= (0b1 << 1);
+            // eslint-disable-next-line quotes
+            data.avatar.replace("a_", '');
+        }
+
+        this.avatar = data.avatar ? BigInt("0x" + data.avatar) : null;
 
         if (typeof data.permissions == "string")
             this._permissions = BigInt(data.permissions);
@@ -49,6 +57,23 @@ class Member {
 
         if ((this.id == this.client.user.id) || (nocache == false && this.client.cacheMembers == true))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
+
+    }
+
+    get pending() {
+
+        return (this._attributes & (0b1 << 0)) == 1;
+
+    }
+
+    /**
+     * Whether the user has an animated avatar or not.
+     * @readonly
+     * @type {Boolean}
+     */
+    get avatarIsAnimated() {
+
+        return (this._attributes & (0b1 << 1)) == 1;
 
     }
 
@@ -109,7 +134,8 @@ class Member {
     get displayAvatarURL() {
 
         return this.avatar ?
-            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatar}.${this.avatar.startsWith("a_") ? "gif" : "png"}` :
+            // eslint-disable-next-line quotes
+            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatarIsAnimated ? "a_" : ''}${this.avatar.toString(16)}.${this.avatarIsAnimated ? "gif" : "png"}` :
             this.user.displayAvatarURL;
 
     }
