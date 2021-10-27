@@ -116,18 +116,22 @@ class User {
          */
         this.id = BigInt(data.id);
 
-        /**
-         * The avatar of the user.
-         * @type {String?}
-         */
-        this.avatar = data.avatar;
+        this._attributes = 0;
 
         if (data.bot == true)
-            /**
-             * Whether the user is a bot or not.
-             * @type {Boolean?}
-             */
-            this.bot = data.bot;
+            this._attributes |= (0b1 &lt;&lt; 0);
+
+        if (data.avatar &amp;&amp; data.avatar.startsWith("a_") == true) {
+            this._attributes |= (0b1 &lt;&lt; 1);
+            // eslint-disable-next-line quotes
+            data.avatar.replace("a_", '');
+        }
+
+        /**
+         * The avatar of the user.
+         * @type {BigInt?}
+         */
+        this.avatar = data.avatar ? BigInt("0x" + data.avatar) : null;
 
         /**
          * The username of the user.
@@ -137,9 +141,9 @@ class User {
 
         /**
          * The discriminator of the user.
-         * @type {String}
+         * @type {Number}
          */
-        this.discriminator = data.discriminator;
+        this.discriminator = parseInt(data.discriminator);
 
         /**
          * The UNIX (seconds) timestamp when this user was last cached.
@@ -151,7 +155,7 @@ class User {
             this.client.users.cache.set(data.id, this);
 
     }
-    
+
     /**
      * The avatar URL of the user.
      * @readonly
@@ -160,7 +164,8 @@ class User {
     get displayAvatarURL() {
 
         return this.avatar ?
-            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatar}.${this.avatar.startsWith("a_") ? "gif" : "png"}` :
+            // eslint-disable-next-line quotes
+            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatarIsAnimated ? "a_" : ''}${this.avatar.toString(16)}.${this.avatarIsAnimated ? "gif" : "png"}` :
             `${CDN_BASE_URL}/embed/avatars/${this.discriminator % 5}.png`;
 
     }
@@ -172,7 +177,7 @@ class User {
      */
     get tag() {
 
-        return this.username + "#" + this.discriminator;
+        return this.username + "#" + this.discriminator.toString();
 
     }
 
@@ -184,6 +189,28 @@ class User {
     get createdTimestamp() {
 
         return getTimestamp(this.id);
+
+    }
+
+    /**
+     * Whether the user is a bot or not.
+     * @readonly
+     * @type {Boolean}
+     */
+    get bot() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 0)) == 1;
+
+    }
+
+    /**
+     * Whether the user has an animated avatar or not.
+     * @readonly
+     * @type {Boolean}
+     */
+    get avatarIsAnimated() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 1)) == 1;
 
     }
 
