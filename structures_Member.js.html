@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> structures/Member.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Interaction.html">Interaction</a></li><li><a href="Message.html">Message</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a></li><li><a href="Thread.html">Thread</a></li><li><a href="User.html">User</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>structures/Member.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { CDN_BASE_URL, PERMISSIONS } = require("../constants");
+const User = require("./User");
+const checkPermission = require("../util/checkPermission");
+
+class Member {
+
+    constructor(client, data, user_id, guild_id, user, nocache = false) {
+
+        this.client = client;
+
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
+
+        const existing = this.guild?.members.cache.get(user_id) || null;
+
+        this.id = BigInt(user_id);
+
+        if (data.user)
+            this.user = new User(this.client, data.user, nocache);
+        else if (existing &amp;&amp; existing.user)
+            this.user = existing.user;
+        else if (user)
+            this.user = user;
+        else
+            this.user = this.client.users.cache.get(user_id) || null;
+
+        if (data.nick != undefined)
+            this.nick = data.nick;
+        else if (data.nick !== null &amp;&amp; existing &amp;&amp; existing.nick != undefined)
+            this.nick = existing.nick;
+
+        this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
+
+        this._attributes = 0;
+
+        if (data.pending == true)
+            this._attributes |= (0b1 &lt;&lt; 0);
+
+        if (data.avatar &amp;&amp; data.avatar.startsWith("a_") == true) {
+            this._attributes |= (0b1 &lt;&lt; 1);
+            // eslint-disable-next-line quotes
+            data.avatar.replace("a_", '');
+        }
+
+        this.avatar = data.avatar ? BigInt("0x" + data.avatar) : null;
+
+        if (typeof data.permissions == "string")
+            this._permissions = BigInt(data.permissions);
+
+        if (data.roles &amp;&amp; this.guild &amp;&amp; this.client.cacheRoles == true) {
+            this._roles = [];
+            for (let i = 0; i &lt; data.roles.length; i++)
+                this._roles.push(BigInt(data.roles[i]));
+        }
+
+        if ((this.id == this.client.user.id) || (nocache == false &amp;&amp; this.client.cacheMembers == true))
+            this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
+
+    }
+
+    get pending() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 0)) == 1;
+
+    }
+
+    /**
+     * Whether the user has an animated avatar or not.
+     * @readonly
+     * @type {Boolean}
+     */
+    get avatarIsAnimated() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 1)) == 1;
+
+    }
+
+    get roles() {
+
+        if (this.client.cacheRoles != true)
+            return [];
+
+        let roles = [];
+
+        roles.push(this.guild.roles.cache.get(this.guild?.id.toString() || this.guild_id?.toString()));
+
+        if (!this._roles)
+            return roles;
+
+        for (let i = 0; i &lt; this._roles.length; i++) {
+            const role = this.guild.roles.cache.get(this._roles[i].toString());
+            if (role)
+                roles.push(role);
+        }
+
+        return roles;
+
+    }
+
+    get highestRolePosition() {
+
+        let highestPosition = 0;
+
+        const roles = this.roles;
+
+        for (let i = 0; i &lt; roles.length; i++)
+            if (roles[i].position > highestPosition)
+                highestPosition = roles[i].position;
+
+        return highestPosition;
+
+    }
+
+    get permissions() {
+
+        if (this.id == this.guild.owner_id)
+            return PERMISSIONS.ADMINISTRATOR;
+
+        let permissions = 0n;
+
+        const roles = this.roles;
+
+        if (roles.length != 0) {
+            for (let i = 0; i &lt; roles.length; i++)
+                permissions |= roles[i].permissions;
+            return permissions;
+        } else
+            return 0n;
+
+    }
+
+    get displayAvatarURL() {
+
+        return this.avatar ?
+            // eslint-disable-next-line quotes
+            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatarIsAnimated ? "a_" : ''}${this.avatar.toString(16)}.${this.avatarIsAnimated ? "gif" : "png"}` :
+            this.user.displayAvatarURL;
+
+    }
+
+    async addRole(role_id, { reason } = {}) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        try {
+
+            await this.client.request.makeRequest("putAddGuildMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+    async removeRole(role_id, { reason } = {}) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        try {
+
+            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+
+    }
+
+}
+
+module.exports = Member;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
