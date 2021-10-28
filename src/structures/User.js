@@ -34,17 +34,14 @@ class User {
         if (data.bot == true)
             this._attributes |= (0b1 << 0);
 
-        if (data.avatar && data.avatar.startsWith("a_") == true) {
+        if (data.avatar && data.avatar.startsWith("a_") == true)
             this._attributes |= (0b1 << 1);
-            // eslint-disable-next-line quotes
-            data.avatar.replace("a_", '');
-        }
 
         /**
          * The avatar of the user.
          * @type {BigInt?}
          */
-        this.avatar = data.avatar ? BigInt("0x" + data.avatar) : null;
+        this.avatar = data.avatar ? BigInt("0x" + data.avatar.replace("a_", "")) : null;
 
         /**
          * The username of the user.
