@@ -16,17 +16,25 @@ class VoiceState {
         if (!this.channel)
             this.channel_id = BigInt(data.channel_id);
 
-        this.deaf = data.deaf;
+        this._attributes = 0;
 
-        this.mute = data.mute;
+        if (data.deaf == true)
+            this._attributes |= (0b1 << 0);
 
-        this.self_deaf = data.self_deaf;
+        if (data.mute == true)
+            this._attributes |= (0b1 << 1);
 
-        this.self_mute = data.self_mute;
+        if (data.self_deaf == true)
+            this._attributes |= (0b1 << 2);
 
-        this.self_stream = data.self_stream || false;
+        if (data.self_mute == true)
+            this._attributes |= (0b1 << 3);
 
-        this.self_video = data.self_video;
+        if (data.self_stream == true)
+            this._attributes |= (0b1 << 4);
+
+        if (data.self_video == true)
+            this._attributes |= (0b1 << 5);
 
         if (data.member)
             this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, nocache);
@@ -41,6 +49,42 @@ class VoiceState {
         if (nocache == false && this.client.cacheVoiceStates == true)
             this.guild?.voice_states.cache.set(data.user_id, this);
 
+    }
+
+    get deaf() {
+
+        return (this._attributes & (0b1 << 0)) == (0b1 << 0);
+
+    }
+
+    get mute() {
+
+        return (this._attributes & (0b1 << 1)) == (0b1 << 1);
+
+    }
+
+    get self_deaf() {
+
+        return (this._attributes & (0b1 << 2)) == (0b1 << 2);
+
+    }
+
+    get self_mute() {
+
+        return (this._attributes & (0b1 << 3)) == (0b1 << 3);
+
+    }
+
+    get self_stream() {
+
+        return (this._attributes & (0b1 << 4)) == (0b1 << 4);
+
+    }
+
+    get self_video() {
+
+        return (this._attributes & (0b1 << 5)) == (0b1 << 5);
+        
     }
 
 }
