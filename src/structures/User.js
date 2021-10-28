@@ -121,7 +121,7 @@ class User {
      */
     get bot() {
 
-        return (this._attributes & (0b1 << 0)) == 1;
+        return (this._attributes & (0b1 << 0)) == (0b1 << 0);
 
     }
 
@@ -132,7 +132,7 @@ class User {
      */
     get avatarIsAnimated() {
 
-        return (this._attributes & (0b1 << 1)) == 1;
+        return (this._attributes & (0b1 << 1)) == (0b1 << 1);
 
     }
 
