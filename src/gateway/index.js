@@ -226,7 +226,7 @@ class WS {
             if (data < 2000)
                 this.resuming = true;
             else
-                this.resuming = false;
+                process.exit(1);
 
             if (this.resuming == true && this.retries < 5)
                 setTimeout(() => {
