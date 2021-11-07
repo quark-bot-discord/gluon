@@ -4,11 +4,11 @@ const erlpack = require("erlpack");
 const ZlibSync = require("zlib-sync");
 const Heartbeat = require("./structures/_1");
 const Identify = require("./structures/_2");
-const EventHandler = require("./eventHandler");
+const UpdatePresence = require("./structures/_3");
 const Resume = require("./structures/_6");
+const EventHandler = require("./eventHandler");
 const chalk = require("chalk");
 const { NAME } = require("../constants");
-const UpdatePresence = require("./structures/_3");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -62,6 +62,7 @@ class WS {
         this.client.emit("raw", data);
 
         switch (data.op) {
+
             // Dispatch
             case 0: {
 
@@ -79,6 +80,7 @@ class WS {
                 break;
 
             }
+
             // Heartbeat
             case 1: {
 
@@ -87,6 +89,7 @@ class WS {
                 break;
 
             }
+
             // Reconnect
             case 7: {
 
@@ -96,6 +99,7 @@ class WS {
                 break;
 
             }
+
             // Invalid Session
             case 9: {
 
@@ -110,6 +114,7 @@ class WS {
                 break;
 
             }
+
             // Hello
             case 10: {
 
@@ -126,6 +131,7 @@ class WS {
                 break;
 
             }
+
             // Heartbeat ACK
             case 11: {
 
