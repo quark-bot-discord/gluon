@@ -198,11 +198,32 @@ class Member {
 
     }
 
+    get originalAvatarHash() {
+
+        return this.avatar ? 
+            // eslint-disable-next-line quotes
+            `${this.avatarIsAnimated ? "a_" : ''}${this.formattedAvatarHash}` :
+            null;
+
+    }
+
+    get formattedAvatarHash() {
+
+        let formattedHash = this.avatar.toString(16);
+
+        while (formattedHash.length != 32)
+            // eslint-disable-next-line quotes
+            formattedHash = '0' + formattedHash;
+
+        return formattedHash;
+
+    }
+
     get displayAvatarURL() {
 
         return this.avatar ?
             // eslint-disable-next-line quotes
-            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.avatarIsAnimated ? "a_" : ''}${this.avatar.toString(16)}.${this.avatarIsAnimated ? "gif" : "png"}` :
+            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.originalAvatarHash}.${this.avatarIsAnimated ? "gif" : "png"}` :
             this.user.displayAvatarURL;
 
     }
