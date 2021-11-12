@@ -66,6 +66,27 @@ class User {
 
     }
 
+    get originalAvatarHash() {
+
+        return this.avatar ? 
+            // eslint-disable-next-line quotes
+            `${this.avatarIsAnimated ? "a_" : ''}${this.formattedAvatarHash}` :
+            null;
+
+    }
+
+    get formattedAvatarHash() {
+
+        let formattedHash = this.avatar.toString(16);
+
+        while (formattedHash.length != 32)
+            // eslint-disable-next-line quotes
+            formattedHash = '0' + formattedHash;
+
+        return formattedHash;
+
+    }
+
     /**
      * The avatar URL of the user.
      * @readonly
@@ -75,7 +96,7 @@ class User {
 
         return this.avatar ?
             // eslint-disable-next-line quotes
-            `${CDN_BASE_URL}/avatars/${this.id}/${this.avatarIsAnimated ? "a_" : ''}${this.avatar.toString(16)}.${this.avatarIsAnimated ? "gif" : "png"}` :
+            `${CDN_BASE_URL}/avatars/${this.id}/${this.originalAvatarHash}.${this.avatarIsAnimated ? "gif" : "png"}` :
             `${CDN_BASE_URL}/embed/avatars/${this.discriminator % 5}.png`;
 
     }

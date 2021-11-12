@@ -6,7 +6,7 @@ function bundleMember(member) {
     data.nick = member.nick;
     data.joined_at = member.joined_at;
     data.pending = member.pending;
-    data.avatar = member.avatar;
+    data.avatar = member.originalAvatarHash;
     data.permissions = member.permissions?.toString();
     data.roles = member.roles.map(r => r.id.toString());
     return data;

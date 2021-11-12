@@ -1,7 +1,7 @@
 function bundleUser(user) {
     const data = {};
     data.id = user.id.toString();
-    data.avatar = user.avatar;
+    data.avatar = user.originalAvatarHash;
     data.bot = user.bot;
     data.username = user.username;
     data.discriminator = user.discriminator;
