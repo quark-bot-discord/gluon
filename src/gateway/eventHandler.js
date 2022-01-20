@@ -56,6 +56,8 @@ class EventHandler {
 
         let guild;
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_CREATE ${data.id}`);
+
         if (this.client.guilds.cache.get(data.id)?.unavailable == true && data.unavailable != true) {
             guild = new Guild(this.client, data);
             return;
@@ -71,6 +73,8 @@ class EventHandler {
 
     GUILD_UPDATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_UPDATE ${data.id}`);
+
         const oldGuild = this.client.guilds.cache.get(data.id);
         const newGuild = new Guild(this.client, data);
 
@@ -79,6 +83,8 @@ class EventHandler {
     }
 
     GUILD_DELETE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_DELETE ${data.id}`);
 
         if (data.unavailable != true) {
 
@@ -96,6 +102,8 @@ class EventHandler {
 
     GUILD_ROLE_CREATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_ROLE_CREATE ${data.guild_id}`);
+
         const role = new Role(this.client, data.role, data.guild_id);
 
         this.client.emit(EVENTS.GUILD_ROLE_CREATE, role);
@@ -103,6 +111,8 @@ class EventHandler {
     }
 
     GUILD_ROLE_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_ROLE_UPDATE ${data.guild_id}`);
 
         const oldRole = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.role.id);
         const newRole = new Role(this.client, data.role, data.guild_id);
@@ -113,6 +123,8 @@ class EventHandler {
 
     GUILD_ROLE_DELETE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_ROLE_DELETE ${data.guild_id}`);
+
         const role = this.client.guilds.cache.get(data.guild_id)?.roles.cache.get(data.role_id);
         this.client.guilds.cache.get(data.guild_id)?.roles.cache.delete(data.role_id);
 
@@ -122,6 +134,8 @@ class EventHandler {
 
     CHANNEL_CREATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => CHANNEL_CREATE ${data.guild_id}`);
+
         const channel = cacheChannel(this.client, data, data.guild_id);
 
         this.client.emit(EVENTS.CHANNEL_CREATE, channel);
@@ -129,6 +143,8 @@ class EventHandler {
     }
 
     CHANNEL_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => CHANNEL_UPDATE ${data.guild_id}`);
 
         const oldChannel = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         const newChannel = cacheChannel(this.client, data, data.guild_id, true);
@@ -139,6 +155,8 @@ class EventHandler {
 
     CHANNEL_DELETE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => CHANNEL_DELETE ${data.guild_id}`);
+
         const channel = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         this.client.guilds.cache.get(data.guild_id)?.channels.cache.delete(data.id);
 
@@ -148,6 +166,8 @@ class EventHandler {
 
     THREAD_CREATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => THREAD_CREATE ${data.guild_id}`);
+
         const thread = new Thread(this.client, data, data.guild_id);
 
         this.client.emit(EVENTS.THREAD_CREATE, thread);
@@ -155,6 +175,8 @@ class EventHandler {
     }
 
     THREAD_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => THREAD_UPDATE ${data.guild_id}`);
 
         const oldThread = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         const newThread = new Thread(this.client, data, data.guild_id);
@@ -165,6 +187,8 @@ class EventHandler {
 
     THREAD_DELETE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => THREAD_DELETE ${data.guild_id}`);
+
         const thread = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.id);
         this.client.guilds.cache.get(data.guild_id)?.channels.cache.delete(data.id);
 
@@ -174,6 +198,8 @@ class EventHandler {
 
     GUILD_MEMBER_ADD(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_ADD ${data.guild_id}`);
+
         const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
 
         this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
@@ -181,6 +207,8 @@ class EventHandler {
     }
 
     GUILD_MEMBER_REMOVE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_REMOVE ${data.guild_id}`);
 
         let member = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
         if (member)
@@ -199,6 +227,8 @@ class EventHandler {
 
     GUILD_MEMBER_UPDATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_UPDATE ${data.guild_id}`);
+
         const oldMember = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
         const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
 
@@ -207,6 +237,8 @@ class EventHandler {
     }
 
     GUILD_BAN_ADD(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_BAN_ADD ${data.guild_id}`);
 
         const user = new User(this.client, data.user);
         user.guild = this.client.guilds.cache.get(data.guild_id) || null;
@@ -219,6 +251,8 @@ class EventHandler {
 
     GUILD_BAN_REMOVE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_BAN_REMOVE ${data.guild_id}`);
+
         const user = new User(this.client, data.user);
         user.guild = this.client.guilds.cache.get(data.guild_id) || null;
         if (!user.guild)
@@ -230,17 +264,23 @@ class EventHandler {
 
     INVITE_CREATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INVITE_CREATE ${data.guild_id}`);
+
         this.client.emit(EVENTS.INVITE_CREATE, data);
 
     }
 
     INVITE_DELETE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INVITE_DELETE ${data.guild_id}`);
+
         this.client.emit(EVENTS.INVITE_DELETE, data);
 
     }
 
     VOICE_STATE_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => VOICE_STATE_UPDATE ${data.guild_id}`);
 
         const oldVoiceState = this.client.guilds.cache.get(data.guild_id)?.voice_states.cache.get(data.user_id) || null;
         let newVoiceState;
@@ -257,6 +297,8 @@ class EventHandler {
 
     MESSAGE_CREATE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_CREATE ${data.guild_id}`);
+
         const message = new Message(this.client, data, data.channel_id, data.guild_id);
 
         this.client.emit(EVENTS.MESSAGE_CREATE, message);
@@ -264,6 +306,8 @@ class EventHandler {
     }
 
     MESSAGE_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_UPDATE ${data.guild_id}`);
 
         const oldMessage = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
@@ -274,6 +318,8 @@ class EventHandler {
 
     MESSAGE_DELETE(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_DELETE ${data.guild_id}`);
+
         const message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
         this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.id);
 
@@ -282,6 +328,8 @@ class EventHandler {
     }
 
     MESSAGE_DELETE_BULK(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_DELETE_BULK ${data.guild_id}`);
 
         let messages = [];
         for (let i = 0; i < data.ids.length; i++) {
@@ -297,6 +345,8 @@ class EventHandler {
     }
 
     INTERACTION_CREATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INTERACTION_CREATE ${data.guild_id}`);
 
         if (!data.guild_id)
             return;

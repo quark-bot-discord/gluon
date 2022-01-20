@@ -62,6 +62,8 @@ class BetterRequestHandler {
             const toHash = actualRequest.method + actualRequest.path(params ? params.map((v, i) => actualRequest.majorParams.includes(i) ? v : null) : []);
             const hash = calculateHash().update(toHash).digest("hex");
 
+            this.client.emit("debug", `ADD ${hash} to request queue`);
+
             this.requestQueue.add(hash, {
                 request: request,
                 params: params,
@@ -155,11 +157,15 @@ class BetterRequestHandler {
 
             this.requestQueue.completed(hash);
 
+            this.client.emit("debug", `REMOVE ${hash} from request queue`);
+
         } else {
             let retryNextIn = Math.ceil(bucket.reset - (new Date().getTime() / 1000));
             if (retryNextIn < 1)
                 retryNextIn = 1;
             this.requestQueue.retryLater(hash, false, retryNextIn);
+
+            this.client.emit("debug", `READD ${hash} to request queue`);
         }
     }
 
