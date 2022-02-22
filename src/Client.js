@@ -27,6 +27,8 @@ class Client extends EventsEmitter {
 
         super();
 
+        this.shards = [];
+
         /**
          * The Discord API base URL.
          * @type {String}
@@ -493,8 +495,6 @@ class Client extends EventsEmitter {
 
         this.request.makeRequest("getGatewayBot")
             .then(gatewayInfo => {
-
-                this.shards = [];
 
                 let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
