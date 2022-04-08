@@ -135,16 +135,16 @@ class WS {
             // Heartbeat ACK
             case 11: {
 
+                this.waitingForHeartbeatACK = false;
+
                 if (this.isInitialHeartbeat == true) {
 
                     this.isInitialHeartbeat = false;
 
                     this.identify();
 
-                } else if (this.resuming == true)
-                    this.resume();
-
-                this.waitingForHeartbeatACK = false;
+                }// else if (this.resuming == true)
+                // this.resume();
 
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Heartbeat acknowledged`);
 
@@ -164,6 +164,9 @@ class WS {
 
     heartbeat() {
 
+        if (this.resuming == true)
+            return;
+
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Sending heartbeat...`);
 
         this.waitingForHeartbeatACK = true;
@@ -172,7 +175,7 @@ class WS {
         // we'll close the websocket if a heartbeat ACK is not received 
         setTimeout(() => {
             if (this.waitingForHeartbeatACK == true)
-                this.ws.close(4000);
+                this.shutDownWebsocket(4000);
         }, 2000);
 
     }
@@ -189,7 +192,7 @@ class WS {
 
         this.resuming = true;
 
-        this.ws.close();
+        this.shutDownWebsocket();
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Shard reconnecting`);
 
@@ -197,11 +200,13 @@ class WS {
 
     resume() {
 
-        this.resuming = false;
+        this.resuming = true;
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => RESUMING`);
 
         this.ws.send(new Resume(this.token, this.sessionId, this.s));
+
+        this.resuming = false;
 
     }
 
@@ -214,7 +219,9 @@ class WS {
     addListeners() {
 
         this.zlib = new ZlibSync.Inflate({
+
             chunkSize: 128 * 1024
+
         });
 
         this.ws.on("open", () => {
@@ -278,6 +285,19 @@ class WS {
             this.client.error(data.stack.toString());
 
         });
+
+    }
+
+    shutDownWebsocket(code = 1000) {
+
+        this.ws.close(code);
+
+        setTimeout(() => {
+
+            if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState))
+                this.ws.terminate();
+
+        }, 5000);
 
     }
 
