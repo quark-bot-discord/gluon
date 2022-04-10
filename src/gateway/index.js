@@ -38,6 +38,7 @@ class WS {
         this.isInitialHeartbeat = sessionId && sequence != null ? false : true;
 
         this.heartbeatSetInterval = null;
+        this.heartbeatInterval = null;
         this.waitingForHeartbeatACK = false;
 
         this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
@@ -53,7 +54,7 @@ class WS {
 
     handleIncoming(data) {
 
-        if (!data) 
+        if (!data)
             return;
 
         if (data.s)
@@ -118,13 +119,12 @@ class WS {
             // Hello
             case 10: {
 
-                this.heartbeat();
+                this.heartbeatInterval = data.d.heartbeat_interval;
 
-                this.heartbeatSetInterval = setInterval((() => {
-
-                    this.heartbeat();
-
-                }), data.d.heartbeat_interval);
+                if (this.resuming != true)
+                    this.heartbeatInit();
+                else
+                    this.resume();
 
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`);
 
@@ -159,6 +159,18 @@ class WS {
     updatePresence(name, type, status, afk, since) {
 
         this.ws.send(new UpdatePresence(name, type, status, afk, since));
+
+    }
+
+    heartbeatInit() {
+
+        this.heartbeat();
+
+        this.heartbeatSetInterval = setInterval((() => {
+
+            this.heartbeat();
+
+        }), this.heartbeatInterval);
 
     }
 

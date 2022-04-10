@@ -48,6 +48,8 @@ class EventHandler {
 
         this.ws.retries = 0;
 
+        this.ws.heartbeatInit();
+
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => RESUMED`);
 
     }
