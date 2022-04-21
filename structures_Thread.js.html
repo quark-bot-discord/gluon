@@ -114,7 +114,7 @@ class Thread extends Channel {
          * The message manager for this channel.
          * @type {ChannelMessageManager}
          */
-        this.messages = existing ? existing.messages : new ChannelMessageManager(client, this);
+        this.messages = existing &amp;&amp; existing.messages &amp;&amp; existing.messages.cache ? existing.messages : new ChannelMessageManager(client, this);
 
         /**
          * The member who created this thread.
