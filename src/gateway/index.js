@@ -217,7 +217,7 @@ class WS {
 
         this.resuming = true;
 
-        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => RESUMING`);
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => RESUMING with token ${this.token}, session id ${this.sessionId} and sequence ${this.s}`);
 
         this.ws.send(new Resume(this.token, this.sessionId, this.s));
 
@@ -250,6 +250,8 @@ class WS {
         this.ws.on("close", data => {
 
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
+
+            clearInterval(this.terminateSocketTimeout);
 
             clearInterval(this.heartbeatSetInterval);
 
@@ -312,7 +314,7 @@ class WS {
 
         this.ws.close(code);
 
-        setTimeout(() => {
+        this.terminateSocketTimeout = setTimeout(() => {
 
             if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState)) {
                 this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
