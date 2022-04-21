@@ -217,6 +217,8 @@ class WS {
 
         this.resuming = true;
 
+        this.waitingForHeartbeatACK = false;
+
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => RESUMING with token ${this.token}, session id ${this.sessionId} and sequence ${this.s}`);
 
         this.ws.send(new Resume(this.token, this.sessionId, this.s));
@@ -254,6 +256,8 @@ class WS {
             clearInterval(this.terminateSocketTimeout);
 
             clearInterval(this.heartbeatSetInterval);
+
+            this.waitingForHeartbeatACK = false;
 
             if (data < 2000)
                 this.resuming = true;
