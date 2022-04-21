@@ -25,7 +25,6 @@ class WS {
 
         this.client = client;
 
-        this.ws = new WebSocket(url);
         this.request = this.client.request;
 
         this.eventHandler = new EventHandler(this.client, this);
@@ -33,9 +32,7 @@ class WS {
         this.sessionId = sessionId;
         this.s = sequence;
 
-        this.resuming = sessionId && sequence != null ? true : false;
-
-        this.isInitialHeartbeat = sessionId && sequence != null ? false : true;
+        this.resuming = sessionId != null && sequence != null ? true : false;
 
         this.heartbeatSetInterval = null;
         this.heartbeatInterval = null;
@@ -46,7 +43,9 @@ class WS {
         this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
         this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
 
-        this.retries = 0;
+        this.ws = new WebSocket(url);
+
+        this.retries = 1;
 
         this.addListeners();
 
@@ -85,7 +84,9 @@ class WS {
             // Heartbeat
             case 1: {
 
-                this.heartbeat();
+                this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Gateway requested heartbeat`);
+
+                this.heartbeat(true);
 
                 break;
 
@@ -93,6 +94,8 @@ class WS {
 
             // Reconnect
             case 7: {
+
+                this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Received reconnect`);
 
                 // reconnect to websocket with session id
                 this.reconnect();
@@ -104,13 +107,13 @@ class WS {
             // Invalid Session
             case 9: {
 
-                this.client.emit("debug", `${this.libName} ${data.d == false ? this.shardCatastrophic : this.shardWarning} @ ${this.time()} => INVALID SESSION`);
+                this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => INVALID SESSION`);
                 this.client.error("INVALID SESSION");
 
                 if (data.d != false)
-                    this.reconnect();
+                    this.resume();
                 else
-                    process.exit(1);
+                    this.identify();
 
                 break;
 
@@ -121,12 +124,13 @@ class WS {
 
                 this.heartbeatInterval = data.d.heartbeat_interval;
 
-                if (this.resuming != true)
-                    this.heartbeatInit();
-                else
-                    this.resume();
-
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`);
+
+                if (this.resuming != true) {
+                    this.heartbeatInit();
+                    this.identify();
+                } else
+                    this.resume();
 
                 break;
 
@@ -136,15 +140,6 @@ class WS {
             case 11: {
 
                 this.waitingForHeartbeatACK = false;
-
-                if (this.isInitialHeartbeat == true) {
-
-                    this.isInitialHeartbeat = false;
-
-                    this.identify();
-
-                }// else if (this.resuming == true)
-                // this.resume();
 
                 this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Heartbeat acknowledged`);
 
@@ -174,21 +169,27 @@ class WS {
 
     }
 
-    heartbeat() {
+    heartbeat(response = false) {
 
-        if (this.resuming == true)
+        if (this.resuming == true && response != true)
             return;
 
         this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Sending heartbeat...`);
 
-        this.waitingForHeartbeatACK = true;
+        if (response != true)
+            this.waitingForHeartbeatACK = true;
 
         this.ws.send(new Heartbeat(this.s));
-        // we'll close the websocket if a heartbeat ACK is not received 
-        setTimeout(() => {
-            if (this.waitingForHeartbeatACK == true)
-                this.shutDownWebsocket(4000);
-        }, 2000);
+        // we'll close the websocket if a heartbeat ACK is not received
+        // unless its us responding to an opcode 1
+        if (response != true)
+            setTimeout(() => {
+                if (this.waitingForHeartbeatACK == true) {
+                    this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Heartbeat ACK not received`);
+                    this.shutDownWebsocket(4000);
+                }
+
+            }, 2000);
 
     }
 
@@ -201,6 +202,8 @@ class WS {
     }
 
     reconnect() {
+
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempting reconnect...`);
 
         this.resuming = true;
 
@@ -230,6 +233,8 @@ class WS {
 
     addListeners() {
 
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Adding websocket listeners`);
+
         this.zlib = new ZlibSync.Inflate({
 
             chunkSize: 128 * 1024
@@ -253,8 +258,10 @@ class WS {
             else
                 process.exit(0);
 
-            if (this.retries < 5)
+            if (this.retries <= 5)
                 setTimeout(() => {
+
+                    this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${this.retries} at re-opening websocket`);
 
                     this.retries++;
 
@@ -262,7 +269,7 @@ class WS {
 
                     this.addListeners();
 
-                }, 1000);
+                }, this.retries * 1000);
             else
                 process.exit(0);
 
@@ -295,6 +302,7 @@ class WS {
         this.ws.on("error", data => {
 
             this.client.error(data.stack.toString());
+            this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ${data.stack.toString()}`);
 
         });
 
@@ -306,8 +314,11 @@ class WS {
 
         setTimeout(() => {
 
-            if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState))
+            if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState)) {
+                this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
                 this.ws.terminate();
+                process.exit(0);
+            }
 
         }, 5000);
 

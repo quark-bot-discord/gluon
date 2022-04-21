@@ -28,7 +28,8 @@ class EventHandler {
 
     READY(data) {
 
-        this.ws.sessionId = data.session_id;
+        if (data.session_id != null)
+            this.ws.sessionId = data.session_id;
 
         this.ws.retries = 0;
 
