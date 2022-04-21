@@ -30,7 +30,7 @@ class TextChannel extends Channel {
          * The message manager for this channel.
          * @type {ChannelMessageManager}
          */
-        this.messages = existing ? existing.messages : new ChannelMessageManager(client, this);
+        this.messages = existing && existing.messages && existing.messages.cache ? existing.messages : new ChannelMessageManager(client, this);
 
         if (nocache == false && this.client.cacheChannels == true)
             this.guild?.channels.cache.set(data.id, this);
