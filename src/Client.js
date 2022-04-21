@@ -586,6 +586,10 @@ class Client extends EventsEmitter {
 
                 this.error(error.stack.toString());
 
+                this.emit("debug", "Get gateway bot request failed, terminating process");
+
+                process.exit(0);
+
             });
 
     }
