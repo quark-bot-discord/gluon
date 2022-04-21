@@ -190,7 +190,7 @@ class WS {
                     this.shutDownWebsocket(4000);
                 }
 
-            }, 5000);
+            }, 10000);
 
     }
 
