@@ -196,7 +196,7 @@ class WS {
 
     identify() {
 
-        this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => IDENTIFY`);
+        this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => IDENTIFY with TOKEN: "${this.token}", SHARD: "${this.shard}" and INTENTS: "${this.intents}"`);
 
         this.ws.send(new Identify(this.token, this.shard, this.intents));
 
