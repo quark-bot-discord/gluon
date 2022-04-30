@@ -114,15 +114,18 @@ class BetterRequestHandler {
             } else if (actualRequest.method != "GET" && actualRequest.method != "DELETE")
                 headers["Content-Type"] = "application/json";
 
-            if (actualRequest.useHeaders)
+            if (actualRequest.useHeaders && actualRequest.useHeaders.length != 0)
                 for (const [key, value] of Object.entries(body))
-                    headers[key] = encodeURIComponent(value);
+                    if (actualRequest.useHeaders.includes(key)) {
+                        headers[key] = encodeURIComponent(value);
+                        delete body[key];
+                    }
 
             /* actually make the request */
-            const res = await fetch(`${this.requestURL}${path}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") && actualRequest.useHeaders != true ? "?" + serialize(body) : ""}`, {
+            const res = await fetch(`${this.requestURL}${path}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") ? "?" + serialize(body) : ""}`, {
                 method: actualRequest.method,
                 headers: headers,
-                body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") && actualRequest.useHeaders != true ? JSON.stringify(body) : undefined),
+                body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
                 compress: true
             });
 

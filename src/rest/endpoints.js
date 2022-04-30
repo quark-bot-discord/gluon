@@ -123,6 +123,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
         method: "PATCH",
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     getGuildBan: {
@@ -151,7 +152,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "PUT",
-        useHeaders: true,
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     deleteRemoveMemberRole: {
@@ -159,7 +160,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
         },
         method: "DELETE",
-        useHeaders: true,
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     getUser: {
