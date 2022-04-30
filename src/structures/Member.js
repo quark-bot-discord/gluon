@@ -115,7 +115,7 @@ class Member {
 
     get originalAvatarHash() {
 
-        return this.avatar ? 
+        return this.avatar ?
             // eslint-disable-next-line quotes
             `${this.avatarIsAnimated ? "a_" : ''}${this.formattedAvatarHash}` :
             null;
@@ -204,6 +204,54 @@ class Member {
 
         }
 
+    }
+
+    async timeoutAdd(timeout_until, { reason }) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        body.communication_disabled_until = timeout_until;
+
+        try {
+
+            await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
+    }
+
+    async timeoutRemove({ reason }) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        body.communication_disabled_until = null;
+
+        try {
+
+            await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
+
+        } catch (error) {
+
+            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
+            throw error;
+
+        }
     }
 
 }
