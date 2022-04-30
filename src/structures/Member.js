@@ -33,6 +33,8 @@ class Member {
 
         this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
 
+        this.timeout_until = data.communication_disabled_until ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0 : null;
+
         this._attributes = 0;
 
         if (data.pending == true)
