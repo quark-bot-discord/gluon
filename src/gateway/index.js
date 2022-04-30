@@ -113,7 +113,9 @@ class WS {
                 if (data.d != false)
                     this.resume();
                 else
-                    this.identify();
+                    setTimeout(() => {
+                        this.identify();
+                    }, (Math.floor(Math.random() * 6) + 1) * 1000);
 
                 break;
 
