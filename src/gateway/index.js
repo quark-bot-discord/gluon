@@ -208,7 +208,7 @@ class WS {
 
         this.resuming = true;
 
-        this.shutDownWebsocket();
+        this.shutDownWebsocket(4000);
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Shard reconnecting`);
 
