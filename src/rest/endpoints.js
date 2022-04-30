@@ -118,6 +118,13 @@ module.exports = {
         method: "GET",
         majorParams: [0]
     },
+    patchGuildMember: {
+        path: ([guild_id, user_id]) => {
+            return `/guilds/${guild_id}/members/${user_id}`;
+        },
+        method: "PATCH",
+        majorParams: [0]
+    },
     getGuildBan: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/bans/${user_id}`;
