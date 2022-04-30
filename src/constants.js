@@ -139,7 +139,11 @@ module.exports.PERMISSIONS = {
     REQUEST_TO_SPEAK:           (1n << 32n),
     MANAGE_THREADS:             (1n << 34n),
     USE_PUBLIC_THREADS:         (1n << 35n),
-    USE_PRIVATE_THREADS:        (1n << 36n)
+    USE_PRIVATE_THREADS:        (1n << 36n),
+    USE_EXTERNAL_STICKERS:      (1n << 37n),
+    SEND_MESSAGES_IN_THREADS:   (1n << 38n),
+    USE_EMBEDDED_ACTIVITIES:    (1n << 39n),
+    MODERATE_MEMBERS:           (1n << 40n)
 };
 module.exports.STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
 module.exports.STICKER_FORMATS_ENUM = {
