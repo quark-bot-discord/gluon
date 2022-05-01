@@ -210,7 +210,7 @@ class WS {
 
         this.resuming = true;
 
-        this.shutDownWebsocket(1003);
+        this.shutDownWebsocket(4901);
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Shard reconnecting`);
 
@@ -262,7 +262,7 @@ class WS {
 
             this.waitingForHeartbeatACK = false;
 
-            if (data < 2000)
+            if (data < 2000 || data == 4901)
                 this.resuming = true;
             else
                 process.exit(0);
