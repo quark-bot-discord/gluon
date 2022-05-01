@@ -38,6 +38,8 @@ class GuildMemberManager {
 
         body.query = query;
 
+        body.limit = 1000;
+
         try {
 
             const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
