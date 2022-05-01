@@ -210,7 +210,7 @@ class WS {
 
         this.resuming = true;
 
-        this.shutDownWebsocket(4000);
+        this.shutDownWebsocket(1003);
 
         this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Shard reconnecting`);
 
