@@ -326,7 +326,9 @@ class WS {
             if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState)) {
                 this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
                 this.ws.terminate();
-                process.exit(0);
+                setTimeout(() => {
+                    process.exit(0);
+                }, 1000);
             }
 
         }, 5000);
