@@ -5,6 +5,7 @@ const { PERMISSIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
+const { inspect } = require("util");
 
 /**
  * A message belonging to a channel within a guild.
@@ -54,7 +55,7 @@ class Message {
              * @type {BigInt?}
              */
             this.channel_id = BigInt(channel_id);
-        this.client.emit("debug", `MESSAGE CHANNEL DEBUG: TYPE: ${data.type}, CHANNEL: ${this.channel?.id}, CHANNEL: ${this.channel?.toString()} MESSAGES: ${this.channel?.messages?.toString()}, GUILD: ${this.guild?.id}`);
+        this.client.emit("debug", `MESSAGE CHANNEL DEBUG: TYPE: ${data.type}, CHANNEL: ${this.channel?.id}, CHANNEL: ${inspect(this.channel)} MESSAGES: ${inspect(this.channel?.messages)}, GUILD: ${this.guild?.id}`);
         const existing = this.channel?.messages.cache.get(data.id) || null;
 
         /**
