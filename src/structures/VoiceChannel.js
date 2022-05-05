@@ -7,6 +7,14 @@ class VoiceChannel extends Channel {
 
         super(client, data, guild_id);
 
+        const existing = client.guilds.cache.get(guild_id)?.channels.cache.get(data.id) || null;
+
+        /**
+         * The message manager for this channel.
+         * @type {ChannelMessageManager}
+         */
+        this.messages = existing && existing.messages && existing.messages.cache ? existing.messages : new ChannelMessageManager(client, this);
+
         if (data.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)
             this.stage = true;
 
