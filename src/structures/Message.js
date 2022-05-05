@@ -56,7 +56,7 @@ class Message {
              */
             this.channel_id = BigInt(channel_id);
         this.client.emit("debug", `MESSAGE CHANNEL DEBUG: MESSAGE TYPE: ${data.type}, CHANNEL TYPE: ${this.channel.type}`);
-        const existing = this.channel?.messages?.cache.get(data.id) || null;
+        const existing = this.channel?.messages.cache.get(data.id) || null;
 
         /**
          * The id of the message.
