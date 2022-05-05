@@ -20,6 +20,12 @@ function cacheChannel(client, data, guild_id, nocache = false) {
 
         }
 
+        default: {
+
+            return new TextChannel(client, data, guild_id, nocache);
+
+        }
+
     }
 
 }
