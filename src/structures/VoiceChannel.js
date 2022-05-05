@@ -1,4 +1,5 @@
 const { CHANNEL_TYPES } = require("../constants");
+const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const Channel = require("./Channel");
 
 class VoiceChannel extends Channel {
