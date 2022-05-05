@@ -142,8 +142,8 @@ class Message {
              * @type {BigInt?}
              */
             this.channel_id = BigInt(channel_id);
-        this.client.emit("debug", `MESSAGE CHANNEL DEBUG: TYPE: ${data.type}, CHANNEL: ${this.channel?.id}, CHANNEL: ${inspect(this.channel)}, GUILD: ${this.guild?.id}`);
-        const existing = this.channel?.messages.cache.get(data.id) || null;
+        this.client.emit("debug", `MESSAGE CHANNEL DEBUG: MESSAGE TYPE: ${data.type}, CHANNEL TYPE: ${this.channel.type}`);
+        const existing = this.channel?.messages?.cache.get(data.id) || null;
 
         /**
          * The id of the message.
