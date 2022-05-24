@@ -26,6 +26,7 @@ const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 const checkPermission = require("./src/util/checkPermission");
 const bundleUser = require("./src/util/bundleUser");
 const hexToInt = require("./src/util/hexToInt");
+const verifyMessageLink = require("./src/util/verifyMessageLink");
 
 module.exports = {
     Client,
@@ -57,5 +58,6 @@ module.exports = {
     INTENTS,
     VERSION: require("./package.json").version,
     bundleUser,
-    hexToInt
+    hexToInt,
+    verifyMessageLink
 };
