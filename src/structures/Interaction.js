@@ -79,7 +79,7 @@ class Interaction {
      * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message. 
      * @returns {Promise<Interaction>}
      */
-    async reply(content, { embed, _embed, _embeds, components, quiet } = {}) {
+    async reply(content, { files, embed, _embed, _embeds, components, quiet } = {}) {
 
         const body = {};
 
@@ -88,6 +88,8 @@ class Interaction {
 
         if (content)
             body.data.content = content;
+        if (files)
+            body.files = files;
         if (embed)
             body.data.embeds = [embed.toJSON()];
         else if (_embed)
