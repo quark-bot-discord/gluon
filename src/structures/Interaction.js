@@ -121,12 +121,14 @@ class Interaction {
      * @param {Object?} options The new interaction response options.
      * @returns {Promise<Interaction>}
      */
-    async edit(content, { embed, _embed, _embeds, components } = {}) {
+    async edit(content, { files, embed, _embed, _embeds, components } = {}) {
 
         const body = {};
 
         if (content)
             body.content = content;
+        if (files)
+            body.files = files;
         if (embed)
             body.embeds = [embed.toJSON()];
         else if (_embed)
