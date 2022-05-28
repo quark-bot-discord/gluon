@@ -53,7 +53,7 @@ module.exports = {
     VoiceChannel,
     VoiceState,
     getTimestampFromSnowflake: getTimestamp,
-    checkPermission: checkPermission,
+    checkPermission,
     PERMISSIONS,
     INTENTS,
     VERSION: require("./package.json").version,
