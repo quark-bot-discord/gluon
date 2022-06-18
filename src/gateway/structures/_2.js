@@ -12,9 +12,9 @@ class Identify {
             d: {
                 token,
                 properties: {
-                    $os: "linux",
-                    $browser: `${NAME} (${require("../../../package.json").version})`,
-                    $device: `${NAME} (${require("../../../package.json").version})`
+                    os: "linux",
+                    browser: `${NAME} (${require("../../../package.json").version})`,
+                    device: `${NAME} (${require("../../../package.json").version})`
                 },
                 large_threshold: 250,
                 shard,
