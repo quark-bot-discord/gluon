@@ -1,9 +1,9 @@
 const fetch = require("node-fetch");
 const FormData = require("form-data");
 const { createReadStream } = require("fs");
-const RequestQueue = require("request-queue");
 const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
+const FastQ = require("fastq");
 
 class BetterRequestHandler {
 
@@ -14,7 +14,7 @@ class BetterRequestHandler {
         this.baseURL = baseURL;
         this.version = version;
         this.requestURL = `${this.baseURL}/v${this.version}`;
-        this.requestQueue = new RequestQueue();
+
         if (!this.client.redis)
             this.localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
@@ -26,13 +26,13 @@ class BetterRequestHandler {
 
         this.endpoints = require("./endpoints");
 
-        this.requestQueue.on("next", (hash, data) => {
-            try {
-                this.http(hash, data.request, data.params, data.body, data.resolve, data.reject);
-            } catch (_) {
+        this.queueWorker = (data) => {
+            return new Promise(async (resolve, reject) => {
+                this.http(data.hash, data.request, data.params, data.body, resolve, reject);
+            });
+        };
 
-            }
-        });
+        this.queues = {};
 
     }
 
@@ -54,8 +54,8 @@ class BetterRequestHandler {
 
     }
 
-    async makeRequest(request, params, body, resolve, reject) {
-        return new Promise(async (_resolve, _reject) => {
+    async makeRequest(request, params, body) {
+        return new Promise(async (resolve, reject) => {
 
             const actualRequest = this.endpoints[request];
 
@@ -64,13 +64,26 @@ class BetterRequestHandler {
 
             this.client.emit("debug", `ADD ${hash} to request queue`);
 
-            this.requestQueue.add(hash, {
-                request: request,
-                params: params,
-                body: body,
-                resolve: resolve ? resolve : _resolve,
-                reject: reject ? reject : _reject
-            });
+            if (!this.queues[hash])
+                this.queues[hash] = FastQ.promise(this.queueWorker, 1);
+
+            let retries = 5;
+
+            while (retries--)
+                try {
+                    const result = await this.queues[hash].push({
+                        hash: hash,
+                        request: request,
+                        params: params,
+                        body: body
+                    });
+                    if (this.queues[hash].idle())
+                        delete this.queues[hash];
+                    return resolve(result);
+                } catch (error) {
+                    if (typeof error == "object")
+                        return reject(error);
+                }
 
         });
     }
@@ -158,15 +171,16 @@ class BetterRequestHandler {
 
             this.client.emit("requestCompleted", { status: res.status, method: actualRequest.method, endpoint: actualRequest.path(params), hash: hash });
 
-            this.requestQueue.completed(hash);
-
             this.client.emit("debug", `REMOVE ${hash} from request queue`);
 
         } else {
             let retryNextIn = Math.ceil(bucket.reset - (new Date().getTime() / 1000));
             if (retryNextIn < 1)
                 retryNextIn = 1;
-            this.requestQueue.retryLater(hash, false, retryNextIn);
+
+            setTimeout(() => {
+                reject(retryNextIn);
+            }, 1500);
 
             this.client.emit("debug", `READD ${hash} to request queue`);
         }
