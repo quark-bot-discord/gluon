@@ -85,6 +85,8 @@ class BetterRequestHandler {
                         return reject(error);
                 }
 
+            return reject();
+
         });
     }
 
