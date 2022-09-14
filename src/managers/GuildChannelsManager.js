@@ -26,7 +26,8 @@ class GuildChannelsManager {
             const data = await this.client.request.makeRequest("getChannel", [channel_id]);
             switch (data.type) {
                 case CHANNEL_TYPES.GUILD_TEXT:
-                case CHANNEL_TYPES.GUILD_NEWS: {
+                case CHANNEL_TYPES.GUILD_NEWS:
+                case CHANNEL_TYPES.GUILD_FORUM: {
                     return new TextChannel(this.client, data, this.guild.id.toString());
                 }
                 case CHANNEL_TYPES.GUILD_VOICE:

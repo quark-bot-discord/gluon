@@ -7,7 +7,8 @@ function cacheChannel(client, data, guild_id, nocache = false) {
     switch (data.type) {
 
         case CHANNEL_TYPES.GUILD_TEXT:
-        case CHANNEL_TYPES.GUILD_NEWS: {
+        case CHANNEL_TYPES.GUILD_NEWS:
+        case CHANNEL_TYPES.GUILD_FORUM: {
 
             return new TextChannel(client, data, guild_id, nocache);
 
