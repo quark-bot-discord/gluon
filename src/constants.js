@@ -1,6 +1,6 @@
 module.exports.BASE_URL = ("https://discord.com/api");
 module.exports.CDN_BASE_URL = ("https://cdn.discordapp.com");
-module.exports.VERSION = (9);
+module.exports.VERSION = (10);
 module.exports.NAME = ("gluon");
 module.exports.INTENTS = {
     GUILDS:                     (1 << 0),
@@ -61,7 +61,9 @@ module.exports.CHANNEL_TYPES = {
     GUILD_NEWS_THREAD:          (10),
     GUILD_PUBLIC_THREAD:        (11),
     GUILD_PRIVATE_THREAD:       (12),
-    GUILD_STAGE_VOICE:          (13)
+    GUILD_STAGE_VOICE:          (13),
+    GUILD_DIRECTORY:            (14),
+    GUILD_FORUM:                (15)
 };
 module.exports.USER_FLAGS = {
     DISCORD_EMPLOYEE:           (1 << 0),
