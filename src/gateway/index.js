@@ -9,6 +9,7 @@ const Resume = require("./structures/_6");
 const EventHandler = require("./eventHandler");
 const chalk = require("chalk");
 const { NAME } = require("../constants");
+const generateWebsocketURL = require("../util/generateWebsocketURL");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -44,6 +45,8 @@ class WS {
         this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
 
         this.ws = new WebSocket(url);
+
+        this.resumeGatewayUrl = null;
 
         this.retries = 1;
 
@@ -274,7 +277,7 @@ class WS {
 
                     this.retries++;
 
-                    this.ws = new WebSocket(this.url);
+                    this.ws = new WebSocket(generateWebsocketURL(this.resumeGatewayUrl));
 
                     this.addListeners();
 
