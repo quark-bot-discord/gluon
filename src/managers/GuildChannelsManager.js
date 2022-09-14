@@ -39,6 +39,9 @@ class GuildChannelsManager {
                 case CHANNEL_TYPES.GUILD_PRIVATE_THREAD: {
                     return new Thread(this.client, data, this.guild.id.toString());
                 }
+                default: {
+                    return new TextChannel(this.client, data, this.guild.id.toString());
+                }
             }
 
         } catch (error) {
