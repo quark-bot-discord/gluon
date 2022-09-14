@@ -12,6 +12,7 @@ const Message = require("./structures/Message");
 const bundleGuild = require("./util/bundleGuild");
 const Guild = require("./structures/Guild");
 const User = require("./structures/User");
+const generateWebsocketURL = require("./util/generateWebsocketURL");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -507,8 +508,8 @@ class Client extends EventsEmitter {
                 for (let i = 0; i < this.shardIds.length && remainingSessionStarts != 0; i++, remainingSessionStarts--)
                     setTimeout(() => {
 
-                        // for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
-                        this.shards.push(new WS(this, `${gatewayInfo.url}?v=${VERSION}&encoding=etf&compress=zlib-stream`, [this.shardIds[i], this.totalShards], this.intents, this._sessionData ? this._sessionData[i].sessionId : undefined, this._sessionData ? this._sessionData[i].sequence : undefined));
+                        for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
+                            this.shards.push(new WS(this, generateWebsocketURL(this._sessionData ? this._sessionData.resumeGatewayUrl : gatewayInfo.url), [this.shardIds[i], this.totalShards], this.intents, this._sessionData ? this._sessionData[i].sessionId : undefined, this._sessionData ? this._sessionData[i].sequence : undefined));
 
                     }, 6000 * i);
 

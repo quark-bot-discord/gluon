@@ -1,6 +1,5 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-const chalk = require("chalk");
 const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
 const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
@@ -29,6 +28,8 @@ class EventHandler {
     READY(data) {
 
         this.ws.sessionId = data.session_id;
+
+        this.ws.resumeGatewayUrl = data.resume_gateway_url;
 
         this.ws.retries = 0;
 
