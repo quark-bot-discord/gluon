@@ -3,7 +3,6 @@ function bundleRole(role) {
     data.id = role.id.toString();
     data.position = role.position;
     data.permissions = role.permissions.toString();
-    data.defaultMuteRole = role.defaultMuteRole;
     return data;
 }
 

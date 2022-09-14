@@ -10,9 +10,6 @@ class Role {
 
         this.permissions = BigInt(data.permissions);
 
-        if (data.name == "Muted" || data.defaultMuteRole == true)
-            this.defaultMuteRole = true;
-
         if (nocache == false && this.client.cacheRoles == true)
             this.client.guilds.cache.get(guild_id)?.roles.cache.set(data.id, this);
 
