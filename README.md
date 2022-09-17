@@ -8,7 +8,7 @@
 
 Gluon is a library made specifically for Quark, so only has options to cache anything that Quark needs to cache. Many things are missing from this library. There are also options to further refine caching, in order to minimise memory usage. Some structures are also stored in "weird" ways in order to optimise memory usage, such as the use of bitfields in order to store groups of binary fields or ids being stored as BigInts rather than strings.
 
-## Bugs
+### Bugs
 
 Gluon has been used in Quark for well over a year, and most bugs have been ironed out over this time.
 
