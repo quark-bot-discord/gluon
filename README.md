@@ -2,6 +2,8 @@
 
 ## Simple Discord API Library for Quark
 
+https://quark-bot-discord.github.io/gluon/
+
 # Info
 
 ### Purpose
