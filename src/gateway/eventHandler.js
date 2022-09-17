@@ -205,6 +205,8 @@ class EventHandler {
 
         const member = new Member(this.client, data, data.user.id, data.guild_id, data.user);
 
+        member.guild.member_count += 1;
+
         this.client.emit(EVENTS.GUILD_MEMBER_ADD, member);
 
     }
@@ -213,16 +215,21 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_REMOVE ${data.guild_id}`);
 
-        let member = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
+        const guild = this.client.guilds.cache.get(data.guild_id) || null;
+
+        let member = guild?.members.cache.get(data.user.id);
         if (member)
-            this.client.guilds.cache.get(data.guild_id)?.members.cache.delete(data.user.id);
+            guild?.members.cache.delete(data.user.id);
         else {
             member = new User(this.client, data.user, true);
             member.user = member;
-            member.guild = this.client.guilds.cache.get(data.guild_id) || null;
+            member.guild = guild || null;
             if (!member.guild)
                 member.guild_id = BigInt(data.guild_id);
         }
+
+        if (guild)
+            guild.member_count -= 1;
 
         this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
