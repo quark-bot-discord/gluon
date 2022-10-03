@@ -228,8 +228,8 @@ class EventHandler {
                 member.guild_id = BigInt(data.guild_id);
         }
 
-        if (guild)
-            guild.member_count -= 1;
+        if (member.guild)
+            member.guild.member_count -= 1;
 
         this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
 
