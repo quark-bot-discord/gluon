@@ -233,7 +233,7 @@ class Client extends EventsEmitter {
             body.content = content;
 
         if (embed)
-            body.embed = embed.toJSON();
+            body.embeds = [embed.toJSON()];
         else if (embeds && embeds.length != 0)
             body.embeds = embeds.map(e => e.toJSON());
         if (components)
@@ -271,7 +271,7 @@ class Client extends EventsEmitter {
         if (content)
             body.content = content;
         if (embed)
-            body.embed = embed.toJSON();
+            body.embeds = [embed.toJSON()];
         if (components)
             body.components = components.toJSON();
 

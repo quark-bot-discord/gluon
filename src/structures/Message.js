@@ -205,7 +205,7 @@ class Message {
         if (content)
             body.content = content;
         if (embed)
-            body.embed = embed.toJSON();
+            body.embeds = [embed.toJSON()];
         if (components)
             body.components = components.toJSON();
         if (files)
@@ -248,7 +248,7 @@ class Message {
         if (content)
             body.content = content;
         if (embed)
-            body.embed = embed.toJSON();
+            body.embeds = [embed.toJSON()];
         if (components)
             body.components = components.toJSON();
 

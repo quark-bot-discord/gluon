@@ -59,7 +59,7 @@ class TextChannel extends Channel {
             body.content = content;
 
         if (embed)
-            body.embed = embed.toJSON();
+            body.embeds = [embed.toJSON()];
         else if (embeds && embeds.length != 0)
             body.embeds = embeds.map(e => e.toJSON());
         if (components)
