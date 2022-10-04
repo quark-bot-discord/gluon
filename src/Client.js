@@ -509,7 +509,7 @@ class Client extends EventsEmitter {
                     setTimeout(() => {
 
                         for (let n = 0; n < gatewayInfo.session_start_limit.max_concurrency; n++)
-                            this.shards.push(new WS(this, generateWebsocketURL(this._sessionData ? this._sessionData.resumeGatewayUrl : gatewayInfo.url), [this.shardIds[i], this.totalShards], this.intents, this._sessionData ? this._sessionData[i].sessionId : undefined, this._sessionData ? this._sessionData[i].sequence : undefined));
+                            this.shards.push(new WS(this, generateWebsocketURL(this._sessionData ? this._sessionData[i].resumeGatewayUrl : gatewayInfo.url), [this.shardIds[i], this.totalShards], this.intents, this._sessionData ? this._sessionData[i].sessionId : undefined, this._sessionData ? this._sessionData[i].sequence : undefined));
 
                     }, 6000 * i);
 
