@@ -15,7 +15,7 @@ const generateWebsocketURL = require("../util/generateWebsocketURL");
 
 class WS {
 
-    constructor(client, url, shard, intents, sessionId = null, sequence = null) {
+    constructor(client, url, shard, intents, sessionId = null, sequence = null, resumeGatewayUrl = null) {
 
         this.token = client.token;
         this.shard = shard;
@@ -46,7 +46,7 @@ class WS {
 
         this.ws = new WebSocket(url);
 
-        this.resumeGatewayUrl = null;
+        this.resumeGatewayUrl = resumeGatewayUrl;
 
         this.retries = 1;
 
