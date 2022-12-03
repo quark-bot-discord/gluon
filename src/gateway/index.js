@@ -320,7 +320,12 @@ class WS {
 
     }
 
-    shutDownWebsocket(code = 1000) {
+    async shutDownWebsocket(code = 1000) {
+
+        while(!this.client.checkSafeToRestart()) {
+            this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Retrying reconnect...`);
+            await this.client.wait(1000);
+        }
 
         this.ws.close(code);
 
