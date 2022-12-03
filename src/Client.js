@@ -595,6 +595,12 @@ class Client extends EventsEmitter {
 
     }
 
+    wait(time) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => resolve(), time);
+        });
+    }
+
 }
 
 module.exports = Client;
