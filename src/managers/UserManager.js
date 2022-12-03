@@ -31,7 +31,7 @@ class UserManager {
 
     }
 
-    sweepUsers() {
+    sweepUsers(currentTime) {
 
         if (this.cache.size == 0)
             return;

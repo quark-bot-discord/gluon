@@ -516,9 +516,10 @@ class Client extends EventsEmitter {
                 if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true)
                     setInterval(() => {
 
+                        const currentTime = Math.floor(new Date().getTime() / 1000);
+
                         if (this.cacheMessages == true || this.cacheMembers == true) {
 
-                            const currentTime = Math.floor(new Date().getTime() / 1000);
 
                             this.guilds.cache.forEach(guild => {
 
@@ -574,7 +575,7 @@ class Client extends EventsEmitter {
 
                             this.emit("debug", "Sweeping users...");
 
-                            const nowCached = this.users.sweepUsers();
+                            const nowCached = this.users.sweepUsers(currentTime);
 
                             this.emit("debug", `New user cache size is ${nowCached || 0}...`);
 
