@@ -322,9 +322,11 @@ class WS {
 
     async shutDownWebsocket(code = 1000) {
 
-        while(!this.client.checkSafeToRestart()) {
-            this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Retrying reconnect...`);
-            await this.client.wait(1000);
+        for (const i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+            if (!this.client.checkSafeToRestart()) {
+                this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Retrying reconnect...`);
+                await this.client.wait(1000);
+            }
         }
 
         this.ws.close(code);
@@ -335,7 +337,10 @@ class WS {
                 this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
                 this.ws.terminate();
                 setTimeout(() => {
-                    process.exit(0);
+                    if (this.client.checkSafeToRestart())
+                        process.exit(0);
+                    else
+                        process.exit(1);
                 }, 1000);
             }
 
