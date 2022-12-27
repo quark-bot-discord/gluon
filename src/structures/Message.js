@@ -183,8 +183,11 @@ class Message {
         else if (existing && existing.sticker_items != undefined)
             this.sticker_items = existing.sticker_items;
 
-        if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true)
+        if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true) {
             this.channel?.messages.cache.set(data.id, this);
+            if (!this.channel)
+                this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
+        }
 
     }
 
