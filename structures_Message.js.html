@@ -270,8 +270,11 @@ class Message {
         else if (existing &amp;&amp; existing.sticker_items != undefined)
             this.sticker_items = existing.sticker_items;
 
-        if (this.author &amp;&amp; this.author.bot != true &amp;&amp; !data.webhook_id &amp;&amp; nocache == false &amp;&amp; this.client.cacheMessages == true)
+        if (this.author &amp;&amp; this.author.bot != true &amp;&amp; !data.webhook_id &amp;&amp; nocache == false &amp;&amp; this.client.cacheMessages == true) {
             this.channel?.messages.cache.set(data.id, this);
+            if (!this.channel)
+                this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
+        }
 
     }
 
