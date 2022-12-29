@@ -578,6 +578,8 @@ class Client extends EventsEmitter {
 
     checkSafeToRestart() {
 
+        this.emit("debug", `GUILDS REMAINING ${this.sweepProgress.guildsRemaining}, SWEEPING USERS ${this.sweepProgress.sweepingUsers}`);
+
         if (this.sweepProgress.guildsRemaining == 0 &amp;&amp; this.sweepProgress.sweepingUsers == false)
             return true;
         else
