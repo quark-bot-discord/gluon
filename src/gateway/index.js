@@ -322,12 +322,14 @@ class WS {
 
     async shutDownWebsocket(code = 1000) {
 
-        for (const i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+        for (const i of [0, 1, 2, 3, 4, 5]) {
             if (!this.client.checkSafeToRestart()) {
                 this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Retrying reconnect...`);
                 await this.client.wait(1000);
             }
         }
+
+        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Closing websocket...`);
 
         this.ws.close(code);
 
