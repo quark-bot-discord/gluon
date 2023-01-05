@@ -81,20 +81,15 @@ class ChannelMessageManager {
         if (this.cache.size == 0)
             return;
 
-        let counter = this.cache.size;
+        const currentCacheSize = this.cache.size;
+        const currentCacheKeys = this.cache.keys();
+        const currentCacheValues = this.cache.values();
 
-        const newCache = new Map();
-
-        this.cache.forEach((message, id) => {
-
-            if (message.timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) > currentTime && (cacheCount != 0 ? counter <= cacheCount : true))
-                newCache.set(id, message);
-
-            counter--;
-
-        });
-
-        this.cache = newCache;
+        for (let i = 0, cacheSize = currentCacheSize; i < currentCacheSize; i++)
+            if (currentCacheValues[i].timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
+                this.cache.delete(currentCacheKeys[i]);
+                cacheSize--;
+            }
 
         return this.cache.size;
 

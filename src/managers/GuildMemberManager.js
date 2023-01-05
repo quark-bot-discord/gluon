@@ -31,7 +31,7 @@ class GuildMemberManager {
         }
 
     }
-    
+
     async search(query) {
 
         const body = {};
@@ -49,7 +49,7 @@ class GuildMemberManager {
 
                 for (let i = 0; i < data.length; i++)
                     members.push(new Member(this.client, data[i], data[i].user.id, this.guild.id.toString(), data[i].user));
-                
+
                 return members;
 
             } else
@@ -69,20 +69,11 @@ class GuildMemberManager {
         if (this.cache.size == 0)
             return;
 
-        let counter = this.cache.size;
+        const currentCacheSize = this.cache.size;
+        const currentCacheKeys = this.cache.keys();
 
-        const newCache = new Map();
-
-        this.cache.forEach((member, id) => {
-
-            if (counter <= cacheCount)
-                newCache.set(id, member);
-
-            counter--;
-
-        });
-
-        this.cache = newCache;
+        for (let i = 0, cacheSize = currentCacheSize; cacheCount < cacheSize; i++, cacheSize--)
+            this.cache.delete(currentCacheKeys[i]);
 
         return this.cache.size;
 

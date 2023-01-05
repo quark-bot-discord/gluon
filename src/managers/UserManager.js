@@ -36,16 +36,13 @@ class UserManager {
         if (this.cache.size == 0)
             return;
 
-        const newCache = new Map();
+        const currentCacheSize = this.cache.size;
+        const currentCacheKeys = this.cache.keys();
+        const currentCacheValues = this.cache.values();
 
-        this.cache.forEach((user, id) => {
-
-            if (user.cached + DEFAULT_USER_EXPIRY_SECONDS > currentTime)
-                newCache.set(id, user);
-
-        });
-
-        this.cache = newCache;
+        for (let i = 0; i < currentCacheSize; i++)
+            if (currentCacheValues[i].cached + DEFAULT_USER_EXPIRY_SECONDS < currentTime)
+                this.cache.delete(currentCacheKeys[i]);
 
         return this.cache.size;
 
