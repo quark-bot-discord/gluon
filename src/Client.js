@@ -138,11 +138,6 @@ class Client extends EventsEmitter {
         this.increasedCache = new Map();
         this.increaseCacheBy = 9;
 
-        this.sweepProgress = {
-            guildsRemaining: 0,
-            sweepingUsers: false
-        };
-
     }
 
     bundleCache() {
@@ -489,17 +484,6 @@ class Client extends EventsEmitter {
 
     }
 
-    checkSafeToRestart() {
-
-        this.emit("debug", `GUILDS REMAINING ${this.sweepProgress.guildsRemaining}, SWEEPING USERS ${this.sweepProgress.sweepingUsers}`);
-
-        if (this.sweepProgress.guildsRemaining == 0 && this.sweepProgress.sweepingUsers == false)
-            return true;
-        else
-            return false;
-
-    }
-
     /**
      * Initiates the login sequence
      * @param {String} token The authorization token
@@ -536,11 +520,6 @@ class Client extends EventsEmitter {
 
                         if (this.cacheMessages == true || this.cacheMembers == true) {
 
-                            if (this.cacheMessages == true && this.cacheMembers == true)
-                                this.sweepProgress.guildsRemaining = this.guilds.cache.size * 2;
-                            else
-                                this.sweepProgress.guildsRemaining = this.guilds.cache.size;
-
                             this.guilds.cache.forEach(guild => {
 
                                 if (this.cacheMessages == true) {
@@ -553,8 +532,6 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
-                                    let channelsRemaining = guild.channels.cache.size;
-
                                     guild.channels.cache.forEach(channel => {
 
                                         if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
@@ -566,9 +543,6 @@ class Client extends EventsEmitter {
                                             this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
 
                                         }
-
-                                        if (--channelsRemaining == 0)
-                                            this.sweepProgress.guildsRemaining--;
 
                                     });
 
@@ -590,8 +564,6 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `New cache size of ${nowCached || 0} for GUILD ${guild.id}...`);
 
-                                    this.sweepProgress.guildsRemaining--;
-
                                 }
 
                             });
@@ -600,15 +572,11 @@ class Client extends EventsEmitter {
 
                         if (this.cacheUsers == true) {
 
-                            this.sweepProgress.sweepingUsers = true;
-
                             this.emit("debug", "Sweeping users...");
 
                             const nowCached = this.users.sweepUsers(currentTime);
 
                             this.emit("debug", `New user cache size is ${nowCached || 0}...`);
-
-                            this.sweepProgress.sweepingUsers = false;
 
                         }
 
