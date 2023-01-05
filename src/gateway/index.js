@@ -268,7 +268,7 @@ class WS {
             if (data < 2000 || data == 4901)
                 this.resuming = true;
             else
-                process.exit(0);
+                process.exit(1);
 
             if (this.retries <= 5)
                 setTimeout(() => {
@@ -283,7 +283,7 @@ class WS {
 
                 }, this.retries * 1000);
             else
-                process.exit(0);
+                process.exit(1);
 
         });
 
