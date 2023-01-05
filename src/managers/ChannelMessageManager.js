@@ -86,10 +86,11 @@ class ChannelMessageManager {
         const currentCacheValues = this.cache.values();
 
         for (let i = 0, cacheSize = currentCacheSize; i < currentCacheSize; i++)
-            if (currentCacheValues[i].timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
-                this.cache.delete(currentCacheKeys[i]);
-                cacheSize--;
-            }
+            if (currentCacheValues[i])
+                if (currentCacheValues[i].timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
+                    this.cache.delete(currentCacheKeys[i]);
+                    cacheSize--;
+                }
 
         return this.cache.size;
 
