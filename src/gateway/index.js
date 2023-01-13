@@ -10,6 +10,7 @@ const EventHandler = require("./eventHandler");
 const chalk = require("chalk");
 const { NAME } = require("../constants");
 const generateWebsocketURL = require("../util/generateWebsocketURL");
+const { OPEN } = require("ws");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -76,11 +77,14 @@ class WS {
                 } catch (error) {
 
                     this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ERROR at ${data.t}: ${error}`);
-                    this.client.error(error.stack.toString());
+
+                    console.log(error);
+
+                } finally {
+
+                    break;
 
                 }
-
-                break;
 
             }
 
@@ -111,7 +115,6 @@ class WS {
             case 9: {
 
                 this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => INVALID SESSION`);
-                this.client.error("INVALID SESSION");
 
                 if (data.d != false)
                     this.resume();
@@ -157,6 +160,9 @@ class WS {
     }
 
     updatePresence(name, type, status, afk, since) {
+
+        if (this.ws.readyState != OPEN)
+            return;
 
         this.ws.send(new UpdatePresence(name, type, status, afk, since));
 
@@ -298,10 +304,8 @@ class WS {
             if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xFFFF) {
 
                 this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-                if (this.zlib.err) {
-                    this.client.error(this.zlib.msg);
-                    return;
-                }
+                if (this.zlib.err)
+                    throw this.zlib.msg;
 
                 data = Buffer.from(this.zlib.result);
                 return this.handleIncoming(erlpack.unpack(data));
@@ -313,8 +317,9 @@ class WS {
 
         this.ws.on("error", data => {
 
-            this.client.error(data.stack.toString());
-            this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ${data.stack.toString()}`);
+            this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ${data?.stack?.toString()}`);
+
+            throw data;
 
         });
 
