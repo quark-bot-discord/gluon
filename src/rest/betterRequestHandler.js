@@ -87,8 +87,9 @@ class BetterRequestHandler {
                         delete this.queues[hash];
                     return resolve(result);
                 } catch (error) {
-                    if (typeof error == "object")
-                        return reject(error);
+
+                    return reject(error);
+
                 }
 
             return reject();
