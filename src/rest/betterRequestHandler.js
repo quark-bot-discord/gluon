@@ -15,8 +15,7 @@ class BetterRequestHandler {
         this.version = version;
         this.requestURL = `${this.baseURL}/v${this.version}`;
 
-        if (!this.client.redis)
-            this.localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
+        this.localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
         this.token = token;
         this.authorization = `Bot ${this.token}`;
@@ -54,9 +53,20 @@ class BetterRequestHandler {
         else if (expireFromCache > 2592000)
             expireFromCache = 2592000;
 
-        this.client.redis ?
-            await this.client.redis.set(`gluon.paths.${hash}`, JSON.stringify(bucket), "EX", expireFromCache)
-            : this.localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
+        try {
+
+            if (this.client.redis)
+                await this.client.redis.set(`gluon.paths.${hash}`, JSON.stringify(bucket), "EX", expireFromCache);
+
+            this.localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
+
+        } catch (error) {
+
+            this.localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
+
+            throw error;
+
+        }
 
     }
 
@@ -104,9 +114,23 @@ class BetterRequestHandler {
         const path = actualRequest.path(params);
 
         let bucket;
-        if (this.client.redis)
-            bucket = JSON.parse(await this.client.redis.get(`gluon.paths.${hash}`) || "{}");
-        else
+        if (this.client.redis) {
+
+            try {
+
+                let rawBucket = await this.client.redis.get(`gluon.paths.${hash}`) || "{}";
+
+                bucket = JSON.parse(rawBucket);
+
+            } catch (error) {
+
+                console.log(error);
+
+                bucket = this.localRatelimitCache.get(`gluon.paths.${hash}`);
+
+            }
+
+        } else
             bucket = this.localRatelimitCache.get(`gluon.paths.${hash}`);
 
         if (!bucket || bucket.remaining != 0 || (bucket.remaining == 0 && (new Date().getTime() / 1000) > bucket.reset + this.latency)) {
@@ -144,6 +168,7 @@ class BetterRequestHandler {
                     }
 
             let res;
+            let e;
 
             for (let i = 0; i <= this.maxRetries; i++)
                 try {
@@ -157,15 +182,17 @@ class BetterRequestHandler {
                     });
 
                     break;
-    
+
                 } catch (error) {
-    
+
                     console.log(error);
-    
+
+                    e = error;
+
                 }
 
             if (!res)
-                return reject("HTTP REQUEST FAILED, LIKELY DUE TO A NETWORK ERROR");
+                return reject(e);
 
             let json;
 
@@ -179,7 +206,15 @@ class BetterRequestHandler {
 
             }
 
-            await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash, res.status == 429 ? json.retry_after : 0);
+            try {
+
+                await this.handleBucket(res.headers.get("x-ratelimit-bucket"), res.headers.get("x-ratelimit-remaining"), res.headers.get("x-ratelimit-reset"), hash, res.status == 429 ? json.retry_after : 0);
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
 
             if (res.ok)
                 resolve(json);
