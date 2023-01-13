@@ -377,7 +377,11 @@ class EventHandler {
 
                     }
 
-                    case COMPONENT_TYPES.SELECT_MENU: {
+                    case COMPONENT_TYPES.SELECT_MENU:
+                    case COMPONENT_TYPES.USER_SELECT_MENU:
+                    case COMPONENT_TYPES.ROLE_SELECT_MENU:
+                    case COMPONENT_TYPES.MENTIONABLE_SELECT_MENU:
+                    case COMPONENT_TYPES.CHANNEL_SELECT_MENU: {
 
                         const componentInteraction = new OptionSelect(this.client, data);
 
