@@ -188,17 +188,9 @@ class Interaction {
         if (quiet == true)
             body.data.flags = 64;
 
-        try {
+        await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
 
-            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
-            return this;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return this;
 
     }
 
@@ -225,17 +217,9 @@ class Interaction {
         if (components)
             body.components = Array.isArray(components) != true ? components.toJSON() : [];
 
-        try {
+        await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
 
-            await this.client.request.makeRequest("patchOriginalInteractionResponse", [this.client.user.id, this.token], body);
-            return this;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return this;
 
     }
 
@@ -249,17 +233,9 @@ class Interaction {
 
         body.type = 6;
 
-        try {
+        await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
 
-            await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
-            return this;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return this;
 
     }
 
