@@ -255,15 +255,17 @@ class WS {
 
         });
 
-        this.ws.on("open", () => {
+        this.ws.once("open", () => {
 
             this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Websocket opened`);
 
         });
 
-        this.ws.on("close", data => {
+        this.ws.once("close", data => {
 
             this.client.emit("debug", `${this.libName} ${data < 2000 ? this.shardNorminal : this.shardCatastrophic} @ ${this.time()} => Websocket closed with code ${data}`);
+
+            this.ws.removeAllListeners();
 
             clearInterval(this.terminateSocketTimeout);
 
