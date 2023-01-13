@@ -67,17 +67,9 @@ class TextChannel extends Channel {
         if (files)
             body.files = files;
 
-        try {
+        const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
 
-            const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
-            return new Message(this.client, data, this.id.toString(), this.guild?.id.toString() || this.guild_id.toString(), false);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this.client, data, this.id.toString(), this.guild?.id.toString() || this.guild_id.toString(), false);
 
     }
 
@@ -95,16 +87,7 @@ class TextChannel extends Channel {
 
         body.messages = messages;
 
-        try {
-
-            await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
 
     }
 
