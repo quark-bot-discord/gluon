@@ -9,6 +9,14 @@ class Dropdown {
 
     }
 
+    setType(type) {
+
+        this.type = type;
+
+        return this;
+
+    }
+
     setCustomID(id) {
 
         this.custom_id = id;
@@ -20,6 +28,14 @@ class Dropdown {
     addOption(option) {
 
         this.options.push(option.toJSON());
+
+        return this;
+
+    }
+
+    addChannelTypes(channelTypes) {
+
+        this.channel_types = channelTypes;
 
         return this;
 
@@ -49,15 +65,25 @@ class Dropdown {
 
     }
 
+    setDisabled(isDisabled) {
+
+        this.disabled = isDisabled;
+
+        return this;
+
+    }
+
     toJSON() {
 
         return {
             type: this.type,
             custom_id: this.custom_id,
             options: this.options,
+            channel_types: this.channel_types,
             placeholder: this.placeholder,
             min_values: this.min_values,
-            max_values: this.max_values
+            max_values: this.max_values,
+            disabled: this.disabled
         };
 
     }

@@ -105,7 +105,12 @@ module.exports.INTERACTION_TYPES = {
 module.exports.COMPONENT_TYPES = {
     ACTION_ROW:                 (1),
     BUTTON:                     (2),
-    SELECT_MENU:                (3)
+    SELECT_MENU:                (3),
+    TEXT_INPUT:                 (4),
+    USER_SELECT_MENU:           (5),
+    ROLE_SELECT_MENU:           (6),
+    MENTIONABLE_SELECT_MENU:    (7),
+    CHANNEL_SELECT_MENU:        (8)
 };
 module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 8; // 8 hours
 module.exports.DEFAULT_USER_EXPIRY_SECONDS = 3600 * 4; // 4 hours
