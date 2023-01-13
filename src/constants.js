@@ -157,3 +157,9 @@ module.exports.STICKER_FORMATS_ENUM = {
     APNG: 2,
     LOTTIE: 3
 };
+module.exports.WEBSOCKET_STATES = {
+    CONNECTING: 0,
+    OPEN: 1,
+    CLOSING: 2,
+    CLOSED: 3
+};
