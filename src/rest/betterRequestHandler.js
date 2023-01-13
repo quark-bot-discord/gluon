@@ -23,6 +23,7 @@ class BetterRequestHandler {
         this.name = name;
 
         this.latency = 1;
+        this.maxRetries = 3;
 
         this.endpoints = require("./endpoints");
 
@@ -46,7 +47,12 @@ class BetterRequestHandler {
             reset: retryAfter != 0 ? (new Date().getTime() / 1000) + retryAfter + this.latency : parseFloat(ratelimitReset)
         };
 
-        const expireFromCache = Math.ceil(bucket.reset - (new Date().getTime() / 1000)) + 60;
+        let expireFromCache = Math.ceil(bucket.reset - (new Date().getTime() / 1000)) + 60;
+
+        if (expireFromCache < 0)
+            expireFromCache = 60;
+        else if (expireFromCache > 2592000)
+            expireFromCache = 2592000;
 
         this.client.redis ?
             await this.client.redis.set(`gluon.paths.${hash}`, JSON.stringify(bucket), "EX", expireFromCache)
@@ -136,13 +142,29 @@ class BetterRequestHandler {
                         delete body[key];
                     }
 
-            /* actually make the request */
-            const res = await fetch(`${this.requestURL}${path}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") ? "?" + serialize(body) : ""}`, {
-                method: actualRequest.method,
-                headers: headers,
-                body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
-                compress: true
-            });
+            let res;
+
+            for (let i = 0; i <= this.maxRetries; i++)
+                try {
+
+                    /* actually make the request */
+                    res = await fetch(`${this.requestURL}${path}${body && (actualRequest.method == "GET" || actualRequest.method == "DELETE") ? "?" + serialize(body) : ""}`, {
+                        method: actualRequest.method,
+                        headers: headers,
+                        body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
+                        compress: true
+                    });
+
+                    break;
+    
+                } catch (error) {
+    
+                    console.log(error);
+    
+                }
+
+            if (!res)
+                return reject("HTTP REQUEST FAILED, LIKELY DUE TO A NETWORK ERROR");
 
             let json;
 
