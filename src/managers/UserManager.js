@@ -6,7 +6,7 @@ class UserManager {
     constructor(client) {
 
         this.client = client;
-        
+
         this.cache = new Map();
 
     }
@@ -17,17 +17,9 @@ class UserManager {
         if (cachedUser)
             return cachedUser;
 
-        try {
+        const data = await this.client.request.makeRequest("getUser", [user_id]);
 
-            const data = await this.client.request.makeRequest("getUser", [user_id]);
-            return new User(this.client, data);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new User(this.client, data);
 
     }
 

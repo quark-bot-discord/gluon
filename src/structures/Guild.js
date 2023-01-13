@@ -30,12 +30,12 @@ class Guild {
         if (data.unavailable == true) {
 
             this.id = BigInt(data.id);
-            
+
             this.unavailable = true;
 
             if (nocache == false && this.client.cacheGuilds == true)
                 this.client.guilds.cache.set(data.id, this);
-            
+
         }
 
         /**
@@ -187,16 +187,7 @@ class Guild {
         if (cached)
             return cached;
 
-        try {
-
-            return await this.members.fetch(this.client.user.id);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return await this.members.fetch(this.client.user.id);
 
     }
 
@@ -219,16 +210,7 @@ class Guild {
         if (days)
             body.delete_message_days = days;
 
-        try {
-
-            await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("putCreateGuildBan", [this.id, user_id], body);
 
     }
 
@@ -248,16 +230,7 @@ class Guild {
         if (reason)
             body.reason = reason;
 
-        try {
-
-            await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
 
     }
 
@@ -277,16 +250,7 @@ class Guild {
         if (reason)
             body.reason = reason;
 
-        try {
-
-            await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
 
     }
 
@@ -307,16 +271,7 @@ class Guild {
         if (reason)
             body["X-Audit-Log-Reason"] = reason;
 
-        try {
-
-            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("deleteRemoveMemberRole", [this.id, user_id, role_id], body);
 
     }
 
@@ -346,24 +301,15 @@ class Guild {
         if (before)
             body.before = before.toString();
 
-        try {
+        const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
 
-            const data = await this.client.request.makeRequest("getGuildAuditLog", [this.id], body);
+        if (type && AUDIT_LOG_TYPES[type] && data && data.audit_log_entries[0] && data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
+            return null;
 
-            if (type && AUDIT_LOG_TYPES[type] && data && data.audit_log_entries[0] && data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type])
-                return null;
+        if (!data || data.audit_log_entries.length == 0)
+            return null;
 
-            if (!data || data.audit_log_entries.length == 0)
-                return null;
-
-            return data.audit_log_entries.map(e => new AuditLog(this.client, e, data.users));
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data.audit_log_entries.map(e => new AuditLog(this.client, e, data.users));
 
     }
 
@@ -376,17 +322,9 @@ class Guild {
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
             return null;
 
-        try {
+        const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
 
-            const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
-            return data;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data;
 
     }
 
@@ -396,20 +334,13 @@ class Guild {
      */
     async fetchChannels() {
 
-        try {
+        const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
 
-            const data = await this.client.request.makeRequest("getGuildChannels", [this.id]);
-            let channels = [];
-            for (let i = 0; i < data.length; i++)
-                channels.push(cacheChannel(this.client, data[i], this.id.toString()));
-            return channels;
+        let channels = [];
+        for (let i = 0; i < data.length; i++)
+            channels.push(cacheChannel(this.client, data[i], this.id.toString()));
 
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return channels;
 
     }
 
@@ -423,17 +354,9 @@ class Guild {
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
             return null;
 
-        try {
+        const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
 
-            const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
-            return data;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data;
 
     }
 
@@ -442,16 +365,7 @@ class Guild {
      */
     async leave() {
 
-        try {
-
-            await this.client.request.makeRequest("deleteLeaveGuild", [this.id]);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("deleteLeaveGuild", [this.id]);
 
     }
 

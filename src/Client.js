@@ -152,16 +152,6 @@ class Client extends EventsEmitter {
     }
 
     /**
-     * Emits an "error" even with the error provided.
-     * @param {String} error The error to emit, as a string.
-     */
-    error(error) {
-
-        this.emit("error", `\`\`\`js\n${error.substring(0, 4000)}\`\`\``);
-
-    }
-
-    /**
      * Fetches a message from a specific channel.
      * @param {BigInt} guild_id The ID of the guild that the message belongs to.
      * @param {BigInt} channel_id The ID of the channel that the message belongs to.
@@ -170,17 +160,9 @@ class Client extends EventsEmitter {
      */
     async fetchMessage(guild_id, channel_id, message_id) {
 
-        try {
+        const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id]);
 
-            const data = await this.request.makeRequest("getChannelMessage", [channel_id, message_id]);
-            return new Message(this, data, channel_id.toString(), guild_id.toString());
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this, data, channel_id.toString(), guild_id.toString());
 
     }
 
@@ -204,16 +186,7 @@ class Client extends EventsEmitter {
         if (files)
             body.files = files;
 
-        try {
-
-            await this.request.makeRequest("postExecuteWebhook", [id, token], body);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.request.makeRequest("postExecuteWebhook", [id, token], body);
 
     }
 
@@ -241,17 +214,9 @@ class Client extends EventsEmitter {
         if (files)
             body.files = files;
 
-        try {
+        const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
 
-            const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
-            return new Message(this, data, channel_id.toString(), guild_id.toString(), false);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this, data, channel_id.toString(), guild_id.toString(), false);
 
     }
 
@@ -282,17 +247,9 @@ class Client extends EventsEmitter {
                 guild_id: guild_id.toString()
             };
 
-        try {
+        const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
 
-            const data = await this.request.makeRequest("patchEditMessage", [channel_id, message_id], body);
-            return new Message(this, data, channel_id, guild_id);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this, data, channel_id, guild_id);
 
     }
 
@@ -306,16 +263,8 @@ class Client extends EventsEmitter {
 
         body.webhook_channel_id = channel_id;
 
-        try {
+        await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body);
 
-            await this.request.makeRequest("postFollowNewsChannel", ["822906135048487023"], body);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
     }
 
     /**
@@ -325,17 +274,9 @@ class Client extends EventsEmitter {
      */
     async fetchChannelWebhooks(channel_id) {
 
-        try {
+        const data = await this.request.makeRequest("getChannelWebhooks", [channel_id]);
 
-            const data = await this.request.makeRequest("getChannelWebhooks", [channel_id]);
-            return data;
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data;
 
     }
 
@@ -345,16 +286,7 @@ class Client extends EventsEmitter {
      */
     async deleteWebhook(webhook_id) {
 
-        try {
-
-            await this.request.makeRequest("deleteWebhook", [webhook_id]);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.request.makeRequest("deleteWebhook", [webhook_id]);
 
     }
 
@@ -369,16 +301,7 @@ class Client extends EventsEmitter {
 
         body.messages = messages;
 
-        try {
-
-            await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
 
     }
 
@@ -405,20 +328,13 @@ class Client extends EventsEmitter {
         if (limit)
             body.limit = limit;
 
-        try {
+        const data = await this.request.makeRequest("getChannelMessages", [channel_id], body);
 
-            const data = await this.request.makeRequest("getChannelMessages", [channel_id], body);
-            let messages = [];
-            for (let i = 0; i < data.length; i++)
-                messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
-            return messages;
+        let messages = [];
+        for (let i = 0; i < data.length; i++)
+            messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
 
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return messages;
 
     }
 
@@ -433,17 +349,9 @@ class Client extends EventsEmitter {
 
         body.name = "Quark";
 
-        try {
+        const data = await this.request.makeRequest("postCreateWebhook", [channel_id], body);
 
-            const data = await this.request.makeRequest("postCreateWebhook", [channel_id], body);
-            return data;
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data;
 
     }
 
@@ -459,17 +367,9 @@ class Client extends EventsEmitter {
 
         body.channel_id = channel_id.toString();
 
-        try {
+        const data = await this.request.makeRequest("patchModifyWebhook", [webhook_id], body);
 
-            const data = await this.request.makeRequest("patchModifyWebhook", [webhook_id], body);
-            return data;
-
-        } catch (error) {
-
-            this.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return data;
 
     }
 
@@ -518,8 +418,7 @@ class Client extends EventsEmitter {
 
                         const currentTime = Math.floor(new Date().getTime() / 1000);
 
-                        if (this.cacheMessages == true || this.cacheMembers == true) {
-
+                        if (this.cacheMessages == true || this.cacheMembers == true)
                             this.guilds.cache.forEach(guild => {
 
                                 if (this.cacheMessages == true) {
@@ -568,8 +467,6 @@ class Client extends EventsEmitter {
 
                             });
 
-                        }
-
                         if (this.cacheUsers == true) {
 
                             this.emit("debug", "Sweeping users...");
@@ -585,20 +482,14 @@ class Client extends EventsEmitter {
             })
             .catch(error => {
 
-                this.error(error.stack.toString());
-
                 this.emit("debug", "Get gateway bot request failed, terminating process");
+
+                console.log(error);
 
                 process.exit(0);
 
             });
 
-    }
-
-    wait(time) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => resolve(), time);
-        });
     }
 
 }

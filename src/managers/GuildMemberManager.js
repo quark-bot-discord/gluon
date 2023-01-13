@@ -18,17 +18,9 @@ class GuildMemberManager {
         if (cached)
             return cached;
 
-        try {
+        const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
 
-            const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
-            return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
 
     }
 
@@ -40,27 +32,18 @@ class GuildMemberManager {
 
         body.limit = 1000;
 
-        try {
+        const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
+        if (data.length != 0) {
 
-            const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
-            if (data.length != 0) {
+            let members = [];
 
-                let members = [];
+            for (let i = 0; i < data.length; i++)
+                members.push(new Member(this.client, data[i], data[i].user.id, this.guild.id.toString(), data[i].user));
 
-                for (let i = 0; i < data.length; i++)
-                    members.push(new Member(this.client, data[i], data[i].user.id, this.guild.id.toString(), data[i].user));
+            return members;
 
-                return members;
-
-            } else
-                return null;
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        } else
+            return null;
 
     }
 

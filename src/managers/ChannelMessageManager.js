@@ -39,20 +39,11 @@ class ChannelMessageManager {
             if (options.limit)
                 body.limit = options.limit;
 
-            try {
-
-                const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
-                let messages = [];
-                for (let i = 0; i < data.length; i++)
-                    messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
-                return messages;
-
-            } catch (error) {
-
-                this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-                throw error;
-
-            }
+            const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
+            let messages = [];
+            for (let i = 0; i < data.length; i++)
+                messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
+            return messages;
 
         } else if (typeof options == "string" || typeof options == "bigint") {
 
@@ -60,17 +51,9 @@ class ChannelMessageManager {
             if (cachedMessage)
                 return cachedMessage;
 
-            try {
+            const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
 
-                const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
-                return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
-
-            } catch (error) {
-
-                this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-                throw error;
-
-            }
+            return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
 
         }
 

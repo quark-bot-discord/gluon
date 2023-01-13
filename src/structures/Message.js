@@ -220,17 +220,9 @@ class Message {
             guild_id: this.guild?.id.toString() || this.guild_id.toString()
         };
 
-        try {
+        const data = await this.client.request.makeRequest("postCreateMessage", [this.channel?.id || this.channel_id], body);
 
-            const data = await this.client.request.makeRequest("postCreateMessage", [this.channel?.id || this.channel_id], body);
-            return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
     }
 
@@ -262,17 +254,9 @@ class Message {
                 guild_id: this.guild?.id.toString() || this.guild_id.toString()
             };
 
-        try {
+        const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body);
 
-            const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body);
-            return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
 
     }
 

@@ -170,16 +170,7 @@ class Member {
         if (reason)
             body["X-Audit-Log-Reason"] = reason;
 
-        try {
-
-            await this.client.request.makeRequest("putAddGuildMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
+        await this.client.request.makeRequest("putAddGuildMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
 
     }
 
@@ -193,16 +184,8 @@ class Member {
         if (reason)
             body["X-Audit-Log-Reason"] = reason;
 
-        try {
+        await this.client.request.makeRequest("deleteRemoveMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
 
-            await this.client.request.makeRequest("deleteRemoveMemberRole", [this.guild?.id || this.guild_id, this.id, role_id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
 
     }
 
@@ -218,16 +201,8 @@ class Member {
 
         body.communication_disabled_until = timeout_until;
 
-        try {
+        await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
 
-            await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
     }
 
     async timeoutRemove({ reason }) {
@@ -242,16 +217,8 @@ class Member {
 
         body.communication_disabled_until = null;
 
-        try {
+        await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
 
-            await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
-
-        } catch (error) {
-
-            this.client.error(error.stack?.toString() || JSON.stringify(error) || error.toString());
-            throw error;
-
-        }
     }
 
 }
