@@ -21,7 +21,7 @@ const Thread = require("./src/structures/Thread");
 const User = require("./src/structures/User");
 const VoiceChannel = require("./src/structures/VoiceChannel");
 const VoiceState = require("./src/structures/VoiceState");
-const { PERMISSIONS, INTENTS, COMPONENT_TYPES } = require("./src/constants");
+const { PERMISSIONS, INTENTS, COMPONENT_TYPES, CHANNEL_TYPES } = require("./src/constants");
 const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 const checkPermission = require("./src/util/checkPermission");
 const bundleUser = require("./src/util/bundleUser");
@@ -58,6 +58,7 @@ module.exports = {
     INTENTS,
     VERSION: require("./package.json").version,
     COMPONENT_TYPES,
+    CHANNEL_TYPES,
     bundleUser,
     hexToInt,
     verifyMessageLink
