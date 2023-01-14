@@ -40,6 +40,8 @@ class WS {
         this.heartbeatInterval = null;
         this.waitingForHeartbeatACK = false;
 
+        this.monitorOpened = null;
+
         this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
         this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
         this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
@@ -259,6 +261,8 @@ class WS {
 
             this.client.emit("debug", `${this.libName} ${this.shardNorminal} @ ${this.time()} => Websocket opened`);
 
+            clearTimeout(this.monitorOpened);
+
         });
 
         this.ws.once("close", data => {
@@ -286,6 +290,12 @@ class WS {
                     this.retries++;
 
                     this.ws = new WebSocket(generateWebsocketURL(this.resumeGatewayUrl));
+
+                    this.monitorOpened = setTimeout(() => {
+
+                        this.shutDownWebsocket(9999);
+
+                    }, 5000);
 
                     this.addListeners();
 
@@ -335,13 +345,11 @@ class WS {
 
         this.terminateSocketTimeout = setTimeout(() => {
 
-            if ([this.ws.OPEN, this.ws.CLOSING].includes(this.ws.readyState)) {
-                this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
-                this.ws.terminate();
-                setTimeout(() => {
-                    process.exit(1);
-                }, 1000);
-            }
+            this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
+            this.ws.terminate();
+            setTimeout(() => {
+                process.exit(1);
+            }, 1000);
 
         }, 5000);
 
