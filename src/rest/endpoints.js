@@ -84,6 +84,7 @@ module.exports = {
             return `/channels/${channel_id}/messages/bulk-delete`;
         },
         method: "POST",
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     postExecuteWebhook: {
