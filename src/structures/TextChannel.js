@@ -78,7 +78,7 @@ class TextChannel extends Channel {
      * @param {String[]} messages An array of message IDs, as strings.
      * @returns {void}
      */
-    async bulkDelete(messages) {
+    async bulkDelete(messages, { reason }) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_MESSAGES))
             return null;
@@ -86,6 +86,9 @@ class TextChannel extends Channel {
         const body = {};
 
         body.messages = messages;
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
 
         await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
 
