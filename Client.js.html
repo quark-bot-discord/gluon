@@ -381,12 +381,16 @@ class Client extends EventsEmitter {
      * Bulk deletes channel messages.
      * @param {BigInt} channel_id The id of the channel to purge messages in.
      * @param {String[]} messages An array of message ids to delete.
+     * @param {Object} options
      */
-    async purgeChannelMessages(channel_id, messages) {
+    async purgeChannelMessages(channel_id, messages, { reason }) {
 
         const body = {};
 
         body.messages = messages;
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
 
         await this.request.makeRequest("postBulkDeleteMessages", [channel_id], body);
 
