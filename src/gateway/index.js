@@ -293,7 +293,9 @@ class WS {
 
                     this.monitorOpened = setTimeout(() => {
 
-                        this.shutDownWebsocket(4901);
+                        this.client.emit("debug", `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${this.retries} failed to re-open websocket, shutting down websocket with code ${data}`);
+
+                        this.shutDownWebsocket(data);
 
                     }, 10000);
 
