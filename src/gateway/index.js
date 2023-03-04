@@ -293,9 +293,9 @@ class WS {
 
                     this.monitorOpened = setTimeout(() => {
 
-                        this.shutDownWebsocket(9999);
+                        this.shutDownWebsocket(4901);
 
-                    }, 5000);
+                    }, 10000);
 
                     this.addListeners();
 
