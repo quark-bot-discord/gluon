@@ -1,6 +1,7 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
 const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
+const AuditLog = require("../structures/AuditLog");
 const ButtonClick = require("../structures/ButtonClick");
 const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
@@ -408,6 +409,16 @@ class EventHandler {
             }
 
         }
+
+    }
+
+    GUILD_AUDIT_LOG_ENTRY_CREATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`);
+
+        const auditLogEntry = new AuditLog(client, data);
+
+        this.client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
 
     }
 
