@@ -25,6 +25,8 @@ class AuditLog {
          */
         this.id = BigInt(data.id);
 
+        this.action_type = data.action_type;
+
         /**
          * The id of the target user.
          * @type {BigInt?}
