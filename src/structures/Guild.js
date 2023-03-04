@@ -205,7 +205,7 @@ class Guild {
         const body = {};
 
         if (reason)
-            body.reason = reason;
+            body["X-Audit-Log-Reason"] = reason;
         // number of days to delete messages for (0-7) 
         if (days)
             body.delete_message_days = days;
@@ -228,7 +228,7 @@ class Guild {
         const body = {};
 
         if (reason)
-            body.reason = reason;
+            body["X-Audit-Log-Reason"] = reason;
 
         await this.client.request.makeRequest("deleteRemoveGuildBan", [this.id, user_id], body);
 
@@ -248,7 +248,7 @@ class Guild {
         const body = {};
 
         if (reason)
-            body.reason = reason;
+            body["X-Audit-Log-Reason"] = reason;
 
         await this.client.request.makeRequest("deleteGuildMember", [this.id, user_id], body);
 
