@@ -112,6 +112,21 @@ class AuditLog {
          */
         this.id = BigInt(data.id);
 
+        if (data.guild_id) {
+            /**
+             * The guild that this audit log belongs to.
+             * @type {Guild?}
+             */
+            this.guild = this.client.guilds.cache.get(data.guild_id) || null;
+        
+            if (!this.guild)
+                /**
+                 * The ID of the guild that this audit log belongs to.
+                 * @type {BigInt?}
+                 */
+                this.guild_id = BigInt(data.guild_id);
+        }
+
         if (data.action_type)
             this.action_type = data.action_type;
 
