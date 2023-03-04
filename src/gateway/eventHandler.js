@@ -416,7 +416,7 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`);
 
-        const auditLogEntry = new AuditLog(client, data);
+        const auditLogEntry = new AuditLog(this.client, data);
 
         this.client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
 
