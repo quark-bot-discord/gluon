@@ -28,6 +28,7 @@ module.exports = {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
         method: "PUT",
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     getGuildAuditLog: {
@@ -135,6 +136,7 @@ module.exports = {
             return `/guilds/${guild_id}/members/${user_id}`;
         },
         method: "DELETE",
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     deleteRemoveGuildBan: {
@@ -142,6 +144,7 @@ module.exports = {
             return `/guilds/${guild_id}/bans/${user_id}`;
         },
         method: "DELETE",
+        useHeaders: ["X-Audit-Log-Reason"],
         majorParams: [0]
     },
     putAddGuildMemberRole: {
