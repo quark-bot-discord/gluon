@@ -543,8 +543,8 @@ class Client extends EventsEmitter {
                                     this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
 
                                     let cacheCount = guild.calculateMemberCacheCount();
-                                    if (this.increasedCache.get(guild.id.toString()))
-                                        cacheCount *= this.increaseCacheBy;
+                                    // if (this.increasedCache.get(guild.id.toString()))
+                                    //     cacheCount *= this.increaseCacheBy;
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`);
 
