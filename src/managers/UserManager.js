@@ -33,7 +33,7 @@ class UserManager {
         const currentCacheValues = this.cache.values();
 
         for (let i = 0; i < currentCacheSize; i++)
-            if (currentCacheValues[i].cached + DEFAULT_USER_EXPIRY_SECONDS < currentTime)
+            if ((currentCacheValues[i].cached || 0) + DEFAULT_USER_EXPIRY_SECONDS < currentTime)
                 this.cache.delete(currentCacheKeys[i]);
 
         return this.cache.size;
