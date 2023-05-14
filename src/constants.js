@@ -28,7 +28,8 @@ module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
                                     this.INTENTS.GUILD_BANS |
                                     this.INTENTS.GUILD_INVITES |
                                     this.INTENTS.GUILD_VOICE_STATES |
-                                    this.INTENTS.GUILD_MESSAGES;
+                                    this.INTENTS.GUILD_MESSAGES |
+                                    this.INTENTS.MESSAGE_CONTENT;
 module.exports.EVENTS = {
     READY:                          ("ready"),
     GUILD_CREATE:                   ("guildCreate"),
