@@ -227,6 +227,53 @@ class Client extends EventsEmitter {
 
     }
 
+    getCacheCounts() {
+
+        let totalMessages = 0;
+        let totalMembers = 0;
+        let totalChannels = 0;
+        let totalRoles = 0;
+
+        this.guilds.cache.forEach(guild => {
+
+            guild.channels.cache.forEach(channel => {
+
+                switch (channel.type) {
+
+                    case CHANNEL_TYPES.GUILD_NEWS_THREAD:
+                    case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
+                    case CHANNEL_TYPES.GUILD_PRIVATE_THREAD:
+                    case CHANNEL_TYPES.GUILD_TEXT:
+                    case CHANNEL_TYPES.GUILD_NEWS:
+                    case CHANNEL_TYPES.GUILD_FORUM: {
+
+                        totalMessages += channel.messages.cache.size;
+
+                    }
+
+                }
+
+                totalChannels++;
+
+            });
+
+            totalMembers += guild.members.cache.size;
+
+            totalRoles += guild.roles.cache.size;
+
+        });
+
+        return {
+            "users": this.users.cache.size,
+            "guilds": this.guilds.cache.size,
+            "messages": totalMessages,
+            "members": totalMembers,
+            "channels": totalChannels,
+            "roles": totalRoles
+        };
+
+    }
+
     bundleCache() {
 
         const bundle = [];
