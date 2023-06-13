@@ -91,7 +91,7 @@ class User {
         return this.avatar ?
             // eslint-disable-next-line quotes
             `${CDN_BASE_URL}/avatars/${this.id}/${this.originalAvatarHash}.${this.avatarIsAnimated ? "gif" : "png"}` :
-            `${CDN_BASE_URL}/embed/avatars/${(this.id >> 22) % 6}.png`;
+            `${CDN_BASE_URL}/embed/avatars/${(this.id >> 22n) % 6n}.png`;
 
     }
 
