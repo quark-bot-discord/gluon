@@ -498,7 +498,7 @@ class Client extends EventsEmitter {
 
                                 }
 
-                                if (this.cacheMembers == true) {
+                                if (this.cacheMembers == true || this.cacheMessages == true) {
 
                                     this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
 
@@ -518,7 +518,7 @@ class Client extends EventsEmitter {
 
                             });
 
-                        if (this.cacheUsers == true) {
+                        if (this.cacheUsers == true || this.cacheMessages == true) {
 
                             this.emit("debug", "Sweeping users...");
 
