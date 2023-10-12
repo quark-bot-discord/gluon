@@ -1,9 +1,14 @@
+const { PERMISSIONS } = require("../constants");
+const ChannelMessageManager = require("../managers/ChannelMessageManager");
+const checkPermission = require("../util/checkPermission");
+const Message = require("./Message");
+
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
  */
 class Channel {
-    
+
     /**
      * Creates the base structure for a channel.
      * @constructor
@@ -50,6 +55,46 @@ class Channel {
          * @type {Number}
          */
         this.type = data.type;
+
+        const existing = this.guild?.channels.cache.get(data.id) || null;
+
+        /**
+         * The message manager for this channel.
+         * @type {ChannelMessageManager}
+         */
+        this.messages = existing && existing.messages && existing.messages.cache ? existing.messages : new ChannelMessageManager(client, this);
+
+    }
+
+    /**
+     * Sends a message to this channel.
+     * @param {String} content The message content.
+     * @param {Object} param1 Embeds, components and files to include with the message.
+     * @returns {Promise<Message>}
+     * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
+     */
+    async send(content, { embed, components, files, embeds } = {}) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+            return null;
+
+        const body = {};
+
+        if (content)
+            body.content = content;
+
+        if (embed)
+            body.embeds = [embed.toJSON()];
+        else if (embeds && embeds.length != 0)
+            body.embeds = embeds.map(e => e.toJSON());
+        if (components)
+            body.components = components.toJSON();
+        if (files)
+            body.files = files;
+
+        const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
+
+        return new Message(this.client, data, this.id.toString(), this.guild?.id.toString() || this.guild_id.toString(), false);
 
     }
 
