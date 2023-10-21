@@ -422,6 +422,30 @@ class EventHandler {
 
     }
 
+    ENTITLEMENT_CREATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => ENTITLEMENT_CREATE ${data.user_id}`);
+
+        this.client.emit(EVENTS.ENTITLEMENT_CREATE, data);
+
+    }
+
+    ENTITLEMENT_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => ENTITLEMENT_UPDATE ${data.user_id}`);
+
+        this.client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
+
+    }
+
+    ENTITLEMENT_DELETE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => ENTITLEMENT_DELETE ${data.user_id}`);
+
+        this.client.emit(EVENTS.ENTITLEMENT_DELETE, data);
+
+    }
+
 }
 
 module.exports = EventHandler;
