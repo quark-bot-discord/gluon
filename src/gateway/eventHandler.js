@@ -42,7 +42,7 @@ class EventHandler {
 
         this.initialGuilds = data.guilds.map(g => g.id);
 
-        this.client.emit(EVENTS.READY);
+        this.client.emit(EVENTS.READY, this.initialGuilds);
 
     }
 
