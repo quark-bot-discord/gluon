@@ -173,3 +173,8 @@ module.exports.WEBSOCKET_STATES = {
     CLOSING: 2,
     CLOSED: 3
 };
+module.exports.GLUON_CACHING_OPTIONS = {
+    NO_MESSAGES:        (1 << 0),
+    FILES_ONLY:         (1 << 1),
+    NO_VOICE_STATE:     (1 << 2)
+};
