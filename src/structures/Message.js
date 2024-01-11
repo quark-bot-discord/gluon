@@ -1,7 +1,7 @@
 const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
-const { PERMISSIONS } = require("../constants");
+const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
@@ -57,6 +57,8 @@ class Message {
             this.channel_id = BigInt(channel_id);
 
         const existing = this.channel?.messages.cache.get(data.id) || null;
+
+        nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES) || ((this.channel._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES);
 
         /**
          * The id of the message.
