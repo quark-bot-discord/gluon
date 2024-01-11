@@ -27,6 +27,7 @@ const checkPermission = require("./src/util/checkPermission");
 const bundleUser = require("./src/util/bundleUser");
 const hexToInt = require("./src/util/hexToInt");
 const verifyMessageLink = require("./src/util/verifyMessageLink");
+const updateGuildPreferences = require("./src/util/updateGuildPreferences");
 
 module.exports = {
     Client,
@@ -61,5 +62,6 @@ module.exports = {
     CHANNEL_TYPES,
     bundleUser,
     hexToInt,
-    verifyMessageLink
+    verifyMessageLink,
+    updateGuildPreferences
 };
