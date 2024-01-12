@@ -108,7 +108,8 @@ class Message {
                 this.attachments.push(new Attachment(this.client, data.attachments[i]));
         else if (existing && existing.attachments)
             this.attachments = existing.attachments;
-        else if (onlyfiles == true)
+
+        if (this.attachments.length == 0 && onlyfiles == true)
             nocache = true;
 
         /**
