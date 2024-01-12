@@ -29,12 +29,12 @@ function updateSingleGuildPreferences(client, guild) {
     }
     client.guilds.cache.set(guild.id, currentGuild);
     for (let j = 0; j < guild.options.additionalServerLogOptions.ignoreChannels.length; j++) {
-        let currentGuildChannel = client.guilds.channels.cache.get(guild.options.additionalServerLogOptions.ignoreChannels[j])
+        let currentGuildChannel = currentGuild.channels.cache.get(guild.options.additionalServerLogOptions.ignoreChannels[j])
         if (!currentGuildChannel)
             continue;
         currentGuildChannel._cache_options = 0;
         currentGuildChannel._cache_options |= GLUON_CACHING_OPTIONS.NO_MESSAGES;
-        client.guilds.channels.cache.set(guild.options.additionalServerLogOptions.ignoreChannels[j], currentGuildChannel);
+        currentGuild.channels.cache.set(guild.options.additionalServerLogOptions.ignoreChannels[j], currentGuildChannel);
     }
 }
 
