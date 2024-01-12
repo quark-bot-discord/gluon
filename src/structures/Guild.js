@@ -138,6 +138,8 @@ class Guild {
          */
         this.preferred_locale = data.preferred_locale;
 
+        this._cache_options = 0;
+
         if (nocache == false && this.client.cacheGuilds == true)
             this.client.guilds.cache.set(data.id, this);
 
