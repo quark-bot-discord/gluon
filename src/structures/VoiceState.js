@@ -5,14 +5,15 @@ class VoiceState {
 
     constructor(client, data, guild_id, nocache = false) {
 
-        nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) == GLUON_CACHING_OPTIONS.NO_VOICE_STATE);
-
         this.client = client;
 
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         if (!this.guild)
             this.guild_id = BigInt(guild_id);
+
+        if (this.guild)
+            nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) == GLUON_CACHING_OPTIONS.NO_VOICE_STATE);
 
         this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
 
