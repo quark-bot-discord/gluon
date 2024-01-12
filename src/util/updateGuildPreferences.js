@@ -28,8 +28,8 @@ function updateSingleGuildPreferences(client, guild) {
         if (!guild.options.additionalServerLogOptions.voiceEvents) {
             currentGuild._cache_options |= GLUON_CACHING_OPTIONS.NO_VOICE_STATE;
         }
-        client.guilds.cache.set(guild.id, currentGuild);
     }
+    client.guilds.cache.set(guild.id, currentGuild);
     for (let j = 0; j < guild.options.additionalServerLogOptions.ignoreChannels.length; j++) {
         let currentGuildChannel = client.guilds.channels.cache.get(guild.options.additionalServerLogOptions.ignoreChannels[j])
         if (!currentGuildChannel)
