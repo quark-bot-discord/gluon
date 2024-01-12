@@ -1,8 +1,11 @@
+const { GLUON_CACHING_OPTIONS } = require("../constants");
 const Member = require("./Member");
 
 class VoiceState {
 
     constructor(client, data, guild_id, nocache = false) {
+
+        nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) == GLUON_CACHING_OPTIONS.NO_VOICE_STATE);
 
         this.client = client;
 
