@@ -24,6 +24,9 @@ class Message {
      */
     constructor(client, data, channel_id, guild_id, nocache = false) {
 
+        nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES) || ((this.channel._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES);
+        onlyfiles = ((this.channel._cache_options & GLUON_CACHING_OPTIONS.FILES_ONLY) == GLUON_CACHING_OPTIONS.FILES_ONLY);
+
         /**
          * The client instance.
          * @type {Client}
@@ -57,8 +60,6 @@ class Message {
             this.channel_id = BigInt(channel_id);
 
         const existing = this.channel?.messages.cache.get(data.id) || null;
-
-        nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES) || ((this.channel._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES);
 
         /**
          * The id of the message.
@@ -104,11 +105,13 @@ class Message {
          * The message content.
          * @type {String?}
          */
-        this.content = data.content;
-        if (!this.content && existing && existing.content)
-            this.content = existing.content;
-        else if (!this.content)
-            this.content = null;
+        if (onlyfiles != true) {
+            this.content = data.content;
+            if (!this.content && existing && existing.content)
+                this.content = existing.content;
+            else if (!this.content)
+                this.content = null;
+        }
 
         /**
          * The message embeds.
