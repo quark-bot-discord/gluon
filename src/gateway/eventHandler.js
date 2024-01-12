@@ -70,8 +70,11 @@ class EventHandler {
 
         if (!this.initialGuilds.includes(data.id))
             this.client.emit(EVENTS.GUILD_CREATE, guild);
-        else
+        else {
             this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
+            if (this.initialGuilds.length == 0)
+                this.client.emit(EVENTS.GOT_ALL_GUILDS);
+        }
 
     }
 

@@ -61,7 +61,8 @@ module.exports.EVENTS = {
     GUILD_ROLE_DELETE:              ("roleDelete"),
     ENTITLEMENT_CREATE:             ("entitlementCreate"),
     ENTITLEMENT_UPDATE:             ("entitlementUpdate"),
-    ENTITLEMENT_DELETE:             ("entitlementDelete")
+    ENTITLEMENT_DELETE:             ("entitlementDelete"),
+    GOT_ALL_GUILDS:                 ("gotAllGuilds")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),
