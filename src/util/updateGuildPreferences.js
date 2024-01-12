@@ -16,8 +16,8 @@ function updateSingleGuildPreferences(client, guild) {
     let currentGuild = client.guilds.cache.get(guild.id);
     if (!currentGuild)
         return;
+    currentGuild._cache_options = 0;
     if (guild.options.serverLog == null) {
-        currentGuild._cache_options = 0;
         if (!guild.options.additionalServerLogOptions.textEvents)
             if (guild.options.additionalServerLogOptions.fileEvents)
                 currentGuild._cache_options |= GLUON_CACHING_OPTIONS.FILES_ONLY;
