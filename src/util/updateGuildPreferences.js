@@ -18,14 +18,14 @@ function updateSingleGuildPreferences(client, guild) {
         return;
     if (guild.options.serverLog == null) {
         currentGuild._cache_options = 0;
-        if (guild.options.additionalServerLogOptions.textEvents == null) {
-            if (guild.options.additionalServerLogOptions.fileEvents != null) {
+        if (!guild.options.additionalServerLogOptions.textEvents) {
+            if (guild.options.additionalServerLogOptions.fileEvents) {
                 currentGuild._cache_options |= GLUON_CACHING_OPTIONS.FILES_ONLY;
             } else {
                 currentGuild._cache_options |= GLUON_CACHING_OPTIONS.NO_MESSAGES;
             }
         }
-        if (guild.options.additionalServerLogOptions.voiceEvents == null) {
+        if (!guild.options.additionalServerLogOptions.voiceEvents) {
             currentGuild._cache_options |= GLUON_CACHING_OPTIONS.NO_VOICE_STATE;
         }
         client.guilds.cache.set(guild.id, currentGuild);
