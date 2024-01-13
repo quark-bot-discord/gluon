@@ -16,6 +16,7 @@ function bundleGuild(guild) {
     data.unavailable = guild.unavailable;
     data.member_count = guild.member_count;
     data.preferred_locale = guild.preferred_locale;
+    data._cache_options = guild._cache_options;
     data.members = [];
     for (const member of guild.members.cache.values())
         data.members.push(bundleMember(member));
