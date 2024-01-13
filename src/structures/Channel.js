@@ -56,9 +56,9 @@ class Channel {
          */
         this.type = data.type;
 
-        this._cache_options = existing ? existing._cache_options : 0;
-
         const existing = this.guild?.channels.cache.get(data.id) || null;
+
+        this._cache_options = existing ? existing._cache_options : 0;
 
         /**
          * The message manager for this channel.
