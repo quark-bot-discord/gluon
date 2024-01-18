@@ -239,7 +239,7 @@ class BetterRequestHandler {
                 retryNextIn = 1;
 
             setTimeout(() => {
-                reject(retryNextIn);
+                reject("429: Hit ratelimit, retry in " + retryNextIn);
             }, 1500);
 
             this.client.emit("debug", `READD ${hash} to request queue`);
