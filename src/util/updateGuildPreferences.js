@@ -19,7 +19,7 @@ function updateSingleGuildPreferences(client, guild) {
     currentGuild._cache_options = 0;
     if (guild.options.serverLog == null) {
         if (!guild.options?.additionalServerLogOptions?.textEvents)
-            if (guild.options.additionalServerLogOptions.fileEvents)
+            if (guild.options?.additionalServerLogOptions?.fileEvents)
                 currentGuild._cache_options |= GLUON_CACHING_OPTIONS.FILES_ONLY;
             else
                 currentGuild._cache_options |= GLUON_CACHING_OPTIONS.NO_MESSAGES;
