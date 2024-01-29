@@ -18,8 +18,11 @@ function bundleGuild(guild) {
     data.preferred_locale = guild.preferred_locale;
     data._cache_options = guild._cache_options;
     data.members = [];
-    for (const member of guild.members.cache.values())
-        data.members.push(bundleMember(member));
+    for (const member of guild.members.cache.values()) {
+        const bundledMember = bundleMember(member);
+        if (bundledMember)
+            data.members.push();
+    }
     data.channels = [];
     for (const channel of guild.channels.cache.values())
         if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_VOICE || channel.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)

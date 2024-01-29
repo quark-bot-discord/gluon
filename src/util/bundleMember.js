@@ -2,7 +2,10 @@ const bundleUser = require("./bundleUser");
 
 function bundleMember(member) {
     const data = {};
-    data.user = bundleUser(member.user);
+    const bundledUser = bundleUser(member.user);
+    if (!bundledUser)
+        return undefined;
+    data.user = bundledUser;
     data.nick = member.nick;
     data.joined_at = member.joined_at;
     data.communication_disabled_until = member.timeout_until;
