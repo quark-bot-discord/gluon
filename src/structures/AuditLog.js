@@ -112,7 +112,7 @@ class AuditLog {
 
         const noBigInt = {
             id: this.id.toString(),
-            guild_id: this.guild ? this.guild.id.toString() : this.guild_id.toString(),
+            guild_id: this.guild ? this.guild.id.toString() : this.guild_id?.toString(),
             action_type: this.action_type,
             target_id: this.target_id?.toString(),
             executor_id: this.executor_id?.toString(),
