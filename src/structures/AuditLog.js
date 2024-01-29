@@ -108,6 +108,24 @@ class AuditLog {
 
     }
 
+    toJSON() {
+
+        const noBigInt = {
+            id: this.id.toString(),
+            guild_id: this.guild ? this.guild.id.toString() : this.guild_id.toString(),
+            action_type: this.action_type,
+            target_id: this.target_id?.toString(),
+            executor_id: this.executor_id?.toString(),
+            reason: this.reason,
+            channel_id: this.channel_id?.toString(),
+            count: this.count?.toString(),
+            changes: this.changes
+        };
+
+        return JSON.stringify(noBigInt);
+
+    }
+
 }
 
 module.exports = AuditLog;
