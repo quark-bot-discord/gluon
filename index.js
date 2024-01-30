@@ -28,6 +28,7 @@ const bundleUser = require("./src/util/bundleUser");
 const hexToInt = require("./src/util/hexToInt");
 const verifyMessageLink = require("./src/util/verifyMessageLink");
 const updateGuildPreferences = require("./src/util/updateGuildPreferences");
+const getAvatarUrl = require("./src/util/getAvatarUrl");
 
 module.exports = {
     Client,
@@ -63,5 +64,6 @@ module.exports = {
     bundleUser,
     hexToInt,
     verifyMessageLink,
-    updateGuildPreferences
+    updateGuildPreferences,
+    getAvatarUrl
 };
