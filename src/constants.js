@@ -98,6 +98,7 @@ module.exports.AUDIT_LOG_TYPES = {
     MEMBER_MOVE:                (26),
     MEMBER_DISCONNECT:          (27),
     BOT_ADD:                    (28),
+    INVITE_DELETE:              (42),
     MESSAGE_DELETE:             (72),
     MESSAGE_BULK_DELETE:        (73),
     THREAD_UPDATE:              (111),
