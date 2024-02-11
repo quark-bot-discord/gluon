@@ -131,6 +131,14 @@ module.exports = {
         method: "GET",
         majorParams: [0]
     },
+    deleteChannelMessage: {
+        path: ([channel_id, message_id]) => {
+            return `/channels/${channel_id}/messages/${message_id}`;
+        },
+        method: "DELETE",
+        useHeaders: ["X-Audit-Log-Reason"],
+        majorParams: [0]
+    },
     deleteGuildMember: {
         path: ([guild_id, user_id]) => {
             return `/guilds/${guild_id}/members/${user_id}`;

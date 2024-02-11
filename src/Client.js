@@ -357,6 +357,23 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Deletes one message.
+     * @param {BigInt} channel_id The id of the channel that the message belongs to.
+     * @param {BigInt} message_id The id of the message to delete.
+     * @param {Object} options
+     */
+    async deleteChannelMessage(channel_id, message_id, { reason }) {
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        await this.request.makeRequest("deleteChannelMessage", [channel_id, message_id], body);
+
+    }
+
+    /**
      * Fetches messages from a specified channel.
      * @param {BigInt} guild_id The id of the guild that the channel belongs to.
      * @param {BigInt} channel_id The id of the channel to fetch messages from.
