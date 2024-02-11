@@ -43,7 +43,7 @@ class BetterRequestHandler {
 
         const bucket = {
             remaining: retryAfter != 0 ? 0 : parseInt(ratelimitRemaining),
-            reset: retryAfter != 0 ? (new Date().getTime() / 1000) + retryAfter + this.latency : parseFloat(ratelimitReset)
+            reset: retryAfter != 0 ? (new Date().getTime() / 1000) + retryAfter : Math.ceil(parseFloat(ratelimitReset))
         };
 
         let expireFromCache = Math.ceil(bucket.reset - (new Date().getTime() / 1000)) + 60;
@@ -170,6 +170,8 @@ class BetterRequestHandler {
             let res;
             let e;
 
+            const requestTime = Date.now();
+
             for (let i = 0; i <= this.maxRetries; i++)
                 try {
 
@@ -180,6 +182,8 @@ class BetterRequestHandler {
                         body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
                         compress: true
                     });
+
+                    this.latency = Math.ceil((Date.now() - requestTime) / 1000);
 
                     break;
 
