@@ -382,7 +382,7 @@ class Guild {
         /* more members => assume more activity => therefore more messages to be cached */
         /* minimum of 50 messages to be cached, and a maximum of 1000 */
         /* having greater than 500000 members has no effect */
-        const shouldCacheCount = (Math.floor(1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
+        const shouldCacheCount = Math.floor((1 / (1 + Math.pow(x / (1 - x), -2))) * 1000) + 50;
 
         return shouldCacheCount;
 
