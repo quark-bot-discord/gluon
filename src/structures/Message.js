@@ -249,7 +249,7 @@ class Message {
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */
-    async edit(content, { embed, components } = {}) {
+    async edit(content, { embed, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
             return null;
@@ -262,6 +262,8 @@ class Message {
             body.embeds = [embed.toJSON()];
         if (components)
             body.components = components.toJSON();
+        if (files)
+            body.files = files;
 
         if (this.referenced_message)
             body.message_reference = {
