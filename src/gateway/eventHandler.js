@@ -489,6 +489,8 @@ class EventHandler {
 
     GUILD_SCHEDULED_EVENT_USER_ADD(data) {
 
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`);
+
         const scheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.guild_scheduled_event_id) || null;
 
         if (scheduledEvent) {
@@ -506,6 +508,8 @@ class EventHandler {
     }
 
     GUILD_SCHEDULED_EVENT_USER_REMOVE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`);
 
         const scheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.guild_scheduled_event_id) || null;
 
