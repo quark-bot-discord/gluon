@@ -169,6 +169,14 @@ class EventHandler {
 
     }
 
+    CHANNEL_PINS_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => CHANNEL_PINS_UPDATE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.CHANNEL_PINS_UPDATE, data);
+
+    }
+
     THREAD_CREATE(data) {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => THREAD_CREATE ${data.guild_id}`);
