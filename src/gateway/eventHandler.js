@@ -526,6 +526,39 @@ class EventHandler {
         this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
 
     }
+
+    AUTO_MODERATION_RULE_CREATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => AUTO_MODERATION_RULE_CREATE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+
+    }
+
+    AUTO_MODERATION_RULE_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+
+    }
+
+    AUTO_MODERATION_RULE_DELETE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => AUTO_MODERATION_RULE_DELETE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+
+    }
+
+    AUTO_MODERATION_ACTION_EXECUTION(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`);
+
+        this.client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
+
+    }
+
 }
 
 module.exports = EventHandler;
