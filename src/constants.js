@@ -186,3 +186,22 @@ module.exports.GLUON_CACHING_OPTIONS = {
     FILES_ONLY:         (1 << 1),
     NO_VOICE_STATE:     (1 << 2)
 };
+module.exports.AUTO_MODERATION_TRIGGER_TYPES = {
+    KEYWORD:            (1),
+    SPAM:               (3),
+    KEYWORD_PRESET:     (4),
+    MENTION_SPAM:       (5)
+};
+module.exports.AUTO_MODERATION_EVENT_TYPES = {
+    MESSAGE_SEND:       (1)
+};
+module.exports.AUTO_MODERATION_KEYWORD_PRESET_TYPES = {
+    PROFANITY:          (1),
+    SEXUAL_CONTENT:     (2),
+    SLURS:              (3)
+};
+module.exports.AUTO_MODERATION_ACTION_TYPES = {
+    BLOCK_MESSAGE:      (1),
+    SEND_ALERT_MESSAGE: (2),
+    TIMEOUT:            (3)
+};
