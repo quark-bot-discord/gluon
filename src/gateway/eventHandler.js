@@ -486,6 +486,42 @@ class EventHandler {
         this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
 
     }
+
+    GUILD_SCHEDULED_EVENT_USER_ADD(data) {
+
+        const scheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.guild_scheduled_event_id) || null;
+
+        if (scheduledEvent) {
+
+            scheduledEvent.user_count++;
+
+            this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.set(data.guild_scheduled_event_id, scheduledEvent);
+
+        }
+
+        const user = this.client.users.cache.get(data.user_id) || null;
+
+        this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
+
+    }
+
+    GUILD_SCHEDULED_EVENT_USER_REMOVE(data) {
+
+        const scheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.guild_scheduled_event_id) || null;
+
+        if (scheduledEvent) {
+
+            scheduledEvent.user_count--;
+
+            this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.set(data.guild_scheduled_event_id, scheduledEvent);
+
+        }
+
+        const user = this.client.users.cache.get(data.user_id) || null;
+
+        this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
+
+    }
 }
 
 module.exports = EventHandler;
