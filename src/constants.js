@@ -51,9 +51,11 @@ module.exports.EVENTS = {
     CHANNEL_CREATE:                 ("channelCreate"),
     CHANNEL_UPDATE:                 ("channelUpdate"),
     CHANNEL_DELETE:                 ("channelDelete"),
+    CHANNEL_PINS_UPDATE:            ("channelPinsUpdate"),
     THREAD_CREATE:                  ("threadCreate"),
     THREAD_UPDATE:                  ("threadUpdate"),
     THREAD_DELETE:                  ("threadDelete"),
+    THREAD_LIST_SYNC:               ("threadListSync"),
     INVITE_CREATE:                  ("inviteCreate"),
     INVITE_DELETE:                  ("inviteDelete"),
     GUILD_ROLE_CREATE:              ("roleCreate"),
@@ -61,7 +63,12 @@ module.exports.EVENTS = {
     GUILD_ROLE_DELETE:              ("roleDelete"),
     ENTITLEMENT_CREATE:             ("entitlementCreate"),
     ENTITLEMENT_UPDATE:             ("entitlementUpdate"),
-    ENTITLEMENT_DELETE:             ("entitlementDelete")
+    ENTITLEMENT_DELETE:             ("entitlementDelete"),
+    GUILD_SCHEDULED_EVENT_CREATE:   ("guildScheduledEventCreate"),
+    GUILD_SCHEDULED_EVENT_UPDATE:   ("guildScheduledEventUpdate"),
+    GUILD_SCHEDULED_EVENT_DELETE:   ("guildScheduledEventDelete"),
+    GUILD_SCHEDULED_EVENT_USER_ADD: ("guildScheduledEventUserAdd"),
+    GUILD_SCHEDULED_EVENT_USER_REMOVE: ("guildScheduledEventUserRemove")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),
