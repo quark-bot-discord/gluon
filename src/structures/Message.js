@@ -183,12 +183,6 @@ class Message {
             this.type = existing.type;
 
         /**
-         * The UNIX (seconds) timestamp for when this message was created.
-         * @type {Number}
-         */
-        this.timestamp = getTimestamp(this.id);
-
-        /**
          * Stickers sent with this message.
          * @type {Sticker[]}
          */
@@ -204,6 +198,16 @@ class Message {
             if (!this.channel)
                 this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
         }
+
+    }
+
+    /**
+     * The UNIX (seconds) timestamp for when this message was created.
+     * @type {Number}
+     */
+    get timestamp() {
+
+        return getTimestamp(this.id);
 
     }
 
