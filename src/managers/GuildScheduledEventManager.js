@@ -14,7 +14,7 @@ class GuildScheduledEventManager {
 
         this.cache = new Map();
 
-        this.list().then(() => null);
+        // this.list().then(() => null);
 
     }
 
