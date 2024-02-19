@@ -8,6 +8,7 @@ const Member = require("../structures/Member");
 const Message = require("../structures/Message");
 const OptionSelect = require("../structures/OptionSelect");
 const Role = require("../structures/Role");
+const ScheduledEvent = require("../structures/ScheduledEvent");
 const SlashCommand = require("../structures/SlashCommand");
 const Thread = require("../structures/Thread");
 const User = require("../structures/User");
@@ -446,6 +447,37 @@ class EventHandler {
 
     }
 
+    GUILD_SCHEDULED_EVENT_CREATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`);
+
+        const scheduledEvent = new ScheduledEvent(this.client, data);
+
+        this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
+
+    }
+
+    GUILD_SCHEDULED_EVENT_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`);
+
+        const oldScheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.id) || null;
+        const newScheduledEvent = new ScheduledEvent(this.client, data);
+
+        this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_UPDATE, oldScheduledEvent, newScheduledEvent);
+
+    }
+
+    GUILD_SCHEDULED_EVENT_DELETE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`);
+
+        const scheduledEvent = this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.get(data.id) || null;
+        this.client.guilds.cache.get(data.guild_id)?.scheduled_events.cache.delete(data.id);
+
+        this.client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
+
+    }
 }
 
 module.exports = EventHandler;

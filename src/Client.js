@@ -24,7 +24,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
 
         super();
 
@@ -95,6 +95,12 @@ class Client extends EventsEmitter {
          * @type {Boolean}
          */
         this.cacheRoles = cacheRoles;
+
+        /**
+         * Whether this client should cache scheduled events.
+         * @type {Boolean}
+         */
+        this.cacheScheduledEvents = cacheScheduledEvents;
 
         /**
          * An array of the shard ids that this client is handling.

@@ -219,5 +219,19 @@ module.exports = {
         },
         method: "DELETE",
         majorParams: [0]
+    },
+    getListGuildScheduledEvents: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/scheduled-events`;
+        },
+        method: "GET",
+        majorParams: [0]
+    },
+    getGuildScheduledEvent: {
+        path: ([guild_id, scheduled_event_id]) => {
+            return `/guilds/${guild_id}/scheduled-events/${scheduled_event_id}`;
+        },
+        method: "GET",
+        majorParams: [0]
     }
 };

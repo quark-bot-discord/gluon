@@ -2,6 +2,7 @@ const { AUDIT_LOG_TYPES, PERMISSIONS, CDN_BASE_URL } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildRoleManager = require("../managers/GuildRoleManager");
+const GuildScheduledEventManager = require("../managers/GuildScheduledEventManager");
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const checkPermission = require("../util/checkPermission");
@@ -79,7 +80,7 @@ class Guild {
              * UNIX (seconds) timestamp for when the bot user was added to this guild.
              * @type {Number?}
              */
-            this.joined_at = data.joined_at ? (new Date(data.joined_at).getTime() / 1000) | 0 : null;
+            this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
         else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
 
@@ -132,6 +133,8 @@ class Guild {
          */
         this.roles = existing ? existing.roles : new GuildRoleManager(this.client);
 
+        this.scheduled_events = existing ? existing.scheduled_events : new GuildScheduledEventManager(this.client, this);
+
         /**
          * The locale of this guild, if set up as a community.
          * @type {String}
@@ -160,6 +163,10 @@ class Guild {
                 new VoiceState(this.client, data.voice_states[i], data.id, nocache);
 
         if (data.roles)
+            for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
+                new Role(this.client, data.roles[i], data.id, nocache);
+
+        if (data.scheduled_events)
             for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
                 new Role(this.client, data.roles[i], data.id, nocache);
 
