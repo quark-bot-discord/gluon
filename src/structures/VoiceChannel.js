@@ -24,11 +24,6 @@ class VoiceChannel extends Channel {
         else if (existing && typeof existing.rtc_region == "string")
             this.rtc_region = existing.rtc_region;
 
-        if (typeof data.video_quality_mode == "number")
-            this.video_quality_mode = data.video_quality_mode;
-        else if (existing && typeof existing.video_quality_mode == "number")
-            this.video_quality_mode = existing.video_quality_mode;
-
         if (data.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)
             this.stage = true;
 

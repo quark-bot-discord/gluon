@@ -52,11 +52,6 @@ class Channel {
 
         const existing = this.guild?.channels.cache.get(data.id) || null;
 
-        if (typeof data.position == "number")
-            this.position = data.position;
-        else if (existing && typeof existing.position == "number")
-            this.position = existing.position;
-
         /**
          * The name of the channel.
          * @type {String}
@@ -75,11 +70,6 @@ class Channel {
             this.rate_limit_per_user = data.rate_limit_per_user;
         else if (existing && typeof existing.rate_limit_per_user == "number")
             this.rate_limit_per_user = existing.rate_limit_per_user;
-
-        if (typeof data.parent_id == "string")
-            this.parent_id = BigInt(data.parent_id);
-        else if (existing && typeof existing.parent_id == "string")
-            this.parent_id = existing.parent_id;
 
         this._attributes = 0;
 
