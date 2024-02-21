@@ -1,5 +1,6 @@
 const { AUDIT_LOG_TYPES, PERMISSIONS, CDN_BASE_URL } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
+const GuildEmojisManager = require("../managers/GuildEmojisManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildRoleManager = require("../managers/GuildRoleManager");
 const GuildScheduledEventManager = require("../managers/GuildScheduledEventManager");
@@ -7,6 +8,7 @@ const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const checkPermission = require("../util/checkPermission");
 const AuditLog = require("./AuditLog");
+const Emoji = require("./Emoji");
 const Member = require("./Member");
 const Role = require("./Role");
 const Thread = require("./Thread");
@@ -60,6 +62,8 @@ class Guild {
          */
         this.name = data.name;
 
+        this.description = data.description;
+
         // needed for join/leave logging
         /**
          * The guild icon hash.
@@ -83,13 +87,6 @@ class Guild {
             this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
         else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
-
-        // only needed if file logging is enabled
-        /**
-         * The premium tier level of this guild.
-         * @type {Number}
-         */
-        this.premium_tier = data.premium_tier;
 
         if (data.unavailable == true)
             /**
@@ -135,6 +132,142 @@ class Guild {
 
         this.scheduled_events = existing ? existing.scheduled_events : new GuildScheduledEventManager(this.client, this);
 
+        this.emojis = existing ? existing.emojis : new GuildEmojisManager(this.client);
+
+        this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
+
+        this.rules_channel_id = data.rules_channel_id ? BigInt(data.rules_channel_id) : null;
+
+        if (typeof data.premium_subscription_count == "number")
+            this.premium_subscription_count = data.premium_subscription_count;
+        else if (typeof existing.premium_subscription_count == "number")
+            this.premium_subscription_count = existing.premium_subscription_count;
+        else
+            this.premium_subscription_count = 0;
+
+        this._attributes = data.system_channel_flags;
+
+        if (typeof data.mfa_level == "number" || typeof existing.mfa_level == "number") {
+            const mfaLevel = typeof data.mfa_level == "number" ? data.mfa_level : existing.mfa_level;
+            switch (mfaLevel) {
+                case 0:
+                    // none
+                    this._attributes |= (0b1 << 6);
+                    break;
+                case 1:
+                    // elevated
+                    this._attributes |= (0b1 << 7);
+                    break;
+            }
+        }
+
+        if (typeof data.verification_level == "number" || typeof existing.verification_level == "number") {
+            const verificationLevel = typeof data.verification_level == "number" ? data.verification_level : existing.verification_level;
+            switch (verificationLevel) {
+                case 0:
+                    // none
+                    this._attributes |= (0b1 << 8);
+                    break;
+                case 1:
+                    // low
+                    this._attributes |= (0b1 << 9);
+                    break;
+                case 2:
+                    // medium
+                    this._attributes |= (0b1 << 10);
+                    break;
+                case 3:
+                    // high
+                    this._attributes |= (0b1 << 11);
+                    break;
+                case 4:
+                    // very high
+                    this._attributes |= (0b1 << 12);
+                    break;
+            }
+        }
+
+        if (typeof data.default_message_notifications == "number" || typeof existing.default_message_notifications == "number") {
+            const defaultMessageNotifications = typeof data.default_message_notifications == "number" ? data.default_message_notifications : existing.default_message_notifications;
+            switch (defaultMessageNotifications) {
+                case 0:
+                    // all messages
+                    this._attributes |= (0b1 << 13);
+                    break;
+                case 1:
+                    // only mentions
+                    this._attributes |= (0b1 << 14);
+                    break;
+            }
+        }
+
+        if (typeof data.explicit_content_filter == "number" || typeof existing.explicit_content_filter == "number") {
+            const explicitContentFilter = typeof data.explicit_content_filter == "number" ? data.explicit_content_filter : existing.explicit_content_filter;
+            switch (explicitContentFilter) {
+                case 0:
+                    // disabled
+                    this._attributes |= (0b1 << 15);
+                    break;
+                case 1:
+                    // members without roles
+                    this._attributes |= (0b1 << 16);
+                    break;
+                case 2:
+                    // all members
+                    this._attributes |= (0b1 << 17);
+                    break;
+            }
+        }
+
+        if (typeof data.nsfw_level == "number" || typeof existing.nsfw_level == "number") {
+            const nsfwLevel = typeof data.nsfw_level == "number" ? data.nsfw_level : existing.nsfw_level;
+            switch (nsfwLevel) {
+                case 0:
+                    // default
+                    this._attributes |= (0b1 << 18);
+                    break;
+                case 1:
+                    // explicit
+                    this._attributes |= (0b1 << 19);
+                    break;
+                case 2:
+                    // safe
+                    this._attributes |= (0b1 << 20);
+                    break;
+                case 3:
+                    // age restricted
+                    this._attributes |= (0b1 << 21);
+                    break;
+            }
+        }
+
+        if (data && typeof data.premium_tier == "number" || typeof existing.premium_tier == "number") {
+            const premiumTier = typeof data.premium_tier == "number" ? data.premium_tier : existing.premium_tier;
+            switch (premiumTier) {
+                case 0:
+                    // none
+                    this._attributes |= (0b1 << 22);
+                    break;
+                case 1:
+                    // tier 1
+                    this._attributes |= (0b1 << 23);
+                    break;
+                case 2:
+                    // tier 2
+                    this._attributes |= (0b1 << 24);
+                    break;
+                case 3:
+                    // tier 3
+                    this._attributes |= (0b1 << 25);
+                    break;
+            }
+        }
+
+        if (data && typeof data.premium_progress_bar_enabled == "boolean" && data.premium_progress_bar_enabled == true)
+            this._attributes |= (0b1 << 26);
+        else if (existing && typeof existing.premium_progress_bar_enabled == "boolean" && existing.premium_progress_bar_enabled == true)
+            this._attributes |= (0b1 << 26);
+
         /**
          * The locale of this guild, if set up as a community.
          * @type {String}
@@ -166,9 +299,13 @@ class Guild {
             for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
                 new Role(this.client, data.roles[i], data.id, nocache);
 
-        if (data.scheduled_events)
-            for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
-                new Role(this.client, data.roles[i], data.id, nocache);
+        // if (data.scheduled_events)
+        //     for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
+        //         new Role(this.client, data.roles[i], data.id, nocache);
+
+        if (data.emojis)
+            for (let i = 0; i < data.emojis.length && this.client.cacheEmojis == true; i++)
+                new Emoji(this.client, data.emojis[i], data.id, nocache);
 
     }
 
@@ -182,6 +319,99 @@ class Guild {
         return this.icon ?
             `${CDN_BASE_URL}/icons/${this.id}/${this.icon}.${this.icon.startsWith("a_") ? "gif" : "png"}` :
             null;
+
+    }
+
+    get system_channel_flags() {
+
+        if ((this._attributes & (0b1 << 0)) == (0b1 << 0))
+            return "SUPPRESS_JOIN_NOTIFICATIONS";
+        else if ((this._attributes & (0b1 << 1)) == (0b1 << 1))
+            return "SUPPRESS_PREMIUM_SUBSCRIPTIONS";
+        else if ((this._attributes & (0b1 << 2)) == (0b1 << 2))
+            return "SUPPRESS_GUILD_REMINDER_NOTIFICATIONS";
+        else if ((this._attributes & (0b1 << 3)) == (0b1 << 3))
+            return "SUPPRESS_JOIN_NOTIFICATION_REPLIES";
+        else if ((this._attributes & (0b1 << 4)) == (0b1 << 4))
+            return "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS";
+        else if ((this._attributes & (0b1 << 5)) == (0b1 << 5))
+            return "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES";
+
+    }
+
+    get mfa_level() {
+
+        if ((this._attributes & (0b1 << 6)) == (0b1 << 6))
+            return "NONE";
+        else if ((this._attributes & (0b1 << 7)) == (0b1 << 7))
+            return "ELEVATED";
+
+    }
+
+    get verification_level() {
+
+        if ((this._attributes & (0b1 << 8)) == (0b1 << 8))
+            return "NONE";
+        else if ((this._attributes & (0b1 << 9)) == (0b1 << 9))
+            return "LOW";
+        else if ((this._attributes & (0b1 << 10)) == (0b1 << 10))
+            return "MEDIUM";
+        else if ((this._attributes & (0b1 << 11)) == (0b1 << 11))
+            return "HIGH";
+        else if ((this._attributes & (0b1 << 12)) == (0b1 << 12))
+            return "VERY_HIGH";
+
+    }
+
+    get default_message_notifications() {
+
+        if ((this._attributes & (0b1 << 13)) == (0b1 << 13))
+            return "ALL_MESSAGES";
+        else if ((this._attributes & (0b1 << 14)) == (0b1 << 14))
+            return "ONLY_MENTIONS";
+
+    }
+
+    get explicit_content_filter() {
+
+        if ((this._attributes & (0b1 << 15)) == (0b1 << 15))
+            return "DISABLED";
+        else if ((this._attributes & (0b1 << 16)) == (0b1 << 16))
+            return "MEMBERS_WITHOUT_ROLES";
+        else if ((this._attributes & (0b1 << 17)) == (0b1 << 17))
+            return "ALL_MEMBERS";
+
+    }
+
+    get nsfw_level() {
+
+        if ((this._attributes & (0b1 << 18)) == (0b1 << 18))
+            return "DEFAULT";
+        else if ((this._attributes & (0b1 << 19)) == (0b1 << 19))
+            return "EXPLICIT";
+        else if ((this._attributes & (0b1 << 20)) == (0b1 << 20))
+            return "SAFE";
+        else if ((this._attributes & (0b1 << 21)) == (0b1 << 21))
+            return "AGE_RESTRICTED";
+
+    }
+
+    get premium_tier() {
+
+        if ((this._attributes & (0b1 << 22)) == (0b1 << 22))
+            return 0;
+        else if ((this._attributes & (0b1 << 23)) == (0b1 << 23))
+            return 1;
+        else if ((this._attributes & (0b1 << 24)) == (0b1 << 24))
+            return 2;
+        else if ((this._attributes & (0b1 << 25)) == (0b1 << 25))
+            return 3;
+
+    }
+    // existing.premium_progress_bar_enabled
+    get premium_progress_bar_enabled() {
+
+        return (this._attributes & (0b1 << 26)) == (0b1 << 26);
 
     }
 
