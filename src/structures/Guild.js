@@ -408,7 +408,7 @@ class Guild {
             return 3;
 
     }
-    // existing.premium_progress_bar_enabled
+
     get premium_progress_bar_enabled() {
 
         return (this._attributes & (0b1 << 26)) == (0b1 << 26);
