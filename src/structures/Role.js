@@ -1,8 +1,13 @@
 class Role {
-    
+
     constructor(client, data, guild_id, nocache = false) {
 
         this.client = client;
+
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
 
         this.id = BigInt(data.id);
 
@@ -29,7 +34,7 @@ class Role {
             this.tags = data.tags;
 
         if (nocache == false && this.client.cacheRoles == true)
-            this.client.guilds.cache.get(guild_id)?.roles.cache.set(data.id, this);
+            this.guild?.roles.cache.set(data.id, this);
 
     }
 
