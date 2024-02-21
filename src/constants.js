@@ -34,6 +34,7 @@ module.exports.EVENTS = {
     READY:                          ("ready"),
     GUILD_CREATE:                   ("guildCreate"),
     GUILD_DELETE:                   ("guildDelete"),
+    GUILD_UPDATE:                   ("guildUpdate"),
     MESSAGE_CREATE:                 ("messageCreate"),
     MESSAGE_UPDATE:                 ("messageUpdate"),
     MESSAGE_DELETE:                 ("messageDelete"),
