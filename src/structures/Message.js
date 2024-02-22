@@ -134,35 +134,21 @@ class Message {
         else if (this.embeds == undefined)
             this.embeds = [];
 
-        /**
-         * Whether any users were mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mentions = data.mentions?.length != 0 || undefined;
-        if (this.mentions == undefined && existing && existing.mentions != undefined)
-            this.mentions = existing.mentions;
-        else if (this.mentions == undefined)
-            this.mentions = false;
+        this._attributes = 0;
 
-        /**
-         * Whether any roles were mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mention_roles = data.mention_roles?.length != 0 || undefined;
-        if (this.mention_roles == undefined && existing && existing.mention_roles != undefined)
-            this.mention_roles = existing.mention_roles;
-        else if (this.mention_roles == undefined)
-            this.mention_roles = false;
+        if (data.mentions?.length != 0 || (existing && existing.mentions != undefined))
+            this._attributes |= (0b1 << 0);
 
-        /**
-         * Whether everyone was mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mention_everyone = data.mention_everyone || undefined;
-        if (this.mention_everyone == undefined && existing && existing.mention_everyone != undefined)
-            this.mention_everyone = existing.mention_everyone;
-        else if (this.mention_everyone == undefined)
-            this.mention_everyone = false;
+        if (data.mention_roles?.length != 0 || (existing && existing.mention_roles != undefined))
+            this._attributes |= (0b1 << 1);
+
+        if (data.mention_everyone?.length != 0 || (existing && existing.mention_everyone != undefined))
+            this._attributes |= (0b1 << 2);
+
+        if (data.pinned != undefined && data.pinned == true)
+            this._attributes |= (0b1 << 3);
+        else if (existing && existing.pinned != undefined && existing.pinned == true)
+            this._attributes |= (0b1 << 3);
 
         /**
          * The message that this message references.
@@ -198,6 +184,30 @@ class Message {
             if (!this.channel)
                 this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
         }
+
+    }
+
+    get mentions() {
+
+        return (this._attributes & (0b1 << 0)) == (0b1 << 0);
+
+    }
+
+    get mention_roles() {
+
+        return (this._attributes & (0b1 << 1)) == (0b1 << 1);
+
+    }
+
+    get mention_everyone() {
+
+        return (this._attributes & (0b1 << 2)) == (0b1 << 2);
+
+    }
+
+    get pinned() {
+
+        return (this._attributes & (0b1 << 3)) == (0b1 << 3);
 
     }
 
