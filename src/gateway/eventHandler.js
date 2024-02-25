@@ -3,6 +3,7 @@
 const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
 const AuditLog = require("../structures/AuditLog");
 const ButtonClick = require("../structures/ButtonClick");
+const Emoji = require("../structures/Emoji");
 const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 const Message = require("../structures/Message");
@@ -14,6 +15,7 @@ const Thread = require("../structures/Thread");
 const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
+const deepCompare = require("../util/deepCompare");
 
 class EventHandler {
 
@@ -559,6 +561,104 @@ class EventHandler {
 
     }
 
+    GUILD_EMOJIS_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_EMOJIS_UPDATE ${data.guild_id}`);
+
+        const oldEmojis = this.client.guilds.cache.get(data.guild_id)?.emojis.cache;
+
+        if (oldEmojis.size < data.emojis.length) {
+            // EMOJI ADDED
+            let addedEmojiRaw;
+            const oldIds = Array.from(oldEmojis.keys());
+
+            for (let i = 0; i < data.emojis.length; i++) {
+
+                let matchingFound = false;
+
+                for (let n = 0; n < oldIds.length; n++)
+                    if (oldIds[n] == data.emojis[i].id) {
+
+                        matchingFound = true;
+                        break;
+
+                    }
+
+                if (matchingFound != true) {
+
+                    addedEmojiRaw = data.emojis[i];
+                    break;
+
+                }
+
+            }
+
+            const addedEmoji = new Emoji(this.client, addedEmojiRaw, data.guild_id);
+
+            this.client.emit(EVENTS.GUILD_EMOJI_CREATE, addedEmoji);
+
+        } else if (oldEmojis.size > data.emojis.length) {
+            // EMOJI DELETED
+            let deletedId;
+            const oldIds = Array.from(oldEmojis.keys());
+
+            for (let i = 0; i < oldIds.length; i++) {
+
+                let matchingFound = false;
+
+                for (let n = 0; n < data.emojis.length; n++)
+                    if (oldIds[i] == data.emojis[n].id) {
+
+                        matchingFound = true;
+                        break;
+
+                    }
+
+                if (matchingFound != true) {
+
+                    deletedId = oldIds[i];
+                    break;
+
+                }
+
+            }
+
+            const deletedEmoji = oldEmojis.get(deletedId);
+
+            this.client.guilds.cache.get(data.guild_id)?.emojis.cache.delete(deletedId);
+
+            this.client.emit(EVENTS.GUILD_EMOJI_DELETE, deletedEmoji);
+
+        } else {
+            // EMOJI UPDATED
+            const oldEmojisArray = Array.from(oldEmojis.values());
+
+            let newEmoji;
+            let oldEmoji;
+
+            for (let i = 0; i < oldEmojisArray.length; i++) {
+
+                const correspondingNewEmojiRaw = data.emojis.find(e => e.id == oldEmojisArray[i].id);
+                const correspondingNewEmoji = new Emoji(this.client, correspondingNewEmojiRaw, data.guild_id);
+
+                const differences = deepCompare(oldEmojisArray[i], correspondingNewEmoji);
+
+                if (differences.length != 0) {
+
+                    newEmoji = correspondingNewEmoji;
+                    oldEmoji = oldEmojisArray[i];
+                    break;
+
+                }
+
+            }
+
+            this.client.emit(EVENTS.GUILD_EMOJI_UPDATE, oldEmoji, newEmoji);
+
+        }
+        
+
+    }
 }
 
 module.exports = EventHandler;
