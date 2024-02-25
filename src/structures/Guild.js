@@ -324,18 +324,22 @@ class Guild {
 
     get system_channel_flags() {
 
+        let flags = [];
+
         if ((this._attributes & (0b1 << 0)) == (0b1 << 0))
-            return "SUPPRESS_JOIN_NOTIFICATIONS";
-        else if ((this._attributes & (0b1 << 1)) == (0b1 << 1))
-            return "SUPPRESS_PREMIUM_SUBSCRIPTIONS";
-        else if ((this._attributes & (0b1 << 2)) == (0b1 << 2))
-            return "SUPPRESS_GUILD_REMINDER_NOTIFICATIONS";
-        else if ((this._attributes & (0b1 << 3)) == (0b1 << 3))
-            return "SUPPRESS_JOIN_NOTIFICATION_REPLIES";
-        else if ((this._attributes & (0b1 << 4)) == (0b1 << 4))
-            return "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS";
-        else if ((this._attributes & (0b1 << 5)) == (0b1 << 5))
-            return "SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES";
+            flags.push("SUPPRESS_JOIN_NOTIFICATIONS");
+        if ((this._attributes & (0b1 << 1)) == (0b1 << 1))
+            flags.push("SUPPRESS_PREMIUM_SUBSCRIPTIONS");
+        if ((this._attributes & (0b1 << 2)) == (0b1 << 2))
+            flags.push("SUPPRESS_GUILD_REMINDER_NOTIFICATIONS");
+        if ((this._attributes & (0b1 << 3)) == (0b1 << 3))
+            flags.push("SUPPRESS_JOIN_NOTIFICATION_REPLIES");
+        if ((this._attributes & (0b1 << 4)) == (0b1 << 4))
+            flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS");
+        if ((this._attributes & (0b1 << 5)) == (0b1 << 5))
+            flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES");
+
+        return flags;
 
     }
 
