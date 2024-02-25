@@ -8,7 +8,10 @@ class Emoji {
 
         this.name = data.name;
 
-        this.guild_id = BigInt(guild_id);
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            this.guild_id = BigInt(guild_id);
 
         if (nocache == false && this.client.cacheEmojis == true)
             this.client.guilds.cache.get(guild_id)?.emojis.cache.set(data.id, this);
