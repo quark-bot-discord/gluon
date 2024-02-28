@@ -142,7 +142,7 @@ class Message {
         if (data.mention_roles?.length != 0 || (existing && existing.mention_roles != undefined))
             this._attributes |= (0b1 << 1);
 
-        if (data.mention_everyone?.length != 0 || (existing && existing.mention_everyone != undefined))
+        if ((data.mention_everyone == true) || (existing && existing.mention_everyone != false))
             this._attributes |= (0b1 << 2);
 
         if (data.pinned != undefined && data.pinned == true)
