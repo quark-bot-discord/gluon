@@ -453,6 +453,19 @@ class Client extends EventsEmitter {
 
     }
 
+    async registerCommands(commands) {
+
+        const body = [];
+
+        for (let i = 0; i < commands.length; i++)
+            body.push(commands[i].toJSON());
+
+        const data = await this.request.makeRequest("bulkOverwriteGlobalApplicationCommands", [this.user.id], body);
+
+        return data;
+
+    }
+
     /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.

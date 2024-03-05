@@ -233,5 +233,12 @@ module.exports = {
         },
         method: "GET",
         majorParams: [0]
+    },
+    bulkOverwriteGlobalApplicationCommands: {
+        path: ([application_id]) => {
+            return `/applications/${application_id}/commands`;
+        },
+        method: "PUT",
+        majorParams: [0]
     }
 };
