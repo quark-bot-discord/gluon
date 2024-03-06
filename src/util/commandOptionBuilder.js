@@ -42,7 +42,7 @@ class CommandOption {
         return this;
 
     }
-    // NEED CHOICE BUILDER
+
     addChoice(choice) {
 
         this.choices.push(choice.toJSON());
