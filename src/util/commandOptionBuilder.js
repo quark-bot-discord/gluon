@@ -99,6 +99,14 @@ class CommandOption {
 
     }
 
+    setAutocomplete(autocomplete) {
+
+        this.autocomplete = autocomplete;
+
+        return this;
+
+    }
+
     toJSON() {
 
         return {
@@ -112,7 +120,8 @@ class CommandOption {
             min_value: this.min_value,
             max_value: this.max_value,
             min_length: this.min_length,
-            max_length: this.max_length
+            max_length: this.max_length,
+            autocomplete: this.autocomplete
         };
 
     }
