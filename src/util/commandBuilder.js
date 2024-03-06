@@ -75,7 +75,7 @@ class Command {
             name: this.name,
             type: this.type,
             description: this.description,
-            default_member_permissions: this.default_member_permissions,
+            default_member_permissions: Number(this.default_member_permissions),
             dm_permission: this.dm_permission,
             nsfw: this.nsfw,
             options: this.options
