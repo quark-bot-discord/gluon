@@ -7,6 +7,8 @@ class Command {
 
         this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
 
+        this.dm_permission = false;
+
         this.options = [];
 
     }
