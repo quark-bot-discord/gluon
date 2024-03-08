@@ -1,5 +1,6 @@
 const { CHANNEL_TYPES } = require("../constants");
 const bundleChannel = require("./bundleChannel");
+const bundleEmoji = require("./bundleEmoji");
 const bundleMember = require("./bundleMember");
 const bundleRole = require("./bundleRole");
 const bundleThread = require("./bundleThread");
