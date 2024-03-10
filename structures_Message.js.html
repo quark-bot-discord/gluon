@@ -1,84 +1,44 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/Message.js</title>
-
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="./build/entry.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-  <link type="text/css" rel="stylesheet" href="">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  
+    
+    <meta charset="utf-8">
+    <title>structures/Message.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<body>
 
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
+<label for="nav-trigger" class="overlay"></label>
 
-<body class="layout small-header">
-    <div id="stickyNavbarOverlay"></div>
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#send">send</a></li></ul></li><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#createWebhook">createWebhook</a></li><li data-type='method'><a href="Client.html#deleteChannelMessage">deleteChannelMessage</a></li><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#fetchMessage">fetchMessage</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#modifyWebhook">modifyWebhook</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li><li><a href="Guild.html">Guild</a><ul class='methods'><li data-type='method'><a href="Guild.html#ban">ban</a></li><li data-type='method'><a href="Guild.html#calculateMemberCacheCount">calculateMemberCacheCount</a></li><li data-type='method'><a href="Guild.html#calculateMessageCacheCount">calculateMessageCacheCount</a></li><li data-type='method'><a href="Guild.html#fetchAuditLogs">fetchAuditLogs</a></li><li data-type='method'><a href="Guild.html#fetchBan">fetchBan</a></li><li data-type='method'><a href="Guild.html#fetchChannels">fetchChannels</a></li><li data-type='method'><a href="Guild.html#fetchInvites">fetchInvites</a></li><li data-type='method'><a href="Guild.html#kick">kick</a></li><li data-type='method'><a href="Guild.html#leave">leave</a></li><li data-type='method'><a href="Guild.html#me">me</a></li><li data-type='method'><a href="Guild.html#removeMemberRole">removeMemberRole</a></li><li data-type='method'><a href="Guild.html#unban">unban</a></li></ul></li><li><a href="Interaction.html">Interaction</a><ul class='methods'><li data-type='method'><a href="Interaction.html#acknowledge">acknowledge</a></li><li data-type='method'><a href="Interaction.html#edit">edit</a></li><li data-type='method'><a href="Interaction.html#reply">reply</a></li></ul></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#edit">edit</a></li><li data-type='method'><a href="Message.html#reply">reply</a></li></ul></li><li><a href="ScheduledEvent.html">ScheduledEvent</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a><ul class='methods'><li data-type='method'><a href="TextChannel.html#bulkDelete">bulkDelete</a></li><li data-type='method'><a href="TextChannel.html#send">send</a></li></ul></li><li><a href="Thread.html">Thread</a><ul class='methods'><li data-type='method'><a href="Thread.html#send">send</a></li></ul></li><li><a href="User.html">User</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">structures/Message.js</h1>
     
 
-<div class="top-nav">
-    <div class="inner">
-        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-        <div class="logo">
-            
-            
-        </div>
-        <div class="menu">
-            
-            <div class="navigation">
-                <a
-                    href="index.html"
-                    class="link"
-                >
-                    Documentation
-                </a>
-                
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-    <div id="main">
-        <div
-            class="sidebar "
-            id="sidebarNav"
-        >
-            
-            <nav>
-                
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Interaction.html">Interaction</a></li><li><a href="Message.html">Message</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a></li><li><a href="Thread.html">Thread</a></li><li><a href="User.html">User</a></li></ul></div>
-                
-            </nav>
-        </div>
-        <div class="core" id="main-content-wrapper">
-            <div class="content">
-                <header class="page-title">
-                    <p>Source</p>
-                    <h1>structures/Message.js</h1>
-                </header>
-                
+    
 
 
 
@@ -88,7 +48,7 @@
             <pre class="prettyprint source linenums"><code>const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
-const { PERMISSIONS } = require("../constants");
+const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
@@ -110,6 +70,8 @@ class Message {
      * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
      */
     constructor(client, data, channel_id, guild_id, nocache = false) {
+
+        let onlyfiles = false;
 
         /**
          * The client instance.
@@ -144,6 +106,15 @@ class Message {
             this.channel_id = BigInt(channel_id);
 
         const existing = this.channel?.messages.cache.get(data.id) || null;
+
+        if (this.guild) {
+
+            onlyfiles = ((this.guild._cache_options &amp; GLUON_CACHING_OPTIONS.FILES_ONLY) == GLUON_CACHING_OPTIONS.FILES_ONLY);
+
+            if (this.channel)
+                nocache = ((this.guild._cache_options &amp; GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES) || ((this.channel._cache_options &amp; GLUON_CACHING_OPTIONS.NO_MESSAGES) == GLUON_CACHING_OPTIONS.NO_MESSAGES);
+
+        }
 
         /**
          * The id of the message.
@@ -185,15 +156,20 @@ class Message {
         else if (existing &amp;&amp; existing.attachments)
             this.attachments = existing.attachments;
 
+        if (this.attachments.length == 0 &amp;&amp; onlyfiles == true)
+            nocache = true;
+
         /**
          * The message content.
          * @type {String?}
          */
-        this.content = data.content;
-        if (!this.content &amp;&amp; existing &amp;&amp; existing.content)
-            this.content = existing.content;
-        else if (!this.content)
-            this.content = null;
+        if (onlyfiles != true) {
+            this.content = data.content;
+            if (!this.content &amp;&amp; existing &amp;&amp; existing.content)
+                this.content = existing.content;
+            else if (!this.content)
+                this.content = null;
+        }
 
         /**
          * The message embeds.
@@ -205,35 +181,21 @@ class Message {
         else if (this.embeds == undefined)
             this.embeds = [];
 
-        /**
-         * Whether any users were mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mentions = data.mentions?.length != 0 || undefined;
-        if (this.mentions == undefined &amp;&amp; existing &amp;&amp; existing.mentions != undefined)
-            this.mentions = existing.mentions;
-        else if (this.mentions == undefined)
-            this.mentions = false;
+        this._attributes = 0;
 
-        /**
-         * Whether any roles were mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mention_roles = data.mention_roles?.length != 0 || undefined;
-        if (this.mention_roles == undefined &amp;&amp; existing &amp;&amp; existing.mention_roles != undefined)
-            this.mention_roles = existing.mention_roles;
-        else if (this.mention_roles == undefined)
-            this.mention_roles = false;
+        if (data.mentions?.length != 0 || (existing &amp;&amp; existing.mentions != undefined))
+            this._attributes |= (0b1 &lt;&lt; 0);
 
-        /**
-         * Whether everyone was mentioned within the message.
-         * @type {Boolean}
-         */
-        this.mention_everyone = data.mention_everyone || undefined;
-        if (this.mention_everyone == undefined &amp;&amp; existing &amp;&amp; existing.mention_everyone != undefined)
-            this.mention_everyone = existing.mention_everyone;
-        else if (this.mention_everyone == undefined)
-            this.mention_everyone = false;
+        if (data.mention_roles?.length != 0 || (existing &amp;&amp; existing.mention_roles != undefined))
+            this._attributes |= (0b1 &lt;&lt; 1);
+
+        if ((data.mention_everyone == true) || (existing &amp;&amp; existing.mention_everyone != false))
+            this._attributes |= (0b1 &lt;&lt; 2);
+
+        if (data.pinned != undefined &amp;&amp; data.pinned == true)
+            this._attributes |= (0b1 &lt;&lt; 3);
+        else if (existing &amp;&amp; existing.pinned != undefined &amp;&amp; existing.pinned == true)
+            this._attributes |= (0b1 &lt;&lt; 3);
 
         /**
          * The message that this message references.
@@ -254,12 +216,6 @@ class Message {
             this.type = existing.type;
 
         /**
-         * The UNIX (seconds) timestamp for when this message was created.
-         * @type {Number}
-         */
-        this.timestamp = getTimestamp(this.id);
-
-        /**
          * Stickers sent with this message.
          * @type {Sticker[]}
          */
@@ -275,6 +231,40 @@ class Message {
             if (!this.channel)
                 this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
         }
+
+    }
+
+    get mentions() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 0)) == (0b1 &lt;&lt; 0);
+
+    }
+
+    get mention_roles() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 1)) == (0b1 &lt;&lt; 1);
+
+    }
+
+    get mention_everyone() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 2)) == (0b1 &lt;&lt; 2);
+
+    }
+
+    get pinned() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 3)) == (0b1 &lt;&lt; 3);
+
+    }
+
+    /**
+     * The UNIX (seconds) timestamp for when this message was created.
+     * @type {Number}
+     */
+    get timestamp() {
+
+        return getTimestamp(this.id);
 
     }
 
@@ -320,7 +310,7 @@ class Message {
      * @returns {Promise&lt;Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */
-    async edit(content, { embed, components } = {}) {
+    async edit(content, { embed, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
             return null;
@@ -333,6 +323,8 @@ class Message {
             body.embeds = [embed.toJSON()];
         if (components)
             body.components = components.toJSON();
+        if (files)
+            body.files = files;
 
         if (this.referenced_message)
             body.message_reference = {
@@ -356,25 +348,20 @@ module.exports = Message;</code></pre>
 
 
 
-            </div>
-            
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
-                    <p class="sidebar-created-by">
-                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
-                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-                    </p>
-                </div>
-            </footer>
-            
-        </div>
-        <div id="side-nav" class="side-nav">
-        </div>
-    </div>
-<script src="scripts/app.min.js"></script>
-<script>PR.prettyPrint();</script>
-<script src="scripts/linenumber.js"> </script>
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Mar 10 2024 15:37:13 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
 
 
 </body>

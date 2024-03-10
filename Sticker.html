@@ -1,82 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Sticker</title>
-
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="./build/entry.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-  <link type="text/css" rel="stylesheet" href="">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  
+    
+    <meta charset="utf-8">
+    <title>Sticker - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<body>
 
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
+<label for="nav-trigger" class="overlay"></label>
 
-<body class="layout small-header">
-    <div id="stickyNavbarOverlay"></div>
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#send">send</a></li></ul></li><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#createWebhook">createWebhook</a></li><li data-type='method'><a href="Client.html#deleteChannelMessage">deleteChannelMessage</a></li><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#fetchMessage">fetchMessage</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#modifyWebhook">modifyWebhook</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li><li><a href="Guild.html">Guild</a><ul class='methods'><li data-type='method'><a href="Guild.html#ban">ban</a></li><li data-type='method'><a href="Guild.html#calculateMemberCacheCount">calculateMemberCacheCount</a></li><li data-type='method'><a href="Guild.html#calculateMessageCacheCount">calculateMessageCacheCount</a></li><li data-type='method'><a href="Guild.html#fetchAuditLogs">fetchAuditLogs</a></li><li data-type='method'><a href="Guild.html#fetchBan">fetchBan</a></li><li data-type='method'><a href="Guild.html#fetchChannels">fetchChannels</a></li><li data-type='method'><a href="Guild.html#fetchInvites">fetchInvites</a></li><li data-type='method'><a href="Guild.html#kick">kick</a></li><li data-type='method'><a href="Guild.html#leave">leave</a></li><li data-type='method'><a href="Guild.html#me">me</a></li><li data-type='method'><a href="Guild.html#removeMemberRole">removeMemberRole</a></li><li data-type='method'><a href="Guild.html#unban">unban</a></li></ul></li><li><a href="Interaction.html">Interaction</a><ul class='methods'><li data-type='method'><a href="Interaction.html#acknowledge">acknowledge</a></li><li data-type='method'><a href="Interaction.html#edit">edit</a></li><li data-type='method'><a href="Interaction.html#reply">reply</a></li></ul></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#edit">edit</a></li><li data-type='method'><a href="Message.html#reply">reply</a></li></ul></li><li><a href="ScheduledEvent.html">ScheduledEvent</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a><ul class='methods'><li data-type='method'><a href="TextChannel.html#bulkDelete">bulkDelete</a></li><li data-type='method'><a href="TextChannel.html#send">send</a></li></ul></li><li><a href="Thread.html">Thread</a><ul class='methods'><li data-type='method'><a href="Thread.html#send">send</a></li></ul></li><li><a href="User.html">User</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Sticker</h1>
     
 
-<div class="top-nav">
-    <div class="inner">
-        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-        <div class="logo">
-            
-            
-        </div>
-        <div class="menu">
-            
-            <div class="navigation">
-                <a
-                    href="index.html"
-                    class="link"
-                >
-                    Documentation
-                </a>
-                
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-    <div id="main">
-        <div
-            class="sidebar "
-            id="sidebarNav"
-        >
-            
-            <nav>
-                
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Interaction.html">Interaction</a></li><li><a href="Message.html">Message</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a></li><li><a href="Thread.html">Thread</a></li><li><a href="User.html">User</a></li></ul></div>
-                
-            </nav>
-        </div>
-        <div class="core" id="main-content-wrapper">
-            <div class="content">
-                <header class="page-title">
-                    <p>Class</p>
-                    <h1>Sticker</h1>
-                </header>
-                
+    
 
 
 
@@ -85,130 +47,43 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Sticker<span class="signature">(client, data)</span><span class="type-signature"></span></h2>
+        <h2>
         
-            <div class="class-description"><p>Represents an sticker.</p></div>
+            Sticker
+        
+        </h2>
+        
+            <div class="class-description usertext"><p>Represents an sticker.</p></div>
         
     
 </header>
 
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
-            <div class='vertical-section'>
-                <div class="members">
-                    <div class="member">
-                        <div class=name>
-                            <span class="tag">Constructor</span>
-                        </div>
-                        
-
+            
 
     
-    <h4 class="name" id="Sticker">
-        <a class="href-link" href="#Sticker">#</a>
-        
-        <span class="code-name">
-            
-                new Sticker<span class="signature">(client, data)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
+    <h2>Constructor</h2>
     
 
+    <h4 class="name" id="Sticker"><span class="type-signature"></span>new Sticker<span class="signature">(client, data)</span><span class="type-signature"></span></h4>
+
     
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>client</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type"><a href="Client.html">Client</a></code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The client instance.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>data</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">Object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Sticker data from Discord.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
 
 
 
 
 <dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
 
     
 
@@ -233,19 +108,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line6">line 6</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -261,70 +128,214 @@
 
 
 
+    <h5 class="h5-parameters">Parameters:</h5>
+    
 
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
-            </div>
+<table class="params">
+    <thead>
+    <tr>
         
-    
-    </div>
-    
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
+        <tr>
             
-                <div class="member">
+                <td class="name"><code>client</code></td>
+            
 
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Sticker data from Discord.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
-<code class="param-type"><a href="Client.html">Client</a></code>
-
-
-    </span>
-
-<h4 class="name" id="client">
-    <a class="href-link" href="#client">#</a>
+        </div>
     
-    <span class="code-name">
-        client
-    </span>
+
     
-</h4>
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="client"><span class="type-signature"></span>client<span class="type-signature"> :<a href="Client.html">Client</a></span></h4>
 
 
 
 
-<div class="description">
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The client instance.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
     <p>The client instance.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="format"><span class="type-signature type-signature-readonly">(readonly) </span>format<span class="type-signature"> :String</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The format of the sticker.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
 
     
 
@@ -349,19 +360,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line19">line 19</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -369,43 +372,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">String</code>
-
-
-    </span>
-
-<h4 class="name" id="format">
-    <a class="href-link" href="#format">#</a>
-    
-        
-            <span class='tag'>readonly</span>
-        
-    
-    <span class="code-name">
-        format
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The format of the sticker.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="format_type"><span class="type-signature"></span>format_type<span class="type-signature"> :Number</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The format type of the sticker.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
 
     
 
@@ -430,19 +438,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line46">line 46</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -450,39 +450,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Number</code>
-
-
-    </span>
-
-<h4 class="name" id="format_type">
-    <a class="href-link" href="#format_type">#</a>
-    
-    <span class="code-name">
-        format_type
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The format type of the sticker.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :BigInt</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the sticker.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
 
     
 
@@ -507,19 +516,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line37">line 37</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -527,39 +528,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">BigInt</code>
-
-
-    </span>
-
-<h4 class="name" id="id">
-    <a class="href-link" href="#id">#</a>
-    
-    <span class="code-name">
-        id
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The id of the sticker.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :String</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The name of the sticker.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
 
     
 
@@ -584,19 +594,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line25">line 25</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -604,39 +606,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">String</code>
-
-
-    </span>
-
-<h4 class="name" id="name">
-    <a class="href-link" href="#name">#</a>
-    
-    <span class="code-name">
-        name
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The name of the sticker.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="previewImageURL"><span class="type-signature type-signature-readonly, nullable">(readonly, nullable) </span>previewImageURL<span class="type-signature"> :String</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
 
     
 
@@ -661,19 +672,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line31">line 31</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -681,93 +684,29 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">String</code>
-
-
-    </span>
-
-<h4 class="name" id="previewImageURL">
-    <a class="href-link" href="#previewImageURL">#</a>
-    
-        
-            <span class='tag'>readonly</span>
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        previewImageURL
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.</p>
 </div>
 
 
 
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Sticker.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Sticker.js.html">structures/Sticker.js</a>, <a href="structures_Sticker.js.html#line57">line 57</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
             
-            </div>
-        </div>
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
     
 
     
@@ -782,25 +721,20 @@
 
 
 
-            </div>
-            
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
-                    <p class="sidebar-created-by">
-                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
-                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-                    </p>
-                </div>
-            </footer>
-            
-        </div>
-        <div id="side-nav" class="side-nav">
-        </div>
-    </div>
-<script src="scripts/app.min.js"></script>
-<script>PR.prettyPrint();</script>
-<script src="scripts/linenumber.js"> </script>
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Mar 10 2024 15:37:13 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
 
 
 </body>

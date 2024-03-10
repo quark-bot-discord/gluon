@@ -1,82 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Message</title>
-
-  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="./build/entry.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-  <link type="text/css" rel="stylesheet" href="">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-  
+    
+    <meta charset="utf-8">
+    <title>Message - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<body>
 
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
 
+<label for="nav-trigger" class="overlay"></label>
 
-<body class="layout small-header">
-    <div id="stickyNavbarOverlay"></div>
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a><ul class='methods'><li data-type='method'><a href="Channel.html#send">send</a></li></ul></li><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#createWebhook">createWebhook</a></li><li data-type='method'><a href="Client.html#deleteChannelMessage">deleteChannelMessage</a></li><li data-type='method'><a href="Client.html#deleteWebhook">deleteWebhook</a></li><li data-type='method'><a href="Client.html#editMessage">editMessage</a></li><li data-type='method'><a href="Client.html#fetchChannelMessages">fetchChannelMessages</a></li><li data-type='method'><a href="Client.html#fetchChannelWebhooks">fetchChannelWebhooks</a></li><li data-type='method'><a href="Client.html#fetchMessage">fetchMessage</a></li><li data-type='method'><a href="Client.html#followStatusChannel">followStatusChannel</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#modifyWebhook">modifyWebhook</a></li><li data-type='method'><a href="Client.html#postWebhook">postWebhook</a></li><li data-type='method'><a href="Client.html#purgeChannelMessages">purgeChannelMessages</a></li><li data-type='method'><a href="Client.html#sendMessage">sendMessage</a></li><li data-type='method'><a href="Client.html#setStatus">setStatus</a></li></ul></li><li><a href="Guild.html">Guild</a><ul class='methods'><li data-type='method'><a href="Guild.html#ban">ban</a></li><li data-type='method'><a href="Guild.html#calculateMemberCacheCount">calculateMemberCacheCount</a></li><li data-type='method'><a href="Guild.html#calculateMessageCacheCount">calculateMessageCacheCount</a></li><li data-type='method'><a href="Guild.html#fetchAuditLogs">fetchAuditLogs</a></li><li data-type='method'><a href="Guild.html#fetchBan">fetchBan</a></li><li data-type='method'><a href="Guild.html#fetchChannels">fetchChannels</a></li><li data-type='method'><a href="Guild.html#fetchInvites">fetchInvites</a></li><li data-type='method'><a href="Guild.html#kick">kick</a></li><li data-type='method'><a href="Guild.html#leave">leave</a></li><li data-type='method'><a href="Guild.html#me">me</a></li><li data-type='method'><a href="Guild.html#removeMemberRole">removeMemberRole</a></li><li data-type='method'><a href="Guild.html#unban">unban</a></li></ul></li><li><a href="Interaction.html">Interaction</a><ul class='methods'><li data-type='method'><a href="Interaction.html#acknowledge">acknowledge</a></li><li data-type='method'><a href="Interaction.html#edit">edit</a></li><li data-type='method'><a href="Interaction.html#reply">reply</a></li></ul></li><li><a href="Message.html">Message</a><ul class='methods'><li data-type='method'><a href="Message.html#edit">edit</a></li><li data-type='method'><a href="Message.html#reply">reply</a></li></ul></li><li><a href="ScheduledEvent.html">ScheduledEvent</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a><ul class='methods'><li data-type='method'><a href="TextChannel.html#bulkDelete">bulkDelete</a></li><li data-type='method'><a href="TextChannel.html#send">send</a></li></ul></li><li><a href="Thread.html">Thread</a><ul class='methods'><li data-type='method'><a href="Thread.html#send">send</a></li></ul></li><li><a href="User.html">User</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Message</h1>
     
 
-<div class="top-nav">
-    <div class="inner">
-        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-        <div class="logo">
-            
-            
-        </div>
-        <div class="menu">
-            
-            <div class="navigation">
-                <a
-                    href="index.html"
-                    class="link"
-                >
-                    Documentation
-                </a>
-                
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-    <div id="main">
-        <div
-            class="sidebar "
-            id="sidebarNav"
-        >
-            
-            <nav>
-                
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Attachment.html">Attachment</a></li><li><a href="AuditLog.html">AuditLog</a></li><li><a href="Channel.html">Channel</a></li><li><a href="Client.html">Client</a></li><li><a href="Guild.html">Guild</a></li><li><a href="Interaction.html">Interaction</a></li><li><a href="Message.html">Message</a></li><li><a href="SlashCommand.html">SlashCommand</a></li><li><a href="Sticker.html">Sticker</a></li><li><a href="TextChannel.html">TextChannel</a></li><li><a href="Thread.html">Thread</a></li><li><a href="User.html">User</a></li></ul></div>
-                
-            </nav>
-        </div>
-        <div class="core" id="main-content-wrapper">
-            <div class="content">
-                <header class="page-title">
-                    <p>Class</p>
-                    <h1>Message</h1>
-                </header>
-                
+    
 
 
 
@@ -85,278 +47,45 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Message<span class="signature">(client, data, channel_id, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h2>
+        <h2>
         
-            <div class="class-description"><p>A message belonging to a channel within a guild.</p></div>
+            Message
+        
+        </h2>
+        
+            <div class="class-description usertext"><p>A message belonging to a channel within a guild.</p></div>
         
     
 </header>
 
 <article>
-    <div class="container-overview">
     
+        <div class="container-overview">
         
-            <div class='vertical-section'>
-                <div class="members">
-                    <div class="member">
-                        <div class=name>
-                            <span class="tag">Constructor</span>
-                        </div>
-                        
-
+            
 
     
-    <h4 class="name" id="Message">
-        <a class="href-link" href="#Message">#</a>
-        
-        <span class="code-name">
-            
-                new Message<span class="signature">(client, data, channel_id, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
+    <h2>Constructor</h2>
     
 
+    <h4 class="name" id="Message"><span class="type-signature"></span>new Message<span class="signature">(client, data, channel_id, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
+
     
-    
-    <div class="description">
-        <p>Creates the structure for a message.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-            <th>Attributes</th>
-            
-
-            
-            <th>Default</th>
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>client</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type"><a href="Client.html">Client</a></code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last"><p>The client instance.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>data</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">Object</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last"><p>Message data returned from Discord.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>channel_id</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">String</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last"><p>The id of the channel that the message belongs to.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>guild_id</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">String</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last"><p>The id of the guild that the channel belongs to.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>nocache</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">Boolean</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-          &lt;nullable><br>
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last"><p>Whether this message should be cached or not.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
 
 
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates the structure for a message.</p></li></ul></dd>
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line13">line 13</a>
+    </li></ul></dd>
     
 
     
@@ -380,6 +109,9 @@
     
 
     
+
+    
+
     
 
     
@@ -392,15 +124,6 @@
     
 
     
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line13">line 13</a>
-            </span>
-        </p>
-    
 </dl>
 
 
@@ -415,74 +138,354 @@
 
 
 
+    <h5 class="h5-parameters">Parameters:</h5>
+    
 
-
-
-
-
-
-
-
-
-                    </div>
-                </div>
-            </div>
+<table class="params">
+    <thead>
+    <tr>
         
-    
-    </div>
-    
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
+        <tr>
             
-                <div class="member">
+                <td class="name"><code>client</code></td>
+            
 
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></code>
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
 
 
-    </span>
 
-<h4 class="name" id="attachments">
-    <a class="href-link" href="#attachments">#</a>
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
     
-        
-            <span class='tag'>nullable</span>
-        
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>Message data returned from Discord.</p></td>
+        </tr>
+
     
-    <span class="code-name">
-        attachments
-    </span>
+
+        <tr>
+            
+                <td class="name"><code>channel_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The id of the channel that the message belongs to.</p></td>
+        </tr>
+
     
-</h4>
+
+        <tr>
+            
+                <td class="name"><code>guild_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The id of the guild that the channel belongs to.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nocache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether this message should be cached or not.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
 
-<div class="description">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="attachments"><span class="type-signature type-signature-nullable">(nullable) </span>attachments<span class="type-signature"> :Array.&lt;<a href="Attachment.html">Attachment</a>></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The message attachments.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line105">line 105</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
     <p>The message attachments.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="author"><span class="type-signature type-signature-nullable">(nullable) </span>author<span class="type-signature"> :<a href="User.html">User</a></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The message author.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line85">line 85</a>
+    </li></ul></dd>
+    
 
     
 
@@ -507,19 +510,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line94">line 94</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -527,43 +522,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type"><a href="User.html">User</a></code>
-
-
-    </span>
-
-<h4 class="name" id="author">
-    <a class="href-link" href="#author">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        author
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The message author.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="User.html">User</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="channel"><span class="type-signature type-signature-nullable">(nullable) </span>channel<span class="type-signature"> :<a href="Channel.html">Channel</a></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The channel that this message belongs to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line52">line 52</a>
+    </li></ul></dd>
+    
 
     
 
@@ -588,19 +588,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line74">line 74</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -608,43 +600,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type"><a href="Channel.html">Channel</a></code>
-
-
-    </span>
-
-<h4 class="name" id="channel">
-    <a class="href-link" href="#channel">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        channel
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The channel that this message belongs to.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Channel.html">Channel</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="channel_id"><span class="type-signature type-signature-nullable">(nullable) </span>channel_id<span class="type-signature"> :BigInt</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the channel that this message belongs to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
 
     
 
@@ -669,19 +666,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line50">line 50</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -689,43 +678,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">BigInt</code>
-
-
-    </span>
-
-<h4 class="name" id="channel_id">
-    <a class="href-link" href="#channel_id">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        channel_id
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The id of the channel that this message belongs to.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="client"><span class="type-signature"></span>client<span class="type-signature"> :<a href="Client.html">Client</a></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The client instance.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
 
     
 
@@ -750,19 +744,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line57">line 57</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -770,39 +756,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type"><a href="Client.html">Client</a></code>
-
-
-    </span>
-
-<h4 class="name" id="client">
-    <a class="href-link" href="#client">#</a>
-    
-    <span class="code-name">
-        client
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The client instance.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="embeds"><span class="type-signature"></span>embeds<span class="type-signature"> :Array.&lt;Object></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The message embeds.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
 
     
 
@@ -827,19 +822,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line31">line 31</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -847,120 +834,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">String</code>
-
-
-    </span>
-
-<h4 class="name" id="content">
-    <a class="href-link" href="#content">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        content
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The message content.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line105">line 105</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Array.&lt;Object></code>
-
-
-    </span>
-
-<h4 class="name" id="embeds">
-    <a class="href-link" href="#embeds">#</a>
-    
-    <span class="code-name">
-        embeds
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The message embeds.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="guild"><span class="type-signature type-signature-nullable">(nullable) </span>guild<span class="type-signature"> :<a href="Guild.html">Guild</a></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The guild that this message belongs to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
 
     
 
@@ -985,19 +900,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line115">line 115</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1005,43 +912,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type"><a href="Guild.html">Guild</a></code>
-
-
-    </span>
-
-<h4 class="name" id="guild">
-    <a class="href-link" href="#guild">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        guild
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The guild that this message belongs to.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Guild.html">Guild</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="guild_id"><span class="type-signature type-signature-nullable">(nullable) </span>guild_id<span class="type-signature"> :BigInt</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the guild that this message belongs to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1066,19 +978,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line37">line 37</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1086,43 +990,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">BigInt</code>
-
-
-    </span>
-
-<h4 class="name" id="guild_id">
-    <a class="href-link" href="#guild_id">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        guild_id
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The id of the guild that this message belongs to.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :BigInt</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the message.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line76">line 76</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1147,19 +1056,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line44">line 44</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1167,39 +1068,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">BigInt</code>
-
-
-    </span>
-
-<h4 class="name" id="id">
-    <a class="href-link" href="#id">#</a>
-    
-    <span class="code-name">
-        id
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The id of the message.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="member"><span class="type-signature type-signature-nullable">(nullable) </span>member<span class="type-signature"> :<a href="Member.html">Member</a></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The member who sent the message.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1224,19 +1134,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line65">line 65</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1244,43 +1146,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type"><a href="Member.html">Member</a></code>
-
-
-    </span>
-
-<h4 class="name" id="member">
-    <a class="href-link" href="#member">#</a>
-    
-        
-            <span class='tag'>nullable</span>
-        
-    
-    <span class="code-name">
-        member
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The member who sent the message.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Member.html">Member</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="reference"><span class="type-signature"></span>reference<span class="type-signature"> :Object</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The message that this message references.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line157">line 157</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1305,19 +1212,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line83">line 83</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1325,270 +1224,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Boolean</code>
-
-
-    </span>
-
-<h4 class="name" id="mention_everyone">
-    <a class="href-link" href="#mention_everyone">#</a>
-    
-    <span class="code-name">
-        mention_everyone
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Whether everyone was mentioned within the message.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line145">line 145</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Boolean</code>
-
-
-    </span>
-
-<h4 class="name" id="mention_roles">
-    <a class="href-link" href="#mention_roles">#</a>
-    
-    <span class="code-name">
-        mention_roles
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Whether any roles were mentioned within the message.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line135">line 135</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Boolean</code>
-
-
-    </span>
-
-<h4 class="name" id="mentions">
-    <a class="href-link" href="#mentions">#</a>
-    
-    <span class="code-name">
-        mentions
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Whether any users were mentioned within the message.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line125">line 125</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Object</code>
-
-
-    </span>
-
-<h4 class="name" id="reference">
-    <a class="href-link" href="#reference">#</a>
-    
-    <span class="code-name">
-        reference
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The message that this message references.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sticker_items"><span class="type-signature"></span>sticker_items<span class="type-signature"> :Array.&lt;<a href="Sticker.html">Sticker</a>></span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Stickers sent with this message.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line175">line 175</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1613,19 +1290,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line155">line 155</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1633,39 +1302,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Array.&lt;<a href="Sticker.html">Sticker</a>></code>
-
-
-    </span>
-
-<h4 class="name" id="sticker_items">
-    <a class="href-link" href="#sticker_items">#</a>
-    
-    <span class="code-name">
-        sticker_items
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>Stickers sent with this message.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="Sticker.html">Sticker</a>></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="timestamp"><span class="type-signature"></span>timestamp<span class="type-signature"> :Number</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The UNIX (seconds) timestamp for when this message was created.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line218">line 218</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1690,19 +1368,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line179">line 179</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1710,39 +1380,48 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Number</code>
-
-
-    </span>
-
-<h4 class="name" id="timestamp">
-    <a class="href-link" href="#timestamp">#</a>
-    
-    <span class="code-name">
-        timestamp
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The UNIX (seconds) timestamp for when this message was created.</p>
 </div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :Number</span></h4>
+
+
+
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The type of message.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line167">line 167</a>
+    </li></ul></dd>
+    
 
     
 
@@ -1767,19 +1446,11 @@
     
 
     
-    
 
     
 
     
 
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line173">line 173</a>
-            </span>
-        </p>
     
 </dl>
 
@@ -1787,210 +1458,57 @@
 
 
 
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">Number</code>
-
-
-    </span>
-
-<h4 class="name" id="type">
-    <a class="href-link" href="#type">#</a>
-    
-    <span class="code-name">
-        type
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
+<div class="description usertext">
     <p>The type of message.</p>
 </div>
 
 
 
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line165">line 165</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
             
-            </div>
-        </div>
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
+<span class="param-type">Number</span>
 
 
-    
-    <h4 class="name" id="edit">
-        <a class="href-link" href="#edit">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                edit<span class="signature">(content, options)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span>
-            
-        </span>
-    </h4>
-    
 
-    
-    
-    <div class="description">
-        <p>Edits the message, assuming it is sent by the client user.</p>
-    </div>
-    
+        </li>
+    </ul>
 
 
 
 
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>content</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">String</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The message content.</p></td>
-</tr>
 
 
         
+    
 
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>options</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">Object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Embeds and components to attach to the message.</p></td>
-</tr>
-
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
-        </tbody>
-    </table>
-</div>
+            
 
+    
+
+    <h4 class="name" id="edit"><span class="type-signature type-signature-async">(async) </span>edit<span class="signature">(content, options)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span></h4>
+
+    
 
 
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Edits the message, assuming it is sent by the client user.</p></li></ul></dd>
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line266">line 266</a>
+    </li></ul></dd>
     
 
     
@@ -2014,6 +1532,9 @@
     
 
     
+
+    
+
     
 
     
@@ -2026,15 +1547,6 @@
     
 
     
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line236">line 236</a>
-            </span>
-        </p>
-    
 </dl>
 
 
@@ -2049,155 +1561,139 @@
 
 
 
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
+    <h5 class="h5-parameters">Parameters:</h5>
     
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+
+<table class="params">
+    <thead>
+    <tr>
         
-<code class="param-type">Promise.&lt;<a href="Message.html">Message</a>></code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="reply">
-        <a class="href-link" href="#reply">#</a>
+        <th>Name</th>
         
-            
-                <span class='tag'>async</span>
-            
+
+        <th>Type</th>
+
         
-        <span class="code-name">
-            
-                reply<span class="signature">(content, param1)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span>
-            
-        </span>
-    </h4>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
-    
-    
-    <div class="description">
-        <p>Replies to the message.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
         <tr>
             
-            <th>Name</th>
+                <td class="name"><code>content</code></td>
             
 
-            <th>Type</th>
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
 
             
 
             
 
-            <th class="last">Description</th>
+            <td class="description last"><p>The message content.</p></td>
         </tr>
-        </thead>
 
-        <tbody>
-        
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
 
             
-<tr class="deep-level-0">
-  
-      <td class="name"><code>content</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">String</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The message content.</p></td>
-</tr>
-
-
-        
+            </td>
 
             
-<tr class="deep-level-0">
-  
-      <td class="name"><code>param1</code></td>
-  
 
-  <td class="type">
-  
-      
-<code class="param-type">Object</code>
+            
+
+            <td class="description last"><p>Embeds and components to attach to the message.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
-  
-  </td>
 
-  
 
-  
 
-  <td class="description last"><p>Embeds, components and files to attach to the message.</p></td>
-</tr>
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
 
 
         
-        </tbody>
-    </table>
-</div>
+            
 
+    
+
+    <h4 class="name" id="reply"><span class="type-signature type-signature-async">(async) </span>reply<span class="signature">(content, param1)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span></h4>
+
+    
 
 
 
 
 <dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Replies to the message.</p></li></ul></dd>
+    
 
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line231">line 231</a>
+    </li></ul></dd>
     
 
     
@@ -2221,6 +1717,9 @@
     
 
     
+
+    
+
     
 
     
@@ -2233,15 +1732,6 @@
     
 
     
-
-    
-        <p class="tag-source">
-            <a href="structures_Message.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line201">line 201</a>
-            </span>
-        </p>
-    
 </dl>
 
 
@@ -2256,41 +1746,117 @@
 
 
 
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
+    <h5 class="h5-parameters">Parameters:</h5>
     
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
+
+<table class="params">
+    <thead>
+    <tr>
         
-<code class="param-type">Promise.&lt;<a href="Message.html">Message</a>></code>
+        <th>Name</th>
+        
 
+        <th>Type</th>
 
-    </div>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
-</div>
 
-                
-        </div>
-    </div>
-
-
-
-
-</div>
+        <tr>
             
-            </div>
-        </div>
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message content.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>param1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Embeds, components and files to attach to the message.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
     
 
     
@@ -2303,25 +1869,20 @@
 
 
 
-            </div>
-            
-            <footer class="footer">
-                <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
-                    <p class="sidebar-created-by">
-                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
-                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-                    </p>
-                </div>
-            </footer>
-            
-        </div>
-        <div id="side-nav" class="side-nav">
-        </div>
-    </div>
-<script src="scripts/app.min.js"></script>
-<script>PR.prettyPrint();</script>
-<script src="scripts/linenumber.js"> </script>
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Mar 10 2024 15:37:13 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
 
 
 </body>
