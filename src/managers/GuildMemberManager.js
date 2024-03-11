@@ -55,8 +55,8 @@ class GuildMemberManager {
         const currentCacheSize = this.cache.size;
         const currentCacheKeys = this.cache.keys();
 
-        for (let i = 0, cacheSize = currentCacheSize; cacheCount < cacheSize; i++, cacheSize--)
-            this.cache.delete(currentCacheKeys[i]);
+        for (let cacheSize = currentCacheSize; cacheCount < cacheSize; cacheSize--)
+            this.cache.delete(currentCacheKeys.next().value);
 
         return this.cache.size;
 
