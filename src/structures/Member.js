@@ -54,7 +54,7 @@ class Member {
                 this._roles.push(BigInt(data.roles[i]));
         }
 
-        if ((this.id == this.client.user.id) || (nocache == false && (this.client.cacheMembers == true && ignoreNoCache == false)))
+        if ((this.id == this.client.user.id) || (nocache == false && ((this.client.cacheMembers == true || this.client.cacheAllMembers == true) && ignoreNoCache == false)))
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
 
     }

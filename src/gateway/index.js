@@ -11,6 +11,7 @@ const chalk = require("chalk");
 const { NAME } = require("../constants");
 const generateWebsocketURL = require("../util/generateWebsocketURL");
 const { OPEN } = require("ws");
+const RequestGuildMembers = require("./structures/_8");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -167,6 +168,12 @@ class WS {
             return;
 
         this.ws.send(new UpdatePresence(name, type, status, afk, since));
+
+    }
+
+    requestGuildMembers(guild_id) {
+
+        this.ws.send(new RequestGuildMembers(guild_id));
 
     }
 

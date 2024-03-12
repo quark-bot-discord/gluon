@@ -73,8 +73,11 @@ class EventHandler {
 
         if (!this.initialGuilds.includes(data.id))
             this.client.emit(EVENTS.GUILD_CREATE, guild);
-        else
+        else {
             this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
+            if (this.client.cacheAllMembers == true)
+                this.ws.requestGuildMembers(data.id);
+        }
 
     }
 
@@ -255,6 +258,15 @@ class EventHandler {
         const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
 
         this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+
+    }
+
+    GUILD_MEMBERS_CHUNK(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBERS_CHUNK ${data.guild_id}`);
+
+        for (let i = 0; i < data.members.length; i++)
+            new Member(this.client, data.members[i], data.members[i].user.id, data.guild_id, data.members[i].user);
 
     }
 

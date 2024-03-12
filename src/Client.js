@@ -24,7 +24,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
 
         super();
 
@@ -107,6 +107,13 @@ class Client extends EventsEmitter {
          * @type {Boolean}
          */
         this.cacheEmojis = cacheEmojis;
+
+        /**
+         * Whether this client should fetch and subsequently cache all members.
+         * Overrides cacheMembers
+         * @type {Boolean}
+         */
+        this.cacheAllMembers = cacheAllMembers;
 
         /**
          * An array of the shard ids that this client is handling.
@@ -506,12 +513,12 @@ class Client extends EventsEmitter {
 
                     }, 6000 * i);
 
-                if (this.cacheMessages == true || this.cacheMembers == true || this.cacheUsers == true)
+                if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true) || this.cacheUsers == true)
                     setInterval(() => {
 
                         const currentTime = Math.floor(new Date().getTime() / 1000);
 
-                        if (this.cacheMessages == true || this.cacheMembers == true)
+                        if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true))
                             this.guilds.cache.forEach(guild => {
 
                                 if (this.cacheMessages == true) {
@@ -540,7 +547,7 @@ class Client extends EventsEmitter {
 
                                 }
 
-                                if (this.cacheMembers == true || this.cacheMessages == true) {
+                                if ((this.cacheMembers == true && this.cacheAllMembers != true) || this.cacheMessages == true) {
 
                                     this.emit("debug", `Sweeping members for GUILD ${guild.id}...`);
 
