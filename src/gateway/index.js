@@ -171,12 +171,6 @@ class WS {
 
     }
 
-    requestGuildMembers(guild_id) {
-
-        this.ws.send(new RequestGuildMembers(guild_id));
-
-    }
-
     heartbeatInit() {
 
         this.heartbeat();
