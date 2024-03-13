@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION, NAME, CHANNEL_TYPES } = require("./constants");
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS } = require("./constants");
 
 const EventsEmitter = require("events");
 
@@ -24,7 +24,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, intents, totalShards, shardIds, sessionData, initCache } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, intents, totalShards, shardIds, sessionData, initCache } = {}) {
 
         super();
 
@@ -114,6 +114,18 @@ class Client extends EventsEmitter {
          * @type {Boolean}
          */
         this.cacheAllMembers = cacheAllMembers;
+
+        /**
+         * The base message expiry time, in seconds.
+         * @type {Number}
+         */
+        this.defaultMessageExpiry = defaultMessageExpiry;
+
+        /**
+         * The base user expiry time, in seconds.
+         * @type {Number}
+         */
+        this.defaultUserExpiry = defaultUserExpiry;
 
         /**
          * An array of the shard ids that this client is handling.
@@ -533,15 +545,11 @@ class Client extends EventsEmitter {
 
                                     guild.channels.cache.forEach(channel => {
 
-                                        if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD) {
+                                        this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
 
-                                            this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
+                                        const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
 
-                                            const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
-
-                                            this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
-
-                                        }
+                                        this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
 
                                     });
 

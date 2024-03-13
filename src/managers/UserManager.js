@@ -1,4 +1,3 @@
-const { DEFAULT_USER_EXPIRY_SECONDS } = require("../constants");
 const User = require("../structures/User");
 
 class UserManager {
@@ -33,7 +32,7 @@ class UserManager {
         const currentCacheValues = this.cache.values();
 
         for (let i = 0; i < currentCacheSize; i++)
-            if ((currentCacheValues[i].cached || 0) + DEFAULT_USER_EXPIRY_SECONDS < currentTime)
+            if ((currentCacheValues[i].cached || 0) + this.client.defaultUserExpiry < currentTime)
                 this.cache.delete(currentCacheKeys[i]);
 
         return this.cache.size;

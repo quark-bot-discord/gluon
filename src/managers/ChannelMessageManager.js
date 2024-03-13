@@ -1,4 +1,3 @@
-const { DEFAULT_MESSAGE_EXPIRY_SECONDS } = require("../constants");
 const Message = require("../structures/Message");
 
 class ChannelMessageManager {
@@ -71,7 +70,7 @@ class ChannelMessageManager {
         for (let i = 0, cacheSize = currentCacheSize; i < currentCacheSize; i++) {
             const currentCacheValue = currentCacheValues.next().value;
             if (currentCacheValue)
-                if (currentCacheValue.timestamp + (DEFAULT_MESSAGE_EXPIRY_SECONDS * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
+                if (currentCacheValue.timestamp + (this.client.defaultMessageExpiry * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
                     this.cache.delete(currentCacheKeys.next().value);
                     cacheSize--;
                 }

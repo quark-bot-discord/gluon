@@ -189,7 +189,7 @@ module.exports.APPLICATION_COMMAND_OPTION_TYPES = {
     NUMBER:                     (10),
     ATTACHMENT:                 (11)
 };
-module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 6; // 6 hours
+module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
 module.exports.DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
 module.exports.PERMISSIONS = {
     CREATE_INSTANT_INVITE:      (1n << 0n),
