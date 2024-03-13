@@ -35,7 +35,7 @@ class Member {
 
         this.timeout_until = data.communication_disabled_until ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0 : null;
 
-        this._attributes = 0;
+        this._attributes = data._attributes ?? 0;
 
         if (data.pending == true)
             this._attributes |= (0b1 << 0);
