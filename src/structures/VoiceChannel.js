@@ -24,9 +24,6 @@ class VoiceChannel extends Channel {
         else if (existing && typeof existing.rtc_region == "string")
             this.rtc_region = existing.rtc_region;
 
-        if (data.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)
-            this.stage = true;
-
         if (nocache == false && this.client.cacheChannels == true)
             this.guild?.channels.cache.set(data.id, this);
 
