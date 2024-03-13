@@ -19,7 +19,7 @@ class Role {
 
         this.permissions = BigInt(data.permissions);
 
-        this._attributes = 0;
+        this._attributes = data._attributes ?? 0;
 
         if (data.hoist == true)
             this._attributes |= (0b1 << 0);
