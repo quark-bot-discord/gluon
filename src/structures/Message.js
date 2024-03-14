@@ -134,20 +134,26 @@ class Message {
         else if (this.embeds == undefined)
             this.embeds = [];
 
-        this._attributes = 0;
+        this._attributes = data._attributes || 0;
 
-        if (data.mentions?.length != 0 || (existing && existing.mentions != undefined))
+        if (data.mentions && data.mentions.length != 0)
+            this._attributes |= (0b1 << 0);
+        else if (data.mentions == undefined && existing && existing.mentions == true)
             this._attributes |= (0b1 << 0);
 
-        if (data.mention_roles?.length != 0 || (existing && existing.mention_roles != undefined))
+        if (data.mention_roles && data.mentions.length != 0)
+            this._attributes |= (0b1 << 1);
+        else if (data.mention_roles == undefined && existing && existing.mention_roles == true)
             this._attributes |= (0b1 << 1);
 
-        if ((data.mention_everyone == true) || (existing && existing.mention_everyone != false))
+        if (data.mention_everyone != undefined && data.mention_everyone == true)
+            this._attributes |= (0b1 << 2);
+        else if (data.mention_everyone == undefined && existing && existing.mention_everyone == true)
             this._attributes |= (0b1 << 2);
 
         if (data.pinned != undefined && data.pinned == true)
             this._attributes |= (0b1 << 3);
-        else if (existing && existing.pinned != undefined && existing.pinned == true)
+        else if (data.pinned == undefined && existing && existing.pinned == true)
             this._attributes |= (0b1 << 3);
 
         /**

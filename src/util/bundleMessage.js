@@ -7,9 +7,7 @@ function bundleMessage(message) {
     data.id = message.id.toString();
     data.author = bundleUser(message.author);
     data.content = message.content;
-    data.mention_everyone = message.mention_everyone;
-    data.mentions = message.mentions == true ? [1] : [];
-    data.mention_roles = message.mention_roles == true ? [1] : [];
+    data._attributes = message._attributes;
     data.attachments = [];
     for (let i = 0; i < message.attachments.length; i++)
         data.attachments.push(bundleAttachment(message.attachments[i]));
