@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS } = require("./constants");
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD } = require("./constants");
 
 const EventsEmitter = require("events");
 
@@ -585,7 +585,7 @@ class Client extends EventsEmitter {
 
                         }
 
-                    }, 1000 * 60 * 60); // every 1 hour 1000 * 60 * 60
+                    }, DEFAULT_CACHE_CHECK_PERIOD); // every 1 hour 1000 * 60 * 60
 
             })
             .catch(error => {
