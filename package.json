@@ -35,7 +35,7 @@
     "eslint": "^7.28.0"
   },
   "script": {
-    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose && cp CNAME"
+    "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "private": true
 }
