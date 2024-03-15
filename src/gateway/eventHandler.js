@@ -16,6 +16,7 @@ const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
+const getTimestamp = require("../util/getTimestampFromSnowflake");
 
 class EventHandler {
 
