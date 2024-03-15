@@ -1,5 +1,5 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD } = require("./constants");
+const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD, DEFAULT_INCREASE_CACHE_BY } = require("./constants");
 
 const EventsEmitter = require("events");
 
@@ -24,7 +24,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, intents, totalShards, shardIds, sessionData, initCache } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, increaseCacheBy = DEFAULT_INCREASE_CACHE_BY, intents, totalShards, shardIds, sessionData, initCache } = {}) {
 
         super();
 
@@ -167,7 +167,7 @@ class Client extends EventsEmitter {
                 new Guild(this, initCache.guilds[i]);
 
         this.increasedCache = new Map();
-        this.increaseCacheBy = 9;
+        this.increaseCacheBy = increaseCacheBy;
 
     }
 
@@ -543,13 +543,17 @@ class Client extends EventsEmitter {
 
                                     this.emit("debug", `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`);
 
-                                    guild.channels.cache.forEach(channel => {
+                                    guild.channels.cache.forEach(async channel => {
 
                                         this.emit("debug", `Sweeping messages for CHANNEL ${channel.id}...`);
 
                                         const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
 
                                         this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+
+                                        const nowStored = await channel.messages.sweepStorage(currentTime);
+
+                                        this.emit("debug", `New storage size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
 
                                     });
 

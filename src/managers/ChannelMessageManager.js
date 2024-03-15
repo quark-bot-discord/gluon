@@ -1,4 +1,6 @@
+const { QuickDB } = require("quick.db");
 const Message = require("../structures/Message");
+const getTimestamp = require("../util/getTimestampFromSnowflake");
 
 class ChannelMessageManager {
 
@@ -9,6 +11,8 @@ class ChannelMessageManager {
         this.channel = channel;
 
         this.cache = new Map();
+
+        this.storage = new QuickDB();
 
     }
 
@@ -70,13 +74,33 @@ class ChannelMessageManager {
         for (let i = 0, cacheSize = currentCacheSize; i < currentCacheSize; i++) {
             const currentCacheValue = currentCacheValues.next().value;
             if (currentCacheValue)
-                if (currentCacheValue.timestamp + (this.client.defaultMessageExpiry * (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString())) ? this.client.increaseCacheBy : 1) < currentTime || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
-                    this.cache.delete(currentCacheKeys.next().value);
-                    cacheSize--;
+                if ((currentCacheValue.timestamp + this.client.defaultMessageExpiry < currentTime) || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
+                    if (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString()))
+                        currentCacheValue.shelf();
+                    else {
+                        this.cache.delete(currentCacheKeys.next().value);
+                        cacheSize--;
+                    }
                 }
         }
 
         return this.cache.size;
+
+    }
+
+    async sweepStorage(currentTime) {
+
+        const currentStorage = await this.storage.all();
+        const currentStorageSize = currentStorage.length;
+
+        for (let i = 0, cacheSize = currentStorageSize; i < currentStorageSize; i++) {
+            const keyDetails = currentStorage[i].id.split('_');
+            if (keyDetails.length == 3 && keyDetails[0] == (this.channel.guild ? this.channel.guild.id : this.channel.guild_id) && keyDetails[1] == this.channel.id)
+                if (getTimestamp(currentStorage[i].value.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) < currentTime) {
+                    await this.storage.delete(currentStorage[i].id);
+                    cacheSize--;
+                }
+        }
 
     }
 

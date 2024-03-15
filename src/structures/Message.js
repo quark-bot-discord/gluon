@@ -6,6 +6,7 @@ const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
 const { inspect } = require("util");
+const bundleMessage = require("../util/bundleMessage");
 
 /**
  * A message belonging to a channel within a guild.
@@ -295,6 +296,22 @@ class Message {
         const data = await this.client.request.makeRequest("patchEditMessage", [this.channel?.id || this.channel_id, this.id], body);
 
         return new Message(this.client, data, this.channel?.id.toString() || this.channel_id, this.guild?.id.toString() || this.guild_id);
+
+    }
+
+    /**
+     * Moves the message to long-term storage.
+     */
+    shelf() {
+
+        const bundledMessage = bundleMessage(this);
+
+        this.channel.messages.storage.set(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`, bundledMessage)
+            .then(() => {
+
+                this.channel.messages.cache.delete(this.id.toString());
+
+            });
 
     }
 
