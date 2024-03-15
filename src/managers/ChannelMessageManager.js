@@ -1,4 +1,3 @@
-const { QuickDB } = require("quick.db");
 const Message = require("../structures/Message");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
 
@@ -12,7 +11,7 @@ class ChannelMessageManager {
 
         this.cache = new Map();
 
-        this.storage = new QuickDB();
+        this.storage = this.client.storage;
 
     }
 

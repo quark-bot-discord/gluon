@@ -2,6 +2,7 @@
 const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD, DEFAULT_INCREASE_CACHE_BY } = require("./constants");
 
 const EventsEmitter = require("events");
+const { QuickDB } = require("quick.db");
 
 const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
@@ -168,6 +169,8 @@ class Client extends EventsEmitter {
 
         this.increasedCache = new Map();
         this.increaseCacheBy = increaseCacheBy;
+
+        this.storage = new QuickDB();
 
     }
 
