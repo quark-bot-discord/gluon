@@ -424,7 +424,7 @@ class EventHandler {
                         await this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.storage.delete(`${data.guild_id}_${data.channel_id}_${data.ids[i]}`);
 
                     });*/
-            }
+            // }
         }
 
         // if (fetchingFromStorage == true)
