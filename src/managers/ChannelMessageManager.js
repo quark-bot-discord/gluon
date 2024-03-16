@@ -11,7 +11,7 @@ class ChannelMessageManager {
 
         this.cache = new Map();
 
-        this.storage = this.client.storage;
+        this.storage = null;//this.client.storage;
 
     }
 
