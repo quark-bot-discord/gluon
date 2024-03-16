@@ -5,7 +5,6 @@ const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
-const { inspect } = require("util");
 const bundleMessage = require("../util/bundleMessage");
 
 /**
