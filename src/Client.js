@@ -529,9 +529,11 @@ class Client extends EventsEmitter {
                     }, 6000 * i);
 
                 if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true) || this.cacheUsers == true)
-                    setInterval(() => {
+                    setInterval(async () => {
 
                         const currentTime = Math.floor(new Date().getTime() / 1000);
+
+                        const currentStorage = await this.storage.all();
 
                         if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true))
                             this.guilds.cache.forEach(guild => {
@@ -554,9 +556,9 @@ class Client extends EventsEmitter {
 
                                         this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
 
-                                        // const nowStored = await channel.messages.sweepStorage(currentTime);
+                                        const nowStored = await channel.messages.sweepStorage(currentTime, currentStorage);
 
-                                        // this.emit("debug", `New storage size of ${nowStored || 0} for CHANNEL ${guild.id}...`);
+                                        this.emit("debug", `New storage size of ${nowStored || 0} for CHANNEL ${guild.id}...`);
 
                                     });
 

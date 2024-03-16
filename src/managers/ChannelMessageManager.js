@@ -91,9 +91,8 @@ class ChannelMessageManager {
 
     }
 
-    async sweepStorage(currentTime) {
+    async sweepStorage(currentTime, currentStorage) {
 
-        const currentStorage = await this.storage.all();
         const currentStorageSize = currentStorage.length;
 
         for (let i = 0, cacheSize = currentStorageSize; i < currentStorageSize; i++) {
