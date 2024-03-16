@@ -306,7 +306,7 @@ class Message {
 
         const bundledMessage = bundleMessage(this);
 
-        this.channel.messages.storage.set(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`, bundledMessage)
+        this.client.storage.setItem(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`, bundledMessage)
             .then(() => {
 
                 this.channel.messages.cache.delete(this.id.toString());

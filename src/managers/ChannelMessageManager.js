@@ -13,12 +13,6 @@ class ChannelMessageManager {
 
     }
 
-    get storage() {
-
-        return this.client.storage;
-
-    }
-
     async fetch(options) {
 
         if (typeof options == "object") {
@@ -88,21 +82,6 @@ class ChannelMessageManager {
         }
 
         return this.cache.size;
-
-    }
-
-    async sweepStorage(currentTime, currentStorage) {
-
-        const currentStorageSize = currentStorage.length;
-
-        for (let i = 0, cacheSize = currentStorageSize; i < currentStorageSize; i++) {
-            const keyDetails = currentStorage[i].id.split('_');
-            if (keyDetails.length == 3 && keyDetails[0] == (this.channel.guild ? this.channel.guild.id : this.channel.guild_id) && keyDetails[1] == this.channel.id)
-                if (getTimestamp(currentStorage[i].value.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) < currentTime) {
-                    await this.storage.delete(currentStorage[i].id);
-                    cacheSize--;
-                }
-        }
 
     }
 

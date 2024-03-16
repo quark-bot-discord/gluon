@@ -2,7 +2,7 @@
 const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD, DEFAULT_INCREASE_CACHE_BY } = require("./constants");
 
 const EventsEmitter = require("events");
-const { QuickDB } = require("quick.db");
+const storage = require('node-persist');
 
 const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
@@ -170,7 +170,12 @@ class Client extends EventsEmitter {
         this.increasedCache = new Map();
         this.increaseCacheBy = increaseCacheBy;
 
-        this.storage = new QuickDB();
+        storage.init({ 
+            ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
+            expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
+            dir: `persist_${this.shardIds ? this.shardIds[0] : 0}` 
+        })
+            .then(() => this.storage = storage);
 
     }
 
@@ -533,8 +538,6 @@ class Client extends EventsEmitter {
 
                         const currentTime = Math.floor(new Date().getTime() / 1000);
 
-                        const currentStorage = await this.storage.all();
-
                         if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true))
                             this.guilds.cache.forEach(guild => {
 
@@ -555,10 +558,6 @@ class Client extends EventsEmitter {
                                         const nowCached = channel.messages.sweepMessages(cacheCount, currentTime);
 
                                         this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
-
-                                        const nowStored = await channel.messages.sweepStorage(currentTime, currentStorage);
-
-                                        this.emit("debug", `New storage size of ${nowStored || 0} for CHANNEL ${guild.id}...`);
 
                                     });
 
