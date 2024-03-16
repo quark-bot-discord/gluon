@@ -554,9 +554,9 @@ class Client extends EventsEmitter {
 
                                         this.emit("debug", `New cache size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
 
-                                        const nowStored = await channel.messages.sweepStorage(currentTime);
+                                        // const nowStored = await channel.messages.sweepStorage(currentTime);
 
-                                        this.emit("debug", `New storage size of ${nowCached || 0} for CHANNEL ${guild.id}...`);
+                                        // this.emit("debug", `New storage size of ${nowStored || 0} for CHANNEL ${guild.id}...`);
 
                                     });
 
