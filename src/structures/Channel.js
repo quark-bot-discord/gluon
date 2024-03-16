@@ -99,7 +99,7 @@ class Channel {
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      */
-    async send(content, { embed, components, files, embeds } = {}) {
+    async send(content, { embed, components, files, embeds, suppressMentions = false } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
             return null;
@@ -117,6 +117,10 @@ class Channel {
             body.components = components.toJSON();
         if (files)
             body.files = files;
+        if (suppressMentions == true) {
+            body.allowed_mentions = {};
+            body.allowed_mentions.parse = [];
+        }
 
         const data = await this.client.request.makeRequest("postCreateMessage", [this.id], body);
 
