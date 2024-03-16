@@ -344,7 +344,7 @@ class EventHandler {
         let oldMessage = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
 
-        if (!oldMessage && this.client.increasedCache.get(data.guild_id) && ((getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy)) > ((new Date().getTime() / 1000) | 0))) {
+        if (!oldMessage && this.client.increasedCache.get(data.guild_id) && ((getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy)) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.id) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
             this.client.storage.getItem(`${data.guild_id}_${data.channel_id}_${data.id}`)
                 .then(async storedOldMessage => {
 
@@ -366,7 +366,7 @@ class EventHandler {
 
         let message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
 
-        if (!message && this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0))) {
+        if (!message && this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.id) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
             const storedKey = `${data.guild_id}_${data.channel_id}_${data.id}`;
             this.client.storage.getItem(storedKey)
                 .then(async storedMessage => {
@@ -399,7 +399,7 @@ class EventHandler {
             if (message) {
                 messages.push(message);
                 this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.ids[i]);
-            } else if (this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.ids[i]) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0))) {
+            } else if (this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.ids[i]) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.ids[i]) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
                 fetchingFromStorage = true;
                 this.client.storage.getItem(`${data.guild_id}_${data.channel_id}_${data.ids[i]}`)
                     .then(async storedMessage => {
