@@ -284,7 +284,7 @@ class Client extends EventsEmitter {
      * @param {Object?} options Embeds, components and files to attach to the message.
      * @returns {Promise<Message>}
      */
-    async sendMessage(channel_id, guild_id, content, { embed, embeds, components, files } = {}) {
+    async sendMessage(channel_id, guild_id, content, { embed, embeds, components, files, suppressMentions = false } = {}) {
 
         const body = {};
 
@@ -299,6 +299,10 @@ class Client extends EventsEmitter {
             body.components = components.toJSON();
         if (files)
             body.files = files;
+        if (suppressMentions == true) {
+            body.allowed_mentions = {};
+            body.allowed_mentions.parse = [];
+        }
 
         const data = await this.request.makeRequest("postCreateMessage", [channel_id], body);
 
