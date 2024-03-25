@@ -61,15 +61,28 @@ class Guild {
          * @type {String}
          */
         this.name = data.name;
+        if (this.name === undefined && existing && existing.name)
+            this.name = existing.name;
+        else if (!this.name)
+            this.name = null;
 
         this.description = data.description;
+        if (this.description === undefined && existing && existing.description)
+            this.description = existing.description;
+        else if (!this.description)
+            this.description = null;
 
         // needed for join/leave logging
         /**
          * The guild icon hash.
          * @type {String?}
          */
-        this.icon = data.icon;
+        this.icon = data.icon; // can this be converted to a bigint?
+        if (this.icon === undefined && existing && existing.icon)
+            this.icon = existing.icon;
+        else if (!this.icon)
+            this.icon = null;
+
 
         // needed for permissions checking and join/leave logging
         /**
@@ -134,20 +147,26 @@ class Guild {
 
         this.emojis = existing ? existing.emojis : new GuildEmojisManager(this.client);
 
-        this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
+        if (data.system_channel_id !== undefined)
+            this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
+        else if (data.system_channel_id === undefined && existing && existing.system_channel_id)
+            this.system_channel_id = BigInt(existing.system_channel_id);
 
-        this.rules_channel_id = data.rules_channel_id ? BigInt(data.rules_channel_id) : null;
+        if (data.rules_channel_id !== undefined)
+            this.rules_channel_id = data.rules_channel_id ? BigInt(data.rules_channel_id) : null;
+        else if (data.rules_channel_id === undefined && existing && existing.rules_channel_id)
+            this.rules_channel_id = BigInt(existing.rules_channel_id);
 
         if (typeof data.premium_subscription_count == "number")
             this.premium_subscription_count = data.premium_subscription_count;
-        else if (typeof existing.premium_subscription_count == "number")
+        else if (typeof data.premium_subscription_count != "number" && existing && existing.premium_subscription_count)
             this.premium_subscription_count = existing.premium_subscription_count;
         else
             this.premium_subscription_count = 0;
 
-        this._attributes = data.system_channel_flags;
+        this._attributes = data._attributes ?? data.system_channel_flags;
 
-        if (typeof data.mfa_level == "number" || typeof existing.mfa_level == "number") {
+        if (typeof data.mfa_level == "number" || (existing && typeof existing.mfa_level == "number")) {
             const mfaLevel = typeof data.mfa_level == "number" ? data.mfa_level : existing.mfa_level;
             switch (mfaLevel) {
                 case 0:
@@ -161,7 +180,7 @@ class Guild {
             }
         }
 
-        if (typeof data.verification_level == "number" || typeof existing.verification_level == "number") {
+        if (typeof data.verification_level == "number" || (existing && typeof existing.verification_level == "number")) {
             const verificationLevel = typeof data.verification_level == "number" ? data.verification_level : existing.verification_level;
             switch (verificationLevel) {
                 case 0:
@@ -187,7 +206,7 @@ class Guild {
             }
         }
 
-        if (typeof data.default_message_notifications == "number" || typeof existing.default_message_notifications == "number") {
+        if (typeof data.default_message_notifications == "number" || (existing && typeof existing.default_message_notifications == "number")) {
             const defaultMessageNotifications = typeof data.default_message_notifications == "number" ? data.default_message_notifications : existing.default_message_notifications;
             switch (defaultMessageNotifications) {
                 case 0:
@@ -201,7 +220,7 @@ class Guild {
             }
         }
 
-        if (typeof data.explicit_content_filter == "number" || typeof existing.explicit_content_filter == "number") {
+        if (typeof data.explicit_content_filter == "number" || (existing && typeof existing.explicit_content_filter == "number")) {
             const explicitContentFilter = typeof data.explicit_content_filter == "number" ? data.explicit_content_filter : existing.explicit_content_filter;
             switch (explicitContentFilter) {
                 case 0:
@@ -219,7 +238,7 @@ class Guild {
             }
         }
 
-        if (typeof data.nsfw_level == "number" || typeof existing.nsfw_level == "number") {
+        if (typeof data.nsfw_level == "number" || (existing && typeof existing.nsfw_level == "number")) {
             const nsfwLevel = typeof data.nsfw_level == "number" ? data.nsfw_level : existing.nsfw_level;
             switch (nsfwLevel) {
                 case 0:
@@ -241,7 +260,7 @@ class Guild {
             }
         }
 
-        if (data && typeof data.premium_tier == "number" || typeof existing.premium_tier == "number") {
+        if (data && typeof data.premium_tier == "number" || (existing && typeof existing.premium_tier == "number")) {
             const premiumTier = typeof data.premium_tier == "number" ? data.premium_tier : existing.premium_tier;
             switch (premiumTier) {
                 case 0:
@@ -263,7 +282,7 @@ class Guild {
             }
         }
 
-        if (data && typeof data.premium_progress_bar_enabled == "boolean" && data.premium_progress_bar_enabled == true)
+        if (typeof data.premium_progress_bar_enabled == "boolean" && data.premium_progress_bar_enabled == true)
             this._attributes |= (0b1 << 26);
         else if (existing && typeof existing.premium_progress_bar_enabled == "boolean" && existing.premium_progress_bar_enabled == true)
             this._attributes |= (0b1 << 26);
@@ -273,8 +292,17 @@ class Guild {
          * @type {String}
          */
         this.preferred_locale = data.preferred_locale;
+        if (!this.preferred_locale && existing && existing.preferred_locale)
+            this.preferred_locale = existing.preferred_locale;
+        else if (!this.preferred_locale)
+            this.preferred_locale = null;
 
-        this._cache_options = existing ? existing._cache_options : 0;
+        if (data._cache_options)
+            this._cache_options = data._cache_options;
+        else if (!data._cache_options && existing && existing._cache_options)
+            this._cache_options = existing._cache_options;
+        else
+            this._cache_options = 0;
 
         if (nocache == false && this.client.cacheGuilds == true)
             this.client.guilds.cache.set(data.id, this);
