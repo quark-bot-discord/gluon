@@ -25,7 +25,7 @@ function bundleGuild(guild) {
     for (const member of guild.members.cache.values()) {
         const bundledMember = bundleMember(member);
         if (bundledMember)
-            data.members.push();
+            data.members.push(bundledMember);
     }
     data.channels = [];
     for (const channel of guild.channels.cache.values())
