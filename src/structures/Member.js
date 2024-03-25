@@ -26,7 +26,7 @@ class Member {
         else
             this.user = this.client.users.cache.get(user_id) || null;
 
-        if (data.nick != undefined)
+        if (data.nick !== undefined)
             this.nick = data.nick;
         else if (data.nick !== null && existing && existing.nick != undefined)
             this.nick = existing.nick;
@@ -37,13 +37,18 @@ class Member {
 
         this._attributes = data._attributes ?? 0;
 
-        if (data.pending == true)
+        if (data.pending !== undefined && data.pending == true)
+            this._attributes |= (0b1 << 0);
+        else if (data.pending === undefined && existing && existing.pending == true)
             this._attributes |= (0b1 << 0);
 
-        if (data.avatar && data.avatar.startsWith("a_") == true)
+        if (data.avatar !== undefined && data.avatar.startsWith("a_") == true)
             this._attributes |= (0b1 << 1);
 
-        this.avatar = data.avatar ? BigInt("0x" + data.avatar.replace("a_", "")) : null;
+        if (data.avatar !== undefined)
+            this.avatar = data.avatar ? BigInt("0x" + data.avatar.replace("a_", "")) : null;
+        else if (data.avatar === undefined && existing && existing.avatar)
+            this.avatar == existing.avatar;
 
         if (typeof data.permissions == "string")
             this._permissions = BigInt(data.permissions);
