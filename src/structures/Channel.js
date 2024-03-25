@@ -58,25 +58,32 @@ class Channel {
          */
         if (typeof data.name == "string")
             this.name = data.name;
-        else if (existing && typeof existing.name == "string")
+        else if (typeof data.name != "string" && existing && typeof existing.name == "string")
             this.name = existing.name;
 
         if (typeof data.topic == "string")
             this.topic = data.topic;
-        else if (existing && typeof existing.topic == "string")
+        else if (typeof data.topic != "string" && existing && typeof existing.topic == "string")
             this.topic = existing.topic;
 
         if (typeof data.rate_limit_per_user == "number")
             this.rate_limit_per_user = data.rate_limit_per_user;
-        else if (existing && typeof existing.rate_limit_per_user == "number")
+        else if (typeof data.rate_limit_per_user != "number" && existing && typeof existing.rate_limit_per_user == "number")
             this.rate_limit_per_user = existing.rate_limit_per_user;
 
-        this._attributes = 0;
+        this._attributes = data._attributes ?? 0;
 
-        if (data.nsfw == true)
+        if (data.nsfw !== undefined && data.nsfw == true)
+            this._attributes |= (0b1 << 0);
+        else if (data.nsfw === undefined && existing && existing.nsfw == true)
             this._attributes |= (0b1 << 0);
 
-        this._cache_options = existing ? existing._cache_options : 0;
+        if (data._cache_options)
+            this._cache_options = data._cache_options;
+        else if (!data._cache_options && existing && existing._cache_options)
+            this._cache_options = existing._cache_options;
+        else
+            this._cache_options = 0;
 
         /**
          * The message manager for this channel.
