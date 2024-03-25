@@ -42,7 +42,7 @@ class Member {
         else if (data.pending === undefined && existing && existing.pending == true)
             this._attributes |= (0b1 << 0);
 
-        if (data.avatar !== undefined && data.avatar.startsWith("a_") == true)
+        if (data.avatar && data.avatar.startsWith("a_") == true)
             this._attributes |= (0b1 << 1);
 
         if (data.avatar !== undefined)
