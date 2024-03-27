@@ -240,5 +240,12 @@ module.exports = {
         },
         method: "PUT",
         majorParams: [0]
+    },
+    getRoles: {
+        path: ([guild_id]) => {
+            return `/guilds/${guild_id}/roles`;
+        },
+        method: "GET",
+        majorParams: [0]
     }
 };

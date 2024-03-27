@@ -141,7 +141,7 @@ class Guild {
          * The role manager of this guild.
          * @type {GuildRoleManager}
          */
-        this.roles = existing ? existing.roles : new GuildRoleManager(this.client);
+        this.roles = existing ? existing.roles : new GuildRoleManager(this.client, this);
 
         this.scheduled_events = existing ? existing.scheduled_events : new GuildScheduledEventManager(this.client, this);
 
