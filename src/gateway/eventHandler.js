@@ -28,6 +28,8 @@ class EventHandler {
 
         this.initialGuilds = [];
 
+        this.initialisedSent = false;
+
     }
 
     READY(data) {
@@ -77,8 +79,10 @@ class EventHandler {
         else
             this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
 
-        if (this.initialGuilds.length == 0)
+        if (this.initialGuilds.length == 0 && this.initialisedSent == false) {
+            this.initialisedSent = true;
             this.client.emit(EVENTS.INITIALISED);
+        }
 
     }
 
