@@ -77,6 +77,9 @@ class EventHandler {
         else
             this.initialGuilds.splice(this.initialGuilds.indexOf(data.id), 1);
 
+        if (this.initialGuilds.length == 0)
+            this.client.emit(EVENTS.INITIALISED);
+
     }
 
     GUILD_UPDATE(data) {

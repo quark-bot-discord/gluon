@@ -72,7 +72,8 @@ module.exports.EVENTS = {
     GUILD_SCHEDULED_EVENT_UPDATE:   ("guildScheduledEventUpdate"),
     GUILD_SCHEDULED_EVENT_DELETE:   ("guildScheduledEventDelete"),
     GUILD_SCHEDULED_EVENT_USER_ADD: ("guildScheduledEventUserAdd"),
-    GUILD_SCHEDULED_EVENT_USER_REMOVE: ("guildScheduledEventUserRemove")
+    GUILD_SCHEDULED_EVENT_USER_REMOVE: ("guildScheduledEventUserRemove"),
+    INITIALISED:                    ("initialised")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),
