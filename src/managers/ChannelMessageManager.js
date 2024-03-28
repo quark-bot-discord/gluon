@@ -59,6 +59,17 @@ class ChannelMessageManager {
 
     }
 
+    async fetchPinned() {
+
+        const data = await this.client.request.makeRequest("getPinned", [this.channel.id]);
+
+        let messages = [];
+        for (let i = 0; i < data.length; i++)
+            messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
+        return messages;
+
+    }
+
     sweepMessages(cacheCount, currentTime) {
 
         if (this.cache.size == 0)

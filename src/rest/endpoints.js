@@ -254,5 +254,12 @@ module.exports = {
         },
         method: "GET",
         majorParams: [0]
+    },
+    getPinned: {
+        path: ([channel_id]) => {
+            return `/channels/${channel_id}/pins`;
+        },
+        method: "GET",
+        majorParams: [0]
     }
 };
