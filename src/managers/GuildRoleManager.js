@@ -14,7 +14,7 @@ class GuildRoleManager {
 
     async fetch(role_id) {
 
-        const cachedRole = this.guild.roles.cache.get(role_id) || null;
+        const cachedRole = this.cache.get(role_id.toString()) || null;
         if (this.client.cacheRoles == true)
             return cachedRole;
 

@@ -12,7 +12,7 @@ class UserManager {
 
     async fetch(user_id) {
 
-        const cachedUser = this.cache.get(user_id);
+        const cachedUser = this.cache.get(user_id.toString());
         if (cachedUser)
             return cachedUser;
 

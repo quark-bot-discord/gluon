@@ -33,7 +33,7 @@ class GuildScheduledEventManager {
 
     async fetch(scheduled_event_id) {
 
-        const cachedEvent = this.cache.get(scheduled_event_id);
+        const cachedEvent = this.cache.get(scheduled_event_id.toString());
         if (cachedEvent)
             return cachedEvent;
 

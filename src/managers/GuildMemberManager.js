@@ -14,7 +14,7 @@ class GuildMemberManager {
 
     async fetch(user_id) {
 
-        const cached = this.cache.get(user_id.toString);
+        const cached = this.cache.get(user_id.toString());
         if (cached)
             return cached;
 
