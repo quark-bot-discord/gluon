@@ -247,5 +247,12 @@ module.exports = {
         },
         method: "GET",
         majorParams: [0]
+    },
+    getEmoji: {
+        path: ([guild_id, emoji_id]) => {
+            return `/guilds/${guild_id}/emojis/${emoji_id}`;
+        },
+        method: "GET",
+        majorParams: [0]
     }
 };
