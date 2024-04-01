@@ -4,6 +4,7 @@ const { createReadStream } = require("fs");
 const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 const FastQ = require("fastq");
+const getBucket = require("./getBucket");
 
 class BetterRequestHandler {
 
@@ -23,12 +24,26 @@ class BetterRequestHandler {
 
         this.latency = 1;
         this.maxRetries = 3;
+        this.maxQueueSize = 100;
 
         this.endpoints = require("./endpoints");
 
         this.queueWorker = (data) => {
             return new Promise(async (resolve, reject) => {
-                this.http(data.hash, data.request, data.params, data.body, resolve, reject);
+                const bucket = await getBucket(this.client, this.localRatelimitCache, data.hash);
+                if (!bucket || bucket.remaining != 0 || (bucket.remaining == 0 && (new Date().getTime() / 1000) > bucket.reset + this.latency))
+                    this.http(data.hash, data.request, data.params, data.body, resolve, reject);
+                else {
+                    this.client.emit("debug", `RATELIMITED ${data.hash} (bucket reset):${bucket.reset} (latency):${this.latency}  (time until retry):${((bucket.reset + this.latency) * 1000) - new Date().getTime()} (current time):${(new Date().getTime() / 1000) | 0}`);
+                    if (this.queues[data.hash].length() > this.maxQueueSize) {
+                        this.client.emit("debug", `KILL QUEUE ${data.hash}`);
+                        this.queues[data.hash].kill();
+                        delete this.queues[data.hash];
+                    }
+                    setTimeout(() => {
+                        this.http(data.hash, data.request, data.params, data.body, resolve, reject);
+                    }, ((bucket.reset + this.latency) * 1000) - new Date().getTime());
+                }
             });
         };
 
@@ -113,25 +128,7 @@ class BetterRequestHandler {
 
         const path = actualRequest.path(params);
 
-        let bucket;
-        if (this.client.redis) {
-
-            try {
-
-                let rawBucket = await this.client.redis.get(`gluon.paths.${hash}`) || "{}";
-
-                bucket = JSON.parse(rawBucket);
-
-            } catch (error) {
-
-                console.log(error);
-
-                bucket = this.localRatelimitCache.get(`gluon.paths.${hash}`);
-
-            }
-
-        } else
-            bucket = this.localRatelimitCache.get(`gluon.paths.${hash}`);
+        const bucket = await getBucket(this.client, this.localRatelimitCache, hash);
 
         if (!bucket || bucket.remaining != 0 || (bucket.remaining == 0 && (new Date().getTime() / 1000) > bucket.reset + this.latency)) {
 
