@@ -355,7 +355,7 @@ class EventHandler {
             this.client.storage.getItem(`${data.guild_id}_${data.channel_id}_${data.id}`)
                 .then(async storedOldMessage => {
 
-                    oldMessage = new Message(this.client, storedOldMessage, data.channel_id, data.guild_id, true);
+                    oldMessage = storedOldMessage ? new Message(this.client, storedOldMessage, data.channel_id, data.guild_id, true) : null;
 
                     this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
