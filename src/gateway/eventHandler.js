@@ -219,6 +219,18 @@ class EventHandler {
 
     }
 
+    THREAD_LIST_SYNC(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => THREAD_LIST_SYNC ${data.guild_id}`);
+
+        let threads = [];
+        for (let i = 0; i < data.threads.length; i++)
+            threads.push(new Thread(this.client, data.threads[i], data.guild_id));
+
+        this.client.emit(EVENTS.THREAD_LIST_SYNC, threads);
+
+    }
+
     GUILD_MEMBER_ADD(data) {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_ADD ${data.guild_id}`);
