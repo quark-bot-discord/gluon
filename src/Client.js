@@ -15,6 +15,8 @@ const Guild = require("./structures/Guild");
 const User = require("./structures/User");
 const generateWebsocketURL = require("./util/generateWebsocketURL");
 const Member = require("./structures/Member");
+const Channel = require("./structures/Channel");
+const cacheChannel = require("./util/cacheChannel");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -388,6 +390,16 @@ class Client extends EventsEmitter {
         const member = new Member(this, data, user_id.toString(), guild_id.toString(), data.user);
 
         return member;
+
+    }
+
+    async fetchChannel(guild_id, channel_id) {
+
+        const data = await this.request.makeRequest("getChannel", [channel_id]);
+
+        const channel = cacheChannel(this, data, guild_id.toString());
+
+        return channel;
 
     }
 
