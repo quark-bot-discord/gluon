@@ -14,6 +14,7 @@ const bundleGuild = require("./util/bundleGuild");
 const Guild = require("./structures/Guild");
 const User = require("./structures/User");
 const generateWebsocketURL = require("./util/generateWebsocketURL");
+const Member = require("./structures/Member");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -377,6 +378,16 @@ class Client extends EventsEmitter {
     async deleteWebhook(webhook_id) {
 
         await this.request.makeRequest("deleteWebhook", [webhook_id]);
+
+    }
+
+    async fetchMember(guild_id, user_id) {
+
+        const data = await this.request.makeRequest("getGuildMember", [guild_id, user_id]);
+
+        const member = new Member(this, data, user_id.toString(), guild_id.toString(), data.user);
+
+        return member;
 
     }
 
