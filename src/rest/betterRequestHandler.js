@@ -25,6 +25,7 @@ class BetterRequestHandler {
         this.latency = 1;
         this.maxRetries = 3;
         this.maxQueueSize = 100;
+        this.fuzz = 500;
 
         this.endpoints = require("./endpoints");
 
@@ -42,7 +43,7 @@ class BetterRequestHandler {
                     }
                     setTimeout(() => {
                         this.http(data.hash, data.request, data.params, data.body, resolve, reject);
-                    }, ((bucket.reset + this.latency) * 1000) - new Date().getTime());
+                    }, ((bucket.reset + this.latency) * 1000) - new Date().getTime() + this.fuzz);
                 }
             });
         };
@@ -235,9 +236,7 @@ class BetterRequestHandler {
             this.client.emit("debug", `REMOVE ${hash} from request queue`);
 
         } else {
-            let retryNextIn = Math.ceil(bucket.reset - (new Date().getTime() / 1000));
-            if (retryNextIn < 1)
-                retryNextIn = 1;
+            let retryNextIn = Math.ceil(bucket.reset - (new Date().getTime() / 1000)) + this.latency;
 
             setTimeout(() => {
                 reject("429: Hit ratelimit, retry in " + retryNextIn);
