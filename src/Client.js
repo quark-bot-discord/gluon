@@ -384,6 +384,13 @@ class Client extends EventsEmitter {
 
     async fetchMember(guild_id, user_id) {
 
+        const guild = this.guilds.cache.get(guild_id.toString());
+
+        const cached = guild.members.cache.get(user_id.toString());
+
+        if (cached)
+            return cached;
+
         const data = await this.request.makeRequest("getGuildMember", [guild_id, user_id]);
 
         const member = new Member(this, data, user_id.toString(), guild_id.toString(), data.user);
