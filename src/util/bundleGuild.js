@@ -5,6 +5,7 @@ const bundleMember = require("./bundleMember");
 const bundleRole = require("./bundleRole");
 const bundleThread = require("./bundleThread");
 const bundleVoiceState = require("./bundleVoiceState");
+const threadTypes = [CHANNEL_TYPES.GUILD_PUBLIC_THREAD, CHANNEL_TYPES.GUILD_PRIVATE_THREAD, CHANNEL_TYPES.GUILD_NEWS_THREAD];
 
 function bundleGuild(guild) {
     const data = {};
@@ -29,11 +30,11 @@ function bundleGuild(guild) {
     }
     data.channels = [];
     for (const channel of guild.channels.cache.values())
-        if (channel.type == CHANNEL_TYPES.GUILD_TEXT || channel.type == CHANNEL_TYPES.GUILD_NEWS || channel.type == CHANNEL_TYPES.GUILD_VOICE || channel.type == CHANNEL_TYPES.GUILD_STAGE_VOICE)
+        if (!threadTypes.includes(channel.type))
             data.channels.push(bundleChannel(channel));
     data.threads = [];
     for (const channel of guild.channels.cache.values())
-        if (channel.type == CHANNEL_TYPES.GUILD_PUBLIC_THREAD || channel.type == CHANNEL_TYPES.GUILD_NEWS_THREAD || channel.type == CHANNEL_TYPES.GUILD_PRIVATE_THREAD)
+        if (threadTypes.includes(channel.type))
             data.threads.push(bundleThread(channel));
     data.voice_states = [];
     for (const voiceState of guild.voice_states.cache.values())
