@@ -121,6 +121,23 @@ class Embed {
 
     }
 
+    toString() {
+
+        let string = "";
+
+        string += this.title ? `## ${this.title}\n\n` : '';
+
+        string += this.description ? `${this.description}\n\n` : '';
+
+        for (let i = 0; i < this.fields; i++)
+            string += this.fields[i].name != "\u200b" ? `**${this.fields[i].name}**:\n${this.fields[i].value}\n` : `${this.fields[i].value}\n`; 
+
+        string += this.footer ? this.footer : '';
+
+        return string;
+
+    }
+
     toJSON() {
 
         return {
