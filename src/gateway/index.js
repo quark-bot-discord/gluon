@@ -334,7 +334,7 @@ class WS {
 
             this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => ${data?.stack?.toString()}`);
 
-            throw data;
+            this.shutDownWebsocket();
 
         });
 
