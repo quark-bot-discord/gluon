@@ -49,6 +49,8 @@ class User {
          */
         this.username = data.username;
 
+        this.global_name = data.global_name;
+
         /**
          * The UNIX (seconds) timestamp when this user was last cached.
          * @type {Number}
