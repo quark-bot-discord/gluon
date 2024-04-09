@@ -174,6 +174,11 @@ class Message {
         if (typeof this.type != "number" && existing && typeof existing.type == "number")
             this.type = existing.type;
 
+        if (data.webhook_id)
+            this.webhook_id = data.webhook_id;
+        else if (existing && existing.webhook_id)
+            this.webhook_id = existing.webhook_id;
+
         /**
          * Stickers sent with this message.
          * @type {Sticker[]}
