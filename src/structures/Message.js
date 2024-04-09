@@ -189,8 +189,8 @@ class Message {
                 this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
         else if (existing && existing.sticker_items != undefined)
             this.sticker_items = existing.sticker_items;
-
-        if (this.author && this.author.bot != true && !data.webhook_id && nocache == false && this.client.cacheMessages == true) {
+        /* this.author && this.author.bot != true && !data.webhook_id && */
+        if (nocache == false && this.client.cacheMessages == true) {
             this.channel?.messages.cache.set(data.id, this);
             if (!this.channel)
                 this.client.emit("debug", `${this.guild?.id?.toString() || this.guild_id?.toString()} NO CHANNEL`);
