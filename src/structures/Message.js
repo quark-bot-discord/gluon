@@ -175,7 +175,7 @@ class Message {
             this.type = existing.type;
 
         if (data.webhook_id)
-            this.webhook_id = data.webhook_id;
+            this.webhook_id = BigInt(data.webhook_id);
         else if (existing && existing.webhook_id)
             this.webhook_id = existing.webhook_id;
 
