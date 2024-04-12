@@ -534,6 +534,12 @@ class Client extends EventsEmitter {
 
     }
 
+    async removeMemberRole(guildId, userId, roleId) {
+
+        await this.request.makeRequest("deleteRemoveMemberRole", [guildId, userId, roleId]);
+
+    }
+
     /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
