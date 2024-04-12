@@ -17,6 +17,8 @@ const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
+const hash = require("hash.js");
+const decryptMessage = require("../util/decryptMessage");
 
 class EventHandler {
 
@@ -364,14 +366,20 @@ class EventHandler {
         const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
 
         if (!oldMessage && this.client.increasedCache.get(data.guild_id) && ((getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy)) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.id) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
-            this.client.storage.getItem(`${data.guild_id}_${data.channel_id}_${data.id}`)
+            const usedHash = hash.sha512().update(`${data.guild_id}_${data.channel_id}_${data.id}`).digest("hex");
+            this.client.storage.getItem(usedHash)
                 .then(async storedOldMessage => {
 
-                    oldMessage = storedOldMessage ? new Message(this.client, storedOldMessage, data.channel_id, data.guild_id, true) : null;
+                    if (storedOldMessage) {
 
-                    this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+                        const oldMessage = decryptMessage(this.client, storedOldMessage, data.id, data.channel_id, data.guild_id);
 
-                    await this.client.storage.removeItem(`${data.guild_id}_${data.channel_id}_${data.id}`);
+                        this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+
+                        await this.client.storage.removeItem(usedHash);
+
+                    } else
+                        this.client.emit(EVENTS.MESSAGE_UPDATE, null, newMessage);
 
                 });
         } else

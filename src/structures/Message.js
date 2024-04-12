@@ -5,7 +5,8 @@ const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
 const checkPermission = require("../util/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
-const bundleMessage = require("../util/bundleMessage");
+const hash = require("hash.js");
+const encryptMessage = require("../util/encryptMessage");
 
 /**
  * A message belonging to a channel within a guild.
@@ -308,9 +309,9 @@ class Message {
      */
     shelf() {
 
-        const bundledMessage = bundleMessage(this);
+        const encryptedMessage = encryptMessage(this);
 
-        this.client.storage.setItem(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`, bundledMessage)
+        this.client.storage.setItem(hash.sha512().update(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`).digest("hex"), encryptedMessage)
             .then(() => {
 
                 this.channel.messages.cache.delete(this.id.toString());
