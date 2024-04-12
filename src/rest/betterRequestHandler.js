@@ -5,6 +5,7 @@ const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 const FastQ = require("fastq");
 const getBucket = require("./getBucket");
+const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
 
@@ -170,6 +171,11 @@ class BetterRequestHandler {
 
             const requestTime = Date.now();
 
+            const controller = new AbortController();
+            const timeout = setTimeout(() => {
+                controller.abort();
+            }, 1500);
+
             for (let i = 0; i <= this.maxRetries; i++)
                 try {
 
@@ -178,7 +184,8 @@ class BetterRequestHandler {
                         method: actualRequest.method,
                         headers: headers,
                         body: form ? form : (body && (actualRequest.method != "GET" && actualRequest.method != "DELETE") ? JSON.stringify(body) : undefined),
-                        compress: true
+                        compress: true,
+                        signal: controller.signal
                     });
 
                     this.latency = Math.ceil((Date.now() - requestTime) / 1000);
@@ -190,6 +197,10 @@ class BetterRequestHandler {
                     console.log(error);
 
                     e = error;
+
+                } finally {
+
+                    clearTimeout(timeout);
 
                 }
 
