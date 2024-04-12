@@ -159,7 +159,7 @@ class BetterRequestHandler {
             } else if (actualRequest.method != "GET" && actualRequest.method != "DELETE")
                 headers["Content-Type"] = "application/json";
 
-            if (actualRequest.useHeaders && actualRequest.useHeaders.length != 0)
+            if (body && actualRequest.useHeaders && actualRequest.useHeaders.length != 0)
                 for (const [key, value] of Object.entries(body))
                     if (actualRequest.useHeaders.includes(key)) {
                         headers[key] = encodeURIComponent(value);
