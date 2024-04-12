@@ -528,6 +528,12 @@ class Client extends EventsEmitter {
 
     }
 
+    async addMemberRole(guildId, userId, roleId) {
+
+        await this.request.makeRequest("putAddGuildMemberRole", [guildId, userId, roleId]);
+
+    }
+
     /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
