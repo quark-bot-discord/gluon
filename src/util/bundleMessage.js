@@ -12,6 +12,7 @@ function bundleMessage(message) {
     for (let i = 0; i < message.attachments.length; i++)
         data.attachments.push(bundleAttachment(message.attachments[i]));
     data.embeds = message.embeds;
+    data.poll = message.poll;
     data.type = message.type;
     const referencedMessageId = message.reference?.message_id?.toString();
     if (referencedMessageId) {
