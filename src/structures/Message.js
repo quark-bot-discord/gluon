@@ -124,6 +124,12 @@ class Message {
             else if (!this.content)
                 this.content = null;
         }
+        
+        /**
+         * The message poll.
+         * @type {Object?}
+         */
+        this.poll = data.poll || null;
 
         /**
          * The message embeds.
