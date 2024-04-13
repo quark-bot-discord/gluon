@@ -124,6 +124,16 @@ class Message {
             else if (!this.content)
                 this.content = null;
         }
+        
+        /**
+         * The message poll.
+         * @type {Object?}
+         */
+        this.poll = data.poll;
+        if (this.poll == undefined && existing && existing.poll != undefined)
+            this.poll = existing.poll;
+        else if (this.poll == undefined)
+            this.poll = undefined;
 
         /**
          * The message embeds.
