@@ -17,8 +17,7 @@ const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
-const hash = require("hash.js");
-const decryptMessage = require("../util/decryptMessage");
+const getMessage = require("../util/getMessage");
 
 class EventHandler {
 
@@ -362,28 +361,14 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_UPDATE ${data.guild_id}`);
 
-        let oldMessage = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
-        const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
+        getMessage(this.client, data.guild_id, data.channel_id, data.id, true)
+            .then(oldMessage => {
 
-        if (!oldMessage && this.client.increasedCache.get(data.guild_id) && ((getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy)) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.id) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
-            const usedHash = hash.sha512().update(`${data.guild_id}_${data.channel_id}_${data.id}`).digest("hex");
-            this.client.storage.getItem(usedHash)
-                .then(async storedOldMessage => {
+                const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
 
-                    if (storedOldMessage) {
+                this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
 
-                        const oldMessage = decryptMessage(this.client, storedOldMessage, data.id, data.channel_id, data.guild_id);
-
-                        this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
-
-                        await this.client.storage.removeItem(usedHash);
-
-                    } else
-                        this.client.emit(EVENTS.MESSAGE_UPDATE, null, newMessage);
-
-                });
-        } else
-            this.client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+            });
 
     }
 
@@ -391,27 +376,12 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_DELETE ${data.guild_id}`);
 
-        let message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.id) || null;
+        getMessage(this.client, data.guild_id, data.channel_id, data.id, true)
+            .then(message => {
 
-        if (!message && this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.id) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.id) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
-            const storedKey = `${data.guild_id}_${data.channel_id}_${data.id}`;
-            this.client.storage.getItem(storedKey)
-                .then(async storedMessage => {
+                this.client.emit(EVENTS.MESSAGE_DELETE, message);
 
-                    message = new Message(this.client, storedMessage, data.channel_id, data.guild_id, true);
-
-                    this.client.emit(EVENTS.MESSAGE_DELETE, message);
-
-                    await this.client.storage.removeItem(storedKey);
-
-                });
-        } else {
-
-            this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.id);
-
-            this.client.emit(EVENTS.MESSAGE_DELETE, message);
-
-        }
+            });
 
     }
 
@@ -420,29 +390,11 @@ class EventHandler {
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_DELETE_BULK ${data.guild_id}`);
 
         let messages = [];
-        let fetchingFromStorage = false;
-        for (let i = 0; i < data.ids.length; i++) {
-            const message = this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.get(data.ids[i]);
-            if (message) {
-                messages.push(message);
-                this.client.guilds.cache.get(data.guild_id)?.channels.cache.get(data.channel_id)?.messages.cache.delete(data.ids[i]);
-            } else if (this.client.increasedCache.get(data.guild_id) && (getTimestamp(data.ids[i]) + (this.client.defaultMessageExpiry * this.client.increaseCacheBy) > ((new Date().getTime() / 1000) | 0)) && ((getTimestamp(data.ids[i]) + this.client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))) {
-                fetchingFromStorage = true;
-                this.client.storage.getItem(`${data.guild_id}_${data.channel_id}_${data.ids[i]}`)
-                    .then(async storedMessage => {
+        for (const id of data.ids)
+            getMessage(this.client, data.guild_id, data.channel_id, id, true)
+                .then(message => messages.push(message));
 
-                        messages.push(new Message(this.client, storedMessage, data.channel_id, data.guild_id, true));
-
-                        await this.client.storage.removeItem(`${data.guild_id}_${data.channel_id}_${data.ids[i]}`);
-
-                    });
-            }
-        }
-
-        if (fetchingFromStorage == true)
-            setTimeout(() => this.client.emit(EVENTS.MESSAGE_DELETE_BULK, messages), 3000);
-        else
-            this.client.emit(EVENTS.MESSAGE_DELETE_BULK, messages);
+        setTimeout(() => this.client.emit(EVENTS.MESSAGE_DELETE_BULK, messages), 3000);
 
     }
 
