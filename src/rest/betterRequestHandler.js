@@ -174,7 +174,7 @@ class BetterRequestHandler {
             const controller = new AbortController();
             const timeout = setTimeout(() => {
                 controller.abort();
-            }, 1500);
+            }, 30000);
 
             for (let i = 0; i <= this.maxRetries; i++)
                 try {
