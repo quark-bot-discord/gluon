@@ -16,7 +16,6 @@ const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
-const getTimestamp = require("../util/getTimestampFromSnowflake");
 const getMessage = require("../util/getMessage");
 
 class EventHandler {
@@ -390,11 +389,11 @@ class EventHandler {
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_DELETE_BULK ${data.guild_id}`);
 
         let messages = [];
-        for (const id of data.ids)
-            getMessage(this.client, data.guild_id, data.channel_id, id, true)
-                .then(message => messages.push(message));
+        for (let i = 0; i < data.ids.length; i++)
+            messages.push(getMessage(this.client, data.guild_id, data.channel_id, id, true));
 
-        setTimeout(() => this.client.emit(EVENTS.MESSAGE_DELETE_BULK, messages), 3000);
+        Promise.all(messages)
+            .then(m => this.client.emit(EVENTS.MESSAGE_DELETE_BULK, m));
 
     }
 
