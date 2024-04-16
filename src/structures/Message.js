@@ -7,6 +7,7 @@ const Sticker = require("./Sticker");
 const getTimestamp = require("../util/getTimestampFromSnowflake");
 const hash = require("hash.js");
 const encryptMessage = require("../util/encryptMessage");
+const MessagePollManager = require("../managers/MessagePollManager");
 
 /**
  * A message belonging to a channel within a guild.
@@ -134,6 +135,9 @@ class Message {
             this.poll = existing.poll;
         else if (this.poll == undefined)
             this.poll = undefined;
+
+        if (this.poll)
+            this.pollResponses = new MessagePollManager(data.pollResponses);
 
         /**
          * The message embeds.

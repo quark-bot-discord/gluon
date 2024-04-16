@@ -688,7 +688,37 @@ class EventHandler {
             this.client.emit(EVENTS.GUILD_EMOJI_UPDATE, oldEmoji, newEmoji);
 
         }
-        
+
+
+    }
+
+    MESSAGE_POLL_VOTE_ADD(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_POLL_VOTE_ADD ${data.guild_id}`);
+
+        getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
+            .then(message => {
+                console.log(message.id);
+                message.pollResponses.addVote(data.user_id, data.answer_id);
+
+            });
+
+        this.client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
+
+    }
+
+    MESSAGE_POLL_VOTE_REMOVE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`);
+
+        getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
+            .then(message => {
+
+                message.pollResponses.removeVote(data.user_id, data.answer_id);
+
+            });
+
+        this.client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
 
     }
 }

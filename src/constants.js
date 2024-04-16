@@ -21,7 +21,9 @@ module.exports.INTENTS = {
     MESSAGE_CONTENT:            (1 << 15),
     GUILD_SCHEDULED_EVENTS:     (1 << 16),
     AUTO_MODERATION_CONFIGURATION: (1 << 20),
-    AUTO_MODERATION_EXECUTION:  (1 << 21)
+    AUTO_MODERATION_EXECUTION:  (1 << 21),
+    GUILD_MESSAGE_POLLS:        (1 << 24),
+    DIRECT_MESSAGE_POLLS:       (1 << 25)
 };
 module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
                                     this.INTENTS.GUILD_MEMBERS |
@@ -29,7 +31,8 @@ module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
                                     this.INTENTS.GUILD_INVITES |
                                     this.INTENTS.GUILD_VOICE_STATES |
                                     this.INTENTS.GUILD_MESSAGES |
-                                    this.INTENTS.MESSAGE_CONTENT;
+                                    this.INTENTS.MESSAGE_CONTENT |
+                                    this.INTENTS.GUILD_MESSAGE_POLLS;
 module.exports.EVENTS = {
     READY:                          ("ready"),
     GUILD_CREATE:                   ("guildCreate"),
@@ -73,7 +76,9 @@ module.exports.EVENTS = {
     GUILD_SCHEDULED_EVENT_DELETE:   ("guildScheduledEventDelete"),
     GUILD_SCHEDULED_EVENT_USER_ADD: ("guildScheduledEventUserAdd"),
     GUILD_SCHEDULED_EVENT_USER_REMOVE: ("guildScheduledEventUserRemove"),
-    INITIALISED:                    ("initialised")
+    INITIALISED:                    ("initialised"),
+    MESSAGE_POLL_VOTE_ADD:          ("messagePoleVoteAdd"),
+    MESSAGE_POLL_VOTE_REMOVE:       ("messagePoleVoteRemove")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),

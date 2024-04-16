@@ -19,10 +19,10 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
                         message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
 
-                        if (destroy != false) {
-                            await client.storage.removeItem(usedHash).catch(() => null);
+                        await client.storage.removeItem(usedHash).catch(() => null);
+
+                        if (destroy != false)
                             client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
-                        }
 
                         return resolve(message);
 
@@ -32,10 +32,10 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
                 });
         } else {
 
-            if (destroy != false) {
-                await client.storage.removeItem(usedHash).catch(() => null);
+            await client.storage.removeItem(usedHash).catch(() => null);
+
+            if (destroy != false)
                 client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
-            }
 
             return resolve(message);
         }
