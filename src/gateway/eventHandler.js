@@ -697,7 +697,7 @@ class EventHandler {
 
         getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
             .then(message => {
-                console.log(message.id);
+
                 message.pollResponses.addVote(data.user_id, data.answer_id);
 
             });
