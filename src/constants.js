@@ -77,8 +77,8 @@ module.exports.EVENTS = {
     GUILD_SCHEDULED_EVENT_USER_ADD: ("guildScheduledEventUserAdd"),
     GUILD_SCHEDULED_EVENT_USER_REMOVE: ("guildScheduledEventUserRemove"),
     INITIALISED:                    ("initialised"),
-    MESSAGE_POLL_VOTE_ADD:          ("messagePoleVoteAdd"),
-    MESSAGE_POLL_VOTE_REMOVE:       ("messagePoleVoteRemove")
+    MESSAGE_POLL_VOTE_ADD:          ("messagePollVoteAdd"),
+    MESSAGE_POLL_VOTE_REMOVE:       ("messagePollVoteRemove")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),
