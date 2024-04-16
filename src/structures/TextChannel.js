@@ -37,7 +37,7 @@ class TextChannel extends Channel {
      * @param {String[]} messages An array of message IDs, as strings.
      * @returns {void}
      */
-    async bulkDelete(messages, { reason }) {
+    async bulkDelete(messages, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_MESSAGES))
             return null;
