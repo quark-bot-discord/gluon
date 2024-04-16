@@ -1,9 +1,9 @@
-const Client = require("../src/index");
+const { Client } = require("../index");
 const ActionRow = require("../src/util/actionRowBuilder");
-const Component = require("../src/util/componentBuilder");
+const Button = require("../src/util/buttonBuilder");
 const Embed = require("../src/util/embedBuilder");
 const MessageComponents = require("../src/util/messageComponents");
-const client = new Client();
+const client = new Client({ cacheGuilds: true, cacheMessages: true, cacheUsers: true, cacheMembers: true, cacheChannels: true, cacheVoiceStates: true, cacheRoles: true, cacheEmojis: true })
 
 client.on("ready", () => {
     console.log("ready");
@@ -11,12 +11,12 @@ client.on("ready", () => {
 });
 
 client.on("raw", raw => {
-    console.log("raw");
-    console.log(raw);
+    // console.log("raw");
+    // console.log(raw);
 });
 
 client.on("debug", data => {
-    console.log("debug");
+    // console.log("debug");
     console.log(data);
 });
 
@@ -26,10 +26,10 @@ client.on("messageCreate", message => {
     if (message.author.bot == true) return;
     if (message.content == "button") {
         const actionRow = new ActionRow();
-        const button = new Component()
+        const button = new Button()
             .setLabel("button")
             .setStyle(1)
-            .setCustomID(message.guild.id);
+            .setCustomID(message.guild.id.toString());
         actionRow.addComponent(button);
         const messageComponents = new MessageComponents()
             .addActionRow(actionRow);
@@ -45,9 +45,9 @@ client.on("messageCreate", message => {
     }
     if (message.content == "embed") {
         const embed = new Embed()
-            .setTitle("pog?")
+            .setTitle("hello?")
             .setColor("5865F2")
-            .setDescription("pog i guess");
+            .setDescription("hello world!");
         message.channel.send("", {
             embed
         });
