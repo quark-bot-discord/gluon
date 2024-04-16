@@ -390,7 +390,7 @@ class EventHandler {
 
         let messages = [];
         for (let i = 0; i < data.ids.length; i++)
-            messages.push(getMessage(this.client, data.guild_id, data.channel_id, id, true));
+            messages.push(getMessage(this.client, data.guild_id, data.channel_id, data.ids[i], true));
 
         Promise.all(messages)
             .then(m => this.client.emit(EVENTS.MESSAGE_DELETE_BULK, m));
