@@ -8,6 +8,7 @@ const client = new Client({ cacheGuilds: true, cacheMessages: true, cacheUsers: 
 client.on("ready", () => {
     console.log("ready");
     console.log(client.user);
+    client.increasedCache.set("721401585300930562", true);
 });
 
 client.on("raw", raw => {
@@ -56,13 +57,13 @@ client.on("messageCreate", message => {
 
 client.on("messageUpdate", (oldMessage, newMessage) => {
     console.log("messageUpdate");
-    console.log(oldMessage);
-    console.log(newMessage);
+    console.log(oldMessage?.content);
+    console.log(newMessage?.content);
 });
 
 client.on("messageDelete", message => {
     console.log("messageDelete");
-    console.log(message);
+    console.log(message?.content);
 });
 
 client.login("ODQ5NzM0MjM0MzM5NjcyMDg0.YLferA.RYFIAP-qz_U-wJB-qXmTD87p5gA");
