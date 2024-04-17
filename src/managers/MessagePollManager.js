@@ -25,7 +25,7 @@ class MessagePollManager {
         const currentUserList = this.cache.get(answer_id);
 
         if (currentUserList)
-            this.cache.set(answer_id, currentUserList.filter(x != BigInt(user_id)));
+            this.cache.set(answer_id, currentUserList.filter(x => x != BigInt(user_id)));
 
     }
 
