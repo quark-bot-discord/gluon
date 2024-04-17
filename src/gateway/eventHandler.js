@@ -698,6 +698,9 @@ class EventHandler {
         getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
             .then(message => {
 
+                if (!message)
+                    return;
+
                 message.pollResponses.addVote(data.user_id, data.answer_id);
 
             });
@@ -712,6 +715,9 @@ class EventHandler {
 
         getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
             .then(message => {
+
+                if (!message)
+                    return;
 
                 message.pollResponses.removeVote(data.user_id, data.answer_id);
 
