@@ -5,7 +5,7 @@ class MessagePollManager {
         this.cache = new Map();
 
         for (const answer_id in existingResponses)
-            this.cache.set(answer_id, BigInt(existingResponses[answer_id]));
+            this.cache.set(answer_id, existingResponses[answer_id].map(v => BigInt(v)));
 
     }
 

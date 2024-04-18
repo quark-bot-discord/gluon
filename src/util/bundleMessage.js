@@ -15,8 +15,8 @@ function bundleMessage(message) {
     data.poll = message.poll;
     data.pollResponses = {};
     if (message.pollResponses)
-        for (const [key, value] of message.pollResponses.cache)
-            data.pollResponses[key] = value.toString();
+        for (const [key, values] of message.pollResponses.cache)
+            data.pollResponses[key] = values.map(v => v.toString());
     data.type = message.type;
     const referencedMessageId = message.reference?.message_id?.toString();
     if (referencedMessageId) {
