@@ -31,7 +31,7 @@ class Member {
         else if (data.nick !== null && existing && existing.nick != undefined)
             this.nick = existing.nick;
 
-        this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
+        this.joined_at = typeof data.joined_at == "number" ? data.joined_at : (new Date(data.joined_at).getTime() / 1000) | 0;
 
         this.timeout_until = data.communication_disabled_until ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0 : null;
 
