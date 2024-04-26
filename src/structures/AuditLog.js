@@ -98,10 +98,10 @@ class AuditLog {
                 this.count = parseInt(data.options.count);
 
             if (data.options.delete_member_days)
-                this.delete_member_days = data.delete_member_days;
+                this.delete_member_days = parseInt(data.options.delete_member_days);
 
             if (data.options.members_removed)
-                this.members_removed = data.members_removed;
+                this.members_removed = parseInt(data.options.members_removed);
 
         }
 
