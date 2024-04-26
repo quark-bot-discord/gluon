@@ -106,6 +106,12 @@ class AuditLog {
              */
             this.changes = data.changes;
 
+        if (data.delete_member_days)
+            this.delete_member_days = data.delete_member_days;
+
+        if (data.members_removed)
+            this.members_removed = data.members_removed;
+
     }
 
     toJSON() {
