@@ -115,6 +115,7 @@ module.exports.AUDIT_LOG_TYPES = {
     CHANNEL_OVERWRITE_UPDATE:   (14),
     CHANNEL_OVERWRITE_DELETE:   (15),
     MEMBER_KICK:                (20),
+    MEMBER_PRUNE:               (21),
     MEMBER_BAN_ADD:             (22),
     MEMBER_BAN_REMOVE:          (23),
     MEMBER_UPDATE:              (24),
