@@ -13,7 +13,7 @@ function bundleGuild(guild) {
     data.name = guild.name;
     data.icon = guild.icon;
     data.owner_id = guild.owner_id.toString();
-    data.joined_at = guild.joined_at;
+    data.joined_at = guild.joined_at * 1000;
     data.premium_tier = guild.premium_tier;
     data.unavailable = guild.unavailable;
     data.member_count = guild.member_count;
