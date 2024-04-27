@@ -106,6 +106,9 @@ class AuditLog {
             if (data.options.id)
                 this.special_id = BigInt(data.options.id);
 
+            if (data.options.type)
+                this.special_type = parseInt(data.options.type);
+
         }
 
         if (data.changes)
