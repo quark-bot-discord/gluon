@@ -229,6 +229,22 @@ class Member {
 
     }
 
+    async massUpdateRoles(roles, { reason }) {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+            return null;
+
+        const body = {};
+
+        if (reason)
+            body["X-Audit-Log-Reason"] = reason;
+
+        body.roles = roles;
+
+        await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
+
+    }
+
 }
 
 module.exports = Member;
