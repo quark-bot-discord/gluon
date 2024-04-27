@@ -197,7 +197,7 @@ class Member {
 
     }
 
-    async timeoutAdd(timeout_until, { reason }) {
+    async timeoutAdd(timeout_until, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
             return null;
@@ -213,7 +213,7 @@ class Member {
 
     }
 
-    async timeoutRemove({ reason }) {
+    async timeoutRemove({ reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
             return null;
@@ -229,7 +229,7 @@ class Member {
 
     }
 
-    async massUpdateRoles(roles, { reason }) {
+    async massUpdateRoles(roles, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
             return null;
