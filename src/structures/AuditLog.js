@@ -103,6 +103,9 @@ class AuditLog {
             if (data.options.members_removed)
                 this.members_removed = parseInt(data.options.members_removed);
 
+            if (data.options.id)
+                this.special_id = BigInt(data.options.id);
+
         }
 
         if (data.changes)
