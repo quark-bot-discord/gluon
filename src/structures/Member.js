@@ -239,7 +239,7 @@ class Member {
         if (reason)
             body["X-Audit-Log-Reason"] = reason;
 
-        body.roles = roles;
+        body.roles = roles.map(role => role.toString());
 
         await this.client.request.makeRequest("patchGuildMember", [this.guild?.id || this.guild_id, this.id], body);
 
