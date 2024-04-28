@@ -240,7 +240,14 @@ module.exports.PERMISSIONS = {
     USE_EXTERNAL_STICKERS:      (1n << 37n),
     SEND_MESSAGES_IN_THREADS:   (1n << 38n),
     USE_EMBEDDED_ACTIVITIES:    (1n << 39n),
-    MODERATE_MEMBERS:           (1n << 40n)
+    MODERATE_MEMBERS:           (1n << 40n),
+    VIEW_CREATOR_MONETIZATION_ANALYTICS: (1n << 41n),
+    USE_SOUNDBOARD:             (1n << 42n),
+    CREATE_GUILD_EXPRESSIONS:   (1n << 43n),
+    CREATE_EVENTS:              (1n << 44n),
+    USE_EXTERNAL_SOUNDS:        (1n << 45n),
+    SEND_VOICE_MESSAGES:        (1n << 46n),
+    SEND_POLLS:                 (1n << 49n)
 };
 module.exports.STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
 module.exports.STICKER_FORMATS_ENUM = {
