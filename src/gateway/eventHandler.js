@@ -726,6 +726,14 @@ class EventHandler {
         this.client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
 
     }
+
+    MESSAGE_REACTION_REMOVE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_REACTION_REMOVE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.MESSAGE_REACTION_REMOVE, data);
+
+    }
 }
 
 module.exports = EventHandler;
