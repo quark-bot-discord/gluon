@@ -107,6 +107,12 @@ module.exports.USER_FLAGS = {
     VERIFIED_BOT:               (1 << 16),
     VERIFIED_BOT_DEVELOPER:     (1 << 17)
 };
+module.exports.MEMBER_FLAGS = {
+    DID_REJOIN:                 (1 << 0),
+    COMPLETED_ONBOARDING:       (1 << 1),
+    BYPASSES_VERIFICATION:      (1 << 2),
+    STARTED_ONBOARDING:         (1 << 3)
+};
 module.exports.AUDIT_LOG_TYPES = {
     GUILD_UPDATE:               (1),
     CHANNEL_CREATE:             (10),

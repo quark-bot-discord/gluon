@@ -1,4 +1,4 @@
-const { CDN_BASE_URL, PERMISSIONS } = require("../constants");
+const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
 const User = require("./User");
 const checkPermission = require("../util/checkPermission");
 
@@ -37,6 +37,13 @@ class Member {
             this.joined_at = existing.joined_at;
 
         this.timeout_until = data.communication_disabled_until ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0 : null;
+
+        if (typeof data.flags == "number")
+            this.flags = data.flags;
+        else if (existing && typeof existing.flags == "number")
+            this.flags = existing.flags;
+        else
+            this.flags = 0;
 
         this._attributes = data._attributes ?? 0;
 
@@ -118,6 +125,12 @@ class Member {
             return permissions;
         } else
             return 0n;
+
+    }
+
+    get rejoined() {
+
+        return (this.flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
 
     }
 
