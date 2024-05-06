@@ -17,7 +17,7 @@ const RequestGuildMembers = require("./structures/_8");
 
 class WS {
 
-    constructor(client, url, shard, intents, sessionId = null, sequence = null, resumeGatewayUrl = null) {
+    constructor(client, url, shard, intents, sessionId = null, sequence = null, resumeGatewayUrl = null, softRestartFunction = null) {
 
         this.token = client.token;
         this.shard = shard;
@@ -53,6 +53,8 @@ class WS {
         this.resumeGatewayUrl = resumeGatewayUrl;
 
         this.retries = 1;
+
+        this.softRestartFunction = softRestartFunction ? softRestartFunction : (() => process.exit(1));
 
         this.addListeners();
 
@@ -351,7 +353,7 @@ class WS {
             this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Terminating websocket`);
             this.ws.terminate();
             setTimeout(() => {
-                process.exit(1);
+                this.softRestartFunction();
             }, 1000);
 
         }, 5000);
