@@ -403,6 +403,13 @@ class Client extends EventsEmitter {
 
     async fetchChannel(guild_id, channel_id) {
 
+        const guild = this.guilds.cache.get(guild_id.toString());
+
+        const cached = guild.channels.cache.get(channel_id.toString());
+
+        if (cached)
+            return cached;
+
         const data = await this.request.makeRequest("getChannel", [channel_id]);
 
         const channel = cacheChannel(this, data, guild_id.toString());
