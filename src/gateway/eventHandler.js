@@ -71,7 +71,7 @@ class EventHandler {
         if (this.client.guilds.cache.get(data.id)?.unavailable == true && data.unavailable != true) {
             guild = new Guild(this.client, data);
             return;
-        } else if (!(this.client.guilds.cache.get(data.id) && this.client.guilds.cache.get(data.id).unavailable != true))
+        } else
             guild = new Guild(this.client, data);
 
         if (!this.initialGuilds.includes(data.id))
