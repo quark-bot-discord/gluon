@@ -199,7 +199,7 @@ class WS {
         if (response != true)
             setTimeout(() => {
 
-                if (this.waitingForHeartbeatACK == true) {
+                if (this.waitingForHeartbeatACK == true && this.resuming != true) {
                     this.client.emit("debug", `${this.libName} ${this.shardCatastrophic} @ ${this.time()} => Heartbeat ACK not received`);
                     this.shutDownWebsocket(4000);
                 }
