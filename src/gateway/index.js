@@ -8,7 +8,7 @@ const UpdatePresence = require("./structures/_3");
 const Resume = require("./structures/_6");
 const EventHandler = require("./eventHandler");
 const chalk = require("chalk");
-const { NAME } = require("../constants");
+const { NAME, GATEWAY_RECONNECT_CLOSE_CODES } = require("../constants");
 const generateWebsocketURL = require("../util/generateWebsocketURL");
 const { OPEN } = require("ws");
 const RequestGuildMembers = require("./structures/_8");
@@ -278,7 +278,7 @@ class WS {
 
             this.waitingForHeartbeatACK = false;
 
-            if (data < 2000 || data == 4901)
+            if (data < 2000 || data == 4901 || GATEWAY_RECONNECT_CLOSE_CODES.includes(data))
                 this.resuming = true;
             else
                 process.exit(1);
