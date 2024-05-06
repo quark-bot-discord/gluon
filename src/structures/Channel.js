@@ -71,6 +71,12 @@ class Channel {
         else if (typeof data.rate_limit_per_user != "number" && existing && typeof existing.rate_limit_per_user == "number")
             this.rate_limit_per_user = existing.rate_limit_per_user;
 
+        if (typeof data.parent_id == "string")
+            this.parent_id = BigInt(data.parent_id);
+        else if (typeof data.parent_id != "string" && data.parent_id === undefined && existing && typeof existing.parent_id == "bigint")
+            this.parent_id = existing.parent_id;
+            
+
         this._attributes = data._attributes ?? 0;
 
         if (data.nsfw !== undefined && data.nsfw == true)

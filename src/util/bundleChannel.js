@@ -7,6 +7,7 @@ function bundleChannel(channel) {
     data.name = channel.name;
     data.topic = channel.topic;
     data.rate_limit_per_user = channel.rate_limit_per_user;
+    data.parent_id = channel.parent_id?.toString();
     data._attributes = channel._attributes;
     data._cache_options = channel._cache_options;
     if (channel.messages) {
