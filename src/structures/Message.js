@@ -204,6 +204,12 @@ class Message {
                 this.sticker_items.push(new Sticker(this.client, data.sticker_items[i]));
         else if (existing && existing.sticker_items != undefined)
             this.sticker_items = existing.sticker_items;
+
+        if (data.message_snapshots)
+            this.message_snapshots = data.message_snapshots;
+        else if (existing && existing.message_snapshots != undefined)
+            this.message_snapshots = existing.message_snapshots;
+
         /* this.author && this.author.bot != true && !data.webhook_id && */
         if (nocache == false && this.client.cacheMessages == true) {
             this.channel?.messages.cache.set(data.id, this);
