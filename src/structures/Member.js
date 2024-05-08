@@ -8,6 +8,16 @@ const checkPermission = require("../util/checkPermission");
  */
 class Member {
 
+    /**
+     * Creates the structure for a guild member.
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw member data from Discord.
+     * @param {String} user_id The id of the member.
+     * @param {String} guild_id The id of the guild that the member belongs to.
+     * @param {User?} user A user object for this member.
+     * @param {Boolean?} nocache Whether this member should be cached.
+     * @param {Boolean?} ignoreNoCache Whether the cache options should be overriden.
+     */
     constructor(client, data, user_id, guild_id, user, nocache = false, ignoreNoCache = false) {
 
         /**
@@ -198,7 +208,7 @@ class Member {
     /**
      * The hash of the member's avatar, as it was received from Discord.
      * @readonly
-     * @type {String}
+     * @type {String?}
      */
     get originalAvatarHash() {
 

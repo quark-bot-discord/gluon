@@ -6,6 +6,11 @@ const Interaction = require("./Interaction");
  */
 class SlashCommand extends Interaction {
 
+    /**
+     * 
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw interaction data from Discord.
+     */
     constructor(client, data) {
 
         super(client, data);

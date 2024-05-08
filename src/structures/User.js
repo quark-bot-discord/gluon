@@ -9,7 +9,6 @@ class User {
 
     /**
      * Creates a structure for a user.
-     * @constructor
      * @param {Client} client The client instance.
      * @param {Object} data The raw user data.
      * @param {Boolean?} nocache Whether the user should be cached or not.
@@ -62,6 +61,11 @@ class User {
 
     }
 
+    /**
+     * The hash of the users's avatar, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     */
     get originalAvatarHash() {
 
         return this.avatar ? 
@@ -71,6 +75,11 @@ class User {
 
     }
 
+    /**
+     * The hash of the users's avatar as a string.
+     * @readonly
+     * @type {String}
+     */
     get formattedAvatarHash() {
 
         let formattedHash = this.avatar.toString(16);

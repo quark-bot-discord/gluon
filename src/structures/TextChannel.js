@@ -12,7 +12,6 @@ class TextChannel extends Channel {
 
     /**
      * Creates the structure for a text channel.
-     * @constructor
      * @param {Client} client The client instance.
      * @param {Object} data Raw channel data.
      * @param {String} guild_id The ID of the guild that this channel belongs to.
