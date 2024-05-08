@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>managers/GuildChannelsManager.js - Documentation</title>
+    <title>Emoji - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,65 +35,330 @@
 
 <div id="main">
     
-    <h1 class="page-title">managers/GuildChannelsManager.js</h1>
+    <h1 class="page-title">Emoji</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const Client = require("../Client");
-const Guild = require("../structures/Guild");
-const TextChannel = require("../structures/TextChannel");
-const Thread = require("../structures/Thread");
-const VoiceChannel = require("../structures/VoiceChannel");
-const cacheChannel = require("../util/cacheChannel");
+        <h2>
+        
+            Emoji
+        
+        </h2>
+        
+            <div class="class-description usertext"><p>Represents an emoji.</p></div>
+        
+    
+</header>
 
-/**
- * Manages all channels within a guild.
- */
-class GuildChannelsManager {
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-    /**
-     * Creates a guild channel manager.
-     * @param {Client} client The client instance.
-     * @param {Guild} guild The guild that this channel manager belongs to.
-     */
-    constructor(client, guild) {
+    
+    <h2>Constructor</h2>
+    
 
-        this.client = client;
+    <h4 class="name" id="Emoji"><span class="type-signature"></span>new Emoji<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
 
-        this.guild = guild;
+    
 
-        this.cache = new Map();
 
-    }
 
-    /**
-     * Fetches a particular channel belonging to this guild.
-     * @param {BigInt | String} channel_id The id of the channel to fetch.
-     * @returns {Promise&lt;VoiceChannel> | Promise&lt;Thread> | Promise&lt;TextChannel>} The fetched channel.
-     */
-    async fetch(channel_id) {
 
-        const cachedChannel = this.cache.get(channel_id.toString()) || null;
-        if (this.client.cacheChannels == true)
-            return cachedChannel;
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates the structure for an emoji.</p></li></ul></dd>
+    
 
-        const data = await this.client.request.makeRequest("getChannel", [channel_id]);
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Emoji.js.html">structures/Emoji.js</a>, <a href="structures_Emoji.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
 
-        return cacheChannel(this.client, data, this.guild.id.toString());
+    
 
-    }
+    
 
-}
+    
 
-module.exports = GuildChannelsManager;</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure">https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The raw emoji data from Discord.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>guild_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The id of the guild that the emoji belongs to.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nocache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>@default [false] Whether this emoji should be cached or not.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
