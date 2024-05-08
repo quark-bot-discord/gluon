@@ -73,6 +73,10 @@ class ChannelMessageManager {
 
     }
 
+    /**
+     * Fetches all the pinned messages that belong to the channel.
+     * @returns {Promise<Array<Message>>}
+     */
     async fetchPinned() {
 
         const data = await this.client.request.makeRequest("getPinned", [this.channel.id]);
@@ -84,6 +88,12 @@ class ChannelMessageManager {
 
     }
 
+    /**
+     * Sweeps messages from the channel which have been flagged for deletion, or moves messages to local storage if the guild has increased cache limits.
+     * @param {Number} cacheCount The maximum number of messages that may be stored for this channel, or 0 for no limit.
+     * @param {Number} currentTime The current UNIX time.
+     * @returns {Number} The remaining number of messages in the channel.
+     */
     sweepMessages(cacheCount, currentTime) {
 
         if (this.cache.size == 0)
