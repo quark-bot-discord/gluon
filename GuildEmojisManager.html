@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>managers/ChannelMessageManager.js - Documentation</title>
+    <title>GuildEmojisManager - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,143 +35,384 @@
 
 <div id="main">
     
-    <h1 class="page-title">managers/ChannelMessageManager.js</h1>
+    <h1 class="page-title">GuildEmojisManager</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const Client = require("../Client");
-const Channel = require("../structures/Channel");
-const Message = require("../structures/Message");
+        <h2>
+        
+            GuildEmojisManager
+        
+        </h2>
+        
+            <div class="class-description usertext"><p>Manages all emojis within a guild.</p></div>
+        
+    
+</header>
 
-/**
- * Manages all messages within a channel.
- */
-class ChannelMessageManager {
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-    /**
-     * Creates a channel message manager.
-     * @param {Client} client The client instance.
-     * @param {Channel} channel The channel that is being managed.
-     */
-    constructor(client, channel) {
+    
+    <h2>Constructor</h2>
+    
 
-        this.client = client;
+    <h4 class="name" id="GuildEmojisManager"><span class="type-signature"></span>new GuildEmojisManager<span class="signature">(client, guild)</span><span class="type-signature"></span></h4>
 
-        this.channel = channel;
+    
 
-        this.cache = new Map();
 
-    }
 
-    /**
-     * Fetches a collection of messages or a singular message from the channel.
-     * @param {Object | String | BigInt} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
-     * @returns {Promise&lt;Array&lt;Message>> | Promise&lt;Message>}
-     */
-    async fetch(options) {
 
-        if (typeof options == "object") {
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates a guild emoji manager.</p></li></ul></dd>
+    
 
-            if (this.cache.size != 0) {
-                let cachedMessages = [];
-                this.cache.forEach((key, value) => {
-                    if (options.before &amp;&amp; value.id &lt; options.before)
-                        cachedMessages.push(value);
-                });
-            }
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="managers_GuildEmojisManager.js.html">managers/GuildEmojisManager.js</a>, <a href="managers_GuildEmojisManager.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
 
-            const body = {};
+    
 
-            if (options.around)
-                body.around = options.around;
+    
 
-            if (options.before)
-                body.before = options.before;
+    
 
-            if (options.after)
-                body.after = options.after;
+    
 
-            if (options.limit)
-                body.limit = options.limit;
+    
 
-            const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
-            let messages = [];
-            for (let i = 0; i &lt; data.length; i++)
-                messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
-            return messages;
+    
 
-        } else if (typeof options == "string" || typeof options == "bigint") {
+    
 
-            const cachedMessage = this.cache.get(options);
-            if (cachedMessage)
-                return cachedMessage;
+    
 
-            const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
+    
 
-            return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
+    
 
-        }
+    
 
-    }
+    
 
-    /**
-     * Fetches all the pinned messages that belong to the channel.
-     * @returns {Promise&lt;Array&lt;Message>>}
-     */
-    async fetchPinned() {
+    
 
-        const data = await this.client.request.makeRequest("getPinned", [this.channel.id]);
+    
 
-        let messages = [];
-        for (let i = 0; i &lt; data.length; i++)
-            messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
-        return messages;
+    
+</dl>
 
-    }
 
-    /**
-     * Sweeps messages from the channel which have been flagged for deletion, or moves messages to local storage if the guild has increased cache limits.
-     * @param {Number} cacheCount The maximum number of messages that may be stored for this channel, or 0 for no limit.
-     * @param {Number} currentTime The current UNIX time.
-     * @returns {Number} The remaining number of messages in the channel.
-     */
-    sweepMessages(cacheCount, currentTime) {
 
-        if (this.cache.size == 0)
-            return;
 
-        const currentCacheSize = this.cache.size;
-        const currentCacheKeys = this.cache.keys();
-        const currentCacheValues = this.cache.values();
 
-        for (let i = 0, cacheSize = currentCacheSize; i &lt; currentCacheSize; i++) {
-            const currentCacheValue = currentCacheValues.next().value;
-            if (currentCacheValue)
-                if ((currentCacheValue.timestamp + this.client.defaultMessageExpiry &lt; currentTime) || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
-                    if (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString()))
-                        currentCacheValue.shelf();
-                    else {
-                        this.cache.delete(currentCacheKeys.next().value);
-                        cacheSize--;
-                    }
-                }
-        }
 
-        return this.cache.size;
 
-    }
 
-}
 
-module.exports = ChannelMessageManager;</code></pre>
-        </article>
-    </section>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>guild</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Guild.html">Guild</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The guild that this emoji manager belongs to.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="fetch"><span class="type-signature type-signature-async">(async) </span>fetch<span class="signature">(emoji_id)</span><span class="type-signature"> &rarr; {Promise.&lt;Emoji>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Fetches a particular emoji that belongs to this guild.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="managers_GuildEmojisManager.js.html">managers/GuildEmojisManager.js</a>, <a href="managers_GuildEmojisManager.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>emoji_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">BigInt</span>
+|
+
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The id of the emoji to fetch.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The fetched emoji.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Emoji></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

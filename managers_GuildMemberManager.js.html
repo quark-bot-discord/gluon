@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>managers/ChannelMessageManager.js - Documentation</title>
+    <title>managers/GuildMemberManager.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">managers/ChannelMessageManager.js</h1>
+    <h1 class="page-title">managers/GuildMemberManager.js</h1>
     
 
     
@@ -46,122 +46,89 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const Client = require("../Client");
-const Channel = require("../structures/Channel");
-const Message = require("../structures/Message");
+const Guild = require("../structures/Guild");
+const Member = require("../structures/Member");
 
 /**
- * Manages all messages within a channel.
+ * Manages all members belonging to this guild.
  */
-class ChannelMessageManager {
+class GuildMemberManager {
 
     /**
-     * Creates a channel message manager.
+     * Creates a member manager.
      * @param {Client} client The client instance.
-     * @param {Channel} channel The channel that is being managed.
+     * @param {Guild} guild The guild that this member manager belongs to.
      */
-    constructor(client, channel) {
+    constructor(client, guild) {
 
         this.client = client;
 
-        this.channel = channel;
+        this.guild = guild;
 
         this.cache = new Map();
 
     }
 
     /**
-     * Fetches a collection of messages or a singular message from the channel.
-     * @param {Object | String | BigInt} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
-     * @returns {Promise&lt;Array&lt;Message>> | Promise&lt;Message>}
+     * Fetches a member.
+     * @param {BigInt | String} user_id The id of the member to fetch.
+     * @returns {Promise&lt;Member>} The fetched member.
      */
-    async fetch(options) {
+    async fetch(user_id) {
 
-        if (typeof options == "object") {
+        const cached = this.cache.get(user_id.toString());
+        if (cached)
+            return cached;
 
-            if (this.cache.size != 0) {
-                let cachedMessages = [];
-                this.cache.forEach((key, value) => {
-                    if (options.before &amp;&amp; value.id &lt; options.before)
-                        cachedMessages.push(value);
-                });
-            }
+        const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
 
-            const body = {};
+        return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
 
-            if (options.around)
-                body.around = options.around;
+    }
 
-            if (options.before)
-                body.before = options.before;
+    /**
+     * Searches for members via a search query.
+     * @param {String} query The search query.
+     * @returns {Promise&lt;Array&lt;Member>> | null} The members which match the search query.
+     */
+    async search(query) {
 
-            if (options.after)
-                body.after = options.after;
+        const body = {};
 
-            if (options.limit)
-                body.limit = options.limit;
+        body.query = query;
 
-            const data = await this.client.request.makeRequest("getChannelMessages", [this.channel.id], body);
-            let messages = [];
+        body.limit = 1000;
+
+        const data = await this.client.request.makeRequest("getSearchGuildMembers", [this.guild.id], body);
+        if (data.length != 0) {
+
+            let members = [];
+
             for (let i = 0; i &lt; data.length; i++)
-                messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
-            return messages;
+                members.push(new Member(this.client, data[i], data[i].user.id, this.guild.id.toString(), data[i].user));
 
-        } else if (typeof options == "string" || typeof options == "bigint") {
+            return members;
 
-            const cachedMessage = this.cache.get(options);
-            if (cachedMessage)
-                return cachedMessage;
-
-            const data = await this.client.request.makeRequest("getChannelMessage", [this.channel.id, options]);
-
-            return new Message(this.client, data, this.channel.id.toString(), this.channel.guild.id.toString());
-
-        }
+        } else
+            return null;
 
     }
 
     /**
-     * Fetches all the pinned messages that belong to the channel.
-     * @returns {Promise&lt;Array&lt;Message>>}
+     * Sweeps all members which have been flagged for deletion.
+     * @param {Number} cacheCount The maximum number of users which may be cached.
+     * @returns {Number} The remaining number of cached members.
      */
-    async fetchPinned() {
-
-        const data = await this.client.request.makeRequest("getPinned", [this.channel.id]);
-
-        let messages = [];
-        for (let i = 0; i &lt; data.length; i++)
-            messages.push(new Message(this.client, data[i], data[i].channel_id, this.channel.guild.id.toString()));
-        return messages;
-
-    }
-
-    /**
-     * Sweeps messages from the channel which have been flagged for deletion, or moves messages to local storage if the guild has increased cache limits.
-     * @param {Number} cacheCount The maximum number of messages that may be stored for this channel, or 0 for no limit.
-     * @param {Number} currentTime The current UNIX time.
-     * @returns {Number} The remaining number of messages in the channel.
-     */
-    sweepMessages(cacheCount, currentTime) {
+    sweepMembers(cacheCount) {
 
         if (this.cache.size == 0)
             return;
 
         const currentCacheSize = this.cache.size;
         const currentCacheKeys = this.cache.keys();
-        const currentCacheValues = this.cache.values();
 
-        for (let i = 0, cacheSize = currentCacheSize; i &lt; currentCacheSize; i++) {
-            const currentCacheValue = currentCacheValues.next().value;
-            if (currentCacheValue)
-                if ((currentCacheValue.timestamp + this.client.defaultMessageExpiry &lt; currentTime) || (cacheCount != 0 ? cacheSize > cacheCount : false)) {
-                    if (this.client.increasedCache.get(this.channel.guild_id?.toString() || this.channel.guild.id.toString()))
-                        currentCacheValue.shelf();
-                    else {
-                        this.cache.delete(currentCacheKeys.next().value);
-                        cacheSize--;
-                    }
-                }
-        }
+        for (let cacheSize = currentCacheSize; cacheCount &lt; cacheSize; cacheSize--)
+            this.cache.delete(currentCacheKeys.next().value);
 
         return this.cache.size;
 
@@ -169,7 +136,7 @@ class ChannelMessageManager {
 
 }
 
-module.exports = ChannelMessageManager;</code></pre>
+module.exports = GuildMemberManager;</code></pre>
         </article>
     </section>
 
