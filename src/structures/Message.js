@@ -359,7 +359,7 @@ class Message {
     }
 
     /**
-     * Moves the message to long-term storage.
+     * Moves the message to long-term storage. 
      */
     shelf() {
 
