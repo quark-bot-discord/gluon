@@ -11,7 +11,6 @@ class Channel {
 
     /**
      * Creates the base structure for a channel.
-     * @constructor
      * @param {Client} client The client instance.
      * @param {Object} data Raw channel data.
      * @param {String} guild_id The ID of the guild that this channel belongs to.
@@ -61,16 +60,28 @@ class Channel {
         else if (typeof data.name != "string" && existing && typeof existing.name == "string")
             this.name = existing.name;
 
+        /**
+         * The topic of the channel.
+         * @type {String?}
+         */
         if (typeof data.topic == "string")
             this.topic = data.topic;
         else if (typeof data.topic != "string" && existing && typeof existing.topic == "string")
             this.topic = existing.topic;
 
+        /**
+         * The message send cooldown for the channel.
+         * @type {Number?}
+         */
         if (typeof data.rate_limit_per_user == "number")
             this.rate_limit_per_user = data.rate_limit_per_user;
         else if (typeof data.rate_limit_per_user != "number" && existing && typeof existing.rate_limit_per_user == "number")
             this.rate_limit_per_user = existing.rate_limit_per_user;
 
+        /**
+         * The id of the parent channel.
+         * @type {BigInt}
+         */
         if (typeof data.parent_id == "string")
             this.parent_id = BigInt(data.parent_id);
         else if (typeof data.parent_id != "string" && data.parent_id === undefined && existing && typeof existing.parent_id == "bigint")
@@ -99,6 +110,11 @@ class Channel {
 
     }
 
+    /**
+     * Whether this channel is marked as NSFW or not.
+     * @readonly
+     * @returns {Boolean}
+     */
     get nsfw() {
 
         return (this._attributes & (0b1 << 0)) == (0b1 << 0);

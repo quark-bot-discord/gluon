@@ -1,7 +1,18 @@
 const { CDN_BASE_URL } = require("../constants");
 
+/**
+ * Represents an emoji.
+ * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
+ */
 class Emoji {
     
+    /**
+     * Creates the structure for an emoji.
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw emoji data from Discord.
+     * @param {String} guild_id The id of the guild that the emoji belongs to.
+     * @param {Boolean?} nocache @default [false] Whether this emoji should be cached or not.
+     */
     constructor(client, data, guild_id, nocache = false) {
 
         this.client = client;

@@ -2,14 +2,15 @@ const User = require("./User");
 
 /**
  * Represents an audit log entry.
+ * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
  */
 class AuditLog {
 
     /**
-     * 
+     * Creates a structure for an audit log entry.
      * @param {Client} client The client instance.
      * @param {Object} data Audit log data from Discord.
-     * @param {Object[]} users Resolved users who are involved with the audit log entries. 
+     * @param {Array<Object>} users Resolved users who are involved with the audit log entries. 
      */
     constructor(client, data, users) {
 
@@ -98,15 +99,31 @@ class AuditLog {
                 this.count = parseInt(data.options.count);
 
             if (data.options.delete_member_days)
+                /**
+                 * The inactivity period for when members are purged.
+                 * @type {Number?}
+                 */
                 this.delete_member_days = parseInt(data.options.delete_member_days);
 
             if (data.options.members_removed)
+                /**
+                 * The number of members removed for when members are purged.
+                 * @type {Number?}
+                 */
                 this.members_removed = parseInt(data.options.members_removed);
 
             if (data.options.id)
+                /**
+                 * The id of the overwritten entity.
+                 * @type {BigInt?}
+                 */
                 this.special_id = BigInt(data.options.id);
 
             if (data.options.type)
+                /**
+                 * The type of the overwritten entity - role ("0") or member ("1")
+                 * @type {Number?}
+                 */
                 this.special_type = parseInt(data.options.type);
 
         }
@@ -120,6 +137,10 @@ class AuditLog {
 
     }
 
+    /**
+     * Converts this audit log structure to a JSON string.
+     * @returns {String}
+     */
     toJSON() {
 
         const noBigInt = {

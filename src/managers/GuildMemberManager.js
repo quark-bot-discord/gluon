@@ -42,7 +42,7 @@ class GuildMemberManager {
     /**
      * Searches for members via a search query.
      * @param {String} query The search query.
-     * @returns {Promise<Array<Member>> | null} The members which match the search query.
+     * @returns {Promise<Array<Member>?>} The members which match the search query.
      */
     async search(query) {
 

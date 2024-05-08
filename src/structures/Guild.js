@@ -22,10 +22,9 @@ class Guild {
 
     /**
      * Creates the structure for a guild.
-     * @constructor
      * @param {Client} client The client instance.
      * @param {Object} data Raw guild data.
-     * @param {Boolean?} nocache Whether this guild should be cached or not.
+     * @param {Boolean?} nocache @default [false] Whether this guild should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
      */
     constructor(client, data, nocache = false) {

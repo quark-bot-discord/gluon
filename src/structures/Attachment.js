@@ -1,10 +1,11 @@
 /**
  * Represents an attachment.
+ * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
  */
 class Attachment {
 
     /**
-     * 
+     * Creates a structure for an attachment.
      * @param {Client} client The client instance.
      * @param {Object} data Attachment data from Discord.
      */
