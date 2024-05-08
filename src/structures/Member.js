@@ -2,22 +2,46 @@ const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
 const User = require("./User");
 const checkPermission = require("../util/checkPermission");
 
+/**
+ * Represents a guild member.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
+ */
 class Member {
 
     constructor(client, data, user_id, guild_id, user, nocache = false, ignoreNoCache = false) {
 
+        /**
+         * The client instance.
+         * @type {Client}
+         */
         this.client = client;
 
+        /**
+         * The guild that this member belongs to.
+         * @type {Guild?}
+         */
         this.guild = this.client.guilds.cache.get(guild_id) || null;
 
         if (!this.guild)
+            /**
+             * The id of the guild that this member belongs to.
+             * @type {BigInt?}
+             */
             this.guild_id = BigInt(guild_id);
 
         const existing = this.guild?.members.cache.get(user_id) || null;
 
+        /**
+         * The id of the member.
+         * @type {BigInt}
+         */
         this.id = BigInt(user_id);
 
         if (data.user)
+            /**
+             * The user object for this member.
+             * @type {User?}
+             */
             this.user = new User(this.client, data.user, nocache);
         else if (existing && existing.user)
             this.user = existing.user;
@@ -27,18 +51,35 @@ class Member {
             this.user = this.client.users.cache.get(user_id) || null;
 
         if (data.nick !== undefined)
+            /**
+             * The nickname of this member.
+             * @type {String?}
+             */
             this.nick = data.nick;
         else if (data.nick !== null && existing && existing.nick != undefined)
             this.nick = existing.nick;
 
         if (data.joined_at)
+            /**
+             * The UNIX timestamp for when this member joined the guild.
+             * @type {Number?}
+             */
             this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
         else if (existing && existing.joined_at)
             this.joined_at = existing.joined_at;
 
+        /**
+         * The UNIX timestamp for when this member's timeout expires, if applicable.
+         * @type {Number?}
+         */
         this.timeout_until = data.communication_disabled_until ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0 : null;
 
         if (typeof data.flags == "number")
+            /**
+             * The flags for this user.
+             * @type {Number}
+             * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}
+             */
             this.flags = data.flags;
         else if (existing && typeof existing.flags == "number")
             this.flags = existing.flags;
@@ -74,6 +115,11 @@ class Member {
 
     }
 
+    /**
+     * The member's roles.
+     * @readonly
+     * @type {Array<Role>}
+     */
     get roles() {
 
         if (this.client.cacheRoles != true)
@@ -96,6 +142,11 @@ class Member {
 
     }
 
+    /**
+     * The position of the member's highest role.
+     * @readonly
+     * @type {Number}
+     */
     get highestRolePosition() {
 
         let highestPosition = 0;
@@ -110,6 +161,11 @@ class Member {
 
     }
 
+    /**
+     * The overall calculated permissions for this member.
+     * @readonly
+     * @type {BigInt}
+     */
     get permissions() {
 
         if (this.id == this.guild.owner_id)
@@ -128,12 +184,22 @@ class Member {
 
     }
 
+    /**
+     * Whether the member has joined the guild before.
+     * @readonly
+     * @type {Boolean}
+     */
     get rejoined() {
 
         return (this.flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
 
     }
 
+    /**
+     * The hash of the member's avatar, as it was received from Discord.
+     * @readonly
+     * @type {String}
+     */
     get originalAvatarHash() {
 
         return this.avatar ?
@@ -143,6 +209,11 @@ class Member {
 
     }
 
+    /**
+     * The hash of the member's avatar as a string.
+     * @readonly
+     * @type {String}
+     */
     get formattedAvatarHash() {
 
         let formattedHash = this.avatar.toString(16);
@@ -155,6 +226,11 @@ class Member {
 
     }
 
+    /**
+     * The url of the member's avatar.
+     * @readonly
+     * @type {String}
+     */
     get displayAvatarURL() {
 
         return this.avatar ?
@@ -164,6 +240,11 @@ class Member {
 
     }
 
+    /**
+     * Whether the user has not yet passed the guild's membership screening requirements.
+     * @readonly
+     * @type {Boolean}
+     */
     get pending() {
 
         return (this._attributes & (0b1 << 0)) == (0b1 << 0);
@@ -181,6 +262,13 @@ class Member {
 
     }
 
+    /**
+     * Adds a role to the member.
+     * @param {BigInt | String} role_id The id of the role to add to the member.
+     * @param {Object?} options The options for adding the role to the member.
+     * @param {String?} options.reason The reason for adding the role to the member.
+     * @returns {Promise<>}
+     */
     async addRole(role_id, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
@@ -195,6 +283,13 @@ class Member {
 
     }
 
+    /**
+     * Removes a role from the member.
+     * @param {BigInt | String} role_id The id of the role to remove from the member.
+     * @param {Object?} options The options for removing the role from the member.
+     * @param {String?} options.reason The reason for removing the role from the member.
+     * @returns {Promise<>}
+     */
     async removeRole(role_id, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
@@ -210,6 +305,13 @@ class Member {
 
     }
 
+    /**
+     * Adds a timeout to the member.
+     * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.
+     * @param {Object?} options The options for timing out the member.
+     * @param {String?} options.reason The reason for timing out the member.
+     * @returns {Promise<>}
+     */
     async timeoutAdd(timeout_until, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
@@ -226,6 +328,12 @@ class Member {
 
     }
 
+    /**
+     * Removes a timeout from the member.
+     * @param {Object?} options The options for untiming out the member.
+     * @param {String?} options.reason The reason for removing the time out from the member.
+     * @returns {Promise<>}
+     */
     async timeoutRemove({ reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
@@ -242,6 +350,12 @@ class Member {
 
     }
 
+    /**
+     * Updates the member's roles.
+     * @param {Array<BigInt | String>} roles An array of role ids for the roles the member should be updated with.
+     * @param {Object?} options The options for updating the member's roles.
+     * @returns {Promise<>}
+     */
     async massUpdateRoles(roles, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))

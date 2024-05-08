@@ -16,7 +16,6 @@ class Message {
 
     /**
      * Creates the structure for a message.
-     * @constructor
      * @param {Client} client The client instance.
      * @param {Object} data Message data returned from Discord.
      * @param {String} channel_id The id of the channel that the message belongs to.
@@ -189,6 +188,10 @@ class Message {
         if (typeof this.type != "number" && existing && typeof existing.type == "number")
             this.type = existing.type;
 
+        /**
+         * The id of the webhook this message is from.
+         * @type {BigInt?}
+         */
         if (data.webhook_id)
             this.webhook_id = BigInt(data.webhook_id);
         else if (existing && existing.webhook_id)
@@ -205,6 +208,10 @@ class Message {
         else if (existing && existing.sticker_items != undefined)
             this.sticker_items = existing.sticker_items;
 
+        /**
+         * The snapshot data about the message.
+         * @type {Object?}
+         */
         if (data.message_snapshots)
             this.message_snapshots = data.message_snapshots;
         else if (existing && existing.message_snapshots != undefined)
@@ -219,24 +226,44 @@ class Message {
 
     }
 
+    /**
+     * Whether this message includes user mentions.
+     * @readonly
+     * @type {Boolean}
+     */
     get mentions() {
 
         return (this._attributes & (0b1 << 0)) == (0b1 << 0);
 
     }
 
+    /**
+     * Whether this message includes role mentions.
+     * @readonly
+     * @type {Boolean}
+     */
     get mention_roles() {
 
         return (this._attributes & (0b1 << 1)) == (0b1 << 1);
 
     }
 
+    /**
+     * Whether this message mentions everyone.
+     * @readonly
+     * @type {Boolean}
+     */
     get mention_everyone() {
 
         return (this._attributes & (0b1 << 2)) == (0b1 << 2);
 
     }
 
+    /**
+     * Whether this message has been pinned.
+     * @readonly
+     * @type {Boolean}
+     */
     get pinned() {
 
         return (this._attributes & (0b1 << 3)) == (0b1 << 3);
@@ -245,6 +272,7 @@ class Message {
 
     /**
      * The UNIX (seconds) timestamp for when this message was created.
+     * @readonly
      * @type {Number}
      */
     get timestamp() {
@@ -256,7 +284,10 @@ class Message {
     /**
      * Replies to the message.
      * @param {String} content The message content.
-     * @param {Object} param1 Embeds, components and files to attach to the message.
+     * @param {Object?} options Embeds, components and files to attach to the message.
+     * @param {Embed?} options.embed Embed to send with the message.
+     * @param {MessageComponents?} options.components Message components to send with the message.
+     * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      */
@@ -291,7 +322,10 @@ class Message {
     /**
      * Edits the message, assuming it is sent by the client user.
      * @param {String} content The message content.
-     * @param {Object} options Embeds and components to attach to the message.
+     * @param {Object?} options Embeds and components to attach to the message.
+     * @param {Embed?} options.embed Embed to send with the message.
+     * @param {MessageComponents?} options.components Message components to send with the message.
+     * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */

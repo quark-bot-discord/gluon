@@ -65,6 +65,10 @@ class Guild {
         else if (!this.name)
             this.name = null;
 
+        /**
+         * The description of the guild.
+         * @type {String?}
+         */
         this.description = data.description;
         if (this.description === undefined && existing && existing.description)
             this.description = existing.description;
@@ -349,6 +353,12 @@ class Guild {
 
     }
 
+    /**
+     * System channel flags.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
+     * @readonly
+     * @type {String}
+     */
     get system_channel_flags() {
 
         let flags = [];
@@ -370,6 +380,12 @@ class Guild {
 
     }
 
+    /**
+     * Server MFA level.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
+     * @readonly
+     * @type {String}
+     */
     get mfa_level() {
 
         if ((this._attributes & (0b1 << 6)) == (0b1 << 6))
@@ -379,6 +395,12 @@ class Guild {
 
     }
 
+    /**
+     * Server verification level.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
+     * @readonly
+     * @type {String}
+     */
     get verification_level() {
 
         if ((this._attributes & (0b1 << 8)) == (0b1 << 8))
@@ -394,6 +416,12 @@ class Guild {
 
     }
 
+    /**
+     * Default notification setting.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
+     * @readonly
+     * @type {String}
+     */
     get default_message_notifications() {
 
         if ((this._attributes & (0b1 << 13)) == (0b1 << 13))
@@ -403,6 +431,12 @@ class Guild {
 
     }
 
+    /**
+     * Explicit content filter level.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
+     * @readonly
+     * @type {String}
+     */
     get explicit_content_filter() {
 
         if ((this._attributes & (0b1 << 15)) == (0b1 << 15))
@@ -414,6 +448,12 @@ class Guild {
 
     }
 
+    /**
+     * Server NSFW level.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
+     * @readonly
+     * @type {String}
+     */
     get nsfw_level() {
 
         if ((this._attributes & (0b1 << 18)) == (0b1 << 18))
@@ -427,6 +467,12 @@ class Guild {
 
     }
 
+    /**
+     * Server boost level.
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
+     * @readonly
+     * @type {Number}
+     */
     get premium_tier() {
 
         if ((this._attributes & (0b1 << 22)) == (0b1 << 22))
@@ -440,6 +486,11 @@ class Guild {
 
     }
 
+    /**
+     * Whether the guild has the boost progress bar enabled.
+     * @readonly
+     * @type {Boolean}
+     */
     get premium_progress_bar_enabled() {
 
         return (this._attributes & (0b1 << 26)) == (0b1 << 26);
