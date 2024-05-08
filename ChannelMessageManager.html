@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>structures/TextChannel.js - Documentation</title>
+    <title>ChannelMessageManager - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,76 +35,383 @@
 
 <div id="main">
     
-    <h1 class="page-title">structures/TextChannel.js</h1>
+    <h1 class="page-title">ChannelMessageManager</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const { PERMISSIONS } = require("../constants");
-const Channel = require("./Channel");
-const Message = require("./Message");
-const checkPermission = require("../util/checkPermission");
+        <h2>
+        
+            ChannelMessageManager
+        
+        </h2>
+        
+            <div class="class-description usertext"><p>Manages all messages within a channel.</p></div>
+        
+    
+</header>
 
-/**
- * Represents a text channel within Discord.
- * @extends {Channel}
- * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
- */
-class TextChannel extends Channel {
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-    /**
-     * Creates the structure for a text channel.
-     * @constructor
-     * @param {Client} client The client instance.
-     * @param {Object} data Raw channel data.
-     * @param {String} guild_id The ID of the guild that this channel belongs to.
-     * @param {Boolean?} nocache Whether this channel should be cached or not.
-     * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
-     */
-    constructor(client, data, guild_id, nocache = false) {
+    
+    <h2>Constructor</h2>
+    
 
-        super(client, data, guild_id);
+    <h4 class="name" id="ChannelMessageManager"><span class="type-signature"></span>new ChannelMessageManager<span class="signature">(client, channel)</span><span class="type-signature"></span></h4>
 
-        if (nocache == false &amp;&amp; this.client.cacheChannels == true)
-            this.guild?.channels.cache.set(data.id, this);
+    
 
-        if (data.messages)
-            for (let i = 0; i &lt; data.messages.length; i++)
-                new Message(this.client, data.messages[i], this.id.toString(), guild_id);
 
-    }
 
-    /**
-     * Bulk deletes all the message IDs provided.
-     * @param {String[]} messages An array of message IDs, as strings.
-     * @returns {void}
-     */
-    async bulkDelete(messages, { reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_MESSAGES))
-            return null;
+<dl class="details">
+    
 
-        const body = {};
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="managers_ChannelMessageManager.js.html">managers/ChannelMessageManager.js</a>, <a href="managers_ChannelMessageManager.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
 
-        body.messages = messages;
+    
 
-        if (reason)
-            body["X-Audit-Log-Reason"] = reason;
+    
 
-        await this.client.request.makeRequest("postBulkDeleteMessages", [this.id], body);
+    
 
-    }
+    
 
-}
+    
 
-module.exports = TextChannel;</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Channel.html">Channel</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The channel that is being managed.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="fetch"><span class="type-signature type-signature-async">(async) </span>fetch<span class="signature">(options)</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;<a href="Message.html">Message</a>>>|Promise.&lt;<a href="Message.html">Message</a>>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Fetches a collection of messages or a singular message from the channel.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="managers_ChannelMessageManager.js.html">managers/ChannelMessageManager.js</a>, <a href="managers_ChannelMessageManager.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">String</span>
+|
+
+<span class="param-type">BigInt</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Either an object of <a href="https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params">options</a> or a message id.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;<a href="Message.html">Message</a>>></span>
+|
+
+<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
