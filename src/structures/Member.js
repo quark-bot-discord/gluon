@@ -267,7 +267,7 @@ class Member {
      * @param {BigInt | String} role_id The id of the role to add to the member.
      * @param {Object?} options The options for adding the role to the member.
      * @param {String?} options.reason The reason for adding the role to the member.
-     * @returns {Promise<>}
+     * @returns {Promise<void>}
      */
     async addRole(role_id, { reason } = {}) {
 
@@ -288,7 +288,7 @@ class Member {
      * @param {BigInt | String} role_id The id of the role to remove from the member.
      * @param {Object?} options The options for removing the role from the member.
      * @param {String?} options.reason The reason for removing the role from the member.
-     * @returns {Promise<>}
+     * @returns {Promise<void>}
      */
     async removeRole(role_id, { reason } = {}) {
 
@@ -310,7 +310,7 @@ class Member {
      * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.
      * @param {Object?} options The options for timing out the member.
      * @param {String?} options.reason The reason for timing out the member.
-     * @returns {Promise<>}
+     * @returns {Promise<void>}
      */
     async timeoutAdd(timeout_until, { reason } = {}) {
 
@@ -332,7 +332,7 @@ class Member {
      * Removes a timeout from the member.
      * @param {Object?} options The options for untiming out the member.
      * @param {String?} options.reason The reason for removing the time out from the member.
-     * @returns {Promise<>}
+     * @returns {Promise<void>}
      */
     async timeoutRemove({ reason } = {}) {
 
@@ -354,7 +354,7 @@ class Member {
      * Updates the member's roles.
      * @param {Array<BigInt | String>} roles An array of role ids for the roles the member should be updated with.
      * @param {Object?} options The options for updating the member's roles.
-     * @returns {Promise<>}
+     * @returns {Promise<void>}
      */
     async massUpdateRoles(roles, { reason } = {}) {
 
