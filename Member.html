@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Message - Documentation</title>
+    <title>Member - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Message</h1>
+    <h1 class="page-title">Member</h1>
     
 
     
@@ -49,11 +49,11 @@
     
         <h2>
         
-            Message
+            Member
         
         </h2>
         
-            <div class="class-description usertext"><p>A message belonging to a channel within a guild.</p></div>
+            <div class="class-description usertext"><p>Represents a guild member.</p></div>
         
     
 </header>
@@ -68,7 +68,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Message"><span class="type-signature"></span>new Message<span class="signature">(client, data, channel_id, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Member"><span class="type-signature"></span>new Member<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -77,14 +77,11 @@
 
 <dl class="details">
     
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates the structure for a message.</p></li></ul></dd>
-    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line15">line 15</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -118,7 +115,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://discord.com/developers/docs/resources/channel#message-object">https://discord.com/developers/docs/resources/channel#message-object</a></li>
+            <li><a href="https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure">https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure</a></li>
         </ul>
     </dd>
     
@@ -136,220 +133,6 @@
 
 
 
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>client</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Client.html">Client</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The client instance.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Message data returned from Discord.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>channel_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The id of the channel that the message belongs to.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>guild_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>The id of the guild that the channel belongs to.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nocache</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>Whether this message should be cached or not.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -390,7 +173,7 @@
 
         
             
-<h4 class="name" id="attachments"><span class="type-signature type-signature-nullable">(nullable) </span>attachments<span class="type-signature"> :Array.&lt;<a href="Attachment.html">Attachment</a>></span></h4>
+<h4 class="name" id="avatarIsAnimated"><span class="type-signature type-signature-readonly">(readonly) </span>avatarIsAnimated<span class="type-signature"> :Boolean</span></h4>
 
 
 
@@ -399,13 +182,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The message attachments.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the user has an animated avatar or not.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line106">line 106</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line259">line 259</a>
     </li></ul></dd>
     
 
@@ -445,7 +228,7 @@
 
 
 <div class="description usertext">
-    <p>The message attachments.</p>
+    <p>Whether the user has an animated avatar or not.</p>
 </div>
 
 
@@ -454,241 +237,7 @@
     <ul>
         <li>
             
-<span class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="author"><span class="type-signature type-signature-nullable">(nullable) </span>author<span class="type-signature"> :<a href="User.html">User</a></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The message author.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line86">line 86</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The message author.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="User.html">User</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="channel"><span class="type-signature type-signature-nullable">(nullable) </span>channel<span class="type-signature"> :<a href="Channel.html">Channel</a></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The channel that this message belongs to.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line53">line 53</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The channel that this message belongs to.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="Channel.html">Channel</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="channel_id"><span class="type-signature type-signature-nullable">(nullable) </span>channel_id<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the channel that this message belongs to.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line60">line 60</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The id of the channel that this message belongs to.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">BigInt</span>
+<span class="param-type">Boolean</span>
 
 
 
@@ -717,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line34">line 34</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -780,7 +329,7 @@
 
         
             
-<h4 class="name" id="embeds"><span class="type-signature"></span>embeds<span class="type-signature"> :Array.&lt;Object></span></h4>
+<h4 class="name" id="displayAvatarURL"><span class="type-signature type-signature-readonly">(readonly) </span>displayAvatarURL<span class="type-signature"> :String</span></h4>
 
 
 
@@ -789,13 +338,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The message embeds.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The url of the member's avatar.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line145">line 145</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line234">line 234</a>
     </li></ul></dd>
     
 
@@ -835,7 +384,7 @@
 
 
 <div class="description usertext">
-    <p>The message embeds.</p>
+    <p>The url of the member's avatar.</p>
 </div>
 
 
@@ -844,7 +393,170 @@
     <ul>
         <li>
             
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="flags"><span class="type-signature"></span>flags<span class="type-signature"> :Number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The flags for this user.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags">https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The flags for this user.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="formattedAvatarHash"><span class="type-signature type-signature-readonly">(readonly) </span>formattedAvatarHash<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The hash of the member's avatar as a string.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line217">line 217</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The hash of the member's avatar as a string.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
 
 
 
@@ -867,13 +579,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The guild that this message belongs to.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The guild that this member belongs to.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line40">line 40</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -913,7 +625,7 @@
 
 
 <div class="description usertext">
-    <p>The guild that this message belongs to.</p>
+    <p>The guild that this member belongs to.</p>
 </div>
 
 
@@ -945,13 +657,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the guild that this message belongs to.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the guild that this member belongs to.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line47">line 47</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -991,7 +703,7 @@
 
 
 <div class="description usertext">
-    <p>The id of the guild that this message belongs to.</p>
+    <p>The id of the guild that this member belongs to.</p>
 </div>
 
 
@@ -1001,6 +713,84 @@
         <li>
             
 <span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="highestRolePosition"><span class="type-signature type-signature-readonly">(readonly) </span>highestRolePosition<span class="type-signature"> :Number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The position of the member's highest role.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line150">line 150</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The position of the member's highest role.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Number</span>
 
 
 
@@ -1023,13 +813,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the message.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the member.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line77">line 77</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -1069,7 +859,7 @@
 
 
 <div class="description usertext">
-    <p>The id of the message.</p>
+    <p>The id of the member.</p>
 </div>
 
 
@@ -1092,7 +882,7 @@
 
         
             
-<h4 class="name" id="member"><span class="type-signature type-signature-nullable">(nullable) </span>member<span class="type-signature"> :<a href="Member.html">Member</a></span></h4>
+<h4 class="name" id="joined_at"><span class="type-signature type-signature-nullable">(nullable) </span>joined_at<span class="type-signature"> :Number</span></h4>
 
 
 
@@ -1101,13 +891,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The member who sent the message.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The UNIX timestamp for when this member joined the guild.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line95">line 95</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
@@ -1147,631 +937,7 @@
 
 
 <div class="description usertext">
-    <p>The member who sent the message.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="Member.html">Member</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="mention_everyone"><span class="type-signature type-signature-readonly">(readonly) </span>mention_everyone<span class="type-signature"> :Boolean</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether this message mentions everyone.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line256">line 256</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether this message mentions everyone.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Boolean</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="mention_roles"><span class="type-signature type-signature-readonly">(readonly) </span>mention_roles<span class="type-signature"> :Boolean</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether this message includes role mentions.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line245">line 245</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether this message includes role mentions.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Boolean</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="mentions"><span class="type-signature type-signature-readonly">(readonly) </span>mentions<span class="type-signature"> :Boolean</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether this message includes user mentions.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line234">line 234</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether this message includes user mentions.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Boolean</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="pinned"><span class="type-signature type-signature-readonly">(readonly) </span>pinned<span class="type-signature"> :Boolean</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether this message has been pinned.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line267">line 267</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether this message has been pinned.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Boolean</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="poll"><span class="type-signature type-signature-nullable">(nullable) </span>poll<span class="type-signature"> :Object</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The message poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line132">line 132</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The message poll.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="reference"><span class="type-signature"></span>reference<span class="type-signature"> :Object</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The message that this message references.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line177">line 177</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The message that this message references.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="sticker_items"><span class="type-signature"></span>sticker_items<span class="type-signature"> :Array.&lt;<a href="Sticker.html">Sticker</a>></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Stickers sent with this message.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line204">line 204</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Stickers sent with this message.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Array.&lt;<a href="Sticker.html">Sticker</a>></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="timestamp"><span class="type-signature type-signature-readonly">(readonly) </span>timestamp<span class="type-signature"> :Number</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The UNIX (seconds) timestamp for when this message was created.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line278">line 278</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The UNIX (seconds) timestamp for when this message was created.</p>
+    <p>The UNIX timestamp for when this member joined the guild.</p>
 </div>
 
 
@@ -1794,7 +960,7 @@
 
         
             
-<h4 class="name" id="type"><span class="type-signature"></span>type<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id="nick"><span class="type-signature type-signature-nullable">(nullable) </span>nick<span class="type-signature"> :String</span></h4>
 
 
 
@@ -1803,13 +969,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The type of message.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The nickname of this member.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line187">line 187</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -1849,7 +1015,475 @@
 
 
 <div class="description usertext">
-    <p>The type of message.</p>
+    <p>The nickname of this member.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="originalAvatarHash"><span class="type-signature type-signature-readonly">(readonly) </span>originalAvatarHash<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The hash of the member's avatar, as it was received from Discord.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line203">line 203</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The hash of the member's avatar, as it was received from Discord.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="pending"><span class="type-signature type-signature-readonly">(readonly) </span>pending<span class="type-signature"> :Boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the user has not yet passed the guild's membership screening requirements.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line248">line 248</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Whether the user has not yet passed the guild's membership screening requirements.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Boolean</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="permissions"><span class="type-signature type-signature-readonly">(readonly) </span>permissions<span class="type-signature"> :BigInt</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The overall calculated permissions for this member.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The overall calculated permissions for this member.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="rejoined"><span class="type-signature type-signature-readonly">(readonly) </span>rejoined<span class="type-signature"> :Boolean</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the member has joined the guild before.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line192">line 192</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Whether the member has joined the guild before.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Boolean</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="roles"><span class="type-signature type-signature-readonly">(readonly) </span>roles<span class="type-signature"> :Array.&lt;Role></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The member's roles.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line123">line 123</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The member's roles.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Role></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="timeout_until"><span class="type-signature type-signature-nullable">(nullable) </span>timeout_until<span class="type-signature"> :Number</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The UNIX timestamp for when this member's timeout expires, if applicable.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The UNIX timestamp for when this member's timeout expires, if applicable.</p>
 </div>
 
 
@@ -1859,6 +1493,84 @@
         <li>
             
 <span class="param-type">Number</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="user"><span class="type-signature type-signature-nullable">(nullable) </span>user<span class="type-signature"> :<a href="User.html">User</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The user object for this member.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The user object for this member.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="User.html">User</a></span>
 
 
 
@@ -1881,7 +1593,7 @@
 
     
 
-    <h4 class="name" id="edit"><span class="type-signature type-signature-async">(async) </span>edit<span class="signature">(content, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span></h4>
+    <h4 class="name" id="addRole"><span class="type-signature type-signature-async">(async) </span>addRole<span class="signature">(role_id, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
 
     
 
@@ -1891,13 +1603,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Edits the message, assuming it is sent by the client user.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Adds a role to the member.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line332">line 332</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line272">line 272</a>
     </li></ul></dd>
     
 
@@ -1927,13 +1639,6 @@
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://discord.com/developers/docs/resources/channel#edit-message">https://discord.com/developers/docs/resources/channel#edit-message</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -1978,12 +1683,15 @@
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>role_id</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">BigInt</span>
+|
+
 <span class="param-type">String</span>
 
 
@@ -2003,7 +1711,7 @@
 
             
 
-            <td class="description last"><p>The message content.</p></td>
+            <td class="description last"><p>The id of the role to add to the member.</p></td>
         </tr>
 
     
@@ -2037,7 +1745,7 @@
 
             
 
-            <td class="description last"><p>Embeds and components to attach to the message.</p>
+            <td class="description last"><p>The options for adding the role to the member.</p>
                 <h6>Properties</h6>
                 
 
@@ -2065,13 +1773,13 @@
 
         <tr>
             
-                <td class="name"><code>embed</code></td>
+                <td class="name"><code>reason</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Embed</span>
+<span class="param-type">String</span>
 
 
 
@@ -2092,75 +1800,7 @@
 
             
 
-            <td class="description last"><p>Embed to send with the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>components</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">MessageComponents</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Message components to send with the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>files</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Array of file objects for files to send with the message.</p></td>
+            <td class="description last"><p>The reason for adding the role to the member.</p></td>
         </tr>
 
     
@@ -2200,7 +1840,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+<span class="param-type">Promise.&lt;void></span>
 
 
 
@@ -2216,7 +1856,7 @@
 
     
 
-    <h4 class="name" id="reply"><span class="type-signature type-signature-async">(async) </span>reply<span class="signature">(content, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="Message.html">Message</a>>}</span></h4>
+    <h4 class="name" id="massUpdateRoles"><span class="type-signature type-signature-async">(async) </span>massUpdateRoles<span class="signature">(roles, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
 
     
 
@@ -2226,13 +1866,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Replies to the message.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Updates the member's roles.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line294">line 294</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line359">line 359</a>
     </li></ul></dd>
     
 
@@ -2262,13 +1902,6 @@
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://discord.com/developers/docs/resources/channel#create-message">https://discord.com/developers/docs/resources/channel#create-message</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -2313,13 +1946,13 @@
 
         <tr>
             
-                <td class="name"><code>content</code></td>
+                <td class="name"><code>roles</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Array.&lt;(BigInt|String)></span>
 
 
 
@@ -2338,7 +1971,7 @@
 
             
 
-            <td class="description last"><p>The message content.</p></td>
+            <td class="description last"><p>An array of role ids for the roles the member should be updated with.</p></td>
         </tr>
 
     
@@ -2372,137 +2005,7 @@
 
             
 
-            <td class="description last"><p>Embeds, components and files to attach to the message.</p>
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>embed</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Embed</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Embed to send with the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>components</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">MessageComponents</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Message components to send with the message.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>files</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Array of file objects for files to send with the message.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last"><p>The options for updating the member's roles.</p></td>
         </tr>
 
     
@@ -2535,7 +2038,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="Message.html">Message</a>></span>
+<span class="param-type">Promise.&lt;void></span>
 
 
 
@@ -2551,7 +2054,7 @@
 
     
 
-    <h4 class="name" id="shelf"><span class="type-signature"></span>shelf<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeRole"><span class="type-signature type-signature-async">(async) </span>removeRole<span class="signature">(role_id, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
 
     
 
@@ -2561,13 +2064,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Moves the message to long-term storage.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Removes a role from the member.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line364">line 364</a>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line293">line 293</a>
     </li></ul></dd>
     
 
@@ -2614,6 +2117,163 @@
 
 
 
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>role_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">BigInt</span>
+|
+
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The id of the role to remove from the member.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The options for removing the role from the member.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The reason for removing the role from the member.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -2628,6 +2288,515 @@
 
 
 
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="timeoutAdd"><span class="type-signature type-signature-async">(async) </span>timeoutAdd<span class="signature">(timeout_until, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Adds a timeout to the member.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line315">line 315</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout_until</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The UNIX timestamp for when the member's timeout should end.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The options for timing out the member.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The reason for timing out the member.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="timeoutRemove"><span class="type-signature type-signature-async">(async) </span>timeoutRemove<span class="signature">(options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Removes a timeout from the member.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Member.js.html">structures/Member.js</a>, <a href="structures_Member.js.html#line337">line 337</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The options for untiming out the member.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The reason for removing the time out from the member.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void></span>
+
+
+
+    </dd>
+</dl>
+
+    
 
 
 
