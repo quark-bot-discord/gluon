@@ -1,3 +1,5 @@
+const { CDN_BASE_URL } = require("../constants");
+
 class Emoji {
     
     constructor(client, data, guild_id, nocache = false) {
@@ -53,6 +55,18 @@ class Emoji {
     get available() {
 
         return (this._attributes & (0b1 << 3)) == (0b1 << 3);
+
+    }
+
+    get mention() {
+
+        return `<${this.animated == true ? 'a' : ''}:${this.name}:${this.id}>`;
+
+    }
+
+    get url() {
+
+        return `${CDN_BASE_URL}/emojis/${this.id}.${this.animated == true ? 'gif' : 'png'}`;
 
     }
 
