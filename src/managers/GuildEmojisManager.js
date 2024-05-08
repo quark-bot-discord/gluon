@@ -1,7 +1,17 @@
+const Client = require("../Client");
 const Emoji = require("../structures/Emoji");
+const Guild = require("../structures/Guild");
 
+/**
+ * Manages all emojis within a guild.
+ */
 class GuildEmojisManager {
 
+    /**
+     * Creates a guild emoji manager.
+     * @param {Client} client The client instance.
+     * @param {Guild} guild The guild that this emoji manager belongs to.
+     */
     constructor(client, guild) {
 
         this.client = client;
@@ -12,6 +22,11 @@ class GuildEmojisManager {
 
     }
 
+    /**
+     * Fetches a particular emoji that belongs to this guild.
+     * @param {BigInt | String} emoji_id The id of the emoji to fetch.
+     * @returns {Promise<Emoji>} The fetched emoji.
+     */
     async fetch(emoji_id) {
 
         const cached = this.cache.get(emoji_id.toString());

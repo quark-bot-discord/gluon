@@ -1,7 +1,17 @@
+const Client = require("../Client");
+const Guild = require("../structures/Guild");
 const Member = require("../structures/Member");
 
+/**
+ * Manages all members belonging to this guild.
+ */
 class GuildMemberManager {
 
+    /**
+     * Creates a member manager.
+     * @param {Client} client The client instance.
+     * @param {Guild} guild The guild that this member manager belongs to.
+     */
     constructor(client, guild) {
 
         this.client = client;
@@ -12,6 +22,11 @@ class GuildMemberManager {
 
     }
 
+    /**
+     * Fetches a member.
+     * @param {BigInt | String} user_id The id of the member to fetch.
+     * @returns {Promise<Member>} The fetched member.
+     */
     async fetch(user_id) {
 
         const cached = this.cache.get(user_id.toString());
@@ -24,6 +39,11 @@ class GuildMemberManager {
 
     }
 
+    /**
+     * Searches for members via a search query.
+     * @param {String} query The search query.
+     * @returns {Promise<Array<Member>> | null} The members which match the search query.
+     */
     async search(query) {
 
         const body = {};
@@ -47,6 +67,11 @@ class GuildMemberManager {
 
     }
 
+    /**
+     * Sweeps all members which have been flagged for deletion.
+     * @param {Number} cacheCount The maximum number of users which may be cached.
+     * @returns {Number} The remaining number of cached members.
+     */
     sweepMembers(cacheCount) {
 
         if (this.cache.size == 0)

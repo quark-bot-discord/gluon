@@ -8,7 +8,7 @@ const Message = require("../structures/Message");
 class ChannelMessageManager {
 
     /**
-     * 
+     * Creates a channel message manager.
      * @param {Client} client The client instance.
      * @param {Channel} channel The channel that is being managed.
      */
