@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MessagePollManager - Documentation</title>
+    <title>structures/OptionSelect.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,523 +35,60 @@
 
 <div id="main">
     
-    <h1 class="page-title">MessagePollManager</h1>
+    <h1 class="page-title">structures/OptionSelect.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Interaction = require("./Interaction");
+const Message = require("./Message");
+
+/**
+ * Represents when an option is selected.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
+ */
+class OptionSelect extends Interaction {
+
+    /**
+     * Creates an option selected interaction structure.
+     * @param {Client} client The client instance.
+     * @param {Object} data The interaction data from Discord.
+     */
+    constructor(client, data) {
+
+        super(client, data);
+
+        /**
+         * The custom id of the select menu.
+         * @type {String}
+         */
+        this.custom_id = data.data.custom_id;
         
-            MessagePollManager
-        
-        </h2>
-        
-            <div class="class-description usertext"><p>Manages a poll for a message.</p></div>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="MessagePollManager"><span class="type-signature"></span>new MessagePollManager<span class="signature">(existingResponses)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a message poll manager.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>existingResponses</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Existing responses for a poll.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="addVote"><span class="type-signature"></span>addVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Adds a response to a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user who voted.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer that was voted for.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeVote"><span class="type-signature"></span>removeVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Removes a response from a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user whose vote was removed.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer for which the vote was removed.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+        /**
+         * The message which the option belongs to.
+         * @type {Message}
+         */
+        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, this.client.cacheMessages);
+
+        /**
+         * The values selected from the select menu.
+         * @type {Array&lt;Object>}
+         * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
+         */
+        this.values = data.data.values;
+
+    }
+
+}
+
+module.exports = OptionSelect;</code></pre>
+        </article>
+    </section>
 
 
 

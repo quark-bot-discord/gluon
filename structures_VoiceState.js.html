@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MessagePollManager - Documentation</title>
+    <title>structures/VoiceState.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,523 +35,186 @@
 
 <div id="main">
     
-    <h1 class="page-title">MessagePollManager</h1>
+    <h1 class="page-title">structures/VoiceState.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { GLUON_CACHING_OPTIONS } = require("../constants");
+const Member = require("./Member");
+
+/**
+ * Represents a voice state.
+ */
+class VoiceState {
+
+    /**
+     * Creates the structure for a voice state.
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw voice state data from Discord.
+     * @param {String} guild_id The id of the guild that the voice state belongs to.
+     * @param {Boolean?} nocache Whether this voice state should be cached.
+     */
+    constructor(client, data, guild_id, nocache = false) {
+
+        /**
+         * The client instance.
+         * @type {Client}
+         */
+        this.client = client;
+
+        /**
+         * The guild that this voice state belongs to.
+         * @type {Guild?}
+         */
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            /**
+             * The id of the guild that this voice state belongs to.
+             * @type {BigInt?}
+             */
+            this.guild_id = BigInt(guild_id);
+
+        if (this.guild)
+            nocache = ((this.guild._cache_options &amp; GLUON_CACHING_OPTIONS.NO_VOICE_STATE) == GLUON_CACHING_OPTIONS.NO_VOICE_STATE);
+
+        /**
+         * The channel involved.
+         * @type {Channel?}
+         */
+        this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
+
+        if (!this.channel)
+            /**
+             * The id of the channel involved.
+             * @type {BigInt?}
+             */
+            this.channel_id = BigInt(data.channel_id);
+
+        this._attributes = 0;
+
+        if (data.deaf == true)
+            this._attributes |= (0b1 &lt;&lt; 0);
+
+        if (data.mute == true)
+            this._attributes |= (0b1 &lt;&lt; 1);
+
+        if (data.self_deaf == true)
+            this._attributes |= (0b1 &lt;&lt; 2);
+
+        if (data.self_mute == true)
+            this._attributes |= (0b1 &lt;&lt; 3);
+
+        if (data.self_stream == true)
+            this._attributes |= (0b1 &lt;&lt; 4);
+
+        if (data.self_video == true)
+            this._attributes |= (0b1 &lt;&lt; 5);
+
+        if (data.member)
+            /**
+             * The member the voice state is about.
+             * @type {Member?}
+             */
+            this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, nocache);
+        else
+            this.member = this.guild?.members.cache.get(data.user_id) || null;
+
+        /**
+         * The user the voice state is about.
+         * @type {User?}
+         */
+        this.user = this.client.users.cache.get(data.user_id) || null;
+
+        if (!this.user)
+            /**
+             * The id of the user the voice state is about.
+             * @type {BigInt?}
+             */
+            this.user_id = BigInt(data.user_id);
+
+        if (nocache == false &amp;&amp; this.client.cacheVoiceStates == true)
+            this.guild?.voice_states.cache.set(data.user_id, this);
+
+    }
+
+    /**
+     * Is server deafened?
+     * @readonly
+     * @type {Boolean}
+     */
+    get deaf() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 0)) == (0b1 &lt;&lt; 0);
+
+    }
+
+    /**
+     * Is server muted?
+     * @readonly
+     * @type {Boolean}
+     */
+    get mute() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 1)) == (0b1 &lt;&lt; 1);
+
+    }
+
+    /**
+     * Is self defeaned?
+     * @readonly
+     * @type {Boolean}
+     */
+    get self_deaf() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 2)) == (0b1 &lt;&lt; 2);
+
+    }
+
+    /**
+     * Is self muted?
+     * @readonly
+     * @type {Boolean}
+     */
+    get self_mute() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 3)) == (0b1 &lt;&lt; 3);
+
+    }
+
+    /**
+     * Is streaming?
+     * @readonly
+     * @type {Boolean}
+     */
+    get self_stream() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 4)) == (0b1 &lt;&lt; 4);
+
+    }
+
+    /**
+     * Is sharing video?
+     * @readonly
+     * @type {Boolean}
+     */
+    get self_video() {
+
+        return (this._attributes &amp; (0b1 &lt;&lt; 5)) == (0b1 &lt;&lt; 5);
         
-            MessagePollManager
-        
-        </h2>
-        
-            <div class="class-description usertext"><p>Manages a poll for a message.</p></div>
-        
-    
-</header>
+    }
 
-<article>
-    
-        <div class="container-overview">
-        
-            
+}
 
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="MessagePollManager"><span class="type-signature"></span>new MessagePollManager<span class="signature">(existingResponses)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a message poll manager.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>existingResponses</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Existing responses for a poll.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="addVote"><span class="type-signature"></span>addVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Adds a response to a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user who voted.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer that was voted for.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeVote"><span class="type-signature"></span>removeVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Removes a response from a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user whose vote was removed.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer for which the vote was removed.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = VoiceState;</code></pre>
+        </article>
+    </section>
 
 
 

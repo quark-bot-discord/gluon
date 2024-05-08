@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MessagePollManager - Documentation</title>
+    <title>OptionSelect - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">MessagePollManager</h1>
+    <h1 class="page-title">OptionSelect</h1>
     
 
     
@@ -49,11 +49,11 @@
     
         <h2>
         
-            MessagePollManager
+            OptionSelect
         
         </h2>
         
-            <div class="class-description usertext"><p>Manages a poll for a message.</p></div>
+            <div class="class-description usertext"><p>Represents when an option is selected.</p></div>
         
     
 </header>
@@ -68,7 +68,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="MessagePollManager"><span class="type-signature"></span>new MessagePollManager<span class="signature">(existingResponses)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="OptionSelect"><span class="type-signature"></span>new OptionSelect<span class="signature">(client, data)</span><span class="type-signature"></span></h4>
 
     
 
@@ -78,13 +78,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a message poll manager.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates an option selected interaction structure.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line4">line 4</a>
+        <a href="structures_OptionSelect.js.html">structures/OptionSelect.js</a>, <a href="structures_OptionSelect.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -114,6 +114,13 @@
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure">https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -156,7 +163,31 @@
 
         <tr>
             
-                <td class="name"><code>existingResponses</code></td>
+                <td class="name"><code>client</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
@@ -173,7 +204,7 @@
 
             
 
-            <td class="description last"><p>Existing responses for a poll.</p></td>
+            <td class="description last"><p>The interaction data from Discord.</p></td>
         </tr>
 
     
@@ -215,18 +246,12 @@
     
 
     
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Members</h3>
 
         
             
+<h4 class="name" id="custom_id"><span class="type-signature"></span>custom_id<span class="type-signature"> :String</span></h4>
 
-    
-
-    <h4 class="name" id="addVote"><span class="type-signature"></span>addVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
@@ -234,13 +259,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Adds a response to a poll.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The custom id of the select menu.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line24">line 24</a>
+        <a href="structures_OptionSelect.js.html">structures/OptionSelect.js</a>, <a href="structures_OptionSelect.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -279,102 +304,22 @@
 
 
 
+<div class="description usertext">
+    <p>The custom id of the select menu.</p>
+</div>
 
 
 
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
             
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user who voted.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">String</span>
 
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer that was voted for.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </li>
+    </ul>
 
 
 
@@ -383,12 +328,8 @@
 
         
             
+<h4 class="name" id="message"><span class="type-signature"></span>message<span class="type-signature"> :<a href="Message.html">Message</a></span></h4>
 
-    
-
-    <h4 class="name" id="removeVote"><span class="type-signature"></span>removeVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
 
 
 
@@ -396,13 +337,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Removes a response from a poll.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The message which the option belongs to.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line40">line 40</a>
+        <a href="structures_OptionSelect.js.html">structures/OptionSelect.js</a>, <a href="structures_OptionSelect.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -441,102 +382,107 @@
 
 
 
+<div class="description usertext">
+    <p>The message which the option belongs to.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="Message.html">Message</a></span>
+
+
+
+        </li>
+    </ul>
 
 
 
 
 
 
+        
+            
+<h4 class="name" id="values"><span class="type-signature"></span>values<span class="type-signature"> :Array.&lt;Object></span></h4>
 
 
-    <h5 class="h5-parameters">Parameters:</h5>
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The values selected from the select menu.</p></li></ul></dd>
     
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user whose vote was removed.</p></td>
-        </tr>
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_OptionSelect.js.html">structures/OptionSelect.js</a>, <a href="structures_OptionSelect.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
 
     
 
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer for which the vote was removed.</p></td>
-        </tr>
+    
 
     
-    </tbody>
-</table>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure">https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
 
 
 
 
 
+<div class="description usertext">
+    <p>The values selected from the select menu.</p>
+</div>
 
 
 
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Object></span>
 
 
 
-
-
+        </li>
+    </ul>
 
 
 
@@ -544,6 +490,8 @@
 
 
         
+    
+
     
 
     

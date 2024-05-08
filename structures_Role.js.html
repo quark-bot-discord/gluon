@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>MessagePollManager - Documentation</title>
+    <title>structures/Role.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,523 +35,137 @@
 
 <div id="main">
     
-    <h1 class="page-title">MessagePollManager</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        
-            MessagePollManager
-        
-        </h2>
-        
-            <div class="class-description usertext"><p>Manages a poll for a message.</p></div>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="MessagePollManager"><span class="type-signature"></span>new MessagePollManager<span class="signature">(existingResponses)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a message poll manager.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>existingResponses</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Existing responses for a poll.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="addVote"><span class="type-signature"></span>addVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Adds a response to a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user who voted.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the answer that was voted for.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removeVote"><span class="type-signature"></span>removeVote<span class="signature">(user_id, answer_id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Removes a response from a poll.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="managers_MessagePollManager.js.html">managers/MessagePollManager.js</a>, <a href="managers_MessagePollManager.js.html#line40">line 40</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
+    <h1 class="page-title">structures/Role.js</h1>
+    
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
-
-        <tr>
-            
-                <td class="name"><code>user_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">BigInt</span>
-
-
 
-            
-            </td>
 
-            
 
-            
-
-            <td class="description last"><p>The id of the user whose vote was removed.</p></td>
-        </tr>
-
     
-
-        <tr>
-            
-                <td class="name"><code>answer_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Represents a role belonging to a guild.
+ */
+class Role {
 
+    /**
+     * 
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw role data from Discord.
+     * @param {String} guild_id The id of the guild that the role belongs to.
+     * @param {Boolean?} nocache Whether this role should be cached or not.
+     * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
+     */
+    constructor(client, data, guild_id, nocache = false) {
 
-            
-            </td>
+        /**
+         * The client instance.
+         * @type {Client}
+         */
+        this.client = client;
 
-            
+        /**
+         * The guild that this role belongs to.
+         * @type {Guild?}
+         */
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
 
-            
+        if (!this.guild)
+            /**
+             * The id of the guild that this role belongs to.
+             * @type {BigInt?}
+             */
+            this.guild_id = BigInt(guild_id);
 
-            <td class="description last"><p>The id of the answer for which the vote was removed.</p></td>
-        </tr>
+        /**
+         * The id of the role.
+         * @type {BigInt}
+         */
+        this.id = BigInt(data.id);
 
-    
-    </tbody>
-</table>
-
+        /**
+         * The name of the role.
+         * @type {String}
+         */
+        this.name = data.name;
 
+        /**
+         * The colour of the role.
+         * @type {Number}
+         */
+        this.color = data.color;
 
+        /**
+         * The position of the role.
+         * @type {Number}
+         */
+        this.position = data.position;
 
+        /**
+         * The permissions for the role.
+         * @type {BigInt}
+         */
+        this.permissions = BigInt(data.permissions);
 
+        this._attributes = data._attributes ?? 0;
 
+        if (data.hoist == true)
+            this._attributes |= (0b1 &lt;&lt; 0);
 
+        if (data.managed == true)
+            this._attributes |= (0b1 &lt;&lt; 1);
 
+        if (data.mentionable == true)
+            this._attributes |= (0b1 &lt;&lt; 2);
 
+        if (data.tags)
+            this.tags = data.tags;
 
+        if (nocache == false &amp;&amp; this.client.cacheRoles == true)
+            this.guild?.roles.cache.set(data.id, this);
 
+    }
 
+    /**
+     * Whether the role is hoisted.
+     * @readonly
+     * @returns {Boolean}
+     */
+    get hoist() {
 
+        return (this._attributes &amp; (0b1 &lt;&lt; 0)) == (0b1 &lt;&lt; 0);
 
+    }
 
+    /**
+     * Whether the role is managed (by an application).
+     * @readonly
+     * @returns {Boolean}
+     */
+    get managed() {
 
+        return (this._attributes &amp; (0b1 &lt;&lt; 1)) == (0b1 &lt;&lt; 1);
 
+    }
 
+    /**
+     * Whether the role is mentionable.
+     * @readonly
+     * @returns {Boolean}
+     */
+    get mentionable() {
 
-        
-    
+        return (this._attributes &amp; (0b1 &lt;&lt; 2)) == (0b1 &lt;&lt; 2);
 
-    
+    }
 
-    
-</article>
+}
 
-</section>
+module.exports = Role;</code></pre>
+        </article>
+    </section>
 
 
 

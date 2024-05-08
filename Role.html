@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>AuditLog - Documentation</title>
+    <title>Role - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">AuditLog</h1>
+    <h1 class="page-title">Role</h1>
     
 
     
@@ -49,11 +49,11 @@
     
         <h2>
         
-            AuditLog
+            Role
         
         </h2>
         
-            <div class="class-description usertext"><p>Represents an audit log entry.</p></div>
+            <div class="class-description usertext"><p>Represents a role belonging to a guild.</p></div>
         
     
 </header>
@@ -68,7 +68,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="AuditLog"><span class="type-signature"></span>new AuditLog<span class="signature">(client, data, users)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Role"><span class="type-signature"></span>new Role<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -77,14 +77,11 @@
 
 <dl class="details">
     
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates a structure for an audit log entry.</p></li></ul></dd>
-    
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line7">line 7</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -118,7 +115,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object">https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object</a></li>
+            <li><a href="https://discord.com/developers/docs/topics/permissions#role-object-role-structure">https://discord.com/developers/docs/topics/permissions#role-object-role-structure</a></li>
         </ul>
     </dd>
     
@@ -151,7 +148,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -177,7 +178,19 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last"><p>The client instance.</p></td>
@@ -201,23 +214,35 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"><p>Audit log data from Discord.</p></td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The raw role data from Discord.</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>users</code></td>
+                <td class="name"><code>guild_id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">String</span>
 
 
 
@@ -225,10 +250,62 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
             
 
-            <td class="description last"><p>Resolved users who are involved with the audit log entries.</p></td>
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The id of the guild that the role belongs to.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nocache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether this role should be cached or not.</p></td>
         </tr>
 
     
@@ -274,162 +351,6 @@
 
         
             
-<h4 class="name" id="changes"><span class="type-signature type-signature-nullable">(nullable) </span>changes<span class="type-signature"> :Object</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The changes in this audit log entry.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line136">line 136</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The changes in this audit log entry.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Object</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="channel_id"><span class="type-signature type-signature-nullable">(nullable) </span>channel_id<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The channel id involved with this audit log entry.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line92">line 92</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The channel id involved with this audit log entry.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">BigInt</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
 <h4 class="name" id="client"><span class="type-signature"></span>client<span class="type-signature"> :<a href="Client.html">Client</a></span></h4>
 
 
@@ -445,7 +366,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line21">line 21</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -508,7 +429,7 @@
 
         
             
-<h4 class="name" id="count"><span class="type-signature type-signature-nullable">(nullable) </span>count<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id="color"><span class="type-signature"></span>color<span class="type-signature"> :Number</span></h4>
 
 
 
@@ -517,13 +438,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The count of this type of audit log entry.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The colour of the role.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line99">line 99</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -563,7 +484,7 @@
 
 
 <div class="description usertext">
-    <p>The count of this type of audit log entry.</p>
+    <p>The colour of the role.</p>
 </div>
 
 
@@ -573,240 +494,6 @@
         <li>
             
 <span class="param-type">Number</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="delete_member_days"><span class="type-signature type-signature-nullable">(nullable) </span>delete_member_days<span class="type-signature"> :Number</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The inactivity period for when members are purged.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line106">line 106</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The inactivity period for when members are purged.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Number</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="executor"><span class="type-signature type-signature-nullable">(nullable) </span>executor<span class="type-signature"> :<a href="User.html">User</a></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The resolved executor user.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line76">line 76</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The resolved executor user.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="User.html">User</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="executor_id"><span class="type-signature type-signature-nullable">(nullable) </span>executor_id<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the executor user.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line67">line 67</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The id of the executor user.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">BigInt</span>
 
 
 
@@ -829,13 +516,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The guild that this audit log belongs to.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The guild that this role belongs to.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line34">line 34</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -875,7 +562,7 @@
 
 
 <div class="description usertext">
-    <p>The guild that this audit log belongs to.</p>
+    <p>The guild that this role belongs to.</p>
 </div>
 
 
@@ -907,13 +594,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The ID of the guild that this audit log belongs to.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the guild that this role belongs to.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line41">line 41</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -953,7 +640,7 @@
 
 
 <div class="description usertext">
-    <p>The ID of the guild that this audit log belongs to.</p>
+    <p>The id of the guild that this role belongs to.</p>
 </div>
 
 
@@ -968,6 +655,73 @@
 
         </li>
     </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="hoist"><span class="type-signature type-signature-readonly">(readonly) </span>hoist<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is hoisted.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line89">line 89</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Whether the role is hoisted.</p>
+</div>
+
+
 
 
 
@@ -985,13 +739,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the audit log entry.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the role.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line27">line 27</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -1031,7 +785,7 @@
 
 
 <div class="description usertext">
-    <p>The id of the audit log entry.</p>
+    <p>The id of the role.</p>
 </div>
 
 
@@ -1054,7 +808,7 @@
 
         
             
-<h4 class="name" id="members_removed"><span class="type-signature type-signature-nullable">(nullable) </span>members_removed<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id="managed"><span class="type-signature type-signature-readonly">(readonly) </span>managed<span class="type-signature"></span></h4>
 
 
 
@@ -1063,13 +817,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The number of members removed for when members are purged.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is managed (by an application).</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line113">line 113</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -1109,21 +863,10 @@
 
 
 <div class="description usertext">
-    <p>The number of members removed for when members are purged.</p>
+    <p>Whether the role is managed (by an application).</p>
 </div>
 
 
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Number</span>
-
-
-
-        </li>
-    </ul>
 
 
 
@@ -1132,7 +875,7 @@
 
         
             
-<h4 class="name" id="reason"><span class="type-signature type-signature-nullable">(nullable) </span>reason<span class="type-signature"> :String</span></h4>
+<h4 class="name" id="mentionable"><span class="type-signature type-signature-readonly">(readonly) </span>mentionable<span class="type-signature"></span></h4>
 
 
 
@@ -1141,13 +884,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The reason for this audit log entry.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is mentionable.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line83">line 83</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -1187,7 +930,74 @@
 
 
 <div class="description usertext">
-    <p>The reason for this audit log entry.</p>
+    <p>Whether the role is mentionable.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The name of the role.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The name of the role.</p>
 </div>
 
 
@@ -1210,7 +1020,7 @@
 
         
             
-<h4 class="name" id="special_id"><span class="type-signature type-signature-nullable">(nullable) </span>special_id<span class="type-signature"> :BigInt</span></h4>
+<h4 class="name" id="permissions"><span class="type-signature"></span>permissions<span class="type-signature"> :BigInt</span></h4>
 
 
 
@@ -1219,13 +1029,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the overwritten entity.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The permissions for the role.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line120">line 120</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -1265,7 +1075,7 @@
 
 
 <div class="description usertext">
-    <p>The id of the overwritten entity.</p>
+    <p>The permissions for the role.</p>
 </div>
 
 
@@ -1288,7 +1098,7 @@
 
         
             
-<h4 class="name" id="special_type"><span class="type-signature type-signature-nullable">(nullable) </span>special_type<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id="position"><span class="type-signature"></span>position<span class="type-signature"> :Number</span></h4>
 
 
 
@@ -1297,13 +1107,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The type of the overwritten entity - role (&quot;0&quot;) or member (&quot;1&quot;)</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The position of the role.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line127">line 127</a>
+        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -1343,7 +1153,7 @@
 
 
 <div class="description usertext">
-    <p>The type of the overwritten entity - role (&quot;0&quot;) or member (&quot;1&quot;)</p>
+    <p>The position of the role.</p>
 </div>
 
 
@@ -1365,272 +1175,8 @@
 
 
         
-            
-<h4 class="name" id="target"><span class="type-signature type-signature-nullable">(nullable) </span>target<span class="type-signature"> :<a href="User.html">User</a></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The resolved target user.</p></li></ul></dd>
     
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line60">line 60</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The resolved target user.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="User.html">User</a></span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="target_id"><span class="type-signature type-signature-nullable">(nullable) </span>target_id<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the target user.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line51">line 51</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The id of the target user.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">BigInt</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="toJSON"><span class="type-signature"></span>toJSON<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Converts this audit log structure to a JSON string.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_AuditLog.js.html">structures/AuditLog.js</a>, <a href="structures_AuditLog.js.html#line144">line 144</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">String</span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
     
 
     
