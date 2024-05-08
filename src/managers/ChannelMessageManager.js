@@ -1,8 +1,17 @@
+const Client = require("../Client");
+const Channel = require("../structures/Channel");
 const Message = require("../structures/Message");
-const getTimestamp = require("../util/getTimestampFromSnowflake");
 
+/**
+ * Manages all messages within a channel.
+ */
 class ChannelMessageManager {
 
+    /**
+     * 
+     * @param {Client} client The client instance.
+     * @param {Channel} channel The channel that is being managed.
+     */
     constructor(client, channel) {
 
         this.client = client;
@@ -13,6 +22,11 @@ class ChannelMessageManager {
 
     }
 
+    /**
+     * Fetches a collection of messages or a singular message from the channel.
+     * @param {Object | String | BigInt} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
+     * @returns {Promise<Array<Message>> | Promise<Message>}
+     */
     async fetch(options) {
 
         if (typeof options == "object") {
