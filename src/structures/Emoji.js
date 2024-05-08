@@ -6,7 +6,7 @@ class Emoji {
 
         this.client = client;
 
-        this.id = BigInt(data.id);
+        this.id = data.id ? BigInt(data.id) : null;
 
         this.name = data.name;
 
@@ -60,7 +60,10 @@ class Emoji {
 
     get mention() {
 
-        return `<${this.animated == true ? 'a' : ''}:${this.name}:${this.id}>`;
+        if (this.id)
+            return `<${this.animated == true ? 'a' : ''}:${this.name}:${this.id}>`;
+        else
+            return this.name;
 
     }
 

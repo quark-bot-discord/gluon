@@ -731,7 +731,11 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_REACTION_REMOVE ${data.guild_id}`);
 
-        this.client.emit(EVENTS.MESSAGE_REACTION_REMOVE, data);
+        const finalData = data;
+
+        finalData.emoji = new Emoji(this.client, data.emoji, data.guild_id);
+
+        this.client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
 
     }
 }
