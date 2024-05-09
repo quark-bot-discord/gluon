@@ -4,6 +4,8 @@
 
 https://quark-bot-discord.github.io/gluon/
 
+https://gluon.quark.bot/
+
 # Info
 
 ### Purpose
