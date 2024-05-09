@@ -7,6 +7,11 @@ const bundleThread = require("./bundleThread");
 const bundleVoiceState = require("./bundleVoiceState");
 const threadTypes = [CHANNEL_TYPES.GUILD_PUBLIC_THREAD, CHANNEL_TYPES.GUILD_PRIVATE_THREAD, CHANNEL_TYPES.GUILD_NEWS_THREAD];
 
+/**
+ * Copies all the guild data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a guild as the "data" parameter to reconstruct this.
+ * @param {Guild} guild A guild to bundle.
+ * @returns {Object}
+ */
 function bundleGuild(guild) {
     const data = {};
     data.id = guild.id.toString();

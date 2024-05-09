@@ -1,5 +1,10 @@
 const bundleMember = require("./bundleMember");
 
+/**
+ * Copies all the voice state data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a voice state as the "data" parameter to reconstruct this.
+ * @param {VoiceState} voiceState A voice state to bundle.
+ * @returns {Object}
+ */
 function bundleVoiceState(voiceState) {
     const data = {};
     data.guild_id = voiceState.guild ? voiceState.guild.id.toString() : voiceState.guild_id.toString();

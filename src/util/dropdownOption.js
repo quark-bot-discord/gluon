@@ -1,11 +1,23 @@
 const resolveEmoji = require("./resolveEmoji");
 
+/**
+ * Helps to create a dropdown option.
+ * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
+ */
 class DropdownOption {
 
+    /**
+     * Creates a dropdown option.
+     */
     constructor() {
 
     }
 
+    /**
+     * Sets the label.
+     * @param {String} label Sets the label.
+     * @returns {DropdownOption}
+     */
     setLabel(label) {
 
         this.label = label;
@@ -14,6 +26,11 @@ class DropdownOption {
 
     }
 
+    /**
+     * Sets the value.
+     * @param {String} value Sets the value.
+     * @returns {DropdownOption}
+     */
     setValue(value) {
 
         this.value = value;
@@ -22,6 +39,11 @@ class DropdownOption {
 
     }
 
+    /**
+     * Sets the description.
+     * @param {String} description Sets the description.
+     * @returns {DropdownOption}
+     */
     setDescription(description) {
 
         this.description = description;
@@ -30,6 +52,11 @@ class DropdownOption {
 
     }
 
+    /**
+     * Sets the emoji to be displayed on the dropdown option. 
+     * @param {String} emoji The emoji to display on the dropdown option. For a custom emoji, it should be in the format "<:bitcoin:844240546246950922>".
+     * @returns {DropdownOption}
+     */
     setEmoji(emoji) {
 
         this.emoji = resolveEmoji(emoji);
@@ -38,6 +65,11 @@ class DropdownOption {
 
     }
 
+    /**
+     * Sets whether this is the default selected option.
+     * @param {Boolean} isDefault Whether this option should be selected by default.
+     * @returns {DropdownOption}
+     */
     setDefault(isDefault) {
 
         this.default = isDefault;
@@ -46,6 +78,10 @@ class DropdownOption {
 
     }
 
+    /**
+     * Returns the correct Discord format for a dropdown option.
+     * @returns {Object}
+     */
     toJSON() {
 
         return {

@@ -1,7 +1,14 @@
 const { COMPONENT_TYPES } = require("../constants");
 
+/**
+ * Helps to create a dropdown message component.
+ * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menus}
+ */
 class Dropdown {
 
+    /**
+     * Creates a dropdown component.
+     */
     constructor() {
 
         this.type = COMPONENT_TYPES.SELECT_MENU;
@@ -9,6 +16,12 @@ class Dropdown {
 
     }
 
+    /**
+     * Sets the option type.
+     * @param {Number} type The option type.
+     * @returns {Dropdown}
+     * @see {@link https://discord.com/developers/docs/interactions/message-components#component-object-component-types}
+     */
     setType(type) {
 
         this.type = type;
@@ -17,6 +30,12 @@ class Dropdown {
 
     }
 
+    /**
+     * Set the custom id of the dropdown.
+     * @param {String} id The custom id of the dropdown.
+     * @returns {Dropdown}
+     * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
+     */
     setCustomID(id) {
 
         this.custom_id = id;
@@ -25,6 +44,11 @@ class Dropdown {
 
     }
 
+    /**
+     * Adds an option to the dropdown.
+     * @param {DropdownOption} option Adds an option to the dropdown.
+     * @returns {Dropdown}
+     */
     addOption(option) {
 
         this.options.push(option.toJSON());
@@ -33,6 +57,12 @@ class Dropdown {
 
     }
 
+    /**
+     * Sets which channel types are selectable by the user.
+     * @param {Array<Number>} channelTypes An array of channel types to offer as a choice.
+     * @returns {CommandOption}
+     * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
+     */
     addChannelTypes(channelTypes) {
 
         this.channel_types = channelTypes;
@@ -41,6 +71,11 @@ class Dropdown {
 
     }
 
+    /**
+     * Sets the placeholder text.
+     * @param {String} placeholder Placeholder text if nothing is selected.
+     * @returns {Dropdown}
+     */
     setPlaceholder(placeholder) {
 
         this.placeholder = placeholder;
@@ -49,6 +84,11 @@ class Dropdown {
 
     }
 
+    /**
+     * Sets the minimum value the user may enter.
+     * @param {Number} value The minimum number value that the user may enter.
+     * @returns {CommandOption}
+     */
     setMinValue(value) {
 
         this.min_values = value;
@@ -57,6 +97,11 @@ class Dropdown {
 
     }
 
+    /**
+     * Sets the maximum value the user may enter.
+     * @param {Number} value The maximum number value that the user may enter.
+     * @returns {Dropdown}
+     */
     setMaxValue(value) {
 
         this.max_values = value;
@@ -65,6 +110,11 @@ class Dropdown {
 
     }
 
+    /**
+     * Disables the dropdown from being clickable.
+     * @param {Boolean} disabled Whether this dropdown should be displayed as disabled.
+     * @returns {Dropdown}
+     */
     setDisabled(isDisabled) {
 
         this.disabled = isDisabled;
@@ -73,6 +123,10 @@ class Dropdown {
 
     }
 
+    /**
+     * Returns the correct Discord format for a dropdown.
+     * @returns {Object}
+     */
     toJSON() {
 
         return {

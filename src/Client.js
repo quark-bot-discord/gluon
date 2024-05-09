@@ -183,6 +183,10 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Counts how many items are in each cache.
+     * @returns {Object}
+     */
     getCacheCounts() {
 
         let totalMessages = 0;
@@ -230,6 +234,10 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Bundles all guilds.
+     * @returns {Array<Object>}
+     */
     bundleCache() {
 
         const bundle = [];
@@ -364,7 +372,7 @@ class Client extends EventsEmitter {
     /**
      * Fetches the webhooks for a specified channel.
      * @param {BigInt} channel_id The id of the channel to fetch the webhooks from.
-     * @returns {Object[]}
+     * @returns {Promise<Array<Object>>}
      */
     async fetchChannelWebhooks(channel_id) {
 
@@ -384,6 +392,12 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Fetches a member, checking the cache first.
+     * @param {String | BigInt} guild_id The id of the guild the member belongs to.
+     * @param {String | BigInt} user_id The id of the member to fetch.
+     * @returns {Promise<Member>}
+     */
     async fetchMember(guild_id, user_id) {
 
         const guild = this.guilds.cache.get(guild_id.toString());
@@ -401,6 +415,12 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Fetches a channel, checking the cache first.
+     * @param {String | BigInt} guild_id The id of the guild the channel belongs to.
+     * @param {String | BigInt} channel_id The id of the channel to fetch.
+     * @returns {Promise<TextChannel | VoiceChannel>}
+     */
     async fetchChannel(guild_id, channel_id) {
 
         const guild = this.guilds.cache.get(guild_id.toString());
@@ -421,7 +441,7 @@ class Client extends EventsEmitter {
     /**
      * Bulk deletes channel messages.
      * @param {BigInt} channel_id The id of the channel to purge messages in.
-     * @param {String[]} messages An array of message ids to delete.
+     * @param {Array<String>} messages An array of message ids to delete.
      * @param {Object} options
      */
     async purgeChannelMessages(channel_id, messages, { reason }) {
@@ -459,7 +479,7 @@ class Client extends EventsEmitter {
      * @param {BigInt} guild_id The id of the guild that the channel belongs to.
      * @param {BigInt} channel_id The id of the channel to fetch messages from.
      * @param {Object} options The filter options to determine which messages should be returned.
-     * @returns {Message[]}
+     * @returns {Promise<Array<Message>>}
      */
     async fetchChannelMessages(guild_id, channel_id, { around, before, after, limit }) {
 
@@ -490,7 +510,7 @@ class Client extends EventsEmitter {
     /**
      * Creates a webhook in the given channel with the name "Quark"
      * @param {BigInt} channel_id The id of the channel to create the webhook in.
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async createWebhook(channel_id) {
 
@@ -508,7 +528,7 @@ class Client extends EventsEmitter {
      * Modified a webhook with the given webhook id.
      * @param {BigInt} webhook_id The id of the webhook to modify.
      * @param {Object} options The options to modify the webhook with.
-     * @returns {Object}
+     * @returns {Promise<Object>}
      */
     async modifyWebhook(webhook_id, { channel_id }) {
 
@@ -522,6 +542,13 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Registers commands, overwriting all previous ones.
+     * @param {Array<Command>} commands Array of commands to register.
+     * @returns {Array<Object>}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#registering-a-command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands}
+     */
     async registerCommands(commands) {
 
         const body = [];
@@ -535,12 +562,24 @@ class Client extends EventsEmitter {
 
     }
 
+    /**
+     * Adds a role to a member.
+     * @param {String | BigInt} guildId The guild id the member belongs to.
+     * @param {String | BigInt} userId The id of the member who the action is occuring on.
+     * @param {String | BigInt} roleId The id of the role to add.
+     */
     async addMemberRole(guildId, userId, roleId) {
 
         await this.request.makeRequest("putAddGuildMemberRole", [guildId, userId, roleId]);
 
     }
 
+    /**
+     * Removes a role from a member.
+     * @param {String | BigInt} guildId The guild id the member belongs to.
+     * @param {String | BigInt} userId The id of the member who the action is occuring on.
+     * @param {String | BigInt} roleId The id of the role to remove.
+     */
     async removeMemberRole(guildId, userId, roleId) {
 
         await this.request.makeRequest("deleteRemoveMemberRole", [guildId, userId, roleId]);

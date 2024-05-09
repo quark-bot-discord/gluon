@@ -1,8 +1,12 @@
-const { APPLICATION_COMMAND_OPTION_TYPES } = require("../constants");
-
-// https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+/**
+ * Helps to create a choice for a command.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
+ */
 class CommandOption {
 
+    /**
+     * Creates an option for a command.
+     */
     constructor() {
 
         this.choices = [];
@@ -13,6 +17,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the name of the option.
+     * @param {String | Object} name Sets the name of the option, or an object of names for localisation.
+     * @returns {CommandOption}
+     */
     setName(name) {
 
         if (typeof name == "object") {
@@ -30,6 +39,12 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the option type.
+     * @param {Number} type The option type.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
+     */
     setType(type) {
 
         this.type = type;
@@ -38,6 +53,12 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the description of the command choice.
+     * @param {String | Object} description The description of the command choice, or an object of descriptions for localisation.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
+     */
     setDescription(description) {
 
         if (typeof description == "object") {
@@ -55,6 +76,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets whether the option is required.
+     * @param {Boolean} isRequired Whether the option is required.
+     * @returns {CommandOption}
+     */
     setRequired(isRequired) {
 
         this.required = isRequired;
@@ -63,6 +89,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Adds a choice to the option.
+     * @param {CommandChoice} choice Adds a choice to the option.
+     * @returns {CommandOption}
+     */
     addChoice(choice) {
 
         this.choices.push(choice.toJSON());
@@ -71,6 +102,11 @@ class CommandOption {
         
     }
 
+    /**
+     * Adds an option to this option.
+     * @param {CommandOption} option Adds an option to this option.
+     * @returns {CommandOption}
+     */
     addOption(option) {
 
         this.options.push(option.toJSON());
@@ -78,7 +114,13 @@ class CommandOption {
         return this;
 
     }
-    // array of channel types (numbers)
+    
+    /**
+     * Sets which channel types are selectable by the user.
+     * @param {Array<Number>} channelTypes An array of channel types to offer as a choice.
+     * @returns {CommandOption}
+     * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
+     */
     setChannelTypes(channelTypes) {
 
         this.channel_types = channelTypes;
@@ -87,6 +129,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the minimum value the user may enter.
+     * @param {Number} value The minimum number value that the user may enter.
+     * @returns {CommandOption}
+     */
     setMinValue(value) {
 
         this.min_value = value;
@@ -95,6 +142,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the maximum value the user may enter.
+     * @param {Number} value The maximum number value that the user may enter.
+     * @returns {CommandOption}
+     */
     setMaxValue(value) {
 
         this.max_value = value;
@@ -103,6 +155,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the minimum length the user may enter.
+     * @param {Number} length The minimum length that the user may enter.
+     * @returns {CommandOption}
+     */
     setMinLength(length) {
 
         this.min_length = length;
@@ -111,6 +168,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets the maximum length the user may enter.
+     * @param {Number} length The maximum length that the user may enter.
+     * @returns {CommandOption}
+     */
     setMaxLength(length) {
 
         this.max_length = length;
@@ -119,6 +181,11 @@ class CommandOption {
 
     }
 
+    /**
+     * Sets whether autocomplete is enabled for this option.
+     * @param {Boolean} autocomplete Whether autocomplete is enabled for this option.
+     * @returns {CommandOption}
+     */
     setAutocomplete(autocomplete) {
 
         this.autocomplete = autocomplete;
@@ -127,7 +194,12 @@ class CommandOption {
 
     }
 
-    // https://discord.com/developers/docs/reference#locales
+    /**
+     * Sets the default locale for localisation.
+     * @param {String?} locale Sets the default locale for localisation.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/reference#locales}
+     */
     setDefaultLocale(locale = "en-US") {
 
         this.defaultLocale = locale;
@@ -136,6 +208,10 @@ class CommandOption {
 
     }
 
+    /**
+     * Returns the correct Discord format for a command option.
+     * @returns {Object}
+     */
     toJSON() {
 
         return {

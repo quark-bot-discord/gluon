@@ -1,5 +1,10 @@
 const bundleUser = require("./bundleUser");
 
+/**
+ * Copies all the member data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a member as the "data" parameter to reconstruct this.
+ * @param {Member} member A member to bundle.
+ * @returns {Object}
+ */
 function bundleMember(member) {
     const data = {};
     const bundledUser = bundleUser(member.user);

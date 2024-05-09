@@ -2,6 +2,11 @@ const bundleAttachment = require("./bundleAttachment");
 const bundleSticker = require("./bundleSticker");
 const bundleUser = require("./bundleUser");
 
+/**
+ * Copies all the message data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a message as the "data" parameter to reconstruct this.
+ * @param {Message} message A message to bundle.
+ * @returns {Object}
+ */
 function bundleMessage(message) {
     const data = {};
     data.id = message.id.toString();

@@ -3,6 +3,14 @@ const TextChannel = require("../structures/TextChannel");
 const Thread = require("../structures/Thread");
 const VoiceChannel = require("../structures/VoiceChannel");
 
+/**
+ * Automatically determines the channel type and caches the channel appropriately.
+ * @param {Client} client The client instance.
+ * @param {Object} data The raw channel data from Discord.
+ * @param {String} guild_id The id of the guild that the channel belongs to.
+ * @param {Boolean?} nocache Whether the channel should be cached.
+ * @returns {VoiceChannel | Thread | TextChannel}
+ */
 function cacheChannel(client, data, guild_id, nocache = false) {
     
     switch (data.type) {

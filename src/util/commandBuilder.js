@@ -1,8 +1,14 @@
 const { APPLICATION_COMMAND_TYPES } = require("../constants");
 
-// https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
+/**
+ * Structure for a command.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
+ */
 class Command {
 
+    /**
+     * Creates the structure for a command.
+     */
     constructor() {
 
         this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
@@ -15,6 +21,12 @@ class Command {
 
     }
 
+    /**
+     * Sets the name of the command.
+     * @param {String | Object} name The name of the command or an object of names for localisation.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
+     */
     setName(name) {
 
         if (typeof name == "object") {
@@ -32,6 +44,12 @@ class Command {
 
     }
 
+    /**
+     * Sets the command type.
+     * @param {Number} type The command type.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
+     */
     setType(type) {
 
         this.type = type;
@@ -40,6 +58,12 @@ class Command {
 
     }
 
+    /**
+     * Sets the description of the command.
+     * @param {String | Object} description The description of the command, or an object of descriptions for localisation.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
+     */
     setDescription(description) {
 
         if (typeof description == "object") {
@@ -57,6 +81,11 @@ class Command {
 
     }
 
+    /**
+     * Sets the permission needed to use the command.
+     * @param {Number | BigInt | String} permissions The permissions required to be able to use this command.
+     * @returns {Command}
+     */
     setDefaultMemberPermissions(permissions) {
 
         this.default_member_permissions = permissions;
@@ -65,6 +94,11 @@ class Command {
 
     }
 
+    /**
+     * Sets whether the command can be used in DMs.
+     * @param {Boolean} dmPermission Whether the command can be used in DMs or not.
+     * @returns {Command}
+     */
     setDmPermission(dmPermission) {
 
         this.dm_permission = dmPermission;
@@ -73,6 +107,11 @@ class Command {
 
     }
 
+    /**
+     * Sets whether this command is NSFW.
+     * @param {Boolean} nsfw Whether this command is NSFW.
+     * @returns {Command}
+     */
     setNsfw(nsfw) {
 
         this.nsfw = nsfw;
@@ -81,6 +120,11 @@ class Command {
 
     }
 
+    /**
+     * Adds an option to the command.
+     * @param {CommandOption} option Adds an option to the command.
+     * @returns {Command}
+     */
     addOption(option) {
 
         this.options.push(option.toJSON());
@@ -89,7 +133,12 @@ class Command {
 
     }
 
-    // https://discord.com/developers/docs/reference#locales
+    /**
+     * Sets the default locale for localisation.
+     * @param {String?} locale Sets the default locale for localisation.
+     * @returns {Command}
+     * @see {@link https://discord.com/developers/docs/reference#locales}
+     */
     setDefaultLocale(locale = "en-US") {
 
         this.defaultLocale = locale;
@@ -98,6 +147,10 @@ class Command {
 
     }
 
+    /**
+     * Returns the correct Discord format for a command.
+     * @returns {Object}
+     */
     toJSON() {
 
         return {

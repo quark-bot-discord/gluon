@@ -2,6 +2,11 @@ const hash = require("hash.js");
 const bundleMessage = require("./bundleMessage");
 const encryptText = require("./encryptText");
 
+/**
+ * Encrypts a message and returns an encrypted string.
+ * @param {Message} message The message to encrypt.
+ * @returns {String}
+ */
 function encryptMessage(message) {
 
     const bundledMessage = bundleMessage(message);

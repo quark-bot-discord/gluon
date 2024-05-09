@@ -1,4 +1,9 @@
 /* eslint-disable quotes */
+/**
+ * Gives a valid Discord emoji structure when given an emoji mention.
+ * @param {String} text Emoji mention. e.g. <:bitcoin:844240546246950922>
+ * @returns {Object}
+ */
 function resolveEmoji(text) {
 
     const emojis = text.match(/<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g);

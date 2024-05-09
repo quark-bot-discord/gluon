@@ -1,5 +1,10 @@
 const bundleMessage = require("./bundleMessage");
 
+/**
+ * Copies all the channel data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a channel as the "data" parameter to reconstruct this.
+ * @param {Channel | TextChannel | VoiceChannel} channel A channel to bundle.
+ * @returns {Object}
+ */
 function bundleChannel(channel) {
     const data = {};
     data.id = channel.id.toString();

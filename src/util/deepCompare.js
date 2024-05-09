@@ -1,3 +1,9 @@
+/**
+ * Compares each property of an object and returns an array of the property names which are unique in their value across the objects.
+ * @param {Object} object0 
+ * @param {Object} object1 
+ * @returns {Array<String>}
+ */
 function deepCompare(object0, object1) {
 
     const keys0 = Object.keys(object0);

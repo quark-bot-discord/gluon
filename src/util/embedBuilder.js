@@ -1,7 +1,14 @@
 const hexToInt = require("./hexToInt");
 
+/**
+ * Helps to create an embed for a message.
+ * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
+ */
 class Embed {
 
+    /**
+     * Creates an embed structure.
+     */
     constructor() {
 
         this.type = "rich";
@@ -9,6 +16,11 @@ class Embed {
 
     }
 
+    /**
+     * Sets the title of the embed.
+     * @param {String} title The title of the embed.
+     * @returns {Embed}
+     */
     setTitle(title) {
 
         this.title = title && title.length > 256 ? title.substring(0, 253) + "..." : title;
@@ -17,14 +29,24 @@ class Embed {
 
     }
 
+    /**
+     * Sets the embed description.
+     * @param {String} text The description.
+     * @returns {Embed}
+     */
     setDescription(text) {
 
-        this.description = text && text.length > 4096 ? text.substring(0, 4096) + "..." : text;
+        this.description = text && text.length > 4096 ? text.substring(0, 4093) + "..." : text;
 
         return this;
 
     }
 
+    /**
+     * Sets the url of the embed.
+     * @param {String} url The url.
+     * @returns {Embed}
+     */
     setURL(url) {
 
         this.url = url;
@@ -33,6 +55,11 @@ class Embed {
 
     }
 
+    /**
+     * Sets the timestamp displayed on the embed.
+     * @param {Number?} timestamp The UNIX timestamp.
+     * @returns {Embed}
+     */
     setTimestamp(timestamp) {
 
         if (timestamp)
@@ -44,6 +71,11 @@ class Embed {
 
     }
 
+    /**
+     * Sets the colour of the embed.
+     * @param {String | Number} colour The colour.
+     * @returns {Embed}
+     */
     setColor(colour) {
 
         if (typeof colour == "string") {
@@ -60,6 +92,11 @@ class Embed {
 
     }
 
+    /**
+     * Sets the embed thumbnail image.
+     * @param {String} url The url of the thumbnail.
+     * @returns {Embed}
+     */
     setThumbnail(url) {
 
         this.thumbnail = {
@@ -70,6 +107,12 @@ class Embed {
 
     }
 
+    /**
+     * Sets the embed footer.
+     * @param {String} text The footer text.
+     * @param {String?} icon The url of the footer icon.
+     * @returns {Embed}
+     */
     setFooter(text, icon) {
 
         this.footer = {
@@ -81,6 +124,13 @@ class Embed {
         return this;
     }
 
+    /**
+     * Sets the embed author info.
+     * @param {String?} name The embed author.
+     * @param {String?} url The url.
+     * @param {String?} icon_url The embed author image url.
+     * @returns {Embed}
+     */
     setAuthor(name, url, icon_url) {
 
         this.author = {};
@@ -96,6 +146,13 @@ class Embed {
 
     }
 
+    /**
+     * Adds a field to the embed.
+     * @param {String} name Sets the embed field name.
+     * @param {String} value Sets the embed field value.
+     * @param {Boolean?} inline Whether this field should be displayed inline.
+     * @returns {Embed}
+     */
     addField(name, value, inline = false) {
 
         if (this.fields.length == 25)
@@ -111,6 +168,11 @@ class Embed {
 
     }
 
+    /**
+     * Sets the embed image url.
+     * @param {String} url The image url.
+     * @returns {Embed}
+     */
     setImage(url) {
 
         this.image = {
@@ -121,6 +183,10 @@ class Embed {
 
     }
 
+    /**
+     * Converts the embed into string form.
+     * @returns {String}
+     */
     toString() {
 
         let string = "";
@@ -138,6 +204,10 @@ class Embed {
 
     }
 
+    /**
+     * Returns the correct Discord format for an embed.
+     * @returns {Object}
+     */
     toJSON() {
 
         return {

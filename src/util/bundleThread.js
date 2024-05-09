@@ -1,3 +1,8 @@
+/**
+ * Copies all the thread data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a thread as the "data" parameter to reconstruct this.
+ * @param {Thread} thread A thread to bundle.
+ * @returns {Object}
+ */
 function bundleThread(thread) {
     const data = {};
     data.id = thread.id.toString();
