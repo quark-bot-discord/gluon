@@ -32,6 +32,8 @@ const hexToInt = require("./src/util/hexToInt");
 const verifyMessageLink = require("./src/util/verifyMessageLink");
 const updateGuildPreferences = require("./src/util/updateGuildPreferences");
 const getAvatarUrl = require("./src/util/getAvatarUrl");
+const Invite = require("./src/structures/Invite");
+const bundleInvite = require("./src/util/bundleInvite");
 
 module.exports = {
     Client,
@@ -60,6 +62,7 @@ module.exports = {
     Command,
     CommandOption,
     CommandChoice,
+    Invite,
     getTimestampFromSnowflake: getTimestamp,
     checkPermission,
     PERMISSIONS,
@@ -72,6 +75,7 @@ module.exports = {
     AUTO_MODERATION_KEYWORD_PRESET_TYPES,
     AUTO_MODERATION_ACTION_TYPES,
     bundleUser,
+    bundleInvite,
     hexToInt,
     verifyMessageLink,
     updateGuildPreferences,
