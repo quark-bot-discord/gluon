@@ -34,6 +34,8 @@ const updateGuildPreferences = require("./src/util/updateGuildPreferences");
 const getAvatarUrl = require("./src/util/getAvatarUrl");
 const Invite = require("./src/structures/Invite");
 const bundleInvite = require("./src/util/bundleInvite");
+const encryptText = require("./src/util/encryptText");
+const decryptText = require("./src/util/decryptText");
 
 module.exports = {
     Client,
@@ -79,5 +81,7 @@ module.exports = {
     hexToInt,
     verifyMessageLink,
     updateGuildPreferences,
-    getAvatarUrl
+    getAvatarUrl,
+    encryptText,
+    decryptText
 };
