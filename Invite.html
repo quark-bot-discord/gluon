@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Role - Documentation</title>
+    <title>Invite - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Role</h1>
+    <h1 class="page-title">Invite</h1>
     
 
     
@@ -49,11 +49,11 @@
     
         <h2>
         
-            Role
+            Invite
         
         </h2>
         
-            <div class="class-description usertext"><p>Represents a role belonging to a guild.</p></div>
+            <div class="class-description usertext"><p>Represents a guild invite.</p></div>
         
     
 </header>
@@ -68,7 +68,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Role"><span class="type-signature"></span>new Role<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Invite"><span class="type-signature"></span>new Invite<span class="signature">(client, data, guild_id, nocache<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -81,7 +81,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line4">line 4</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -115,7 +115,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="https://discord.com/developers/docs/topics/permissions#role-object-role-structure">https://discord.com/developers/docs/topics/permissions#role-object-role-structure</a></li>
+            <li><a href="https://discord.com/developers/docs/resources/invite#invite-object-invite-structure">https://discord.com/developers/docs/resources/invite#invite-object-invite-structure</a></li>
         </ul>
     </dd>
     
@@ -229,7 +229,7 @@
                 </td>
             
 
-            <td class="description last"><p>The raw role data from Discord.</p></td>
+            <td class="description last"><p>The raw invite data from Discord.</p></td>
         </tr>
 
     
@@ -265,7 +265,7 @@
                 </td>
             
 
-            <td class="description last"><p>The id of the guild that the role belongs to.</p></td>
+            <td class="description last"><p>The id of the guild that the invite belongs to.</p></td>
         </tr>
 
     
@@ -305,7 +305,7 @@
                 </td>
             
 
-            <td class="description last"><p>Whether this role should be cached or not.</p></td>
+            <td class="description last"><p>Whether this invite should be cached or not.</p></td>
         </tr>
 
     
@@ -351,6 +351,165 @@
 
         
             
+<h4 class="name" id="channel"><span class="type-signature type-signature-nullable">(nullable) </span>channel<span class="type-signature"> :<a href="TextChannel.html">TextChannel</a>|<a href="VoiceChannel.html">VoiceChannel</a></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The channel the invite is directed to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The channel the invite is directed to.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="TextChannel.html">TextChannel</a></span>
+|
+
+<span class="param-type"><a href="VoiceChannel.html">VoiceChannel</a></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="channel_id"><span class="type-signature type-signature-nullable">(nullable) </span>channel_id<span class="type-signature"> :BigInt</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The id of the channel the invite is directed to.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The id of the channel the invite is directed to.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">BigInt</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="client"><span class="type-signature"></span>client<span class="type-signature"> :<a href="Client.html">Client</a></span></h4>
 
 
@@ -366,7 +525,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line20">line 20</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -429,7 +588,7 @@
 
         
             
-<h4 class="name" id="color"><span class="type-signature"></span>color<span class="type-signature"> :Number</span></h4>
+<h4 class="name" id="code"><span class="type-signature"></span>code<span class="type-signature"> :String</span></h4>
 
 
 
@@ -438,13 +597,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The colour of the role.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The code for the invite.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line51">line 51</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -484,7 +643,7 @@
 
 
 <div class="description usertext">
-    <p>The colour of the role.</p>
+    <p>The code for the invite.</p>
 </div>
 
 
@@ -493,7 +652,7 @@
     <ul>
         <li>
             
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 
 
@@ -522,7 +681,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line26">line 26</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -600,7 +759,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line33">line 33</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -663,7 +822,7 @@
 
         
             
-<h4 class="name" id="hoist"><span class="type-signature type-signature-readonly">(readonly) </span>hoist<span class="type-signature"></span></h4>
+<h4 class="name" id="inviter"><span class="type-signature type-signature-nullable">(nullable) </span>inviter<span class="type-signature"> :<a href="User.html">User</a></span></h4>
 
 
 
@@ -672,13 +831,13 @@
 <dl class="details">
     
     <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is hoisted.</p></li></ul></dd>
+    <dd class="tag-description"><ul class="dummy"><li><p>The user who created the invite.</p></li></ul></dd>
     
 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line89">line 89</a>
+        <a href="structures_Invite.js.html">structures/Invite.js</a>, <a href="structures_Invite.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -718,74 +877,7 @@
 
 
 <div class="description usertext">
-    <p>Whether the role is hoisted.</p>
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The id of the role.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line39">line 39</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The id of the role.</p>
+    <p>The user who created the invite.</p>
 </div>
 
 
@@ -794,375 +886,7 @@
     <ul>
         <li>
             
-<span class="param-type">BigInt</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="managed"><span class="type-signature type-signature-readonly">(readonly) </span>managed<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is managed (by an application).</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line100">line 100</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether the role is managed (by an application).</p>
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="mentionable"><span class="type-signature type-signature-readonly">(readonly) </span>mentionable<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Whether the role is mentionable.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line111">line 111</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>Whether the role is mentionable.</p>
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :String</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The name of the role.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line45">line 45</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The name of the role.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">String</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="permissions"><span class="type-signature"></span>permissions<span class="type-signature"> :BigInt</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The permissions for the role.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line63">line 63</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The permissions for the role.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">BigInt</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="position"><span class="type-signature"></span>position<span class="type-signature"> :Number</span></h4>
-
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>The position of the role.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Role.js.html">structures/Role.js</a>, <a href="structures_Role.js.html#line57">line 57</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The position of the role.</p>
-</div>
-
-
-
-    <h5 class="h5-types">Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Number</span>
+<span class="param-type"><a href="User.html">User</a></span>
 
 
 
