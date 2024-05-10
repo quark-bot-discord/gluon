@@ -318,7 +318,7 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INVITE_CREATE ${data.guild_id}`);
 
-        const invite = new Invite(this.client, data, data.guild.id);
+        const invite = new Invite(this.client, data, data.guild_id);
 
         this.client.emit(EVENTS.INVITE_CREATE, invite);
 
