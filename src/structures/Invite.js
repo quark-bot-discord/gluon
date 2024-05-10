@@ -43,14 +43,14 @@ class Invite {
          * The channel the invite is directed to.
          * @type {(TextChannel | VoiceChannel)?}
          */
-        this.channel = this.guild && (data.channel || data.channel_id) ? this.guild.channels.cache.get(data.channel.id || data.channel_id) : null;
+        this.channel = this.guild && (data.channel || data.channel_id) ? this.guild.channels.cache.get(data.channel?.id || data.channel_id) : null;
 
         if (!this.channel && (data.channel || data.channel_id))
             /**
              * The id of the channel the invite is directed to.
              * @type {BigInt?}
              */
-            this.channel_id = BigInt(data.channel.id);
+            this.channel_id = BigInt(data.channel?.id || data.channel_id);
 
         if (data.inviter)
             /**
