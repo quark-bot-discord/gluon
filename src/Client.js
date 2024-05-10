@@ -600,7 +600,7 @@ class Client extends EventsEmitter {
 
         body.limit = 1000;
 
-        const data = await this.client.request.makeRequest("getSearchGuildMembers", [guildId], body);
+        const data = await this.request.makeRequest("getSearchGuildMembers", [guildId], body);
         if (data.length != 0) {
 
             let members = [];
