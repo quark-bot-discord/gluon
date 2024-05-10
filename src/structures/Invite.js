@@ -78,7 +78,7 @@ class Invite {
              * The maximum number of uses allowed for the invite.
              * @type {Number?}
              */
-            this.maxUses = data.maxUses;
+            this.maxUses = data.max_uses;
 
     }
 };
