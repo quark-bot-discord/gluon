@@ -41,7 +41,7 @@ class Invite {
 
         /**
          * The channel the invite is directed to.
-         * @type {TextChannel? | VoiceChannel?}
+         * @type {(TextChannel | VoiceChannel)?}
          */
         this.channel = this.guild && (data.channel || data.channel_id) ? this.guild.channels.cache.get(data.channel.id || data.channel_id) : null;
 
