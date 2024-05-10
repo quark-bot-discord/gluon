@@ -587,6 +587,35 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Searches for members via a search query.
+     * @param {String | BigInt} guildId The id of the guild to search.
+     * @param {String} query The search query.
+     * @returns {Promise<Array<Member>?>} The members which match the search query.
+     */
+    async search(guildId, query) {
+
+        const body = {};
+
+        body.query = query;
+
+        body.limit = 1000;
+
+        const data = await this.client.request.makeRequest("getSearchGuildMembers", [guildId], body);
+        if (data.length != 0) {
+
+            let members = [];
+
+            for (let i = 0; i < data.length; i++)
+                members.push(new Member(this, data[i], data[i].user.id, guildId.toString(), data[i].user));
+
+            return members;
+
+        } else
+            return null;
+
+    }
+
+    /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
      */
