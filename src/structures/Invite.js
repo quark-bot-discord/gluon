@@ -73,6 +73,13 @@ class Invite {
              */
             this.expires = ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
 
+        if (typeof data.max_uses == "number")
+            /**
+             * The maximum number of uses allowed for the invite.
+             * @type {Number?}
+             */
+            this.maxUses = data.maxUses;
+
     }
 };
 

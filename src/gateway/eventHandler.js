@@ -14,6 +14,7 @@ const SlashCommand = require("../structures/SlashCommand");
 const Thread = require("../structures/Thread");
 const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
+const Invite = require("../structures/Invite");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
 const getMessage = require("../util/getMessage");
@@ -317,7 +318,9 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INVITE_CREATE ${data.guild_id}`);
 
-        this.client.emit(EVENTS.INVITE_CREATE, data);
+        const invite = new Invite(this.client, data, data.guild.id);
+
+        this.client.emit(EVENTS.INVITE_CREATE, invite);
 
     }
 
