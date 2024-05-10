@@ -59,6 +59,20 @@ class Invite {
              */
             this.inviter = new User(this.client, data.inviter, nocache);
 
+        if (typeof data.uses == "number")
+            /**
+             * The number of times the invite has been used.
+             * @type {Number?}
+             */
+            this.uses = data.uses;
+
+        if (typeof data.max_age == "number" && data.max_age != 0 && data.created_at)
+            /**
+             * The UNIX timestamp of when the invite expires.
+             * @type {Number?}
+             */
+            this.expires = ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
+
     }
 };
 

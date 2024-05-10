@@ -12,6 +12,10 @@ function bundleInvite(invite) {
     // data.channel_id = invite.channel ? invite.channel.id.toString() : invite.channel_id.toString();
     if (invite.inviter)
         data.inviter = bundleUser(invite.inviter);
+    if (typeof invite.uses == "number")
+        data.uses = invite.uses;
+    if (invite.expires)
+        data.expires = invite.expires;
     return data;
 }
 
