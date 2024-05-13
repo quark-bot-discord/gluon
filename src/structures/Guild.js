@@ -148,7 +148,7 @@ class Guild {
 
         this.scheduled_events = existing ? existing.scheduled_events : new GuildScheduledEventManager(this.client, this);
 
-        this.emojis = existing ? existing.emojis : new GuildEmojisManager(this.client);
+        this.emojis = existing ? existing.emojis : new GuildEmojisManager(this.client, this);
 
         if (data.system_channel_id !== undefined)
             this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
