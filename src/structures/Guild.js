@@ -7,6 +7,7 @@ const GuildScheduledEventManager = require("../managers/GuildScheduledEventManag
 const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
 const cacheChannel = require("../util/cacheChannel");
 const checkPermission = require("../util/checkPermission");
+const getGuildIcon = require("../util/getGuildIcon");
 const AuditLog = require("./AuditLog");
 const Emoji = require("./Emoji");
 const Member = require("./Member");
@@ -347,9 +348,7 @@ class Guild {
      */
     get displayIconURL() {
 
-        return this.icon ?
-            `${CDN_BASE_URL}/icons/${this.id}/${this.icon}.${this.icon.startsWith("a_") ? "gif" : "png"}` :
-            null;
+        return getGuildIcon(this.icon, this.id);
 
     }
 

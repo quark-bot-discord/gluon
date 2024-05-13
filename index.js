@@ -36,6 +36,7 @@ const Invite = require("./src/structures/Invite");
 const bundleInvite = require("./src/util/bundleInvite");
 const encryptText = require("./src/util/encryptText");
 const decryptText = require("./src/util/decryptText");
+const getGuildIcon = require("./src/util/getGuildIcon");
 
 module.exports = {
     Client,
@@ -83,5 +84,6 @@ module.exports = {
     updateGuildPreferences,
     getAvatarUrl,
     encryptText,
-    decryptText
+    decryptText,
+    getGuildIcon
 };
