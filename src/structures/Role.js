@@ -1,3 +1,5 @@
+const getRoleIcon = require("../util/getRoleIcon");
+
 /**
  * Represents a role belonging to a guild.
  */
@@ -57,6 +59,13 @@ class Role {
         this.position = data.position;
 
         /**
+         * The role icon hash.
+         * @type {String?}
+         */
+        if (data.icon)
+            this.icon = data.icon;
+
+        /**
          * The permissions for the role.
          * @type {BigInt}
          */
@@ -111,6 +120,17 @@ class Role {
     get mentionable() {
 
         return (this._attributes & (0b1 << 2)) == (0b1 << 2);
+
+    }
+
+    /**
+     * The icon URL of the role.
+     * @readonly
+     * @type {String?}
+     */
+    get displayIconURL() {
+
+        return getRoleIcon(this.hash, this.id);
 
     }
 
