@@ -170,6 +170,7 @@ class Client extends EventsEmitter {
                 new Guild(this, initCache.guilds[i]);
 
         this.increasedCache = new Map();
+        this.increasedCacheMultipliers = new Map();
         this.increaseCacheBy = increaseCacheBy;
 
         this.softRestartFunction = softRestartFunction;
