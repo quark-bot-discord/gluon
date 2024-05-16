@@ -38,6 +38,7 @@ const encryptText = require("./src/util/encryptText");
 const decryptText = require("./src/util/decryptText");
 const getGuildIcon = require("./src/util/getGuildIcon");
 const getRoleIcon = require("./src/util/getRoleIcon");
+const getMemberAvatar = require("./src/util/getMemberAvatar");
 
 module.exports = {
     Client,
@@ -87,5 +88,6 @@ module.exports = {
     encryptText,
     decryptText,
     getGuildIcon,
-    getRoleIcon
+    getRoleIcon,
+    getMemberAvatar
 };
