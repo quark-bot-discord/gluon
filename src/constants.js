@@ -206,7 +206,7 @@ module.exports.APPLICATION_COMMAND_OPTION_TYPES = {
 module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
 module.exports.DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
 module.exports.DEFAULT_CACHE_CHECK_PERIOD = 3600 * 1 * 1000; // 1 hour, in MILLISECONDS
-module.exports.DEFAULT_INCREASE_CACHE_BY = 56;
+module.exports.DEFAULT_INCREASE_CACHE_BY = 28;
 module.exports.PERMISSIONS = {
     CREATE_INSTANT_INVITE:      (1n << 0n),
     KICK_MEMBERS:               (1n << 1n),
