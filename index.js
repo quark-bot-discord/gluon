@@ -39,6 +39,7 @@ const decryptText = require("./src/util/decryptText");
 const getGuildIcon = require("./src/util/getGuildIcon");
 const getRoleIcon = require("./src/util/getRoleIcon");
 const getMemberAvatar = require("./src/util/getMemberAvatar");
+const bundleMessage = require("./src/util/bundleMessage");
 
 module.exports = {
     Client,
@@ -81,6 +82,7 @@ module.exports = {
     AUTO_MODERATION_ACTION_TYPES,
     bundleUser,
     bundleInvite,
+    bundleMessage,
     hexToInt,
     verifyMessageLink,
     updateGuildPreferences,
