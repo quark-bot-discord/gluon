@@ -155,7 +155,7 @@ class Message {
         else if (data.mentions == undefined && existing && existing.mentions == true)
             this._attributes |= (0b1 << 0);
 
-        if (data.mention_roles && data.mentions.length != 0)
+        if (data.mention_roles && data.mention_roles.length != 0)
             this._attributes |= (0b1 << 1);
         else if (data.mention_roles == undefined && existing && existing.mention_roles == true)
             this._attributes |= (0b1 << 1);
