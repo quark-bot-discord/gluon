@@ -1,4 +1,5 @@
 const bundleAttachment = require("./bundleAttachment");
+const bundleMember = require("./bundleMember");
 const bundleSticker = require("./bundleSticker");
 const bundleUser = require("./bundleUser");
 
@@ -11,6 +12,8 @@ function bundleMessage(message) {
     const data = {};
     data.id = message.id.toString();
     data.author = bundleUser(message.author);
+    if (message.member)
+        data.member = bundleMember(message.member);
     data.content = message.content;
     data._attributes = message._attributes;
     data.attachments = [];
