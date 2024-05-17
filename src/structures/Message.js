@@ -23,7 +23,7 @@ class Message {
      * @param {Boolean?} nocache Whether this message should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
      */
-    constructor(client, data, channel_id, guild_id, nocache = false) {
+    constructor(client, data, channel_id, guild_id, nocache = false, ignoreExisting = false) {
 
         let onlyfiles = false;
 
@@ -59,7 +59,7 @@ class Message {
              */
             this.channel_id = BigInt(channel_id);
 
-        const existing = this.channel?.messages.cache.get(data.id) || null;
+        const existing = ignoreExisting != true ? this.channel?.messages.cache.get(data.id) || null : null;
 
         if (this.guild) {
 
@@ -170,9 +170,9 @@ class Message {
         else if (data.pinned == undefined && existing && existing.pinned == true)
             this._attributes |= (0b1 << 3);
 
-        if (data.mirror != undefined && data.mirror == true)
+        if (data.mirrored != undefined && data.mirrored == true)
             this._attributes |= (0b1 << 4);
-        else if (data.mirror == undefined && existing && existing.mirror == true)
+        else if (data.mirrored == undefined && existing && existing.mirrored == true)
             this._attributes |= (0b1 << 4);
 
         /**
