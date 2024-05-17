@@ -170,6 +170,11 @@ class Message {
         else if (data.pinned == undefined && existing && existing.pinned == true)
             this._attributes |= (0b1 << 3);
 
+        if (data.mirror != undefined && data.mirror == true)
+            this._attributes |= (0b1 << 4);
+        else if (data.mirror == undefined && existing && existing.mirror == true)
+            this._attributes |= (0b1 << 4);
+
         /**
          * The message that this message references.
          * @type {Object}
@@ -267,6 +272,17 @@ class Message {
     get pinned() {
 
         return (this._attributes & (0b1 << 3)) == (0b1 << 3);
+
+    }
+
+    /**
+     * Whether another message has replaced this original message.
+     * @readonly
+     * @type {Boolean}
+     */
+    get mirrored() {
+
+        return (this._attributes & (0b1 << 4)) == (0b1 << 4);
 
     }
 
