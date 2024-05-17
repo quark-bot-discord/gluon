@@ -92,7 +92,7 @@ class Message {
              * The member who sent the message.
              * @type {Member?}
              */
-            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, data.author, nocache, true);
+            this.member = new Member(this.client, data.member, data.author.id, data.guild_id, new User(this.client, data.author), nocache, true);
         else if (data.author)
             this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
         else if (existing && existing.member)
