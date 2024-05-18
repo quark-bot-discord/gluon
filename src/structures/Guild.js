@@ -11,6 +11,7 @@ const checkPermission = require("../util/checkPermission");
 const getGuildIcon = require("../util/getGuildIcon");
 const AuditLog = require("./AuditLog");
 const Emoji = require("./Emoji");
+const Invite = require("./Invite");
 const Member = require("./Member");
 const Role = require("./Role");
 const Thread = require("./Thread");
@@ -160,7 +161,7 @@ class Guild {
          * The invite manager of this guild.
          * @type {GuildInviteManager}
          */
-        this.invites = existing ? existing.invites : new GuildInviteManager(this.client, this, data.invites);
+        this.invites = existing ? existing.invites : new GuildInviteManager(this.client, this);
 
         if (data.system_channel_id !== undefined)
             this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
@@ -349,6 +350,10 @@ class Guild {
         if (data.emojis)
             for (let i = 0; i < data.emojis.length && this.client.cacheEmojis == true; i++)
                 new Emoji(this.client, data.emojis[i], data.id, nocache);
+
+        if (data.invites)
+            for (let i = 0; i < data.invites.length && this.client.cacheInvites == true; i++)
+                new Invite(this.client, data.invites[i], data.id, nocache);
 
     }
 

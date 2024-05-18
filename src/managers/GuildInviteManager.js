@@ -14,16 +14,13 @@ class GuildInviteManager {
      * @param {Client} client The client instance.
      * @param {Guild} guild The guild that this invite manager belongs to.
      */
-    constructor(client, guild, invites = []) {
+    constructor(client, guild) {
 
         this.client = client;
 
         this.guild = guild;
 
         this.cache = new Map();
-
-        for (let i = 0; i < invites.length; i++)
-            new Invite(this.client, invites[i], this.guild?.id?.toString());
 
     }
 
