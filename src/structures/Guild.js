@@ -1,6 +1,7 @@
 const { AUDIT_LOG_TYPES, PERMISSIONS } = require("../constants");
 const GuildChannelsManager = require("../managers/GuildChannelsManager");
 const GuildEmojisManager = require("../managers/GuildEmojisManager");
+const GuildInviteManager = require("../managers/GuildInviteManager");
 const GuildMemberManager = require("../managers/GuildMemberManager");
 const GuildRoleManager = require("../managers/GuildRoleManager");
 const GuildScheduledEventManager = require("../managers/GuildScheduledEventManager");
@@ -149,7 +150,17 @@ class Guild {
 
         this.scheduled_events = existing ? existing.scheduled_events : new GuildScheduledEventManager(this.client, this);
 
+        /**
+         * The emoji manager of this guild.
+         * @type {GuildEmojisManager}
+         */
         this.emojis = existing ? existing.emojis : new GuildEmojisManager(this.client, this);
+
+        /**
+         * The invite manager of this guild.
+         * @type {GuildInviteManager}
+         */
+        this.invites = existing ? existing.invites : new GuildInviteManager(this.client, this);
 
         if (data.system_channel_id !== undefined)
             this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;

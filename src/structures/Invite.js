@@ -80,6 +80,9 @@ class Invite {
              */
             this.maxUses = data.max_uses;
 
+        if (nocache == false && this.client.cacheInvites == true && this.code)
+            this.client.guilds.cache.get(guild_id)?.invites.cache.set(data.code, this);
+
     }
 };
 

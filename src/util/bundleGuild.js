@@ -1,6 +1,7 @@
 const { CHANNEL_TYPES } = require("../constants");
 const bundleChannel = require("./bundleChannel");
 const bundleEmoji = require("./bundleEmoji");
+const bundleInvite = require("./bundleInvite");
 const bundleMember = require("./bundleMember");
 const bundleRole = require("./bundleRole");
 const bundleThread = require("./bundleThread");
@@ -50,6 +51,9 @@ function bundleGuild(guild) {
     data.emojis = [];
     for (const emoji of guild.emojis.cache.values())
         data.emojis.push(bundleEmoji(emoji));
+    data.invites = [];
+    for (const invite of guild.invites.cache.values())
+        data.invites.push(bundleInvite(invite));
     return data;
 }
 

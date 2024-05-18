@@ -328,7 +328,13 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => INVITE_DELETE ${data.guild_id}`);
 
-        this.client.emit(EVENTS.INVITE_DELETE, data);
+        const guild = this.client.guilds.cache.get(data.guild_id);
+
+        const invite = guild?.invites?.cache.get(data.code) || null;
+
+        guild?.invites?.cache.delete(data.code);
+
+        this.client.emit(EVENTS.INVITE_DELETE, data, invite);
 
     }
 

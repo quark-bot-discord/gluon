@@ -27,7 +27,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, increaseCacheBy = DEFAULT_INCREASE_CACHE_BY, intents, totalShards, shardIds, sessionData, initCache, softRestartFunction } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheInvites = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, increaseCacheBy = DEFAULT_INCREASE_CACHE_BY, intents, totalShards, shardIds, sessionData, initCache, softRestartFunction } = {}) {
 
         super();
 
@@ -110,6 +110,12 @@ class Client extends EventsEmitter {
          * @type {Boolean}
          */
         this.cacheEmojis = cacheEmojis;
+
+        /**
+         * Whether this client should cache invites.
+         * @type {Boolean}
+         */
+        this.cacheInvites = cacheInvites;
 
         /**
          * Whether this client should fetch and subsequently cache all members.

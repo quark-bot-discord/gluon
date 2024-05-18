@@ -8,7 +8,6 @@ const bundleUser = require("./bundleUser");
 function bundleInvite(invite) {
     const data = {};
     data.code = invite.code;
-    // data.guild_id = invite.guild ? invite.guild.id.toString() : invite.guild_id.toString();
     // data.channel_id = invite.channel ? invite.channel.id.toString() : invite.channel_id.toString();
     if (invite.inviter)
         data.inviter = bundleUser(invite.inviter);
