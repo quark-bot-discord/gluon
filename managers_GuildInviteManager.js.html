@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/encryptMessage.js - Documentation</title>
+    <title>managers/GuildInviteManager.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/encryptMessage.js</h1>
+    <h1 class="page-title">managers/GuildInviteManager.js</h1>
     
 
     
@@ -45,30 +45,50 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const hash = require("hash.js");
-const bundleMessage = require("./bundleMessage");
-const encryptText = require("./encryptText");
+            <pre class="prettyprint source linenums"><code>const Client = require("../Client");
+const { PERMISSIONS } = require("../constants");
+const Guild = require("../structures/Guild");
+const Invite = require("../structures/Invite");
+const checkPermission = require("../util/checkPermission");
 
 /**
- * Encrypts a message and returns an encrypted string.
- * @param {Message} message The message to encrypt.
- * @returns {String}
+ * Manages all invites within a guild.
  */
-function encryptMessage(message) {
+class GuildInviteManager {
 
-    const bundledMessage = bundleMessage(message);
+    /**
+     * Creates a guild invite manager.
+     * @param {Client} client The client instance.
+     * @param {Guild} guild The guild that this invite manager belongs to.
+     */
+    constructor(client, guild) {
 
-    const messageString = JSON.stringify(bundledMessage);
+        this.client = client;
 
-    const key = hash.sha512().update(`${hash.sha512().update(`${message.id}_${message.channel ? message.channel.id : message.channel_id}_${message.guild ? message.guild.id : message.guild_id}`).digest("hex")}satoshiNakamoto`).digest("hex").slice(0, 32);
+        this.guild = guild;
 
-    const iv = hash.sha512().update(`${hash.sha512().update(`${message.id}_${message.channel ? message.channel.id : message.channel_id}_${message.guild ? message.guild.id : message.guild_id}`).digest("hex")}${message.id}`).digest("hex").slice(0, 16);
+        this.cache = new Map();
 
-    return encryptText(messageString, key, iv);
+    }
+
+    /**
+     * Fetches all invites for this guild.
+     * @returns {Promise&lt;Array&lt;Invite>?>} The fetched invites.
+     */
+    async fetch() {
+
+        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
+            return null;
+
+        const data = await this.client.request.makeRequest("getGuildInvites", [this.guild.id]);
+
+        return data.map(raw => new Invite(this.client, raw, this.guild?.id?.toString() ?? this.guild_id.toString()));
+
+    }
 
 }
 
-module.exports = encryptMessage;</code></pre>
+module.exports = GuildInviteManager;</code></pre>
         </article>
     </section>
 
