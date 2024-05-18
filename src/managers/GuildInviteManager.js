@@ -14,13 +14,16 @@ class GuildInviteManager {
      * @param {Client} client The client instance.
      * @param {Guild} guild The guild that this invite manager belongs to.
      */
-    constructor(client, guild) {
+    constructor(client, guild, invites = []) {
 
         this.client = client;
 
         this.guild = guild;
 
         this.cache = new Map();
+
+        for (let i = 0; i < invites.length; i++)
+            new Invite(this.client, invites[i], this.guild?.id?.toString());
 
     }
 
@@ -35,7 +38,7 @@ class GuildInviteManager {
 
         const data = await this.client.request.makeRequest("getGuildInvites", [this.guild.id]);
 
-        return data.map(raw => new Invite(this.client, raw, this.guild?.id?.toString() ?? this.guild_id.toString()));
+        return data.map(raw => new Invite(this.client, raw, this.guild?.id?.toString()));
 
     }
 

@@ -72,6 +72,8 @@ class Invite {
              * @type {Number?}
              */
             this.expires = ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
+        else if (typeof data.expires == "number")
+            this.expires = data.expires;
 
         if (typeof data.max_uses == "number")
             /**

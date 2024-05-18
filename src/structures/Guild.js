@@ -160,7 +160,7 @@ class Guild {
          * The invite manager of this guild.
          * @type {GuildInviteManager}
          */
-        this.invites = existing ? existing.invites : new GuildInviteManager(this.client, this);
+        this.invites = existing ? existing.invites : new GuildInviteManager(this.client, this, data.invites);
 
         if (data.system_channel_id !== undefined)
             this.system_channel_id = data.system_channel_id ? BigInt(data.system_channel_id) : null;
