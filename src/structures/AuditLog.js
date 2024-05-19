@@ -126,6 +126,13 @@ class AuditLog {
                  */
                 this.special_type = parseInt(data.options.type);
 
+            if (data.options.status)
+                /**
+                 * The new voice channel status.
+                 * @type {String?}
+                 */
+                this.status = data.options.status;
+
         }
 
         if (data.changes)
