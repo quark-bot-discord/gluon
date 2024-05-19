@@ -355,6 +355,14 @@ class EventHandler {
 
     }
 
+    VOICE_CHANNEL_STATUS_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
+
+    }
+
     MESSAGE_CREATE(data) {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_CREATE ${data.guild_id}`);

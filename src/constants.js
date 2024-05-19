@@ -52,6 +52,7 @@ module.exports.EVENTS = {
     MENU_SELECT:                    ("menuSelect"),
     SLASH_COMMAND:                  ("slashCommand"),
     VOICE_STATE_UPDATE:             ("voiceStateUpdate"),
+    VOICE_CHANNEL_STATUS_UPDATE:    ("voiceChannelStatusUpdate"),
     CHANNEL_CREATE:                 ("channelCreate"),
     CHANNEL_UPDATE:                 ("channelUpdate"),
     CHANNEL_DELETE:                 ("channelDelete"),
@@ -169,7 +170,8 @@ module.exports.AUDIT_LOG_TYPES = {
     AUTO_MODERATION_FLAG_TO_CHANNEL: (144),
     AUTO_MODERATION_USER_COMMUNICATION_DISABLED: (145),
     CREATOR_MONETIZATION_REQUEST_CREATED: (150),
-    CREATOR_MONETIZATION_TERMS_ACCEPTED: (151)
+    CREATOR_MONETIZATION_TERMS_ACCEPTED: (151),
+    VOICE_CHANNEL_STATUS_UPDATE: (192)
 };
 module.exports.INTERACTION_TYPES = {
     COMMAND:                    (2),
