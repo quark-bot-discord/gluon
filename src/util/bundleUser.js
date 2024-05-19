@@ -11,6 +11,8 @@ function bundleUser(user) {
     data.avatar = user.originalAvatarHash;
     data.bot = user.bot;
     data.username = user.username;
+    if (user.discriminator)
+        data.discriminator = user.discriminator;
     return data;
 }
 

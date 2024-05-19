@@ -48,7 +48,19 @@ class User {
          */
         this.username = data.username;
 
+        /**
+         * The global name of the user.
+         * @type {String}
+         */
         this.global_name = data.global_name;
+
+
+        if (data.discriminator && data.discriminator != 0)
+            /**
+             * The discriminator of the user.
+             * @type {Number?}
+             */
+            this.discriminator = data.discriminator;
 
         /**
          * The UNIX (seconds) timestamp when this user was last cached.
@@ -113,7 +125,9 @@ class User {
      */
     get tag() {
 
-        return this.username;
+        return this.discriminator ? 
+            `${this.username}#${this.discriminator}` :
+            this.username;
 
     }
 
