@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/bundleThread.js - Documentation</title>
+    <title>structures/Reaction.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/bundleThread.js</h1>
+    <h1 class="page-title">structures/Reaction.js</h1>
     
 
     
@@ -45,23 +45,82 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Copies all the thread data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a thread as the "data" parameter to reconstruct this.
- * @param {Thread} thread A thread to bundle.
- * @returns {Object}
- */
-function bundleThread(thread) {
-    const data = {};
-    data.id = thread.id.toString();
-    data.type = thread.type;
-    data.guild_id = thread.guild ? thread.guild.id.toString() : thread.guild_id.toString();
-    data.name = thread.name;
-    data.owner_id = thread.owner ? thread.owner.id.toString() : thread.owner_id.toString();
-    data.parent_id = thread.parent ? thread.parent.id.toString() : thread.parent_id.toString();
-    return data;
+            <pre class="prettyprint source linenums"><code>const Emoji = require("./Emoji");
+
+class Reaction {
+
+    constructor(client, data, guild_id) {
+
+        /**
+         * The client instance.
+         * @type {Client}
+         */
+        this.client = client;
+
+        /**
+         * The guild that this reaction belongs to.
+         * @type {Guild?}
+         */
+        this.guild = this.client.guilds.cache.get(guild_id) || null;
+
+        if (!this.guild)
+            /**
+             * The id of the guild that this reaction belongs to.
+             * @type {BigInt?}
+             */
+            this.guild_id = BigInt(guild_id);
+
+        /**
+         * The emoji used for the reaction.
+         * @type {Emoji}
+         */
+        if (data.emoji.mention)
+            this.emoji = data.emoji;
+        else
+            this.emoji = new Emoji(client, data, guild_id, true);
+
+        /**
+         * Users who reacted with this emoji.
+         * @type {Array&lt;BigInt>}
+         */
+        this._reacted = data._reacted || [];
+
+    }
+
+    /**
+     * The number of reactions to this message.
+     * @readonly
+     * @type {Number}
+     */
+    get count() {
+
+        return this._reacted.length;
+
+    }
+
+    /**
+     * The member objects of the members who reacted. Returns the user id of the member cannot be found.
+     * @readonly
+     * @type {Array&lt;Member | BigInt>}
+     */
+    get reacted() {
+
+        return this._reacted.map(userId => {
+
+            const member = this.guild.members.cache.get(userId.toString());
+
+            if (member)
+                return member;
+            else
+                return userId;
+
+        });
+
+    }
+
 }
 
-module.exports = bundleThread;</code></pre>
+module.exports = Reaction;</code></pre>
         </article>
     </section>
 

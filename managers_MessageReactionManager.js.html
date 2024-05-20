@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/bundleThread.js - Documentation</title>
+    <title>managers/MessageReactionManager.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/bundleThread.js</h1>
+    <h1 class="page-title">managers/MessageReactionManager.js</h1>
     
 
     
@@ -45,23 +45,66 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Copies all the thread data into a plain JavaScript object without any BigInts. Safe to be JSON.stringify'd. May be passed directly into the constructor for a thread as the "data" parameter to reconstruct this.
- * @param {Thread} thread A thread to bundle.
- * @returns {Object}
+            <pre class="prettyprint source linenums"><code>const Reaction = require("../structures/Reaction");
+
+/**
+ * Manages the reactions of a message.
  */
-function bundleThread(thread) {
-    const data = {};
-    data.id = thread.id.toString();
-    data.type = thread.type;
-    data.guild_id = thread.guild ? thread.guild.id.toString() : thread.guild_id.toString();
-    data.name = thread.name;
-    data.owner_id = thread.owner ? thread.owner.id.toString() : thread.owner_id.toString();
-    data.parent_id = thread.parent ? thread.parent.id.toString() : thread.parent_id.toString();
-    return data;
+class MessageReactionManager {
+
+    /**
+     * Creates a message reaction manager.
+     * @param {Object} existingReactions Existing reactions for a message.
+     */
+    constructor(client, guild, existingReactions = {}) {
+
+        this.client = client;
+
+        this.guild = guild;
+
+        this.cache = {};
+
+        for (const message_reaction in existingReactions)
+            this.cache[message_reaction] = new Reaction(this.client, existingReactions[message_reaction], this.guild.id.toString());
+
+    }
+
+    /**
+     * Adds a reaction to a message.
+     * @param {String | BigInt} user_id The id of the user who reacted.
+     * @param {String} emoji The id or unicode emoji that was reacted with.
+     * @param {Object} data The raw MESSAGE_REACTION_ADD data.
+     */
+    addReaction(user_id, emoji, data) {
+
+        if (!this.cache[emoji])
+            this.cache[emoji] = new Reaction(this.client, data, this.guild.id.toString());
+
+        this.cache[emoji]._reacted.push(BigInt(user_id));
+
+    }
+
+    /**
+     * Removes a reaction from a message.
+     * @param {String | BigInt} user_id The id of the user whose reaction was removed.
+     * @param {String} emoji The id or unicode emoji for which the reaction was removed.
+     */
+    removeReaction(user_id, emoji) {
+
+        if (this.cache[emoji]) {
+
+            this.cache[emoji]._reacted = this.cache[emoji]._reacted.filter(userId => userId != user_id);
+
+            if (this.cache[emoji]._reacted.length == 0)
+                delete this.cache[emoji];
+
+        }
+
+    }
+
 }
 
-module.exports = bundleThread;</code></pre>
+module.exports = MessageReactionManager;</code></pre>
         </article>
     </section>
 
