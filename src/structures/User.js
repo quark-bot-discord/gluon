@@ -54,7 +54,6 @@ class User {
          */
         this.global_name = data.global_name;
 
-
         if (data.discriminator && data.discriminator != 0)
             /**
              * The discriminator of the user.
