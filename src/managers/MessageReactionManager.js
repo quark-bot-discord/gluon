@@ -15,6 +15,10 @@ class MessageReactionManager {
 
         this.guild = guild;
 
+        /**
+         * Cache of message reactions.
+         * @type {Object}
+         */
         this.cache = {};
 
         for (const message_reaction in existingReactions)
