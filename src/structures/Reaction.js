@@ -1,7 +1,17 @@
 const Emoji = require("./Emoji");
 
+/**
+ * Represents a reaction belonging to a message.
+ */
 class Reaction {
 
+    /**
+     * 
+     * @param {Client} client The client instance.
+     * @param {Object} data The raw reaction data from Discord.
+     * @param {String} guild_id The id of the guild that the reaction belongs to.
+     * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
+     */
     constructor(client, data, guild_id) {
 
         /**
@@ -23,11 +33,11 @@ class Reaction {
              */
             this.guild_id = BigInt(guild_id);
 
-        /**
-         * The emoji used for the reaction.
-         * @type {Emoji}
-         */
         if (data.emoji.mention)
+            /**
+             * The emoji used for the reaction.
+             * @type {Emoji}
+             */
             this.emoji = data.emoji;
         else
             this.emoji = new Emoji(client, data, guild_id, true);
