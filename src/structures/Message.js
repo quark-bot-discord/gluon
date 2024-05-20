@@ -8,6 +8,7 @@ const getTimestamp = require("../util/getTimestampFromSnowflake");
 const hash = require("hash.js");
 const encryptMessage = require("../util/encryptMessage");
 const MessagePollManager = require("../managers/MessagePollManager");
+const MessageReactionManager = require("../managers/MessageReactionManager");
 
 /**
  * A message belonging to a channel within a guild.
@@ -135,8 +136,23 @@ class Message {
         else if (this.poll == undefined)
             this.poll = undefined;
 
-        if (this.poll)
+        /**
+         * The poll responses.
+         * @type {MessagePollManager?}
+         */
+        if (this.poll && existing && existing.pollResponses)
+            this.pollResponses = existing.pollResponses;
+        else if (this.poll)
             this.pollResponses = new MessagePollManager(data.pollResponses);
+
+        /**
+         * The message reactions.
+         * @type {MessageReactionManager}
+         */
+        if (existing && existing.reactions)
+            this.reactions = existing.reactions;
+        else
+            this.reactions = new MessageReactionManager(this.client, this.guild, data.messageReactions);
 
         /**
          * The message embeds.

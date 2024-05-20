@@ -744,9 +744,41 @@ class EventHandler {
 
     }
 
+    MESSAGE_REACTION_ADD(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_REACTION_ADD ${data.guild_id}`);
+
+        getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
+            .then(message => {
+
+                if (!message)
+                    return;
+
+                message.reactions.addReaction(data.user_id, data.emoji.id ? data.emoji.id : data.emoji.name, data);
+
+            });
+
+        const finalData = data;
+
+        finalData.emoji = new Emoji(this.client, data.emoji, data.guild_id);
+
+        this.client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
+
+    }
+
     MESSAGE_REACTION_REMOVE(data) {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_REACTION_REMOVE ${data.guild_id}`);
+
+        getMessage(this.client, data.guild_id, data.channel_id, data.message_id)
+            .then(message => {
+
+                if (!message)
+                    return;
+
+                message.reactions.removeReaction(data.user_id, data.emoji.id ? data.emoji.id : data.emoji.name);
+
+            });
 
         const finalData = data;
 

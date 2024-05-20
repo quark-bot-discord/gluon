@@ -1,5 +1,6 @@
 const bundleAttachment = require("./bundleAttachment");
 const bundleMember = require("./bundleMember");
+const bundleReaction = require("./bundleReaction");
 const bundleSticker = require("./bundleSticker");
 const bundleUser = require("./bundleUser");
 
@@ -35,6 +36,9 @@ function bundleMessage(message) {
     data.sticker_items = [];
     for (let i = 0; i < message.sticker_items.length; i++)
         data.sticker_items.push(bundleSticker(message.sticker_items[i]));
+    data.messageReactions = {};
+    for (const reaction in message.reactions.cache)
+        data.messageReactions[reaction] = bundleReaction(message.reactions.cache[reaction]);
     return data;
 }
 
