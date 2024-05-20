@@ -136,20 +136,20 @@ class Message {
         else if (this.poll == undefined)
             this.poll = undefined;
 
-        /**
-         * The poll responses.
-         * @type {MessagePollManager?}
-         */
         if (this.poll && existing && existing.pollResponses)
+            /**
+             * The poll responses.
+             * @type {MessagePollManager?}
+             */
             this.pollResponses = existing.pollResponses;
         else if (this.poll)
             this.pollResponses = new MessagePollManager(data.pollResponses);
 
-        /**
-         * The message reactions.
-         * @type {MessageReactionManager}
-         */
         if (existing && existing.reactions)
+            /**
+             * The message reactions.
+             * @type {MessageReactionManager}
+             */
             this.reactions = existing.reactions;
         else
             this.reactions = new MessageReactionManager(this.client, this.guild, data.messageReactions);
