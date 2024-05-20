@@ -17,6 +17,7 @@ function bundleVoiceState(voiceState) {
     data.self_video = voiceState.self_video;
     data.member = bundleMember(voiceState.member);
     data.user_id = voiceState.user ? voiceState.user.id.toString() : voiceState.user_id.toString();
+    data.joined = voiceState.joined;
     return data;
 }
 

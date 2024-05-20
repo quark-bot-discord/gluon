@@ -37,6 +37,8 @@ class VoiceState {
         if (this.guild)
             nocache = ((this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) == GLUON_CACHING_OPTIONS.NO_VOICE_STATE);
 
+        const existing = this.guild?.voice_states.cache.get(data.user_id) || null;
+
         /**
          * The channel involved.
          * @type {Channel?}
@@ -91,6 +93,17 @@ class VoiceState {
              * @type {BigInt?}
              */
             this.user_id = BigInt(data.user_id);
+
+        /**
+         * The UNIX time the user joined the voice channel.
+         * @type {Number}
+         */
+        if (typeof data.joined == "number")
+            this.joined = data.joined;
+        else if (existing && typeof existing.joined == "number")
+            this.joined = existing.joined;
+        else
+            this.joined = (Date.now() / 1000) | 0;
 
         if (nocache == false && this.client.cacheVoiceStates == true)
             this.guild?.voice_states.cache.set(data.user_id, this);
