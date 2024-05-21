@@ -245,7 +245,7 @@ class Member {
 
         return this.avatar ?
             // eslint-disable-next-line quotes
-            `${CDN_BASE_URL}/guilds/${this.guild.id}/${this.user.id}/avatars/${this.originalAvatarHash}.${this.avatarIsAnimated ? "gif" : "png"}` :
+            `${CDN_BASE_URL}/guilds/${this.guild.id}/users/${this.user.id}/avatars/${this.originalAvatarHash}.${this.avatarIsAnimated ? "gif" : "png"}` :
             this.user.displayAvatarURL;
 
     }
