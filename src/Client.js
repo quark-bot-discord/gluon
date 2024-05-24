@@ -242,6 +242,24 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Counts how many members are in all of Quark's servers.
+     * @returns {Number}
+     */
+    getMemberCount() {
+
+        let memberCount = 0;
+
+        this.guilds.cache.forEach(guild => {
+
+            memberCount += guild.member_count;
+
+        });
+
+        return memberCount;
+
+    }
+
+    /**
      * Bundles all guilds.
      * @returns {Array<Object>}
      */
