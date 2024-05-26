@@ -184,9 +184,16 @@ class Client extends EventsEmitter {
         storage.init({ 
             ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
             expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
-            dir: `persist_${this.shardIds ? this.shardIds[0] : 0}` 
+            dir: `messages`
         })
             .then(() => this.storage = storage);
+
+        storage.init({ 
+            ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
+            expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
+            dir: `persist_${this.shardIds ? this.shardIds[0] : 0}` // PHASE OUT DIFFERENT DIRECTORIES FOR DIFFERENT SHARDS
+        })
+            .then(() => this.storageOld = storage);
 
     }
 

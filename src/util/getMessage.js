@@ -26,11 +26,16 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
             client.storage.getItem(usedHash)
                 .then(async storedMessage => {
 
+                    if (!storedMessage)
+                        storedMessage = await client.storageOld.getItem(usedHash);
+
                     if (storedMessage) {
 
                         message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
 
                         await client.storage.removeItem(usedHash).catch(() => null);
+
+                        await client.storageOld.removeItem(usedHash).catch(() => null);
 
                         if (destroy != false)
                             client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
@@ -44,6 +49,8 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
         } else {
 
             await client.storage.removeItem(usedHash).catch(() => null);
+
+            await client.storageOld.removeItem(usedHash).catch(() => null);
 
             if (destroy != false)
                 client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
