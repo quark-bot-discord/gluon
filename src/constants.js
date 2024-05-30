@@ -35,6 +35,7 @@ module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
                                     this.INTENTS.GUILD_MESSAGE_POLLS;
 module.exports.EVENTS = {
     READY:                          ("ready"),
+    RESUMED:                        ("resumed"),
     GUILD_CREATE:                   ("guildCreate"),
     GUILD_DELETE:                   ("guildDelete"),
     GUILD_UPDATE:                   ("guildUpdate"),

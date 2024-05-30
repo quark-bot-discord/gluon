@@ -61,6 +61,8 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => RESUMED`);
 
+        this.client.emit(EVENTS.RESUMED);
+
     }
 
     GUILD_CREATE(data) {
