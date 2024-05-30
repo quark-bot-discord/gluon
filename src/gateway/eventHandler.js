@@ -377,7 +377,7 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_UPDATE ${data.guild_id}`);
 
-        getMessage(this.client, data.guild_id, data.channel_id, data.id, true)
+        getMessage(this.client, data.guild_id, data.channel_id, data.id)
             .then(oldMessage => {
 
                 const newMessage = new Message(this.client, data, data.channel_id, data.guild_id);
