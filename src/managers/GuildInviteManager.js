@@ -35,7 +35,7 @@ class GuildInviteManager {
 
         const data = await this.client.request.makeRequest("getGuildInvites", [this.guild.id]);
 
-        this.cache = this.cache.clear();
+        this.cache.clear();
 
         return data.map(raw => new Invite(this.client, raw, this.guild?.id?.toString()));
 
