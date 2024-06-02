@@ -26,8 +26,8 @@ function bundleGuild(guild) {
     data.preferred_locale = guild.preferred_locale;
     data._cache_options = guild._cache_options;
     data._attributes = guild._attributes;
-    data.system_channel_id = guild.system_channel_id;
-    data.rules_channel_id = guild.rules_channel_id;
+    data.system_channel_id = guild.system_channel_id?.toString();
+    data.rules_channel_id = guild.rules_channel_id?.toString();
     data.members = [];
     for (const member of guild.members.cache.values()) {
         const bundledMember = bundleMember(member);
