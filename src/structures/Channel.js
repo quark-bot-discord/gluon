@@ -78,12 +78,20 @@ class Channel {
         else if (typeof data.rate_limit_per_user != "number" && existing && typeof existing.rate_limit_per_user == "number")
             this.rate_limit_per_user = existing.rate_limit_per_user;
 
-        /**
-         * The id of the parent channel.
-         * @type {BigInt}
-         */
-        if (typeof data.parent_id == "string")
-            this.parent_id = BigInt(data.parent_id);
+        if (typeof data.parent_id == "string") {
+            /**
+             * The parent channel.
+             * @type {Channel}
+             */
+            this.parent = this.guild?.channels.cache.get(data.parent_id);
+            if (!this.parent)
+                /**
+                 * The id of the parent channel.
+                 * @type {BigInt}
+                 */
+                this.parent_id = BigInt(data.parent_id);
+        } else if (typeof data.parent_id != "string" && data.parent_id === undefined && existing && existing.parent)
+            this.parent = existing.parent;
         else if (typeof data.parent_id != "string" && data.parent_id === undefined && existing && typeof existing.parent_id == "bigint")
             this.parent_id = existing.parent_id;
             
