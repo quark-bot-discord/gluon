@@ -483,7 +483,7 @@ class Client extends EventsEmitter {
 
         const guild = this.guilds.cache.get(guild_id.toString());
 
-        const cached = guild.roles.cache.get(role_id.toString());
+        const cached = role_id ? guild.roles.cache.get(role_id.toString()) : Array.from(guild.roles.cache, ([key, value]) => value);
 
         if (cached)
             return cached;
