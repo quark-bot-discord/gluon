@@ -16,6 +16,7 @@ const User = require("./structures/User");
 const generateWebsocketURL = require("./util/generateWebsocketURL");
 const Member = require("./structures/Member");
 const cacheChannel = require("./util/cacheChannel");
+const Role = require("./structures/Role");
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -469,6 +470,37 @@ class Client extends EventsEmitter {
         const channel = cacheChannel(this, data, guild_id.toString());
 
         return channel;
+
+    }
+
+    /**
+     * Fetches a role, checking the cache first.
+     * @param {String | BigInt} guild_id The id of the guild the role belongs to.
+     * @param {String? | BigInt?} user_id The id of the role to fetch, or null to return all roles.
+     * @returns {Promise<Role | Array<Role>>}
+     */
+    async fetchRole(guild_id, role_id) {
+
+        const guild = this.guilds.cache.get(guild_id.toString());
+
+        const cached = guild.roles.cache.get(role_id.toString());
+
+        if (cached)
+            return cached;
+
+        const data = await this.request.makeRequest("getRoles", [guild_id]);
+
+        if (!role_id)
+            return data.map(role => new Role(this, role, guild_id));
+
+        let matchedRole;
+        for (let i = 0; i < data.length; i++) {
+            const role = new Role(this, data[i], guild_id);
+            if (role.id == role_id)
+                matchedRole = role;
+        }
+
+        return matchedRole;
 
     }
 
