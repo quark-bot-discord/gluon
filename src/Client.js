@@ -476,7 +476,7 @@ class Client extends EventsEmitter {
     /**
      * Fetches a role, checking the cache first.
      * @param {String | BigInt} guild_id The id of the guild the role belongs to.
-     * @param {String? | BigInt?} user_id The id of the role to fetch, or null to return all roles.
+     * @param {String | BigInt | null} user_id The id of the role to fetch, or null to return all roles.
      * @returns {Promise<Role | Array<Role>>}
      */
     async fetchRole(guild_id, role_id) {
