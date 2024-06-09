@@ -454,16 +454,6 @@ class EventHandler {
 
                     }
 
-                    case COMPONENT_TYPES.TEXT_INPUT: {
-
-                        const componentInteraction = new ModalResponse(this.client, data);
-
-                        this.client.emit(EVENTS.MODAL_RESPONSE, componentInteraction);
-
-                        break;
-
-                    }
-
                 }
 
                 break;
@@ -475,6 +465,16 @@ class EventHandler {
                 const commandInteraction = new SlashCommand(this.client, data);
 
                 this.client.emit(EVENTS.SLASH_COMMAND, commandInteraction);
+
+                break;
+
+            }
+
+            case INTERACTION_TYPES.MODAL_SUBMIT: {
+
+                const componentInteraction = new ModalResponse(this.client, data);
+
+                this.client.emit(EVENTS.MODAL_RESPONSE, componentInteraction);
 
                 break;
 

@@ -178,7 +178,9 @@ module.exports.AUDIT_LOG_TYPES = {
 };
 module.exports.INTERACTION_TYPES = {
     COMMAND:                    (2),
-    COMPONENT:                  (3)
+    COMPONENT:                  (3),
+    APPLICATION_COMMAND_AUTOCOMPLETE: (4),
+    MODAL_SUBMIT:               (5)
 };
 module.exports.COMPONENT_TYPES = {
     ACTION_ROW:                 (1),
