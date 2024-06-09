@@ -83,6 +83,32 @@ class TextInput {
     }
 
     /**
+     * Set the minimum response length the user may enter.
+     * @param {Number} length Minimum user input length.
+     * @returns {TextInput}
+     */
+    setMinLength(length) {
+
+        this.min_length = length;
+
+        return this;
+
+    }
+
+    /**
+     * Set the maximum response length the user may enter.
+     * @param {Number} length Maximum user input length.
+     * @returns {TextInput}
+     */
+    setMaxLength(length) {
+
+        this.max_length = length;
+
+        return this;
+
+    }
+
+    /**
      * Returns the correct Discord format for a text input.
      * @returns {Object}
      */
@@ -94,7 +120,9 @@ class TextInput {
             style: this.style,
             custom_id: this.custom_id,
             value: this.value,
-            placeholder: this.placeholder
+            placeholder: this.placeholder,
+            min_length: this.min_length,
+            max_length: this.max_length
         };
 
     }
