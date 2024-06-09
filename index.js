@@ -1,6 +1,7 @@
 const Client = require("./src/Client");
 const ActionRow = require("./src/util/actionRowBuilder");
 const Button = require("./src/util/buttonBuilder");
+const TextInput = require("./src/util/textInputBuilder");
 const Dropdown = require("./src/util/dropdownBuilder");
 const DropdownOption = require("./src/util/dropdownOption");
 const Embed = require("./src/util/embedBuilder");
@@ -45,6 +46,7 @@ module.exports = {
     Client,
     ActionRow,
     Button,
+    TextInput,
     Dropdown,
     DropdownOption,
     Embed,

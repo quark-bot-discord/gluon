@@ -189,6 +189,10 @@ module.exports.COMPONENT_TYPES = {
     MENTIONABLE_SELECT_MENU:    (7),
     CHANNEL_SELECT_MENU:        (8)
 };
+module.exports.TEXT_INPUT_STYLES = {
+    SHORT: 1,
+    PARAGRAPH: 2
+};
 module.exports.APPLICATION_COMMAND_TYPES = {
     CHAT_INPUT:                 (1),
     USER:                       (2),
