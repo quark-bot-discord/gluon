@@ -18,6 +18,7 @@ const Invite = require("../structures/Invite");
 const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
 const getMessage = require("../util/getMessage");
+const ModalResponse = require("../structures/ModalResponse");
 
 class EventHandler {
 
@@ -448,6 +449,16 @@ class EventHandler {
                         const componentInteraction = new OptionSelect(this.client, data);
 
                         this.client.emit(EVENTS.MENU_SELECT, componentInteraction);
+
+                        break;
+
+                    }
+
+                    case COMPONENT_TYPES.TEXT_INPUT: {
+
+                        const componentInteraction = new ModalResponse(this.client, data);
+
+                        this.client.emit(EVENTS.MODAL_RESPONSE, componentInteraction);
 
                         break;
 

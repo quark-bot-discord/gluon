@@ -51,6 +51,7 @@ module.exports.EVENTS = {
     GUILD_MEMBER_REMOVE:            ("guildMemberRemove"),
     BUTTON_CLICK:                   ("buttonClick"),
     MENU_SELECT:                    ("menuSelect"),
+    MODAL_RESPONSE:                 ("modalResponse"),
     SLASH_COMMAND:                  ("slashCommand"),
     VOICE_STATE_UPDATE:             ("voiceStateUpdate"),
     VOICE_CHANNEL_STATUS_UPDATE:    ("voiceChannelStatusUpdate"),
