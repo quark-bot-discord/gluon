@@ -1,3 +1,4 @@
+const ActionRow = require("../util/actionRowBuilder");
 const Member = require("./Member");
 
 /**
@@ -70,6 +71,30 @@ class Interaction {
          * @type {String}
          */
         this.token = data.token;
+
+    }
+
+    /**
+     * Prompts a user to enter text using a modal.
+     * @param {Object} options Modal options.
+     * @returns {Promise<Interaction>}
+     */
+    async textPrompt({ title, customId, textInputModal }) {
+
+        const body = {};
+
+        body.title = title;
+
+        body.custom_id = customId;
+
+        const components = new ActionRow()
+            .addComponent(textInputModal);
+
+        body.components = Array.isArray(components) != true ? components.toJSON() : [];
+
+        await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
+
+        return this;
 
     }
 
