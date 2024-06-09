@@ -83,18 +83,19 @@ class Interaction {
 
         const body = {};
 
-        body.title = title;
+        body.type = 9;
+        body.data = {};
 
-        body.custom_id = customId;
+        body.data.title = title;
+
+        body.data.custom_id = customId;
 
         const components = new ActionRow()
             .addComponent(textInputModal);
 
-        body.components = Array.isArray(components) != true ? components.toJSON() : [];
+        body.data.components = Array.isArray(components) != true ? [components.toJSON()] : [];
 
         await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
-
-        return this;
 
     }
 
