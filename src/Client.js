@@ -3,6 +3,7 @@ const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, 
 
 const EventsEmitter = require("events");
 const storage = require('node-persist');
+const rustPersist = require('rust-persist');
 
 const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
@@ -182,18 +183,12 @@ class Client extends EventsEmitter {
 
         this.softRestartFunction = softRestartFunction;
 
-        storage.init({ 
-            ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
-            expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
-            dir: `messages`,
-            forgiveParseErrors: true
-        })
-            .then(() => this.storage = storage);
+        this.storage = rustPersist;
 
         storage.init({ 
             ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
             expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
-            dir: `persist_${this.shardIds ? this.shardIds[0] : 0}`, // PHASE OUT DIFFERENT DIRECTORIES FOR DIFFERENT SHARDS
+            dir: `messages`,
             forgiveParseErrors: true
         })
             .then(() => this.storageOld = storage);
