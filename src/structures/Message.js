@@ -399,7 +399,7 @@ class Message {
 
         const cacheMultiplier = this.client.increasedCacheMultipliers.get(this.guild?.id.toString() || this.guild_id.toString()) || 1;
 
-        this.client.storage.setItem(hash.sha512().update(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`).digest("hex"), encryptedMessage, this.client.defaultMessageExpiry * this.client.increaseCacheBy * cacheMultiplier * 1000)
+        this.client.storage.setItem(hash.sha512().update(`${this.guild ? this.guild.id : this.guild_id}_${this.channel ? this.channel.id : this.channel_id}_${this.id}`).digest("hex"), encryptedMessage, this.client.defaultMessageExpiry * this.client.increaseCacheBy * cacheMultiplier)
         
         this.channel.messages.cache.delete(this.id.toString());
 
