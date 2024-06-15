@@ -39,7 +39,7 @@ class TextChannel extends Channel {
     async bulkDelete(messages, { reason } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_MESSAGES))
-            return null;
+            throw new Error("The bot does not have the MANAGE_MESSAGES permission.");
 
         const body = {};
 

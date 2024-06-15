@@ -326,7 +326,7 @@ class Message {
     async reply(content, { embed, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
-            return null;
+            throw new Error("The bot does not have the SEND_MESSAGES permission.");
 
         const body = {};
 
@@ -364,7 +364,7 @@ class Message {
     async edit(content, { embed, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
-            return null;
+            throw new Error("The bot does not have the SEND_MESSAGES permission.");
 
         const body = {};
 
