@@ -79,7 +79,7 @@ class Interaction {
      * @param {Object} options Modal options.
      * @returns {Promise<Interaction>}
      */
-    async textPrompt({ title, customId, textInputModal }) {
+    async textPrompt({ title, customId, textInputModal, value }) {
 
         const body = {};
 
@@ -89,6 +89,8 @@ class Interaction {
         body.data.title = title;
 
         body.data.custom_id = customId;
+
+        body.data.value = value;
 
         const components = new ActionRow()
             .addComponent(textInputModal);
