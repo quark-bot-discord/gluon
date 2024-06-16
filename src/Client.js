@@ -183,15 +183,13 @@ class Client extends EventsEmitter {
 
         this.softRestartFunction = softRestartFunction;
 
-        this.storage = rustPersist;
-
         storage.init({ 
             ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
             expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
             dir: `messages`,
             forgiveParseErrors: true
         })
-            .then(() => this.storageOld = storage);
+            .then(() => this.storage = storage);
 
     }
 
