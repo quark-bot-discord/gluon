@@ -86,6 +86,12 @@ class Invite {
             this.guild?.invites.cache.set(data.code, this);
 
     }
+
+    get id() {
+
+        return this.code;
+
+    }
 };
 
 module.exports = Invite;
