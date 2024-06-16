@@ -536,7 +536,7 @@ class Guild {
     async ban(user_id, { reason, days } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
-            throw new Error({ status: 403, error: "The bot does not have the BAN_MEMBERS permission." });
+            throw { status: 403, error: "The bot does not have the BAN_MEMBERS permission." };
 
         const body = {};
 
@@ -559,7 +559,7 @@ class Guild {
     async unban(user_id, { reason } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
-            throw new Error({ status: 403, error: "The bot does not have the BAN_MEMBERS permission." });
+            throw { status: 403, error: "The bot does not have the BAN_MEMBERS permission." };
 
         const body = {};
 
@@ -579,7 +579,7 @@ class Guild {
     async kick(user_id, { reason } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.KICK_MEMBERS))
-            throw new Error({ status: 403, error: "The bot does not have the KICK_MEMBERS permission." });
+            throw { status: 403, error: "The bot does not have the KICK_MEMBERS permission." };
 
         const body = {};
 
@@ -600,7 +600,7 @@ class Guild {
     async removeMemberRole(user_id, role_id, { reason } = {}) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
-            throw new Error({ status: 403, error: "The bot does not have the MANAGE_ROLES permission." });
+            throw { status: 403, error: "The bot does not have the MANAGE_ROLES permission." };
 
         const body = {};
 
@@ -619,7 +619,7 @@ class Guild {
     async fetchAuditLogs({ limit, type, user_id, before }) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.VIEW_AUDIT_LOG))
-            throw new Error({ status: 403, error: "The bot does not have the VIEW_AUDIT_LOG permission." });
+            throw { status: 403, error: "The bot does not have the VIEW_AUDIT_LOG permission." };
 
         const body = {};
 
@@ -656,7 +656,7 @@ class Guild {
     async fetchInvites() {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
-            throw new Error({ status: 403, error: "The bot does not have the MANAGE_GUILD permission." });
+            throw { status: 403, error: "The bot does not have the MANAGE_GUILD permission." };
 
         const data = await this.client.request.makeRequest("getGuildInvites", [this.id]);
 
@@ -688,7 +688,7 @@ class Guild {
     async fetchBan(user_id) {
 
         if (!checkPermission(await this.me().catch(() => null), PERMISSIONS.BAN_MEMBERS))
-            throw new Error({ status: 403, error: "The bot does not have the BAN_MEMBERS permission." });
+            throw { status: 403, error: "The bot does not have the BAN_MEMBERS permission." };
 
         const data = await this.client.request.makeRequest("getGuildBan", [this.id, user_id]);
 
