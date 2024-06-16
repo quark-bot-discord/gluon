@@ -23,7 +23,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
         if (!message && client.increasedCache.get(guild_id) && (getTimestamp(message_id) + (client.defaultMessageExpiry * client.increaseCacheBy * guildCacheMultiplier) > ((new Date().getTime() / 1000) | 0))/* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/) {
 
-            let storedMessage = client.storage.getItem(usedHash);
+            let storedMessage = await client.storage.getItem(usedHash);
 
             // if (!storedMessage)
             //     storedMessage = await client.storageOld.getItem(usedHash);
