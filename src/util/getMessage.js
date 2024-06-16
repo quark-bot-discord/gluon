@@ -25,8 +25,8 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
             let storedMessage = client.storage.getItem(usedHash);
 
-            if (!storedMessage)
-                storedMessage = await client.storageOld.getItem(usedHash);
+            // if (!storedMessage)
+            //     storedMessage = await client.storageOld.getItem(usedHash);
 
             if (storedMessage) {
 
@@ -34,7 +34,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
                 await client.storage.removeItem(usedHash);
 
-                await client.storageOld.removeItem(usedHash).catch(() => null);
+                // await client.storageOld.removeItem(usedHash).catch(() => null);
 
                 if (destroy != false)
                     client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
@@ -47,7 +47,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
             await client.storage.removeItem(usedHash);
 
-            await client.storageOld.removeItem(usedHash).catch(() => null);
+            // await client.storageOld.removeItem(usedHash).catch(() => null);
 
             if (destroy != false)
                 client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
