@@ -3,7 +3,6 @@ const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, 
 
 const EventsEmitter = require("events");
 const storage = require('node-persist');
-const rustPersist = require('rust-persist');
 
 const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
