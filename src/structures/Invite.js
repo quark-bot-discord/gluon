@@ -66,14 +66,16 @@ class Invite {
              */
             this.uses = data.uses;
 
-        if (typeof data.max_age == "number" && data.max_age != 0 && data.created_at)
+        if (data.expires_at)
             /**
              * The UNIX timestamp of when the invite expires.
              * @type {Number?}
              */
-            this.expires = ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
+            this.expires = ((new Date(data.expires_at).getTime() / 1000) | 0);
         else if (typeof data.expires == "number")
             this.expires = data.expires;
+        else if (typeof data.max_age == "number" && data.max_age != 0 && data.created_at)
+            this.expires = ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
 
         if (typeof data.max_uses == "number")
             /**
@@ -84,6 +86,8 @@ class Invite {
 
         if (nocache == false && this.client.cacheInvites == true && this.code && (this.expires && this.expires > (Date.now() / 1000)))
             this.guild?.invites.cache.set(data.code, this);
+        else
+            this.client.emit("debug", `NOT CACHING INVITE ${this.code} ${this.expires} ${(Date.now() / 1000) | 0}`);
 
     }
 
