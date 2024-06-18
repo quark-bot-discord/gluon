@@ -84,12 +84,17 @@ class AuditLog {
 
         if (data.options) {
 
-            if (data.options.channel_id)
+            if (data.options.channel_id) {
                 /**
                  * The channel id involved with this audit log entry.
                  * @type {BigInt?}
                  */
                 this.channel_id = BigInt(data.options.channel_id);
+
+                if (this.guild)
+                    this.channel = this.guild.channels.cache.get(data.options.channel_id);
+
+            }
 
             if (data.options.count)
                 /**
