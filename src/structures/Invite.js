@@ -84,7 +84,7 @@ class Invite {
              */
             this.maxUses = data.max_uses;
 
-        if (nocache == false && this.client.cacheInvites == true && this.code && (this.expires && this.expires > (Date.now() / 1000)))
+        if (nocache == false && this.client.cacheInvites == true && this.code && ((this.expires && this.expires > (Date.now() / 1000)) || !this.expires))
             this.guild?.invites.cache.set(data.code, this);
         else
             this.client.emit("debug", `NOT CACHING INVITE ${this.code} ${this.expires} ${(Date.now() / 1000) | 0}`);
