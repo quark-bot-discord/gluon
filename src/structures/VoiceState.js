@@ -72,6 +72,9 @@ class VoiceState {
         if (data.self_video == true)
             this._attributes |= (0b1 << 5);
 
+        if (data.suppress == true)
+            this._attributes |= (0b1 << 6);
+
         if (data.member)
             /**
              * The member the voice state is about.
@@ -181,6 +184,17 @@ class VoiceState {
 
         return (this._attributes & (0b1 << 5)) == (0b1 << 5);
         
+    }
+
+    /**
+     * Is suppressed (for stage channels)?
+     * @readonly
+     * @type {Boolean}
+     */
+    get suppress() {
+
+        return (this._attributes & (0b1 << 6)) == (0b1 << 6);
+
     }
 
 }
