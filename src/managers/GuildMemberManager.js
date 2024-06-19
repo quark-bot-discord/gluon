@@ -34,9 +34,7 @@ class GuildMemberManager {
             .then(() => this.client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER STORAGE`));
 
         if (member.user)
-            this.client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
-                { id: member.user.id, avatar: member.user.formattedAvatarHash, username: member.user.username, global_name: member.user.global_name, discriminator: member.user.discriminator, attributes: member.user._attributes })
-                .then(() => this.client.emit("debug", `ADDED ${member.id} TO USER STORAGE`));
+            this.client.users.store(member.user);
 
     }
 
@@ -53,28 +51,17 @@ class GuildMemberManager {
             WHERE id = :id AND guild = :guild;
             `, { id: user_id, guild: this.guild.id });
 
-        const fetchedUserRaw = await this.client.dataStorage.query(`
-            SELECT *
-            FROM Users
-            WHERE id = :id;
-            `, { id: user_id });
-
         if (!fetchedMemberRaw)
             return null;
 
         const fetchedMember = fetchedMemberRaw[0][0];
-
         if (!fetchedMember)
             return null;
 
         fetchedMember._attributes = fetchedMember.attributes;
         fetchedMember.joined_at = fetchedMember.joined_at * 1000;
 
-        const fetchedUser = fetchedUserRaw[0][0];
-        if (fetchedUser)
-            fetchedUser._attributes = fetchedUser.attributes;
-
-        const user = fetchedUser ? new User(this.client, fetchedUser) : null;
+        const user = await this.client.users.localFetch(user_id);
 
         return new Member(this.client, fetchedMember, user_id, this.guild.id.toString(), user, { noDbStore: true });
 
@@ -91,16 +78,7 @@ class GuildMemberManager {
             WHERE guild = :guild;
             `,
             { guild: this.guild.id })
-            .then(() => {
-                this.client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`);
-                this.client.dataStorage.query(`
-                    DELETE FROM Users
-                    WHERE id NOT IN (
-                        SELECT id FROM Members
-                    );
-                    `)
-                    .then(() => this.client.emit("debug", `CLEANUP USERS`));
-            });
+            .then(() => this.client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`));
 
     }
 
@@ -116,16 +94,7 @@ class GuildMemberManager {
             WHERE guild = :guild AND id = :id;
             `,
             { guild: this.guild.id, id: user_id })
-            .then(() => {
-                this.client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`);
-                this.client.dataStorage.query(`
-                    DELETE FROM Users
-                    WHERE id NOT IN (
-                        SELECT id FROM Members
-                    );
-                    `)
-                    .then(() => this.client.emit("debug", `CLEANUP USERS`));
-            });
+            .then(() => this.client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
 
         this.cache.delete(user_id.toString());
 

@@ -52,7 +52,7 @@ class Member {
              * The user object for this member.
              * @type {User?}
              */
-            this.user = new User(this.client, data.user, nocache);
+            this.user = new User(this.client, data.user, { nocache });
         else if (existing && existing.user)
             this.user = existing.user;
         else if (user)

@@ -259,7 +259,7 @@ class EventHandler {
                 if (member)
                     guild?.members.remove(data.user.id);
                 else {
-                    member = new User(this.client, data.user, true);
+                    member = new User(this.client, data.user, { nocache: true });
                     member.user = member;
                     member.guild = guild || null;
                     if (!member.guild)

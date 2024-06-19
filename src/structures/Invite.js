@@ -57,7 +57,7 @@ class Invite {
              * The user who created the invite.
              * @type {User?}
              */
-            this.inviter = new User(this.client, data.inviter, nocache);
+            this.inviter = new User(this.client, data.inviter, { nocache });
 
         if (typeof data.uses == "number")
             /**

@@ -14,7 +14,7 @@ class User {
      * @param {Boolean?} nocache Whether the user should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/user#user-object}
      */
-    constructor(client, data, nocache = false, ignoreNoCache = false) {
+    constructor(client, data, { nocache = false, ignoreNoCache = false, noDbStore = false } = {}) {
 
         /**
          * The client instance.
@@ -67,8 +67,11 @@ class User {
          */
         this.cached = (new Date().getTime() / 1000) | 0;
 
-        if (nocache == false && (this.client.cacheUsers == true && ignoreNoCache == false))
+        if (nocache == false && (this.client.cacheUsers == true && ignoreNoCache == false)) {
             this.client.users.cache.set(data.id, this);
+            if (noDbStore != true)
+                this.client.users.store(this);
+        }
 
     }
 

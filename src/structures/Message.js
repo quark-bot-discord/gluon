@@ -84,7 +84,7 @@ class Message {
              * The message author.
              * @type {User?}
              */
-            this.author = new User(this.client, data.author, !data.webhook_id || nocache, true);
+            this.author = new User(this.client, data.author, { nocache: (!data.webhook_id || nocache) });
         else if (existing && existing.author)
             this.author = existing.author;
 
@@ -93,7 +93,7 @@ class Message {
              * The member who sent the message.
              * @type {Member?}
              */
-            this.member = new Member(this.client, data.member, data.author.id, guild_id, new User(this.client, data.author), { nocache, ignoreNoCache: true });
+            this.member = new Member(this.client, data.member, data.author.id, guild_id, new User(this.client, data.author));
         else if (data.author)
             this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
         else if (existing && existing.member)
