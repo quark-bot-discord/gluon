@@ -81,9 +81,23 @@ class GuildMemberManager {
             .then(() => this.client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER STORAGE`));
 
         if (member.user)
-            this.client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
-                { id: member.user.id, avatar: member.user.formattedAvatarHash, username: member.user.username, global_name: member.user.global_name, discriminator: member.user.discriminator, attributes: member.user._attributes })
-                .then(() => this.client.emit("debug", `ADDED ${member.id} TO USER STORAGE`));
+            this.client.users.store(member.user);
+
+        if (Array.isArray(member._roles) &amp;&amp; member._roles.length != 0) {
+
+            const valuesTemplate = member._roles.map(() => `(?, ?, ?)`).join(',');
+            const values = [];
+
+            for (let i = 0; i &lt; member._roles.length; i++) {
+                values.push(member.id);
+                values.push(member._roles[i]);
+                values.push(this.guild.id);
+            }
+
+            this.client.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, values)
+                .then(() => this.client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER ROLES STORAGE`));
+
+        }
 
     }
 
@@ -100,28 +114,30 @@ class GuildMemberManager {
             WHERE id = :id AND guild = :guild;
             `, { id: user_id, guild: this.guild.id });
 
-        const fetchedUserRaw = await this.client.dataStorage.query(`
-            SELECT *
-            FROM Users
-            WHERE id = :id;
-            `, { id: user_id });
-
         if (!fetchedMemberRaw)
             return null;
 
         const fetchedMember = fetchedMemberRaw[0][0];
-
         if (!fetchedMember)
             return null;
 
         fetchedMember._attributes = fetchedMember.attributes;
         fetchedMember.joined_at = fetchedMember.joined_at * 1000;
 
-        const fetchedUser = fetchedUserRaw[0][0];
-        if (fetchedUser)
-            fetchedUser._attributes = fetchedUser.attributes;
+        const fetchedMemberRolesRaw = await this.client.dataStorage.query(`
+            SELECT roleid
+            FROM MemberRoles
+            WHERE memberid = :memberid AND guild = :guild;
+            `, { memberid: user_id, guild: this.guild.id });
 
-        const user = fetchedUser ? new User(this.client, fetchedUser) : null;
+        if (fetchedMemberRolesRaw) {
+
+            const fetchedRoles = fetchedMemberRolesRaw[0].map(roles => roles.roleid);
+            fetchedMember.roles = fetchedRoles;
+
+        }
+
+        const user = await this.client.users.localFetch(user_id);
 
         return new Member(this.client, fetchedMember, user_id, this.guild.id.toString(), user, { noDbStore: true });
 
@@ -138,16 +154,15 @@ class GuildMemberManager {
             WHERE guild = :guild;
             `,
             { guild: this.guild.id })
-            .then(() => {
-                this.client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`);
-                this.client.dataStorage.query(`
-                    DELETE FROM Users
-                    WHERE id NOT IN (
-                        SELECT id FROM Members
-                    );
-                    `)
-                    .then(() => this.client.emit("debug", `CLEANUP USERS`));
-            });
+            .then(() => this.client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`));
+
+        this.client.dataStorage.query(`
+            DELETE
+            FROM MemberRoles
+            WHERE guild = :guild;
+            `,
+            { guild: this.guild.id })
+            .then(() => this.client.emit("debug", `CLEANUP MEMBER ROLES ${this.guild.id}`));
 
     }
 
@@ -163,16 +178,15 @@ class GuildMemberManager {
             WHERE guild = :guild AND id = :id;
             `,
             { guild: this.guild.id, id: user_id })
-            .then(() => {
-                this.client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`);
-                this.client.dataStorage.query(`
-                    DELETE FROM Users
-                    WHERE id NOT IN (
-                        SELECT id FROM Members
-                    );
-                    `)
-                    .then(() => this.client.emit("debug", `CLEANUP USERS`));
-            });
+            .then(() => this.client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
+
+        this.client.dataStorage.query(`
+            DELETE
+            FROM MemberRoles
+            WHERE guild = :guild AND memberid = :memberid;
+            `,
+            { guild: this.guild.id, memberid: user_id })
+            .then(() => this.client.emit("debug", `CLEANUP MEMBER ROLES ${user_id} FROM ${this.guild.id}`));
 
         this.cache.delete(user_id.toString());
 
@@ -276,7 +290,7 @@ module.exports = GuildMemberManager;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Jun 19 2024 20:15:54 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Wed Jun 19 2024 22:21:14 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
