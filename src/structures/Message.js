@@ -84,7 +84,7 @@ class Message {
              * The message author.
              * @type {User?}
              */
-            this.author = new User(this.client, data.author, { nocache: (!data.webhook_id || nocache) });
+            this.author = new User(this.client, data.author, { nocache: (!data.webhook_id || nocache), noDbStore: true });
         else if (existing && existing.author)
             this.author = existing.author;
 
