@@ -93,6 +93,9 @@ class User {
      */
     get formattedAvatarHash() {
 
+        if (!this.avatar)
+            return null;
+
         let formattedHash = this.avatar.toString(16);
 
         while (formattedHash.length != 32)

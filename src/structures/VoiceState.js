@@ -80,7 +80,7 @@ class VoiceState {
              * The member the voice state is about.
              * @type {Member?}
              */
-            this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, nocache);
+            this.member = new Member(this.client, data.member, data.user_id, data.guild_id, data.member.user, { nocache });
         else
             this.member = this.guild?.members.cache.get(data.user_id) || null;
 

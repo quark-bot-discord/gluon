@@ -108,6 +108,7 @@ class EventHandler {
         if (data.unavailable != true) {
 
             const guild = this.client.guilds.cache.get(data.id);
+            guild.cleanup();
             this.client.guilds.cache.delete(data.id);
 
             if (!guild)
@@ -253,21 +254,22 @@ class EventHandler {
 
         const guild = this.client.guilds.cache.get(data.guild_id) || null;
 
-        let member = guild?.members.cache.get(data.user.id);
-        if (member)
-            guild?.members.cache.delete(data.user.id);
-        else {
-            member = new User(this.client, data.user, true);
-            member.user = member;
-            member.guild = guild || null;
-            if (!member.guild)
-                member.guild_id = BigInt(data.guild_id);
-        }
+        guild.members.localFetch(data.user.id)
+            .then(member => {
+                if (member)
+                    guild?.members.remove(data.user.id);
+                else {
+                    member = new User(this.client, data.user, true);
+                    member.user = member;
+                    member.guild = guild || null;
+                    if (!member.guild)
+                        member.guild_id = BigInt(data.guild_id);
+                }
 
-        if (member.guild)
-            member.guild.member_count -= 1;
-
-        this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
+                member.guild.member_count -= 1;
+        
+                this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
+            });
 
     }
 
@@ -275,10 +277,14 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_UPDATE ${data.guild_id}`);
 
-        const oldMember = this.client.guilds.cache.get(data.guild_id)?.members.cache.get(data.user.id);
-        const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
+        this.client.guilds.cache.get(data.guild_id).members.localFetch(data.user.id)
+            .then(oldMember => {
 
-        this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+                const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
+
+                this.client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+
+            });
 
     }
 

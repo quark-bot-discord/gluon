@@ -18,7 +18,7 @@ class Member {
      * @param {Boolean?} nocache Whether this member should be cached.
      * @param {Boolean?} ignoreNoCache Whether the cache options should be overriden.
      */
-    constructor(client, data, user_id, guild_id, user, nocache = false, ignoreNoCache = false) {
+    constructor(client, data, user_id, guild_id, user, { nocache = false, ignoreNoCache = false, noDbStore = false } = {}) {
 
         /**
          * The client instance.
@@ -111,9 +111,6 @@ class Member {
         else if (data.avatar === undefined && existing && existing.avatar)
             this.avatar == existing.avatar;
 
-        if (typeof data.permissions == "string")
-            this._permissions = BigInt(data.permissions);
-
         if (data.roles && this.guild && this.client.cacheRoles == true) {
             this._roles = [];
             for (let i = 0; i < data.roles.length; i++)
@@ -121,8 +118,11 @@ class Member {
                     this._roles.push(BigInt(data.roles[i]));
         }
 
-        if ((this.id == this.client.user.id) || (nocache == false && ((this.client.cacheMembers == true || this.client.cacheAllMembers == true) && ignoreNoCache == false)))
+        if ((this.id == this.client.user.id) || (nocache == false && ((this.client.cacheMembers == true || this.client.cacheAllMembers == true) && ignoreNoCache == false))) {
             this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
+            if (noDbStore != true)
+                this.guild.members.store(this);
+        }
 
     }
 
@@ -226,6 +226,9 @@ class Member {
      * @type {String}
      */
     get formattedAvatarHash() {
+
+        if (!this.avatar)
+            return null;
 
         let formattedHash = this.avatar.toString(16);
 

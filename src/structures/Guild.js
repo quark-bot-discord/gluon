@@ -325,7 +325,7 @@ class Guild {
 
         if (data.members)
             for (let i = 0; i < data.members.length && this.client.cacheMembers == true; i++)
-                new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, nocache);
+                new Member(this.client, data.members[i], data.members[i].user.id, data.id, data.members[i].user, { nocache });
 
         if (data.channels)
             for (let i = 0; i < data.channels.length && this.client.cacheChannels == true; i++)
@@ -735,6 +735,12 @@ class Guild {
         const shouldCacheCount = Math.floor((1 - Math.sqrt(x / 501000)) * x);
 
         return shouldCacheCount;
+
+    }
+
+    cleanup() {
+
+        this.members.cleanup();
 
     }
 
