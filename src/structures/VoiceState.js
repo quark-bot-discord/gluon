@@ -105,6 +105,13 @@ class VoiceState {
         else
             this.joined = (Date.now() / 1000) | 0;
 
+        /**
+         * The UNIX timestamp of when the user requested to speak.
+         * @type {Number?}
+         */
+        if (data.request_to_speak_timestamp)
+            this.request_to_speak_timestamp = (new Date(data.request_to_speak_timestamp).getTime() / 1000) | 0;
+
         if (nocache == false && this.client.cacheVoiceStates == true)
             this.guild?.voice_states.cache.set(data.user_id, this);
 
