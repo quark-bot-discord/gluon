@@ -736,6 +736,58 @@ class Client extends EventsEmitter {
                 if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true) || this.cacheUsers == true)
                     setInterval(async () => {
 
+                        // store all members
+
+                        if (this.cacheMembers == true) {
+                            let fullMembersList = [];
+                            this.guilds.cache.forEach(guild => {
+
+                                Array.from(guild.members.cache, ([key, value]) => fullMembersList.push(value));
+
+                            });
+
+                            const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
+                            const values = [];
+
+                            for (let i = 0; i < fullMembersList.length; i++) {
+                                // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
+                                values.push(fullMembersList[i].id);
+                                values.push(fullMembersList[i].guild.id);
+                                values.push(fullMembersList[i].nick);
+                                values.push(fullMembersList[i].joined_at);
+                                values.push(fullMembersList[i].avatar);
+                                values.push(fullMembersList[i].communication_disabled_until);
+                                values.push(fullMembersList[i]._attributes);
+                            }
+
+                            await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
+                                .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
+
+                        }
+
+                        if (this.cacheUsers == true) {
+                            let fullUsersList = [];
+
+                            Array.from(this.users.cache, ([key, value]) => fullUsersList.push(value));
+
+                            const valuesTemplate = fullUsersList.map(() => `(?, ?, ?, ?, ?, ?)`).join(',');
+                            const values = [];
+
+                            for (let i = 0; i < fullUsersList.length; i++) {
+                                // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
+                                values.push(fullUsersList[i].id);
+                                values.push(fullUsersList[i].avatar);
+                                values.push(fullUsersList[i].username);
+                                values.push(fullUsersList[i].global_name);
+                                values.push(fullUsersList[i].discriminator);
+                                values.push(fullUsersList[i]._attributes);
+                            }
+
+                            await this.dataStorage.query(`INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);`, values)
+                                .then(() => this.emit("debug", `ADDED ${fullUsersList.length} USERS TO STORAGE`));
+
+                        }
+
                         const currentTime = Math.floor(new Date().getTime() / 1000);
 
                         if (this.cacheMessages == true || (this.cacheMembers == true && this.cacheAllMembers != true))

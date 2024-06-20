@@ -69,8 +69,8 @@ class User {
 
         if (nocache == false && (this.client.cacheUsers == true && ignoreNoCache == false)) {
             this.client.users.cache.set(data.id, this);
-            if (noDbStore != true)
-                this.client.users.store(this);
+            // if (noDbStore != true)
+                // this.client.users.store(this);
         }
 
     }
