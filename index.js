@@ -41,6 +41,7 @@ const getGuildIcon = require("./src/util/getGuildIcon");
 const getRoleIcon = require("./src/util/getRoleIcon");
 const getMemberAvatar = require("./src/util/getMemberAvatar");
 const bundleMessage = require("./src/util/bundleMessage");
+const getEventImage = require("./src/util/getEventImage");
 
 module.exports = {
     Client,
@@ -93,5 +94,6 @@ module.exports = {
     decryptText,
     getGuildIcon,
     getRoleIcon,
-    getMemberAvatar
+    getMemberAvatar,
+    getEventImage
 };
