@@ -747,7 +747,8 @@ class Client extends EventsEmitter {
                             });
 
                             const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
-                            const values = [];
+                            let values = [];
+                            let memberRolesValues = [];
 
                             for (let i = 0; i < fullMembersList.length; i++) {
                                 // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
@@ -755,13 +756,20 @@ class Client extends EventsEmitter {
                                 values.push(fullMembersList[i].guild.id);
                                 values.push(fullMembersList[i].nick);
                                 values.push(fullMembersList[i].joined_at);
-                                values.push(fullMembersList[i].avatar);
+                                values.push(fullMembersList[i].formattedAvatarHash);
                                 values.push(fullMembersList[i].communication_disabled_until);
                                 values.push(fullMembersList[i]._attributes);
+                                if (Array.isArray(fullMembersList[i]._roles) && fullMembersList[i]._roles.length > 0) {
+                                    for (let n = 0; n < fullMembersList[i]._roles.length; n++)
+                                        memberRolesValues.push(fullMembersList[i].id, fullMembersList[i]._roles[n], fullMembersList[i].guild.id);
+                                }
                             }
 
                             await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
                                 .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
+
+                            await this.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${Array(memberRolesValues.length / 3).fill("(?, ?, ?)").join(',')} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, memberRolesValues)
+                                .then(() => this.emit("debug", `ADDED ${memberRolesValues.length} TO MEMBER ROLES STORAGE`));
 
                         }
 
@@ -776,7 +784,7 @@ class Client extends EventsEmitter {
                             for (let i = 0; i < fullUsersList.length; i++) {
                                 // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
                                 values.push(fullUsersList[i].id);
-                                values.push(fullUsersList[i].avatar);
+                                values.push(fullUsersList[i].formattedAvatarHash);
                                 values.push(fullUsersList[i].username);
                                 values.push(fullUsersList[i].global_name);
                                 values.push(fullUsersList[i].discriminator);
