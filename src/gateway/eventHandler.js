@@ -19,6 +19,7 @@ const cacheChannel = require("../util/cacheChannel");
 const deepCompare = require("../util/deepCompare");
 const getMessage = require("../util/getMessage");
 const ModalResponse = require("../structures/ModalResponse");
+const getMember = require("../util/getMember");
 
 class EventHandler {
 
@@ -252,10 +253,11 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_REMOVE ${data.guild_id}`);
 
-        const guild = this.client.guilds.cache.get(data.guild_id) || null;
-
-        guild.members.localFetch(data.user.id)
+        getMember(this.client, data.guild_id, data.user.id, true)
             .then(member => {
+
+                const guild = this.client.guilds.cache.get(data.guild_id) || null;
+
                 if (member)
                     guild?.members.remove(data.user.id);
                 else {
@@ -267,8 +269,9 @@ class EventHandler {
                 }
 
                 member.guild.member_count -= 1;
-        
+
                 this.client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
+
             });
 
     }
@@ -277,7 +280,7 @@ class EventHandler {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => GUILD_MEMBER_UPDATE ${data.guild_id}`);
 
-        this.client.guilds.cache.get(data.guild_id).members.localFetch(data.user.id)
+        getMember(this.client, data.guild_id, data.user.id)
             .then(oldMember => {
 
                 const newMember = new Member(this.client, data, data.user.id, data.guild_id, data.user);
