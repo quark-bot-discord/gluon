@@ -489,6 +489,14 @@ class EventHandler {
 
             }
 
+            case INTERACTION_TYPES.APPLICATION_COMMAND_AUTOCOMPLETE: {
+
+                const commandInteraction = new SlashCommand(this.client, data);
+
+                this.client.emit(EVENTS.SLASH_COMMAND_AUTOCOMPLETE, commandInteraction);
+
+            }
+
         }
 
     }

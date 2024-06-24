@@ -53,6 +53,7 @@ module.exports.EVENTS = {
     MENU_SELECT:                    ("menuSelect"),
     MODAL_RESPONSE:                 ("modalResponse"),
     SLASH_COMMAND:                  ("slashCommand"),
+    SLASH_COMMAND_AUTOCOMPLETE:     ("slashCommandAutocomplete"),
     VOICE_STATE_UPDATE:             ("voiceStateUpdate"),
     VOICE_CHANNEL_STATUS_UPDATE:    ("voiceChannelStatusUpdate"),
     CHANNEL_CREATE:                 ("channelCreate"),
