@@ -100,6 +100,24 @@ class Interaction {
     }
 
     /**
+     * Responds to autocomplete interactions.
+     * @param {Object} options Autocompletion options.
+     * @returns {Promise<Interaction>}
+     */
+    async autocompleteResponse({ choices }) {
+
+        const body = {};
+
+        body.type = 8;
+        body.data = {};
+
+        body.data.choices = choices.map(c => c.toJSON());
+
+        await this.client.request.makeRequest("postInteractionResponse", [this.id, this.token], body);
+
+    }
+
+    /**
      * Replies to an interaction.
      * @param {String?} content The message content to send in the response to the interaction.
      * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message. 
