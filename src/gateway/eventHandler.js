@@ -495,6 +495,8 @@ class EventHandler {
 
                 this.client.emit(EVENTS.SLASH_COMMAND_AUTOCOMPLETE, commandInteraction);
 
+                break;
+
             }
 
         }
