@@ -361,7 +361,7 @@ class Message {
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      */
-    async edit(content, { embed, components, files } = {}) {
+    async edit(content, { embed, embeds, components, files } = {}) {
 
         if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
             throw { status: 403, error: "The bot does not have the SEND_MESSAGES permission." };
@@ -372,6 +372,8 @@ class Message {
             body.content = content;
         if (embed)
             body.embeds = [embed.toJSON()];
+        else if (embeds && embeds.length != 0)
+            body.embeds = embeds.map(e => e.toJSON());
         if (components)
             body.components = components.toJSON();
         if (files)
