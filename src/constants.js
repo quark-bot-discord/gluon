@@ -305,3 +305,6 @@ module.exports.AUTO_MODERATION_ACTION_TYPES = {
     TIMEOUT:            (3)
 };
 module.exports.GATEWAY_RECONNECT_CLOSE_CODES = [4000, 4001, 4002, 4003, 4005, 4007, 4008, 4009];
+module.exports.LIMITS = {
+    MAX_EMBED_SIZE: 6000
+};
