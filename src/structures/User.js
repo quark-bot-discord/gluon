@@ -75,6 +75,12 @@ class User {
 
     }
 
+    overrideAvatarURL(url) {
+
+        this.overrideAvatar = url;
+
+    }
+
     /**
      * The hash of the users's avatar, as it was received from Discord.
      * @readonly
@@ -115,6 +121,9 @@ class User {
      * @type {String}
      */
     get displayAvatarURL() {
+
+        if (this.overrideAvatar)
+            return this.overrideAvatar;
 
         return this.avatar ?
             // eslint-disable-next-line quotes
