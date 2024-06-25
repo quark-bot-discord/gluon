@@ -25,7 +25,7 @@ const VoiceState = require("./src/structures/VoiceState");
 const Command = require("./src/util/commandBuilder");
 const CommandOption = require("./src/util/commandOptionBuilder");
 const CommandChoice = require("./src/util/commandChoiceBuilder");
-const { PERMISSIONS, INTENTS, COMPONENT_TYPES, CHANNEL_TYPES, AUTO_MODERATION_TRIGGER_TYPES, AUTO_MODERATION_EVENT_TYPES, AUTO_MODERATION_KEYWORD_PRESET_TYPES, AUTO_MODERATION_ACTION_TYPES } = require("./src/constants");
+const { PERMISSIONS, INTENTS, COMPONENT_TYPES, CHANNEL_TYPES, AUTO_MODERATION_TRIGGER_TYPES, AUTO_MODERATION_EVENT_TYPES, AUTO_MODERATION_KEYWORD_PRESET_TYPES, AUTO_MODERATION_ACTION_TYPES, LIMITS } = require("./src/constants");
 const getTimestamp = require("./src/util/getTimestampFromSnowflake");
 const checkPermission = require("./src/util/checkPermission");
 const bundleUser = require("./src/util/bundleUser");
@@ -83,6 +83,7 @@ module.exports = {
     AUTO_MODERATION_EVENT_TYPES,
     AUTO_MODERATION_KEYWORD_PRESET_TYPES,
     AUTO_MODERATION_ACTION_TYPES,
+    LIMITS,
     bundleUser,
     bundleInvite,
     bundleMessage,
