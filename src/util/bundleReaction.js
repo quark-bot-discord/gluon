@@ -9,6 +9,7 @@ function bundleReaction(reaction) {
     const data = {};
     data.emoji = bundleEmoji(reaction.emoji);
     data._reacted = reaction._reacted.map(r => r.toString());
+    data.initial_reactor = reaction.initial_reactor?.toString();
     return data;
 }
 

@@ -34,8 +34,10 @@ class MessageReactionManager {
      */
     addReaction(user_id, emoji, data) {
 
-        if (!this.cache[emoji])
+        if (!this.cache[emoji]) {
+            data.initial_reactor = user_id;
             this.cache[emoji] = new Reaction(this.client, data, this.guild.id.toString());
+        }
 
         this.cache[emoji]._reacted.push(BigInt(user_id));
 

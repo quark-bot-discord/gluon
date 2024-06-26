@@ -48,6 +48,13 @@ class Reaction {
          */
         this._reacted = data._reacted || [];
 
+        /**
+         * The user who added the first reaction.
+         * @type {BigInt?}
+         */
+        if (data.initial_reactor)
+            this.initial_reactor = BigInt(data.initial_reactor);
+
     }
 
     /**
