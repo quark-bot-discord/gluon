@@ -621,6 +621,19 @@ class Client extends EventsEmitter {
     }
 
     /**
+     * Fetches a webhook by the webhook's id.
+     * @param {BigInt | String} webhook_id The id of the webhook to fetch.
+     * @returns {Promise<Object>}
+     */
+    async fetchWebhook(webhook_id) {
+
+        const data = await this.request.makeRequest("getWebhook", [webhook_id]);
+
+        return data;
+
+    }
+
+    /**
      * Registers commands, overwriting all previous ones.
      * @param {Array<Command>} commands Array of commands to register.
      * @returns {Array<Object>}

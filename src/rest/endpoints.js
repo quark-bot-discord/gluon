@@ -185,6 +185,13 @@ module.exports = {
         method: "GET",
         majorParams: [0]
     },
+    getWebhook: {
+        path: ([webhook_id]) => {
+            return `/webhooks/${webhook_id}`;
+        },
+        method: "GET",
+        majorParams: []
+    },
     deleteWebhook: {
         path: ([webhook_id]) => {
             return `/webhooks/${webhook_id}`;
