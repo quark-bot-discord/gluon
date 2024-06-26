@@ -740,6 +740,14 @@ class EventHandler {
 
     }
 
+    WEBHOOKS_UPDATE(data) {
+
+        this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => WEBHOOKS_UPDATE ${data.guild_id}`);
+
+        this.client.emit(EVENTS.WEBHOOKS_UPDATE, data);
+
+    }
+
     MESSAGE_POLL_VOTE_ADD(data) {
 
         this.client.emit("debug", `${this.ws.libName} ${this.ws.shardNorminal} @ ${this.ws.time()} => MESSAGE_POLL_VOTE_ADD ${data.guild_id}`);

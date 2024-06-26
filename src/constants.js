@@ -84,7 +84,8 @@ module.exports.EVENTS = {
     MESSAGE_POLL_VOTE_ADD:          ("messagePollVoteAdd"),
     MESSAGE_POLL_VOTE_REMOVE:       ("messagePollVoteRemove"),
     MESSAGE_REACTION_ADD:           ("messageReactionAdd"),
-    MESSAGE_REACTION_REMOVE:        ("messageReactionRemove")
+    MESSAGE_REACTION_REMOVE:        ("messageReactionRemove"),
+    WEBHOOKS_UPDATE:                ("webhooksUpdate")
 };
 module.exports.CHANNEL_TYPES = {
     GUILD_TEXT:                 (0),
