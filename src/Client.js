@@ -187,7 +187,8 @@ class Client extends EventsEmitter {
             ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
             expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
             dir: `messages`,
-            forgiveParseErrors: true
+            forgiveParseErrors: true,
+            mySqlPassword
         })
             .then(() => this.storage = storage);
 
