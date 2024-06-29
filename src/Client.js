@@ -4,6 +4,7 @@ const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, 
 const EventsEmitter = require("events");
 const storage = require('node-persist');
 const mysql = require("mysql2/promise");
+const AWS = require("aws-sdk");
 
 const BetterRequestHandler = require("./rest/betterRequestHandler");
 const WS = require("./gateway/index");
@@ -29,7 +30,7 @@ class Client extends EventsEmitter {
      * @constructor
      * @param {Object?} options The options to pass to the client. 
      */
-    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheInvites = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, increaseCacheBy = DEFAULT_INCREASE_CACHE_BY, intents, totalShards, shardIds, sessionData, initCache, softRestartFunction, mySqlPassword } = {}) {
+    constructor({ cacheMessages = false, cacheUsers = false, cacheMembers = false, cacheChannels = false, cacheGuilds = false, cacheVoiceStates = false, cacheRoles = false, cacheScheduledEvents = false, cacheEmojis = false, cacheInvites = false, cacheAllMembers = false, defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS, defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS, increaseCacheBy = DEFAULT_INCREASE_CACHE_BY, intents, totalShards, shardIds, sessionData, initCache, softRestartFunction, mySqlPassword, s3Url, s3MessageBucket, s3AccessKeyId, s3SecretAccessKey } = {}) {
 
         super();
 
@@ -210,6 +211,17 @@ class Client extends EventsEmitter {
         });
 
         this.dataStorage = connection;
+
+        const s3Messages = new AWS.S3({
+            endpoint: `${s3Url}${s3MessageBucket}`,
+            accessKeyId: s3AccessKeyId,
+            secretAccessKey: s3SecretAccessKey,
+            s3BucketEndpoint: true
+        });
+
+        this.s3MessageBucket = s3MessageBucket;
+
+        this.s3Messages = s3Messages;
 
     }
 

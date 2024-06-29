@@ -23,31 +23,37 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
         if (!message && client.increasedCache.get(guild_id) && (getTimestamp(message_id) + (client.defaultMessageExpiry * client.increaseCacheBy * guildCacheMultiplier) > ((new Date().getTime() / 1000) | 0))/* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/) {
 
-            let storedMessage = await client.storage.getItem(usedHash);
+            return client.s3Messages.getObject({ Bucket: client.s3MessageBucket, Key: usedHash }, async (err, data) => {
+                if (err)
+                    reject(err);
+                else {
 
-            // if (!storedMessage)
-            //     storedMessage = await client.storageOld.getItem(usedHash);
+                    const storedMessage = data.Body.toString();
+                    if (storedMessage) {
 
-            if (storedMessage) {
+                        message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
 
-                message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
+                        client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }, (err, data) => {
+                            if (err)
+                                console.log(err);
+                        });
 
-                await client.storage.removeItem(usedHash);
+                        if (destroy != false)
+                            client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
 
-                // await client.storageOld.removeItem(usedHash).catch(() => null);
+                        return resolve(message);
 
-                if (destroy != false)
-                    client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
+                    } else
+                        return resolve(null);
+                }
+            });
 
-                return resolve(message);
-
-            } else
-                return resolve(null);
         } else {
 
-            await client.storage.removeItem(usedHash);
-
-            // await client.storageOld.removeItem(usedHash).catch(() => null);
+            client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }, (err, data) => {
+                if (err)
+                    console.log(err);
+            });
 
             if (destroy != false)
                 client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
