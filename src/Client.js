@@ -2,7 +2,6 @@
 const { BASE_URL, VERSION, NAME, CHANNEL_TYPES, DEFAULT_MESSAGE_EXPIRY_SECONDS, DEFAULT_USER_EXPIRY_SECONDS, DEFAULT_CACHE_CHECK_PERIOD, DEFAULT_INCREASE_CACHE_BY } = require("./constants");
 
 const EventsEmitter = require("events");
-const storage = require('node-persist');
 const mysql = require("mysql2/promise");
 const AWS = require("aws-sdk");
 
@@ -183,15 +182,6 @@ class Client extends EventsEmitter {
         this.increaseCacheBy = increaseCacheBy;
 
         this.softRestartFunction = softRestartFunction;
-
-        storage.init({ 
-            ttl: this.defaultMessageExpiry * this.increaseCacheBy * 1000,
-            expiredInterval: DEFAULT_CACHE_CHECK_PERIOD,
-            dir: `messages`,
-            forgiveParseErrors: true,
-            mySqlPassword
-        })
-            .then(() => this.storage = storage);
 
         const connection = mysql.createPool({
             host: "localhost",
