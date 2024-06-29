@@ -20,39 +20,39 @@ class UserManager {
 
     async retrieve(user_id) {
 
-        const fetchedUserRaw = await this.client.dataStorage.query(`
-            SELECT *
-            FROM Users
-            WHERE id = :id;
-            `, { id: user_id });
+        // const fetchedUserRaw = await this.client.dataStorage.query(`
+        //     SELECT *
+        //     FROM Users
+        //     WHERE id = :id;
+        //     `, { id: user_id });
 
-        const fetchedUser = fetchedUserRaw[0][0];
-        if (!fetchedUser)
-            return null;
+        // const fetchedUser = fetchedUserRaw[0][0];
+        // if (!fetchedUser)
+        //     return null;
 
-        fetchedUser._attributes = fetchedUser.attributes;
+        // fetchedUser._attributes = fetchedUser.attributes;
 
-        return new User(this.client, fetchedUser, { noDbStore: true });
+        // return new User(this.client, fetchedUser, { noDbStore: true });
 
     }
 
     store(user) {
 
-        this.client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
-            { id: user.id, avatar: user.formattedAvatarHash, username: user.username, global_name: user.global_name, discriminator: user.discriminator, attributes: user._attributes })
-            .then(() => this.client.emit("debug", `ADDED ${user.id} TO USER STORAGE`));
+        // this.client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
+        //     { id: user.id, avatar: user.formattedAvatarHash, username: user.username, global_name: user.global_name, discriminator: user.discriminator, attributes: user._attributes })
+        //     .then(() => this.client.emit("debug", `ADDED ${user.id} TO USER STORAGE`));
 
     }
 
     cleanup() {
 
-        this.client.dataStorage.query(`
-            DELETE FROM Users
-            WHERE id NOT IN (
-                SELECT id FROM Members
-            );
-            `)
-            .then(() => this.client.emit("debug", `CLEANUP USERS`));
+        // this.client.dataStorage.query(`
+        //     DELETE FROM Users
+        //     WHERE id NOT IN (
+        //         SELECT id FROM Members
+        //     );
+        //     `)
+        //     .then(() => this.client.emit("debug", `CLEANUP USERS`));
 
     }
 
