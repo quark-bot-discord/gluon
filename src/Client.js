@@ -213,6 +213,28 @@ class Client extends EventsEmitter {
 
         this.s3Messages = s3Messages;
 
+        this.s3Messages.putBucketLifecycleConfiguration({
+            Bucket: s3MessageBucket,
+            LifecycleConfiguration: {
+                Rules: [
+                    {
+                        Expiration: {
+                            Days: 56
+                        },
+                        Status: "Enabled",
+                        Filter: {
+                            Prefix: ''
+                        },
+                        ID: 'DeleteOldFiles',
+                    }
+                ]
+            }
+        }, (err, data) => {
+            if (err)
+                console.log(err);
+        
+        });
+
     }
 
     /**
