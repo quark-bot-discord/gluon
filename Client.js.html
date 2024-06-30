@@ -823,63 +823,63 @@ class Client extends EventsEmitter {
 
                         // store all members
 
-                        if (this.cacheMembers == true) {
-                            let fullMembersList = [];
-                            this.guilds.cache.forEach(guild => {
+                        // if (this.cacheMembers == true) {
+                        //     let fullMembersList = [];
+                        //     this.guilds.cache.forEach(guild => {
 
-                                Array.from(guild.members.cache, ([key, value]) => fullMembersList.push(value));
+                        //         Array.from(guild.members.cache, ([key, value]) => fullMembersList.push(value));
 
-                            });
+                        //     });
 
-                            const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
-                            let values = [];
-                            let memberRolesValues = [];
+                        //     const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
+                        //     let values = [];
+                        //     let memberRolesValues = [];
 
-                            for (let i = 0; i &lt; fullMembersList.length; i++) {
-                                // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
-                                values.push(fullMembersList[i].id);
-                                values.push(fullMembersList[i].guild.id);
-                                values.push(fullMembersList[i].nick);
-                                values.push(fullMembersList[i].joined_at);
-                                values.push(fullMembersList[i].formattedAvatarHash);
-                                values.push(fullMembersList[i].communication_disabled_until);
-                                values.push(fullMembersList[i]._attributes);
-                                if (Array.isArray(fullMembersList[i]._roles) &amp;&amp; fullMembersList[i]._roles.length > 0) {
-                                    for (let n = 0; n &lt; fullMembersList[i]._roles.length; n++)
-                                        memberRolesValues.push(fullMembersList[i].id, fullMembersList[i]._roles[n], fullMembersList[i].guild.id);
-                                }
-                            }
+                        //     for (let i = 0; i &lt; fullMembersList.length; i++) {
+                        //         // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
+                        //         values.push(fullMembersList[i].id);
+                        //         values.push(fullMembersList[i].guild.id);
+                        //         values.push(fullMembersList[i].nick);
+                        //         values.push(fullMembersList[i].joined_at);
+                        //         values.push(fullMembersList[i].formattedAvatarHash);
+                        //         values.push(fullMembersList[i].communication_disabled_until);
+                        //         values.push(fullMembersList[i]._attributes);
+                        //         if (Array.isArray(fullMembersList[i]._roles) &amp;&amp; fullMembersList[i]._roles.length > 0) {
+                        //             for (let n = 0; n &lt; fullMembersList[i]._roles.length; n++)
+                        //                 memberRolesValues.push(fullMembersList[i].id, fullMembersList[i]._roles[n], fullMembersList[i].guild.id);
+                        //         }
+                        //     }
 
-                            await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
-                                .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
+                        //     await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
+                        //         .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
 
-                            await this.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${Array(memberRolesValues.length / 3).fill("(?, ?, ?)").join(',')} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, memberRolesValues)
-                                .then(() => this.emit("debug", `ADDED ${memberRolesValues.length} TO MEMBER ROLES STORAGE`));
+                        //     await this.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${Array(memberRolesValues.length / 3).fill("(?, ?, ?)").join(',')} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, memberRolesValues)
+                        //         .then(() => this.emit("debug", `ADDED ${memberRolesValues.length} TO MEMBER ROLES STORAGE`));
 
-                        }
+                        // }
 
-                        if (this.cacheUsers == true) {
-                            let fullUsersList = [];
+                        // if (this.cacheUsers == true) {
+                        //     let fullUsersList = [];
 
-                            Array.from(this.users.cache, ([key, value]) => fullUsersList.push(value));
+                        //     Array.from(this.users.cache, ([key, value]) => fullUsersList.push(value));
 
-                            const valuesTemplate = fullUsersList.map(() => `(?, ?, ?, ?, ?, ?)`).join(',');
-                            const values = [];
+                        //     const valuesTemplate = fullUsersList.map(() => `(?, ?, ?, ?, ?, ?)`).join(',');
+                        //     const values = [];
 
-                            for (let i = 0; i &lt; fullUsersList.length; i++) {
-                                // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
-                                values.push(fullUsersList[i].id);
-                                values.push(fullUsersList[i].formattedAvatarHash);
-                                values.push(fullUsersList[i].username);
-                                values.push(fullUsersList[i].global_name);
-                                values.push(fullUsersList[i].discriminator);
-                                values.push(fullUsersList[i]._attributes);
-                            }
+                        //     for (let i = 0; i &lt; fullUsersList.length; i++) {
+                        //         // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
+                        //         values.push(fullUsersList[i].id);
+                        //         values.push(fullUsersList[i].formattedAvatarHash);
+                        //         values.push(fullUsersList[i].username);
+                        //         values.push(fullUsersList[i].global_name);
+                        //         values.push(fullUsersList[i].discriminator);
+                        //         values.push(fullUsersList[i]._attributes);
+                        //     }
 
-                            await this.dataStorage.query(`INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);`, values)
-                                .then(() => this.emit("debug", `ADDED ${fullUsersList.length} USERS TO STORAGE`));
+                        //     await this.dataStorage.query(`INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);`, values)
+                        //         .then(() => this.emit("debug", `ADDED ${fullUsersList.length} USERS TO STORAGE`));
 
-                        }
+                        // }
 
                         const currentTime = Math.floor(new Date().getTime() / 1000);
 
@@ -969,7 +969,7 @@ module.exports = Client;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Jun 30 2024 09:36:32 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sun Jun 30 2024 10:17:07 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
