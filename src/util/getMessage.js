@@ -23,27 +23,24 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
         if (!message && client.increasedCache.get(guild_id) && (getTimestamp(message_id) + (client.defaultMessageExpiry * client.increaseCacheBy * guildCacheMultiplier) > ((new Date().getTime() / 1000) | 0))/* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/) {
 
-            return client.s3Messages.getObject({ Bucket: client.s3MessageBucket, Key: usedHash }, async (err, data) => {
-                if (err && err.statusCode != 404)
-                    reject(err);
-                else {
+            const rawMessage = await client.s3Messages.getObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
+            if (!rawMessage || !rawMessage.Body)
+                return resolve(null);
 
-                    const storedMessage = data.Body.toString();
-                    if (storedMessage) {
+            const storedMessage = rawMessage.Body.toString();
+            if (storedMessage) {
 
-                        message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
+                message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
 
-                        client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
+                client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
 
-                        if (destroy != false)
-                            client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
+                if (destroy != false)
+                    client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
 
-                        return resolve(message);
+                return resolve(message);
 
-                    } else
-                        return resolve(null);
-                }
-            });
+            } else
+                return resolve(null);
 
         } else {
 
