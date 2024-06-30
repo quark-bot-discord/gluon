@@ -33,10 +33,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
                         message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
 
-                        client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }, (err, data) => {
-                            if (err)
-                                console.log(err);
-                        });
+                        client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
 
                         if (destroy != false)
                             client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
@@ -50,10 +47,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
 
         } else {
 
-            client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }, (err, data) => {
-                if (err)
-                    console.log(err);
-            });
+            client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
 
             if (destroy != false)
                 client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
