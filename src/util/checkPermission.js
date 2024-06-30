@@ -10,6 +10,8 @@ const { PERMISSIONS } = require("../constants");
 function checkPermission(member, permission, adminOverride = true) {
     if (!permission)
         return true;
+    if (!member)
+        return false;
     member.permissions = BigInt(member.permissions);
     if (adminOverride == true && (member.permissions & PERMISSIONS.ADMINISTRATOR) == PERMISSIONS.ADMINISTRATOR)
         return true;
