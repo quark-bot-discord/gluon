@@ -24,7 +24,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
         if (!message && client.increasedCache.get(guild_id) && (getTimestamp(message_id) + (client.defaultMessageExpiry * client.increaseCacheBy * guildCacheMultiplier) > ((new Date().getTime() / 1000) | 0))/* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/) {
 
             return client.s3Messages.getObject({ Bucket: client.s3MessageBucket, Key: usedHash }, async (err, data) => {
-                if (err)
+                if (err && err.statusCode != 404)
                     reject(err);
                 else {
 
