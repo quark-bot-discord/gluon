@@ -5,25 +5,21 @@ const Interaction = require("./Interaction");
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
  */
 class SlashCommand extends Interaction {
+  /**
+   *
+   * @param {Client} client The client instance.
+   * @param {Object} data The raw interaction data from Discord.
+   */
+  constructor(client, data) {
+    super(client, data);
 
     /**
-     * 
-     * @param {Client} client The client instance.
-     * @param {Object} data The raw interaction data from Discord.
+     * Raw slash command data from discord.
+     * @type {Object?}
+     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}
      */
-    constructor(client, data) {
-
-        super(client, data);
-
-        /**
-         * Raw slash command data from discord.
-         * @type {Object?}
-         * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}
-         */
-        this.data = data.data;
-
-    }
-
+    this.data = data.data;
+  }
 }
 
 module.exports = SlashCommand;

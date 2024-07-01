@@ -12,48 +12,75 @@ const hash = require("hash.js");
  * @returns {Message?}
  */
 function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
+  return new Promise(async (resolve, reject) => {
+    let message =
+      client.guilds.cache
+        .get(guild_id)
+        ?.channels.cache.get(channel_id)
+        ?.messages.cache.get(message_id) || null;
 
-    return new Promise(async (resolve, reject) => {
+    const usedHash = hash
+      .sha512()
+      .update(`${guild_id}_${channel_id}_${message_id}`)
+      .digest("hex");
 
-        let message = client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.get(message_id) || null;
+    const guildCacheMultiplier =
+      client.increasedCacheMultipliers.get(guild_id.toString()) || 1;
 
-        const usedHash = hash.sha512().update(`${guild_id}_${channel_id}_${message_id}`).digest("hex");
+    if (
+      !message &&
+      client.increasedCache.get(guild_id) &&
+      getTimestamp(message_id) +
+        client.defaultMessageExpiry *
+          client.increaseCacheBy *
+          guildCacheMultiplier >
+        ((new Date().getTime() / 1000) |
+          0) /* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/
+    ) {
+      const rawMessage = await client.s3Messages
+        .getObject({ Bucket: client.s3MessageBucket, Key: usedHash })
+        .promise()
+        .catch(() => null);
+      if (!rawMessage || !rawMessage.Body) return resolve(null);
 
-        const guildCacheMultiplier = client.increasedCacheMultipliers.get(guild_id.toString()) || 1;
+      const storedMessage = rawMessage.Body.toString();
+      if (storedMessage) {
+        message = decryptMessage(
+          client,
+          storedMessage,
+          message_id,
+          channel_id,
+          guild_id,
+        );
 
-        if (!message && client.increasedCache.get(guild_id) && (getTimestamp(message_id) + (client.defaultMessageExpiry * client.increaseCacheBy * guildCacheMultiplier) > ((new Date().getTime() / 1000) | 0))/* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/) {
+        client.s3Messages
+          .deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash })
+          .promise()
+          .catch(() => null);
 
-            const rawMessage = await client.s3Messages.getObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
-            if (!rawMessage || !rawMessage.Body)
-                return resolve(null);
+        if (destroy != false)
+          client.guilds.cache
+            .get(guild_id)
+            ?.channels.cache.get(channel_id)
+            ?.messages.cache.delete(message_id);
 
-            const storedMessage = rawMessage.Body.toString();
-            if (storedMessage) {
+        return resolve(message);
+      } else return resolve(null);
+    } else {
+      client.s3Messages
+        .deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash })
+        .promise()
+        .catch(() => null);
 
-                message = decryptMessage(client, storedMessage, message_id, channel_id, guild_id);
+      if (destroy != false)
+        client.guilds.cache
+          .get(guild_id)
+          ?.channels.cache.get(channel_id)
+          ?.messages.cache.delete(message_id);
 
-                client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
-
-                if (destroy != false)
-                    client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
-
-                return resolve(message);
-
-            } else
-                return resolve(null);
-
-        } else {
-
-            client.s3Messages.deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash }).promise().catch(() => null);
-
-            if (destroy != false)
-                client.guilds.cache.get(guild_id)?.channels.cache.get(channel_id)?.messages.cache.delete(message_id);
-
-            return resolve(message);
-        }
-
-    });
-
+      return resolve(message);
+    }
+  });
 }
 
 module.exports = getMessage;

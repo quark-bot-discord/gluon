@@ -1,31 +1,27 @@
 const erlpack = require("erlpack");
 
 class UpdatePresence {
+  constructor(name, type = 0, status = "online", afk = false, since = null) {
+    this.op = 3;
 
-    constructor(name, type = 0, status = "online", afk = false, since = null) {
+    let activities = [];
 
-        this.op = 3;
+    if (name)
+      activities.push({
+        name,
+        type,
+      });
 
-        let activities = [];
-
-        if (name)
-            activities.push({
-                name,
-                type
-            });
-
-        return erlpack.pack({
-            op: this.op,
-            d: {
-                since,
-                activities,
-                status,
-                afk
-            }
-        });
-
-    }
-
+    return erlpack.pack({
+      op: this.op,
+      d: {
+        since,
+        activities,
+        status,
+        afk,
+      },
+    });
+  }
 }
 
 module.exports = UpdatePresence;

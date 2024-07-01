@@ -5,44 +5,41 @@ const Thread = require("../structures/Thread");
 const VoiceChannel = require("../structures/VoiceChannel");
 
 class GuildScheduledEventManager {
+  constructor(client, guild) {
+    this.client = client;
 
-    constructor(client, guild) {
+    this.guild = guild;
 
-        this.client = client;
+    this.cache = new Map();
 
-        this.guild = guild;
+    // this.list().then(() => null);
+  }
 
-        this.cache = new Map();
+  async list() {
+    const data = await this.client.request.makeRequest(
+      "getListGuildScheduledEvents",
+      [this.guild.id],
+    );
 
-        // this.list().then(() => null);
+    let eventsList = [];
 
-    }
+    for (let i = 0; i < data.length; i++)
+      eventsList.push(new ScheduledEvent(this.client, data[i]));
 
-    async list() {
+    return eventsList;
+  }
 
-        const data = await this.client.request.makeRequest("getListGuildScheduledEvents", [this.guild.id]);
+  async fetch(scheduled_event_id) {
+    const cachedEvent = this.cache.get(scheduled_event_id.toString());
+    if (cachedEvent) return cachedEvent;
 
-        let eventsList = [];
+    const data = await this.client.request.makeRequest(
+      "getGuildScheduledEvent",
+      [this.guild.id, scheduled_event_id],
+    );
 
-        for (let i = 0; i < data.length; i++)
-            eventsList.push(new ScheduledEvent(this.client, data[i]));
-
-        return eventsList;
-
-    }
-
-    async fetch(scheduled_event_id) {
-
-        const cachedEvent = this.cache.get(scheduled_event_id.toString());
-        if (cachedEvent)
-            return cachedEvent;
-
-        const data = await this.client.request.makeRequest("getGuildScheduledEvent", [this.guild.id, scheduled_event_id]);
-
-        return new ScheduledEvent(this.client, data);
-
-    }
-
+    return new ScheduledEvent(this.client, data);
+  }
 }
 
 module.exports = GuildScheduledEventManager;

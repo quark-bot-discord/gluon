@@ -6,16 +6,13 @@ const bundleUser = require("./bundleUser");
  * @returns {Object}
  */
 function bundleInvite(invite) {
-    const data = {};
-    data.code = invite.code;
-    // data.channel_id = invite.channel ? invite.channel.id.toString() : invite.channel_id.toString();
-    if (invite.inviter)
-        data.inviter = bundleUser(invite.inviter);
-    if (typeof invite.uses == "number")
-        data.uses = invite.uses;
-    if (invite.expires)
-        data.expires = invite.expires;
-    return data;
+  const data = {};
+  data.code = invite.code;
+  // data.channel_id = invite.channel ? invite.channel.id.toString() : invite.channel_id.toString();
+  if (invite.inviter) data.inviter = bundleUser(invite.inviter);
+  if (typeof invite.uses == "number") data.uses = invite.uses;
+  if (invite.expires) data.expires = invite.expires;
+  return data;
 }
 
 module.exports = bundleInvite;
