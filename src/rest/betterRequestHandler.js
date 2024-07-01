@@ -149,7 +149,7 @@ class BetterRequestHandler {
             };
 
             let form;
-            if (body && body.files) {
+            if (body?.files) {
                 form = new FormData();
                 for (let i = 0; i < body.files.length; i++)
                     form.append(`${i}_${body.files[i].name}`, body.files[i].stream ? body.files[i].stream : createReadStream(body.files[i].attachment), body.files[i].name);

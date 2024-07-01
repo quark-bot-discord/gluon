@@ -85,7 +85,7 @@ class Message {
              * @type {User?}
              */
             this.author = new User(this.client, data.author, { nocache: (!data.webhook_id || nocache), noDbStore: true });
-        else if (existing && existing.author)
+        else if (existing?.author)
             this.author = existing.author;
 
         if (data.member)
@@ -96,7 +96,7 @@ class Message {
             this.member = new Member(this.client, data.member, data.author.id, guild_id, new User(this.client, data.author));
         else if (data.author)
             this.member = this.guild ? this.guild.members.cache.get(data.author.id) : null;
-        else if (existing && existing.member)
+        else if (existing?.member)
             this.member = existing.member;
 
         // should only be stored if file logging is enabled
@@ -108,7 +108,7 @@ class Message {
         if (data.attachments != undefined)
             for (let i = 0; i < data.attachments.length; i++)
                 this.attachments.push(new Attachment(this.client, data.attachments[i]));
-        else if (existing && existing.attachments)
+        else if (existing?.attachments)
             this.attachments = existing.attachments;
 
         if (this.attachments.length == 0 && onlyfiles == true)
@@ -145,7 +145,7 @@ class Message {
         else if (this.poll)
             this.pollResponses = new MessagePollManager(data.pollResponses);
 
-        if (existing && existing.reactions)
+        if (existing?.reactions)
             /**
              * The message reactions.
              * @type {MessageReactionManager}
@@ -215,7 +215,7 @@ class Message {
          */
         if (data.webhook_id)
             this.webhook_id = BigInt(data.webhook_id);
-        else if (existing && existing.webhook_id)
+        else if (existing?.webhook_id)
             this.webhook_id = existing.webhook_id;
 
         /**
