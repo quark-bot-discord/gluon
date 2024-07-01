@@ -10,17 +10,14 @@ const { createDecipheriv } = require("crypto");
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
 function decryptText(text, key, iv) {
+  if (!text) return null;
 
-    if (!text)
-        return null;
+  const decipher = createDecipheriv("aes-256-cbc", key, iv);
 
-    const decipher = createDecipheriv("aes-256-cbc", key, iv);
-
-    return Buffer.concat([
-        decipher.update(text, "base64"),
-        decipher.final()
-    ]).toString();
-
+  return Buffer.concat([
+    decipher.update(text, "base64"),
+    decipher.final(),
+  ]).toString();
 }
 
 module.exports = decryptText;
