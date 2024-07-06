@@ -285,7 +285,7 @@ class Member {
      */
     async addRole(role_id, { reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
             throw { status: 403, error: "The bot does not have the MANAGE_ROLES permission." };
 
         const body = {};
@@ -306,7 +306,7 @@ class Member {
      */
     async removeRole(role_id, { reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
             throw { status: 403, error: "The bot does not have the MANAGE_ROLES permission." };
 
         const body = {};
@@ -328,7 +328,7 @@ class Member {
      */
     async timeoutAdd(timeout_until, { reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MODERATE_MEMBERS))
             throw { status: 403, error: "The bot does not have the MODERATE_MEMBERS permission." };
 
         const body = {};
@@ -350,7 +350,7 @@ class Member {
      */
     async timeoutRemove({ reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MODERATE_MEMBERS))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MODERATE_MEMBERS))
             throw { status: 403, error: "The bot does not have the MODERATE_MEMBERS permission." };
 
         const body = {};
@@ -372,7 +372,7 @@ class Member {
      */
     async massUpdateRoles(roles, { reason } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_ROLES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
             throw { status: 403, error: "The bot does not have the MANAGE_ROLES permission." };
 
         const body = {};

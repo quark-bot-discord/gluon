@@ -138,7 +138,7 @@ class Channel {
      */
     async send(content, { embed, components, files, embeds, suppressMentions = false } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
             return null;
 
         const body = {};

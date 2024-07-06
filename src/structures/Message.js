@@ -325,7 +325,7 @@ class Message {
      */
     async reply(content, { embed, components, files } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
             throw { status: 403, error: "The bot does not have the SEND_MESSAGES permission." };
 
         const body = {};
@@ -363,7 +363,7 @@ class Message {
      */
     async edit(content, { embed, embeds, components, files } = {}) {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.SEND_MESSAGES))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
             throw { status: 403, error: "The bot does not have the SEND_MESSAGES permission." };
 
         const body = {};

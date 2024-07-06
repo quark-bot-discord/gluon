@@ -11,7 +11,7 @@ function checkPermission(member, permission, adminOverride = true) {
     if (!permission)
         return true;
     if (!member)
-        return false;
+        throw "No member provided to permission check";
     member.permissions = BigInt(member.permissions);
     if (adminOverride == true && (member.permissions & PERMISSIONS.ADMINISTRATOR) == PERMISSIONS.ADMINISTRATOR)
         return true;

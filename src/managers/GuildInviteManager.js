@@ -30,7 +30,7 @@ class GuildInviteManager {
      */
     async fetch() {
 
-        if (!checkPermission(await this.guild.me().catch(() => null), PERMISSIONS.MANAGE_GUILD))
+        if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_GUILD))
             return null;
 
         const data = await this.client.request.makeRequest("getGuildInvites", [this.guild.id]);
