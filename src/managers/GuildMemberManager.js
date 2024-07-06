@@ -169,13 +169,13 @@ class GuildMemberManager {
      */
     async fetch(user_id) {
 
-        // const localFetch = await this.localFetch(user_id);
-        // if (localFetch)
-        //     return localFetch;
+        const localFetch = await this.localFetch(user_id);
+        if (localFetch)
+            return localFetch;
 
-        // const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
+        const data = await this.client.request.makeRequest("getGuildMember", [this.guild.id, user_id]);
 
-        // return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
+        return new Member(this.client, data, user_id, this.guild.id.toString(), data.user);
 
     }
 
