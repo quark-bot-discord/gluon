@@ -8,14 +8,16 @@ const { PERMISSIONS } = require("../constants");
  * @returns {Boolean}
  */
 function checkPermission(member, permission, adminOverride = true) {
-    if (!permission)
-        return true;
-    if (!member)
-        throw "No member provided to permission check";
-    member.permissions = BigInt(member.permissions);
-    if (adminOverride == true && (member.permissions & PERMISSIONS.ADMINISTRATOR) == PERMISSIONS.ADMINISTRATOR)
-        return true;
-    return (member.permissions & permission) == permission;
+  if (!permission) return true;
+  if (!member) throw "No member provided to permission check";
+  member.permissions = BigInt(member.permissions);
+  if (
+    adminOverride == true &&
+    (member.permissions & PERMISSIONS.ADMINISTRATOR) ==
+      PERMISSIONS.ADMINISTRATOR
+  )
+    return true;
+  return (member.permissions & permission) == permission;
 }
 
 module.exports = checkPermission;
