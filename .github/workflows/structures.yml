@@ -31,7 +31,7 @@ jobs:
           for file in $(find ./src/structures/compiled -name '*.json');
           do
             echo "Adding file to export $file"
-            output="$output $(basename $file .js.json): require('$file'),"
+            output="$output $(basename $file .js.json): require('./structures/compiled/$(basename $file)'),"
           done
           output="$output };"
           echo $output > ./src/structures.js
