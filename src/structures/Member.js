@@ -1,6 +1,7 @@
 const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
 const User = require("./User");
 const checkPermission = require("../util/checkPermission");
+const checkMemberPermissions = require("../util/checkMemberPermissions");
 
 /**
  * Represents a guild member.
@@ -186,15 +187,7 @@ class Member {
   get permissions() {
     if (this.id == this.guild.owner_id) return PERMISSIONS.ADMINISTRATOR;
 
-    let permissions = 0n;
-
-    const roles = this.roles;
-
-    if (roles.length != 0) {
-      for (let i = 0; i < roles.length; i++)
-        permissions |= roles[i].permissions;
-      return permissions;
-    } else return 0n;
+    return checkMemberPermissions(this.roles);
   }
 
   /**
