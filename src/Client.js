@@ -219,7 +219,7 @@ class Client extends EventsEmitter {
                 Rules: [
                     {
                         Expiration: {
-                            Days: 56
+                            Days: 30
                         },
                         Status: "Enabled",
                         Filter: {
