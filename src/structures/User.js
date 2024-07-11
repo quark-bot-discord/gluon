@@ -16,7 +16,7 @@ class User {
   constructor(
     client,
     data,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {}
+    { nocache = false, ignoreNoCache = false, noDbStore = false } = {},
   ) {
     /**
      * The client instance.

@@ -393,7 +393,7 @@ class Guild {
           data.members[i].user.id,
           data.id,
           data.members[i].user,
-          { nocache }
+          { nocache },
         );
 
     if (data.channels)
@@ -604,7 +604,7 @@ class Guild {
     await this.client.request.makeRequest(
       "putCreateGuildBan",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -628,7 +628,7 @@ class Guild {
     await this.client.request.makeRequest(
       "deleteRemoveGuildBan",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -652,7 +652,7 @@ class Guild {
     await this.client.request.makeRequest(
       "deleteGuildMember",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -677,7 +677,7 @@ class Guild {
     await this.client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.id, user_id, role_id],
-      body
+      body,
     );
   }
 
@@ -707,7 +707,7 @@ class Guild {
     const data = await this.client.request.makeRequest(
       "getGuildAuditLog",
       [this.id],
-      body
+      body,
     );
 
     if (
@@ -722,7 +722,7 @@ class Guild {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e) => new AuditLog(this.client, e, data.users)
+      (e) => new AuditLog(this.client, e, data.users),
     );
   }
 

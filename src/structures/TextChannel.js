@@ -29,7 +29,7 @@ class TextChannel extends Channel {
           this.client,
           data.messages[i],
           this.id.toString(),
-          guild_id
+          guild_id,
         );
   }
 
@@ -54,7 +54,7 @@ class TextChannel extends Channel {
     await this.client.request.makeRequest(
       "postBulkDeleteMessages",
       [this.id],
-      body
+      body,
     );
   }
 }

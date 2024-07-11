@@ -29,7 +29,7 @@ class Message {
     channel_id,
     guild_id,
     nocache = false,
-    ignoreExisting = false
+    ignoreExisting = false,
   ) {
     let onlyfiles = false;
 
@@ -112,7 +112,7 @@ class Message {
         data.member,
         data.author.id,
         guild_id,
-        new User(this.client, data.author)
+        new User(this.client, data.author),
       );
     else if (data.author)
       this.member = this.guild
@@ -173,7 +173,7 @@ class Message {
       this.reactions = new MessageReactionManager(
         this.client,
         this.guild,
-        data.messageReactions
+        data.messageReactions,
       );
 
     /**
@@ -266,7 +266,7 @@ class Message {
     if (data.sticker_items != undefined)
       for (let i = 0; i < data.sticker_items.length; i++)
         this.sticker_items.push(
-          new Sticker(this.client, data.sticker_items[i])
+          new Sticker(this.client, data.sticker_items[i]),
         );
     else if (existing && existing.sticker_items != undefined)
       this.sticker_items = existing.sticker_items;
@@ -287,7 +287,7 @@ class Message {
           "debug",
           `${
             this.guild?.id?.toString() || this.guild_id?.toString()
-          } NO CHANNEL`
+          } NO CHANNEL`,
         );
     }
   }
@@ -379,14 +379,14 @@ class Message {
     const data = await this.client.request.makeRequest(
       "postCreateMessage",
       [this.channel?.id || this.channel_id],
-      body
+      body,
     );
 
     return new Message(
       this.client,
       data,
       this.channel?.id.toString() || this.channel_id,
-      this.guild?.id.toString() || this.guild_id
+      this.guild?.id.toString() || this.guild_id,
     );
   }
 
@@ -426,14 +426,14 @@ class Message {
     const data = await this.client.request.makeRequest(
       "patchEditMessage",
       [this.channel?.id || this.channel_id, this.id],
-      body
+      body,
     );
 
     return new Message(
       this.client,
       data,
       this.channel?.id.toString() || this.channel_id,
-      this.guild?.id.toString() || this.guild_id
+      this.guild?.id.toString() || this.guild_id,
     );
   }
 
@@ -445,14 +445,14 @@ class Message {
 
     const cacheMultiplier =
       this.client.increasedCacheMultipliers.get(
-        this.guild?.id.toString() || this.guild_id.toString()
+        this.guild?.id.toString() || this.guild_id.toString(),
       ) || 1;
     const key = hash
       .sha512()
       .update(
         `${this.guild ? this.guild.id : this.guild_id}_${
           this.channel ? this.channel.id : this.channel_id
-        }_${this.id}`
+        }_${this.id}`,
       )
       .digest("hex");
 
@@ -465,7 +465,7 @@ class Message {
       (err, data) => {
         if (err) console.log(err);
         else console.log(data);
-      }
+      },
     );
 
     this.channel.messages.cache.delete(this.id.toString());

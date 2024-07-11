@@ -29,7 +29,7 @@ class ButtonClick extends Interaction {
       data.message,
       data.channel_id,
       data.guild_id,
-      this.client.cacheMessages
+      this.client.cacheMessages,
     );
   }
 }

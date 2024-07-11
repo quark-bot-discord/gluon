@@ -66,7 +66,7 @@ class Interaction {
         this.client,
         data.member,
         data.member.user.id,
-        data.guild_id
+        data.guild_id,
       );
 
     /**
@@ -99,7 +99,7 @@ class Interaction {
     await this.client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
-      body
+      body,
     );
   }
 
@@ -119,7 +119,7 @@ class Interaction {
     await this.client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
-      body
+      body,
     );
   }
 
@@ -131,7 +131,7 @@ class Interaction {
    */
   async reply(
     content,
-    { files, embed, embeds, _embed, _embeds, components, quiet } = {}
+    { files, embed, embeds, _embed, _embeds, components, quiet } = {},
   ) {
     const body = {};
 
@@ -153,7 +153,7 @@ class Interaction {
     await this.client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
-      body
+      body,
     );
 
     return this;
@@ -180,7 +180,7 @@ class Interaction {
     await this.client.request.makeRequest(
       "patchOriginalInteractionResponse",
       [this.client.user.id, this.token],
-      body
+      body,
     );
 
     return this;
@@ -198,7 +198,7 @@ class Interaction {
     await this.client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
-      body
+      body,
     );
 
     return this;

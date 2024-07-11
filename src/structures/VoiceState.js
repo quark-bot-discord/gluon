@@ -79,7 +79,7 @@ class VoiceState {
         data.user_id,
         data.guild_id,
         data.member.user,
-        { nocache }
+        { nocache },
       );
     else this.member = this.guild?.members.cache.get(data.user_id) || null;
 

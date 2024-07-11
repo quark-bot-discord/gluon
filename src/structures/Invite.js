@@ -102,7 +102,7 @@ class Invite {
         "debug",
         `NOT CACHING INVITE ${this.code} ${this.expires} ${
           (Date.now() / 1000) | 0
-        }`
+        }`,
       );
   }
 
