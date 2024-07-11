@@ -33,7 +33,7 @@ class BetterRequestHandler {
         const bucket = await getBucket(
           this.client,
           this.localRatelimitCache,
-          data.hash
+          data.hash,
         );
         if (
           !bucket ||
@@ -47,7 +47,7 @@ class BetterRequestHandler {
             data.params,
             data.body,
             resolve,
-            reject
+            reject,
           );
         else {
           this.client.emit(
@@ -56,23 +56,28 @@ class BetterRequestHandler {
               bucket.reset
             } (latency):${this.latency}  (time until retry):${
               (bucket.reset + this.latency) * 1000 - new Date().getTime()
-            } (current time):${(new Date().getTime() / 1000) | 0}`
+            } (current time):${(new Date().getTime() / 1000) | 0}`,
           );
           if (this.queues[data.hash].length() > this.maxQueueSize) {
             this.client.emit("debug", `KILL QUEUE ${data.hash}`);
             this.queues[data.hash].kill();
             delete this.queues[data.hash];
           }
-          setTimeout(() => {
-            this.http(
-              data.hash,
-              data.request,
-              data.params,
-              data.body,
-              resolve,
-              reject
-            );
-          }, (bucket.reset + this.latency) * 1000 - new Date().getTime() + this.fuzz);
+          setTimeout(
+            () => {
+              this.http(
+                data.hash,
+                data.request,
+                data.params,
+                data.body,
+                resolve,
+                reject,
+              );
+            },
+            (bucket.reset + this.latency) * 1000 -
+              new Date().getTime() +
+              this.fuzz,
+          );
         }
       });
     };
@@ -85,7 +90,7 @@ class BetterRequestHandler {
     ratelimitRemaining,
     ratelimitReset,
     hash,
-    retryAfter = 0
+    retryAfter = 0,
   ) {
     if (!ratelimitBucket) return;
 
@@ -109,19 +114,19 @@ class BetterRequestHandler {
           `gluon.paths.${hash}`,
           JSON.stringify(bucket),
           "EX",
-          expireFromCache
+          expireFromCache,
         );
 
       this.localRatelimitCache.set(
         `gluon.paths.${hash}`,
         bucket,
-        expireFromCache
+        expireFromCache,
       );
     } catch (error) {
       this.localRatelimitCache.set(
         `gluon.paths.${hash}`,
         bucket,
-        expireFromCache
+        expireFromCache,
       );
 
       throw error;
@@ -137,9 +142,9 @@ class BetterRequestHandler {
         actualRequest.path(
           params
             ? params.map((v, i) =>
-                actualRequest.majorParams.includes(i) ? v : null
+                actualRequest.majorParams.includes(i) ? v : null,
               )
-            : []
+            : [],
         );
       const hash = calculateHash().update(toHash).digest("hex");
 
@@ -192,7 +197,7 @@ class BetterRequestHandler {
       let headers = {
         Authorization: this.authorization,
         "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(
-          4
+          4,
         )}, ${require("../../package.json").version}) ${this.name}`,
         Accept: "application/json",
       };
@@ -206,7 +211,7 @@ class BetterRequestHandler {
             body.files[i].stream
               ? body.files[i].stream
               : createReadStream(body.files[i].attachment),
-            body.files[i].name
+            body.files[i].name,
           );
         delete body.files;
         form.append("payload_json", JSON.stringify(body));
@@ -255,13 +260,13 @@ class BetterRequestHandler {
               body: form
                 ? form
                 : body &&
-                  actualRequest.method != "GET" &&
-                  actualRequest.method != "DELETE"
-                ? JSON.stringify(body)
-                : undefined,
+                    actualRequest.method != "GET" &&
+                    actualRequest.method != "DELETE"
+                  ? JSON.stringify(body)
+                  : undefined,
               compress: true,
               signal: controller.signal,
-            }
+            },
           );
 
           this.latency = Math.ceil((Date.now() - requestTime) / 1000);
@@ -291,7 +296,7 @@ class BetterRequestHandler {
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),
           hash,
-          res.status == 429 ? json.retry_after : 0
+          res.status == 429 ? json.retry_after : 0,
         );
       } catch (error) {
         console.log(error);

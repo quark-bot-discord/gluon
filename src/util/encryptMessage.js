@@ -20,9 +20,9 @@ function encryptMessage(message) {
         .update(
           `${message.id}_${
             message.channel ? message.channel.id : message.channel_id
-          }_${message.guild ? message.guild.id : message.guild_id}`
+          }_${message.guild ? message.guild.id : message.guild_id}`,
         )
-        .digest("hex")}satoshiNakamoto`
+        .digest("hex")}satoshiNakamoto`,
     )
     .digest("hex")
     .slice(0, 32);
@@ -35,9 +35,9 @@ function encryptMessage(message) {
         .update(
           `${message.id}_${
             message.channel ? message.channel.id : message.channel_id
-          }_${message.guild ? message.guild.id : message.guild_id}`
+          }_${message.guild ? message.guild.id : message.guild_id}`,
         )
-        .digest("hex")}${message.id}`
+        .digest("hex")}${message.id}`,
     )
     .digest("hex")
     .slice(0, 16);

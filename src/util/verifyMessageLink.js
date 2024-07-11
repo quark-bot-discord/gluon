@@ -5,7 +5,7 @@
  */
 function verifyMessageLink(text) {
   const messageLink = text.match(
-    /(https?:\/\/)(.+[a-z]\.)?(discord\.com|discordapp\.com)\/(channels)\/(.[0-9]+)\/(.[0-9]+)\/(.[0-9]+)/g
+    /(https?:\/\/)(.+[a-z]\.)?(discord\.com|discordapp\.com)\/(channels)\/(.[0-9]+)\/(.[0-9]+)\/(.[0-9]+)/g,
   );
 
   if (messageLink) return messageLink[0];

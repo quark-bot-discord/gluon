@@ -38,7 +38,7 @@ function bundleMessage(message) {
   data.messageReactions = {};
   for (const reaction in message.reactions.cache)
     data.messageReactions[reaction] = bundleReaction(
-      message.reactions.cache[reaction]
+      message.reactions.cache[reaction],
     );
   return data;
 }

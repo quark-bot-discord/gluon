@@ -50,7 +50,7 @@ function getMessage(client, guild_id, channel_id, message_id, destroy = false) {
           storedMessage,
           message_id,
           channel_id,
-          guild_id
+          guild_id,
         );
 
         client.s3Messages

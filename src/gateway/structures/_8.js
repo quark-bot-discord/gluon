@@ -7,7 +7,7 @@ class RequestGuildMembers {
     limit = 0,
     presences = false,
     user_ids,
-    nonce
+    nonce,
   ) {
     this.op = 8;
 

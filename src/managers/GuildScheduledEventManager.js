@@ -18,7 +18,7 @@ class GuildScheduledEventManager {
   async list() {
     const data = await this.client.request.makeRequest(
       "getListGuildScheduledEvents",
-      [this.guild.id]
+      [this.guild.id],
     );
 
     let eventsList = [];
@@ -35,7 +35,7 @@ class GuildScheduledEventManager {
 
     const data = await this.client.request.makeRequest(
       "getGuildScheduledEvent",
-      [this.guild.id, scheduled_event_id]
+      [this.guild.id, scheduled_event_id],
     );
 
     return new ScheduledEvent(this.client, data);

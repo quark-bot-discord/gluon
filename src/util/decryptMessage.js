@@ -18,7 +18,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${id}_${channelId}_${guildId}`)
-        .digest("hex")}satoshiNakamoto`
+        .digest("hex")}satoshiNakamoto`,
     )
     .digest("hex")
     .slice(0, 32);
@@ -29,7 +29,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${id}_${channelId}_${guildId}`)
-        .digest("hex")}${id}`
+        .digest("hex")}${id}`,
     )
     .digest("hex")
     .slice(0, 16);

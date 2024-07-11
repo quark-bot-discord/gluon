@@ -47,7 +47,7 @@ class ChannelMessageManager {
       const data = await this.client.request.makeRequest(
         "getChannelMessages",
         [this.channel.id],
-        body
+        body,
       );
       let messages = [];
       for (let i = 0; i < data.length; i++)
@@ -56,8 +56,8 @@ class ChannelMessageManager {
             this.client,
             data[i],
             data[i].channel_id,
-            this.channel.guild.id.toString()
-          )
+            this.channel.guild.id.toString(),
+          ),
         );
       return messages;
     } else if (typeof options == "string" || typeof options == "bigint") {
@@ -73,7 +73,7 @@ class ChannelMessageManager {
         this.client,
         data,
         this.channel.id.toString(),
-        this.channel.guild.id.toString()
+        this.channel.guild.id.toString(),
       );
     }
   }
@@ -94,8 +94,8 @@ class ChannelMessageManager {
           this.client,
           data[i],
           data[i].channel_id,
-          this.channel.guild.id.toString()
-        )
+          this.channel.guild.id.toString(),
+        ),
       );
     return messages;
   }
@@ -124,7 +124,7 @@ class ChannelMessageManager {
           if (
             this.client.increasedCache.get(
               this.channel.guild_id?.toString() ||
-                this.channel.guild.id.toString()
+                this.channel.guild.id.toString(),
             )
           )
             currentCacheValue.shelf();
