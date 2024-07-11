@@ -49,6 +49,6 @@ jobs:
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-            add: 'src/structures/*.json'
+            add: 'src'
             committer_email: 30315137+Starman3787@users.noreply.github.com
             committer_name: Starman
