@@ -6,30 +6,32 @@ const Message = require("./Message");
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
  */
 class ButtonClick extends Interaction {
+  /**
+   * Creates a button click interaction structure.
+   * @param {Client} client The client instance.
+   * @param {Object} data The interaction data from Discord.
+   */
+  constructor(client, data) {
+    super(client, data);
 
     /**
-     * Creates a button click interaction structure.
-     * @param {Client} client The client instance.
-     * @param {Object} data The interaction data from Discord.
+     * The custom id of the button.
+     * @type {String}
      */
-    constructor(client, data) {
+    this.custom_id = data.data.custom_id;
 
-        super(client, data);
-
-        /**
-         * The custom id of the button.
-         * @type {String}
-         */
-        this.custom_id = data.data.custom_id;
-
-        /**
-         * The message which the button belongs to.
-         * @type {Message}
-         */
-        this.message = new Message(this.client, data.message, data.channel_id, data.guild_id, this.client.cacheMessages);
-
-    }
-
+    /**
+     * The message which the button belongs to.
+     * @type {Message}
+     */
+    this.message = new Message(
+      this.client,
+      data.message,
+      data.channel_id,
+      data.guild_id,
+      this.client.cacheMessages
+    );
+  }
 }
 
 module.exports = ButtonClick;
