@@ -5,242 +5,211 @@ const hexToInt = require("./hexToInt");
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
 class Embed {
-
-    /**
-     * Creates an embed structure.
-     */
-    constructor() {
-
-        this.type = "rich";
-        this.fields = [];
-
-    }
-
-    /**
-     * Sets the title of the embed.
-     * @param {String} title The title of the embed.
-     * @returns {Embed}
-     */
-    setTitle(title) {
-
-        this.title = title && title.length > 256 ? title.substring(0, 253) + "..." : title;
-
-        return this;
-
-    }
-
-    /**
-     * Sets the embed description.
-     * @param {String} text The description.
-     * @returns {Embed}
-     */
-    setDescription(text) {
-
-        this.description = text && text.length > 4096 ? text.substring(0, 4093) + "..." : text;
-
-        return this;
-
-    }
-
-    /**
-     * Sets the url of the embed.
-     * @param {String} url The url.
-     * @returns {Embed}
-     */
-    setURL(url) {
-
-        this.url = url;
-
-        return this;
-
-    }
-
-    /**
-     * Sets the timestamp displayed on the embed.
-     * @param {Number?} timestamp The UNIX timestamp.
-     * @returns {Embed}
-     */
-    setTimestamp(timestamp) {
-
-        if (timestamp)
-            this.timestamp = new Date(timestamp * 1000).toISOString();
-        else
-            this.timestamp = new Date().toISOString();
-
-        return this;
-
-    }
-
-    /**
-     * Sets the colour of the embed.
-     * @param {String | Number} colour The colour.
-     * @returns {Embed}
-     */
-    setColor(colour) {
-
-        if (typeof colour == "string") {
-
-            if (colour[0] == "#")
-                colour = colour.substring(1);
-
-            this.color = hexToInt(colour);
-
-        } else if (typeof colour == "number")
-            this.color = colour;
-
-        return this;
-
-    }
-
-    /**
-     * Sets the embed thumbnail image.
-     * @param {String} url The url of the thumbnail.
-     * @returns {Embed}
-     */
-    setThumbnail(url) {
-
-        this.thumbnail = {
-            url: url
-        };
-
-        return this;
-
-    }
-
-    /**
-     * Sets the embed footer.
-     * @param {String} text The footer text.
-     * @param {String?} icon The url of the footer icon.
-     * @returns {Embed}
-     */
-    setFooter(text, icon) {
-
-        this.footer = {
-            text: text && text.length > 2048 ? text.substring(0, 2045) + "..." : text
-        };
-        if (icon)
-            this.footer.icon_url = icon;
-
-        return this;
-    }
-
-    /**
-     * Sets the embed author info.
-     * @param {String?} name The embed author.
-     * @param {String?} url The url.
-     * @param {String?} icon_url The embed author image url.
-     * @returns {Embed}
-     */
-    setAuthor(name, url, icon_url) {
-
-        this.author = {};
-
-        if (name)
-            this.author.name = name;
-        if (url)
-            this.author.url = url;
-        if (icon_url)
-            this.author.icon_url = icon_url;
-
-        return this;
-
-    }
-
-    /**
-     * Adds a field to the embed.
-     * @param {String} name Sets the embed field name.
-     * @param {String} value Sets the embed field value.
-     * @param {Boolean?} inline Whether this field should be displayed inline.
-     * @returns {Embed}
-     */
-    addField(name, value, inline = false) {
-
-        if (this.fields.length == 25)
-            return this;
-
-        this.fields.push({
-            name: name && name.length > 256 ? name.substring(0, 253) + "..." : name,
-            value: value && value.length > 1024 ? value.substring(0, 1021) + "..." : value,
-            inline: inline
-        });
-
-        return this;
-
-    }
-
-    /**
-     * Sets the embed image url.
-     * @param {String} url The image url.
-     * @returns {Embed}
-     */
-    setImage(url) {
-
-        this.image = {
-            url: url
-        };
-
-        return this;
-
-    }
-
-    /**
-     * Converts the embed into string form.
-     * @returns {String}
-     */
-    toString() {
-
-        let string = "";
-
-        string += this.title ? `## ${this.title}\n\n` : '';
-
-        string += this.description ? `${this.description}\n\n` : '';
-
-        for (let i = 0; i < this.fields.length; i++)
-            string += this.fields[i].name != "\u200b" ? `**${this.fields[i].name}**:\n${this.fields[i].value}\n` : `${this.fields[i].value}\n`; 
-
-        string += this.footer ? this.footer.text : '';
-
-        return string;
-
-    }
-
-    /**
-     * Returns the correct Discord format for an embed.
-     * @returns {Object}
-     */
-    toJSON() {
-
-        return {
-            title: this.title,
-            type: this.type,
-            description: this.description,
-            url: this.url,
-            timestamp: this.timestamp,
-            color: this.color,
-            footer: this.footer,
-            author: this.author,
-            fields: this.fields,
-            image: this.image,
-            thumbnail: this.thumbnail
-        };
-
-    }
-
-    get characterCount() {
-
-        let count = 0;
-
-        count += this.title ? this.title.length : 0;
-        count += this.description ? this.description.length : 0;
-        count += this.footer && this.footer.text ? this.footer.text.length : 0;
-        count += this.author && this.author.name ? this.author.name.length : 0;
-
-        for (let i = 0; i < this.fields.length; i++)
-            count += (this.fields[i].name?.length || 0) + (this.fields[i].value?.length || 0);
-
-        return count;
-
-    }
+  /**
+   * Creates an embed structure.
+   */
+  constructor() {
+    this.type = "rich";
+    this.fields = [];
+  }
+
+  /**
+   * Sets the title of the embed.
+   * @param {String} title The title of the embed.
+   * @returns {Embed}
+   */
+  setTitle(title) {
+    this.title =
+      title && title.length > 256 ? title.substring(0, 253) + "..." : title;
+
+    return this;
+  }
+
+  /**
+   * Sets the embed description.
+   * @param {String} text The description.
+   * @returns {Embed}
+   */
+  setDescription(text) {
+    this.description =
+      text && text.length > 4096 ? text.substring(0, 4093) + "..." : text;
+
+    return this;
+  }
+
+  /**
+   * Sets the url of the embed.
+   * @param {String} url The url.
+   * @returns {Embed}
+   */
+  setURL(url) {
+    this.url = url;
+
+    return this;
+  }
+
+  /**
+   * Sets the timestamp displayed on the embed.
+   * @param {Number?} timestamp The UNIX timestamp.
+   * @returns {Embed}
+   */
+  setTimestamp(timestamp) {
+    if (timestamp) this.timestamp = new Date(timestamp * 1000).toISOString();
+    else this.timestamp = new Date().toISOString();
+
+    return this;
+  }
+
+  /**
+   * Sets the colour of the embed.
+   * @param {String | Number} colour The colour.
+   * @returns {Embed}
+   */
+  setColor(colour) {
+    if (typeof colour == "string") {
+      if (colour[0] == "#") colour = colour.substring(1);
+
+      this.color = hexToInt(colour);
+    } else if (typeof colour == "number") this.color = colour;
+
+    return this;
+  }
+
+  /**
+   * Sets the embed thumbnail image.
+   * @param {String} url The url of the thumbnail.
+   * @returns {Embed}
+   */
+  setThumbnail(url) {
+    this.thumbnail = {
+      url: url,
+    };
+
+    return this;
+  }
+
+  /**
+   * Sets the embed footer.
+   * @param {String} text The footer text.
+   * @param {String?} icon The url of the footer icon.
+   * @returns {Embed}
+   */
+  setFooter(text, icon) {
+    this.footer = {
+      text: text && text.length > 2048 ? text.substring(0, 2045) + "..." : text,
+    };
+    if (icon) this.footer.icon_url = icon;
+
+    return this;
+  }
+
+  /**
+   * Sets the embed author info.
+   * @param {String?} name The embed author.
+   * @param {String?} url The url.
+   * @param {String?} icon_url The embed author image url.
+   * @returns {Embed}
+   */
+  setAuthor(name, url, icon_url) {
+    this.author = {};
+
+    if (name) this.author.name = name;
+    if (url) this.author.url = url;
+    if (icon_url) this.author.icon_url = icon_url;
+
+    return this;
+  }
+
+  /**
+   * Adds a field to the embed.
+   * @param {String} name Sets the embed field name.
+   * @param {String} value Sets the embed field value.
+   * @param {Boolean?} inline Whether this field should be displayed inline.
+   * @returns {Embed}
+   */
+  addField(name, value, inline = false) {
+    if (this.fields.length == 25) return this;
+
+    this.fields.push({
+      name: name && name.length > 256 ? name.substring(0, 253) + "..." : name,
+      value:
+        value && value.length > 1024 ? value.substring(0, 1021) + "..." : value,
+      inline: inline,
+    });
+
+    return this;
+  }
+
+  /**
+   * Sets the embed image url.
+   * @param {String} url The image url.
+   * @returns {Embed}
+   */
+  setImage(url) {
+    this.image = {
+      url: url,
+    };
+
+    return this;
+  }
+
+  /**
+   * Converts the embed into string form.
+   * @returns {String}
+   */
+  toString() {
+    let string = "";
+
+    string += this.title ? `## ${this.title}\n\n` : "";
+
+    string += this.description ? `${this.description}\n\n` : "";
+
+    for (let i = 0; i < this.fields.length; i++)
+      string +=
+        this.fields[i].name != "\u200b"
+          ? `**${this.fields[i].name}**:\n${this.fields[i].value}\n`
+          : `${this.fields[i].value}\n`;
+
+    string += this.footer ? this.footer.text : "";
+
+    return string;
+  }
+
+  /**
+   * Returns the correct Discord format for an embed.
+   * @returns {Object}
+   */
+  toJSON() {
+    return {
+      title: this.title,
+      type: this.type,
+      description: this.description,
+      url: this.url,
+      timestamp: this.timestamp,
+      color: this.color,
+      footer: this.footer,
+      author: this.author,
+      fields: this.fields,
+      image: this.image,
+      thumbnail: this.thumbnail,
+    };
+  }
+
+  get characterCount() {
+    let count = 0;
+
+    count += this.title ? this.title.length : 0;
+    count += this.description ? this.description.length : 0;
+    count += this.footer && this.footer.text ? this.footer.text.length : 0;
+    count += this.author && this.author.name ? this.author.name.length : 0;
+
+    for (let i = 0; i < this.fields.length; i++)
+      count +=
+        (this.fields[i].name?.length || 0) +
+        (this.fields[i].value?.length || 0);
+
+    return count;
+  }
 }
 
 module.exports = Embed;

@@ -8,39 +8,37 @@ const checkPermission = require("../util/checkPermission");
  * Manages all invites within a guild.
  */
 class GuildInviteManager {
+  /**
+   * Creates a guild invite manager.
+   * @param {Client} client The client instance.
+   * @param {Guild} guild The guild that this invite manager belongs to.
+   */
+  constructor(client, guild) {
+    this.client = client;
 
-    /**
-     * Creates a guild invite manager.
-     * @param {Client} client The client instance.
-     * @param {Guild} guild The guild that this invite manager belongs to.
-     */
-    constructor(client, guild) {
+    this.guild = guild;
 
-        this.client = client;
+    this.cache = new Map();
+  }
 
-        this.guild = guild;
+  /**
+   * Fetches all invites for this guild.
+   * @returns {Promise<Array<Invite>?>} The fetched invites.
+   */
+  async fetch() {
+    if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_GUILD))
+      return null;
 
-        this.cache = new Map();
+    const data = await this.client.request.makeRequest("getGuildInvites", [
+      this.guild.id,
+    ]);
 
-    }
+    this.cache.clear();
 
-    /**
-     * Fetches all invites for this guild.
-     * @returns {Promise<Array<Invite>?>} The fetched invites.
-     */
-    async fetch() {
-
-        if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_GUILD))
-            return null;
-
-        const data = await this.client.request.makeRequest("getGuildInvites", [this.guild.id]);
-
-        this.cache.clear();
-
-        return data.map(raw => new Invite(this.client, raw, this.guild?.id?.toString()));
-
-    }
-
+    return data.map(
+      (raw) => new Invite(this.client, raw, this.guild?.id?.toString())
+    );
+  }
 }
 
 module.exports = GuildInviteManager;

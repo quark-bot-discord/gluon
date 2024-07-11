@@ -4,17 +4,15 @@
  * @returns {Object}
  */
 function bundleUser(user) {
-    if (!user)
-        return undefined;
-    const data = {};
-    data.id = user.id.toString();
-    data.avatar = user.originalAvatarHash;
-    data.bot = user.bot;
-    data.username = user.username;
-    data.global_name = user.global_name;
-    if (user.discriminator)
-        data.discriminator = user.discriminator;
-    return data;
+  if (!user) return undefined;
+  const data = {};
+  data.id = user.id.toString();
+  data.avatar = user.originalAvatarHash;
+  data.bot = user.bot;
+  data.username = user.username;
+  data.global_name = user.global_name;
+  if (user.discriminator) data.discriminator = user.discriminator;
+  return data;
 }
 
 module.exports = bundleUser;
