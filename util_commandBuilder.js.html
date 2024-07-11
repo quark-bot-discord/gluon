@@ -52,171 +52,144 @@
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
  */
 class Command {
+  /**
+   * Creates the structure for a command.
+   */
+  constructor() {
+    this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
 
-    /**
-     * Creates the structure for a command.
-     */
-    constructor() {
+    this.dm_permission = false;
 
-        this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
+    this.options = [];
 
-        this.dm_permission = false;
+    this.defaultLocale = "en-US";
+  }
 
-        this.options = [];
+  /**
+   * Sets the name of the command.
+   * @param {String | Object} name The name of the command or an object of names for localisation.
+   * @returns {Command}
+   * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
+   */
+  setName(name) {
+    if (typeof name == "object") {
+      this.name = name[this.defaultLocale];
 
-        this.defaultLocale = "en-US";
+      delete name[this.defaultLocale];
 
-    }
+      this.name_localizations = name;
+    } else this.name = name;
 
-    /**
-     * Sets the name of the command.
-     * @param {String | Object} name The name of the command or an object of names for localisation.
-     * @returns {Command}
-     * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
-     */
-    setName(name) {
+    return this;
+  }
 
-        if (typeof name == "object") {
+  /**
+   * Sets the command type.
+   * @param {Number} type The command type.
+   * @returns {Command}
+   * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
+   */
+  setType(type) {
+    this.type = type;
 
-            this.name = name[this.defaultLocale];
+    return this;
+  }
 
-            delete name[this.defaultLocale];
+  /**
+   * Sets the description of the command.
+   * @param {String | Object} description The description of the command, or an object of descriptions for localisation.
+   * @returns {Command}
+   * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
+   */
+  setDescription(description) {
+    if (typeof description == "object") {
+      this.description = description[this.defaultLocale];
 
-            this.name_localizations = name;
+      delete description[this.defaultLocale];
 
-        } else
-            this.name = name;
+      this.description_localizations = description;
+    } else this.description = description;
 
-        return this;
+    return this;
+  }
 
-    }
+  /**
+   * Sets the permission needed to use the command.
+   * @param {Number | BigInt | String} permissions The permissions required to be able to use this command.
+   * @returns {Command}
+   */
+  setDefaultMemberPermissions(permissions) {
+    this.default_member_permissions = permissions;
 
-    /**
-     * Sets the command type.
-     * @param {Number} type The command type.
-     * @returns {Command}
-     * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
-     */
-    setType(type) {
+    return this;
+  }
 
-        this.type = type;
+  /**
+   * Sets whether the command can be used in DMs.
+   * @param {Boolean} dmPermission Whether the command can be used in DMs or not.
+   * @returns {Command}
+   */
+  setDmPermission(dmPermission) {
+    this.dm_permission = dmPermission;
 
-        return this;
+    return this;
+  }
 
-    }
+  /**
+   * Sets whether this command is NSFW.
+   * @param {Boolean} nsfw Whether this command is NSFW.
+   * @returns {Command}
+   */
+  setNsfw(nsfw) {
+    this.nsfw = nsfw;
 
-    /**
-     * Sets the description of the command.
-     * @param {String | Object} description The description of the command, or an object of descriptions for localisation.
-     * @returns {Command}
-     * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
-     */
-    setDescription(description) {
+    return this;
+  }
 
-        if (typeof description == "object") {
+  /**
+   * Adds an option to the command.
+   * @param {CommandOption} option Adds an option to the command.
+   * @returns {Command}
+   */
+  addOption(option) {
+    this.options.push(option.toJSON());
 
-            this.description = description[this.defaultLocale];
+    return this;
+  }
 
-            delete description[this.defaultLocale];
+  /**
+   * Sets the default locale for localisation.
+   * @param {String?} locale Sets the default locale for localisation.
+   * @returns {Command}
+   * @see {@link https://discord.com/developers/docs/reference#locales}
+   */
+  setDefaultLocale(locale = "en-US") {
+    this.defaultLocale = locale;
 
-            this.description_localizations = description;
+    return this;
+  }
 
-        } else
-            this.description = description;
-
-        return this;
-
-    }
-
-    /**
-     * Sets the permission needed to use the command.
-     * @param {Number | BigInt | String} permissions The permissions required to be able to use this command.
-     * @returns {Command}
-     */
-    setDefaultMemberPermissions(permissions) {
-
-        this.default_member_permissions = permissions;
-
-        return this;
-
-    }
-
-    /**
-     * Sets whether the command can be used in DMs.
-     * @param {Boolean} dmPermission Whether the command can be used in DMs or not.
-     * @returns {Command}
-     */
-    setDmPermission(dmPermission) {
-
-        this.dm_permission = dmPermission;
-
-        return this;
-
-    }
-
-    /**
-     * Sets whether this command is NSFW.
-     * @param {Boolean} nsfw Whether this command is NSFW.
-     * @returns {Command}
-     */
-    setNsfw(nsfw) {
-
-        this.nsfw = nsfw;
-
-        return this;
-
-    }
-
-    /**
-     * Adds an option to the command.
-     * @param {CommandOption} option Adds an option to the command.
-     * @returns {Command}
-     */
-    addOption(option) {
-
-        this.options.push(option.toJSON());
-
-        return this;
-
-    }
-
-    /**
-     * Sets the default locale for localisation.
-     * @param {String?} locale Sets the default locale for localisation.
-     * @returns {Command}
-     * @see {@link https://discord.com/developers/docs/reference#locales}
-     */
-    setDefaultLocale(locale = "en-US") {
-
-        this.defaultLocale = locale;
-
-        return this;
-
-    }
-
-    /**
-     * Returns the correct Discord format for a command.
-     * @returns {Object}
-     */
-    toJSON() {
-
-        return {
-            name: this.name,
-            name_localizations: this.name_localizations,
-            type: this.type,
-            description: this.description,
-            description_localizations: this.description_localizations,
-            default_member_permissions: Number(this.default_member_permissions),
-            dm_permission: this.dm_permission,
-            nsfw: this.nsfw,
-            options: this.options
-        };
-
-    }
-
+  /**
+   * Returns the correct Discord format for a command.
+   * @returns {Object}
+   */
+  toJSON() {
+    return {
+      name: this.name,
+      name_localizations: this.name_localizations,
+      type: this.type,
+      description: this.description,
+      description_localizations: this.description_localizations,
+      default_member_permissions: Number(this.default_member_permissions),
+      dm_permission: this.dm_permission,
+      nsfw: this.nsfw,
+      options: this.options,
+    };
+  }
 }
 
-module.exports = Command;</code></pre>
+module.exports = Command;
+</code></pre>
         </article>
     </section>
 
@@ -230,7 +203,7 @@ module.exports = Command;</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Jul 11 2024 10:39:28 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Jul 11 2024 10:44:35 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
