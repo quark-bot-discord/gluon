@@ -2,7 +2,17 @@
   "name": "gluon",
   "version": "1.19.10",
   "description": "Discord API library for Quark",
-  "main": "./index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./constants": {
+      "default": "./src/constants.js"
+    },
+    "./structures": {
+      "default": "./src/structures.js"
+    }
+  },
   "scripts": {
     "test": "node ../test/bot"
   },

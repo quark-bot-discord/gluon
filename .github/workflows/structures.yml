@@ -25,8 +25,16 @@ jobs:
           for file in $(find ./src/structures -name '*.js');
           do
             echo "Compiling $file"
-            jsdoc -X $file > $file.json
+            jsdoc -X $file > src/structures/compiled/$(basename "$file").json
           done
+          output="module.exports = {"
+          for file in $(find ./src/structures/compiled -name '*.json');
+          do
+            echo "Adding file to export $file"
+            output="$output $(basename $file): require('$file'),"
+          done
+          output="$output };"
+          echo output >> ./src/structures.js
 
       - name: Import bot's GPG key for signing commits
         id: import-gpg
