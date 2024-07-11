@@ -12,7 +12,7 @@ class ChannelMessageManager {
    * @param {Channel} channel The channel that is being managed.
    */
   constructor(client, channel) {
-    this.client = client;
+    this._client = client;
 
     this.channel = channel;
 
@@ -44,7 +44,7 @@ class ChannelMessageManager {
 
       if (options.limit) body.limit = options.limit;
 
-      const data = await this.client.request.makeRequest(
+      const data = await this._client.request.makeRequest(
         "getChannelMessages",
         [this.channel.id],
         body
@@ -53,7 +53,7 @@ class ChannelMessageManager {
       for (let i = 0; i < data.length; i++)
         messages.push(
           new Message(
-            this.client,
+            this._client,
             data[i],
             data[i].channel_id,
             this.channel.guild.id.toString()
@@ -64,13 +64,13 @@ class ChannelMessageManager {
       const cachedMessage = this.cache.get(options);
       if (cachedMessage) return cachedMessage;
 
-      const data = await this.client.request.makeRequest("getChannelMessage", [
+      const data = await this._client.request.makeRequest("getChannelMessage", [
         this.channel.id,
         options,
       ]);
 
       return new Message(
-        this.client,
+        this._client,
         data,
         this.channel.id.toString(),
         this.channel.guild.id.toString()
@@ -83,7 +83,7 @@ class ChannelMessageManager {
    * @returns {Promise<Array<Message>>}
    */
   async fetchPinned() {
-    const data = await this.client.request.makeRequest("getPinned", [
+    const data = await this._client.request.makeRequest("getPinned", [
       this.channel.id,
     ]);
 
@@ -91,7 +91,7 @@ class ChannelMessageManager {
     for (let i = 0; i < data.length; i++)
       messages.push(
         new Message(
-          this.client,
+          this._client,
           data[i],
           data[i].channel_id,
           this.channel.guild.id.toString()
@@ -117,12 +117,12 @@ class ChannelMessageManager {
       const currentCacheValue = currentCacheValues.next().value;
       if (currentCacheValue)
         if (
-          currentCacheValue.timestamp + this.client.defaultMessageExpiry <
+          currentCacheValue.timestamp + this._client.defaultMessageExpiry <
             currentTime ||
           (cacheCount != 0 ? cacheSize > cacheCount : false)
         ) {
           if (
-            this.client.increasedCache.get(
+            this._client.increasedCache.get(
               this.channel.guild_id?.toString() ||
                 this.channel.guild.id.toString()
             )

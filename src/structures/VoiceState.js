@@ -17,13 +17,13 @@ class VoiceState {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this voice state belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -74,7 +74,7 @@ class VoiceState {
        * @type {Member?}
        */
       this.member = new Member(
-        this.client,
+        this._client,
         data.member,
         data.user_id,
         data.guild_id,
@@ -87,7 +87,7 @@ class VoiceState {
      * The user the voice state is about.
      * @type {User?}
      */
-    this.user = this.client.users.cache.get(data.user_id) || null;
+    this.user = this._client.users.cache.get(data.user_id) || null;
 
     if (!this.user)
       /**
@@ -113,7 +113,7 @@ class VoiceState {
       this.request_to_speak_timestamp =
         (new Date(data.request_to_speak_timestamp).getTime() / 1000) | 0;
 
-    if (nocache == false && this.client.cacheVoiceStates == true)
+    if (nocache == false && this._client.cacheVoiceStates == true)
       this.guild?.voice_states.cache.set(data.user_id, this);
   }
 

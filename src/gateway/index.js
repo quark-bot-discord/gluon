@@ -33,11 +33,11 @@ class WS {
 
     this.url = url;
 
-    this.client = client;
+    this._client = client;
 
-    this.request = this.client.request;
+    this.request = this._client.request;
 
-    this.eventHandler = new EventHandler(this.client, this);
+    this.eventHandler = new EventHandler(this._client, this);
 
     this.sessionId = sessionId;
     this.s = sequence;
@@ -73,7 +73,7 @@ class WS {
 
     if (data.s) this.s = data.s;
 
-    this.client.emit("raw", data);
+    this._client.emit("raw", data);
 
     switch (data.op) {
       // Dispatch
@@ -81,7 +81,7 @@ class WS {
         try {
           this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
         } catch (error) {
-          this.client.emit(
+          this._client.emit(
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
@@ -96,7 +96,7 @@ class WS {
 
       // Heartbeat
       case 1: {
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${this.libName} ${
             this.shardNorminal
@@ -110,7 +110,7 @@ class WS {
 
       // Reconnect
       case 7: {
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${this.libName} ${
             this.shardWarning
@@ -125,7 +125,7 @@ class WS {
 
       // Invalid Session
       case 9: {
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${this.libName} ${
             this.shardWarning
@@ -145,7 +145,7 @@ class WS {
       case 10: {
         this.heartbeatInterval = data.d.heartbeat_interval;
 
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`
         );
@@ -162,7 +162,7 @@ class WS {
       case 11: {
         this.waitingForHeartbeatACK = false;
 
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${this.libName} ${
             this.shardNorminal
@@ -191,7 +191,7 @@ class WS {
   heartbeat(response = false) {
     if (this.resuming == true && response != true) return;
 
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardNorminal
@@ -206,7 +206,7 @@ class WS {
     if (response != true)
       setTimeout(() => {
         if (this.waitingForHeartbeatACK == true && this.resuming != true) {
-          this.client.emit(
+          this._client.emit(
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
@@ -218,7 +218,7 @@ class WS {
   }
 
   identify() {
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardNorminal
@@ -231,7 +231,7 @@ class WS {
   }
 
   reconnect() {
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
@@ -242,7 +242,7 @@ class WS {
 
     this.shutDownWebsocket(4901);
 
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
@@ -255,7 +255,7 @@ class WS {
 
     this.waitingForHeartbeatACK = false;
 
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
@@ -274,7 +274,7 @@ class WS {
   }
 
   addListeners() {
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
@@ -286,7 +286,7 @@ class WS {
     });
 
     this.ws.once("open", () => {
-      this.client.emit(
+      this._client.emit(
         "debug",
         `${this.libName} ${
           this.shardNorminal
@@ -297,7 +297,7 @@ class WS {
     });
 
     this.ws.once("close", (data) => {
-      this.client.emit(
+      this._client.emit(
         "debug",
         `${this.libName} ${
           data < 2000 ? this.shardNorminal : this.shardCatastrophic
@@ -322,7 +322,7 @@ class WS {
 
       if (this.retries <= 5)
         setTimeout(() => {
-          this.client.emit(
+          this._client.emit(
             "debug",
             `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${
               this.retries
@@ -334,7 +334,7 @@ class WS {
           this.ws = new WebSocket(generateWebsocketURL(this.resumeGatewayUrl));
 
           this.monitorOpened = setTimeout(() => {
-            this.client.emit(
+            this._client.emit(
               "debug",
               `${this.libName} ${
                 this.shardWarning
@@ -367,7 +367,7 @@ class WS {
     });
 
     this.ws.on("error", (data) => {
-      this.client.emit(
+      this._client.emit(
         "debug",
         `${this.libName} ${
           this.shardCatastrophic
@@ -379,7 +379,7 @@ class WS {
   }
 
   async shutDownWebsocket(code = 1000) {
-    this.client.emit(
+    this._client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
@@ -389,7 +389,7 @@ class WS {
     this.ws.close(code);
 
     this.terminateSocketTimeout = setTimeout(() => {
-      this.client.emit(
+      this._client.emit(
         "debug",
         `${this.libName} ${
           this.shardCatastrophic

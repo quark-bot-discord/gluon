@@ -20,13 +20,13 @@ class TextChannel extends Channel {
   constructor(client, data, guild_id, nocache = false) {
     super(client, data, guild_id);
 
-    if (nocache == false && this.client.cacheChannels == true)
+    if (nocache == false && this._client.cacheChannels == true)
       this.guild?.channels.cache.set(data.id, this);
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
         new Message(
-          this.client,
+          this._client,
           data.messages[i],
           this.id.toString(),
           guild_id
@@ -51,7 +51,7 @@ class TextChannel extends Channel {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "postBulkDeleteMessages",
       [this.id],
       body

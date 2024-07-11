@@ -16,13 +16,13 @@ class Reaction {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this reaction belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**

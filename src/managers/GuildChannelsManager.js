@@ -15,7 +15,7 @@ class GuildChannelsManager {
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
   constructor(client, guild) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -29,13 +29,13 @@ class GuildChannelsManager {
    */
   async fetch(channel_id) {
     const cachedChannel = this.cache.get(channel_id.toString()) || null;
-    if (this.client.cacheChannels == true) return cachedChannel;
+    if (this._client.cacheChannels == true) return cachedChannel;
 
-    const data = await this.client.request.makeRequest("getChannel", [
+    const data = await this._client.request.makeRequest("getChannel", [
       channel_id,
     ]);
 
-    return cacheChannel(this.client, data, this.guild.id.toString());
+    return cacheChannel(this._client, data, this.guild.id.toString());
   }
 }
 

@@ -16,7 +16,7 @@ class Interaction {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the message.
@@ -35,7 +35,7 @@ class Interaction {
      * The guild that this interaction belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(data.guild_id) || null;
+    this.guild = this._client.guilds.cache.get(data.guild_id) || null;
 
     if (!this.guild)
       /**
@@ -63,7 +63,7 @@ class Interaction {
        * @type {Member?}
        */
       this.member = new Member(
-        this.client,
+        this._client,
         data.member,
         data.member.user.id,
         data.guild_id
@@ -96,7 +96,7 @@ class Interaction {
     body.data.components =
       Array.isArray(components) != true ? [components.toJSON()] : [];
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
       body
@@ -116,7 +116,7 @@ class Interaction {
 
     body.data.choices = choices.map((c) => c.toJSON());
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
       body
@@ -150,7 +150,7 @@ class Interaction {
         Array.isArray(components) != true ? components.toJSON() : [];
     if (quiet == true) body.data.flags = 64;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
       body
@@ -177,9 +177,9 @@ class Interaction {
       body.components =
         Array.isArray(components) != true ? components.toJSON() : [];
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "patchOriginalInteractionResponse",
-      [this.client.user.id, this.token],
+      [this._client.user.id, this.token],
       body
     );
 
@@ -195,7 +195,7 @@ class Interaction {
 
     body.type = 6;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.token],
       body

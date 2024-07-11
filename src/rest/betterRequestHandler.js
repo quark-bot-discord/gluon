@@ -9,7 +9,7 @@ const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
   constructor(client, baseURL, name, version, token) {
-    this.client = client;
+    this._client = client;
 
     this.baseURL = baseURL;
     this.version = version;
@@ -31,7 +31,7 @@ class BetterRequestHandler {
     this.queueWorker = (data) => {
       return new Promise(async (resolve, reject) => {
         const bucket = await getBucket(
-          this.client,
+          this._client,
           this.localRatelimitCache,
           data.hash
         );
@@ -50,7 +50,7 @@ class BetterRequestHandler {
             reject
           );
         else {
-          this.client.emit(
+          this._client.emit(
             "debug",
             `RATELIMITED ${data.hash} (bucket reset):${
               bucket.reset
@@ -59,7 +59,7 @@ class BetterRequestHandler {
             } (current time):${(new Date().getTime() / 1000) | 0}`
           );
           if (this.queues[data.hash].length() > this.maxQueueSize) {
-            this.client.emit("debug", `KILL QUEUE ${data.hash}`);
+            this._client.emit("debug", `KILL QUEUE ${data.hash}`);
             this.queues[data.hash].kill();
             delete this.queues[data.hash];
           }
@@ -104,8 +104,8 @@ class BetterRequestHandler {
     else if (expireFromCache > 2592000) expireFromCache = 2592000;
 
     try {
-      if (this.client.redis)
-        await this.client.redis.set(
+      if (this._client.redis)
+        await this._client.redis.set(
           `gluon.paths.${hash}`,
           JSON.stringify(bucket),
           "EX",
@@ -143,7 +143,7 @@ class BetterRequestHandler {
         );
       const hash = calculateHash().update(toHash).digest("hex");
 
-      this.client.emit("debug", `ADD ${hash} to request queue`);
+      this._client.emit("debug", `ADD ${hash} to request queue`);
 
       if (!this.queues[hash])
         this.queues[hash] = FastQ.promise(this.queueWorker, 1);
@@ -173,7 +173,7 @@ class BetterRequestHandler {
 
     const path = actualRequest.path(params);
 
-    const bucket = await getBucket(this.client, this.localRatelimitCache, hash);
+    const bucket = await getBucket(this._client, this.localRatelimitCache, hash);
 
     if (
       !bucket ||
@@ -304,19 +304,19 @@ class BetterRequestHandler {
           json: json,
           method: actualRequest.method,
           endpoint: actualRequest.path(params),
-          shards: this.client.shardIds,
+          shards: this._client.shardIds,
         };
         reject(requestResult);
       }
 
-      this.client.emit("requestCompleted", {
+      this._client.emit("requestCompleted", {
         status: res.status,
         method: actualRequest.method,
         endpoint: actualRequest.path(params),
         hash: hash,
       });
 
-      this.client.emit("debug", `REMOVE ${hash} from request queue`);
+      this._client.emit("debug", `REMOVE ${hash} from request queue`);
     } else {
       let retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.latency;
@@ -325,7 +325,7 @@ class BetterRequestHandler {
         reject("429: Hit ratelimit, retry in " + retryNextIn);
       }, 1500);
 
-      this.client.emit("debug", `READD ${hash} to request queue`);
+      this._client.emit("debug", `READD ${hash} to request queue`);
     }
   }
 }

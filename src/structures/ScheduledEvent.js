@@ -16,7 +16,7 @@ class ScheduledEvent {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the scheduled event.
@@ -24,7 +24,7 @@ class ScheduledEvent {
      */
     this.id = BigInt(data.id);
 
-    this.guild = this.client.guilds.cache.get(data.guild_id) || null;
+    this.guild = this._client.guilds.cache.get(data.guild_id) || null;
 
     if (!this.guild) this.guild_id = BigInt(data.guild_id);
 
@@ -44,7 +44,7 @@ class ScheduledEvent {
       this.creator_id = BigInt(data.creator_id);
 
     if (data.creator) {
-      const creator = new User(this.client, data.creator);
+      const creator = new User(this._client, data.creator);
       if (creator)
         /**
          * The user who created the event.
@@ -126,7 +126,7 @@ class ScheduledEvent {
        */
       this.location = data.entity_metadata.location;
 
-    if (nocache == false && this.client.cacheScheduledEvents == true)
+    if (nocache == false && this._client.cacheScheduledEvents == true)
       this.guild?.scheduled_events.cache.set(data.id, this);
   }
 

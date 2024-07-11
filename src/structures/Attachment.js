@@ -13,7 +13,7 @@ class Attachment {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the attachment.

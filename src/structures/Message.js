@@ -37,13 +37,13 @@ class Message {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this message belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -96,7 +96,7 @@ class Message {
        * The message author.
        * @type {User?}
        */
-      this.author = new User(this.client, data.author, {
+      this.author = new User(this._client, data.author, {
         nocache: !data.webhook_id || nocache,
         noDbStore: true,
       });
@@ -108,11 +108,11 @@ class Message {
        * @type {Member?}
        */
       this.member = new Member(
-        this.client,
+        this._client,
         data.member,
         data.author.id,
         guild_id,
-        new User(this.client, data.author)
+        new User(this._client, data.author)
       );
     else if (data.author)
       this.member = this.guild
@@ -128,7 +128,7 @@ class Message {
     this.attachments = [];
     if (data.attachments != undefined)
       for (let i = 0; i < data.attachments.length; i++)
-        this.attachments.push(new Attachment(this.client, data.attachments[i]));
+        this.attachments.push(new Attachment(this._client, data.attachments[i]));
     else if (existing && existing.attachments)
       this.attachments = existing.attachments;
 
@@ -171,7 +171,7 @@ class Message {
       this.reactions = existing.reactions;
     else
       this.reactions = new MessageReactionManager(
-        this.client,
+        this._client,
         this.guild,
         data.messageReactions
       );
@@ -266,7 +266,7 @@ class Message {
     if (data.sticker_items != undefined)
       for (let i = 0; i < data.sticker_items.length; i++)
         this.sticker_items.push(
-          new Sticker(this.client, data.sticker_items[i])
+          new Sticker(this._client, data.sticker_items[i])
         );
     else if (existing && existing.sticker_items != undefined)
       this.sticker_items = existing.sticker_items;
@@ -280,10 +280,10 @@ class Message {
       this.message_snapshots = existing.message_snapshots;
 
     /* this.author && this.author.bot != true && !data.webhook_id && */
-    if (nocache == false && this.client.cacheMessages == true) {
+    if (nocache == false && this._client.cacheMessages == true) {
       this.channel?.messages.cache.set(data.id, this);
       if (!this.channel)
-        this.client.emit(
+        this._client.emit(
           "debug",
           `${
             this.guild?.id?.toString() || this.guild_id?.toString()
@@ -376,14 +376,14 @@ class Message {
       guild_id: this.guild?.id.toString() || this.guild_id.toString(),
     };
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "postCreateMessage",
       [this.channel?.id || this.channel_id],
       body
     );
 
     return new Message(
-      this.client,
+      this._client,
       data,
       this.channel?.id.toString() || this.channel_id,
       this.guild?.id.toString() || this.guild_id
@@ -423,14 +423,14 @@ class Message {
         guild_id: this.guild?.id.toString() || this.guild_id.toString(),
       };
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "patchEditMessage",
       [this.channel?.id || this.channel_id, this.id],
       body
     );
 
     return new Message(
-      this.client,
+      this._client,
       data,
       this.channel?.id.toString() || this.channel_id,
       this.guild?.id.toString() || this.guild_id
@@ -444,7 +444,7 @@ class Message {
     const encryptedMessage = encryptMessage(this);
 
     const cacheMultiplier =
-      this.client.increasedCacheMultipliers.get(
+      this._client.increasedCacheMultipliers.get(
         this.guild?.id.toString() || this.guild_id.toString()
       ) || 1;
     const key = hash
@@ -456,9 +456,9 @@ class Message {
       )
       .digest("hex");
 
-    this.client.s3Messages.putObject(
+    this._client.s3Messages.putObject(
       {
-        Bucket: this.client.s3MessageBucket,
+        Bucket: this._client.s3MessageBucket,
         Key: key,
         Body: encryptedMessage,
       },

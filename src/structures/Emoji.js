@@ -13,7 +13,7 @@ class Emoji {
    * @param {Boolean?} nocache Whether this emoji should be cached or not.
    */
   constructor(client, data, guild_id, nocache = false) {
-    this.client = client;
+    this._client = client;
 
     this.id = data.id ? BigInt(data.id) : null;
 
@@ -33,12 +33,12 @@ class Emoji {
     if (data.available !== undefined && data.available == true)
       this._attributes |= 0b1 << 3;
 
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild) this.guild_id = BigInt(guild_id);
 
-    if (nocache == false && this.client.cacheEmojis == true && this.id)
-      this.client.guilds.cache.get(guild_id)?.emojis.cache.set(data.id, this);
+    if (nocache == false && this._client.cacheEmojis == true && this.id)
+      this._client.guilds.cache.get(guild_id)?.emojis.cache.set(data.id, this);
   }
 
   get require_colons() {

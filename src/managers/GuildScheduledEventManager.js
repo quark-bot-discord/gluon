@@ -6,7 +6,7 @@ const VoiceChannel = require("../structures/VoiceChannel");
 
 class GuildScheduledEventManager {
   constructor(client, guild) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -16,7 +16,7 @@ class GuildScheduledEventManager {
   }
 
   async list() {
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "getListGuildScheduledEvents",
       [this.guild.id]
     );
@@ -24,7 +24,7 @@ class GuildScheduledEventManager {
     let eventsList = [];
 
     for (let i = 0; i < data.length; i++)
-      eventsList.push(new ScheduledEvent(this.client, data[i]));
+      eventsList.push(new ScheduledEvent(this._client, data[i]));
 
     return eventsList;
   }
@@ -33,12 +33,12 @@ class GuildScheduledEventManager {
     const cachedEvent = this.cache.get(scheduled_event_id.toString());
     if (cachedEvent) return cachedEvent;
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "getGuildScheduledEvent",
       [this.guild.id, scheduled_event_id]
     );
 
-    return new ScheduledEvent(this.client, data);
+    return new ScheduledEvent(this._client, data);
   }
 }
 

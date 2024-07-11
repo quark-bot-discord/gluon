@@ -16,7 +16,7 @@ class AuditLog {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the audit log entry.
@@ -29,7 +29,7 @@ class AuditLog {
        * The guild that this audit log belongs to.
        * @type {Guild?}
        */
-      this.guild = this.client.guilds.cache.get(data.guild_id) || null;
+      this.guild = this._client.guilds.cache.get(data.guild_id) || null;
 
       if (!this.guild)
         /**
@@ -54,7 +54,7 @@ class AuditLog {
          * The resolved target user.
          * @type {User?}
          */
-        this.target = new User(this.client, user);
+        this.target = new User(this._client, user);
     }
 
     /**
@@ -70,7 +70,7 @@ class AuditLog {
          * The resolved executor user.
          * @type {User?}
          */
-        this.executor = new User(this.client, user);
+        this.executor = new User(this._client, user);
     }
 
     /**

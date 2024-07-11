@@ -35,17 +35,17 @@ class Guild {
 
       this.unavailable = true;
 
-      if (nocache == false && this.client.cacheGuilds == true)
-        this.client.guilds.cache.set(data.id, this);
+      if (nocache == false && this._client.cacheGuilds == true)
+        this._client.guilds.cache.set(data.id, this);
     }
 
     /**
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
-    const existing = this.client.guilds.cache.get(data.id) || null;
+    const existing = this._client.guilds.cache.get(data.id) || null;
 
     /**
      * The id of the message.
@@ -122,7 +122,7 @@ class Guild {
      */
     this.voice_states = existing
       ? existing.voice_states
-      : new GuildVoiceStatesManager(this.client, data.voice_states);
+      : new GuildVoiceStatesManager(this._client, data.voice_states);
 
     /**
      * The member manager of this guild.
@@ -130,7 +130,7 @@ class Guild {
      */
     this.members = existing
       ? existing.members
-      : new GuildMemberManager(this.client, this);
+      : new GuildMemberManager(this._client, this);
 
     /**
      * The channel manager of this guild.
@@ -138,7 +138,7 @@ class Guild {
      */
     this.channels = existing
       ? existing.channels
-      : new GuildChannelsManager(this.client, this);
+      : new GuildChannelsManager(this._client, this);
 
     /**
      * The role manager of this guild.
@@ -146,11 +146,11 @@ class Guild {
      */
     this.roles = existing
       ? existing.roles
-      : new GuildRoleManager(this.client, this);
+      : new GuildRoleManager(this._client, this);
 
     this.scheduled_events = existing
       ? existing.scheduled_events
-      : new GuildScheduledEventManager(this.client, this);
+      : new GuildScheduledEventManager(this._client, this);
 
     /**
      * The emoji manager of this guild.
@@ -158,7 +158,7 @@ class Guild {
      */
     this.emojis = existing
       ? existing.emojis
-      : new GuildEmojisManager(this.client, this);
+      : new GuildEmojisManager(this._client, this);
 
     /**
      * The invite manager of this guild.
@@ -166,7 +166,7 @@ class Guild {
      */
     this.invites = existing
       ? existing.invites
-      : new GuildInviteManager(this.client, this);
+      : new GuildInviteManager(this._client, this);
 
     if (data.system_channel_id !== undefined)
       this.system_channel_id = data.system_channel_id
@@ -378,17 +378,17 @@ class Guild {
       this._cache_options = existing._cache_options;
     else this._cache_options = 0;
 
-    if (nocache == false && this.client.cacheGuilds == true)
-      this.client.guilds.cache.set(data.id, this);
+    if (nocache == false && this._client.cacheGuilds == true)
+      this._client.guilds.cache.set(data.id, this);
 
     if (data.members)
       for (
         let i = 0;
-        i < data.members.length && this.client.cacheMembers == true;
+        i < data.members.length && this._client.cacheMembers == true;
         i++
       )
         new Member(
-          this.client,
+          this._client,
           data.members[i],
           data.members[i].user.id,
           data.id,
@@ -399,54 +399,54 @@ class Guild {
     if (data.channels)
       for (
         let i = 0;
-        i < data.channels.length && this.client.cacheChannels == true;
+        i < data.channels.length && this._client.cacheChannels == true;
         i++
       )
-        cacheChannel(this.client, data.channels[i], data.id, nocache);
+        cacheChannel(this._client, data.channels[i], data.id, nocache);
 
     if (data.threads)
       for (
         let i = 0;
-        i < data.threads.length && this.client.cacheChannels == true;
+        i < data.threads.length && this._client.cacheChannels == true;
         i++
       )
-        new Thread(this.client, data.threads[i], data.id, nocache);
+        new Thread(this._client, data.threads[i], data.id, nocache);
 
     if (data.voice_states)
       for (
         let i = 0;
-        i < data.voice_states.length && this.client.cacheVoiceStates == true;
+        i < data.voice_states.length && this._client.cacheVoiceStates == true;
         i++
       )
-        new VoiceState(this.client, data.voice_states[i], data.id, nocache);
+        new VoiceState(this._client, data.voice_states[i], data.id, nocache);
 
     if (data.roles)
       for (
         let i = 0;
-        i < data.roles.length && this.client.cacheRoles == true;
+        i < data.roles.length && this._client.cacheRoles == true;
         i++
       )
-        new Role(this.client, data.roles[i], data.id, nocache);
+        new Role(this._client, data.roles[i], data.id, nocache);
 
     // if (data.scheduled_events)
-    //     for (let i = 0; i < data.roles.length && this.client.cacheRoles == true; i++)
-    //         new Role(this.client, data.roles[i], data.id, nocache);
+    //     for (let i = 0; i < data.roles.length && this._client.cacheRoles == true; i++)
+    //         new Role(this._client, data.roles[i], data.id, nocache);
 
     if (data.emojis)
       for (
         let i = 0;
-        i < data.emojis.length && this.client.cacheEmojis == true;
+        i < data.emojis.length && this._client.cacheEmojis == true;
         i++
       )
-        new Emoji(this.client, data.emojis[i], data.id, nocache);
+        new Emoji(this._client, data.emojis[i], data.id, nocache);
 
     if (data.invites)
       for (
         let i = 0;
-        i < data.invites.length && this.client.cacheInvites == true;
+        i < data.invites.length && this._client.cacheInvites == true;
         i++
       )
-        new Invite(this.client, data.invites[i], data.id, nocache);
+        new Invite(this._client, data.invites[i], data.id, nocache);
   }
 
   /**
@@ -575,11 +575,11 @@ class Guild {
    * @returns {Promise<Member>}
    */
   async me() {
-    const cached = this.members.cache.get(this.client.user.id.toString());
+    const cached = this.members.cache.get(this._client.user.id.toString());
 
     if (cached) return cached;
 
-    return await this.members.fetch(this.client.user.id);
+    return await this.members.fetch(this._client.user.id);
   }
 
   /**
@@ -601,7 +601,7 @@ class Guild {
     // number of days to delete messages for (0-7)
     if (days) body.delete_message_days = days;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "putCreateGuildBan",
       [this.id, user_id],
       body
@@ -625,7 +625,7 @@ class Guild {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "deleteRemoveGuildBan",
       [this.id, user_id],
       body
@@ -649,7 +649,7 @@ class Guild {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "deleteGuildMember",
       [this.id, user_id],
       body
@@ -674,7 +674,7 @@ class Guild {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.id, user_id, role_id],
       body
@@ -704,7 +704,7 @@ class Guild {
 
     if (before) body.before = before.toString();
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "getGuildAuditLog",
       [this.id],
       body
@@ -722,7 +722,7 @@ class Guild {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e) => new AuditLog(this.client, e, data.users)
+      (e) => new AuditLog(this._client, e, data.users)
     );
   }
 
@@ -737,7 +737,7 @@ class Guild {
         error: "The bot does not have the MANAGE_GUILD permission.",
       };
 
-    const data = await this.client.request.makeRequest("getGuildInvites", [
+    const data = await this._client.request.makeRequest("getGuildInvites", [
       this.id,
     ]);
 
@@ -749,13 +749,13 @@ class Guild {
    * @returns {Promise<Channel[]>}
    */
   async fetchChannels() {
-    const data = await this.client.request.makeRequest("getGuildChannels", [
+    const data = await this._client.request.makeRequest("getGuildChannels", [
       this.id,
     ]);
 
     let channels = [];
     for (let i = 0; i < data.length; i++)
-      channels.push(cacheChannel(this.client, data[i], this.id.toString()));
+      channels.push(cacheChannel(this._client, data[i], this.id.toString()));
 
     return channels;
   }
@@ -772,7 +772,7 @@ class Guild {
         error: "The bot does not have the BAN_MEMBERS permission.",
       };
 
-    const data = await this.client.request.makeRequest("getGuildBan", [
+    const data = await this._client.request.makeRequest("getGuildBan", [
       this.id,
       user_id,
     ]);
@@ -784,7 +784,7 @@ class Guild {
    * Leaves the guild.
    */
   async leave() {
-    await this.client.request.makeRequest("deleteLeaveGuild", [this.id]);
+    await this._client.request.makeRequest("deleteLeaveGuild", [this.id]);
   }
 
   /**

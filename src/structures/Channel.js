@@ -20,7 +20,7 @@ class Channel {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the channel.
@@ -32,7 +32,7 @@ class Channel {
      * The guild that this channel belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -172,14 +172,14 @@ class Channel {
       body.allowed_mentions.parse = [];
     }
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "postCreateMessage",
       [this.id],
       body
     );
 
     return new Message(
-      this.client,
+      this._client,
       data,
       this.id.toString(),
       this.guild?.id.toString() || this.guild_id.toString(),

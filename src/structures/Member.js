@@ -30,13 +30,13 @@ class Member {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this member belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -58,10 +58,10 @@ class Member {
        * The user object for this member.
        * @type {User?}
        */
-      this.user = new User(this.client, data.user, { nocache });
+      this.user = new User(this._client, data.user, { nocache });
     else if (existing && existing.user) this.user = existing.user;
     else if (user) this.user = user;
-    else this.user = this.client.users.cache.get(user_id) || null;
+    else this.user = this._client.users.cache.get(user_id) || null;
 
     if (data.nick !== undefined)
       /**
@@ -117,20 +117,20 @@ class Member {
     else if (data.avatar === undefined && existing && existing.avatar)
       this.avatar == existing.avatar;
 
-    if (data.roles && this.guild && this.client.cacheRoles == true) {
+    if (data.roles && this.guild && this._client.cacheRoles == true) {
       this._roles = [];
       for (let i = 0; i < data.roles.length; i++)
         if (data.roles[i] != guild_id) this._roles.push(BigInt(data.roles[i]));
     }
 
     if (
-      this.id == this.client.user.id ||
+      this.id == this._client.user.id ||
       (nocache == false &&
-        (this.client.cacheMembers == true ||
-          this.client.cacheAllMembers == true) &&
+        (this._client.cacheMembers == true ||
+          this._client.cacheAllMembers == true) &&
         ignoreNoCache == false)
     ) {
-      this.client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
+      this._client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
       // if (noDbStore != true)
       //     this.guild.members.store(this);
     }
@@ -142,7 +142,7 @@ class Member {
    * @type {Array<Role>}
    */
   get roles() {
-    if (this.client.cacheRoles != true) return [];
+    if (this._client.cacheRoles != true) return [];
 
     let roles = [];
 
@@ -280,7 +280,7 @@ class Member {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "putAddGuildMemberRole",
       [this.guild?.id || this.guild_id, this.id, role_id],
       body
@@ -305,7 +305,7 @@ class Member {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.guild?.id || this.guild_id, this.id, role_id],
       body
@@ -332,7 +332,7 @@ class Member {
 
     body.communication_disabled_until = timeout_until;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
       body
@@ -358,7 +358,7 @@ class Member {
 
     body.communication_disabled_until = null;
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
       body
@@ -384,7 +384,7 @@ class Member {
 
     body.roles = roles.map((role) => role.toString());
 
-    await this.client.request.makeRequest(
+    await this._client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
       body

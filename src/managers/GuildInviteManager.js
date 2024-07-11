@@ -14,7 +14,7 @@ class GuildInviteManager {
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
   constructor(client, guild) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -29,14 +29,14 @@ class GuildInviteManager {
     if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_GUILD))
       return null;
 
-    const data = await this.client.request.makeRequest("getGuildInvites", [
+    const data = await this._client.request.makeRequest("getGuildInvites", [
       this.guild.id,
     ]);
 
     this.cache.clear();
 
     return data.map(
-      (raw) => new Invite(this.client, raw, this.guild?.id?.toString())
+      (raw) => new Invite(this._client, raw, this.guild?.id?.toString())
     );
   }
 }

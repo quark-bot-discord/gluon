@@ -10,13 +10,13 @@ class UserManager {
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    this.client = client;
+    this._client = client;
 
     this.cache = new Map();
   }
 
   async retrieve(user_id) {
-    // const fetchedUserRaw = await this.client.dataStorage.query(`
+    // const fetchedUserRaw = await this._client.dataStorage.query(`
     //     SELECT *
     //     FROM Users
     //     WHERE id = :id;
@@ -25,23 +25,23 @@ class UserManager {
     // if (!fetchedUser)
     //     return null;
     // fetchedUser._attributes = fetchedUser.attributes;
-    // return new User(this.client, fetchedUser, { noDbStore: true });
+    // return new User(this._client, fetchedUser, { noDbStore: true });
   }
 
   store(user) {
-    // this.client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
+    // this._client.dataStorage.query("INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES (:id, :avatar, :username, :global_name, :discriminator, :attributes) ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);",
     //     { id: user.id, avatar: user.formattedAvatarHash, username: user.username, global_name: user.global_name, discriminator: user.discriminator, attributes: user._attributes })
-    //     .then(() => this.client.emit("debug", `ADDED ${user.id} TO USER STORAGE`));
+    //     .then(() => this._client.emit("debug", `ADDED ${user.id} TO USER STORAGE`));
   }
 
   cleanup() {
-    // this.client.dataStorage.query(`
+    // this._client.dataStorage.query(`
     //     DELETE FROM Users
     //     WHERE id NOT IN (
     //         SELECT id FROM Members
     //     );
     //     `)
-    //     .then(() => this.client.emit("debug", `CLEANUP USERS`));
+    //     .then(() => this._client.emit("debug", `CLEANUP USERS`));
   }
 
   async localFetch(user_id) {
@@ -61,9 +61,9 @@ class UserManager {
     const localFetch = await this.localFetch(user_id);
     if (localFetch) return localFetch;
 
-    const data = await this.client.request.makeRequest("getUser", [user_id]);
+    const data = await this._client.request.makeRequest("getUser", [user_id]);
 
-    return new User(this.client, data);
+    return new User(this._client, data);
   }
 
   /**
@@ -81,7 +81,7 @@ class UserManager {
     for (let i = 0; i < currentCacheSize; i++)
       if (
         (currentCacheValues.next().value.cached || 0) +
-          this.client.defaultUserExpiry <
+          this._client.defaultUserExpiry <
         currentTime
       )
         this.cache.delete(currentCacheKeys.next().value);

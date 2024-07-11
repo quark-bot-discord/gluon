@@ -43,7 +43,7 @@ class VoiceChannel extends Channel {
     else if (existing && typeof existing.rtc_region == "string")
       this.rtc_region = existing.rtc_region;
 
-    if (nocache == false && this.client.cacheChannels == true)
+    if (nocache == false && this._client.cacheChannels == true)
       this.guild?.channels.cache.set(data.id, this);
   }
 }

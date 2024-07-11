@@ -9,7 +9,7 @@ class GuildManager {
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    this.client = client;
+    this._client = client;
 
     this.cache = new Map();
   }

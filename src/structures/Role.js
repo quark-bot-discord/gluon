@@ -17,13 +17,13 @@ class Role {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this role belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -78,7 +78,7 @@ class Role {
 
     if (data.tags) this.tags = data.tags;
 
-    if (nocache == false && this.client.cacheRoles == true)
+    if (nocache == false && this._client.cacheRoles == true)
       this.guild?.roles.cache.set(data.id, this);
   }
 

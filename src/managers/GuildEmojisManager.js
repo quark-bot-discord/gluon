@@ -12,7 +12,7 @@ class GuildEmojisManager {
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
   constructor(client, guild) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -28,12 +28,12 @@ class GuildEmojisManager {
     const cached = this.cache.get(emoji_id.toString());
     if (cached) return cached;
 
-    const data = await this.client.request.makeRequest("getEmoji", [
+    const data = await this._client.request.makeRequest("getEmoji", [
       this.guild.id,
       emoji_id,
     ]);
 
-    return new Emoji(this.client, data, this.guild.id.toString(), data.user);
+    return new Emoji(this._client, data, this.guild.id.toString(), data.user);
   }
 }
 

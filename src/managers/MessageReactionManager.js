@@ -9,7 +9,7 @@ class MessageReactionManager {
    * @param {Object} existingReactions Existing reactions for a message.
    */
   constructor(client, guild, existingReactions = {}) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -21,7 +21,7 @@ class MessageReactionManager {
 
     for (const message_reaction in existingReactions)
       this.cache[message_reaction] = new Reaction(
-        this.client,
+        this._client,
         existingReactions[message_reaction],
         this.guild.id.toString()
       );
@@ -37,7 +37,7 @@ class MessageReactionManager {
     if (!this.cache[emoji]) {
       data.initial_reactor = user_id;
       this.cache[emoji] = new Reaction(
-        this.client,
+        this._client,
         data,
         this.guild.id.toString()
       );

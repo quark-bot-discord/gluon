@@ -13,7 +13,7 @@ class GuildMemberManager {
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
-    this.client = client;
+    this._client = client;
 
     this.guild = guild;
 
@@ -25,11 +25,11 @@ class GuildMemberManager {
    * @param {Member} member The member to store.
    */
   store(member) {
-    // this.client.dataStorage.query("INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes) ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);",
+    // this._client.dataStorage.query("INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes) ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);",
     //     { id: member.id, guild: this.guild.id, nick: member.nick, joined_at: member.joined_at, avatar: member.formattedAvatarHash, communication_disabled_until: member.communication_disabled_until, attributes: member._attributes })
-    //     .then(() => this.client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER STORAGE`));
+    //     .then(() => this._client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER STORAGE`));
     // if (member.user)
-    //     this.client.users.store(member.user);
+    //     this._client.users.store(member.user);
     // if (Array.isArray(member._roles) && member._roles.length != 0) {
     //     const valuesTemplate = member._roles.map(() => `(?, ?, ?)`).join(',');
     //     const values = [];
@@ -38,8 +38,8 @@ class GuildMemberManager {
     //         values.push(member._roles[i]);
     //         values.push(this.guild.id);
     //     }
-    //     this.client.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, values)
-    //         .then(() => this.client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER ROLES STORAGE`));
+    //     this._client.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, values)
+    //         .then(() => this._client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER ROLES STORAGE`));
     // }
   }
 
@@ -49,7 +49,7 @@ class GuildMemberManager {
    * @returns {Member} The retrieved member.
    */
   async retrieve(user_id) {
-    // const fetchedMemberRaw = await this.client.dataStorage.query(`
+    // const fetchedMemberRaw = await this._client.dataStorage.query(`
     //     SELECT *
     //     FROM Members
     //     WHERE id = :id AND guild = :guild;
@@ -61,7 +61,7 @@ class GuildMemberManager {
     //     return null;
     // fetchedMember._attributes = fetchedMember.attributes;
     // fetchedMember.joined_at = fetchedMember.joined_at * 1000;
-    // const fetchedMemberRolesRaw = await this.client.dataStorage.query(`
+    // const fetchedMemberRolesRaw = await this._client.dataStorage.query(`
     //     SELECT roleid
     //     FROM MemberRoles
     //     WHERE memberid = :memberid AND guild = :guild;
@@ -70,28 +70,28 @@ class GuildMemberManager {
     //     const fetchedRoles = fetchedMemberRolesRaw[0].map(roles => roles.roleid);
     //     fetchedMember.roles = fetchedRoles;
     // }
-    // const user = await this.client.users.localFetch(user_id);
-    // return new Member(this.client, fetchedMember, user_id, this.guild.id.toString(), user, { noDbStore: true });
+    // const user = await this._client.users.localFetch(user_id);
+    // return new Member(this._client, fetchedMember, user_id, this.guild.id.toString(), user, { noDbStore: true });
   }
 
   /**
    * Cleans up the stored member data for this guild.
    */
   cleanup() {
-    // this.client.dataStorage.query(`
+    // this._client.dataStorage.query(`
     //     DELETE
     //     FROM Members
     //     WHERE guild = :guild;
     //     `,
     //     { guild: this.guild.id })
-    //     .then(() => this.client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`));
-    // this.client.dataStorage.query(`
+    //     .then(() => this._client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`));
+    // this._client.dataStorage.query(`
     //     DELETE
     //     FROM MemberRoles
     //     WHERE guild = :guild;
     //     `,
     //     { guild: this.guild.id })
-    //     .then(() => this.client.emit("debug", `CLEANUP MEMBER ROLES ${this.guild.id}`));
+    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ROLES ${this.guild.id}`));
   }
 
   /**
@@ -99,21 +99,21 @@ class GuildMemberManager {
    * @param {BigInt | String} user_id The id of the user to remove from storage.
    */
   remove(user_id) {
-    // this.client.dataStorage.query(`
+    // this._client.dataStorage.query(`
     //     DELETE
     //     FROM Members
     //     WHERE guild = :guild AND id = :id;
     //     `,
     //     { guild: this.guild.id, id: user_id })
-    //     .then(() => this.client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
+    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
 
-    // this.client.dataStorage.query(`
+    // this._client.dataStorage.query(`
     //     DELETE
     //     FROM MemberRoles
     //     WHERE guild = :guild AND memberid = :memberid;
     //     `,
     //     { guild: this.guild.id, memberid: user_id })
-    //     .then(() => this.client.emit("debug", `CLEANUP MEMBER ROLES ${user_id} FROM ${this.guild.id}`));
+    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ROLES ${user_id} FROM ${this.guild.id}`));
 
     this.cache.delete(user_id.toString());
   }
@@ -140,13 +140,13 @@ class GuildMemberManager {
     const localFetch = await this.localFetch(user_id);
     if (localFetch) return localFetch;
 
-    const data = await this.client.request.makeRequest("getGuildMember", [
+    const data = await this._client.request.makeRequest("getGuildMember", [
       this.guild.id,
       user_id,
     ]);
 
     return new Member(
-      this.client,
+      this._client,
       data,
       user_id,
       this.guild.id.toString(),
@@ -166,7 +166,7 @@ class GuildMemberManager {
 
     body.limit = 1000;
 
-    const data = await this.client.request.makeRequest(
+    const data = await this._client.request.makeRequest(
       "getSearchGuildMembers",
       [this.guild.id],
       body
@@ -177,7 +177,7 @@ class GuildMemberManager {
       for (let i = 0; i < data.length; i++)
         members.push(
           new Member(
-            this.client,
+            this._client,
             data[i],
             data[i].user.id,
             this.guild.id.toString(),
@@ -206,7 +206,7 @@ class GuildMemberManager {
       cacheSize--
     ) {
       const current = currentCacheKeys.next().value;
-      if (current != this.client.user.id);
+      if (current != this._client.user.id);
       this.cache.delete(current);
     }
 

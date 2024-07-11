@@ -17,13 +17,13 @@ class Invite {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The guild that this role belongs to.
      * @type {Guild?}
      */
-    this.guild = this.client.guilds.cache.get(guild_id) || null;
+    this.guild = this._client.guilds.cache.get(guild_id) || null;
 
     if (!this.guild)
       /**
@@ -59,7 +59,7 @@ class Invite {
        * The user who created the invite.
        * @type {User?}
        */
-      this.inviter = new User(this.client, data.inviter, { nocache });
+      this.inviter = new User(this._client, data.inviter, { nocache });
 
     if (typeof data.uses == "number")
       /**
@@ -92,13 +92,13 @@ class Invite {
 
     if (
       nocache == false &&
-      this.client.cacheInvites == true &&
+      this._client.cacheInvites == true &&
       this.code &&
       ((this.expires && this.expires > Date.now() / 1000) || !this.expires)
     )
       this.guild?.invites.cache.set(data.code, this);
     else
-      this.client.emit(
+      this._client.emit(
         "debug",
         `NOT CACHING INVITE ${this.code} ${this.expires} ${
           (Date.now() / 1000) | 0

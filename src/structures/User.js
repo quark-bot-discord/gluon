@@ -22,7 +22,7 @@ class User {
      * The client instance.
      * @type {Client}
      */
-    this.client = client;
+    this._client = client;
 
     /**
      * The id of the user.
@@ -72,12 +72,12 @@ class User {
 
     if (
       nocache == false &&
-      this.client.cacheUsers == true &&
+      this._client.cacheUsers == true &&
       ignoreNoCache == false
     ) {
-      this.client.users.cache.set(data.id, this);
+      this._client.users.cache.set(data.id, this);
       // if (noDbStore != true)
-      // this.client.users.store(this);
+      // this._client.users.store(this);
     }
   }
 
