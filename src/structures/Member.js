@@ -24,7 +24,7 @@ class Member {
     user_id,
     guild_id,
     user,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {}
+    { nocache = false, ignoreNoCache = false, noDbStore = false } = {},
   ) {
     /**
      * The client instance.
@@ -148,8 +148,8 @@ class Member {
 
     roles.push(
       this.guild.roles.cache.get(
-        this.guild?.id.toString() || this.guild_id?.toString()
-      )
+        this.guild?.id.toString() || this.guild_id?.toString(),
+      ),
     );
 
     if (!this._roles) return roles;
@@ -283,7 +283,7 @@ class Member {
     await this.client.request.makeRequest(
       "putAddGuildMemberRole",
       [this.guild?.id || this.guild_id, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -308,7 +308,7 @@ class Member {
     await this.client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.guild?.id || this.guild_id, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -335,7 +335,7 @@ class Member {
     await this.client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
-      body
+      body,
     );
   }
 
@@ -361,7 +361,7 @@ class Member {
     await this.client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
-      body
+      body,
     );
   }
 
@@ -387,7 +387,7 @@ class Member {
     await this.client.request.makeRequest(
       "patchGuildMember",
       [this.guild?.id || this.guild_id, this.id],
-      body
+      body,
     );
   }
 
