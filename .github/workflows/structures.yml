@@ -27,3 +27,8 @@ jobs:
             echo "Compiling $file"
             jsdoc -X $file > $file.json
           done
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+            add: 'src/structures/*.json'
