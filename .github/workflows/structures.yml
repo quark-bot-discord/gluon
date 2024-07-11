@@ -34,7 +34,7 @@ jobs:
             output="$output $(basename $file): require('$file'),"
           done
           output="$output };"
-          echo output >> ./src/structures.js
+          echo $output >> ./src/structures.js
 
       - name: Import bot's GPG key for signing commits
         id: import-gpg
