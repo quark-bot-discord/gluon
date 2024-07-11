@@ -1,0 +1,17 @@
+name: Compile structures
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compile structures
+        run: |
+          for file in $(find ./src/structures -name '*.js');
+          do
+            jsdoc -X $file > $file.json
+          done
