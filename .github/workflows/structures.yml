@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Compile structures
-        working-directory: "./"
         run: |
           echo "$PWD"
+          ls
           for file in $(find src/structures -name '*.js');
           do
             jsdoc -X $file > $file.json
