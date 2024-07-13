@@ -110,7 +110,7 @@ class Channel {
      * @type {ChannelMessageManager}
      */
     this.messages =
-      existing && existing.messages && existing.messages.cache
+      existing?.messages && existing.messages.cache
         ? existing.messages
         : new ChannelMessageManager(client, this);
   }

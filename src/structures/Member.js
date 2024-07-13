@@ -52,7 +52,7 @@ class Member {
        * @type {User?}
        */
       this.user = new User(this._client, data.user, { nocache });
-    else if (existing && existing.user) this.user = existing.user;
+    else if (existing?.user) this.user = existing.user;
     else if (user) this.user = user;
     else this.user = this._client.users.cache.get(user_id) || null;
 
@@ -71,7 +71,7 @@ class Member {
        * @type {Number?}
        */
       this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
-    else if (existing && existing.joined_at)
+    else if (existing?.joined_at)
       this.joined_at = existing.joined_at;
 
     /**

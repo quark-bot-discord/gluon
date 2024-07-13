@@ -207,7 +207,7 @@ class BetterRequestHandler {
       };
 
       let form;
-      if (body && body.files) {
+      if (body?.files) {
         form = new FormData();
         for (let i = 0; i < body.files.length; i++)
           form.append(

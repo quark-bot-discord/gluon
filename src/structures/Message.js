@@ -86,7 +86,7 @@ class Message {
         nocache: !data.webhook_id || nocache,
         noDbStore: true,
       });
-    else if (existing && existing.author) this.author = existing.author;
+    else if (existing?.author) this.author = existing.author;
 
     if (data.member)
       /**
@@ -104,7 +104,7 @@ class Message {
       this.member = this.guild
         ? this.guild.members.cache.get(data.author.id)
         : null;
-    else if (existing && existing.member) this.member = existing.member;
+    else if (existing?.member) this.member = existing.member;
 
     // should only be stored if file logging is enabled
     /**
@@ -117,7 +117,7 @@ class Message {
         this.attachments.push(
           new Attachment(this._client, data.attachments[i]),
         );
-    else if (existing && existing.attachments)
+    else if (existing?.attachments)
       this.attachments = existing.attachments;
 
     if (this.attachments.length == 0 && onlyfiles == true) nocache = true;
@@ -151,7 +151,7 @@ class Message {
     else if (this.poll)
       this.pollResponses = new MessagePollManager(data.pollResponses);
 
-    if (existing && existing.reactions)
+    if (existing?.reactions)
       /**
        * The message reactions.
        * @type {MessageReactionManager}
@@ -243,7 +243,7 @@ class Message {
      * @type {BigInt?}
      */
     if (data.webhook_id) this.webhook_id = BigInt(data.webhook_id);
-    else if (existing && existing.webhook_id)
+    else if (existing?.webhook_id)
       this.webhook_id = existing.webhook_id;
 
     /**
