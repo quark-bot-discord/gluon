@@ -142,7 +142,7 @@ class Channel {
    */
   async send(
     content,
-    { embed, components, files, embeds, suppressMentions = false } = {}
+    { embed, components, files, embeds, suppressMentions = false } = {},
   ) {
     if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
       return null;
@@ -164,7 +164,7 @@ class Channel {
     const data = await this._client.request.makeRequest(
       "postCreateMessage",
       [this.id],
-      body
+      body,
     );
 
     return new Message(
@@ -172,7 +172,7 @@ class Channel {
       data,
       String(this.id),
       String(this._guild_id),
-      false
+      false,
     );
   }
 

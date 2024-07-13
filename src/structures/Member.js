@@ -24,7 +24,7 @@ class Member {
     user_id,
     guild_id,
     user,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {}
+    { nocache = false, ignoreNoCache = false, noDbStore = false } = {},
   ) {
     /**
      * The client instance.
@@ -148,11 +148,7 @@ class Member {
 
     let roles = [];
 
-    roles.push(
-      this.guild.roles.cache.get(
-        String(this._guild_id)
-      )
-    );
+    roles.push(this.guild.roles.cache.get(String(this._guild_id)));
 
     if (!this._roles) return roles;
 
@@ -285,7 +281,7 @@ class Member {
     await this._client.request.makeRequest(
       "putAddGuildMemberRole",
       [this._guild_id, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -310,7 +306,7 @@ class Member {
     await this._client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this._guild_id, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -337,7 +333,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body
+      body,
     );
   }
 
@@ -363,7 +359,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body
+      body,
     );
   }
 
@@ -389,7 +385,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body
+      body,
     );
   }
 
@@ -400,7 +396,9 @@ class Member {
       joined_at: this.joined_at ? this.joined_at * 1000 : undefined,
       avatar: this._originalAvatarHash,
       permissions: String(this.permissions),
-      roles: Array.isArray(this._roles) ? this._roles.map((r) => String(r)) : undefined,
+      roles: Array.isArray(this._roles)
+        ? this._roles.map((r) => String(r))
+        : undefined,
       communication_disabled_until: this.timeout_until
         ? this.timeout_until * 1000
         : undefined,

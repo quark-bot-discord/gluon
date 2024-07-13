@@ -29,7 +29,7 @@ class Message {
     channel_id,
     guild_id,
     nocache = false,
-    ignoreExisting = false
+    ignoreExisting = false,
   ) {
     let onlyfiles = false;
 
@@ -98,7 +98,7 @@ class Message {
         data.member,
         data.author.id,
         guild_id,
-        new User(this._client, data.author)
+        new User(this._client, data.author),
       );
     else if (data.author)
       this.member = this.guild
@@ -114,7 +114,9 @@ class Message {
     this.attachments = [];
     if (data.attachments != undefined)
       for (let i = 0; i < data.attachments.length; i++)
-        this.attachments.push(new Attachment(this._client, data.attachments[i]));
+        this.attachments.push(
+          new Attachment(this._client, data.attachments[i]),
+        );
     else if (existing && existing.attachments)
       this.attachments = existing.attachments;
 
@@ -159,7 +161,7 @@ class Message {
       this.reactions = new MessageReactionManager(
         this._client,
         this.guild,
-        data.messageReactions
+        data.messageReactions,
       );
 
     /**
@@ -252,7 +254,7 @@ class Message {
     if (data.sticker_items != undefined)
       for (let i = 0; i < data.sticker_items.length; i++)
         this.sticker_items.push(
-          new Sticker(this._client, data.sticker_items[i])
+          new Sticker(this._client, data.sticker_items[i]),
         );
     else if (existing && existing.sticker_items != undefined)
       this.sticker_items = existing.sticker_items;
@@ -269,12 +271,7 @@ class Message {
     if (nocache == false && this._client.cacheMessages == true) {
       this.channel?.messages.cache.set(data.id, this);
       if (!this.channel)
-        this._client.emit(
-          "debug",
-          `${
-            this._guild_id?.toString()
-          } NO CHANNEL`
-        );
+        this._client.emit("debug", `${this._guild_id?.toString()} NO CHANNEL`);
     }
   }
 
@@ -383,15 +380,10 @@ class Message {
     const data = await this._client.request.makeRequest(
       "postCreateMessage",
       [this._channel_id],
-      body
+      body,
     );
 
-    return new Message(
-      this._client,
-      data,
-      this._channel_id,
-      this._guild_id
-    );
+    return new Message(this._client, data, this._channel_id, this._guild_id);
   }
 
   /**
@@ -430,15 +422,10 @@ class Message {
     const data = await this._client.request.makeRequest(
       "patchEditMessage",
       [this._channel_id, this.id],
-      body
+      body,
     );
 
-    return new Message(
-      this._client,
-      data,
-      this._channel_id,
-      this._guild_id
-    );
+    return new Message(this._client, data, this._channel_id, this._guild_id);
   }
 
   /**
@@ -448,16 +435,11 @@ class Message {
     const encryptedMessage = encryptMessage(this);
 
     const cacheMultiplier =
-      this._client.increasedCacheMultipliers.get(
-        this._guild_id.toString()
-      ) || 1;
+      this._client.increasedCacheMultipliers.get(this._guild_id.toString()) ||
+      1;
     const key = hash
       .sha512()
-      .update(
-        `${this._guild_id}_${
-          this._channel_id
-        }_${this.id}`
-      )
+      .update(`${this._guild_id}_${this._channel_id}_${this.id}`)
       .digest("hex");
 
     this._client.s3Messages.putObject(
@@ -469,7 +451,7 @@ class Message {
       (err, data) => {
         if (err) console.log(err);
         else console.log(data);
-      }
+      },
     );
 
     this.channel.messages.cache.delete(this.id.toString());
@@ -488,7 +470,9 @@ class Message {
       pollResponses: this.pollResponses,
       message_snapshots: this.message_snapshots,
       type: this.type,
-      referenced_message: this.reference?.message_id ? { id: String(this.reference.message_id) } : undefined,
+      referenced_message: this.reference?.message_id
+        ? { id: String(this.reference.message_id) }
+        : undefined,
       sticker_items: this.sticker_items,
       messageReactions: this.reactions,
     };

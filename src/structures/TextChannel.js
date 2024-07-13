@@ -25,12 +25,7 @@ class TextChannel extends Channel {
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
-        new Message(
-          this._client,
-          data.messages[i],
-          String(this.id),
-          guild_id
-        );
+        new Message(this._client, data.messages[i], String(this.id), guild_id);
   }
 
   /**
@@ -54,7 +49,7 @@ class TextChannel extends Channel {
     await this._client.request.makeRequest(
       "postBulkDeleteMessages",
       [this.id],
-      body
+      body,
     );
   }
 
