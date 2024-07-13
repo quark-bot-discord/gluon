@@ -145,7 +145,7 @@ class AuditLog {
 
   /**
    * The channel involved with this audit log entry.
-   * @type {TextChannel? | VoiceChannel?} The channel involved with this audit log entry.
+   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.
    * @readonly
    */
   get channel() {
