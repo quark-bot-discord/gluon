@@ -29,7 +29,7 @@ class OptionSelect extends Interaction {
       data.message,
       data.channel_id,
       data.guild_id,
-      this._client.cacheMessages
+      this._client.cacheMessages,
     );
 
     /**

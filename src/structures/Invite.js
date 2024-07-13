@@ -85,7 +85,7 @@ class Invite {
         "debug",
         `NOT CACHING INVITE ${this._code} ${this.expires} ${
           (Date.now() / 1000) | 0
-        }`
+        }`,
       );
   }
 
@@ -94,7 +94,9 @@ class Invite {
    * @type {(TextChannel | VoiceChannel)?}
    */
   get channel() {
-    return this._channel_id ? this.guild.channels.cache.get(String(this._channel_id)) : null;
+    return this._channel_id
+      ? this.guild.channels.cache.get(String(this._channel_id))
+      : null;
   }
 
   /**

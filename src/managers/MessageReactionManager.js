@@ -23,7 +23,7 @@ class MessageReactionManager {
       this.cache[message_reaction] = new Reaction(
         this._client,
         existingReactions[message_reaction],
-        this.guild.id.toString()
+        this.guild.id.toString(),
       );
   }
 
@@ -39,7 +39,7 @@ class MessageReactionManager {
       this.cache[emoji] = new Reaction(
         this._client,
         data,
-        this.guild.id.toString()
+        this.guild.id.toString(),
       );
     }
 
@@ -54,7 +54,7 @@ class MessageReactionManager {
   removeReaction(user_id, emoji) {
     if (this.cache[emoji]) {
       this.cache[emoji]._reacted = this.cache[emoji]._reacted.filter(
-        (userId) => userId != user_id
+        (userId) => userId != user_id,
       );
 
       if (this.cache[emoji]._reacted.length == 0) delete this.cache[emoji];

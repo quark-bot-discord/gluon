@@ -36,7 +36,7 @@ class GuildInviteManager {
     this.cache.clear();
 
     return data.map(
-      (raw) => new Invite(this._client, raw, this.guild?.id?.toString())
+      (raw) => new Invite(this._client, raw, this.guild?.id?.toString()),
     );
   }
 
