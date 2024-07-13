@@ -2,16 +2,15 @@
 const WebSocket = require("ws");
 const erlpack = require("erlpack");
 const ZlibSync = require("zlib-sync");
-const Heartbeat = require("./structures/_1");
-const Identify = require("./structures/_2");
-const UpdatePresence = require("./structures/_3");
-const Resume = require("./structures/_6");
+const _heartbeat = require("./structures/_heartbeat");
+const _identify = require("./structures/_identify");
 const EventHandler = require("./eventHandler");
 const chalk = require("chalk");
 const { NAME, GATEWAY_RECONNECT_CLOSE_CODES } = require("../constants");
 const generateWebsocketURL = require("../util/generateWebsocketURL");
 const { OPEN } = require("ws");
-const RequestGuildMembers = require("./structures/_8");
+const _updatePresence = require("./structures/_updatePresence");
+const _resume = require("./structures/_resume");
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -180,7 +179,7 @@ class WS {
   updatePresence(name, type, status, afk, since) {
     if (this.ws.readyState != OPEN) return;
 
-    this.ws.send(new UpdatePresence(name, type, status, afk, since));
+    this.ws.send(_updatePresence(name, type, status, afk, since));
   }
 
   heartbeatInit() {
@@ -203,7 +202,7 @@ class WS {
 
     if (response != true) this.waitingForHeartbeatACK = true;
 
-    this.ws.send(new Heartbeat(this.s));
+    this.ws.send(_heartbeat(this.s));
     // we'll close the websocket if a heartbeat ACK is not received
     // unless its us responding to an opcode 1
     if (response != true)
@@ -230,7 +229,7 @@ class WS {
       }" and INTENTS: "${this.intents}"`,
     );
 
-    this.ws.send(new Identify(this.token, this.shard, this.intents));
+    this.ws.send(_identify(this.token, this.shard, this.intents));
   }
 
   reconnect() {
@@ -267,7 +266,7 @@ class WS {
       } and sequence ${this.s}`,
     );
 
-    this.ws.send(new Resume(this.token, this.sessionId, this.s));
+    this.ws.send(_resume(this.token, this.sessionId, this.s));
 
     this.resuming = false;
   }
