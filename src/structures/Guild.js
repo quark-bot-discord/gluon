@@ -611,12 +611,12 @@ class Guild {
    * Returns the client member for this guild.
    * @returns {Promise<Member>}
    */
-  async me() {
+  me() {
     const cached = this.members.cache.get(this._client.user.id.toString());
 
     if (cached) return cached;
 
-    return await this.members.fetch(this._client.user.id);
+    return this.members.fetch(this._client.user.id);
   }
 
   /**
