@@ -200,8 +200,8 @@ class Embed {
 
     count += this.title ? this.title.length : 0;
     count += this.description ? this.description.length : 0;
-    count += this.footer && this.footer.text ? this.footer.text.length : 0;
-    count += this.author && this.author.name ? this.author.name.length : 0;
+    count += this.footer?.text ? this.footer.text.length : 0;
+    count += this.author?.name ? this.author.name.length : 0;
 
     for (let i = 0; i < this.fields.length; i++)
       count +=
