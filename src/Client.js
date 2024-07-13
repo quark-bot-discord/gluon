@@ -264,7 +264,7 @@ class Client extends EventsEmitter {
       },
       (err, data) => {
         if (err) console.log(err);
-      }
+      },
     );
   }
 
@@ -356,7 +356,7 @@ class Client extends EventsEmitter {
   async postWebhook(
     { id, token },
     content,
-    { embeds, components, files } = {}
+    { embeds, components, files } = {},
   ) {
     const body = {};
 
@@ -381,7 +381,7 @@ class Client extends EventsEmitter {
     channel_id,
     guild_id,
     content,
-    { embed, embeds, components, files, suppressMentions = false } = {}
+    { embed, embeds, components, files, suppressMentions = false } = {},
   ) {
     const body = {};
 
@@ -400,7 +400,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "postCreateMessage",
       [channel_id],
-      body
+      body,
     );
 
     return new Message(
@@ -408,7 +408,7 @@ class Client extends EventsEmitter {
       data,
       channel_id.toString(),
       guild_id.toString(),
-      false
+      false,
     );
   }
 
@@ -426,7 +426,7 @@ class Client extends EventsEmitter {
     guild_id,
     message_id,
     content,
-    { embed, components } = {}
+    { embed, components } = {},
   ) {
     const body = {};
 
@@ -444,7 +444,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "patchEditMessage",
       [channel_id, message_id],
-      body
+      body,
     );
 
     return new Message(this, data, channel_id, guild_id);
@@ -462,7 +462,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "postFollowNewsChannel",
       ["822906135048487023"],
-      body
+      body,
     );
   }
 
@@ -510,7 +510,7 @@ class Client extends EventsEmitter {
       data,
       user_id.toString(),
       guild_id.toString(),
-      data.user
+      data.user,
     );
 
     return member;
@@ -580,7 +580,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "postBulkDeleteMessages",
       [channel_id],
-      body
+      body,
     );
   }
 
@@ -598,7 +598,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "deleteChannelMessage",
       [channel_id, message_id],
-      body
+      body,
     );
   }
 
@@ -612,7 +612,7 @@ class Client extends EventsEmitter {
   async fetchChannelMessages(
     guild_id,
     channel_id,
-    { around, before, after, limit }
+    { around, before, after, limit },
   ) {
     const body = {};
 
@@ -627,7 +627,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "getChannelMessages",
       [channel_id],
-      body
+      body,
     );
 
     let messages = [];
@@ -650,7 +650,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "postCreateWebhook",
       [channel_id],
-      body
+      body,
     );
 
     return data;
@@ -670,7 +670,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "patchModifyWebhook",
       [webhook_id],
-      body
+      body,
     );
 
     return data;
@@ -702,7 +702,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
-      body
+      body,
     );
 
     return data;
@@ -752,7 +752,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "getSearchGuildMembers",
       [guildId],
-      body
+      body,
     );
     if (data.length != 0) {
       let members = [];
@@ -764,8 +764,8 @@ class Client extends EventsEmitter {
             data[i],
             data[i].user.id,
             guildId.toString(),
-            data[i].user
-          )
+            data[i].user,
+          ),
         );
 
       return members;
@@ -794,7 +794,7 @@ class Client extends EventsEmitter {
       this.baseURL,
       this.name,
       this.version,
-      this.token
+      this.token,
     );
 
     this.request
@@ -824,7 +824,7 @@ class Client extends EventsEmitter {
                   generateWebsocketURL(
                     this._sessionData
                       ? this._sessionData[i].resumeGatewayUrl
-                      : gatewayInfo.url
+                      : gatewayInfo.url,
                   ),
                   [this.shardIds[i], this.totalShards],
                   this.intents,
@@ -835,8 +835,8 @@ class Client extends EventsEmitter {
                   this._sessionData
                     ? this._sessionData[i].resumeGatewayUrl
                     : undefined,
-                  this.softRestartFunction
-                )
+                  this.softRestartFunction,
+                ),
               );
           }, 6000 * i);
 
@@ -916,7 +916,7 @@ class Client extends EventsEmitter {
                 if (this.cacheMessages == true) {
                   this.emit(
                     "debug",
-                    `Sweeping messages for GUILD ${guild.id}...`
+                    `Sweeping messages for GUILD ${guild.id}...`,
                   );
 
                   let cacheCount = guild.calculateMessageCacheCount() * 2;
@@ -925,25 +925,25 @@ class Client extends EventsEmitter {
 
                   this.emit(
                     "debug",
-                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`
+                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`,
                   );
 
                   guild.channels.cache.forEach(async (channel) => {
                     this.emit(
                       "debug",
-                      `Sweeping messages for CHANNEL ${channel.id}...`
+                      `Sweeping messages for CHANNEL ${channel.id}...`,
                     );
 
                     const nowCached = channel.messages.sweepMessages(
                       cacheCount,
-                      currentTime
+                      currentTime,
                     );
 
                     this.emit(
                       "debug",
                       `New cache size of ${nowCached || 0} for CHANNEL ${
                         guild.id
-                      }...`
+                      }...`,
                     );
                   });
                 }
@@ -954,7 +954,7 @@ class Client extends EventsEmitter {
                 ) {
                   this.emit(
                     "debug",
-                    `Sweeping members for GUILD ${guild.id}...`
+                    `Sweeping members for GUILD ${guild.id}...`,
                   );
 
                   let cacheCount = guild.calculateMemberCacheCount();
@@ -963,12 +963,12 @@ class Client extends EventsEmitter {
 
                   this.emit(
                     "debug",
-                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`
+                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`,
                   );
 
                   this.emit(
                     "debug",
-                    `Sweeping members for GUILD ${guild.id}...`
+                    `Sweeping members for GUILD ${guild.id}...`,
                   );
 
                   const nowCached = guild.members.sweepMembers(cacheCount);
@@ -977,7 +977,7 @@ class Client extends EventsEmitter {
                     "debug",
                     `New cache size of ${nowCached || 0} for GUILD ${
                       guild.id
-                    }...`
+                    }...`,
                   );
                 }
               });
@@ -994,7 +994,7 @@ class Client extends EventsEmitter {
       .catch((error) => {
         this.emit(
           "debug",
-          "Get gateway bot request failed, terminating process"
+          "Get gateway bot request failed, terminating process",
         );
 
         console.log(error);

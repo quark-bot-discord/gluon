@@ -29,7 +29,7 @@
         "meta": {
             "range": [
                 92,
-                1909
+                2113
             ],
             "filename": "Reaction.js",
             "lineno": 6,
@@ -58,7 +58,7 @@
         "meta": {
             "range": [
                 426,
-                1390
+                1230
             ],
             "filename": "Reaction.js",
             "lineno": 14,
@@ -121,7 +121,7 @@
         "meta": {
             "range": [
                 92,
-                1909
+                2113
             ],
             "filename": "Reaction.js",
             "lineno": 6,
@@ -181,7 +181,7 @@
         "meta": {
             "range": [
                 534,
-                554
+                555
             ],
             "filename": "Reaction.js",
             "lineno": 19,
@@ -189,7 +189,7 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000019",
-                "name": "this.client",
+                "name": "this._client",
                 "type": "Identifier",
                 "value": "client",
                 "paramnames": []
@@ -201,18 +201,18 @@
                 "Client"
             ]
         },
-        "name": "client",
-        "longname": "Reaction#client",
+        "name": "_client",
+        "longname": "Reaction#_client",
         "kind": "member",
         "memberof": "Reaction",
         "scope": "instance"
     },
     {
-        "comment": "/**\n     * The guild that this reaction belongs to.\n     * @type {Guild?}\n     */",
+        "comment": "/**\n     * The id of the guild that this reaction belongs to.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                647,
-                706
+                658,
+                691
             ],
             "filename": "Reaction.js",
             "lineno": 25,
@@ -220,39 +220,7 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000025",
-                "name": "this.guild",
-                "type": "LogicalExpression",
-                "value": "",
-                "paramnames": []
-            }
-        },
-        "description": "The guild that this reaction belongs to.",
-        "type": {
-            "names": [
-                "Guild"
-            ]
-        },
-        "nullable": true,
-        "name": "guild",
-        "longname": "Reaction#guild",
-        "kind": "member",
-        "memberof": "Reaction",
-        "scope": "instance"
-    },
-    {
-        "comment": "/**\n       * The id of the guild that this reaction belongs to.\n       * @type {BigInt?}\n       */",
-        "meta": {
-            "range": [
-                841,
-                873
-            ],
-            "filename": "Reaction.js",
-            "lineno": 32,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000048",
-                "name": "this.guild_id",
+                "name": "this._guild_id",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -264,9 +232,8 @@
                 "BigInt"
             ]
         },
-        "nullable": true,
-        "name": "guild_id",
-        "longname": "Reaction#guild_id",
+        "name": "_guild_id",
+        "longname": "Reaction#_guild_id",
         "kind": "member",
         "memberof": "Reaction",
         "scope": "instance"
@@ -275,15 +242,15 @@
         "comment": "/**\n       * The emoji used for the reaction.\n       * @type {Emoji}\n       */",
         "meta": {
             "range": [
-                995,
-                1018
+                813,
+                836
             ],
             "filename": "Reaction.js",
-            "lineno": 39,
+            "lineno": 32,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000062",
+                "id": "astnode100000039",
                 "name": "this.emoji",
                 "type": "MemberExpression",
                 "value": "data.emoji",
@@ -306,15 +273,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1029,
-                1081
+                847,
+                899
             ],
             "filename": "Reaction.js",
-            "lineno": 40,
+            "lineno": 33,
             "columnno": 9,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000070",
+                "id": "astnode100000047",
                 "name": "this.emoji",
                 "type": "NewExpression",
                 "value": "",
@@ -332,15 +299,15 @@
         "comment": "/**\n     * Users who reacted with this emoji.\n     * @type {Array<BigInt>}\n     */",
         "meta": {
             "range": [
-                1175,
-                1210
+                993,
+                1050
             ],
             "filename": "Reaction.js",
-            "lineno": 46,
+            "lineno": 39,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000081",
+                "id": "astnode100000058",
                 "name": "this._reacted",
                 "type": "LogicalExpression",
                 "value": "",
@@ -363,15 +330,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1334,
-                1385
+                1174,
+                1225
             ],
             "filename": "Reaction.js",
-            "lineno": 53,
+            "lineno": 46,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000095",
+                "id": "astnode100000080",
                 "name": "this.initial_reactor",
                 "type": "CallExpression",
                 "value": "",
@@ -389,15 +356,15 @@
         "comment": "/**\n   * The number of reactions to this message.\n   * @readonly\n   * @type {Number}\n   */",
         "meta": {
             "range": [
-                1487,
-                1537
+                1327,
+                1377
             ],
             "filename": "Reaction.js",
-            "lineno": 61,
+            "lineno": 54,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000104",
+                "id": "astnode100000089",
                 "name": "Reaction#count",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -424,15 +391,15 @@
         "comment": "/**\n   * The member objects of the members who reacted. Returns the user id of the member cannot be found.\n   * @readonly\n   * @type {Array<Member | BigInt>}\n   */",
         "meta": {
             "range": [
-                1707,
-                1907
+                1547,
+                1747
             ],
             "filename": "Reaction.js",
-            "lineno": 70,
+            "lineno": 63,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000114",
+                "id": "astnode100000099",
                 "name": "Reaction#reacted",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -459,15 +426,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1778,
-                1834
+                1618,
+                1674
             ],
             "filename": "Reaction.js",
-            "lineno": 72,
+            "lineno": 65,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000129",
+                "id": "astnode100000114",
                 "name": "member",
                 "type": "CallExpression",
                 "value": ""
@@ -482,18 +449,155 @@
         "params": []
     },
     {
+        "comment": "/**\n   * The guild that this reaction belongs to.\n   * @type {Guild?}\n   * @readonly\n   */",
+        "meta": {
+            "range": [
+                1844,
+                1938
+            ],
+            "filename": "Reaction.js",
+            "lineno": 77,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000136",
+                "name": "Reaction#guild",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The guild that this reaction belongs to.",
+        "type": {
+            "names": [
+                "Guild"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "name": "guild",
+        "longname": "Reaction#guild",
+        "kind": "member",
+        "memberof": "Reaction",
+        "scope": "instance",
+        "params": []
+    },
+    {
         "comment": "",
         "meta": {
             "range": [
-                1911,
-                1936
+                1942,
+                2111
             ],
             "filename": "Reaction.js",
-            "lineno": 80,
+            "lineno": 81,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000159",
+                "name": "Reaction#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "toJSON",
+        "longname": "Reaction#toJSON",
+        "kind": "function",
+        "memberof": "Reaction",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1972,
+                1989
+            ],
+            "filename": "Reaction.js",
+            "lineno": 83,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000165",
+                "name": "emoji",
+                "type": "MemberExpression",
+                "value": "this.emoji"
+            }
+        },
+        "undocumented": true,
+        "name": "emoji",
+        "longname": "emoji",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1997,
+                2042
+            ],
+            "filename": "Reaction.js",
+            "lineno": 84,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000169",
+                "name": "_reacted",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "_reacted",
+        "longname": "_reacted",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2050,
+                2099
+            ],
+            "filename": "Reaction.js",
+            "lineno": 85,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000181",
+                "name": "initial_reactor",
+                "type": "ChainExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "initial_reactor",
+        "longname": "initial_reactor",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2115,
+                2140
+            ],
+            "filename": "Reaction.js",
+            "lineno": 90,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000152",
+                "id": "astnode100000184",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "Reaction",

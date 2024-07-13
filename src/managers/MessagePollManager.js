@@ -12,7 +12,7 @@ class MessagePollManager {
     for (const answer_id in existingResponses)
       this.cache.set(
         answer_id,
-        existingResponses[answer_id].map((v) => BigInt(v))
+        existingResponses[answer_id].map((v) => BigInt(v)),
       );
   }
 
@@ -40,7 +40,7 @@ class MessagePollManager {
     if (currentUserList)
       this.cache.set(
         answer_id,
-        currentUserList.filter((x) => x != BigInt(user_id))
+        currentUserList.filter((x) => x != BigInt(user_id)),
       );
   }
 

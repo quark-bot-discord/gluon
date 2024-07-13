@@ -150,7 +150,7 @@ class GuildMemberManager {
       data,
       user_id,
       this.guild.id.toString(),
-      data.user
+      data.user,
     );
   }
 
@@ -169,7 +169,7 @@ class GuildMemberManager {
     const data = await this._client.request.makeRequest(
       "getSearchGuildMembers",
       [this.guild.id],
-      body
+      body,
     );
     if (data.length != 0) {
       let members = [];
@@ -181,8 +181,8 @@ class GuildMemberManager {
             data[i],
             data[i].user.id,
             this.guild.id.toString(),
-            data[i].user
-          )
+            data[i].user,
+          ),
         );
 
       return members;

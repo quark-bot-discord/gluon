@@ -13,7 +13,6 @@ class Emoji {
    * @param {Boolean?} nocache Whether this emoji should be cached or not.
    */
   constructor(client, data, guild_id, nocache = false) {
-
     /**
      * The client instance.
      * @type {Client}
