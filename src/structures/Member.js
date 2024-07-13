@@ -71,8 +71,7 @@ class Member {
        * @type {Number?}
        */
       this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
-    else if (existing?.joined_at)
-      this.joined_at = existing.joined_at;
+    else if (existing?.joined_at) this.joined_at = existing.joined_at;
 
     /**
      * The UNIX timestamp for when this member's timeout expires, if applicable.

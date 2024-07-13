@@ -95,8 +95,7 @@ class Guild {
        * @type {Number?}
        */
       this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
-    else if (existing?.joined_at)
-      this.joined_at = existing.joined_at;
+    else if (existing?.joined_at) this.joined_at = existing.joined_at;
 
     if (data.unavailable == true)
       /**
@@ -111,8 +110,7 @@ class Guild {
        * @type {Number}
        */
       this.member_count = data.member_count;
-    else if (existing?.member_count)
-      this.member_count = existing.member_count;
+    else if (existing?.member_count) this.member_count = existing.member_count;
     else this.member_count = 2;
 
     /**

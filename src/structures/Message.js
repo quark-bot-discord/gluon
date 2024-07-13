@@ -117,8 +117,7 @@ class Message {
         this.attachments.push(
           new Attachment(this._client, data.attachments[i]),
         );
-    else if (existing?.attachments)
-      this.attachments = existing.attachments;
+    else if (existing?.attachments) this.attachments = existing.attachments;
 
     if (this.attachments.length == 0 && onlyfiles == true) nocache = true;
 
@@ -243,8 +242,7 @@ class Message {
      * @type {BigInt?}
      */
     if (data.webhook_id) this.webhook_id = BigInt(data.webhook_id);
-    else if (existing?.webhook_id)
-      this.webhook_id = existing.webhook_id;
+    else if (existing?.webhook_id) this.webhook_id = existing.webhook_id;
 
     /**
      * Stickers sent with this message.
