@@ -29,7 +29,7 @@
         "meta": {
             "range": [
                 78,
-                1539
+                1702
             ],
             "filename": "VoiceChannel.js",
             "lineno": 6,
@@ -59,7 +59,7 @@
         "meta": {
             "range": [
                 447,
-                1537
+                1538
             ],
             "filename": "VoiceChannel.js",
             "lineno": 14,
@@ -132,7 +132,7 @@
         "meta": {
             "range": [
                 78,
-                1539
+                1702
             ],
             "filename": "VoiceChannel.js",
             "lineno": 6,
@@ -398,15 +398,116 @@
         "comment": "",
         "meta": {
             "range": [
-                1541,
-                1570
+                1542,
+                1700
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 51,
+            "lineno": 50,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000142",
+                "name": "VoiceChannel#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "toJSON",
+        "longname": "VoiceChannel#toJSON",
+        "kind": "function",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1597,
+                1618
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 53,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000153",
+                "name": "bitrate",
+                "type": "MemberExpression",
+                "value": "this.bitrate"
+            }
+        },
+        "undocumented": true,
+        "name": "bitrate",
+        "longname": "bitrate",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1626,
+                1653
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 54,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000157",
+                "name": "user_limit",
+                "type": "MemberExpression",
+                "value": "this.user_limit"
+            }
+        },
+        "undocumented": true,
+        "name": "user_limit",
+        "longname": "user_limit",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1661,
+                1688
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 55,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000161",
+                "name": "rtc_region",
+                "type": "MemberExpression",
+                "value": "this.rtc_region"
+            }
+        },
+        "undocumented": true,
+        "name": "rtc_region",
+        "longname": "rtc_region",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1704,
+                1733
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 60,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000143",
+                "id": "astnode100000166",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "VoiceChannel",
