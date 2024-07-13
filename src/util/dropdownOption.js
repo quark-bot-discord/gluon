@@ -6,11 +6,6 @@ const resolveEmoji = require("./resolveEmoji");
  */
 class DropdownOption {
   /**
-   * Creates a dropdown option.
-   */
-  constructor() {}
-
-  /**
    * Sets the label.
    * @param {String} label Sets the label.
    * @returns {DropdownOption}
