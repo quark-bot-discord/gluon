@@ -29,17 +29,10 @@ class Channel {
     this.id = BigInt(data.id);
 
     /**
-     * The guild that this channel belongs to.
-     * @type {Guild?}
+     * The ID of the guild that this channel belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The ID of the guild that this channel belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     /**
      * The type of channel.
@@ -88,30 +81,17 @@ class Channel {
 
     if (typeof data.parent_id == "string") {
       /**
-       * The parent channel.
-       * @type {Channel}
+       * The id of the parent channel.
+       * @type {BigInt?}
        */
-      this.parent = this.guild?.channels.cache.get(data.parent_id);
-      if (!this.parent)
-        /**
-         * The id of the parent channel.
-         * @type {BigInt}
-         */
-        this.parent_id = BigInt(data.parent_id);
+      this._parent_id = BigInt(data.parent_id);
     } else if (
       typeof data.parent_id != "string" &&
       data.parent_id === undefined &&
       existing &&
-      existing.parent
+      typeof existing._parent_id == "bigint"
     )
-      this.parent = existing.parent;
-    else if (
-      typeof data.parent_id != "string" &&
-      data.parent_id === undefined &&
-      existing &&
-      typeof existing.parent_id == "bigint"
-    )
-      this.parent_id = existing.parent_id;
+      this._parent_id = existing._parent_id;
 
     this._attributes = data._attributes ?? 0;
 
@@ -142,6 +122,15 @@ class Channel {
    */
   get nsfw() {
     return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+  }
+
+  /**
+   * The guild that this channel belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
   }
 
   /**
@@ -181,10 +170,35 @@ class Channel {
     return new Message(
       this._client,
       data,
-      this.id.toString(),
-      this.guild?.id.toString() || this.guild_id.toString(),
+      String(this.id),
+      String(this._guild_id),
       false
     );
+  }
+
+  /**
+   * The parent channel.
+   * @type {Channel?}
+   * @readonly
+   */
+  get parent() {
+    return this._parent_id
+      ? this.guild?.channels.cache.get(String(this._parent_id)) || null
+      : null;
+  }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      type: this.type,
+      name: this.name,
+      topic: this.topic,
+      rate_limit_per_user: this.rate_limit_per_user,
+      parent_id: this._parent_id ? String(this._parent_id) : undefined,
+      _attributes: this._attributes,
+      _cache_options: this._cache_options,
+      messages: this.messages,
+    };
   }
 }
 

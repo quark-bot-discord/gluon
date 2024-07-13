@@ -137,6 +137,10 @@ class ChannelMessageManager {
 
     return this.cache.size;
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = ChannelMessageManager;

@@ -39,6 +39,10 @@ class GuildRoleManager {
 
     return matchedRole;
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildRoleManager;

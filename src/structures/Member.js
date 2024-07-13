@@ -33,17 +33,10 @@ class Member {
     this._client = client;
 
     /**
-     * The guild that this member belongs to.
-     * @type {Guild?}
+     * The id of the guild that this member belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this member belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     const existing = this.guild?.members.cache.get(user_id) || null;
 
@@ -111,11 +104,11 @@ class Member {
       this._attributes |= 0b1 << 1;
 
     if (data.avatar !== undefined)
-      this.avatar = data.avatar
+      this._avatar = data.avatar
         ? BigInt("0x" + data.avatar.replace("a_", ""))
         : null;
     else if (data.avatar === undefined && existing && existing.avatar)
-      this.avatar == existing.avatar;
+      this._avatar = existing.avatar;
 
     if (data.roles && this.guild && this._client.cacheRoles == true) {
       this._roles = [];
@@ -137,6 +130,15 @@ class Member {
   }
 
   /**
+   * The guild that this member belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(String(this._guild_id)) || null;
+  }
+
+  /**
    * The member's roles.
    * @readonly
    * @type {Array<Role>}
@@ -148,7 +150,7 @@ class Member {
 
     roles.push(
       this.guild.roles.cache.get(
-        this.guild?.id.toString() || this.guild_id?.toString()
+        String(this._guild_id)
       )
     );
 
@@ -204,10 +206,10 @@ class Member {
    * @readonly
    * @type {String?}
    */
-  get originalAvatarHash() {
-    return this.avatar
+  get _originalAvatarHash() {
+    return this._avatar
       ? // eslint-disable-next-line quotes
-        `${this.avatarIsAnimated ? "a_" : ""}${this.formattedAvatarHash}`
+        `${this.avatarIsAnimated ? "a_" : ""}${this._formattedAvatarHash}`
       : null;
   }
 
@@ -216,10 +218,10 @@ class Member {
    * @readonly
    * @type {String}
    */
-  get formattedAvatarHash() {
-    if (!this.avatar) return null;
+  get _formattedAvatarHash() {
+    if (!this._avatar) return null;
 
-    let formattedHash = this.avatar.toString(16);
+    let formattedHash = this._avatar.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
@@ -234,11 +236,11 @@ class Member {
    * @type {String}
    */
   get displayAvatarURL() {
-    return this.avatar
+    return this._avatar
       ? // eslint-disable-next-line quotes
         `${CDN_BASE_URL}/guilds/${this.guild.id}/users/${
           this.user.id
-        }/avatars/${this.originalAvatarHash}.${
+        }/avatars/${this._originalAvatarHash}.${
           this.avatarIsAnimated ? "gif" : "png"
         }`
       : this.user.displayAvatarURL;
@@ -282,7 +284,7 @@ class Member {
 
     await this._client.request.makeRequest(
       "putAddGuildMemberRole",
-      [this.guild?.id || this.guild_id, this.id, role_id],
+      [this._guild_id, this.id, role_id],
       body
     );
   }
@@ -307,7 +309,7 @@ class Member {
 
     await this._client.request.makeRequest(
       "deleteRemoveMemberRole",
-      [this.guild?.id || this.guild_id, this.id, role_id],
+      [this._guild_id, this.id, role_id],
       body
     );
   }
@@ -334,7 +336,7 @@ class Member {
 
     await this._client.request.makeRequest(
       "patchGuildMember",
-      [this.guild?.id || this.guild_id, this.id],
+      [this._guild_id, this.id],
       body
     );
   }
@@ -360,7 +362,7 @@ class Member {
 
     await this._client.request.makeRequest(
       "patchGuildMember",
-      [this.guild?.id || this.guild_id, this.id],
+      [this._guild_id, this.id],
       body
     );
   }
@@ -386,7 +388,7 @@ class Member {
 
     await this._client.request.makeRequest(
       "patchGuildMember",
-      [this.guild?.id || this.guild_id, this.id],
+      [this._guild_id, this.id],
       body
     );
   }
@@ -396,9 +398,9 @@ class Member {
       user: this.user,
       nick: this.nick,
       joined_at: this.joined_at ? this.joined_at * 1000 : undefined,
-      avatar: this.originalAvatarHash,
-      permissions: this.permissions ? String(this.permissions) : undefined,
-      roles: this.roles.map((r) => String(r.id)),
+      avatar: this._originalAvatarHash,
+      permissions: String(this.permissions),
+      roles: Array.isArray(this._roles) ? this._roles.map((r) => String(r)) : undefined,
       communication_disabled_until: this.timeout_until
         ? this.timeout_until * 1000
         : undefined,

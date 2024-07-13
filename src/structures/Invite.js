@@ -20,39 +20,22 @@ class Invite {
     this._client = client;
 
     /**
-     * The guild that this role belongs to.
-     * @type {Guild?}
+     * The id of the guild that this role belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this role belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     /**
      * The code for the invite.
      * @type {String}
      */
-    this.code = data.code;
+    this._code = data.code;
 
     /**
-     * The channel the invite is directed to.
-     * @type {(TextChannel | VoiceChannel)?}
+     * The id of the channel the invite is directed to.
+     * @type {BigInt}
      */
-    this.channel =
-      this.guild && (data.channel || data.channel_id)
-        ? this.guild.channels.cache.get(data.channel?.id || data.channel_id)
-        : null;
-
-    if (!this.channel && (data.channel || data.channel_id))
-      /**
-       * The id of the channel the invite is directed to.
-       * @type {BigInt?}
-       */
-      this.channel_id = BigInt(data.channel?.id || data.channel_id);
+    this._channel_id = BigInt(data.channel_id);
 
     if (data.inviter)
       /**
@@ -93,21 +76,53 @@ class Invite {
     if (
       nocache == false &&
       this._client.cacheInvites == true &&
-      this.code &&
+      this._code &&
       ((this.expires && this.expires > Date.now() / 1000) || !this.expires)
     )
       this.guild?.invites.cache.set(data.code, this);
     else
       this._client.emit(
         "debug",
-        `NOT CACHING INVITE ${this.code} ${this.expires} ${
+        `NOT CACHING INVITE ${this._code} ${this.expires} ${
           (Date.now() / 1000) | 0
         }`
       );
   }
 
+  /**
+   * The channel the invite is directed to.
+   * @type {(TextChannel | VoiceChannel)?}
+   */
+  get channel() {
+    return this._channel_id ? this.guild.channels.cache.get(String(this._channel_id)) : null;
+  }
+
+  /**
+   * The code of the invite.
+   * @type {String}
+   * @readonly
+   */
   get id() {
-    return this.code;
+    return this._code;
+  }
+
+  /**
+   * The guild that this role belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id) || null;
+  }
+
+  toJSON() {
+    return {
+      code: this._code,
+      channel: this.channel,
+      inviter: this.inviter,
+      uses: this.uses,
+      expires: this.expires,
+    };
   }
 }
 

@@ -20,17 +20,10 @@ class VoiceState {
     this._client = client;
 
     /**
-     * The guild that this voice state belongs to.
-     * @type {Guild?}
+     * The id of the guild that this voice state belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this voice state belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     if (this.guild)
       nocache =
@@ -40,17 +33,10 @@ class VoiceState {
     const existing = this.guild?.voice_states.cache.get(data.user_id) || null;
 
     /**
-     * The channel involved.
-     * @type {Channel?}
+     * The id of the channel involved.
+     * @type {BigInt}
      */
-    this.channel = this.guild?.channels.cache.get(data.channel_id) || null;
-
-    if (!this.channel)
-      /**
-       * The id of the channel involved.
-       * @type {BigInt?}
-       */
-      this.channel_id = BigInt(data.channel_id);
+    this._channel_id = BigInt(data.channel_id);
 
     this._attributes = 0;
 
@@ -84,17 +70,10 @@ class VoiceState {
     else this.member = this.guild?.members.cache.get(data.user_id) || null;
 
     /**
-     * The user the voice state is about.
-     * @type {User?}
+     * The id of the user the voice state is about.
+     * @type {BigInt}
      */
-    this.user = this._client.users.cache.get(data.user_id) || null;
-
-    if (!this.user)
-      /**
-       * The id of the user the voice state is about.
-       * @type {BigInt?}
-       */
-      this.user_id = BigInt(data.user_id);
+    this._user_id = BigInt(data.user_id);
 
     /**
      * The UNIX time the user joined the voice channel.
@@ -178,6 +157,50 @@ class VoiceState {
    */
   get suppress() {
     return (this._attributes & (0b1 << 6)) == 0b1 << 6;
+  }
+
+  /**
+   * The guild that this voice state belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(String(this._guild_id)) || null;
+  }
+
+  /**
+   * The channel involved.
+   * @type {Channel?}
+   * @readonly
+   */
+  get channel() {
+    return this.guild?.channels.cache.get(String(this._channel_id)) || null;
+  }
+
+  /**
+   * The user the voice state is about.
+   * @type {User?}
+   * @readonly
+   */
+  get user() {
+    return this._client.users.cache.get(String(this._user_id)) || null;
+  }
+
+  toJSON() {
+    return {
+      guild_id: String(this._guild_id),
+      channel_id: String(this._channel_id),
+      deaf: this.deaf,
+      mute: this.mute,
+      self_deaf: this.self_deaf,
+      self_mute: this.self_mute,
+      self_stream: this.self_stream,
+      self_video: this.self_video,
+      suppress: this.suppress,
+      member: this.member,
+      user_id: String(this._user_id),
+      joined: this.joined,
+    };
   }
 }
 

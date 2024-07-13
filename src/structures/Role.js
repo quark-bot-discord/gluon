@@ -20,17 +20,10 @@ class Role {
     this._client = client;
 
     /**
-     * The guild that this role belongs to.
-     * @type {Guild?}
+     * The id of the guild that this role belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this role belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     /**
      * The id of the role.
@@ -60,7 +53,7 @@ class Role {
      * The role icon hash.
      * @type {String?}
      */
-    if (data.icon) this.icon = data.icon;
+    if (data.icon) this._icon = BigInt("0x" + data.icon);
 
     /**
      * The permissions for the role.
@@ -110,12 +103,63 @@ class Role {
   }
 
   /**
+   * The hash of the role's avatar, as it was received from Discord.
+   * @readonly
+   * @type {String?}
+   */
+  get _originalIconHash() {
+    return this._icon
+      ? // eslint-disable-next-line quotes
+        `${this._formattedIconHash}`
+      : null;
+  }
+
+  /**
+   * The hash of the role icon as a string.
+   * @readonly
+   * @type {String}
+   */
+  get _formattedIconHash() {
+    if (!this._icon) return null;
+
+    let formattedHash = this._icon.toString(16);
+
+    while (formattedHash.length != 32)
+      // eslint-disable-next-line quotes
+      formattedHash = "0" + formattedHash;
+
+    return formattedHash;
+  }
+
+  /**
    * The icon URL of the role.
    * @readonly
    * @type {String?}
    */
   get displayIconURL() {
-    return getRoleIcon(this.hash, this.id);
+    return getRoleIcon(this._originalIconHash, this.id);
+  }
+
+  /**
+   * The guild that this role belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+  }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      name: this.name,
+      color: this.color,
+      position: this.position,
+      permissions: String(this.permissions),
+      icon: this._originalIconHash,
+      _attributes: this._attributes,
+      tags: this.tags,
+    };
   }
 }
 

@@ -40,30 +40,16 @@ class Message {
     this._client = client;
 
     /**
-     * The guild that this message belongs to.
-     * @type {Guild?}
+     * The id of the guild that this message belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this message belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     /**
-     * The channel that this message belongs to.
-     * @type {Channel?}
+     * The id of the channel that this message belongs to.
+     * @type {BigInt}
      */
-    this.channel = this.guild?.channels.cache.get(channel_id) || null;
-
-    if (!this.channel)
-      /**
-       * The id of the channel that this message belongs to.
-       * @type {BigInt?}
-       */
-      this.channel_id = BigInt(channel_id);
+    this._channel_id = BigInt(channel_id);
 
     const existing =
       ignoreExisting != true
@@ -286,7 +272,7 @@ class Message {
         this._client.emit(
           "debug",
           `${
-            this.guild?.id?.toString() || this.guild_id?.toString()
+            this._guild_id?.toString()
           } NO CHANNEL`
         );
     }
@@ -347,6 +333,24 @@ class Message {
   }
 
   /**
+   * The guild that this message belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+  }
+
+  /**
+   * The channel that this message belongs to.
+   * @type {Channel?}
+   * @readonly
+   */
+  get channel() {
+    return this.guild?.channels.cache.get(this._channel_id.toString()) || null;
+  }
+
+  /**
    * Replies to the message.
    * @param {String} content The message content.
    * @param {Object?} options Embeds, components and files to attach to the message.
@@ -372,21 +376,21 @@ class Message {
 
     body.message_reference = {
       message_id: this.id.toString(),
-      channel_id: this.channel?.id.toString() || this.channel_id.toString(),
-      guild_id: this.guild?.id.toString() || this.guild_id.toString(),
+      channel_id: this._channel_id.toString(),
+      guild_id: this._guild_id.toString(),
     };
 
     const data = await this._client.request.makeRequest(
       "postCreateMessage",
-      [this.channel?.id || this.channel_id],
+      [this._channel_id],
       body
     );
 
     return new Message(
       this._client,
       data,
-      this.channel?.id.toString() || this.channel_id,
-      this.guild?.id.toString() || this.guild_id
+      this._channel_id,
+      this._guild_id
     );
   }
 
@@ -419,21 +423,21 @@ class Message {
     if (this.referenced_message)
       body.message_reference = {
         message_id: this.id.toString(),
-        channel_id: this.channel?.id.toString() || this.channel_id.toString(),
-        guild_id: this.guild?.id.toString() || this.guild_id.toString(),
+        channel_id: this._channel_id.toString(),
+        guild_id: this._guild_id.toString(),
       };
 
     const data = await this._client.request.makeRequest(
       "patchEditMessage",
-      [this.channel?.id || this.channel_id, this.id],
+      [this._channel_id, this.id],
       body
     );
 
     return new Message(
       this._client,
       data,
-      this.channel?.id.toString() || this.channel_id,
-      this.guild?.id.toString() || this.guild_id
+      this._channel_id,
+      this._guild_id
     );
   }
 
@@ -445,13 +449,13 @@ class Message {
 
     const cacheMultiplier =
       this._client.increasedCacheMultipliers.get(
-        this.guild?.id.toString() || this.guild_id.toString()
+        this._guild_id.toString()
       ) || 1;
     const key = hash
       .sha512()
       .update(
-        `${this.guild ? this.guild.id : this.guild_id}_${
-          this.channel ? this.channel.id : this.channel_id
+        `${this._guild_id}_${
+          this._channel_id
         }_${this.id}`
       )
       .digest("hex");
@@ -469,6 +473,25 @@ class Message {
     );
 
     this.channel.messages.cache.delete(this.id.toString());
+  }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      author: this.author,
+      member: this.member,
+      content: this.content,
+      _attributes: this._attributes,
+      attachments: this.attachments,
+      embeds: this.embeds,
+      poll: this.poll,
+      pollResponses: this.pollResponses,
+      message_snapshots: this.message_snapshots,
+      type: this.type,
+      referenced_message: this.reference?.message_id ? { id: String(this.reference.message_id) } : undefined,
+      sticker_items: this.sticker_items,
+      messageReactions: this.reactions,
+    };
   }
 }
 

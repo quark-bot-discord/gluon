@@ -46,6 +46,15 @@ class VoiceChannel extends Channel {
     if (nocache == false && this._client.cacheChannels == true)
       this.guild?.channels.cache.set(data.id, this);
   }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      bitrate: this.bitrate,
+      user_limit: this.user_limit,
+      rtc_region: this.rtc_region,
+    };
+  }
 }
 
 module.exports = VoiceChannel;

@@ -39,6 +39,10 @@ class GuildInviteManager {
       (raw) => new Invite(this._client, raw, this.guild?.id?.toString())
     );
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildInviteManager;

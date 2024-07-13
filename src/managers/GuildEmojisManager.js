@@ -35,6 +35,10 @@ class GuildEmojisManager {
 
     return new Emoji(this._client, data, this.guild.id.toString(), data.user);
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildEmojisManager;

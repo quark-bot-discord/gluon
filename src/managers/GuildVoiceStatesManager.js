@@ -10,6 +10,10 @@ class GuildVoiceStatesManager {
   constructor() {
     this.cache = new Map();
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildVoiceStatesManager;

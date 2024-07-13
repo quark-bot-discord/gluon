@@ -80,7 +80,7 @@ class UserManager {
 
     for (let i = 0; i < currentCacheSize; i++)
       if (
-        (currentCacheValues.next().value.cached || 0) +
+        (currentCacheValues.next().value._cached || 0) +
           this._client.defaultUserExpiry <
         currentTime
       )
@@ -89,6 +89,10 @@ class UserManager {
     this.cleanup();
 
     return this.cache.size;
+  }
+
+  toJSON() {
+    return [...this.cache.values()];
   }
 }
 

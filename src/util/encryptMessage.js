@@ -1,5 +1,4 @@
 const hash = require("hash.js");
-const bundleMessage = require("./bundleMessage");
 const encryptText = require("./encryptText");
 
 /**
@@ -8,9 +7,7 @@ const encryptText = require("./encryptText");
  * @returns {String}
  */
 function encryptMessage(message) {
-  const bundledMessage = bundleMessage(message);
-
-  const messageString = JSON.stringify(bundledMessage);
+  const messageString = JSON.stringify(message);
 
   const key = hash
     .sha512()

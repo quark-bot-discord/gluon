@@ -24,9 +24,11 @@ class ScheduledEvent {
      */
     this.id = BigInt(data.id);
 
-    this.guild = this._client.guilds.cache.get(data.guild_id) || null;
-
-    if (!this.guild) this.guild_id = BigInt(data.guild_id);
+    /**
+     * The id of the guild that this event belongs to.
+     * @type {BigInt}
+     */
+    this._guild_id = BigInt(data.guild_id);
 
     // const existing = this.guild?.scheduledEvents.cache.get(data.id) || null;
 
@@ -41,17 +43,14 @@ class ScheduledEvent {
        * The id of the user who created the event.
        * @type {BigInt?}
        */
-      this.creator_id = BigInt(data.creator_id);
+      this._creator_id = BigInt(data.creator_id);
 
-    if (data.creator) {
-      const creator = new User(this._client, data.creator);
-      if (creator)
-        /**
-         * The user who created the event.
-         * @type {User?}
-         */
-        this.creator = creator;
-    }
+    if (data.creator)
+      /**
+       * The user who created the event.
+       * @type {User?}
+       */
+      this.creator = new User(this._client, data.creator);
 
     /**
      * The UNIX timestamp of the start time for the event.
@@ -68,7 +67,7 @@ class ScheduledEvent {
       this.scheduled_end_time =
         (new Date(data.scheduled_end_time).getTime() / 1000) | 0;
 
-    this.image = data.image ? BigInt("0x" + data.image) : null;
+    this._image = data.image ? BigInt("0x" + data.image) : null;
 
     /**
      * The number of users who have signed up for the event.
@@ -124,7 +123,7 @@ class ScheduledEvent {
        * The location of the event.
        * @type {String?}
        */
-      this.location = data.entity_metadata.location;
+      this.location = data.location ?? data.entity_metadata.location;
 
     if (nocache == false && this._client.cacheScheduledEvents == true)
       this.guild?.scheduled_events.cache.set(data.id, this);
@@ -135,10 +134,10 @@ class ScheduledEvent {
    * @readonly
    * @type {String?}
    */
-  get originalImageHash() {
-    return this.image
+  get _originalImageHash() {
+    return this._image
       ? // eslint-disable-next-line quotes
-        `${this.formattedAvatarHash}`
+        `${this._formattedImageHash}`
       : null;
   }
 
@@ -147,8 +146,8 @@ class ScheduledEvent {
    * @readonly
    * @type {String}
    */
-  get formattedImageHash() {
-    let formattedHash = this.image.toString(16);
+  get _formattedImageHash() {
+    let formattedHash = this._image.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
@@ -163,9 +162,9 @@ class ScheduledEvent {
    * @type {String?}
    */
   get displayImageURL() {
-    return this.image
+    return this._image
       ? // eslint-disable-next-line quotes
-        `${CDN_BASE_URL}/guild-events/${this.id}/${this.originalAvatarHash}.png`
+        `${CDN_BASE_URL}/guild-events/${this.id}/${this._originalImageHash}.png`
       : null;
   }
 
@@ -192,6 +191,34 @@ class ScheduledEvent {
     else if ((this._attributes & (0b1 << 5)) == 0b1 << 5) return "COMPLETED";
     else if ((this._attributes & (0b1 << 6)) == 0b1 << 6) return "CANCELED";
     else return "UNKNOWN";
+  }
+
+  /**
+   * The guild that this event belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(String(this._guild_id)) || null;
+  }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      guild_id: String(this._guild_id),
+      name: this.name,
+      creator_id: this._creator_id ? String(this._creator_id) : undefined,
+      creator: this.creator,
+      scheduled_start_time: this.scheduled_start_time * 1000,
+      scheduled_end_time: this.scheduled_end_time
+        ? this.scheduled_end_time * 1000
+        : undefined,
+      image: this._originalImageHash,
+      user_count: this.user_count,
+      entity_type: this.entity_type,
+      status: this.status,
+      location: this.location,
+    };
   }
 }
 

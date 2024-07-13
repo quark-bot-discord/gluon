@@ -37,6 +37,10 @@ class GuildChannelsManager {
 
     return cacheChannel(this._client, data, this.guild.id.toString());
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildChannelsManager;

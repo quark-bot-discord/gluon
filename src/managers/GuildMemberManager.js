@@ -212,6 +212,10 @@ class GuildMemberManager {
 
     return this.cache.size;
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildMemberManager;

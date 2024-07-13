@@ -13,6 +13,10 @@ class GuildManager {
 
     this.cache = new Map();
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildManager;

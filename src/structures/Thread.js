@@ -18,33 +18,45 @@ class Thread extends Channel {
     super(client, data, guild_id);
 
     /**
-     * The member who created this thread.
-     * @type {Member?}
+     * The ID of the user who created this thread.
+     * @type {BigInt}
      */
-    this.owner = this.guild.members.cache.get(data.owner_id) || null;
-
-    if (!this.owner)
-      /**
-       * The ID of the user who created this thread.
-       * @type {BigInt?}
-       */
-      this.owner_id = BigInt(data.owner_id);
+    this._owner_id = BigInt(data.owner_id);
 
     /**
-     * The text channel that this thread belongs to.
-     * @type {TextChannel?}
+     * The ID of the text channel that this thread belongs to.
+     * @type {BigInt}
      */
-    this.parent = this.guild?.channels.cache.get(data.parent_id) || null;
-
-    if (!this.parent)
-      /**
-       * The ID of the text channel that this thread belongs to.
-       * @type {BigInt?}
-       */
-      this.parent_id = BigInt(data.parent_id);
+    this._parent_id = BigInt(data.parent_id);
 
     if (nocache == false && data.archived != true)
       this.guild?.channels.cache.set(data.id, this);
+  }
+
+  /**
+   * The member who created this thread.
+   * @type {Member?}
+   * @readonly
+   */
+  get owner() {
+    return this.guild?.members.cache.get(String(this._owner_id)) || null;
+  }
+
+  /**
+   * The text channel that this thread belongs to.
+   * @type {TextChannel?}
+   * @readonly
+   */
+  get parent() {
+    return this.guild?.channels.cache.get(String(this._parent_id)) || null;
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      owner_id: String(this._owner_id),
+      parent_id: String(this._parent_id),
+    };
   }
 }
 

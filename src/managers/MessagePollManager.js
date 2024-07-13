@@ -43,6 +43,13 @@ class MessagePollManager {
         currentUserList.filter((x) => x != BigInt(user_id))
       );
   }
+
+  toJSON() {
+    const pollResponses = {};
+    for (const [key, values] of this.cache)
+      pollResponses[key] = values.map((v) => String(v));
+    return pollResponses;
+  }
 }
 
 module.exports = MessagePollManager;

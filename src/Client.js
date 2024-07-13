@@ -20,7 +20,6 @@ const WS = require("./gateway/index");
 const UserManager = require("./managers/UserManager");
 const GuildManager = require("./managers/GuildManager");
 const Message = require("./structures/Message");
-const bundleGuild = require("./util/bundleGuild");
 const Guild = require("./structures/Guild");
 const User = require("./structures/User");
 const generateWebsocketURL = require("./util/generateWebsocketURL");
@@ -329,12 +328,7 @@ class Client extends EventsEmitter {
    * @returns {Array<Object>}
    */
   bundleCache() {
-    const bundle = [];
-
-    for (const guild of this.guilds.cache.values())
-      bundle.push(bundleGuild(guild));
-
-    return bundle;
+    return this.guilds;
   }
 
   /**

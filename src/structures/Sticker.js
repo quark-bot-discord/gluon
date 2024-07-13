@@ -70,6 +70,14 @@ class Sticker {
 
     return `${CDN_BASE_URL}/stickers/${this.id}.${cdnImageFormat}`;
   }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      name: this.name,
+      format_type: this.format_type,
+    };
+  }
 }
 
 module.exports = Sticker;

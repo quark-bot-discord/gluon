@@ -28,7 +28,7 @@ class TextChannel extends Channel {
         new Message(
           this._client,
           data.messages[i],
-          this.id.toString(),
+          String(this.id),
           guild_id
         );
   }
@@ -56,6 +56,12 @@ class TextChannel extends Channel {
       [this.id],
       body
     );
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+    };
   }
 }
 

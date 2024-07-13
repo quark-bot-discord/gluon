@@ -60,6 +60,13 @@ class MessageReactionManager {
       if (this.cache[emoji]._reacted.length == 0) delete this.cache[emoji];
     }
   }
+
+  toJSON() {
+    const messageReactions = {};
+    for (const reaction in this.cache)
+      messageReactions[reaction] = this.cache[reaction];
+    return messageReactions;
+  }
 }
 
 module.exports = MessageReactionManager;

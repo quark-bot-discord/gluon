@@ -40,6 +40,10 @@ class GuildScheduledEventManager {
 
     return new ScheduledEvent(this._client, data);
   }
+
+  toJSON() {
+    return [...this.cache.values()];
+  }
 }
 
 module.exports = GuildScheduledEventManager;

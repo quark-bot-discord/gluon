@@ -24,21 +24,16 @@ class AuditLog {
      */
     this.id = BigInt(data.id);
 
-    if (data.guild_id) {
-      /**
-       * The guild that this audit log belongs to.
-       * @type {Guild?}
-       */
-      this.guild = this._client.guilds.cache.get(data.guild_id) || null;
+    /**
+     * The ID of the guild that this audit log belongs to.
+     * @type {BigInt}
+     */
+    this._guild_id = BigInt(data.guild_id);
 
-      if (!this.guild)
-        /**
-         * The ID of the guild that this audit log belongs to.
-         * @type {BigInt?}
-         */
-        this.guild_id = BigInt(data.guild_id);
-    }
-
+    /**
+     * The type of action that occurred.
+     * @type {Number}
+     */
     if (data.action_type) this.action_type = data.action_type;
 
     /**
@@ -85,10 +80,7 @@ class AuditLog {
          * The channel id involved with this audit log entry.
          * @type {BigInt?}
          */
-        this.channel_id = BigInt(data.options.channel_id);
-
-        if (this.guild)
-          this.channel = this.guild.channels.cache.get(data.options.channel_id);
+        this._channel_id = BigInt(data.options.channel_id);
       }
 
       if (data.options.count)
@@ -143,21 +135,33 @@ class AuditLog {
   }
 
   /**
-   * Converts this audit log structure to a JSON string.
-   * @returns {String}
+   * The guild that this audit log belongs to.
+   * @type {Guild?}
+   * @readonly
    */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+  }
+
+  /**
+   * The channel involved with this audit log entry.
+   * @type {TextChannel? | VoiceChannel?} The channel involved with this audit log entry.
+   * @readonly
+   */
+  get channel() {
+    return this.guild?.channels.cache.get(this._channel_id.toString()) || null;
+  }
+
   toJSON() {
     return {
       id: this.id.toString(),
-      guild_id: this.guild
-        ? this.guild.id.toString()
-        : this.guild_id?.toString(),
+      guild_id: String(this._guild_id),
       action_type: this.action_type,
-      target_id: this.target_id?.toString(),
-      executor_id: this.executor_id?.toString(),
+      target_id: this.target_id ? String(this.target_id) : undefined,
+      executor_id: this.executor_id ? String(this.executor_id) : undefined,
       reason: this.reason,
-      channel_id: this.channel_id?.toString(),
-      count: this.count?.toString(),
+      channel_id: this._channel_id ? String(this._channel_id) : undefined,
+      count: this.count ? String(this.count) : undefined,
       changes: this.changes,
     };
   }

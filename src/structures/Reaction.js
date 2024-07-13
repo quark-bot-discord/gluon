@@ -19,17 +19,10 @@ class Reaction {
     this._client = client;
 
     /**
-     * The guild that this reaction belongs to.
-     * @type {Guild?}
+     * The id of the guild that this reaction belongs to.
+     * @type {BigInt}
      */
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
-
-    if (!this.guild)
-      /**
-       * The id of the guild that this reaction belongs to.
-       * @type {BigInt?}
-       */
-      this.guild_id = BigInt(guild_id);
+    this._guild_id = BigInt(guild_id);
 
     if (data.emoji.mention)
       /**
@@ -43,7 +36,7 @@ class Reaction {
      * Users who reacted with this emoji.
      * @type {Array<BigInt>}
      */
-    this._reacted = data._reacted || [];
+    this._reacted = data._reacted.map((r) => BigInt(r)) || [];
 
     /**
      * The user who added the first reaction.
@@ -74,6 +67,23 @@ class Reaction {
       if (member) return member;
       else return userId;
     });
+  }
+
+  /**
+   * The guild that this reaction belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+  }
+
+  toJSON() {
+    return {
+      emoji: this.emoji,
+      _reacted: this._reacted.map((r) => String(r)),
+      initial_reactor: this.initial_reactor?.toString(),
+    };
   }
 }
 

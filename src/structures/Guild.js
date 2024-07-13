@@ -72,24 +72,23 @@ class Guild {
       this.description = existing.description;
     else if (!this.description) this.description = null;
 
-    // needed for join/leave logging
     /**
      * The guild icon hash.
-     * @type {String?}
+     * @type {BigInt?}
      */
-    this.icon = data.icon; // can this be converted to a bigint?
-    if (this.icon === undefined && existing && existing.icon)
-      this.icon = existing.icon;
-    else if (!this.icon) this.icon = null;
+    if (data.icon !== undefined)
+      this._icon = data.icon
+        ? BigInt("0x" + data.icon.replace("a_", ""))
+        : null;
+    else if (data.icon === undefined && existing && existing.icon)
+      this._icon = existing.icon;
 
-    // needed for permissions checking and join/leave logging
     /**
      * The id of the guild owner.
      * @type {BigInt}
      */
-    this.owner_id = BigInt(data.owner_id);
+    this._owner_id = BigInt(data.owner_id);
 
-    // useful to see how long a guild keeps the bot for
     if (data.joined_at)
       /**
        * UNIX (seconds) timestamp for when the bot user was added to this guild.
@@ -450,12 +449,50 @@ class Guild {
   }
 
   /**
+   * The hash of the guild's icon, as it was received from Discord.
+   * @readonly
+   * @type {String?}
+   */
+  get _originalIconHash() {
+    return this._icon
+      ? // eslint-disable-next-line quotes
+        `${this._formattedIconHash}`
+      : null;
+  }
+
+  /**
+   * The hash of the guild icon as a string.
+   * @readonly
+   * @type {String}
+   */
+  get _formattedIconHash() {
+    if (!this._icon) return null;
+
+    let formattedHash = this._icon.toString(16);
+
+    while (formattedHash.length != 32)
+      // eslint-disable-next-line quotes
+      formattedHash = "0" + formattedHash;
+
+    return formattedHash;
+  }
+
+  /**
    * The icon URL of the guild.
    * @readonly
    * @type {String?}
    */
   get displayIconURL() {
-    return getGuildIcon(this.icon, this.id);
+    return getGuildIcon(this._originalIconHash, this.id);
+  }
+
+  /**
+   * The owner of the guild.
+   * @type {Member}
+   * @readonly
+   */
+  get owner() {
+    return this.members.cache.get(String(this._owner_id));
   }
 
   /**
@@ -820,6 +857,35 @@ class Guild {
 
   cleanup() {
     this.members.cleanup();
+  }
+
+  toJSON() {
+    return {
+      id: String(this.id),
+      name: this.name,
+      icon: this._originalIconHash,
+      owner_id: String(this._owner_id),
+      joined_at: this.joined_at * 1000,
+      premium_tier: this.premium_tier,
+      unavailable: this.unavailable,
+      member_count: this.member_count,
+      preferred_locale: this.preferred_locale,
+      _cache_options: this._cache_options,
+      _attributes: this._attributes,
+      system_channel_id: this.system_channel_id
+        ? String(this.system_channel_id)
+        : undefined,
+      rules_channel_id: this.rules_channel_id
+        ? String(this.rules_channel_id)
+        : undefined,
+      members: this.members,
+      channels: this.channels,
+      threads: this.threads,
+      voice_states: this.voice_states,
+      roles: this.roles,
+      emojis: this.emojis,
+      invites: this.invites,
+    };
   }
 }
 

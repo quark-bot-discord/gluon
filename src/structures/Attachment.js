@@ -39,6 +39,15 @@ class Attachment {
      */
     this.url = data.url;
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      size: this.size,
+      url: this.url,
+    };
+  }
 }
 
 module.exports = Attachment;

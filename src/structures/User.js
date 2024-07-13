@@ -41,7 +41,7 @@ class User {
      * The avatar of the user.
      * @type {BigInt?}
      */
-    this.avatar = data.avatar
+    this._avatar = data.avatar
       ? BigInt("0x" + data.avatar.replace("a_", ""))
       : null;
 
@@ -59,16 +59,16 @@ class User {
 
     if (data.discriminator && data.discriminator != 0)
       /**
-       * The discriminator of the user.
+       * The discriminator of the user (only if user is a bot).
        * @type {Number?}
        */
-      this.discriminator = data.discriminator;
+      this.discriminator = Number(data.discriminator);
 
     /**
      * The UNIX (seconds) timestamp when this user was last cached.
      * @type {Number}
      */
-    this.cached = (new Date().getTime() / 1000) | 0;
+    this._cached = (new Date().getTime() / 1000) | 0;
 
     if (
       nocache == false &&
@@ -90,10 +90,10 @@ class User {
    * @readonly
    * @type {String?}
    */
-  get originalAvatarHash() {
-    return this.avatar
+  get _originalAvatarHash() {
+    return this._avatar
       ? // eslint-disable-next-line quotes
-        `${this.avatarIsAnimated ? "a_" : ""}${this.formattedAvatarHash}`
+        `${this.avatarIsAnimated ? "a_" : ""}${this._formattedAvatarHash}`
       : null;
   }
 
@@ -102,10 +102,10 @@ class User {
    * @readonly
    * @type {String}
    */
-  get formattedAvatarHash() {
-    if (!this.avatar) return null;
+  get _formattedAvatarHash() {
+    if (!this._avatar) return null;
 
-    let formattedHash = this.avatar.toString(16);
+    let formattedHash = this._avatar.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
@@ -122,16 +122,16 @@ class User {
   get displayAvatarURL() {
     if (this.overrideAvatar) return this.overrideAvatar;
 
-    return this.avatar
+    return this._avatar
       ? // eslint-disable-next-line quotes
-        `${CDN_BASE_URL}/avatars/${this.id}/${this.originalAvatarHash}.${
+        `${CDN_BASE_URL}/avatars/${this.id}/${this._originalAvatarHash}.${
           this.avatarIsAnimated ? "gif" : "png"
         }`
       : `${CDN_BASE_URL}/embed/avatars/${(this.id >> 22n) % 6n}.png`;
   }
 
   /**
-   * The username of the user.
+   * The username of the user, including their discriminator if they are a bot (username#0001).
    * @readonly
    * @type {String}
    */
@@ -171,7 +171,7 @@ class User {
   toJSON() {
     return {
       id: String(this.id),
-      avatar: this.originalAvatarHash,
+      avatar: this._originalAvatarHash,
       bot: this.bot,
       username: this.username,
       global_name: this.global_name,
