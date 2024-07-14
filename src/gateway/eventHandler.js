@@ -595,6 +595,9 @@ class EventHandler {
 
             break;
           }
+
+          default:
+            break;
         }
 
         break;
@@ -626,6 +629,9 @@ class EventHandler {
 
         break;
       }
+
+      default:
+        break;
     }
   }
 
