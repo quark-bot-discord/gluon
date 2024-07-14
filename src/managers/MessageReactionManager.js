@@ -19,10 +19,10 @@ class MessageReactionManager {
      */
     this.cache = {};
 
-    for (const message_reaction in existingReactions)
-      this.cache[message_reaction] = new Reaction(
+    for (const [messageReaction, messageReactionValue] of Object.entries(existingReactions))
+      this.cache[messageReaction] = new Reaction(
         this._client,
-        existingReactions[message_reaction],
+        messageReactionValue,
         this.guild.id.toString(),
       );
   }
@@ -63,8 +63,8 @@ class MessageReactionManager {
 
   toJSON() {
     const messageReactions = {};
-    for (const reaction in this.cache)
-      messageReactions[reaction] = this.cache[reaction];
+    for (const [reaction, reactionData] of this.cache)
+      messageReactions[reaction] = reactionData;
     return messageReactions;
   }
 }

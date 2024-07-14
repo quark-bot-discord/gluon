@@ -9,10 +9,10 @@ class MessagePollManager {
   constructor(existingResponses = {}) {
     this.cache = new Map();
 
-    for (const answer_id in existingResponses)
+    for (const [answer, answerValue] of Object.entries(existingResponses))
       this.cache.set(
-        answer_id,
-        existingResponses[answer_id].map((v) => BigInt(v)),
+        answer,
+        answerValue.map((v) => BigInt(v)),
       );
   }
 
