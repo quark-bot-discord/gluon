@@ -86,11 +86,9 @@ class WS {
               this.shardCatastrophic
             } @ ${this.time()} => ERROR at ${data.t}: ${error}`,
           );
-
-          console.log(error);
-        } finally {
-          break;
+          console.error(error);
         }
+        break;
       }
 
       // Heartbeat
