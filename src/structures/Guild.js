@@ -214,6 +214,8 @@ class Guild {
           // elevated
           this._attributes |= 0b1 << 7;
           break;
+        default:
+          break;
       }
     }
 
@@ -246,6 +248,8 @@ class Guild {
           // very high
           this._attributes |= 0b1 << 12;
           break;
+        default:
+          break;
       }
     }
 
@@ -265,6 +269,8 @@ class Guild {
         case 1:
           // only mentions
           this._attributes |= 0b1 << 14;
+          break;
+        default:
           break;
       }
     }
@@ -289,6 +295,8 @@ class Guild {
         case 2:
           // all members
           this._attributes |= 0b1 << 17;
+          break;
+        default:
           break;
       }
     }
@@ -318,6 +326,8 @@ class Guild {
           // age restricted
           this._attributes |= 0b1 << 21;
           break;
+        default:
+          break;
       }
     }
 
@@ -345,6 +355,8 @@ class Guild {
         case 3:
           // tier 3
           this._attributes |= 0b1 << 25;
+          break;
+        default:
           break;
       }
     }
