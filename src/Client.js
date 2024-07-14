@@ -288,7 +288,10 @@ class Client extends EventsEmitter {
           case CHANNEL_TYPES.GUILD_NEWS:
           case CHANNEL_TYPES.GUILD_FORUM: {
             totalMessages += channel.messages.cache.size;
+            break;
           }
+          default:
+            break;
         }
 
         totalChannels++;
