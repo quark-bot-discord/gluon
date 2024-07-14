@@ -7,7 +7,7 @@ function _updatePresence(
   afk = false,
   since = null,
 ) {
-  let activities = [];
+  const activities = [];
 
   if (name)
     activities.push({

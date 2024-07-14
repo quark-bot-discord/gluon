@@ -286,7 +286,7 @@ class EventHandler {
       } @ ${this.ws.time()} => THREAD_LIST_SYNC ${data.guild_id}`,
     );
 
-    let threads = [];
+    const threads = [];
     for (let i = 0; i < data.threads.length; i++)
       threads.push(new Thread(this._client, data.threads[i], data.guild_id));
 
@@ -543,7 +543,7 @@ class EventHandler {
       } @ ${this.ws.time()} => MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
 
-    let messages = [];
+    const messages = [];
     for (let i = 0; i < data.ids.length; i++)
       messages.push(
         getMessage(

@@ -27,7 +27,7 @@ class ChannelMessageManager {
   async fetch(options) {
     if (typeof options == "object") {
       if (this.cache.size != 0) {
-        let cachedMessages = [];
+        const cachedMessages = [];
         this.cache.forEach((key, value) => {
           if (options.before && value.id < options.before)
             cachedMessages.push(value);
@@ -49,7 +49,7 @@ class ChannelMessageManager {
         [this.channel.id],
         body,
       );
-      let messages = [];
+      const messages = [];
       for (let i = 0; i < data.length; i++)
         messages.push(
           new Message(
@@ -87,7 +87,7 @@ class ChannelMessageManager {
       this.channel.id,
     ]);
 
-    let messages = [];
+    const messages = [];
     for (let i = 0; i < data.length; i++)
       messages.push(
         new Message(

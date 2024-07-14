@@ -191,14 +191,14 @@ class BetterRequestHandler {
         new Date().getTime() / 1000 > bucket.reset + this.latency)
     ) {
       const serialize = (obj) => {
-        let str = [];
+        const str = [];
         for (let p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
             str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
         return str.join("&");
       };
 
-      let headers = {
+      const headers = {
         Authorization: this.authorization,
         "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(
           4,
@@ -327,7 +327,7 @@ class BetterRequestHandler {
 
       this._client.emit("debug", `REMOVE ${hash} from request queue`);
     } else {
-      let retryNextIn =
+      const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.latency;
 
       setTimeout(() => {

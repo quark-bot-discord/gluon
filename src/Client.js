@@ -633,7 +633,7 @@ class Client extends EventsEmitter {
       body,
     );
 
-    let messages = [];
+    const messages = [];
     for (let i = 0; i < data.length; i++)
       messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
 
@@ -758,7 +758,7 @@ class Client extends EventsEmitter {
       body,
     );
     if (data.length != 0) {
-      let members = [];
+      const members = [];
 
       for (let i = 0; i < data.length; i++)
         members.push(

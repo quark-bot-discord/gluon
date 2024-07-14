@@ -512,7 +512,7 @@ class Guild {
    * @type {String}
    */
   get system_channel_flags() {
-    let flags = [];
+    const flags = [];
 
     if ((this._attributes & (0b1 << 0)) == 0b1 << 0)
       flags.push("SUPPRESS_JOIN_NOTIFICATIONS");
@@ -806,7 +806,7 @@ class Guild {
       this.id,
     ]);
 
-    let channels = [];
+    const channels = [];
     for (let i = 0; i < data.length; i++)
       channels.push(cacheChannel(this._client, data[i], this.id.toString()));
 

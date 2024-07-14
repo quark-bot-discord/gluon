@@ -13,7 +13,7 @@ function updatePreferences(client, guild) {
 }
 
 function updateSingleGuildPreferences(client, guild) {
-  let currentGuild = client.guilds.cache.get(guild.id);
+  const currentGuild = client.guilds.cache.get(guild.id);
   if (!currentGuild) return;
   currentGuild._cache_options = 0;
   if (guild.options.serverLog == null) {
@@ -32,7 +32,7 @@ function updateSingleGuildPreferences(client, guild) {
       j < guild.options.additionalServerLogOptions.ignoreChannels.length;
       j++
     ) {
-      let currentGuildChannel = currentGuild.channels.cache.get(
+      const currentGuildChannel = currentGuild.channels.cache.get(
         guild.options.additionalServerLogOptions.ignoreChannels[j]
       );
       if (!currentGuildChannel) continue;

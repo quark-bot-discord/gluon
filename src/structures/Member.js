@@ -145,7 +145,7 @@ class Member {
   get roles() {
     if (this._client.cacheRoles != true) return [];
 
-    let roles = [];
+    const roles = [];
 
     roles.push(this.guild.roles.cache.get(String(this._guild_id)));
 

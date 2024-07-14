@@ -123,12 +123,11 @@ class GuildMemberManager {
    * @param {BigInt | String} user_id The id of the member to get.
    * @returns {Member}
    */
-  async localFetch(user_id) {
+  localFetch(user_id) {
     const cached = this.cache.get(user_id.toString());
     if (cached) return cached;
 
-    const stored = await this.retrieve(user_id);
-    if (stored) return stored;
+    return this.retrieve(user_id);
   }
 
   /**
@@ -172,7 +171,7 @@ class GuildMemberManager {
       body,
     );
     if (data.length != 0) {
-      let members = [];
+      const members = [];
 
       for (let i = 0; i < data.length; i++)
         members.push(

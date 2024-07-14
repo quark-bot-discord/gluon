@@ -21,7 +21,7 @@ class GuildScheduledEventManager {
       [this.guild.id],
     );
 
-    let eventsList = [];
+    const eventsList = [];
 
     for (let i = 0; i < data.length; i++)
       eventsList.push(new ScheduledEvent(this._client, data[i]));
