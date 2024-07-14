@@ -194,7 +194,7 @@ class BetterRequestHandler {
         let str = [];
         for (let p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
         return str.join("&");
       };
 
@@ -255,7 +255,7 @@ class BetterRequestHandler {
               body &&
               (actualRequest.method == "GET" ||
                 actualRequest.method == "DELETE")
-                ? "?" + serialize(body)
+                ? `?${serialize(body)}`
                 : ""
             }`,
             {
@@ -277,7 +277,7 @@ class BetterRequestHandler {
 
           break;
         } catch (error) {
-          console.log(error);
+          console.error(error);
 
           e = error;
         } finally {
@@ -303,7 +303,7 @@ class BetterRequestHandler {
           res.status == 429 ? json.retry_after : 0,
         );
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
 
       if (res.ok) resolve(json);
@@ -331,7 +331,7 @@ class BetterRequestHandler {
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.latency;
 
       setTimeout(() => {
-        reject("429: Hit ratelimit, retry in " + retryNextIn);
+        reject(new Error(`429: Hit ratelimit, retry in ${retryNextIn}`));
       }, 1500);
 
       this._client.emit("debug", `READD ${hash} to request queue`);
