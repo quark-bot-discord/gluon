@@ -5,7 +5,7 @@ function _updatePresence(
   type = 0,
   status = "online",
   afk = false,
-  since = null
+  since = null,
 ) {
   let activities = [];
 
