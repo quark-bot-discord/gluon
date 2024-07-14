@@ -82,7 +82,7 @@ class Embed {
    */
   setThumbnail(url) {
     this.thumbnail = {
-      url: url,
+      url,
     };
 
     return this;
@@ -134,7 +134,7 @@ class Embed {
       name: name && name.length > 256 ? `${name.substring(0, 253)}...` : name,
       value:
         value && value.length > 1024 ? `${value.substring(0, 1021)}...` : value,
-      inline: inline,
+      inline,
     });
 
     return this;
@@ -147,7 +147,7 @@ class Embed {
    */
   setImage(url) {
     this.image = {
-      url: url,
+      url,
     };
 
     return this;

@@ -158,10 +158,10 @@ class BetterRequestHandler {
       while (retries--)
         try {
           const result = await this.queues[hash].push({
-            hash: hash,
-            request: request,
-            params: params,
-            body: body,
+            hash,
+            request,
+            params,
+            body,
           });
           if (this.queues[hash].idle()) delete this.queues[hash];
           return resolve(result);
@@ -260,7 +260,7 @@ class BetterRequestHandler {
             }`,
             {
               method: actualRequest.method,
-              headers: headers,
+              headers,
               body: form
                 ? form
                 : body &&
@@ -310,7 +310,7 @@ class BetterRequestHandler {
       else {
         const requestResult = {
           status: res.status,
-          json: json,
+          json,
           method: actualRequest.method,
           endpoint: actualRequest.path(params),
           shards: this._client.shardIds,
@@ -322,7 +322,7 @@ class BetterRequestHandler {
         status: res.status,
         method: actualRequest.method,
         endpoint: actualRequest.path(params),
-        hash: hash,
+        hash,
       });
 
       this._client.emit("debug", `REMOVE ${hash} from request queue`);
