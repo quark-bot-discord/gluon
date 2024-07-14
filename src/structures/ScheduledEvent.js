@@ -93,6 +93,8 @@ class ScheduledEvent {
         this._attributes |= 0b1 << 2;
         break;
       }
+      default:
+        break;
     }
 
     switch (data.status) {
@@ -116,6 +118,8 @@ class ScheduledEvent {
         this._attributes |= 0b1 << 6;
         break;
       }
+      default:
+        break;
     }
 
     if (this.entity_type == "EXTERNAL")
