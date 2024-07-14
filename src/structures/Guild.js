@@ -527,6 +527,7 @@ class Guild {
   get mfa_level() {
     if ((this._attributes & (0b1 << 6)) == 0b1 << 6) return "NONE";
     else if ((this._attributes & (0b1 << 7)) == 0b1 << 7) return "ELEVATED";
+    else return null;
   }
 
   /**
@@ -541,6 +542,7 @@ class Guild {
     else if ((this._attributes & (0b1 << 10)) == 0b1 << 10) return "MEDIUM";
     else if ((this._attributes & (0b1 << 11)) == 0b1 << 11) return "HIGH";
     else if ((this._attributes & (0b1 << 12)) == 0b1 << 12) return "VERY_HIGH";
+    else return null;
   }
 
   /**
@@ -553,6 +555,7 @@ class Guild {
     if ((this._attributes & (0b1 << 13)) == 0b1 << 13) return "ALL_MESSAGES";
     else if ((this._attributes & (0b1 << 14)) == 0b1 << 14)
       return "ONLY_MENTIONS";
+    else return null;
   }
 
   /**
@@ -567,6 +570,7 @@ class Guild {
       return "MEMBERS_WITHOUT_ROLES";
     else if ((this._attributes & (0b1 << 17)) == 0b1 << 17)
       return "ALL_MEMBERS";
+    else return null;
   }
 
   /**
@@ -581,6 +585,7 @@ class Guild {
     else if ((this._attributes & (0b1 << 20)) == 0b1 << 20) return "SAFE";
     else if ((this._attributes & (0b1 << 21)) == 0b1 << 21)
       return "AGE_RESTRICTED";
+    else return null;
   }
 
   /**
@@ -594,6 +599,7 @@ class Guild {
     else if ((this._attributes & (0b1 << 23)) == 0b1 << 23) return 1;
     else if ((this._attributes & (0b1 << 24)) == 0b1 << 24) return 2;
     else if ((this._attributes & (0b1 << 25)) == 0b1 << 25) return 3;
+    else return null;
   }
 
   /**
