@@ -80,8 +80,8 @@ class Guild {
       this._icon = data.icon
         ? BigInt("0x" + data.icon.replace("a_", ""))
         : null;
-    else if (data.icon === undefined && existing && existing.icon)
-      this._icon = existing.icon;
+    else if (data.icon === undefined && existing && existing._icon)
+      this._icon = existing._icon;
 
     /**
      * The id of the guild owner.

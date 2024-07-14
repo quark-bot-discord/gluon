@@ -106,8 +106,8 @@ class Member {
       this._avatar = data.avatar
         ? BigInt("0x" + data.avatar.replace("a_", ""))
         : null;
-    else if (data.avatar === undefined && existing && existing.avatar)
-      this._avatar = existing.avatar;
+    else if (data.avatar === undefined && existing && existing._avatar)
+      this._avatar = existing._avatar;
 
     if (data.roles && this.guild && this._client.cacheRoles == true) {
       this._roles = [];
