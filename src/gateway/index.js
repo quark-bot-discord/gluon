@@ -171,6 +171,17 @@ class WS {
 
         break;
       }
+
+      default: {
+        this._client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardCatastrophic
+          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`,
+        );
+
+        break;
+      }
     }
   }
 
