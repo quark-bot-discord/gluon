@@ -78,7 +78,7 @@ class Guild {
      */
     if (data.icon !== undefined)
       this._icon = data.icon
-        ? BigInt("0x" + data.icon.replace("a_", ""))
+        ? BigInt(`0x${data.icon.replace("a_", "")}`)
         : null;
     else if (data.icon === undefined && existing && existing._icon)
       this._icon = existing._icon;

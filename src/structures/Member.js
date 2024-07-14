@@ -104,7 +104,7 @@ class Member {
 
     if (data.avatar !== undefined)
       this._avatar = data.avatar
-        ? BigInt("0x" + data.avatar.replace("a_", ""))
+        ? BigInt(`0x${data.avatar.replace("a_", "")}`)
         : null;
     else if (data.avatar === undefined && existing && existing._avatar)
       this._avatar = existing._avatar;

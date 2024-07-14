@@ -42,7 +42,7 @@ class User {
      * @type {BigInt?}
      */
     this._avatar = data.avatar
-      ? BigInt("0x" + data.avatar.replace("a_", ""))
+      ? BigInt(`0x${data.avatar.replace("a_", "")}`)
       : null;
 
     /**

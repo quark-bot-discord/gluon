@@ -53,7 +53,7 @@ class Role {
      * The role icon hash.
      * @type {String?}
      */
-    if (data.icon) this._icon = BigInt("0x" + data.icon);
+    if (data.icon) this._icon = BigInt(`0x${data.icon}`);
 
     /**
      * The permissions for the role.

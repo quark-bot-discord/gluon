@@ -20,7 +20,7 @@ class Embed {
    */
   setTitle(title) {
     this.title =
-      title && title.length > 256 ? title.substring(0, 253) + "..." : title;
+      title && title.length > 256 ? `${title.substring(0, 253)}...` : title;
 
     return this;
   }
@@ -32,7 +32,7 @@ class Embed {
    */
   setDescription(text) {
     this.description =
-      text && text.length > 4096 ? text.substring(0, 4093) + "..." : text;
+      text && text.length > 4096 ? `${text.substring(0, 4093)}...` : text;
 
     return this;
   }
@@ -96,7 +96,7 @@ class Embed {
    */
   setFooter(text, icon) {
     this.footer = {
-      text: text && text.length > 2048 ? text.substring(0, 2045) + "..." : text,
+      text: text && text.length > 2048 ? `${text.substring(0, 2045)}...` : text,
     };
     if (icon) this.footer.icon_url = icon;
 
@@ -131,9 +131,9 @@ class Embed {
     if (this.fields.length == 25) return this;
 
     this.fields.push({
-      name: name && name.length > 256 ? name.substring(0, 253) + "..." : name,
+      name: name && name.length > 256 ? `${name.substring(0, 253)}...` : name,
       value:
-        value && value.length > 1024 ? value.substring(0, 1021) + "..." : value,
+        value && value.length > 1024 ? `${value.substring(0, 1021)}...` : value,
       inline: inline,
     });
 

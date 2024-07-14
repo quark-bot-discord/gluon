@@ -67,7 +67,7 @@ class ScheduledEvent {
       this.scheduled_end_time =
         (new Date(data.scheduled_end_time).getTime() / 1000) | 0;
 
-    this._image = data.image ? BigInt("0x" + data.image) : null;
+    this._image = data.image ? BigInt(`0x${data.image}`) : null;
 
     /**
      * The number of users who have signed up for the event.
