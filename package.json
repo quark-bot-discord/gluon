@@ -9,8 +9,14 @@
     "./constants": {
       "default": "./src/constants.js"
     },
+    "./util": {
+      "default": "./src/util.js"
+    },
     "./structures": {
       "default": "./src/structures.js"
+    },
+    "./structures/compiled": {
+      "default": "./src/compiledStructures.js"
     }
   },
   "scripts": {

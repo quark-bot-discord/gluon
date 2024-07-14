@@ -1,1 +1,47 @@
-module.exports = { Message: require('./structures/compiled/Message.js.json'), ScheduledEvent: require('./structures/compiled/ScheduledEvent.js.json'), TextChannel: require('./structures/compiled/TextChannel.js.json'), Member: require('./structures/compiled/Member.js.json'), ModalResponse: require('./structures/compiled/ModalResponse.js.json'), Role: require('./structures/compiled/Role.js.json'), Emoji: require('./structures/compiled/Emoji.js.json'), Attachment: require('./structures/compiled/Attachment.js.json'), User: require('./structures/compiled/User.js.json'), Thread: require('./structures/compiled/Thread.js.json'), Channel: require('./structures/compiled/Channel.js.json'), ButtonClick: require('./structures/compiled/ButtonClick.js.json'), Reaction: require('./structures/compiled/Reaction.js.json'), Interaction: require('./structures/compiled/Interaction.js.json'), AuditLog: require('./structures/compiled/AuditLog.js.json'), Invite: require('./structures/compiled/Invite.js.json'), VoiceState: require('./structures/compiled/VoiceState.js.json'), SlashCommand: require('./structures/compiled/SlashCommand.js.json'), Guild: require('./structures/compiled/Guild.js.json'), Sticker: require('./structures/compiled/Sticker.js.json'), OptionSelect: require('./structures/compiled/OptionSelect.js.json'), VoiceChannel: require('./structures/compiled/VoiceChannel.js.json'), };
+const Attachment = require("./structures/Attachment");
+const AuditLog = require("./structures/AuditLog");
+const ButtonClick = require("./structures/ButtonClick");
+const Channel = require("./structures/Channel");
+const Emoji = require("./structures/Emoji");
+const Guild = require("./structures/Guild");
+const Interaction = require("./structures/Interaction");
+const Invite = require("./structures/Invite");
+const Member = require("./structures/Member");
+const Message = require("./structures/Message");
+const ModalResponse = require("./structures/ModalResponse");
+const OptionSelect = require("./structures/OptionSelect");
+const Reaction = require("./structures/Reaction");
+const Role = require("./structures/Role");
+const ScheduledEvent = require("./structures/ScheduledEvent");
+const SlashCommand = require("./structures/SlashCommand");
+const Sticker = require("./structures/Sticker");
+const TextChannel = require("./structures/TextChannel");
+const Thread = require("./structures/Thread");
+const User = require("./structures/User");
+const VoiceChannel = require("./structures/VoiceChannel");
+const VoiceState = require("./structures/VoiceState");
+
+module.exports = {
+    Attachment,
+    AuditLog,
+    ButtonClick,
+    Channel,
+    Emoji,
+    Guild,
+    Interaction,
+    Invite,
+    Member,
+    Message,
+    ModalResponse,
+    OptionSelect,
+    Reaction,
+    Role,
+    ScheduledEvent,
+    SlashCommand,
+    Sticker,
+    TextChannel,
+    Thread,
+    User,
+    VoiceChannel,
+    VoiceState
+};
