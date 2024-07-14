@@ -169,7 +169,7 @@ class BetterRequestHandler {
           return reject(error);
         }
 
-      return reject();
+      return reject(new Error("Request ran out of retries"));
     });
   }
 
