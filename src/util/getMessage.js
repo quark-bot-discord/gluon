@@ -72,11 +72,6 @@ async function getMessage(
       return message;
     } else return null;
   } else {
-    client.s3Messages
-      .deleteObject({ Bucket: client.s3MessageBucket, Key: usedHash })
-      .promise()
-      .catch(() => null);
-
     if (destroy != false)
       client.guilds.cache
         .get(guild_id)
