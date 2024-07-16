@@ -310,3 +310,4 @@ module.exports.LIMITS = {
     MAX_EMBED_SIZE: 6000,
     MAX_EMBED_DESCRIPTION: 4096
 };
+module.exports.VERSION = require("../package.json").version;
