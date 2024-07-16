@@ -141,8 +141,7 @@ class Interaction {
     if (content) body.data.content = content;
     if (files) body.files = files;
     if (embed) body.data.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     else if (_embed) body.data.embeds = [_embed];
     else if (_embeds) body.data.embeds = _embeds;
     if (components)
@@ -174,8 +173,7 @@ class Interaction {
     else if (_embed) body.embeds = [_embed];
     else if (_embeds) body.embeds = _embeds;
     if (components)
-      body.components =
-        Array.isArray(components) != true ? components : [];
+      body.components = Array.isArray(components) != true ? components : [];
 
     await this._client.request.makeRequest(
       "patchOriginalInteractionResponse",

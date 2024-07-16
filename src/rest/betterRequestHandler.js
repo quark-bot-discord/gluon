@@ -307,7 +307,12 @@ class BetterRequestHandler {
       }
 
       if (res.ok) resolve(json);
-      else reject(new Error(`${res.status}: ${actualRequest.method} ${actualRequest.path(params)} FAILED`));
+      else
+        reject(
+          new Error(
+            `${res.status}: ${actualRequest.method} ${actualRequest.path(params)} FAILED`,
+          ),
+        );
 
       this._client.emit("requestCompleted", {
         status: res.status,
