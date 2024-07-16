@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/buttonBuilder.js - Documentation</title>
+    <title>util/builder/dropdownBuilder.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/buttonBuilder.js</h1>
+    <h1 class="page-title">util/builder/dropdownBuilder.js</h1>
     
 
     
@@ -45,59 +45,37 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { COMPONENT_TYPES } = require("../constants");
-const resolveEmoji = require("./resolveEmoji");
+            <pre class="prettyprint source linenums"><code>const { COMPONENT_TYPES } = require("../../constants");
 
 /**
- * Helps to construct a button for a message.
- * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}
+ * Helps to create a dropdown message component.
+ * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menus}
  */
-class Button {
+class Dropdown {
   /**
-   * Creates a button.
+   * Creates a dropdown component.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.BUTTON;
+    this.type = COMPONENT_TYPES.SELECT_MENU;
+    this.options = [];
   }
 
   /**
-   * Sets the text on the button.
-   * @param {String} label The text to display on the button.
-   * @returns {Button}
+   * Sets the option type.
+   * @param {Number} type The option type.
+   * @returns {Dropdown}
+   * @see {@link https://discord.com/developers/docs/interactions/message-components#component-object-component-types}
    */
-  setLabel(label) {
-    this.label = label;
+  setType(type) {
+    this.type = type;
 
     return this;
   }
 
   /**
-   * Sets the emoji to be displayed on the button.
-   * @param {String} emoji The emoji to display on the button. For a custom emoji, it should be in the format "&lt;:bitcoin:844240546246950922>".
-   * @returns {Button}
-   */
-  setEmoji(emoji) {
-    this.emoji = resolveEmoji(emoji);
-
-    return this;
-  }
-
-  /**
-   * Sets the style of the button.
-   * @param {Number} style The button style.
-   * @returns {Button}
-   * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles}
-   */
-  setStyle(style) {
-    this.style = style;
-
-    return this;
-  }
-
-  /**
-   * Set the custom id of the button.
-   * @param {String} id The custom id of the button.
-   * @returns {Button}
+   * Set the custom id of the dropdown.
+   * @param {String} id The custom id of the dropdown.
+   * @returns {Dropdown}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
   setCustomID(id) {
@@ -107,45 +85,91 @@ class Button {
   }
 
   /**
-   * Sets the url of the button.
-   * @param {String} url The url for a link button.
-   * @returns {Button}
+   * Adds an option to the dropdown.
+   * @param {DropdownOption} option Adds an option to the dropdown.
+   * @returns {Dropdown}
    */
-  setURL(url) {
-    this.url = url;
+  addOption(option) {
+    this.options.push(option.toJSON());
 
     return this;
   }
 
   /**
-   * Disables the button from being clickable.
-   * @param {Boolean} disabled Whether this button should be displayed as disabled.
-   * @returns {Button}
+   * Sets which channel types are selectable by the user.
+   * @param {Array&lt;Number>} channelTypes An array of channel types to offer as a choice.
+   * @returns {CommandOption}
+   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
-  setDisabled(disabled) {
-    this.disabled = disabled;
+  addChannelTypes(channelTypes) {
+    this.channel_types = channelTypes;
 
     return this;
   }
 
   /**
-   * Returns the correct Discord format for a button.
+   * Sets the placeholder text.
+   * @param {String} placeholder Placeholder text if nothing is selected.
+   * @returns {Dropdown}
+   */
+  setPlaceholder(placeholder) {
+    this.placeholder = placeholder;
+
+    return this;
+  }
+
+  /**
+   * Sets the minimum value the user may enter.
+   * @param {Number} value The minimum number value that the user may enter.
+   * @returns {CommandOption}
+   */
+  setMinValue(value) {
+    this.min_values = value;
+
+    return this;
+  }
+
+  /**
+   * Sets the maximum value the user may enter.
+   * @param {Number} value The maximum number value that the user may enter.
+   * @returns {Dropdown}
+   */
+  setMaxValue(value) {
+    this.max_values = value;
+
+    return this;
+  }
+
+  /**
+   * Disables the dropdown from being clickable.
+   * @param {Boolean} disabled Whether this dropdown should be displayed as disabled.
+   * @returns {Dropdown}
+   */
+  setDisabled(isDisabled) {
+    this.disabled = isDisabled;
+
+    return this;
+  }
+
+  /**
+   * Returns the correct Discord format for a dropdown.
    * @returns {Object}
    */
   toJSON() {
     return {
       type: this.type,
-      label: this.label,
-      emoji: this.emoji,
-      style: this.style,
       custom_id: this.custom_id,
-      url: this.url,
+      options: this.options,
+      channel_types: this.channel_types,
+      placeholder: this.placeholder,
+      min_values: this.min_values,
+      max_values: this.max_values,
       disabled: this.disabled,
     };
   }
 }
 
-module.exports = Button;
+module.exports = Dropdown;
 </code></pre>
         </article>
     </section>
@@ -160,7 +184,7 @@ module.exports = Button;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Tue Jul 16 2024 10:18:32 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Tue Jul 16 2024 13:57:04 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
