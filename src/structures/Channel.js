@@ -151,10 +151,10 @@ class Channel {
 
     if (content) body.content = content;
 
-    if (embed) body.embeds = [embed.toJSON()];
+    if (embed) body.embeds = [embed];
     else if (embeds && embeds.length != 0)
-      body.embeds = embeds.map((e) => e.toJSON());
-    if (components) body.components = components.toJSON();
+      body.embeds = embeds;
+    if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
       body.allowed_mentions = {};

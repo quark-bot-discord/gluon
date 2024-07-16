@@ -357,16 +357,13 @@ class Message {
    */
   async reply(content, { embed, components, files } = {}) {
     if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
-      throw {
-        status: 403,
-        error: "The bot does not have the SEND_MESSAGES permission.",
-      };
+      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
 
     if (content) body.content = content;
-    if (embed) body.embeds = [embed.toJSON()];
-    if (components) body.components = components.toJSON();
+    if (embed) body.embeds = [embed];
+    if (components) body.components = components;
     if (files) body.files = files;
 
     body.message_reference = {
@@ -396,18 +393,15 @@ class Message {
    */
   async edit(content, { embed, embeds, components, files } = {}) {
     if (!checkPermission(await this.guild.me(), PERMISSIONS.SEND_MESSAGES))
-      throw {
-        status: 403,
-        error: "The bot does not have the SEND_MESSAGES permission.",
-      };
+      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
 
     if (content) body.content = content;
-    if (embed) body.embeds = [embed.toJSON()];
+    if (embed) body.embeds = [embed];
     else if (embeds && embeds.length != 0)
-      body.embeds = embeds.map((e) => e.toJSON());
-    if (components) body.components = components.toJSON();
+      body.embeds = embeds;
+    if (components) body.components = components;
     if (files) body.files = files;
 
     if (this.referenced_message)

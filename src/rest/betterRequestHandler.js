@@ -307,16 +307,7 @@ class BetterRequestHandler {
       }
 
       if (res.ok) resolve(json);
-      else {
-        const requestResult = {
-          status: res.status,
-          json,
-          method: actualRequest.method,
-          endpoint: actualRequest.path(params),
-          shards: this._client.shardIds,
-        };
-        reject(requestResult);
-      }
+      else reject(new Error(`${res.status}: ${actualRequest.method} ${actualRequest.path(params)} FAILED`));
 
       this._client.emit("requestCompleted", {
         status: res.status,

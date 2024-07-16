@@ -94,7 +94,7 @@ class Interaction {
     const components = new ActionRow().addComponent(textInputModal);
 
     body.data.components =
-      Array.isArray(components) != true ? [components.toJSON()] : [];
+      Array.isArray(components) != true ? [components] : [];
 
     await this._client.request.makeRequest(
       "postInteractionResponse",
@@ -114,7 +114,7 @@ class Interaction {
     body.type = 8;
     body.data = {};
 
-    body.data.choices = choices.map((c) => c.toJSON());
+    body.data.choices = choices;
 
     await this._client.request.makeRequest(
       "postInteractionResponse",
@@ -140,14 +140,14 @@ class Interaction {
 
     if (content) body.data.content = content;
     if (files) body.files = files;
-    if (embed) body.data.embeds = [embed.toJSON()];
+    if (embed) body.data.embeds = [embed];
     else if (embeds && embeds.length != 0)
-      body.embeds = embeds.map((e) => e.toJSON());
+      body.embeds = embeds;
     else if (_embed) body.data.embeds = [_embed];
     else if (_embeds) body.data.embeds = _embeds;
     if (components)
       body.data.components =
-        Array.isArray(components) != true ? components.toJSON() : [];
+        Array.isArray(components) != true ? components : [];
     if (quiet == true) body.data.flags = 64;
 
     await this._client.request.makeRequest(
@@ -170,12 +170,12 @@ class Interaction {
 
     if (content) body.content = content;
     if (files) body.files = files;
-    if (embed) body.embeds = [embed.toJSON()];
+    if (embed) body.embeds = [embed];
     else if (_embed) body.embeds = [_embed];
     else if (_embeds) body.embeds = _embeds;
     if (components)
       body.components =
-        Array.isArray(components) != true ? components.toJSON() : [];
+        Array.isArray(components) != true ? components : [];
 
     await this._client.request.makeRequest(
       "patchOriginalInteractionResponse",

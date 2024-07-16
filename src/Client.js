@@ -365,8 +365,8 @@ class Client extends EventsEmitter {
 
     if (content) body.content = content;
 
-    if (embeds) body.embeds = embeds.map((embed) => embed.toJSON());
-    if (components) body.components = components.toJSON();
+    if (embeds) body.embeds = embeds;
+    if (components) body.components;
     if (files) body.files = files;
 
     await this.request.makeRequest("postExecuteWebhook", [id, token], body);
@@ -390,10 +390,10 @@ class Client extends EventsEmitter {
 
     if (content) body.content = content;
 
-    if (embed) body.embeds = [embed.toJSON()];
+    if (embed) body.embeds = [embed];
     else if (embeds && embeds.length != 0)
-      body.embeds = embeds.map((e) => e.toJSON());
-    if (components) body.components = components.toJSON();
+      body.embeds = embeds;
+    if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
       body.allowed_mentions = {};
@@ -434,8 +434,8 @@ class Client extends EventsEmitter {
     const body = {};
 
     if (content) body.content = content;
-    if (embed) body.embeds = [embed.toJSON()];
-    if (components) body.components = components.toJSON();
+    if (embed) body.embeds = [embed];
+    if (components) body.components = components;
 
     if (this.referenced_message)
       body.message_reference = {
@@ -474,12 +474,10 @@ class Client extends EventsEmitter {
    * @param {BigInt} channel_id The id of the channel to fetch the webhooks from.
    * @returns {Promise<Array<Object>>}
    */
-  async fetchChannelWebhooks(channel_id) {
-    const data = await this.request.makeRequest("getChannelWebhooks", [
+  fetchChannelWebhooks(channel_id) {
+    return this.request.makeRequest("getChannelWebhooks", [
       channel_id,
-    ]);
-
-    return data;
+    ]);;
   }
 
   /**
@@ -508,15 +506,13 @@ class Client extends EventsEmitter {
       user_id,
     ]);
 
-    const member = new Member(
+    return new Member(
       this,
       data,
       user_id.toString(),
       guild_id.toString(),
       data.user,
     );
-
-    return member;
   }
 
   /**
@@ -534,9 +530,7 @@ class Client extends EventsEmitter {
 
     const data = await this.request.makeRequest("getChannel", [channel_id]);
 
-    const channel = cacheChannel(this, data, guild_id.toString());
-
-    return channel;
+    return cacheChannel(this, data, guild_id.toString());
   }
 
   /**
@@ -700,7 +694,7 @@ class Client extends EventsEmitter {
   async registerCommands(commands) {
     const body = [];
 
-    for (let i = 0; i < commands.length; i++) body.push(commands[i].toJSON());
+    for (let i = 0; i < commands.length; i++) body.push(commands[i]);
 
     const data = await this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",

@@ -9,7 +9,7 @@ const { PERMISSIONS } = require("../constants");
  */
 function checkPermission(member, permission, adminOverride = true) {
   if (!permission) return true;
-  if (!member) throw "No member provided to permission check";
+  if (!member) throw new Error("No member provided to permission check");
   member.permissions = BigInt(member.permissions);
   if (
     adminOverride == true &&

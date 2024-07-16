@@ -370,7 +370,7 @@ class WS {
 
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
         this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-        if (this.zlib.err) throw this.zlib.msg;
+        if (this.zlib.err) throw new Error(this.zlib.msg);
 
         data = Buffer.from(this.zlib.result);
         return this.handleIncoming(erlpack.unpack(data));
