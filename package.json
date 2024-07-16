@@ -20,7 +20,8 @@
     }
   },
   "scripts": {
-    "test": "node ../test/bot"
+    "test": "mocha",
+    "example": "node ../example/bot"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
+    "chai": "^5.1.1",
     "clean-jsdoc-theme": "^3.2.7",
     "eslint": "^7.28.0",
     "mocha": "^10.6.0"
