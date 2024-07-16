@@ -33,14 +33,14 @@ function updateSingleGuildPreferences(client, guild) {
       j++
     ) {
       const currentGuildChannel = currentGuild.channels.cache.get(
-        guild.options.additionalServerLogOptions.ignoreChannels[j]
+        guild.options.additionalServerLogOptions.ignoreChannels[j],
       );
       if (!currentGuildChannel) continue;
       currentGuildChannel._cache_options = 0;
       currentGuildChannel._cache_options |= GLUON_CACHING_OPTIONS.NO_MESSAGES;
       currentGuild.channels.cache.set(
         guild.options.additionalServerLogOptions.ignoreChannels[j],
-        currentGuildChannel
+        currentGuildChannel,
       );
     }
 }

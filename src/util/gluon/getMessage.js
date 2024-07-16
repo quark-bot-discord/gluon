@@ -16,7 +16,7 @@ async function getMessage(
   guild_id,
   channel_id,
   message_id,
-  destroy = false
+  destroy = false,
 ) {
   let message =
     client.guilds.cache
@@ -55,7 +55,7 @@ async function getMessage(
         storedMessage,
         message_id,
         channel_id,
-        guild_id
+        guild_id,
       );
 
       client.s3Messages

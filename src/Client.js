@@ -391,8 +391,7 @@ class Client extends EventsEmitter {
     if (content) body.content = content;
 
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
@@ -475,9 +474,7 @@ class Client extends EventsEmitter {
    * @returns {Promise<Array<Object>>}
    */
   fetchChannelWebhooks(channel_id) {
-    return this.request.makeRequest("getChannelWebhooks", [
-      channel_id,
-    ]);;
+    return this.request.makeRequest("getChannelWebhooks", [channel_id]);
   }
 
   /**

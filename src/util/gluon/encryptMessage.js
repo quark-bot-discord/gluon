@@ -15,9 +15,9 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${String(message.id)}_${
-            String(message._channel_id)
-          }_${String(message._guild_id)}`,
+          `${String(message.id)}_${String(
+            message._channel_id,
+          )}_${String(message._guild_id)}`,
         )
         .digest("hex")}satoshiNakamoto`,
     )
@@ -30,9 +30,9 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${String(message.id)}_${
-            String(message._channel_id)
-          }_${String(message._guild_id)}`,
+          `${String(message.id)}_${String(
+            message._channel_id,
+          )}_${String(message._guild_id)}`,
         )
         .digest("hex")}${String(message.id)}`,
     )
