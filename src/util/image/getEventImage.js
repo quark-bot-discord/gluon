@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+const { CDN_BASE_URL } = require("../../constants");
 
 function getEventImage(hash, id) {
   return hash

@@ -1,7 +1,7 @@
 const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
 const User = require("./User");
-const checkPermission = require("../util/checkPermission");
-const checkMemberPermissions = require("../util/checkMemberPermissions");
+const checkPermission = require("../util/discord/checkPermission");
+const checkMemberPermissions = require("../util/discord/checkMemberPermissions");
 
 /**
  * Represents a guild member.

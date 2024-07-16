@@ -22,9 +22,9 @@ const GuildManager = require("./managers/GuildManager");
 const Message = require("./structures/Message");
 const Guild = require("./structures/Guild");
 const User = require("./structures/User");
-const generateWebsocketURL = require("./util/generateWebsocketURL");
+const generateWebsocketURL = require("./util/gluon/generateWebsocketURL");
 const Member = require("./structures/Member");
-const cacheChannel = require("./util/cacheChannel");
+const cacheChannel = require("./util/gluon/cacheChannel");
 const Role = require("./structures/Role");
 
 /**

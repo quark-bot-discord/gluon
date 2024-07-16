@@ -2,11 +2,11 @@ const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
 const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
-const checkPermission = require("../util/checkPermission");
+const checkPermission = require("../util/discord/checkPermission");
 const Sticker = require("./Sticker");
-const getTimestamp = require("../util/getTimestampFromSnowflake");
+const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
 const hash = require("hash.js");
-const encryptMessage = require("../util/encryptMessage");
+const encryptMessage = require("../util/gluon/encryptMessage");
 const MessagePollManager = require("../managers/MessagePollManager");
 const MessageReactionManager = require("../managers/MessageReactionManager");
 

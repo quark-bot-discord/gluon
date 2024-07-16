@@ -1,4 +1,4 @@
-const { APPLICATION_COMMAND_TYPES } = require("../constants");
+const { APPLICATION_COMMAND_TYPES } = require("../../constants");
 
 /**
  * Structure for a command.

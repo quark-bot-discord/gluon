@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+const { CDN_BASE_URL } = require("../../constants");
 
 /**
  * Returns the url to the user's avatar.

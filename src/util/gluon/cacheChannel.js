@@ -1,7 +1,7 @@
-const { CHANNEL_TYPES } = require("../constants");
-const TextChannel = require("../structures/TextChannel");
-const Thread = require("../structures/Thread");
-const VoiceChannel = require("../structures/VoiceChannel");
+const { CHANNEL_TYPES } = require("../../constants");
+const TextChannel = require("../../structures/TextChannel");
+const Thread = require("../../structures/Thread");
+const VoiceChannel = require("../../structures/VoiceChannel");
 
 /**
  * Automatically determines the channel type and caches the channel appropriately.

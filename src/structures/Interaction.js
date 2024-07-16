@@ -1,4 +1,4 @@
-const ActionRow = require("../util/actionRowBuilder");
+const ActionRow = require("../util/builder/actionRowBuilder");
 const Member = require("./Member");
 
 /**

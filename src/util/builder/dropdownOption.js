@@ -1,4 +1,4 @@
-const resolveEmoji = require("./resolveEmoji");
+const resolveEmoji = require("../discord/resolveEmoji");
 
 /**
  * Helps to create a dropdown option.

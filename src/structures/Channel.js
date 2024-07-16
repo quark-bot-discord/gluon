@@ -1,6 +1,6 @@
 const { PERMISSIONS } = require("../constants");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
-const checkPermission = require("../util/checkPermission");
+const checkPermission = require("../util/discord/checkPermission");
 const Message = require("./Message");
 
 /**

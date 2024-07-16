@@ -1,4 +1,4 @@
-const hexToInt = require("./hexToInt");
+const hexToInt = require("../general/hexToInt");
 
 /**
  * Helps to create an embed for a message.

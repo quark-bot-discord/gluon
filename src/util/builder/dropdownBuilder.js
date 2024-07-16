@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES } = require("../constants");
+const { COMPONENT_TYPES } = require("../../constants");
 
 /**
  * Helps to create a dropdown message component.

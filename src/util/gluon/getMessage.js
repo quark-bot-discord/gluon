@@ -1,5 +1,5 @@
-const decryptMessage = require("./decryptMessage");
-const getTimestamp = require("./getTimestampFromSnowflake");
+const decryptMessage = require("../decryptMessage");
+const getTimestamp = require("../discord/getTimestampFromSnowflake");
 const hash = require("hash.js");
 
 /**

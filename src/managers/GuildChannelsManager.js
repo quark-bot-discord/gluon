@@ -3,7 +3,7 @@ const Guild = require("../structures/Guild");
 const TextChannel = require("../structures/TextChannel");
 const Thread = require("../structures/Thread");
 const VoiceChannel = require("../structures/VoiceChannel");
-const cacheChannel = require("../util/cacheChannel");
+const cacheChannel = require("../util/gluon/cacheChannel");
 
 /**
  * Manages all channels within a guild.

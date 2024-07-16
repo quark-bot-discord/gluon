@@ -1,4 +1,4 @@
-const { PERMISSIONS } = require("../constants");
+const { PERMISSIONS } = require("../../constants");
 
 /**
  * Checks if a member has the given permission.

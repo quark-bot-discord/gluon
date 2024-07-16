@@ -1,5 +1,5 @@
 const hash = require("hash.js");
-const encryptText = require("./encryptText");
+const encryptText = require("../general/encryptText");
 
 /**
  * Encrypts a message and returns an encrypted string.
@@ -15,9 +15,9 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${message.id}_${
-            message.channel ? message.channel.id : message.channel_id
-          }_${message.guild ? message.guild.id : message.guild_id}`,
+          `${String(message.id)}_${
+            String(message._channel_id)
+          }_${String(message._guild_id)}`,
         )
         .digest("hex")}satoshiNakamoto`,
     )
@@ -30,11 +30,11 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${message.id}_${
-            message.channel ? message.channel.id : message.channel_id
-          }_${message.guild ? message.guild.id : message.guild_id}`,
+          `${String(message.id)}_${
+            String(message._channel_id)
+          }_${String(message._guild_id)}`,
         )
-        .digest("hex")}${message.id}`,
+        .digest("hex")}${String(message.id)}`,
     )
     .digest("hex")
     .slice(0, 16);

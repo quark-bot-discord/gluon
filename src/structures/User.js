@@ -1,5 +1,5 @@
 const { CDN_BASE_URL } = require("../constants");
-const getTimestamp = require("../util/getTimestampFromSnowflake");
+const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
 
 /**
  * Represents a Discord user.

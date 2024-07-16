@@ -1,4 +1,4 @@
-const { VERSION } = require("../constants");
+const { VERSION } = require("../../constants");
 
 function generateWebsocketURL(url) {
   return `${url}?v=${VERSION}&encoding=etf&compress=zlib-stream`;

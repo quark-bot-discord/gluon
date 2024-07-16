@@ -15,11 +15,11 @@ const Thread = require("../structures/Thread");
 const User = require("../structures/User");
 const VoiceState = require("../structures/VoiceState");
 const Invite = require("../structures/Invite");
-const cacheChannel = require("../util/cacheChannel");
+const cacheChannel = require("../util/gluon/cacheChannel");
 const deepCompare = require("../util/deepCompare");
-const getMessage = require("../util/getMessage");
+const getMessage = require("../util/gluon/getMessage");
 const ModalResponse = require("../structures/ModalResponse");
-const getMember = require("../util/getMember");
+const getMember = require("../util/gluon/getMember");
 
 class EventHandler {
   constructor(client, ws) {
