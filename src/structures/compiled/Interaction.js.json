@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 6,
-                53
+                61
             ],
             "filename": "Interaction.js",
             "lineno": 1,
@@ -28,8 +28,8 @@
         "comment": "",
         "meta": {
             "range": [
-                61,
-                89
+                69,
+                97
             ],
             "filename": "Interaction.js",
             "lineno": 2,
@@ -53,8 +53,8 @@
         "comment": "/**\n * Represents an interaction received over the gateway.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}\n */",
         "meta": {
             "range": [
-                277,
-                5257
+                285,
+                5265
             ],
             "filename": "Interaction.js",
             "lineno": 8,
@@ -84,8 +84,8 @@
         "comment": "/**\n   * Creates the structure for an interaction.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
         "meta": {
             "range": [
-                468,
-                2006
+                476,
+                2014
             ],
             "filename": "Interaction.js",
             "lineno": 14,
@@ -135,8 +135,8 @@
         "comment": "/**\n * Represents an interaction received over the gateway.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}\n */",
         "meta": {
             "range": [
-                277,
-                5257
+                285,
+                5265
             ],
             "filename": "Interaction.js",
             "lineno": 8,
@@ -186,8 +186,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     */",
         "meta": {
             "range": [
-                566,
-                587
+                574,
+                595
             ],
             "filename": "Interaction.js",
             "lineno": 19,
@@ -217,8 +217,8 @@
         "comment": "/**\n     * The id of the message.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                662,
-                687
+                670,
+                695
             ],
             "filename": "Interaction.js",
             "lineno": 25,
@@ -248,8 +248,8 @@
         "comment": "/**\n     * The type of interaction.\n     * @type {Number}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-type}\n     */",
         "meta": {
             "range": [
-                884,
-                905
+                892,
+                913
             ],
             "filename": "Interaction.js",
             "lineno": 32,
@@ -282,8 +282,8 @@
         "comment": "/**\n     * The guild that this interaction belongs to.\n     * @type {Guild?}\n     */",
         "meta": {
             "range": [
-                1001,
-                1066
+                1009,
+                1074
             ],
             "filename": "Interaction.js",
             "lineno": 38,
@@ -314,8 +314,8 @@
         "comment": "/**\n       * The id of the guild that this interaction belongs to.\n       * @type {BigInt?}\n       */",
         "meta": {
             "range": [
-                1204,
-                1241
+                1212,
+                1249
             ],
             "filename": "Interaction.js",
             "lineno": 45,
@@ -346,8 +346,8 @@
         "comment": "/**\n     * The channel that this interaction belongs to.\n     * @type {TextChannel?}\n     */",
         "meta": {
             "range": [
-                1345,
-                1415
+                1353,
+                1423
             ],
             "filename": "Interaction.js",
             "lineno": 51,
@@ -378,8 +378,8 @@
         "comment": "/**\n       * The id of the channel that this interaction belongs to.\n       * @type {BigInt}\n       */",
         "meta": {
             "range": [
-                1556,
-                1597
+                1564,
+                1605
             ],
             "filename": "Interaction.js",
             "lineno": 58,
@@ -409,8 +409,8 @@
         "comment": "/**\n       * The member that triggered the interaction, if it was run in a guild.\n       * @type {Member?}\n       */",
         "meta": {
             "range": [
-                1750,
-                1878
+                1758,
+                1886
             ],
             "filename": "Interaction.js",
             "lineno": 65,
@@ -441,8 +441,8 @@
         "comment": "/**\n     * The interaction token, needed to respond to it.\n     * @type {String}\n     */",
         "meta": {
             "range": [
-                1978,
-                2001
+                1986,
+                2009
             ],
             "filename": "Interaction.js",
             "lineno": 76,
@@ -472,8 +472,8 @@
         "comment": "/**\n   * Prompts a user to enter text using a modal.\n   * @param {Object} options Modal options.\n   * @returns {Promise<Interaction>}\n   */",
         "meta": {
             "range": [
-                2152,
-                2624
+                2160,
+                2632
             ],
             "filename": "Interaction.js",
             "lineno": 84,
@@ -523,8 +523,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2171,
-                2176
+                2179,
+                2184
             ],
             "filename": "Interaction.js",
             "lineno": 84,
@@ -547,8 +547,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2178,
-                2186
+                2186,
+                2194
             ],
             "filename": "Interaction.js",
             "lineno": 84,
@@ -571,8 +571,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2188,
-                2202
+                2196,
+                2210
             ],
             "filename": "Interaction.js",
             "lineno": 84,
@@ -595,8 +595,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2218,
-                2227
+                2226,
+                2235
             ],
             "filename": "Interaction.js",
             "lineno": 85,
@@ -621,8 +621,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2234,
-                2247
+                2242,
+                2255
             ],
             "filename": "Interaction.js",
             "lineno": 87,
@@ -648,8 +648,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2253,
-                2267
+                2261,
+                2275
             ],
             "filename": "Interaction.js",
             "lineno": 88,
@@ -675,8 +675,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2274,
-                2297
+                2282,
+                2305
             ],
             "filename": "Interaction.js",
             "lineno": 90,
@@ -702,8 +702,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2304,
-                2334
+                2312,
+                2342
             ],
             "filename": "Interaction.js",
             "lineno": 92,
@@ -729,8 +729,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2347,
-                2404
+                2355,
+                2412
             ],
             "filename": "Interaction.js",
             "lineno": 94,
@@ -755,8 +755,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2411,
-                2493
+                2419,
+                2501
             ],
             "filename": "Interaction.js",
             "lineno": 96,
@@ -782,8 +782,8 @@
         "comment": "/**\n   * Responds to autocomplete interactions.\n   * @param {Object} options Autocompletion options.\n   * @returns {Promise<Interaction>}\n   */",
         "meta": {
             "range": [
-                2774,
-                3040
+                2782,
+                3048
             ],
             "filename": "Interaction.js",
             "lineno": 111,
@@ -833,8 +833,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2803,
-                2810
+                2811,
+                2818
             ],
             "filename": "Interaction.js",
             "lineno": 111,
@@ -857,8 +857,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2826,
-                2835
+                2834,
+                2843
             ],
             "filename": "Interaction.js",
             "lineno": 112,
@@ -883,8 +883,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2842,
-                2855
+                2850,
+                2863
             ],
             "filename": "Interaction.js",
             "lineno": 114,
@@ -910,8 +910,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2861,
-                2875
+                2869,
+                2883
             ],
             "filename": "Interaction.js",
             "lineno": 115,
@@ -937,8 +937,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2882,
-                2909
+                2890,
+                2917
             ],
             "filename": "Interaction.js",
             "lineno": 117,
@@ -964,8 +964,8 @@
         "comment": "/**\n   * Replies to an interaction.\n   * @param {String?} content The message content to send in the response to the interaction.\n   * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message.\n   * @returns {Promise<Interaction>}\n   */",
         "meta": {
             "range": [
-                3331,
-                4093
+                3339,
+                4101
             ],
             "filename": "Interaction.js",
             "lineno": 132,
@@ -1027,8 +1027,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3363,
-                3368
+                3371,
+                3376
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1051,8 +1051,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3370,
-                3375
+                3378,
+                3383
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1075,8 +1075,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3377,
-                3383
+                3385,
+                3391
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1099,8 +1099,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3385,
-                3391
+                3393,
+                3399
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1123,8 +1123,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3393,
-                3400
+                3401,
+                3408
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1147,8 +1147,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3402,
-                3412
+                3410,
+                3420
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1171,8 +1171,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3414,
-                3419
+                3422,
+                3427
             ],
             "filename": "Interaction.js",
             "lineno": 134,
@@ -1195,8 +1195,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3444,
-                3453
+                3452,
+                3461
             ],
             "filename": "Interaction.js",
             "lineno": 136,
@@ -1221,8 +1221,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3460,
-                3473
+                3468,
+                3481
             ],
             "filename": "Interaction.js",
             "lineno": 138,
@@ -1248,8 +1248,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3479,
-                3493
+                3487,
+                3501
             ],
             "filename": "Interaction.js",
             "lineno": 139,
@@ -1275,8 +1275,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3513,
-                3540
+                3521,
+                3548
             ],
             "filename": "Interaction.js",
             "lineno": 141,
@@ -1302,8 +1302,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3557,
-                3575
+                3565,
+                3583
             ],
             "filename": "Interaction.js",
             "lineno": 142,
@@ -1329,8 +1329,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3592,
-                3618
+                3600,
+                3626
             ],
             "filename": "Interaction.js",
             "lineno": 143,
@@ -1356,8 +1356,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3669,
-                3689
+                3677,
+                3697
             ],
             "filename": "Interaction.js",
             "lineno": 145,
@@ -1383,8 +1383,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3712,
-                3739
+                3720,
+                3747
             ],
             "filename": "Interaction.js",
             "lineno": 146,
@@ -1410,8 +1410,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3763,
-                3789
+                3771,
+                3797
             ],
             "filename": "Interaction.js",
             "lineno": 147,
@@ -1437,8 +1437,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3817,
-                3899
+                3825,
+                3907
             ],
             "filename": "Interaction.js",
             "lineno": 149,
@@ -1464,8 +1464,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3924,
-                3944
+                3932,
+                3952
             ],
             "filename": "Interaction.js",
             "lineno": 151,
@@ -1491,8 +1491,8 @@
         "comment": "/**\n   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.\n   * @param {String?} content The new interaction response content.\n   * @param {Object?} options The new interaction response options.\n   * @returns {Promise<Interaction>}\n   */",
         "meta": {
             "range": [
-                4375,
-                4949
+                4383,
+                4957
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1554,8 +1554,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4397,
-                4402
+                4405,
+                4410
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1578,8 +1578,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4404,
-                4409
+                4412,
+                4417
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1602,8 +1602,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4411,
-                4417
+                4419,
+                4425
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1626,8 +1626,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4419,
-                4426
+                4427,
+                4434
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1650,8 +1650,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4428,
-                4438
+                4436,
+                4446
             ],
             "filename": "Interaction.js",
             "lineno": 168,
@@ -1674,8 +1674,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4459,
-                4468
+                4467,
+                4476
             ],
             "filename": "Interaction.js",
             "lineno": 169,
@@ -1700,8 +1700,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4488,
-                4510
+                4496,
+                4518
             ],
             "filename": "Interaction.js",
             "lineno": 171,
@@ -1727,8 +1727,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4527,
-                4545
+                4535,
+                4553
             ],
             "filename": "Interaction.js",
             "lineno": 172,
@@ -1754,8 +1754,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4562,
-                4583
+                4570,
+                4591
             ],
             "filename": "Interaction.js",
             "lineno": 173,
@@ -1781,8 +1781,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4606,
-                4628
+                4614,
+                4636
             ],
             "filename": "Interaction.js",
             "lineno": 174,
@@ -1808,8 +1808,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4652,
-                4673
+                4660,
+                4681
             ],
             "filename": "Interaction.js",
             "lineno": 175,
@@ -1835,8 +1835,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4701,
-                4778
+                4709,
+                4786
             ],
             "filename": "Interaction.js",
             "lineno": 177,
@@ -1862,8 +1862,8 @@
         "comment": "/**\n   * Silently acknowledges an interaction.\n   * @returns {Promise<Interaction>}\n   */",
         "meta": {
             "range": [
-                5045,
-                5255
+                5053,
+                5263
             ],
             "filename": "Interaction.js",
             "lineno": 193,
@@ -1901,8 +1901,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5077,
-                5086
+                5085,
+                5094
             ],
             "filename": "Interaction.js",
             "lineno": 194,
@@ -1927,8 +1927,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5093,
-                5106
+                5101,
+                5114
             ],
             "filename": "Interaction.js",
             "lineno": 196,
@@ -1954,8 +1954,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5259,
-                5287
+                5267,
+                5295
             ],
             "filename": "Interaction.js",
             "lineno": 208,

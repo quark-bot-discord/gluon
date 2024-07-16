@@ -101,7 +101,7 @@
         "meta": {
             "range": [
                 115,
-                167
+                175
             ],
             "filename": "Member.js",
             "lineno": 3,
@@ -125,8 +125,8 @@
         "comment": "",
         "meta": {
             "range": [
-                175,
-                241
+                183,
+                257
             ],
             "filename": "Member.js",
             "lineno": 4,
@@ -150,8 +150,8 @@
         "comment": "/**\n * Represents a guild member.\n * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}\n */",
         "meta": {
             "range": [
-                393,
-                11254
+                409,
+                11270
             ],
             "filename": "Member.js",
             "lineno": 10,
@@ -185,8 +185,8 @@
         "comment": "/**\n   * Creates the structure for a guild member.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw member data from Discord.\n   * @param {String} user_id The id of the member.\n   * @param {String} guild_id The id of the guild that the member belongs to.\n   * @param {User?} user A user object for this member.\n   * @param {Boolean?} nocache Whether this member should be cached.\n   * @param {Boolean?} ignoreNoCache Whether the cache options should be overriden.\n   */",
         "meta": {
             "range": [
-                916,
-                4203
+                932,
+                4219
             ],
             "filename": "Member.js",
             "lineno": 21,
@@ -288,8 +288,8 @@
         "comment": "/**\n * Represents a guild member.\n * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}\n */",
         "meta": {
             "range": [
-                393,
-                11254
+                409,
+                11270
             ],
             "filename": "Member.js",
             "lineno": 10,
@@ -391,8 +391,8 @@
         "comment": "",
         "meta": {
             "range": [
-                994,
-                1009
+                1010,
+                1025
             ],
             "filename": "Member.js",
             "lineno": 27,
@@ -415,8 +415,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1011,
-                1032
+                1027,
+                1048
             ],
             "filename": "Member.js",
             "lineno": 27,
@@ -439,8 +439,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1034,
-                1051
+                1050,
+                1067
             ],
             "filename": "Member.js",
             "lineno": 27,
@@ -463,8 +463,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     */",
         "meta": {
             "range": [
-                1136,
-                1157
+                1152,
+                1173
             ],
             "filename": "Member.js",
             "lineno": 33,
@@ -494,8 +494,8 @@
         "comment": "/**\n     * The id of the guild that this member belongs to.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                1258,
-                1291
+                1274,
+                1307
             ],
             "filename": "Member.js",
             "lineno": 39,
@@ -525,8 +525,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1304,
-                1361
+                1320,
+                1377
             ],
             "filename": "Member.js",
             "lineno": 41,
@@ -551,8 +551,8 @@
         "comment": "/**\n     * The id of the member.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                1435,
-                1460
+                1451,
+                1476
             ],
             "filename": "Member.js",
             "lineno": 47,
@@ -582,8 +582,8 @@
         "comment": "/**\n       * The user object for this member.\n       * @type {User?}\n       */",
         "meta": {
             "range": [
-                1573,
-                1631
+                1589,
+                1647
             ],
             "filename": "Member.js",
             "lineno": 54,
@@ -614,8 +614,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1621,
-                1628
+                1637,
+                1644
             ],
             "filename": "Member.js",
             "lineno": 54,
@@ -638,8 +638,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1662,
-                1687
+                1678,
+                1703
             ],
             "filename": "Member.js",
             "lineno": 55,
@@ -664,8 +664,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1708,
-                1724
+                1724,
+                1740
             ],
             "filename": "Member.js",
             "lineno": 56,
@@ -690,8 +690,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1735,
-                1792
+                1751,
+                1808
             ],
             "filename": "Member.js",
             "lineno": 57,
@@ -716,8 +716,8 @@
         "comment": "/**\n       * The nickname of this member.\n       * @type {String?}\n       */",
         "meta": {
             "range": [
-                1917,
-                1938
+                1933,
+                1954
             ],
             "filename": "Member.js",
             "lineno": 64,
@@ -748,8 +748,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2021,
-                2046
+                2037,
+                2062
             ],
             "filename": "Member.js",
             "lineno": 66,
@@ -774,8 +774,8 @@
         "comment": "/**\n       * The UNIX timestamp for when this member joined the guild.\n       * @type {Number?}\n       */",
         "meta": {
             "range": [
-                2191,
-                2255
+                2207,
+                2271
             ],
             "filename": "Member.js",
             "lineno": 73,
@@ -806,8 +806,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2291,
-                2326
+                2307,
+                2342
             ],
             "filename": "Member.js",
             "lineno": 74,
@@ -832,8 +832,8 @@
         "comment": "/**\n     * The UNIX timestamp for when this member's timeout expires, if applicable.\n     * @type {Number?}\n     */",
         "meta": {
             "range": [
-                2453,
-                2595
+                2469,
+                2611
             ],
             "filename": "Member.js",
             "lineno": 80,
@@ -864,8 +864,8 @@
         "comment": "/**\n       * The flags for this user.\n       * @type {Number}\n       * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}\n       */",
         "meta": {
             "range": [
-                2834,
-                2857
+                2850,
+                2873
             ],
             "filename": "Member.js",
             "lineno": 90,
@@ -898,8 +898,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2925,
-                2952
+                2941,
+                2968
             ],
             "filename": "Member.js",
             "lineno": 92,
@@ -924,8 +924,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2963,
-                2977
+                2979,
+                2993
             ],
             "filename": "Member.js",
             "lineno": 93,
@@ -950,8 +950,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2984,
-                3024
+                3000,
+                3040
             ],
             "filename": "Member.js",
             "lineno": 95,
@@ -976,8 +976,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3093,
-                3121
+                3109,
+                3137
             ],
             "filename": "Member.js",
             "lineno": 98,
@@ -1002,8 +1002,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3210,
-                3238
+                3226,
+                3254
             ],
             "filename": "Member.js",
             "lineno": 100,
@@ -1028,8 +1028,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3308,
-                3336
+                3324,
+                3352
             ],
             "filename": "Member.js",
             "lineno": 103,
@@ -1054,8 +1054,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3380,
-                3476
+                3396,
+                3492
             ],
             "filename": "Member.js",
             "lineno": 106,
@@ -1080,8 +1080,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3556,
-                3587
+                3572,
+                3603
             ],
             "filename": "Member.js",
             "lineno": 110,
@@ -1106,8 +1106,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3667,
-                3683
+                3683,
+                3699
             ],
             "filename": "Member.js",
             "lineno": 113,
@@ -1132,8 +1132,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3700,
-                3705
+                3716,
+                3721
             ],
             "filename": "Member.js",
             "lineno": 114,
@@ -1158,8 +1158,8 @@
         "comment": "/**\n   * The guild that this member belongs to.\n   * @type {Guild?}\n   * @readonly\n   */",
         "meta": {
             "range": [
-                4298,
-                4389
+                4314,
+                4405
             ],
             "filename": "Member.js",
             "lineno": 136,
@@ -1194,8 +1194,8 @@
         "comment": "/**\n   * The member's roles.\n   * @readonly\n   * @type {Array<Role>}\n   */",
         "meta": {
             "range": [
-                4470,
-                4853
+                4486,
+                4869
             ],
             "filename": "Member.js",
             "lineno": 145,
@@ -1229,8 +1229,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4547,
-                4557
+                4563,
+                4573
             ],
             "filename": "Member.js",
             "lineno": 148,
@@ -1255,8 +1255,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4679,
-                4684
+                4695,
+                4700
             ],
             "filename": "Member.js",
             "lineno": 154,
@@ -1281,8 +1281,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4729,
-                4789
+                4745,
+                4805
             ],
             "filename": "Member.js",
             "lineno": 155,
@@ -1307,8 +1307,8 @@
         "comment": "/**\n   * The position of the member's highest role.\n   * @readonly\n   * @type {Number}\n   */",
         "meta": {
             "range": [
-                4952,
-                5208
+                4968,
+                5224
             ],
             "filename": "Member.js",
             "lineno": 167,
@@ -1342,8 +1342,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4988,
-                5007
+                5004,
+                5023
             ],
             "filename": "Member.js",
             "lineno": 168,
@@ -1368,8 +1368,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5020,
-                5038
+                5036,
+                5054
             ],
             "filename": "Member.js",
             "lineno": 170,
@@ -1394,8 +1394,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5054,
-                5059
+                5070,
+                5075
             ],
             "filename": "Member.js",
             "lineno": 172,
@@ -1420,8 +1420,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5139,
-                5174
+                5155,
+                5190
             ],
             "filename": "Member.js",
             "lineno": 174,
@@ -1447,8 +1447,8 @@
         "comment": "/**\n   * The overall calculated permissions for this member.\n   * @readonly\n   * @type {BigInt}\n   */",
         "meta": {
             "range": [
-                5316,
-                5461
+                5332,
+                5477
             ],
             "filename": "Member.js",
             "lineno": 184,
@@ -1482,8 +1482,8 @@
         "comment": "/**\n   * Whether the member has joined the guild before.\n   * @readonly\n   * @type {Boolean}\n   */",
         "meta": {
             "range": [
-                5566,
-                5664
+                5582,
+                5680
             ],
             "filename": "Member.js",
             "lineno": 195,
@@ -1517,8 +1517,8 @@
         "comment": "/**\n   * The hash of the member's avatar, as it was received from Discord.\n   * @readonly\n   * @type {String?}\n   */",
         "meta": {
             "range": [
-                5787,
-                5974
+                5803,
+                5990
             ],
             "filename": "Member.js",
             "lineno": 204,
@@ -1553,8 +1553,8 @@
         "comment": "/**\n   * The hash of the member's avatar as a string.\n   * @readonly\n   * @type {String}\n   */",
         "meta": {
             "range": [
-                6075,
-                6346
+                6091,
+                6362
             ],
             "filename": "Member.js",
             "lineno": 216,
@@ -1588,8 +1588,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6149,
-                6190
+                6165,
+                6206
             ],
             "filename": "Member.js",
             "lineno": 219,
@@ -1614,8 +1614,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6279,
-                6314
+                6295,
+                6330
             ],
             "filename": "Member.js",
             "lineno": 223,
@@ -1641,8 +1641,8 @@
         "comment": "/**\n   * The url of the member's avatar.\n   * @readonly\n   * @type {String}\n   */",
         "meta": {
             "range": [
-                6434,
-                6754
+                6450,
+                6770
             ],
             "filename": "Member.js",
             "lineno": 233,
@@ -1676,8 +1676,8 @@
         "comment": "/**\n   * Whether the user has not yet passed the guild's membership screening requirements.\n   * @readonly\n   * @type {Boolean}\n   */",
         "meta": {
             "range": [
-                6894,
-                6969
+                6910,
+                6985
             ],
             "filename": "Member.js",
             "lineno": 249,
@@ -1711,8 +1711,8 @@
         "comment": "/**\n   * Whether the user has an animated avatar or not.\n   * @readonly\n   * @type {Boolean}\n   */",
         "meta": {
             "range": [
-                7074,
-                7158
+                7090,
+                7174
             ],
             "filename": "Member.js",
             "lineno": 258,
@@ -1746,8 +1746,8 @@
         "comment": "/**\n   * Adds a role to the member.\n   * @param {BigInt | String} role_id The id of the role to add to the member.\n   * @param {Object?} options The options for adding the role to the member.\n   * @param {String?} options.reason The reason for adding the role to the member.\n   * @returns {Promise<void>}\n   */",
         "meta": {
             "range": [
-                7475,
-                7868
+                7491,
+                7884
             ],
             "filename": "Member.js",
             "lineno": 269,
@@ -1819,8 +1819,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7500,
-                7506
+                7516,
+                7522
             ],
             "filename": "Member.js",
             "lineno": 269,
@@ -1843,8 +1843,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7663,
-                7672
+                7679,
+                7688
             ],
             "filename": "Member.js",
             "lineno": 273,
@@ -1869,8 +1869,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7691,
-                7726
+                7707,
+                7742
             ],
             "filename": "Member.js",
             "lineno": 275,
@@ -1896,8 +1896,8 @@
         "comment": "/**\n   * Removes a role from the member.\n   * @param {BigInt | String} role_id The id of the role to remove from the member.\n   * @param {Object?} options The options for removing the role from the member.\n   * @param {String?} options.reason The reason for removing the role from the member.\n   * @returns {Promise<void>}\n   */",
         "meta": {
             "range": [
-                8203,
-                8600
+                8219,
+                8616
             ],
             "filename": "Member.js",
             "lineno": 291,
@@ -1969,8 +1969,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8231,
-                8237
+                8247,
+                8253
             ],
             "filename": "Member.js",
             "lineno": 291,
@@ -1993,8 +1993,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8394,
-                8403
+                8410,
+                8419
             ],
             "filename": "Member.js",
             "lineno": 295,
@@ -2019,8 +2019,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8422,
-                8457
+                8438,
+                8473
             ],
             "filename": "Member.js",
             "lineno": 297,
@@ -2046,8 +2046,8 @@
         "comment": "/**\n   * Adds a timeout to the member.\n   * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.\n   * @param {Object?} options The options for timing out the member.\n   * @param {String?} options.reason The reason for timing out the member.\n   * @returns {Promise<void>}\n   */",
         "meta": {
             "range": [
-                8921,
-                9373
+                8937,
+                9389
             ],
             "filename": "Member.js",
             "lineno": 313,
@@ -2118,8 +2118,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8955,
-                8961
+                8971,
+                8977
             ],
             "filename": "Member.js",
             "lineno": 313,
@@ -2142,8 +2142,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9126,
-                9135
+                9142,
+                9151
             ],
             "filename": "Member.js",
             "lineno": 317,
@@ -2168,8 +2168,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9154,
-                9189
+                9170,
+                9205
             ],
             "filename": "Member.js",
             "lineno": 319,
@@ -2195,8 +2195,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9196,
-                9245
+                9212,
+                9261
             ],
             "filename": "Member.js",
             "lineno": 321,
@@ -2222,8 +2222,8 @@
         "comment": "/**\n   * Removes a timeout from the member.\n   * @param {Object?} options The options for untiming out the member.\n   * @param {String?} options.reason The reason for removing the time out from the member.\n   * @returns {Promise<void>}\n   */",
         "meta": {
             "range": [
-                9621,
-                10052
+                9637,
+                10068
             ],
             "filename": "Member.js",
             "lineno": 336,
@@ -2284,8 +2284,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9643,
-                9649
+                9659,
+                9665
             ],
             "filename": "Member.js",
             "lineno": 336,
@@ -2308,8 +2308,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9814,
-                9823
+                9830,
+                9839
             ],
             "filename": "Member.js",
             "lineno": 340,
@@ -2334,8 +2334,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9842,
-                9877
+                9858,
+                9893
             ],
             "filename": "Member.js",
             "lineno": 342,
@@ -2361,8 +2361,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9884,
-                9924
+                9900,
+                9940
             ],
             "filename": "Member.js",
             "lineno": 344,
@@ -2388,8 +2388,8 @@
         "comment": "/**\n   * Updates the member's roles.\n   * @param {Array<BigInt | String>} roles An array of role ids for the roles the member should be updated with.\n   * @param {Object?} options The options for updating the member's roles.\n   * @returns {Promise<void>}\n   */",
         "meta": {
             "range": [
-                10319,
-                10760
+                10335,
+                10776
             ],
             "filename": "Member.js",
             "lineno": 359,
@@ -2450,8 +2450,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10350,
-                10356
+                10366,
+                10372
             ],
             "filename": "Member.js",
             "lineno": 359,
@@ -2474,8 +2474,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10513,
-                10522
+                10529,
+                10538
             ],
             "filename": "Member.js",
             "lineno": 363,
@@ -2500,8 +2500,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10541,
-                10576
+                10557,
+                10592
             ],
             "filename": "Member.js",
             "lineno": 365,
@@ -2527,8 +2527,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10583,
-                10632
+                10599,
+                10648
             ],
             "filename": "Member.js",
             "lineno": 367,
@@ -2554,8 +2554,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10764,
-                11252
+                10780,
+                11268
             ],
             "filename": "Member.js",
             "lineno": 376,
@@ -2583,8 +2583,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10794,
-                10809
+                10810,
+                10825
             ],
             "filename": "Member.js",
             "lineno": 378,
@@ -2607,8 +2607,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10817,
-                10832
+                10833,
+                10848
             ],
             "filename": "Member.js",
             "lineno": 379,
@@ -2631,8 +2631,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10840,
-                10901
+                10856,
+                10917
             ],
             "filename": "Member.js",
             "lineno": 380,
@@ -2655,8 +2655,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10909,
-                10941
+                10925,
+                10957
             ],
             "filename": "Member.js",
             "lineno": 381,
@@ -2679,8 +2679,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10949,
-                10986
+                10965,
+                11002
             ],
             "filename": "Member.js",
             "lineno": 382,
@@ -2703,8 +2703,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10994,
-                11091
+                11010,
+                11107
             ],
             "filename": "Member.js",
             "lineno": 383,
@@ -2727,8 +2727,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11099,
-                11203
+                11115,
+                11219
             ],
             "filename": "Member.js",
             "lineno": 386,
@@ -2751,8 +2751,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11211,
-                11240
+                11227,
+                11256
             ],
             "filename": "Member.js",
             "lineno": 389,
@@ -2775,8 +2775,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11256,
-                11279
+                11272,
+                11295
             ],
             "filename": "Member.js",
             "lineno": 394,
