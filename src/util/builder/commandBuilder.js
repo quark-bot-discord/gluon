@@ -11,7 +11,7 @@ class Command {
   constructor() {
     this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
 
-    this.dm_permission = false;
+    this.contexts = [0];
 
     this.options = [];
 
@@ -25,6 +25,9 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setName(name) {
+
+    if (!name) throw new TypeError("GLUON: Command name must be provided.");
+
     if (typeof name == "object") {
       this.name = name[this.defaultLocale];
 
@@ -55,6 +58,9 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setDescription(description) {
+
+    if (!description) throw new TypeError("GLUON: Command description must be provided.");
+
     if (typeof description == "object") {
       this.description = description[this.defaultLocale];
 
@@ -72,18 +78,10 @@ class Command {
    * @returns {Command}
    */
   setDefaultMemberPermissions(permissions) {
+
+    if (typeof permissions != "number") throw new TypeError("GLUON: Command default permission must be a number.");
+
     this.default_member_permissions = permissions;
-
-    return this;
-  }
-
-  /**
-   * Sets whether the command can be used in DMs.
-   * @param {Boolean} dmPermission Whether the command can be used in DMs or not.
-   * @returns {Command}
-   */
-  setDmPermission(dmPermission) {
-    this.dm_permission = dmPermission;
 
     return this;
   }
@@ -134,7 +132,6 @@ class Command {
       description: this.description,
       description_localizations: this.description_localizations,
       default_member_permissions: Number(this.default_member_permissions),
-      dm_permission: this.dm_permission,
       nsfw: this.nsfw,
       options: this.options,
     };

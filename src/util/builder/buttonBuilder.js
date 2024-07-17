@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES } = require("../../constants");
+const { COMPONENT_TYPES, BUTTON_STYLES, LIMITS } = require("../../constants");
 const resolveEmoji = require("../discord/resolveEmoji");
 
 /**
@@ -22,7 +22,7 @@ class Button {
 
     if (!label) throw new TypeError("GLUON: Button label must be provided.");
 
-    this.label = label;
+    this.label = (label && label.length > LIMITS.MAX_BUTTON_LABEL) ? `${label.substring(0, LIMITS.MAX_BUTTON_LABEL - 3)}...` : label;
 
     return this;
   }
@@ -47,6 +47,9 @@ class Button {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles}
    */
   setStyle(style) {
+
+    if (!style) throw new TypeError("GLUON: Button style must be provided.");
+
     this.style = style;
 
     return this;
@@ -59,6 +62,12 @@ class Button {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
   setCustomID(id) {
+
+    if (!id) throw new TypeError("GLUON: Button custom id must be provided for non-link buttons.");
+
+    if (id.length > LIMITS.MAX_BUTTON_CUSTOM_ID)
+      throw new RangeError(`GLUON: Button custom id must be under ${LIMITS.MAX_BUTTON_CUSTOM_ID} characters.`);
+
     this.custom_id = id;
 
     return this;
@@ -91,6 +100,20 @@ class Button {
    * @returns {Object}
    */
   toJSON() {
+    if (!this.label)
+      throw new TypeError("GLUON: Button label must be provided.");
+    if (!this.style)
+      throw new TypeError("GLUON: Button style must be provided.");
+    if (this.style === BUTTON_STYLES.LINK && !this.url)
+      throw new TypeError("GLUON: Button url must be provided for link buttons.");
+    if (this.style !== BUTTON_STYLES.LINK && !this.custom_id)
+      throw new TypeError("GLUON: Button custom id must be provided for non-link buttons.");
+    if (this.style === BUTTON_STYLES.LINK && this.custom_id)
+      throw new TypeError("GLUON: Button custom id must not be provided for link buttons.");
+    if (this.style !== BUTTON_STYLES.LINK && this.url)
+      throw new TypeError("GLUON: Button url must not be provided for non-link buttons.");
+    if (this.style === BUTTON_STYLES.LINK && this.emoji)
+      throw new TypeError("GLUON: Button emoji must not be provided for link buttons.");
     return {
       type: this.type,
       label: this.label,
