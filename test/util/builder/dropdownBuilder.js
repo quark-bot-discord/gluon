@@ -38,7 +38,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setType()).to.throw(
         TypeError,
-        "GLUON: Dropdown type must be a number."
+        "GLUON: Dropdown type must be a number.",
       );
     });
   });
@@ -59,16 +59,16 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setCustomID()).to.throw(
         TypeError,
-        "GLUON: Dropdown custom id must be provided."
+        "GLUON: Dropdown custom id must be provided.",
       );
     });
     it("should throw an error if the custom id is too long", function () {
       const dropdown = new DropdownBuilder();
       expect(() =>
-        dropdown.setCustomID("a".repeat(LIMITS.MAX_DROPDOWN_CUSTOM_ID + 1))
+        dropdown.setCustomID("a".repeat(LIMITS.MAX_DROPDOWN_CUSTOM_ID + 1)),
       ).to.throw(
         RangeError,
-        `GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`
+        `GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`,
       );
     });
   });
@@ -89,7 +89,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.addOption()).to.throw(
         TypeError,
-        "GLUON: Dropdown option must be provided."
+        "GLUON: Dropdown option must be provided.",
       );
     });
 
@@ -97,10 +97,10 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       dropdown.options = new Array(LIMITS.MAX_DROPDOWN_OPTIONS);
       expect(() =>
-        dropdown.addOption({ label: "test", value: "test" })
+        dropdown.addOption({ label: "test", value: "test" }),
       ).to.throw(
         RangeError,
-        `GLUON: Dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`
+        `GLUON: Dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`,
       );
     });
   });
@@ -121,7 +121,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.addChannelTypes()).to.throw(
         TypeError,
-        "GLUON: Dropdown channel types must be provided."
+        "GLUON: Dropdown channel types must be provided.",
       );
     });
 
@@ -129,7 +129,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.addChannelTypes(123)).to.throw(
         TypeError,
-        "GLUON: Dropdown channel types must be an array."
+        "GLUON: Dropdown channel types must be an array.",
       );
     });
   });
@@ -150,7 +150,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setPlaceholder()).to.throw(
         TypeError,
-        "GLUON: Dropdown placeholder must be provided."
+        "GLUON: Dropdown placeholder must be provided.",
       );
     });
 
@@ -158,7 +158,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       dropdown.setPlaceholder("a".repeat(LIMITS.MAX_DROPDOWN_PLACEHOLDER + 1));
       expect(dropdown.placeholder.length).to.equal(
-        LIMITS.MAX_DROPDOWN_PLACEHOLDER
+        LIMITS.MAX_DROPDOWN_PLACEHOLDER,
       );
     });
   });
@@ -179,7 +179,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setMinValue()).to.throw(
         TypeError,
-        "GLUON: Dropdown min value must be a number."
+        "GLUON: Dropdown min value must be a number.",
       );
     });
   });
@@ -200,7 +200,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setMaxValue()).to.throw(
         TypeError,
-        "GLUON: Dropdown max value must be a number."
+        "GLUON: Dropdown max value must be a number.",
       );
     });
   });
@@ -221,7 +221,7 @@ describe("DropdownBuilder", function () {
       const dropdown = new DropdownBuilder();
       expect(() => dropdown.setDisabled()).to.throw(
         TypeError,
-        "GLUON: Dropdown disabled must be a boolean."
+        "GLUON: Dropdown disabled must be a boolean.",
       );
     });
   });

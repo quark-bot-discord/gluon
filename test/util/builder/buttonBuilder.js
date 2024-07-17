@@ -2,7 +2,11 @@ let expect;
 before(async () => {
   expect = (await import("chai")).expect;
 });
-const { COMPONENT_TYPES, BUTTON_STYLES, LIMITS } = require("../../../src/constants");
+const {
+  COMPONENT_TYPES,
+  BUTTON_STYLES,
+  LIMITS,
+} = require("../../../src/constants");
 const Button = require("../../../src/util/builder/buttonBuilder");
 
 describe("ButtonBuilder", () => {
@@ -34,7 +38,7 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setLabel()).to.throw(
         TypeError,
-        "GLUON: Button label must be provided."
+        "GLUON: Button label must be provided.",
       );
     });
     it("should truncate the label if it exceeds the maximum length", function () {
@@ -65,14 +69,14 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setEmoji()).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
     it("should throw an error if string is not an emoji", function () {
       const button = new Button();
       expect(() => button.setEmoji("test")).to.throw(
         TypeError,
-        "GLUON: Button emoji must be provided."
+        "GLUON: Button emoji must be provided.",
       );
     });
   });
@@ -91,7 +95,7 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setStyle()).to.throw(
         TypeError,
-        "GLUON: Button style must be provided."
+        "GLUON: Button style must be provided.",
       );
     });
   });
@@ -110,14 +114,16 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setCustomID()).to.throw(
         TypeError,
-        "GLUON: Button custom id must be provided for non-link buttons."
+        "GLUON: Button custom id must be provided for non-link buttons.",
       );
     });
     it("should throw an error if custom id exceeds the maximum length", function () {
       const button = new Button();
-      expect(() => button.setCustomID("a".repeat(LIMITS.MAX_BUTTON_CUSTOM_ID + 1))).to.throw(
+      expect(() =>
+        button.setCustomID("a".repeat(LIMITS.MAX_BUTTON_CUSTOM_ID + 1)),
+      ).to.throw(
         RangeError,
-        `GLUON: Button custom id must be under ${LIMITS.MAX_BUTTON_CUSTOM_ID} characters.`
+        `GLUON: Button custom id must be under ${LIMITS.MAX_BUTTON_CUSTOM_ID} characters.`,
       );
     });
   });
@@ -172,14 +178,14 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button label must be provided."
+        "GLUON: Button label must be provided.",
       );
     });
     it("should throw an error if no style is provided", function () {
       const button = new Button().setLabel("test");
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button style must be provided."
+        "GLUON: Button style must be provided.",
       );
     });
     it("should throw an error if no custom id is provided", function () {
@@ -188,14 +194,14 @@ describe("ButtonBuilder", () => {
         .setStyle(BUTTON_STYLES.PRIMARY);
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button custom id must be provided for non-link buttons."
+        "GLUON: Button custom id must be provided for non-link buttons.",
       );
     });
     it("should throw an error if no url is provided", function () {
       const button = new Button().setLabel("test").setStyle(BUTTON_STYLES.LINK);
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button url must be provided for link buttons."
+        "GLUON: Button url must be provided for link buttons.",
       );
     });
     it("should throw an error if custom id is provided for link buttons", function () {
@@ -206,7 +212,7 @@ describe("ButtonBuilder", () => {
         .setCustomID("custom_id");
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button custom id must not be provided for link buttons."
+        "GLUON: Button custom id must not be provided for link buttons.",
       );
     });
     it("should throw an error if url is provided for non-link buttons", function () {
@@ -217,7 +223,7 @@ describe("ButtonBuilder", () => {
         .setURL("https://example.com");
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button url must not be provided for non-link buttons."
+        "GLUON: Button url must not be provided for non-link buttons.",
       );
     });
     it("should throw an error if emoji is provided for link buttons", function () {
@@ -228,7 +234,7 @@ describe("ButtonBuilder", () => {
         .setURL("https://example.com");
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button emoji must not be provided for link buttons."
+        "GLUON: Button emoji must not be provided for link buttons.",
       );
     });
   });

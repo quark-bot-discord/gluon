@@ -41,7 +41,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setLabel()).to.throw(
         TypeError,
-        "GLUON: Text input label must be provided."
+        "GLUON: Text input label must be provided.",
       );
     });
 
@@ -68,7 +68,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setStyle()).to.throw(
         TypeError,
-        "GLUON: Text input style must be provided."
+        "GLUON: Text input style must be provided.",
       );
     });
   });
@@ -89,16 +89,16 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setCustomID()).to.throw(
         TypeError,
-        "GLUON: Text input custom id must be provided."
+        "GLUON: Text input custom id must be provided.",
       );
     });
     it("should throw an error if the custom id is too long", function () {
       const textInput = new TextInputBuilder();
       expect(() =>
-        textInput.setCustomID("a".repeat(LIMITS.MAX_TEXT_INPUT_CUSTOM_ID + 1))
+        textInput.setCustomID("a".repeat(LIMITS.MAX_TEXT_INPUT_CUSTOM_ID + 1)),
       ).to.throw(
         RangeError,
-        `GLUON: Text input custom id must be less than ${LIMITS.MAX_TEXT_INPUT_CUSTOM_ID} characters.`
+        `GLUON: Text input custom id must be less than ${LIMITS.MAX_TEXT_INPUT_CUSTOM_ID} characters.`,
       );
     });
   });
@@ -119,7 +119,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setValue()).to.throw(
         TypeError,
-        "GLUON: Text input value must be provided."
+        "GLUON: Text input value must be provided.",
       );
     });
   });
@@ -140,17 +140,17 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setPlaceholder()).to.throw(
         TypeError,
-        "GLUON: Text input placeholder must be provided."
+        "GLUON: Text input placeholder must be provided.",
       );
     });
 
     it("should truncate the placeholder if it exceeds the maximum length", function () {
       const textInput = new TextInputBuilder();
       textInput.setPlaceholder(
-        "a".repeat(LIMITS.MAX_TEXT_INPUT_PLACEHOLDER + 1)
+        "a".repeat(LIMITS.MAX_TEXT_INPUT_PLACEHOLDER + 1),
       );
       expect(textInput.placeholder.length).to.equal(
-        LIMITS.MAX_TEXT_INPUT_PLACEHOLDER
+        LIMITS.MAX_TEXT_INPUT_PLACEHOLDER,
       );
     });
   });
@@ -171,7 +171,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setMinLength()).to.throw(
         TypeError,
-        "GLUON: Text input min length must be a number."
+        "GLUON: Text input min length must be a number.",
       );
     });
   });
@@ -192,7 +192,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.setMaxLength()).to.throw(
         TypeError,
-        "GLUON: Text input max length must be a number."
+        "GLUON: Text input max length must be a number.",
       );
     });
   });
@@ -229,7 +229,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder();
       expect(() => textInput.toJSON()).to.throw(
         TypeError,
-        "GLUON: Text input label must be provided."
+        "GLUON: Text input label must be provided.",
       );
     });
 
@@ -237,7 +237,7 @@ describe("TextInputBuilder", function () {
       const textInput = new TextInputBuilder().setLabel("test");
       expect(() => textInput.toJSON()).to.throw(
         TypeError,
-        "GLUON: Text input style must be provided."
+        "GLUON: Text input style must be provided.",
       );
     });
 
@@ -247,7 +247,7 @@ describe("TextInputBuilder", function () {
         .setStyle(TEXT_INPUT_STYLES.PARAGRAPH);
       expect(() => textInput.toJSON()).to.throw(
         TypeError,
-        "GLUON: Text input custom id must be provided."
+        "GLUON: Text input custom id must be provided.",
       );
     });
   });

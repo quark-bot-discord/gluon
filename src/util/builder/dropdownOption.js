@@ -12,10 +12,13 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setLabel(label) {
+    if (!label)
+      throw new TypeError("GLUON: Dropdown option label must be provided.");
 
-    if (!label) throw new TypeError("GLUON: Dropdown option label must be provided.");
-
-    this.label = (label && label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL) ? `${label.substring(0, LIMITS.MAX_DROPDOWN_OPTION_LABEL - 3)}...` : label;
+    this.label =
+      label && label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL
+        ? `${label.substring(0, LIMITS.MAX_DROPDOWN_OPTION_LABEL - 3)}...`
+        : label;
 
     return this;
   }
@@ -26,11 +29,13 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setValue(value) {
-
-    if (!value) throw new TypeError("GLUON: Dropdown option value must be provided.");
+    if (!value)
+      throw new TypeError("GLUON: Dropdown option value must be provided.");
 
     if (value.length > LIMITS.MAX_DROPDOWN_OPTION_VALUE)
-      throw new RangeError(`GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`);
+      throw new RangeError(
+        `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`,
+      );
 
     this.value = value;
 
@@ -43,10 +48,15 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setDescription(description) {
+    if (!description)
+      throw new TypeError(
+        "GLUON: Dropdown option description must be provided.",
+      );
 
-    if (!description) throw new TypeError("GLUON: Dropdown option description must be provided.");
-
-    this.description = (description && description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION) ? `${description.substring(0, LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION - 3)}...` : description;
+    this.description =
+      description && description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION
+        ? `${description.substring(0, LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION - 3)}...`
+        : description;
 
     return this;
   }
@@ -59,7 +69,8 @@ class DropdownOption {
   setEmoji(emoji) {
     this.emoji = resolveEmoji(emoji);
 
-    if (!this.emoji) throw new TypeError("GLUON: Dropdown option emoji must be provided.");
+    if (!this.emoji)
+      throw new TypeError("GLUON: Dropdown option emoji must be provided.");
 
     return this;
   }

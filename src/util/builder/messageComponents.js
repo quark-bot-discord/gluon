@@ -17,12 +17,12 @@ class MessageComponents {
    * @returns {MessageComponents}
    */
   addActionRow(actionRow) {
-
     if (this.actionRows.length >= LIMITS.MAX_ACTION_ROWS)
-      throw new RangeError(`GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`);
+      throw new RangeError(
+        `GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`,
+      );
 
-    if (!actionRow)
-      throw new TypeError("GLUON: Action row must be provided.");
+    if (!actionRow) throw new TypeError("GLUON: Action row must be provided.");
 
     this.actionRows.push(actionRow);
 
