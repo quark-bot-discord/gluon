@@ -20,12 +20,12 @@ class Embed {
    * @returns {Embed}
    */
   setTitle(title) {
-
-    if (!title)
-      throw new TypeError("GLUON: Embed title must be provided.");
+    if (!title) throw new TypeError("GLUON: Embed title must be provided.");
 
     this.title =
-      title && title.length > LIMITS.MAX_EMBED_TITLE ? `${title.substring(0, LIMITS.MAX_EMBED_TITLE - 3)}...` : title;
+      title && title.length > LIMITS.MAX_EMBED_TITLE
+        ? `${title.substring(0, LIMITS.MAX_EMBED_TITLE - 3)}...`
+        : title;
 
     return this;
   }
@@ -36,12 +36,13 @@ class Embed {
    * @returns {Embed}
    */
   setDescription(text) {
-
     if (!text)
       throw new TypeError("GLUON: Embed description must be provided.");
 
     this.description =
-      text && text.length > LIMITS.MAX_EMBED_DESCRIPTION ? `${text.substring(0, LIMITS.MAX_EMBED_DESCRIPTION - 3)}...` : text;
+      text && text.length > LIMITS.MAX_EMBED_DESCRIPTION
+        ? `${text.substring(0, LIMITS.MAX_EMBED_DESCRIPTION - 3)}...`
+        : text;
 
     return this;
   }
@@ -52,9 +53,7 @@ class Embed {
    * @returns {Embed}
    */
   setURL(url) {
-
-    if (!url)
-      throw new TypeError("GLUON: Embed url must be provided.");
+    if (!url) throw new TypeError("GLUON: Embed url must be provided.");
 
     this.url = url;
 
@@ -79,9 +78,7 @@ class Embed {
    * @returns {Embed}
    */
   setColor(colour) {
-
-    if (!colour)
-      throw new TypeError("GLUON: Embed colour must be provided.");
+    if (!colour) throw new TypeError("GLUON: Embed colour must be provided.");
 
     if (typeof colour == "string") {
       if (colour[0] == "#") colour = colour.substring(1);
@@ -98,7 +95,6 @@ class Embed {
    * @returns {Embed}
    */
   setThumbnail(url) {
-
     if (!url)
       throw new TypeError("GLUON: Embed thumbnail url must be provided.");
 
@@ -116,12 +112,14 @@ class Embed {
    * @returns {Embed}
    */
   setFooter(text, icon) {
-
     if (!text)
       throw new TypeError("GLUON: Embed footer text must be provided.");
 
     this.footer = {
-      text: text && text.length > LIMITS.MAX_EMBED_FOOTER_TEXT ? `${text.substring(0, LIMITS.MAX_EMBED_FOOTER_TEXT - 3)}...` : text,
+      text:
+        text && text.length > LIMITS.MAX_EMBED_FOOTER_TEXT
+          ? `${text.substring(0, LIMITS.MAX_EMBED_FOOTER_TEXT - 3)}...`
+          : text,
     };
     if (icon) this.footer.icon_url = icon;
 
@@ -136,13 +134,16 @@ class Embed {
    * @returns {Embed}
    */
   setAuthor(name, url, icon_url) {
-
     if (!name)
       throw new TypeError("GLUON: Embed author name must be provided.");
 
     this.author = {};
 
-    if (name) this.author.name = (name && name.length > LIMITS.MAX_EMBED_AUTHOR_NAME ? `${name.substring(0, LIMITS.MAX_EMBED_AUTHOR_NAME - 3)}...` : name);
+    if (name)
+      this.author.name =
+        name && name.length > LIMITS.MAX_EMBED_AUTHOR_NAME
+          ? `${name.substring(0, LIMITS.MAX_EMBED_AUTHOR_NAME - 3)}...`
+          : name;
     if (url) this.author.url = url;
     if (icon_url) this.author.icon_url = icon_url;
 
@@ -158,15 +159,24 @@ class Embed {
    */
   addField(name, value, inline = false) {
     if (this.fields.length == LIMITS.MAX_EMBED_FIELDS)
-      throw new RangeError(`GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`);
+      throw new RangeError(
+        `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
+      );
 
     if (!name || !value)
-      throw new TypeError("GLUON: Embed field name and value must be provided.");
+      throw new TypeError(
+        "GLUON: Embed field name and value must be provided.",
+      );
 
     this.fields.push({
-      name: name && name.length > LIMITS.MAX_EMBED_FIELD_NAME ? `${name.substring(0, LIMITS.MAX_EMBED_FIELD_NAME - 3)}...` : name,
+      name:
+        name && name.length > LIMITS.MAX_EMBED_FIELD_NAME
+          ? `${name.substring(0, LIMITS.MAX_EMBED_FIELD_NAME - 3)}...`
+          : name,
       value:
-        value && value.length > LIMITS.MAX_EMBED_FIELD_VALUE ? `${value.substring(0, LIMITS.MAX_EMBED_FIELD_VALUE - 3)}...` : value,
+        value && value.length > LIMITS.MAX_EMBED_FIELD_VALUE
+          ? `${value.substring(0, LIMITS.MAX_EMBED_FIELD_VALUE - 3)}...`
+          : value,
       inline,
     });
 
