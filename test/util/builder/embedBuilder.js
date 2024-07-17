@@ -311,7 +311,7 @@ describe("Embed", function () {
       embed.setThumbnail("thumbnail");
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
-      expect(embed.toJSON()).to.eql({
+      expect(embed.toJSON()).to.deep.equal({
         type: "rich",
         title: "title",
         description: "description",
