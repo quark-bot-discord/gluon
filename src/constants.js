@@ -194,6 +194,13 @@ module.exports.COMPONENT_TYPES = {
     MENTIONABLE_SELECT_MENU:    (7),
     CHANNEL_SELECT_MENU:        (8)
 };
+module.exports.BUTTON_STYLES = {
+    PRIMARY:                    (1),
+    SECONDARY:                  (2),
+    SUCCESS:                    (3),
+    DANGER:                     (4),
+    LINK:                       (5)
+};
 module.exports.TEXT_INPUT_STYLES = {
     SHORT: 1,
     PARAGRAPH: 2
@@ -315,5 +322,19 @@ module.exports.LIMITS = {
     MAX_EMBED_FIELD_VALUE: 1024,
     MAX_EMBED_FOOTER_TEXT: 2048,
     MAX_EMBED_AUTHOR_NAME: 256,
+    MAX_COMMAND_NAME: 32,
+    MIN_COMMAND_NAME: 1,
+    MAX_COMMAND_DESCRIPTION: 100,
+    MIN_COMMAND_DESCRIPTION: 1,
+    MAX_COMMAND_OPTIONS: 25,
+    MAX_COMMAND_OPTION_NAME: 32,
+    MIN_COMMAND_OPTION_NAME: 1,
+    MAX_COMMAND_OPTION_DESCRIPTION: 100,
+    MIN_COMMAND_OPTION_DESCRIPTION: 1,
+    MAX_COMMAND_OPTION_CHOICES: 25,
+    MAX_COMMAND_OPTION_CHOICE_NAME: 100,
+    MIN_COMMAND_OPTION_CHOICE_NAME: 1,
+    MAX_COMMAND_OPTION_CHOICE_VALUE: 100,
+    MIN_COMMAND_OPTION_CHOICE_VALUE: 1,
 };
 module.exports.VERSION = require("../package.json").version;
