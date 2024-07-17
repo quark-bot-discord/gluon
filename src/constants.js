@@ -336,5 +336,7 @@ module.exports.LIMITS = {
     MIN_COMMAND_OPTION_CHOICE_NAME: 1,
     MAX_COMMAND_OPTION_CHOICE_VALUE: 100,
     MIN_COMMAND_OPTION_CHOICE_VALUE: 1,
+    MAX_BUTTON_LABEL: 80,
+    MAX_BUTTON_CUSTOM_ID: 100,
 };
 module.exports.VERSION = require("../package.json").version;
