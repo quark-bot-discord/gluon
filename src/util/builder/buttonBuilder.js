@@ -1,5 +1,5 @@
-const { COMPONENT_TYPES } = require("../constants");
-const resolveEmoji = require("./resolveEmoji");
+const { COMPONENT_TYPES } = require("../../constants");
+const resolveEmoji = require("../discord/resolveEmoji");
 
 /**
  * Helps to construct a button for a message.
