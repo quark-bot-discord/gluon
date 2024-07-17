@@ -27,7 +27,7 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setLabel()).to.throw(
         TypeError,
-        "GLUON: Button label must be provided."
+        "GLUON: Button label must be provided.",
       );
     });
   });
@@ -53,14 +53,14 @@ describe("ButtonBuilder", () => {
       const button = new Button();
       expect(() => button.setEmoji()).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
     it("should throw an error if string is not an emoji", function () {
       const button = new Button();
       expect(() => button.setEmoji("test")).to.throw(
         TypeError,
-        "GLUON: Button emoji must be provided."
+        "GLUON: Button emoji must be provided.",
       );
     });
   });

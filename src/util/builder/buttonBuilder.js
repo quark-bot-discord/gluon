@@ -19,7 +19,6 @@ class Button {
    * @returns {Button}
    */
   setLabel(label) {
-
     if (!label) throw new TypeError("GLUON: Button label must be provided.");
 
     this.label = label;
@@ -35,7 +34,8 @@ class Button {
   setEmoji(emoji) {
     this.emoji = resolveEmoji(emoji);
 
-    if (!this.emoji) throw new TypeError("GLUON: Button emoji must be provided.");
+    if (!this.emoji)
+      throw new TypeError("GLUON: Button emoji must be provided.");
 
     return this;
   }
