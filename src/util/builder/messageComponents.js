@@ -15,7 +15,7 @@ class MessageComponents {
    * @returns {MessageComponents}
    */
   addActionRow(actionRow) {
-    this.actionRows.push(actionRow.toJSON());
+    this.actionRows.push(actionRow);
 
     return this;
   }

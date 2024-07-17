@@ -105,7 +105,7 @@ class Command {
    * @returns {Command}
    */
   addOption(option) {
-    this.options.push(option.toJSON());
+    this.options.push(option);
 
     return this;
   }

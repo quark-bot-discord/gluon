@@ -43,7 +43,7 @@ class Dropdown {
    * @returns {Dropdown}
    */
   addOption(option) {
-    this.options.push(option.toJSON());
+    this.options.push(option);
 
     return this;
   }

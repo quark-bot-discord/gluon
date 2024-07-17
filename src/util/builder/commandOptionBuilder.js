@@ -78,7 +78,7 @@ class CommandOption {
    * @returns {CommandOption}
    */
   addChoice(choice) {
-    this.choices.push(choice.toJSON());
+    this.choices.push(choice);
 
     return this;
   }
@@ -89,7 +89,7 @@ class CommandOption {
    * @returns {CommandOption}
    */
   addOption(option) {
-    this.options.push(option.toJSON());
+    this.options.push(option);
 
     return this;
   }

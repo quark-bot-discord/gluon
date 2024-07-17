@@ -18,7 +18,7 @@ class ActionRow {
    * @returns {ActionRow}
    */
   addComponent(component) {
-    this.components.push(component.toJSON());
+    this.components.push(component);
 
     return this;
   }
