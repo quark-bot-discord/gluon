@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES, TEXT_INPUT_STYLES } = require("../../constants");
+const { COMPONENT_TYPES, TEXT_INPUT_STYLES, LIMITS } = require("../../constants");
 
 /**
  * Helps to construct a text input interaction.
@@ -18,7 +18,11 @@ class TextInput {
    * @returns {TextInput}
    */
   setLabel(label) {
-    this.label = label;
+
+    if (!label)
+      throw new TypeError("GLUON: Text input label must be provided.");
+
+    this.label = (label && label.length > LIMITS.MAX_TEXT_INPUT_LABEL) ? `${label.substring(0, LIMITS.MAX_TEXT_INPUT_LABEL - 3)}...` : label;
 
     return this;
   }
@@ -30,6 +34,10 @@ class TextInput {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles}
    */
   setStyle(style) {
+
+    if (!style)
+      throw new TypeError("GLUON: Text input style must be provided.");
+
     this.style = style;
 
     return this;
@@ -42,6 +50,13 @@ class TextInput {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
   setCustomID(id) {
+
+    if (!id)
+      throw new TypeError("GLUON: Text input custom id must be provided.");
+
+    if (id.length > LIMITS.MAX_TEXT_INPUT_CUSTOM_ID)
+      throw new RangeError(`GLUON: Text input custom id must be less than ${LIMITS.MAX_TEXT_INPUT_CUSTOM_ID} characters.`);
+
     this.custom_id = id;
 
     return this;
@@ -53,7 +68,11 @@ class TextInput {
    * @returns {TextInput}
    */
   setValue(value) {
-    this.value = value;
+
+    if (!value)
+      throw new TypeError("GLUON: Text input value must be provided.");
+
+    this.value = (value && value.length > LIMITS.MAX_TEXT_INPUT_VALUE) ? `${value.substring(0, LIMITS.MAX_TEXT_INPUT_VALUE - 3)}...` : value;
 
     return this;
   }
@@ -64,7 +83,11 @@ class TextInput {
    * @returns {TextInput}
    */
   setPlaceholder(placeholder) {
-    this.placeholder = placeholder;
+
+    if (!placeholder)
+      throw new TypeError("GLUON: Text input placeholder must be provided.");
+
+    this.placeholder = (placeholder && placeholder.length > LIMITS.MAX_TEXT_INPUT_PLACEHOLDER) ? `${placeholder.substring(0, LIMITS.MAX_TEXT_INPUT_PLACEHOLDER - 3)}...` : placeholder;
 
     return this;
   }
@@ -75,6 +98,10 @@ class TextInput {
    * @returns {TextInput}
    */
   setMinLength(length) {
+
+    if (typeof length != "number")
+      throw new TypeError("GLUON: Text input min length must be a number.");
+
     this.min_length = length;
 
     return this;
@@ -86,6 +113,10 @@ class TextInput {
    * @returns {TextInput}
    */
   setMaxLength(length) {
+
+    if (typeof length != "number")
+      throw new TypeError("GLUON: Text input max length must be a number.");
+
     this.max_length = length;
 
     return this;
@@ -96,6 +127,12 @@ class TextInput {
    * @returns {Object}
    */
   toJSON() {
+    if (!this.label)
+      throw new TypeError("GLUON: Text input label must be provided.");
+    if (!this.style)
+      throw new TypeError("GLUON: Text input style must be provided.");
+    if (!this.custom_id)
+      throw new TypeError("GLUON: Text input custom id must be provided.");
     return {
       type: this.type,
       label: this.label,

@@ -3,6 +3,7 @@ before(async () => {
   expect = (await import("chai")).expect;
 });
 
+const { APPLICATION_COMMAND_TYPES } = require("../../../src/constants");
 const Command = require("../../../src/util/builder/commandBuilder");
 
 describe("CommandBuilder", function () {
@@ -10,6 +11,13 @@ describe("CommandBuilder", function () {
     it("should be an object", function () {
       const command = new Command();
       expect(command).to.be.an("object");
+    });
+  });
+
+  context("check type", function () {
+    it("should have the correct type", function () {
+      const command = new Command();
+      expect(command.type).to.equal(APPLICATION_COMMAND_TYPES.CHAT_INPUT);
     });
   });
 

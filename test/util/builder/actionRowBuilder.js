@@ -13,6 +13,12 @@ describe("ActionRowBuilder", () => {
       expect(actionRow).to.be.an("object");
     });
   });
+  context("check type", function () {
+    it("should have the correct type", function () {
+      const actionRow = new ActionRow();
+      expect(actionRow.type).to.equal(COMPONENT_TYPES.ACTION_ROW);
+    });
+  });
   context("check addComponent", function () {
     it("should have method addComponent", function () {
         const actionRow = new ActionRow();

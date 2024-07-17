@@ -14,6 +14,13 @@ describe("Embed", function () {
     });
   });
 
+  context("check type", function () {
+    it("should have the correct type", function () {
+      const embed = new Embed();
+      expect(embed.type).to.equal("rich");
+    });
+  });
+
   context("check setTitle", function () {
     it("should have method setTitle", function () {
       const embed = new Embed();

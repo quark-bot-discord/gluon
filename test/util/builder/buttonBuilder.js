@@ -13,6 +13,13 @@ describe("ButtonBuilder", () => {
     });
   });
 
+  context("check type", function () {
+    it("should have the correct type", function () {
+      const button = new Button();
+      expect(button.type).to.equal(COMPONENT_TYPES.BUTTON);
+    });
+  });
+
   context("check setLabel", function () {
     it("should have method setLabel", function () {
       const button = new Button();

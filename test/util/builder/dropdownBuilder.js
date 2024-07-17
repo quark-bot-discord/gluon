@@ -3,14 +3,22 @@ before(async () => {
   expect = (await import("chai")).expect;
 });
 
-const { LIMITS } = require("../../../src/constants");
+const { LIMITS, COMPONENT_TYPES } = require("../../../src/constants");
 const DropdownBuilder = require("../../../src/util/builder/dropdownBuilder");
+const DropdownOption = require("../../../src/util/builder/dropdownOption");
 
 describe("DropdownBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {
       const dropdown = new DropdownBuilder();
       expect(dropdown).to.be.an("object");
+    });
+  });
+
+  context("check type", function () {
+    it("should have the correct type", function () {
+      const dropdown = new DropdownBuilder();
+      expect(dropdown.type).to.equal(COMPONENT_TYPES.SELECT_MENU);
     });
   });
 
@@ -226,10 +234,13 @@ describe("DropdownBuilder", function () {
 
     it("should return the dropdown as an object", function () {
       const dropdown = new DropdownBuilder();
+      const dropdownOption = new DropdownOption()
+        .setLabel("test")
+        .setValue("testValue");
       dropdown
         .setType(1)
         .setCustomID("test")
-        .addOption({ label: "test", value: "test" })
+        .addOption(dropdownOption)
         .addChannelTypes([1, 2, 3])
         .setPlaceholder("test")
         .setMinValue(1)
@@ -238,7 +249,7 @@ describe("DropdownBuilder", function () {
       expect(dropdown.toJSON()).to.eql({
         type: 1,
         custom_id: "test",
-        options: [{ label: "test", value: "test" }],
+        options: [dropdownOption],
         channel_types: [1, 2, 3],
         placeholder: "test",
         min_values: 1,
