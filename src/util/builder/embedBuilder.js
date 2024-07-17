@@ -157,7 +157,7 @@ class Embed {
    * @returns {Embed}
    */
   addField(name, value, inline = false) {
-    if (this.fields.length == LIMITS.MAX_EMBED_FIELDS)
+    if (this.fields.length >= LIMITS.MAX_EMBED_FIELDS)
       throw new RangeError(`GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`);
 
     if (!name || !value)

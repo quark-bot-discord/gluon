@@ -70,6 +70,64 @@ describe("CommandBuilder", function () {
     });
   });
 
+  context("check setDefaultLocale", function () {
+    it("should have method setDefaultLocale", function () {
+      const command = new Command();
+      expect(command).to.respondTo("setDefaultLocale");
+    });
+    it("should set the default locale for localisation", function () {
+      const command = new Command();
+      command.setDefaultLocale("en-GB");
+      expect(command.defaultLocale).to.equal("en-GB");
+    });
+    it("should throw an error if no locale is provided", function () {
+      const command = new Command();
+      expect(() => command.setDefaultLocale()).to.throw(
+        TypeError,
+        "GLUON: Default locale must be provided."
+      );
+    });
+  });
+
+  context("check setNsfw", function () {
+    it("should have method setNsfw", function () {
+      const command = new Command();
+      expect(command).to.respondTo("setNsfw");
+    });
+    it("should set whether the command is NSFW", function () {
+      const command = new Command();
+      command.setNsfw(true);
+      expect(command.nsfw).to.be.true;
+    });
+    it("should throw an error if no NSFW value is provided", function () {
+      const command = new Command();
+      expect(() => command.setNsfw()).to.throw(
+        TypeError,
+        "GLUON: Command nsfw must be a boolean."
+      );
+    });
+  });
+
+  context("check addOption", function () {
+    it("should have method addOption", function () {
+      const command = new Command();
+      expect(command).to.respondTo("addOption");
+    });
+    it("should add an option to the command", function () {
+      const command = new Command();
+      const option = { name: "test" };
+      command.addOption(option);
+      expect(command.options).to.include(option);
+    });
+    it("should throw an error if no option is provided", function () {
+      const command = new Command();
+      expect(() => command.addOption()).to.throw(
+        TypeError,
+        "GLUON: Command option must be provided."
+      );
+    });
+  });
+
   context("check toJSON", function () {
     it("should have method toJSON", function () {
       const command = new Command();

@@ -46,6 +46,9 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
    */
   setType(type) {
+
+    if (typeof type != "number") throw new TypeError("GLUON: Command type must be a number.");
+
     this.type = type;
 
     return this;
@@ -92,6 +95,9 @@ class Command {
    * @returns {Command}
    */
   setNsfw(nsfw) {
+
+    if (typeof nsfw != "boolean") throw new TypeError("GLUON: Command nsfw must be a boolean.");
+
     this.nsfw = nsfw;
 
     return this;
@@ -103,6 +109,9 @@ class Command {
    * @returns {Command}
    */
   addOption(option) {
+
+    if (!option) throw new TypeError("GLUON: Command option must be provided.");
+
     this.options.push(option);
 
     return this;
@@ -114,7 +123,10 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale = "en-US") {
+  setDefaultLocale(locale) {
+
+    if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
+
     this.defaultLocale = locale;
 
     return this;
