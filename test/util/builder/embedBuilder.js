@@ -2,9 +2,9 @@ let expect;
 before(async () => {
   expect = (await import("chai")).expect;
 });
-const hexToInt = require("../src/util/general/hexToInt");
-const Embed = require("../src/util/builder/embedBuilder");
-const { LIMITS } = require("../src/constants");
+const hexToInt = require("../../../src/util/general/hexToInt");
+const Embed = require("../../../src/util/builder/embedBuilder");
+const { LIMITS } = require("../../../src/constants");
 
 describe("Embed", function () {
   context("check import", function () {
