@@ -2,7 +2,7 @@ const { Client } = require("../index");
 const ActionRow = require("../src/util/builder/actionRowBuilder");
 const Button = require("../src/util/buttonBuilder");
 const Embed = require("../src/util/builder/embedBuilder");
-const MessageComponents = require("../src/util/messageComponents");
+const MessageComponents = require("../src/util/builder/messageComponents");
 const client = new Client({ cacheGuilds: true, cacheMessages: true, cacheUsers: true, cacheMembers: true, cacheChannels: true, cacheVoiceStates: true, cacheRoles: true, cacheEmojis: true })
 
 client.on("ready", () => {

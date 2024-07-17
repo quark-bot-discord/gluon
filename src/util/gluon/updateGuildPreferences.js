@@ -1,4 +1,4 @@
-const { GLUON_CACHING_OPTIONS } = require("../constants");
+const { GLUON_CACHING_OPTIONS } = require("../../constants");
 
 function updatePreferences(client, guild) {
   if (Array.isArray(guild)) {
