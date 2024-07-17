@@ -27,8 +27,8 @@ describe("CommandOptionBuilder", () => {
     });
     it("should allow for localisation of the name", () => {
       const commandOption = new CommandOptionBuilder();
-      commandOption.setName({ "en-US": "test" });
-      expect(commandOption.name).to.equal("test");
+      commandOption.setName({ "en-GB": "test", "en-US": "test en-US" });
+      expect(commandOption.name_localizations["en-GB"]).to.equal("test");
     });
     it("should throw an error if no name is provided", () => {
       const commandOption = new CommandOptionBuilder();
@@ -67,8 +67,8 @@ describe("CommandOptionBuilder", () => {
     });
     it("should allow for localisation of the description", () => {
       const commandOption = new CommandOptionBuilder();
-      commandOption.setDescription({ "en-US": "test" });
-      expect(commandOption.description).to.equal("test");
+      commandOption.setDescription({ "en-GB": "test", "en-US": "test en-US" });
+      expect(commandOption.description_localizations["en-GB"]).to.equal("test");
     });
     it("should throw an error if the description is not a string or object", () => {
       const commandOption = new CommandOptionBuilder();

@@ -338,5 +338,8 @@ module.exports.LIMITS = {
     MIN_COMMAND_OPTION_CHOICE_VALUE: 1,
     MAX_BUTTON_LABEL: 80,
     MAX_BUTTON_CUSTOM_ID: 100,
+    MAX_DROPDOWN_CUSTOM_ID: 100,
+    MAX_DROPDOWN_OPTIONS: 25,
+    MAX_DROPDOWN_PLACEHOLDER: 150
 };
 module.exports.VERSION = require("../package.json").version;
