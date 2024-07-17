@@ -15,9 +15,9 @@ describe("ActionRowBuilder", () => {
   });
   context("check addComponent", function () {
     it("should have method addComponent", function () {
-        const actionRow = new ActionRow();
-        expect(actionRow).to.respondTo("addComponent");
-      });
+      const actionRow = new ActionRow();
+      expect(actionRow).to.respondTo("addComponent");
+    });
     it("should add a component to the action row", function () {
       const actionRow = new ActionRow();
       const button = new Button()

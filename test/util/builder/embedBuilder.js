@@ -199,10 +199,10 @@ describe("Embed", function () {
       const embed = new Embed();
       embed.addField("field", "fieldValue");
       expect(embed.fields.find((f) => f.name == "field").name).to.equal(
-        "field"
+        "field",
       );
       expect(embed.fields.find((f) => f.name == "field").value).to.equal(
-        "fieldValue"
+        "fieldValue",
       );
     });
     it("should not add a field if the field is empty", function () {
@@ -211,19 +211,19 @@ describe("Embed", function () {
         embed.addField(undefined, "fieldValue");
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
       expect(() => {
         embed.addField("field", undefined);
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
       expect(() => {
         embed.addField(undefined, undefined);
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
     });
     it("should throw an error if too many fields are added", function () {
@@ -235,21 +235,21 @@ describe("Embed", function () {
         embed.addField("field", "fieldValue");
       }).to.throw(
         RangeError,
-        `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`
+        `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
       );
     });
     it("should not exceed the value limit", function () {
       const embed = new Embed();
       embed.addField("field", "a".repeat(LIMITS.MAX_EMBED_FIELD_VALUE + 1));
       expect(embed.fields.find((f) => f.name == "field").value.length).to.equal(
-        LIMITS.MAX_EMBED_FIELD_VALUE
+        LIMITS.MAX_EMBED_FIELD_VALUE,
       );
     });
     it("should not exceed the name limit", function () {
       const embed = new Embed();
       embed.addField("a".repeat(256), "fieldValue");
       expect(
-        embed.fields.find((f) => f.value == "fieldValue").name.length
+        embed.fields.find((f) => f.value == "fieldValue").name.length,
       ).to.equal(LIMITS.MAX_EMBED_FIELD_NAME);
     });
   });
@@ -272,7 +272,7 @@ describe("Embed", function () {
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
       expect(embed.toString()).to.equal(
-        "## title\n\ndescription\n\n**field**:\nfieldValue\nfooter"
+        "## title\n\ndescription\n\n**field**:\nfieldValue\nfooter",
       );
     });
   });
@@ -334,7 +334,7 @@ describe("Embed", function () {
           {
             name: "field",
             value: "fieldValue",
-            inline: false
+            inline: false,
           },
         ],
       });
