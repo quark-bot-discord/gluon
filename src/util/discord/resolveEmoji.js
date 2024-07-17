@@ -5,9 +5,17 @@
  * @returns {Object}
  */
 function resolveEmoji(text) {
+
+  if (typeof text !== "string")
+    throw new TypeError("GLUON: The emoji must be a string.");
+
   const emojis = text.match(/<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g);
 
-  if (!emojis || emojis.length == 0) return null;
+  if (!emojis || emojis.length == 0) {
+    if (/\p{Extended_Pictographic}/u.test(text))
+      return { name: text, id: null };
+    return null;
+  }
 
   const splitEmoji = emojis[0].replace(/<|>/g, "").split(":");
 
