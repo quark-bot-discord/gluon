@@ -67,8 +67,8 @@ describe("Embed", function () {
     });
     it("should set the url of the embed", function () {
       const embed = new Embed();
-      embed.setURL("url");
-      expect(embed.url).to.equal("url");
+      embed.setURL("https://example.com");
+      expect(embed.url).to.equal("https://example.com");
     });
     it("should throw an error if the url is empty", function () {
       const embed = new Embed();
@@ -115,14 +115,14 @@ describe("Embed", function () {
     });
     it("should set the footer of the embed", function () {
       const embed = new Embed();
-      embed.setFooter("footer", "icon");
+      embed.setFooter("footer", "https://example.com");
       expect(embed.footer.text).to.equal("footer");
-      expect(embed.footer.icon_url).to.equal("icon");
+      expect(embed.footer.icon_url).to.equal("https://example.com");
     });
     it("should throw an error if the text is empty", function () {
       const embed = new Embed();
       expect(() => {
-        embed.setFooter(undefined, "icon");
+        embed.setFooter(undefined, "https://example.com");
       }).to.throw(TypeError, "GLUON: Embed footer text must be provided.");
     });
     it("should not allow the character limit to be exceeded", function () {
@@ -139,8 +139,8 @@ describe("Embed", function () {
     });
     it("should set the image of the embed", function () {
       const embed = new Embed();
-      embed.setImage("image");
-      expect(embed.image.url).to.equal("image");
+      embed.setImage("https://example.com");
+      expect(embed.image.url).to.equal("https://example.com");
     });
   });
 
@@ -151,8 +151,8 @@ describe("Embed", function () {
     });
     it("should set the thumbnail of the embed", function () {
       const embed = new Embed();
-      embed.setThumbnail("thumbnail");
-      expect(embed.thumbnail.url).to.equal("thumbnail");
+      embed.setThumbnail("https://example.com");
+      expect(embed.thumbnail.url).to.equal("https://example.com");
     });
     it("should throw an error if the url is empty", function () {
       const embed = new Embed();
@@ -180,8 +180,8 @@ describe("Embed", function () {
     });
     it("should set the author url of the embed", function () {
       const embed = new Embed();
-      embed.setAuthor("author", "url");
-      expect(embed.author.url).to.equal("url");
+      embed.setAuthor("author", "https://example.com");
+      expect(embed.author.url).to.equal("https://example.com");
     });
     it("should not allow the character limit to be exceeded", function () {
       const embed = new Embed();
@@ -263,7 +263,7 @@ describe("Embed", function () {
       const embed = new Embed();
       embed.setTitle("title");
       embed.setDescription("description");
-      embed.setURL("url");
+      embed.setURL("https://example.com");
       embed.setColor("color");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
@@ -282,7 +282,7 @@ describe("Embed", function () {
       const embed = new Embed();
       embed.setTitle("title");
       embed.setDescription("description");
-      embed.setURL("url");
+      embed.setURL("https://example.com");
       embed.setColor("color");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
@@ -303,29 +303,29 @@ describe("Embed", function () {
       const embed = new Embed();
       embed.setTitle("title");
       embed.setDescription("description");
-      embed.setURL("url");
+      embed.setURL("https://example.com");
       embed.setColor("color");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
-      embed.setImage("image");
-      embed.setThumbnail("thumbnail");
+      embed.setImage("https://example.com");
+      embed.setThumbnail("https://example.com");
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
       expect(embed.toJSON()).to.deep.equal({
         type: "rich",
         title: "title",
         description: "description",
-        url: "url",
+        url: "https://example.com",
         color: hexToInt("color"),
         timestamp: new Date(123456 * 1000).toISOString(),
         footer: {
           text: "footer",
         },
         image: {
-          url: "image",
+          url: "https://example.com",
         },
         thumbnail: {
-          url: "thumbnail",
+          url: "https://example.com",
         },
         author: {
           name: "author",
