@@ -27,7 +27,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setName()).to.throw(
         TypeError,
-        "GLUON: Command name must be provided."
+        "GLUON: Command name must be provided.",
       );
     });
   });
@@ -46,7 +46,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDescription()).to.throw(
         TypeError,
-        "GLUON: Command description must be provided."
+        "GLUON: Command description must be provided.",
       );
     });
   });
@@ -65,7 +65,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDefaultMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Command default permission must be a number."
+        "GLUON: Command default permission must be a number.",
       );
     });
   });

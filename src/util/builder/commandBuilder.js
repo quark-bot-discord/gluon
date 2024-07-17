@@ -25,7 +25,6 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setName(name) {
-
     if (!name) throw new TypeError("GLUON: Command name must be provided.");
 
     if (typeof name == "object") {
@@ -58,8 +57,8 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setDescription(description) {
-
-    if (!description) throw new TypeError("GLUON: Command description must be provided.");
+    if (!description)
+      throw new TypeError("GLUON: Command description must be provided.");
 
     if (typeof description == "object") {
       this.description = description[this.defaultLocale];
@@ -78,8 +77,10 @@ class Command {
    * @returns {Command}
    */
   setDefaultMemberPermissions(permissions) {
-
-    if (typeof permissions != "number") throw new TypeError("GLUON: Command default permission must be a number.");
+    if (typeof permissions != "number")
+      throw new TypeError(
+        "GLUON: Command default permission must be a number.",
+      );
 
     this.default_member_permissions = permissions;
 
