@@ -20,7 +20,6 @@ class Dropdown {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#component-object-component-types}
    */
   setType(type) {
-
     if (typeof type != "number")
       throw new TypeError("GLUON: Dropdown type must be a number.");
 
@@ -36,12 +35,12 @@ class Dropdown {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
   setCustomID(id) {
-
-    if (!id)
-      throw new TypeError("GLUON: Dropdown custom id must be provided.");
+    if (!id) throw new TypeError("GLUON: Dropdown custom id must be provided.");
 
     if (id.length > LIMITS.MAX_DROPDOWN_CUSTOM_ID)
-      throw new RangeError(`GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`);
+      throw new RangeError(
+        `GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`,
+      );
 
     this.custom_id = id;
 
@@ -54,12 +53,13 @@ class Dropdown {
    * @returns {Dropdown}
    */
   addOption(option) {
-
     if (!option)
       throw new TypeError("GLUON: Dropdown option must be provided.");
 
     if (this.options.length >= LIMITS.MAX_DROPDOWN_OPTIONS)
-      throw new RangeError(`GLUON: Dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`);
+      throw new RangeError(
+        `GLUON: Dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`,
+      );
 
     this.options.push(option);
 
@@ -73,7 +73,6 @@ class Dropdown {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
   addChannelTypes(channelTypes) {
-
     if (!channelTypes)
       throw new TypeError("GLUON: Dropdown channel types must be provided.");
 
@@ -91,11 +90,13 @@ class Dropdown {
    * @returns {Dropdown}
    */
   setPlaceholder(placeholder) {
-
     if (!placeholder)
       throw new TypeError("GLUON: Dropdown placeholder must be provided.");
 
-    this.placeholder = (placeholder && placeholder.length > LIMITS.MAX_DROPDOWN_PLACEHOLDER) ? `${placeholder.substring(0, LIMITS.MAX_DROPDOWN_PLACEHOLDER - 3)}...` : placeholder;
+    this.placeholder =
+      placeholder && placeholder.length > LIMITS.MAX_DROPDOWN_PLACEHOLDER
+        ? `${placeholder.substring(0, LIMITS.MAX_DROPDOWN_PLACEHOLDER - 3)}...`
+        : placeholder;
 
     return this;
   }
@@ -106,7 +107,6 @@ class Dropdown {
    * @returns {CommandOption}
    */
   setMinValue(value) {
-
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown min value must be a number.");
 
@@ -121,7 +121,6 @@ class Dropdown {
    * @returns {Dropdown}
    */
   setMaxValue(value) {
-
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown max value must be a number.");
 
@@ -136,7 +135,6 @@ class Dropdown {
    * @returns {Dropdown}
    */
   setDisabled(isDisabled) {
-
     if (typeof isDisabled != "boolean")
       throw new TypeError("GLUON: Dropdown disabled must be a boolean.");
 

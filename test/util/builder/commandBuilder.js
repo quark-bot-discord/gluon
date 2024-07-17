@@ -27,7 +27,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setName()).to.throw(
         TypeError,
-        "GLUON: Command name must be provided."
+        "GLUON: Command name must be provided.",
       );
     });
   });
@@ -46,7 +46,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDescription()).to.throw(
         TypeError,
-        "GLUON: Command description must be provided."
+        "GLUON: Command description must be provided.",
       );
     });
   });
@@ -65,7 +65,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDefaultMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Command default permission must be a number."
+        "GLUON: Command default permission must be a number.",
       );
     });
   });
@@ -84,7 +84,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDefaultLocale()).to.throw(
         TypeError,
-        "GLUON: Default locale must be provided."
+        "GLUON: Default locale must be provided.",
       );
     });
   });
@@ -103,7 +103,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setNsfw()).to.throw(
         TypeError,
-        "GLUON: Command nsfw must be a boolean."
+        "GLUON: Command nsfw must be a boolean.",
       );
     });
   });
@@ -123,7 +123,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.addOption()).to.throw(
         TypeError,
-        "GLUON: Command option must be provided."
+        "GLUON: Command option must be provided.",
       );
     });
   });

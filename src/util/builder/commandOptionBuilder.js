@@ -22,16 +22,19 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setName(name) {
-
-    if (!name) throw new TypeError("GLUON: Command option name must be provided.");
+    if (!name)
+      throw new TypeError("GLUON: Command option name must be provided.");
 
     if (typeof name != "string" && typeof name != "object")
-      throw new TypeError("GLUON: Command option name must be a string or an object.");
+      throw new TypeError(
+        "GLUON: Command option name must be a string or an object.",
+      );
 
     if (typeof name == "object") {
-
       if (name[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_NAME)
-        throw new RangeError(`GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`);
+        throw new RangeError(
+          `GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
+        );
 
       this.name = name[this.defaultLocale];
 
@@ -39,9 +42,10 @@ class CommandOption {
 
       this.name_localizations = name;
     } else {
-
       if (name.length > LIMITS.MAX_COMMAND_OPTION_NAME)
-        throw new RangeError(`GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`);
+        throw new RangeError(
+          `GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
+        );
 
       this.name = name;
     }
@@ -56,7 +60,6 @@ class CommandOption {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
    */
   setType(type) {
-
     if (typeof type != "number")
       throw new TypeError("GLUON: Command option type must be a number.");
 
@@ -72,17 +75,24 @@ class CommandOption {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setDescription(description) {
-
     if (!description)
-      throw new TypeError("GLUON: Command option description must be provided.");
+      throw new TypeError(
+        "GLUON: Command option description must be provided.",
+      );
 
     if (typeof description != "string" && typeof description != "object")
-      throw new TypeError("GLUON: Command option description must be a string or an object.");
+      throw new TypeError(
+        "GLUON: Command option description must be a string or an object.",
+      );
 
     if (typeof description == "object") {
-
-      if (description[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_DESCRIPTION)
-        throw new RangeError(`GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`);
+      if (
+        description[this.defaultLocale].length >
+        LIMITS.MAX_COMMAND_OPTION_DESCRIPTION
+      )
+        throw new RangeError(
+          `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
+        );
 
       this.description = description[this.defaultLocale];
 
@@ -90,9 +100,10 @@ class CommandOption {
 
       this.description_localizations = description;
     } else {
-
       if (description.length > LIMITS.MAX_COMMAND_OPTION_DESCRIPTION)
-        throw new RangeError(`GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`);
+        throw new RangeError(
+          `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
+        );
 
       this.description = description;
     }
@@ -106,9 +117,10 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setRequired(isRequired) {
-
     if (typeof isRequired != "boolean")
-      throw new TypeError("GLUON: Command option required status must be a boolean.");
+      throw new TypeError(
+        "GLUON: Command option required status must be a boolean.",
+      );
 
     this.required = isRequired;
 
@@ -121,11 +133,13 @@ class CommandOption {
    * @returns {CommandOption}
    */
   addChoice(choice) {
-
     if (this.choices.length >= LIMITS.MAX_COMMAND_OPTION_CHOICES)
-      throw new RangeError(`GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`);
+      throw new RangeError(
+        `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`,
+      );
 
-    if (!choice) throw new TypeError("GLUON: Command option choice must be provided.");
+    if (!choice)
+      throw new TypeError("GLUON: Command option choice must be provided.");
 
     this.choices.push(choice);
 
@@ -138,9 +152,10 @@ class CommandOption {
    * @returns {CommandOption}
    */
   addOption(option) {
-
     if (this.options.length >= LIMITS.MAX_COMMAND_OPTIONS)
-      throw new RangeError(`GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`);
+      throw new RangeError(
+        `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`,
+      );
 
     if (!option) throw new TypeError("GLUON: Command option must be provided.");
 
@@ -156,12 +171,15 @@ class CommandOption {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
   setChannelTypes(channelTypes) {
-
     if (!channelTypes)
-      throw new TypeError("GLUON: Command option channel types must be provided.");
+      throw new TypeError(
+        "GLUON: Command option channel types must be provided.",
+      );
 
     if (!Array.isArray(channelTypes))
-      throw new TypeError("GLUON: Command option channel types must be an array.");
+      throw new TypeError(
+        "GLUON: Command option channel types must be an array.",
+      );
 
     this.channel_types = channelTypes;
 
@@ -174,7 +192,6 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setMinValue(value) {
-
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option min value must be a number.");
 
@@ -189,7 +206,6 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setMaxValue(value) {
-
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option max value must be a number.");
 
@@ -204,7 +220,6 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setMinLength(length) {
-
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option min length must be a number.");
 
@@ -219,7 +234,6 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setMaxLength(length) {
-
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option max length must be a number.");
 
@@ -234,9 +248,10 @@ class CommandOption {
    * @returns {CommandOption}
    */
   setAutocomplete(autocomplete) {
-
     if (typeof autocomplete != "boolean")
-      throw new TypeError("GLUON: Command option autocomplete must be a boolean.");
+      throw new TypeError(
+        "GLUON: Command option autocomplete must be a boolean.",
+      );
 
     this.autocomplete = autocomplete;
 
@@ -250,9 +265,7 @@ class CommandOption {
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
   setDefaultLocale(locale) {
-
-    if (!locale)
-      throw new TypeError("GLUON: Default locale must be provided.");
+    if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
 
@@ -264,9 +277,14 @@ class CommandOption {
    * @returns {Object}
    */
   toJSON() {
-    if (!this.name) throw new TypeError("GLUON: Command option name must be provided.");
-    if (!this.type) throw new TypeError("GLUON: Command option type must be provided.");
-    if (!this.description) throw new TypeError("GLUON: Command option description must be provided.");
+    if (!this.name)
+      throw new TypeError("GLUON: Command option name must be provided.");
+    if (!this.type)
+      throw new TypeError("GLUON: Command option type must be provided.");
+    if (!this.description)
+      throw new TypeError(
+        "GLUON: Command option description must be provided.",
+      );
     return {
       name: this.name,
       name_localizations: this.name_localizations,

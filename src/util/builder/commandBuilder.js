@@ -25,7 +25,6 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setName(name) {
-
     if (!name) throw new TypeError("GLUON: Command name must be provided.");
 
     if (typeof name == "object") {
@@ -46,8 +45,8 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
    */
   setType(type) {
-
-    if (typeof type != "number") throw new TypeError("GLUON: Command type must be a number.");
+    if (typeof type != "number")
+      throw new TypeError("GLUON: Command type must be a number.");
 
     this.type = type;
 
@@ -61,8 +60,8 @@ class Command {
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
   setDescription(description) {
-
-    if (!description) throw new TypeError("GLUON: Command description must be provided.");
+    if (!description)
+      throw new TypeError("GLUON: Command description must be provided.");
 
     if (typeof description == "object") {
       this.description = description[this.defaultLocale];
@@ -81,8 +80,10 @@ class Command {
    * @returns {Command}
    */
   setDefaultMemberPermissions(permissions) {
-
-    if (typeof permissions != "number") throw new TypeError("GLUON: Command default permission must be a number.");
+    if (typeof permissions != "number")
+      throw new TypeError(
+        "GLUON: Command default permission must be a number.",
+      );
 
     this.default_member_permissions = permissions;
 
@@ -95,8 +96,8 @@ class Command {
    * @returns {Command}
    */
   setNsfw(nsfw) {
-
-    if (typeof nsfw != "boolean") throw new TypeError("GLUON: Command nsfw must be a boolean.");
+    if (typeof nsfw != "boolean")
+      throw new TypeError("GLUON: Command nsfw must be a boolean.");
 
     this.nsfw = nsfw;
 
@@ -109,7 +110,6 @@ class Command {
    * @returns {Command}
    */
   addOption(option) {
-
     if (!option) throw new TypeError("GLUON: Command option must be provided.");
 
     this.options.push(option);
@@ -124,7 +124,6 @@ class Command {
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
   setDefaultLocale(locale) {
-
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
