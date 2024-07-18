@@ -1,4 +1,9 @@
 function checkMemberPermissions(roles) {
+
+  if (roles == undefined) throw new TypeError("GLUON: Member roles must be provided.");
+
+  if (!Array.isArray(roles)) throw new TypeError("GLUON: Member roles must be an array.");
+
   let permissions = 0n;
 
   if (roles.length != 0) {

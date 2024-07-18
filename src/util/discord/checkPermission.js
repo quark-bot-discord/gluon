@@ -1,23 +1,23 @@
 const { PERMISSIONS } = require("../../constants");
 
 /**
- * Checks if a member has the given permission.
- * @param {Member} member The member to check.
+ * Checks if a set of permissions contains a specific permission.
+ * @param {BigInt} memberPermission The permissions to check.
  * @param {BigInt} permission The permission to check for.
  * @param {Boolean?} adminOverride Whether the admin permission should be taken into consideration.
  * @returns {Boolean}
  */
-function checkPermission(member, permission, adminOverride = true) {
-  if (!permission) return true;
-  if (!member) throw new Error("No member provided to permission check");
-  member.permissions = BigInt(member.permissions);
+function checkPermission(memberPermission, permission, adminOverride = true) {
+  if (typeof memberPermission != "bigint") throw new TypeError("GLUON: Permissions must be a BigInt.");
+  if (typeof permission != "bigint")
+    throw new TypeError("GLUON: Permission must be a BigInt.");
   if (
     adminOverride == true &&
-    (member.permissions & PERMISSIONS.ADMINISTRATOR) ==
+    (memberPermission & PERMISSIONS.ADMINISTRATOR) ==
       PERMISSIONS.ADMINISTRATOR
   )
     return true;
-  return (member.permissions & permission) == permission;
+  return (memberPermission & permission) == permission;
 }
 
 module.exports = checkPermission;

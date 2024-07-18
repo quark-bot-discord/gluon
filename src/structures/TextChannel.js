@@ -34,7 +34,7 @@ class TextChannel extends Channel {
    * @returns {void}
    */
   async bulkDelete(messages, { reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_MESSAGES))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_MESSAGES))
       throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
 
     const body = {};

@@ -267,7 +267,7 @@ class Member {
    * @returns {Promise<void>}
    */
   async addRole(role_id, { reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -289,7 +289,7 @@ class Member {
    * @returns {Promise<void>}
    */
   async removeRole(role_id, { reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -311,7 +311,7 @@ class Member {
    * @returns {Promise<void>}
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MODERATE_MEMBERS))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MODERATE_MEMBERS))
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
 
     const body = {};
@@ -334,7 +334,7 @@ class Member {
    * @returns {Promise<void>}
    */
   async timeoutRemove({ reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MODERATE_MEMBERS))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MODERATE_MEMBERS))
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
 
     const body = {};
@@ -357,7 +357,7 @@ class Member {
    * @returns {Promise<void>}
    */
   async massUpdateRoles(roles, { reason } = {}) {
-    if (!checkPermission(await this.guild.me(), PERMISSIONS.MANAGE_ROLES))
+    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
