@@ -16,13 +16,13 @@ describe("VerifyMessageLink", function () {
     it("should throw an error if no message link is provided", function () {
       expect(() => verifyMessageLink()).to.throw(
         TypeError,
-        "GLUON: The text must be a string."
+        "GLUON: The text must be a string.",
       );
     });
     it("should throw an error if message link is not a string", function () {
       expect(() => verifyMessageLink(123456)).to.throw(
         TypeError,
-        "GLUON: The text must be a string."
+        "GLUON: The text must be a string.",
       );
     });
   });
@@ -33,7 +33,7 @@ describe("VerifyMessageLink", function () {
         "test https://discord.com/channels/12345678/1234567/123456 test";
       const verifiedMessageLink = verifyMessageLink(messageLink);
       expect(verifiedMessageLink).to.equal(
-        "https://discord.com/channels/12345678/1234567/123456"
+        "https://discord.com/channels/12345678/1234567/123456",
       );
     });
     it("should return null if no message link is found", function () {

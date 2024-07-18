@@ -17,25 +17,25 @@ describe("CheckPermission", function () {
     it("should throw an error if no permissions are provided", function () {
       expect(() => checkPermission(undefined, 33n)).to.throw(
         TypeError,
-        "GLUON: Permissions must be a BigInt."
+        "GLUON: Permissions must be a BigInt.",
       );
     });
     it("should throw an error if permissions is not a BigInt", function () {
       expect(() => checkPermission("test", 33n)).to.throw(
         TypeError,
-        "GLUON: Permissions must be a BigInt."
+        "GLUON: Permissions must be a BigInt.",
       );
     });
     it("should throw an error if no specific permission to check for is provided", function () {
       expect(() => checkPermission(33n)).to.throw(
         TypeError,
-        "GLUON: Permission must be a BigInt."
+        "GLUON: Permission must be a BigInt.",
       );
     });
     it("should throw an error if specific permission to check for is not a BigInt", function () {
       expect(() => checkPermission(33n, "test")).to.throw(
         TypeError,
-        "GLUON: Permission must be a BigInt."
+        "GLUON: Permission must be a BigInt.",
       );
     });
   });
@@ -69,7 +69,7 @@ describe("CheckPermission", function () {
       const calculatedPermission = checkPermission(
         permissions,
         permission,
-        true
+        true,
       );
       expect(calculatedPermission).to.equal(true);
     });
