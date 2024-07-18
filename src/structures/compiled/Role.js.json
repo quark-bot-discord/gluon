@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 6,
-                50
+                56
             ],
             "filename": "Role.js",
             "lineno": 1,
@@ -28,8 +28,8 @@
         "comment": "/**\n * Represents a role belonging to a guild.\n */",
         "meta": {
             "range": [
-                104,
-                3595
+                110,
+                3601
             ],
             "filename": "Role.js",
             "lineno": 6,
@@ -58,8 +58,8 @@
         "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {String} guild_id The id of the guild that the role belongs to.\n   * @param {Boolean?} nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
         "meta": {
             "range": [
-                493,
-                1811
+                499,
+                1817
             ],
             "filename": "Role.js",
             "lineno": 15,
@@ -133,8 +133,8 @@
         "comment": "/**\n * Represents a role belonging to a guild.\n */",
         "meta": {
             "range": [
-                104,
-                3595
+                110,
+                3601
             ],
             "filename": "Role.js",
             "lineno": 6,
@@ -205,8 +205,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     */",
         "meta": {
             "range": [
-                618,
-                639
+                624,
+                645
             ],
             "filename": "Role.js",
             "lineno": 20,
@@ -236,8 +236,8 @@
         "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                738,
-                771
+                744,
+                777
             ],
             "filename": "Role.js",
             "lineno": 26,
@@ -267,8 +267,8 @@
         "comment": "/**\n     * The id of the role.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                843,
-                868
+                849,
+                874
             ],
             "filename": "Role.js",
             "lineno": 32,
@@ -298,8 +298,8 @@
         "comment": "/**\n     * The name of the role.\n     * @type {String}\n     */",
         "meta": {
             "range": [
-                942,
-                963
+                948,
+                969
             ],
             "filename": "Role.js",
             "lineno": 38,
@@ -329,8 +329,8 @@
         "comment": "/**\n     * The colour of the role.\n     * @type {Number}\n     */",
         "meta": {
             "range": [
-                1039,
-                1062
+                1045,
+                1068
             ],
             "filename": "Role.js",
             "lineno": 44,
@@ -360,8 +360,8 @@
         "comment": "/**\n     * The position of the role.\n     * @type {Number}\n     */",
         "meta": {
             "range": [
-                1140,
-                1169
+                1146,
+                1175
             ],
             "filename": "Role.js",
             "lineno": 50,
@@ -391,8 +391,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1257,
-                1294
+                1263,
+                1300
             ],
             "filename": "Role.js",
             "lineno": 56,
@@ -417,8 +417,8 @@
         "comment": "/**\n     * The permissions for the role.\n     * @type {BigInt}\n     */",
         "meta": {
             "range": [
-                1376,
-                1419
+                1382,
+                1425
             ],
             "filename": "Role.js",
             "lineno": 62,
@@ -448,8 +448,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1426,
-                1466
+                1432,
+                1472
             ],
             "filename": "Role.js",
             "lineno": 64,
@@ -474,8 +474,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1497,
-                1525
+                1503,
+                1531
             ],
             "filename": "Role.js",
             "lineno": 66,
@@ -500,8 +500,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1558,
-                1586
+                1564,
+                1592
             ],
             "filename": "Role.js",
             "lineno": 68,
@@ -526,8 +526,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1623,
-                1651
+                1629,
+                1657
             ],
             "filename": "Role.js",
             "lineno": 70,
@@ -552,8 +552,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1673,
-                1694
+                1679,
+                1700
             ],
             "filename": "Role.js",
             "lineno": 72,
@@ -578,8 +578,8 @@
         "comment": "/**\n   * Whether the role is hoisted.\n   * @readonly\n   * @returns {Boolean}\n   */",
         "meta": {
             "range": [
-                1900,
-                1973
+                1906,
+                1979
             ],
             "filename": "Role.js",
             "lineno": 83,
@@ -617,8 +617,8 @@
         "comment": "/**\n   * Whether the role is managed (by an application).\n   * @readonly\n   * @returns {Boolean}\n   */",
         "meta": {
             "range": [
-                2082,
-                2157
+                2088,
+                2163
             ],
             "filename": "Role.js",
             "lineno": 92,
@@ -656,8 +656,8 @@
         "comment": "/**\n   * Whether the role is mentionable.\n   * @readonly\n   * @returns {Boolean}\n   */",
         "meta": {
             "range": [
-                2250,
-                2329
+                2256,
+                2335
             ],
             "filename": "Role.js",
             "lineno": 101,
@@ -695,8 +695,8 @@
         "comment": "/**\n   * The hash of the role's avatar, as it was received from Discord.\n   * @readonly\n   * @type {String?}\n   */",
         "meta": {
             "range": [
-                2450,
-                2595
+                2456,
+                2601
             ],
             "filename": "Role.js",
             "lineno": 110,
@@ -731,8 +731,8 @@
         "comment": "/**\n   * The hash of the role icon as a string.\n   * @readonly\n   * @type {String}\n   */",
         "meta": {
             "range": [
-                2690,
-                2955
+                2696,
+                2961
             ],
             "filename": "Role.js",
             "lineno": 122,
@@ -766,8 +766,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2760,
-                2799
+                2766,
+                2805
             ],
             "filename": "Role.js",
             "lineno": 125,
@@ -792,8 +792,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2888,
-                2923
+                2894,
+                2929
             ],
             "filename": "Role.js",
             "lineno": 129,
@@ -819,8 +819,8 @@
         "comment": "/**\n   * The icon URL of the role.\n   * @readonly\n   * @type {String?}\n   */",
         "meta": {
             "range": [
-                3038,
-                3121
+                3044,
+                3127
             ],
             "filename": "Role.js",
             "lineno": 139,
@@ -855,8 +855,8 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   */",
         "meta": {
             "range": [
-                3214,
-                3308
+                3220,
+                3314
             ],
             "filename": "Role.js",
             "lineno": 148,
@@ -891,8 +891,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3312,
-                3593
+                3318,
+                3599
             ],
             "filename": "Role.js",
             "lineno": 152,
@@ -920,8 +920,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3342,
-                3361
+                3348,
+                3367
             ],
             "filename": "Role.js",
             "lineno": 154,
@@ -944,8 +944,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3369,
-                3384
+                3375,
+                3390
             ],
             "filename": "Role.js",
             "lineno": 155,
@@ -968,8 +968,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3392,
-                3409
+                3398,
+                3415
             ],
             "filename": "Role.js",
             "lineno": 156,
@@ -992,8 +992,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3417,
-                3440
+                3423,
+                3446
             ],
             "filename": "Role.js",
             "lineno": 157,
@@ -1016,8 +1016,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3448,
-                3485
+                3454,
+                3491
             ],
             "filename": "Role.js",
             "lineno": 158,
@@ -1040,8 +1040,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3493,
-                3521
+                3499,
+                3527
             ],
             "filename": "Role.js",
             "lineno": 159,
@@ -1064,8 +1064,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3529,
-                3558
+                3535,
+                3564
             ],
             "filename": "Role.js",
             "lineno": 160,
@@ -1088,8 +1088,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3566,
-                3581
+                3572,
+                3587
             ],
             "filename": "Role.js",
             "lineno": 161,
@@ -1112,8 +1112,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3597,
-                3618
+                3603,
+                3624
             ],
             "filename": "Role.js",
             "lineno": 166,
