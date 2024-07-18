@@ -29,38 +29,38 @@ describe("GetMessage", function () {
           undefined,
           TEST_DATA.GUILD_ID,
           TEST_DATA.CHANNEL_ID,
-          TEST_DATA.MESSAGE_ID
-        )
+          TEST_DATA.MESSAGE_ID,
+        ),
       ).to.be.rejectedWith(TypeError, "GLUON: Client must be provided.");
     });
     it("should throw an error if the guild id is not provided", async function () {
       await expect(
-        getMessage({}, undefined, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID)
+        getMessage({}, undefined, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID),
       ).to.be.rejectedWith(TypeError, "GLUON: Guild id must be a string.");
     });
     it("should throw an error if the channel id is not provided", async function () {
       await expect(
-        getMessage({}, TEST_DATA.GUILD_ID, undefined, TEST_DATA.MESSAGE_ID)
+        getMessage({}, TEST_DATA.GUILD_ID, undefined, TEST_DATA.MESSAGE_ID),
       ).to.be.rejectedWith(TypeError, "GLUON: Channel id must be a string.");
     });
     it("should throw an error if the message id is not provided", async function () {
       await expect(
-        getMessage({}, TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, undefined)
+        getMessage({}, TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, undefined),
       ).to.be.rejectedWith(TypeError, "GLUON: Message id must be a string.");
     });
     it("should throw an error if the guild id is not a string", async function () {
       await expect(
-        getMessage({}, 123456, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID)
+        getMessage({}, 123456, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID),
       ).to.be.rejectedWith(TypeError, "GLUON: Guild id must be a string.");
     });
     it("should throw an error if the channel id is not a string", async function () {
       await expect(
-        getMessage({}, TEST_DATA.GUILD_ID, 123456, TEST_DATA.MESSAGE_ID)
+        getMessage({}, TEST_DATA.GUILD_ID, 123456, TEST_DATA.MESSAGE_ID),
       ).to.be.rejectedWith(TypeError, "GLUON: Channel id must be a string.");
     });
     it("should throw an error if the message id is not a string", async function () {
       await expect(
-        getMessage({}, TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, 123456)
+        getMessage({}, TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, 123456),
       ).to.be.rejectedWith(TypeError, "GLUON: Message id must be a string.");
     });
   });
@@ -73,7 +73,7 @@ describe("GetMessage", function () {
       const channel = new TextChannel(
         client,
         TEST_DATA.TEXT_CHANNEL,
-        TEST_DATA.GUILD_ID
+        TEST_DATA.GUILD_ID,
       );
       const message = TEST_DATA.MESSAGE;
       channel.messages.cache.set(TEST_DATA.MESSAGE_ID, message);
@@ -90,8 +90,8 @@ describe("GetMessage", function () {
           client,
           TEST_DATA.GUILD_ID,
           TEST_DATA.CHANNEL_ID,
-          TEST_DATA.MESSAGE_ID
-        )
+          TEST_DATA.MESSAGE_ID,
+        ),
       ).to.eventually.deep.equal(message);
     });
   });

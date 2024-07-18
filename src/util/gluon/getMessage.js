@@ -16,11 +16,9 @@ async function getMessage(
   guild_id,
   channel_id,
   message_id,
-  destroy = false
+  destroy = false,
 ) {
-
-  if (!client)
-    throw new TypeError("GLUON: Client must be provided.");
+  if (!client) throw new TypeError("GLUON: Client must be provided.");
 
   if (typeof guild_id != "string")
     throw new TypeError("GLUON: Guild id must be a string.");
@@ -71,7 +69,7 @@ async function getMessage(
         storedMessage,
         message_id,
         channel_id,
-        guild_id
+        guild_id,
       );
 
       client.s3Messages
