@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/builder/commandBuilder.js - Documentation</title>
+    <title>util/gluon/getMember.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/builder/commandBuilder.js</h1>
+    <h1 class="page-title">util/gluon/getMember.js</h1>
     
 
     
@@ -45,159 +45,52 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { APPLICATION_COMMAND_TYPES } = require("../../constants");
-
-/**
- * Structure for a command.
- * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
+            <pre class="prettyprint source linenums"><code>/**
+ * Gets a member from the cache or storage.
+ * @param {Client} client The client instance.
+ * @param {String} guild_id The id of the guild that the member belongs to.
+ * @param {String} member_id The id fo the member to get.
+ * @param {Boolean} destroy Whether the member should be removed from the cache/storage.
+ * @returns {Promise&lt;Member>}
  */
-class Command {
-  /**
-   * Creates the structure for a command.
-   */
-  constructor() {
-    this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
+async function getMember(client, guild_id, member_id, destroy = false) {
 
-    this.contexts = [0];
+  if (!client)
+    throw new TypeError("GLUON: Client must be provided.");
 
-    this.options = [];
+  if (typeof guild_id != "string")
+    throw new TypeError("GLUON: Guild id must be a string.");
 
-    this.defaultLocale = "en-US";
-  }
+  if (typeof member_id != "string")
+    throw new TypeError("GLUON: Member id must be a string.");
 
-  /**
-   * Sets the name of the command.
-   * @param {String | Object} name The name of the command or an object of names for localisation.
-   * @returns {Command}
-   * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
-   */
-  setName(name) {
+  if (typeof destroy != "boolean")
+    throw new TypeError("GLUON: Destroy must be a boolean.");
 
-    if (!name) throw new TypeError("GLUON: Command name must be provided.");
+  const guild = client.guilds.cache.get(guild_id);
 
-    if (typeof name == "object") {
-      this.name = name[this.defaultLocale];
+  const member = guild.members.cache.get(member_id) || null;
 
-      delete name[this.defaultLocale];
+  if (!member) {
+    const storedMember = await guild.members.retrieve(member_id);
 
-      this.name_localizations = name;
-    } else this.name = name;
+    if (storedMember) {
+      guild.members.remove(member_id);
 
-    return this;
-  }
+      if (destroy != false) guild.members.cache.delete(member_id);
 
-  /**
-   * Sets the command type.
-   * @param {Number} type The command type.
-   * @returns {Command}
-   * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
-   */
-  setType(type) {
+      return storedMember;
+    } else return null;
+  } else {
+    guild.members.remove(member_id);
 
-    if (typeof type != "number") throw new TypeError("GLUON: Command type must be a number.");
+    if (destroy != false) guild.members.cache.delete(member_id);
 
-    this.type = type;
-
-    return this;
-  }
-
-  /**
-   * Sets the description of the command.
-   * @param {String | Object} description The description of the command, or an object of descriptions for localisation.
-   * @returns {Command}
-   * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
-   */
-  setDescription(description) {
-
-    if (!description) throw new TypeError("GLUON: Command description must be provided.");
-
-    if (typeof description == "object") {
-      this.description = description[this.defaultLocale];
-
-      delete description[this.defaultLocale];
-
-      this.description_localizations = description;
-    } else this.description = description;
-
-    return this;
-  }
-
-  /**
-   * Sets the permission needed to use the command.
-   * @param {Number | BigInt | String} permissions The permissions required to be able to use this command.
-   * @returns {Command}
-   */
-  setDefaultMemberPermissions(permissions) {
-
-    if (typeof permissions != "number") throw new TypeError("GLUON: Command default permission must be a number.");
-
-    this.default_member_permissions = permissions;
-
-    return this;
-  }
-
-  /**
-   * Sets whether this command is NSFW.
-   * @param {Boolean} nsfw Whether this command is NSFW.
-   * @returns {Command}
-   */
-  setNsfw(nsfw) {
-
-    if (typeof nsfw != "boolean") throw new TypeError("GLUON: Command nsfw must be a boolean.");
-
-    this.nsfw = nsfw;
-
-    return this;
-  }
-
-  /**
-   * Adds an option to the command.
-   * @param {CommandOption} option Adds an option to the command.
-   * @returns {Command}
-   */
-  addOption(option) {
-
-    if (!option) throw new TypeError("GLUON: Command option must be provided.");
-
-    this.options.push(option);
-
-    return this;
-  }
-
-  /**
-   * Sets the default locale for localisation.
-   * @param {String?} locale Sets the default locale for localisation.
-   * @returns {Command}
-   * @see {@link https://discord.com/developers/docs/reference#locales}
-   */
-  setDefaultLocale(locale) {
-
-    if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
-
-    this.defaultLocale = locale;
-
-    return this;
-  }
-
-  /**
-   * Returns the correct Discord format for a command.
-   * @returns {Object}
-   */
-  toJSON() {
-    return {
-      name: this.name,
-      name_localizations: this.name_localizations,
-      type: this.type,
-      description: this.description,
-      description_localizations: this.description_localizations,
-      default_member_permissions: Number(this.default_member_permissions),
-      nsfw: this.nsfw,
-      options: this.options,
-    };
+    return member;
   }
 }
 
-module.exports = Command;
+module.exports = getMember;
 </code></pre>
         </article>
     </section>
