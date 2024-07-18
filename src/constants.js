@@ -459,5 +459,31 @@ module.exports.TEST_DATA = {
         type: 0,
         content: "test message",
         channel_id: "123456789012345678",
+    },
+    MEMBER_ID: "123456789012345678",
+    MEMBER: {
+        user: {
+            id: "123456789012345678",
+            username: "test",
+            discriminator: "0001",
+            avatar: null,
+            bot: false,
+            system: false,
+            mfa_enabled: false,
+            locale: "en-US",
+            verified: false,
+            email: null,
+            flags: 0,
+            premium_type: 0,
+            public_flags: 0
+        },
+        nick: null,
+        roles: [],
+        joined_at: "2021-01-01T00:00:00.000Z",
+        premium_since: null,
+        deaf: false,
+        mute: false,
+        pending: false,
+        permissions: "0"
     }
 };
