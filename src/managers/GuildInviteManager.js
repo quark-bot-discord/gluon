@@ -26,7 +26,12 @@ class GuildInviteManager {
    * @returns {Promise<Array<Invite>?>} The fetched invites.
    */
   async fetch() {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_GUILD))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MANAGE_GUILD,
+      )
+    )
       return null;
 
     const data = await this._client.request.makeRequest("getGuildInvites", [

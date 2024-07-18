@@ -17,13 +17,13 @@ describe("CheckMemberPermissions", function () {
     it("should throw an error if no member roles are provided", function () {
       expect(() => checkMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Member roles must be provided."
+        "GLUON: Member roles must be provided.",
       );
     });
     it("should throw an error if an array is not provided", function () {
       expect(() => checkMemberPermissions("test")).to.throw(
         TypeError,
-        "GLUON: Member roles must be an array."
+        "GLUON: Member roles must be an array.",
       );
     });
   });
@@ -45,7 +45,7 @@ describe("CheckMemberPermissions", function () {
         PERMISSIONS.ADD_REACTIONS |
           PERMISSIONS.BAN_MEMBERS |
           PERMISSIONS.ATTACH_FILES |
-          PERMISSIONS.CHANGE_NICKNAME
+          PERMISSIONS.CHANGE_NICKNAME,
       );
     });
   });

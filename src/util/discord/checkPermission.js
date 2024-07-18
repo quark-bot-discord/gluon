@@ -8,13 +8,13 @@ const { PERMISSIONS } = require("../../constants");
  * @returns {Boolean}
  */
 function checkPermission(memberPermission, permission, adminOverride = true) {
-  if (typeof memberPermission != "bigint") throw new TypeError("GLUON: Permissions must be a BigInt.");
+  if (typeof memberPermission != "bigint")
+    throw new TypeError("GLUON: Permissions must be a BigInt.");
   if (typeof permission != "bigint")
     throw new TypeError("GLUON: Permission must be a BigInt.");
   if (
     adminOverride == true &&
-    (memberPermission & PERMISSIONS.ADMINISTRATOR) ==
-      PERMISSIONS.ADMINISTRATOR
+    (memberPermission & PERMISSIONS.ADMINISTRATOR) == PERMISSIONS.ADMINISTRATOR
   )
     return true;
   return (memberPermission & permission) == permission;

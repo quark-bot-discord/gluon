@@ -356,7 +356,12 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
    */
   async reply(content, { embed, components, files } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES,
+      )
+    )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
@@ -392,15 +397,19 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
    */
   async edit(content, { embed, embeds, components, files } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES,
+      )
+    )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
 
     if (content) body.content = content;
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
 

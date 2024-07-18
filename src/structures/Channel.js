@@ -144,7 +144,12 @@ class Channel {
     content,
     { embed, components, files, embeds, suppressMentions = false } = {},
   ) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES,
+      )
+    )
       return null;
 
     const body = {};
@@ -152,8 +157,7 @@ class Channel {
     if (content) body.content = content;
 
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
