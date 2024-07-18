@@ -7,9 +7,7 @@
  * @returns {Promise<Member>}
  */
 async function getMember(client, guild_id, member_id, destroy = false) {
-
-  if (!client)
-    throw new TypeError("GLUON: Client must be provided.");
+  if (!client) throw new TypeError("GLUON: Client must be provided.");
 
   if (typeof guild_id != "string")
     throw new TypeError("GLUON: Guild id must be a string.");

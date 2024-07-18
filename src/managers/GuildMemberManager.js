@@ -105,7 +105,6 @@ class GuildMemberManager {
     //     `,
     //     { guild: this.guild.id, id: user_id })
     //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
-
     // this._client.dataStorage.query(`
     //     DELETE
     //     FROM MemberRoles
@@ -113,7 +112,6 @@ class GuildMemberManager {
     //     `,
     //     { guild: this.guild.id, memberid: user_id })
     //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ROLES ${user_id} FROM ${this.guild.id}`));
-
     // this.cache.delete(user_id.toString());
   }
 
