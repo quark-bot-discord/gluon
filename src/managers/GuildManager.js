@@ -1,5 +1,3 @@
-const Client = require("../Client");
-
 /**
  * Manages all guilds belonging to this client.
  */

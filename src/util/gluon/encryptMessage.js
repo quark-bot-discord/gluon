@@ -7,6 +7,13 @@ const encryptText = require("../general/encryptText");
  * @returns {String}
  */
 function encryptMessage(message) {
+
+  if (!message)
+    throw new TypeError("GLUON: Message must be provided.");
+
+  if (!message.id || !message._channel_id || !message._guild_id)
+    throw new TypeError("GLUON: Message must have an id, channel id and guild id.");
+
   const messageString = JSON.stringify(message);
 
   const key = hash

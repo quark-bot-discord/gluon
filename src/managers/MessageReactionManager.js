@@ -63,7 +63,7 @@ class MessageReactionManager {
 
   toJSON() {
     const messageReactions = {};
-    for (const [reaction, reactionData] of this.cache)
+    for (const [reaction, reactionData] of Object.entries(this.cache))
       messageReactions[reaction] = reactionData;
     return messageReactions;
   }

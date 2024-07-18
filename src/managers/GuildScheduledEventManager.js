@@ -1,8 +1,4 @@
-const { CHANNEL_TYPES } = require("../constants");
 const ScheduledEvent = require("../structures/ScheduledEvent");
-const TextChannel = require("../structures/TextChannel");
-const Thread = require("../structures/Thread");
-const VoiceChannel = require("../structures/VoiceChannel");
 
 class GuildScheduledEventManager {
   constructor(client, guild) {

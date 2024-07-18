@@ -1,4 +1,3 @@
-const Client = require("../Client");
 const Channel = require("../structures/Channel");
 const Message = require("../structures/Message");
 

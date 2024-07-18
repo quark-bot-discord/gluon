@@ -1,5 +1,3 @@
-const Client = require("../Client");
-const Guild = require("../structures/Guild");
 const TextChannel = require("../structures/TextChannel");
 const Thread = require("../structures/Thread");
 const VoiceChannel = require("../structures/VoiceChannel");

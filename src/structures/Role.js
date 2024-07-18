@@ -1,4 +1,4 @@
-const getRoleIcon = require("../util/getRoleIcon");
+const getRoleIcon = require("../util/image/getRoleIcon");
 
 /**
  * Represents a role belonging to a guild.

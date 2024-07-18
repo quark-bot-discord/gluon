@@ -1,6 +1,6 @@
 const hash = require("hash.js");
-const decryptText = require("./decryptText");
-const Message = require("../structures/Message");
+const decryptText = require("../general/decryptText");
+const Message = require("../../structures/Message");
 
 /**
  * Decrypts a message and returns the message structure for it.
@@ -12,6 +12,16 @@ const Message = require("../structures/Message");
  * @returns {Message}
  */
 function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
+
+  if (!client)
+    throw new TypeError("GLUON: Client must be provided.");
+
+  if (!encryptedMessage)
+    throw new TypeError("GLUON: Encrypted message must be provided.");
+
+  if (!id || !channelId || !guildId)
+    throw new TypeError("GLUON: Message must have an id, channel id and guild id.");
+
   const key = hash
     .sha512()
     .update(

@@ -1,5 +1,5 @@
 const erlpack = require("erlpack");
-const { NAME, CALCULATED_INTENTS } = require("../../constants");
+const { NAME, CALCULATED_INTENTS, GLUON_VERSION } = require("../../constants");
 
 function _identify(token, shard, intents = CALCULATED_INTENTS) {
   return erlpack.pack({
@@ -8,8 +8,8 @@ function _identify(token, shard, intents = CALCULATED_INTENTS) {
       token,
       properties: {
         os: "linux",
-        browser: `${NAME} (${require("../../../package.json").version})`,
-        device: `${NAME} (${require("../../../package.json").version})`,
+        browser: `${NAME} (${GLUON_VERSION})`,
+        device: `${NAME} (${GLUON_VERSION})`,
       },
       large_threshold: 250,
       shard,

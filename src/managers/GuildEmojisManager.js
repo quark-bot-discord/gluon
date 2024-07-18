@@ -1,4 +1,3 @@
-const Client = require("../Client");
 const Emoji = require("../structures/Emoji");
 const Guild = require("../structures/Guild");
 

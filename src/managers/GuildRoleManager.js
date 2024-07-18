@@ -1,4 +1,3 @@
-const Client = require("../Client");
 const Guild = require("../structures/Guild");
 const Role = require("../structures/Role");
 

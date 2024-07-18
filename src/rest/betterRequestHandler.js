@@ -5,6 +5,7 @@ const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 const FastQ = require("fastq");
 const getBucket = require("./getBucket");
+const { GLUON_VERSION } = require("../constants");
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -202,7 +203,7 @@ class BetterRequestHandler {
         Authorization: this.authorization,
         "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(
           4,
-        )}, ${require("../../package.json").version}) ${this.name}`,
+        )}, ${GLUON_VERSION}) ${this.name}`,
         Accept: "application/json",
       };
 

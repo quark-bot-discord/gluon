@@ -1,4 +1,3 @@
-const Client = require("../Client");
 const User = require("../structures/User");
 
 /**
