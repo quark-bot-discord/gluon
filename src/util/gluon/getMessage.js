@@ -1,4 +1,4 @@
-const decryptMessage = require("../decryptMessage");
+const decryptMessage = require("../gluon/decryptMessage");
 const getTimestamp = require("../discord/getTimestampFromSnowflake");
 const hash = require("hash.js");
 
@@ -18,6 +18,22 @@ async function getMessage(
   message_id,
   destroy = false
 ) {
+
+  if (!client)
+    throw new TypeError("GLUON: Client must be provided.");
+
+  if (typeof guild_id != "string")
+    throw new TypeError("GLUON: Guild id must be a string.");
+
+  if (typeof channel_id != "string")
+    throw new TypeError("GLUON: Channel id must be a string.");
+
+  if (typeof message_id != "string")
+    throw new TypeError("GLUON: Message id must be a string.");
+
+  if (typeof destroy != "boolean")
+    throw new TypeError("GLUON: Destroy must be a boolean.");
+
   let message =
     client.guilds.cache
       .get(guild_id)
