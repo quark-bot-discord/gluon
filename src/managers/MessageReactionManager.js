@@ -19,7 +19,9 @@ class MessageReactionManager {
      */
     this.cache = {};
 
-    for (const [messageReaction, messageReactionValue] of Object.entries(existingReactions))
+    for (const [messageReaction, messageReactionValue] of Object.entries(
+      existingReactions,
+    ))
       this.cache[messageReaction] = new Reaction(
         this._client,
         messageReactionValue,

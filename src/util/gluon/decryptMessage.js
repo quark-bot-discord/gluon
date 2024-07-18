@@ -12,15 +12,15 @@ const Message = require("../../structures/Message");
  * @returns {Message}
  */
 function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
-
-  if (!client)
-    throw new TypeError("GLUON: Client must be provided.");
+  if (!client) throw new TypeError("GLUON: Client must be provided.");
 
   if (!encryptedMessage)
     throw new TypeError("GLUON: Encrypted message must be provided.");
 
   if (!id || !channelId || !guildId)
-    throw new TypeError("GLUON: Message must have an id, channel id and guild id.");
+    throw new TypeError(
+      "GLUON: Message must have an id, channel id and guild id.",
+    );
 
   const key = hash
     .sha512()
@@ -28,7 +28,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${String(id)}_${String(channelId)}_${String(guildId)}`)
-        .digest("hex")}satoshiNakamoto`
+        .digest("hex")}satoshiNakamoto`,
     )
     .digest("hex")
     .slice(0, 32);
@@ -39,7 +39,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${String(id)}_${String(channelId)}_${String(guildId)}`)
-        .digest("hex")}${String(id)}`
+        .digest("hex")}${String(id)}`,
     )
     .digest("hex")
     .slice(0, 16);

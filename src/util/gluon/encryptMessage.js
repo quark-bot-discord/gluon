@@ -7,12 +7,12 @@ const encryptText = require("../general/encryptText");
  * @returns {String}
  */
 function encryptMessage(message) {
-
-  if (!message)
-    throw new TypeError("GLUON: Message must be provided.");
+  if (!message) throw new TypeError("GLUON: Message must be provided.");
 
   if (!message.id || !message._channel_id || !message._guild_id)
-    throw new TypeError("GLUON: Message must have an id, channel id and guild id.");
+    throw new TypeError(
+      "GLUON: Message must have an id, channel id and guild id.",
+    );
 
   const messageString = JSON.stringify(message);
 
@@ -22,9 +22,9 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${String(message.id)}_${
-            String(message._channel_id)
-          }_${String(message._guild_id)}`,
+          `${String(message.id)}_${String(
+            message._channel_id,
+          )}_${String(message._guild_id)}`,
         )
         .digest("hex")}satoshiNakamoto`,
     )
@@ -37,9 +37,9 @@ function encryptMessage(message) {
       `${hash
         .sha512()
         .update(
-          `${String(message.id)}_${
-            String(message._channel_id)
-          }_${String(message._guild_id)}`,
+          `${String(message.id)}_${String(
+            message._channel_id,
+          )}_${String(message._guild_id)}`,
         )
         .digest("hex")}${String(message.id)}`,
     )
