@@ -97,11 +97,11 @@ describe("CommandChoiceBuilder", function () {
       expect(commandChoice.defaultLocale).to.equal("en-GB");
     });
     it("should throw an error if no locale is provided", function () {
-        const commandChoice = new CommandChoiceBuilder();
-        expect(() => commandChoice.setDefaultLocale()).to.throw(
-            TypeError,
-            "GLUON: Default locale must be provided."
-        );
+      const commandChoice = new CommandChoiceBuilder();
+      expect(() => commandChoice.setDefaultLocale()).to.throw(
+        TypeError,
+        "GLUON: Default locale must be provided."
+      );
     });
   });
 
@@ -121,7 +121,9 @@ describe("CommandChoiceBuilder", function () {
     });
     it("should return the command choice as an object with localisation", function () {
       const commandChoice = new CommandChoiceBuilder();
-      commandChoice.setName({ "en-US": "test", "en-GB": "testGB" }).setValue("testValue");
+      commandChoice
+        .setName({ "en-US": "test", "en-GB": "testGB" })
+        .setValue("testValue");
       expect(commandChoice.toJSON()).to.deep.equal({
         name: "test",
         name_localizations: { "en-GB": "testGB" },

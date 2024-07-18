@@ -155,7 +155,9 @@ describe("CommandOptionBuilder", () => {
     it("should throw an error if the choices limit is reached", () => {
       const commandOption = new CommandOptionBuilder();
       commandOption.choices = new Array(LIMITS.MAX_COMMAND_OPTION_CHOICES);
-      expect(() => commandOption.addChoice({ name: "test", value: "testValue" })).to.throw(
+      expect(() =>
+        commandOption.addChoice({ name: "test", value: "testValue" })
+      ).to.throw(
         RangeError,
         `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`
       );
@@ -181,12 +183,12 @@ describe("CommandOptionBuilder", () => {
       );
     });
     it("should throw an error if the options limit is reached", () => {
-        const commandOption = new CommandOptionBuilder();
-        commandOption.options = new Array(LIMITS.MAX_COMMAND_OPTIONS);
-        expect(() => commandOption.addOption({ name: "test" })).to.throw(
-            RangeError,
-            `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`
-        );
+      const commandOption = new CommandOptionBuilder();
+      commandOption.options = new Array(LIMITS.MAX_COMMAND_OPTIONS);
+      expect(() => commandOption.addOption({ name: "test" })).to.throw(
+        RangeError,
+        `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`
+      );
     });
   });
 

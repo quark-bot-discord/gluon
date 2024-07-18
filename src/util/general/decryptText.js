@@ -4,13 +4,22 @@ const { createDecipheriv } = require("crypto");
 /**
  * Decrypts text and returns the plain text.
  * @param {String} text The text to decrypt.
- * @param {CipherKey} key The key used for encryption.
- * @param {BinaryLike} iv The iv used for encryption.
+ * @param {CipherKey} key The key used for encryption, must be 32 characters in length.
+ * @param {BinaryLike} iv The iv used for encryption, must be 16 characters in length.
  * @returns {String}
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
 function decryptText(text, key, iv) {
-  if (!text) return null;
+  if (typeof text !== "string")
+    throw new TypeError("GLUON: Text to decrypt must be a string.");
+  if (typeof key !== "string")
+    throw new TypeError("GLUON: Decryption key must be a string.");
+  if (typeof iv !== "string")
+    throw new TypeError("GLUON: Decryption IV must be a string.");
+  if (key.length !== 32)
+    throw new RangeError("GLUON: Decryption key must be 32 characters long.");
+  if (iv.length !== 16)
+    throw new RangeError("GLUON: Decryption IV must be 16 characters long.");
 
   const decipher = createDecipheriv("aes-256-cbc", key, iv);
 

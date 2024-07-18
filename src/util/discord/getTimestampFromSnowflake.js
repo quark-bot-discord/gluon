@@ -4,6 +4,9 @@
  * @returns {Number}
  */
 function getTimestamp(snowflake) {
+  if (!snowflake) throw new TypeError("GLUON: Snowflake must be provided.");
+  if (typeof snowflake != "bigint" && typeof snowflake != "string")
+    throw new TypeError("GLUON: Snowflake must be a BigInt or string.");
   return ((Number(BigInt(snowflake) >> 22n) + 1420070400000) / 1000) | 0;
 }
 

@@ -95,6 +95,11 @@ describe("Embed", function () {
       embed.setColor("#fcfcfc");
       expect(embed.color).to.equal(hexToInt("fcfcfc"));
     });
+    it("should work without the #", function () {
+      const embed = new Embed();
+      embed.setColor("fcfcfc");
+      expect(embed.color).to.equal(hexToInt("fcfcfc"));
+    });
     it("should throw an error if the color is empty", function () {
       const embed = new Embed();
       expect(() => {
@@ -271,7 +276,7 @@ describe("Embed", function () {
       embed.setTitle("title");
       embed.setDescription("description");
       embed.setURL("https://example.com");
-      embed.setColor("color");
+      embed.setColor("#f3f3f3");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
       embed.setImage("image");
@@ -290,7 +295,7 @@ describe("Embed", function () {
       embed.setTitle("title");
       embed.setDescription("description");
       embed.setURL("https://example.com");
-      embed.setColor("color");
+      embed.setColor("#f3f3f3");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
       embed.setImage("image");
@@ -311,7 +316,7 @@ describe("Embed", function () {
       embed.setTitle("title");
       embed.setDescription("description");
       embed.setURL("https://example.com");
-      embed.setColor("color");
+      embed.setColor("#f3f3f3");
       embed.setTimestamp(123456);
       embed.setFooter("footer");
       embed.setImage("https://example.com");
@@ -323,7 +328,7 @@ describe("Embed", function () {
         title: "title",
         description: "description",
         url: "https://example.com",
-        color: hexToInt("color"),
+        color: hexToInt("f3f3f3"),
         timestamp: new Date(123456 * 1000).toISOString(),
         footer: {
           text: "footer",
@@ -341,7 +346,7 @@ describe("Embed", function () {
           {
             name: "field",
             value: "fieldValue",
-            inline: false
+            inline: false,
           },
         ],
       });

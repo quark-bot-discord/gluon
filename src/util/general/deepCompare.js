@@ -5,6 +5,14 @@
  * @returns {Array<String>}
  */
 function deepCompare(object0, object1) {
+
+  if (typeof object0 != "object")
+    throw new TypeError("GLUON: First argument must be an object.");
+  if (typeof object1 != "object")
+    throw new TypeError("GLUON: Second argument must be an object.");
+
+  if (object0 === object1) return [];
+
   const keys0 = Object.keys(object0);
   const keys1 = Object.keys(object1);
   const keys = [...new Set(keys0.concat(keys1))];
