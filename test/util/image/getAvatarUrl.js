@@ -1,9 +1,9 @@
-const { TEST_DATA } = require("../../../src/constants");
-
 let expect;
 before(async () => {
   expect = (await import("chai")).expect;
 });
+
+const { TEST_DATA } = require("../../../src/constants");
 
 describe("GetAvatarUrl", function () {
   const getAvatarUrl = require("../../../src/util/image/getAvatarUrl");
