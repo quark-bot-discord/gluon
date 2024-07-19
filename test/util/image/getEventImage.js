@@ -17,14 +17,14 @@ describe("GetEventImage", function () {
     it("should throw an error if no event id is provided", function () {
       expect(() => getEventImage(undefined, "hash")).to.throw(
         TypeError,
-        "GLUON: Event id must be provided."
+        "GLUON: Event id must be provided.",
       );
     });
     it("should throw an error if the hash is not a string and not null", function () {
-        expect(() => getEventImage(TEST_DATA.EVENT_ID, 123)).to.throw(
-            TypeError,
-            "GLUON: Event hash must be a string."
-        );
+      expect(() => getEventImage(TEST_DATA.EVENT_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Event hash must be a string.",
+      );
     });
   });
 
@@ -37,12 +37,12 @@ describe("GetEventImage", function () {
     });
     it("should return the correct event image url", function () {
       expect(getEventImage(TEST_DATA.EVENT_ID, "hash")).to.equal(
-        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/hash.png`
+        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/hash.png`,
       );
     });
     it("should return the correct event image url for gif", function () {
       expect(getEventImage(TEST_DATA.EVENT_ID, "a_hash")).to.equal(
-        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/a_hash.gif`
+        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/a_hash.gif`,
       );
     });
   });

@@ -17,14 +17,14 @@ describe("GetGuildIcon", function () {
     it("should throw an error if no guild id is provided", function () {
       expect(() => getGuildIcon(undefined, "hash")).to.throw(
         TypeError,
-        "GLUON: Guild id must be provided."
+        "GLUON: Guild id must be provided.",
       );
     });
     it("should throw an error if the hash is not a string and not null", function () {
-        expect(() => getGuildIcon(TEST_DATA.GUILD_ID, 123)).to.throw(
-            TypeError,
-            "GLUON: Guild icon hash must be a string."
-        );
+      expect(() => getGuildIcon(TEST_DATA.GUILD_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Guild icon hash must be a string.",
+      );
     });
   });
 
@@ -37,12 +37,12 @@ describe("GetGuildIcon", function () {
     });
     it("should return the correct icon url", function () {
       expect(getGuildIcon(TEST_DATA.GUILD_ID, "hash")).to.equal(
-        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/hash.png`
+        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/hash.png`,
       );
     });
     it("should return the correct icon url for a gif", function () {
       expect(getGuildIcon(TEST_DATA.GUILD_ID, "a_hash")).to.equal(
-        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/a_hash.gif`
+        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/a_hash.gif`,
       );
     });
   });

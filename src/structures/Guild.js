@@ -642,7 +642,9 @@ class Guild {
    * @returns {void?}
    */
   async ban(user_id, { reason, days } = {}) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
+    )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
     const body = {};
@@ -665,7 +667,9 @@ class Guild {
    * @returns {void?}
    */
   async unban(user_id, { reason } = {}) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
+    )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
     const body = {};
@@ -686,7 +690,9 @@ class Guild {
    * @returns {void?}
    */
   async kick(user_id, { reason } = {}) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS)
+    )
       throw new Error("MISSING PERMISSIONS: KICK_MEMBERS");
 
     const body = {};
@@ -708,7 +714,9 @@ class Guild {
    * @returns {void?}
    */
   async removeMemberRole(user_id, role_id, { reason } = {}) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES)
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -728,7 +736,12 @@ class Guild {
    * @returns {Promise<AuditLog[]?>}
    */
   async fetchAuditLogs({ limit, type, user_id, before }) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.VIEW_AUDIT_LOG))
+    if (
+      !checkPermission(
+        (await this.me()).permissions,
+        PERMISSIONS.VIEW_AUDIT_LOG,
+      )
+    )
       throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
 
     const body = {};
@@ -769,7 +782,9 @@ class Guild {
    * @returns {Promise<Object[]?>}
    */
   async fetchInvites() {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_GUILD))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_GUILD)
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
 
     const data = await this._client.request.makeRequest("getGuildInvites", [
@@ -801,7 +816,9 @@ class Guild {
    * @returns {Promise<Object?>}
    */
   async fetchBan(user_id) {
-    if (!checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS))
+    if (
+      !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
+    )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
     const data = await this._client.request.makeRequest("getGuildBan", [

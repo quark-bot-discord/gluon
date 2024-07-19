@@ -17,13 +17,13 @@ describe("GetAvatarUrl", function () {
     it("should throw an error if no user id is provided", function () {
       expect(() => getAvatarUrl(undefined, "hash")).to.throw(
         TypeError,
-        "GLUON: User id must be provided."
+        "GLUON: User id must be provided.",
       );
     });
     it("should throw an error if the hash is not a string and not null", function () {
       expect(() => getAvatarUrl(TEST_DATA.MEMBER_ID, 123)).to.throw(
         TypeError,
-        "GLUON: Avatar hash must be a string."
+        "GLUON: Avatar hash must be a string.",
       );
     });
   });
@@ -34,17 +34,17 @@ describe("GetAvatarUrl", function () {
     });
     it("should return the correct default avatar url", function () {
       expect(getAvatarUrl(TEST_DATA.MEMBER_ID)).to.equal(
-        "https://cdn.discordapp.com/embed/avatars/0.png"
+        "https://cdn.discordapp.com/embed/avatars/0.png",
       );
     });
     it("should return the correct avatar url", function () {
       expect(getAvatarUrl(TEST_DATA.MEMBER_ID, "hash")).to.equal(
-        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/hash.png`
+        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/hash.png`,
       );
     });
     it("should return the correct avatar url for a gif", function () {
       expect(getAvatarUrl(TEST_DATA.MEMBER_ID, "a_hash")).to.equal(
-        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/a_hash.gif`
+        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/a_hash.gif`,
       );
     });
   });
