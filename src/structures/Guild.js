@@ -493,7 +493,7 @@ class Guild {
    * @type {String?}
    */
   get displayIconURL() {
-    return getGuildIcon(this._originalIconHash, this.id);
+    return getGuildIcon(this.id, this._originalIconHash);
   }
 
   /**

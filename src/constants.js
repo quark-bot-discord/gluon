@@ -500,5 +500,7 @@ module.exports.TEST_DATA = {
         mute: false,
         pending: false,
         permissions: "0"
-    }
+    },
+    EVENT_ID: "123456789012345678",
+    ROLE_ID: "123456789012345678",
 };

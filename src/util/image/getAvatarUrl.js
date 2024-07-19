@@ -7,9 +7,9 @@ const { CDN_BASE_URL } = require("../../constants");
  * @returns {String}
  */
 function getAvatarUrl(id, hash) {
-
   if (!id) throw new TypeError("GLUON: User id must be provided.");
-
+  if (hash && typeof hash !== "string")
+    throw new TypeError("GLUON: Avatar hash must be a string.");
   return hash
     ? // eslint-disable-next-line quotes
       `${CDN_BASE_URL}/avatars/${String(id)}/${hash}.${

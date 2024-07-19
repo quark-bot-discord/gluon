@@ -2,6 +2,7 @@ const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
 const User = require("./User");
 const checkPermission = require("../util/discord/checkPermission");
 const checkMemberPermissions = require("../util/discord/checkMemberPermissions");
+const getMemberAvatar = require("../util/image/getMemberAvatar");
 
 /**
  * Represents a guild member.
@@ -24,7 +25,7 @@ class Member {
     user_id,
     guild_id,
     user,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {},
+    { nocache = false, ignoreNoCache = false, noDbStore = false } = {}
   ) {
     /**
      * The client instance.
@@ -231,14 +232,10 @@ class Member {
    * @type {String}
    */
   get displayAvatarURL() {
-    return this._avatar
-      ? // eslint-disable-next-line quotes
-        `${CDN_BASE_URL}/guilds/${this.guild.id}/users/${
-          this.user.id
-        }/avatars/${this._originalAvatarHash}.${
-          this.avatarIsAnimated ? "gif" : "png"
-        }`
-      : this.user.displayAvatarURL;
+    return (
+      getMemberAvatar(this.id, this._guild_id, this._originalAvatarHash) ??
+      this.user.displayAvatarURL
+    );
   }
 
   /**
@@ -267,7 +264,12 @@ class Member {
    * @returns {Promise<void>}
    */
   async addRole(role_id, { reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MANAGE_ROLES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -277,7 +279,7 @@ class Member {
     await this._client.request.makeRequest(
       "putAddGuildMemberRole",
       [this._guild_id, this.id, role_id],
-      body,
+      body
     );
   }
 
@@ -289,7 +291,12 @@ class Member {
    * @returns {Promise<void>}
    */
   async removeRole(role_id, { reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MANAGE_ROLES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -299,7 +306,7 @@ class Member {
     await this._client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this._guild_id, this.id, role_id],
-      body,
+      body
     );
   }
 
@@ -311,7 +318,12 @@ class Member {
    * @returns {Promise<void>}
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MODERATE_MEMBERS))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MODERATE_MEMBERS
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
 
     const body = {};
@@ -323,7 +335,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body,
+      body
     );
   }
 
@@ -334,7 +346,12 @@ class Member {
    * @returns {Promise<void>}
    */
   async timeoutRemove({ reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MODERATE_MEMBERS))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MODERATE_MEMBERS
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
 
     const body = {};
@@ -346,7 +363,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body,
+      body
     );
   }
 
@@ -357,7 +374,12 @@ class Member {
    * @returns {Promise<void>}
    */
   async massUpdateRoles(roles, { reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_ROLES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MANAGE_ROLES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
     const body = {};
@@ -369,7 +391,7 @@ class Member {
     await this._client.request.makeRequest(
       "patchGuildMember",
       [this._guild_id, this.id],
-      body,
+      body
     );
   }
 

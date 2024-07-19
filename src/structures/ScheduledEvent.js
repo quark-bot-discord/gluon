@@ -1,5 +1,5 @@
 const User = require("./User");
-const { CDN_BASE_URL } = require("../constants");
+const getEventImage = require("../util/image/getEventImage");
 
 /**
  * Represents an scheduled event.
@@ -166,10 +166,7 @@ class ScheduledEvent {
    * @type {String?}
    */
   get displayImageURL() {
-    return this._image
-      ? // eslint-disable-next-line quotes
-        `${CDN_BASE_URL}/guild-events/${this.id}/${this._originalImageHash}.png`
-      : null;
+    return getEventImage(this.id, this._originalImageHash);
   }
 
   /**
