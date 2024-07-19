@@ -293,6 +293,21 @@ module.exports.GLUON_CACHING_OPTIONS = {
     FILES_ONLY:         (1 << 1),
     NO_VOICE_STATE:     (1 << 2)
 };
+module.exports.GLUON_GUILD_CACHING_OPTIONS = {
+    MESSAGES:           (1 << 0),
+    FILES:              (1 << 1),
+    VOICE_STATES:       (1 << 2),
+    ROLES:              (1 << 3),
+    EMOJIS:             (1 << 4),
+    INVITES:            (1 << 5),
+    CHANNELS:           (1 << 6),
+    MEMBERS:            (1 << 7),
+    THREADS:            (1 << 8),
+};
+module.exports.GLUON_CHANNEL_CACHING_OPTIONS = {
+    MESSAGES:           (1 << 0),
+    FILES:              (1 << 1),
+};
 module.exports.AUTO_MODERATION_TRIGGER_TYPES = {
     KEYWORD:            (1),
     SPAM:               (3),
