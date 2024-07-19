@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>util/discord/verifyMessageLink.js - Documentation</title>
+    <title>util/image/getEventImage.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">util/discord/verifyMessageLink.js</h1>
+    <h1 class="page-title">util/image/getEventImage.js</h1>
     
 
     
@@ -45,25 +45,25 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Whether the string provided contains a valid message link.
- * @param {String} text A url to a Discord message.
- * @returns {String?} The link to a message, if it is present.
+            <pre class="prettyprint source linenums"><code>const { CDN_BASE_URL } = require("../../constants");
+
+/**
+ * Returns the image url for a guild event.
+ * @param {BigInt | String} id The id of the event.
+ * @param {String} hash The hash of the event image.
+ * @returns {String | null}
  */
-function verifyMessageLink(text) {
-
-  if (typeof text !== "string")
-    throw new TypeError("GLUON: The text must be a string.");
-
-  const messageLink = text.match(
-    /(https?:\/\/)(.+[a-z]\.)?(discord\.com|discordapp\.com)\/(channels)\/(.[0-9]+)\/(.[0-9]+)\/(.[0-9]+)/g
-  );
-
-  if (messageLink) return messageLink[0];
-  else return null;
+function getEventImage(id, hash) {
+  if (!id) throw new TypeError("GLUON: Event id must be provided.");
+  if (hash &amp;&amp; typeof hash !== "string") throw new TypeError("GLUON: Event hash must be a string.");
+  return hash
+    ? `${CDN_BASE_URL}/guild-events/${String(id)}/${hash}.${
+        hash.startsWith("a_") ? "gif" : "png"
+      }`
+    : null;
 }
 
-module.exports = verifyMessageLink;
+module.exports = getEventImage;
 </code></pre>
         </article>
     </section>
