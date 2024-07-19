@@ -9,7 +9,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
     return this;
@@ -19,7 +20,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.FILES;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.FILES;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.FILES;
     return this;
@@ -40,7 +42,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
     return this;
@@ -50,7 +53,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.ROLES;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.ROLES;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.ROLES;
     return this;
@@ -60,7 +64,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
     return this;
@@ -70,7 +75,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
     return this;
@@ -80,7 +86,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.THREADS;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.THREADS;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.THREADS;
     return this;
@@ -90,7 +97,8 @@ class GuildCacheOptions {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
-    if (option === true) this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.INVITES;
+    if (option === true)
+      this._cache_options |= GLUON_GUILD_CACHING_OPTIONS.INVITES;
     else if (option === false)
       this._cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.INVITES;
     return this;
