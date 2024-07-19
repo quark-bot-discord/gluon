@@ -25,7 +25,6 @@ const hexToInt = require("./util/general/hexToInt");
 const MessageComponents = require("./util/builder/messageComponents");
 const resolveEmoji = require("./util/discord/resolveEmoji");
 const TextInput = require("./util/builder/textInputBuilder");
-const updatePreferences = require("./util/gluon/updateGuildPreferences");
 const verifyMessageLink = require("./util/discord/verifyMessageLink");
 
 module.exports = {
@@ -56,6 +55,5 @@ module.exports = {
     MessageComponents,
     resolveEmoji,
     TextInput,
-    updatePreferences,
     verifyMessageLink
 };
