@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+const getAvatarUrl = require("../util/image/getAvatarUrl")
 const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
 
 /**
@@ -122,12 +122,7 @@ class User {
   get displayAvatarURL() {
     if (this.overrideAvatar) return this.overrideAvatar;
 
-    return this._avatar
-      ? // eslint-disable-next-line quotes
-        `${CDN_BASE_URL}/avatars/${this.id}/${this._originalAvatarHash}.${
-          this.avatarIsAnimated ? "gif" : "png"
-        }`
-      : `${CDN_BASE_URL}/embed/avatars/${(this.id >> 22n) % 6n}.png`;
+    return getAvatarUrl(this.id, this._originalAvatarHash);
   }
 
   /**
