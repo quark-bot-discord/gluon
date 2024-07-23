@@ -1,97 +1,104 @@
-const fetch = require("node-fetch");
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const FormData = require("form-data");
 const { createReadStream } = require("fs");
 const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 const FastQ = require("fastq");
 const getBucket = require("./getBucket");
-const { GLUON_VERSION } = require("../constants");
+const { GLUON_VERSION, BASE_URL, VERSION, NAME } = require("../constants");
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
-  constructor(client, baseURL, name, version, token) {
-    this._client = client;
+  #token;
+  #authorization;
+  #_client;
+  #requestURL;
+  #latency;
+  #maxRetries;
+  #maxQueueSize;
+  #fuzz;
+  #endpoints;
+  #queueWorker;
+  #handleBucket;
+  #queues;
+  #localRatelimitCache;
 
-    this.baseURL = baseURL;
-    this.version = version;
-    this.requestURL = `${this.baseURL}/v${this.version}`;
+  constructor(client, token) {
+    this.#_client = client;
 
-    this.localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
+    this.#requestURL = `${BASE_URL}/v${VERSION}`;
 
-    this.token = token;
-    this.authorization = `Bot ${this.token}`;
-    this.name = name;
+    this.#localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
-    this.latency = 1;
-    this.maxRetries = 3;
-    this.maxQueueSize = 100;
-    this.fuzz = 500;
+    this.#token = token;
+    this.#authorization = `Bot ${this.#token}`;
 
-    this.endpoints = require("./endpoints");
+    this.#latency = 1;
+    this.#maxRetries = 3;
+    this.#maxQueueSize = 100;
+    this.#fuzz = 500;
 
-    this.queueWorker = (data) => {
+    this.#endpoints = require("./endpoints");
+
+    this.#queueWorker = (data) => {
       return new Promise(async (resolve, reject) => {
         const bucket = await getBucket(
-          this._client,
-          this.localRatelimitCache,
-          data.hash,
+          this.#_client,
+          this.#localRatelimitCache,
+          data.hash
         );
         if (
           !bucket ||
           bucket.remaining != 0 ||
           (bucket.remaining == 0 &&
-            new Date().getTime() / 1000 > bucket.reset + this.latency)
+            new Date().getTime() / 1000 > bucket.reset + this.#latency)
         )
-          this.http(
+          this.#http(
             data.hash,
             data.request,
             data.params,
             data.body,
             resolve,
-            reject,
+            reject
           );
         else {
-          this._client.emit(
+          this.#_client.emit(
             "debug",
             `RATELIMITED ${data.hash} (bucket reset):${
               bucket.reset
-            } (latency):${this.latency}  (time until retry):${
-              (bucket.reset + this.latency) * 1000 - new Date().getTime()
-            } (current time):${(new Date().getTime() / 1000) | 0}`,
+            } (latency):${this.#latency}  (time until retry):${
+              (bucket.reset + this.#latency) * 1000 - new Date().getTime()
+            } (current time):${(new Date().getTime() / 1000) | 0}`
           );
-          if (this.queues[data.hash].length() > this.maxQueueSize) {
-            this._client.emit("debug", `KILL QUEUE ${data.hash}`);
-            this.queues[data.hash].kill();
-            delete this.queues[data.hash];
+          if (this.#queues[data.hash].length() > this.#maxQueueSize) {
+            this.#_client.emit("debug", `KILL QUEUE ${data.hash}`);
+            this.#queues[data.hash].kill();
+            delete this.#queues[data.hash];
           }
-          setTimeout(
-            () => {
-              this.http(
-                data.hash,
-                data.request,
-                data.params,
-                data.body,
-                resolve,
-                reject,
-              );
-            },
-            (bucket.reset + this.latency) * 1000 -
-              new Date().getTime() +
-              this.fuzz,
-          );
+          setTimeout(() => {
+            this.#http(
+              data.hash,
+              data.request,
+              data.params,
+              data.body,
+              resolve,
+              reject
+            );
+          }, (bucket.reset + this.#latency) * 1000 - new Date().getTime() + this.#fuzz);
         }
       });
     };
 
-    this.queues = {};
+    this.#queues = {};
   }
 
-  async handleBucket(
+  async #handleBucket(
     ratelimitBucket,
     ratelimitRemaining,
     ratelimitReset,
     hash,
-    retryAfter = 0,
+    retryAfter = 0
   ) {
     if (!ratelimitBucket) return;
 
@@ -110,24 +117,24 @@ class BetterRequestHandler {
     else if (expireFromCache > 2592000) expireFromCache = 2592000;
 
     try {
-      if (this._client.redis)
-        await this._client.redis.set(
+      if (this.#_client.redis)
+        await this.#_client.redis.set(
           `gluon.paths.${hash}`,
           JSON.stringify(bucket),
           "EX",
-          expireFromCache,
+          expireFromCache
         );
 
-      this.localRatelimitCache.set(
+      this.#localRatelimitCache.set(
         `gluon.paths.${hash}`,
         bucket,
-        expireFromCache,
+        expireFromCache
       );
     } catch (error) {
-      this.localRatelimitCache.set(
+      this.#localRatelimitCache.set(
         `gluon.paths.${hash}`,
         bucket,
-        expireFromCache,
+        expireFromCache
       );
 
       throw error;
@@ -136,35 +143,35 @@ class BetterRequestHandler {
 
   async makeRequest(request, params, body) {
     return new Promise(async (resolve, reject) => {
-      const actualRequest = this.endpoints[request];
+      const actualRequest = this.#endpoints[request];
 
       const toHash =
         actualRequest.method +
         actualRequest.path(
           params
             ? params.map((v, i) =>
-                actualRequest.majorParams.includes(i) ? v : null,
+                actualRequest.majorParams.includes(i) ? v : null
               )
-            : [],
+            : []
         );
       const hash = calculateHash().update(toHash).digest("hex");
 
-      this._client.emit("debug", `ADD ${hash} to request queue`);
+      this.#_client.emit("debug", `ADD ${hash} to request queue`);
 
-      if (!this.queues[hash])
-        this.queues[hash] = FastQ.promise(this.queueWorker, 1);
+      if (!this.#queues[hash])
+        this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
 
       let retries = 5;
 
       while (retries--)
         try {
-          const result = await this.queues[hash].push({
+          const result = await this.#queues[hash].push({
             hash,
             request,
             params,
             body,
           });
-          if (this.queues[hash].idle()) delete this.queues[hash];
+          if (this.#queues[hash].idle()) delete this.#queues[hash];
           return resolve(result);
         } catch (error) {
           return reject(error);
@@ -174,22 +181,22 @@ class BetterRequestHandler {
     });
   }
 
-  async http(hash, request, params, body, resolve, reject) {
-    const actualRequest = this.endpoints[request];
+  async #http(hash, request, params, body, resolve, reject) {
+    const actualRequest = this.#endpoints[request];
 
-    const path = actualRequest.path(params);
+    const path = actualRequest.path(...params);
 
     const bucket = await getBucket(
-      this._client,
-      this.localRatelimitCache,
-      hash,
+      this.#_client,
+      this.#localRatelimitCache,
+      hash
     );
 
     if (
       !bucket ||
       bucket.remaining != 0 ||
       (bucket.remaining == 0 &&
-        new Date().getTime() / 1000 > bucket.reset + this.latency)
+        new Date().getTime() / 1000 > bucket.reset + this.#latency)
     ) {
       const serialize = (obj) => {
         const str = [];
@@ -200,10 +207,10 @@ class BetterRequestHandler {
       };
 
       const headers = {
-        Authorization: this.authorization,
+        Authorization: this.#authorization,
         "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(
-          4,
-        )}, ${GLUON_VERSION}) ${this.name}`,
+          4
+        )}, ${GLUON_VERSION}) ${NAME}`,
         Accept: "application/json",
       };
 
@@ -216,7 +223,7 @@ class BetterRequestHandler {
             body.files[i].stream
               ? body.files[i].stream
               : createReadStream(body.files[i].attachment),
-            body.files[i].name,
+            body.files[i].name
           );
         delete body.files;
         form.append("payload_json", JSON.stringify(body));
@@ -248,11 +255,11 @@ class BetterRequestHandler {
         controller.abort();
       }, 30000);
 
-      for (let i = 0; i <= this.maxRetries; i++)
+      for (let i = 0; i <= this.#maxRetries; i++)
         try {
           /* actually make the request */
           res = await fetch(
-            `${this.requestURL}${path}${
+            `${this.#requestURL}${path}${
               body &&
               (actualRequest.method == "GET" ||
                 actualRequest.method == "DELETE")
@@ -265,16 +272,16 @@ class BetterRequestHandler {
               body: form
                 ? form
                 : body &&
-                    actualRequest.method != "GET" &&
-                    actualRequest.method != "DELETE"
-                  ? JSON.stringify(body)
-                  : undefined,
+                  actualRequest.method != "GET" &&
+                  actualRequest.method != "DELETE"
+                ? JSON.stringify(body)
+                : undefined,
               compress: true,
               signal: controller.signal,
-            },
+            }
           );
 
-          this.latency = Math.ceil((Date.now() - requestTime) / 1000);
+          this.#latency = Math.ceil((Date.now() - requestTime) / 1000);
 
           break;
         } catch (error) {
@@ -296,37 +303,44 @@ class BetterRequestHandler {
       }
 
       try {
-        await this.handleBucket(
+        await this.#handleBucket(
           res.headers.get("x-ratelimit-bucket"),
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),
           hash,
-          res.status == 429 ? json.retry_after : 0,
+          res.status == 429 ? json.retry_after : 0
         );
       } catch (error) {
         console.error(error);
       }
 
       if (res.ok) resolve(json);
-      else reject(new Error(`${res.status}: ${actualRequest.method} ${actualRequest.path(params)} FAILED`));
+      else
+        reject(
+          new Error(
+            `${res.status}: ${actualRequest.method} ${actualRequest.path(
+              ...params
+            )} FAILED`
+          )
+        );
 
-      this._client.emit("requestCompleted", {
+      this.#_client.emit("requestCompleted", {
         status: res.status,
         method: actualRequest.method,
-        endpoint: actualRequest.path(params),
+        endpoint: actualRequest.path(...params),
         hash,
       });
 
-      this._client.emit("debug", `REMOVE ${hash} from request queue`);
+      this.#_client.emit("debug", `REMOVE ${hash} from request queue`);
     } else {
       const retryNextIn =
-        Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.latency;
+        Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
 
       setTimeout(() => {
         reject(new Error(`429: Hit ratelimit, retry in ${retryNextIn}`));
       }, 1500);
 
-      this._client.emit("debug", `READD ${hash} to request queue`);
+      this.#_client.emit("debug", `READD ${hash} to request queue`);
     }
   }
 }
