@@ -1,7 +1,7 @@
 module.exports.BASE_URL = ("https://discord.com/api");
 module.exports.CDN_BASE_URL = ("https://cdn.discordapp.com");
 module.exports.VERSION = (10);
-module.exports.NAME = ("gluon");
+module.exports.NAME = require("../package.json").name;
 module.exports.INTENTS = {
     GUILDS:                     (1 << 0),
     GUILD_MEMBERS:              (1 << 1),
@@ -25,14 +25,6 @@ module.exports.INTENTS = {
     GUILD_MESSAGE_POLLS:        (1 << 24),
     DIRECT_MESSAGE_POLLS:       (1 << 25)
 };
-module.exports.CALCULATED_INTENTS = this.INTENTS.GUILDS |
-                                    this.INTENTS.GUILD_MEMBERS |
-                                    this.INTENTS.GUILD_BANS |
-                                    this.INTENTS.GUILD_INVITES |
-                                    this.INTENTS.GUILD_VOICE_STATES |
-                                    this.INTENTS.GUILD_MESSAGES |
-                                    this.INTENTS.MESSAGE_CONTENT |
-                                    this.INTENTS.GUILD_MESSAGE_POLLS;
 module.exports.EVENTS = {
     READY:                          ("ready"),
     RESUMED:                        ("resumed"),
@@ -503,4 +495,13 @@ module.exports.TEST_DATA = {
     },
     EVENT_ID: "123456789012345678",
     ROLE_ID: "123456789012345678",
+    ATTACHMENT: {
+        id: "123456789012345678",
+        filename: "test.png",
+        size: 1000,
+        url: "https://cdn.discordapp.com/attachments/123456789012345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+        proxy_url: "https://cdn.discordapp.com/attachments/123456789012345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+        height: 100,
+        width: 100
+    },
 };
