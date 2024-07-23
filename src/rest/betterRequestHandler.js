@@ -20,7 +20,6 @@ class BetterRequestHandler {
   #fuzz;
   #endpoints;
   #queueWorker;
-  #handleBucket;
   #queues;
   #localRatelimitCache;
 
