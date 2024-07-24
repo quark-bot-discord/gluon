@@ -25,14 +25,14 @@
         "params": []
     },
     {
-        "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n */",
+        "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                166,
-                649
+                192,
+                950
             ],
             "filename": "SlashCommand.js",
-            "lineno": 7,
+            "lineno": 8,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -49,6 +49,9 @@
         "see": [
             "{@link https://discord.com/developers/docs/interactions/slash-commands}"
         ],
+        "augments": [
+            "Interaction"
+        ],
         "name": "SlashCommand",
         "longname": "SlashCommand",
         "kind": "class",
@@ -56,18 +59,43 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw interaction data from Discord.\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                340,
-                647
+                235,
+                241
             ],
             "filename": "SlashCommand.js",
-            "lineno": 13,
+            "lineno": 9,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000012",
+                "name": "data",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "SlashCommand#data",
+        "kind": "member",
+        "memberof": "SlashCommand",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw interaction data from Discord.\n   */",
+        "meta": {
+            "range": [
+                375,
+                699
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 15,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000013",
                 "name": "SlashCommand",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -106,14 +134,14 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n */",
+        "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                166,
-                649
+                192,
+                950
             ],
             "filename": "SlashCommand.js",
-            "lineno": 7,
+            "lineno": 8,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -132,6 +160,9 @@
         "classdesc": "Represents a slash command.",
         "see": [
             "{@link https://discord.com/developers/docs/interactions/slash-commands}"
+        ],
+        "augments": [
+            "Interaction"
         ],
         "scope": "global",
         "params": [
@@ -156,19 +187,19 @@
         ]
     },
     {
-        "comment": "/**\n     * Raw slash command data from discord.\n     * @type {Object?}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}\n     */",
+        "comment": "/**\n     * Raw slash command data from discord.\n     * @type {Object?}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}\n     * @private\n     */",
         "meta": {
             "range": [
-                621,
-                642
+                672,
+                694
             ],
             "filename": "SlashCommand.js",
-            "lineno": 21,
+            "lineno": 24,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000024",
-                "name": "this.data",
+                "id": "astnode100000025",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.data",
                 "paramnames": []
@@ -184,25 +215,92 @@
         "see": [
             "{@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}"
         ],
+        "access": "private",
+        "name": "SlashCommand",
+        "longname": "SlashCommand.SlashCommand",
+        "kind": "member",
+        "memberof": "SlashCommand",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * The raw slash command data from Discord.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                810,
+                849
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 33,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000033",
+                "name": "SlashCommand#data",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The raw slash command data from Discord.",
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
         "name": "data",
         "longname": "SlashCommand#data",
         "kind": "member",
         "memberof": "SlashCommand",
-        "scope": "instance"
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                891,
+                948
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 41,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000042",
+                "name": "SlashCommand#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "SlashCommand#toString",
+        "memberof": "SlashCommand",
+        "scope": "instance",
+        "params": []
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                651,
-                680
+                952,
+                981
             ],
             "filename": "SlashCommand.js",
-            "lineno": 25,
+            "lineno": 46,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000032",
+                "id": "astnode100000054",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "SlashCommand",
