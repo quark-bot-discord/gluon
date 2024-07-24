@@ -30,15 +30,22 @@ class User {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the user.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(data.id);
 
+    /**
+     * The attributes of the user.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = 0;
 
     if (data.bot == true) this.#_attributes |= 0b1 << 0;
@@ -49,6 +56,7 @@ class User {
     /**
      * The avatar of the user.
      * @type {BigInt?}
+     * @private
      */
     this.#_avatar = data.avatar
       ? BigInt(`0x${data.avatar.replace("a_", "")}`)
@@ -57,12 +65,14 @@ class User {
     /**
      * The username of the user.
      * @type {String}
+     * @private
      */
     this.#username = data.username;
 
     /**
      * The global name of the user.
      * @type {String}
+     * @private
      */
     this.#global_name = data.global_name;
 
@@ -70,12 +80,14 @@ class User {
       /**
        * The discriminator of the user (only if user is a bot).
        * @type {Number?}
+       * @private
        */
       this.#discriminator = Number(data.discriminator);
 
     /**
      * The UNIX (seconds) timestamp when this user was last cached.
      * @type {Number}
+     * @private
      */
     this.#_cached = (new Date().getTime() / 1000) | 0;
 
@@ -96,6 +108,7 @@ class User {
    * The ID of the user.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -105,6 +118,7 @@ class User {
    * The username of the user.
    * @type {String}
    * @readonly
+   * @public
    */
   get username() {
     return this.#username;
@@ -114,6 +128,7 @@ class User {
    * The global name of the user.
    * @type {String}
    * @readonly
+   * @public
    */
   get globalName() {
     return this.#global_name;
@@ -123,6 +138,7 @@ class User {
    * The discriminator of the user.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get discriminator() {
     return this.#discriminator;
@@ -132,6 +148,7 @@ class User {
    * The UNIX (seconds) timestamp when this user was last cached.
    * @type {Number}
    * @readonly
+   * @public
    */
   get _cached() {
     return this.#_cached;
@@ -141,6 +158,7 @@ class User {
    * The mention string for the user.
    * @type {String}
    * @readonly
+   * @public
    */
   get mention() {
     return `<@${this.id}>`;
@@ -150,6 +168,7 @@ class User {
    * The hash of the users's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
+   * @private
    */
   get #_originalAvatarHash() {
     return this.#_avatar
@@ -162,6 +181,7 @@ class User {
    * The hash of the users's avatar as a string.
    * @readonly
    * @type {String}
+   * @private
    */
   get #_formattedAvatarHash() {
     if (!this.#_avatar) return null;
@@ -179,6 +199,7 @@ class User {
    * The avatar URL of the user.
    * @readonly
    * @type {String}
+   * @public
    */
   get displayAvatarURL() {
     if (this.#overrideAvatar) return this.#overrideAvatar;
@@ -190,6 +211,7 @@ class User {
    * The username of the user, including their discriminator if they are a bot (username#0001).
    * @readonly
    * @type {String}
+   * @public
    */
   get tag() {
     return this.#discriminator
@@ -201,6 +223,7 @@ class User {
    * The UNIX (seconds) timestamp of when this user created their Discord account.
    * @readonly
    * @type {Number}
+   * @public
    */
   get createdTimestamp() {
     return getTimestamp(this.id);
@@ -210,6 +233,7 @@ class User {
    * Whether the user is a bot or not.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get bot() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -219,15 +243,24 @@ class User {
    * Whether the user has an animated avatar or not.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get avatarIsAnimated() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<User: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

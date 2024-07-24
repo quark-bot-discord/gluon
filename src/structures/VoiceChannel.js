@@ -2,6 +2,7 @@ const Channel = require("./Channel");
 
 /**
  * Represents a voice channel.
+ * @extends {Channel}
  */
 class VoiceChannel extends Channel {
   #_client;
@@ -18,6 +19,11 @@ class VoiceChannel extends Channel {
   constructor(client, data, guild_id, nocache = false) {
     super(client, data, { guild_id });
 
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
     const existing = this.guild?.channels.get(data.id) || null;
@@ -26,6 +32,7 @@ class VoiceChannel extends Channel {
       /**
        * The bitrate of the channel.
        * @type {Number}
+       * @private
        */
       this.#bitrate = data.bitrate;
     else if (existing && typeof existing.bitrate)
@@ -35,6 +42,7 @@ class VoiceChannel extends Channel {
       /**
        * The user limit of the channel.
        * @type {Number}
+       * @private
        */
       this.#user_limit = data.user_limit;
     else if (existing && typeof existing.userLimit == "number")
@@ -44,6 +52,7 @@ class VoiceChannel extends Channel {
       /**
        * The region of the voice channel.
        * @type {String}
+       * @private
        */
       this.#rtc_region = data.rtc_region;
     else if (existing && typeof existing.rtcRegion == "string")
@@ -57,6 +66,7 @@ class VoiceChannel extends Channel {
    * The bitrate of the channel.
    * @type {Number}
    * @readonly
+   * @public
    */
   get bitrate() {
     return this.#bitrate;
@@ -66,6 +76,7 @@ class VoiceChannel extends Channel {
    * The user limit of the channel.
    * @type {Number}
    * @readonly
+   * @public
    */
   get userLimit() {
     return this.#user_limit;
@@ -75,15 +86,24 @@ class VoiceChannel extends Channel {
    * The region of the voice channel.
    * @type {String}
    * @readonly
+   * @public
    */
   get rtcRegion() {
     return this.#rtc_region;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<VoiceChannel: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       ...super.toJSON(),

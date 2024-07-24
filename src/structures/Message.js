@@ -49,7 +49,6 @@ class Message {
       guild_id,
       nocache = false,
       ignoreExisting = false,
-      _parentStructure,
     } = { nocache: false, ignoreExisting: false }
   ) {
     let onlyfiles = false;
@@ -57,18 +56,21 @@ class Message {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the guild that this message belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(guild_id);
 
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_channel_id = BigInt(channel_id);
 
@@ -93,6 +95,7 @@ class Message {
     /**
      * The id of the message.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(data.id);
 
@@ -102,6 +105,7 @@ class Message {
       /**
        * The message author.
        * @type {User}
+       * @private
        */
       this.#author = new User(this.#_client, data.author, {
         nocache: !data.webhook_id || nocache,
@@ -113,6 +117,7 @@ class Message {
       /**
        * The member who sent the message.
        * @type {Member?}
+       * @private
        */
       this.#member = new Member(this.#_client, data.member, {
         user_id: data.author.id,
@@ -127,6 +132,7 @@ class Message {
     /**
      * The message attachments.
      * @type {Attachment[]?}
+     * @private
      */
     this.#attachments = [];
     if (data.attachments != undefined)
@@ -143,6 +149,7 @@ class Message {
     /**
      * The message content.
      * @type {String?}
+     * @private
      */
     if (onlyfiles != true) {
       this.#content = data.content;
@@ -154,6 +161,7 @@ class Message {
     /**
      * The message poll.
      * @type {Object?}
+     * @private
      */
     this.#poll = data.poll;
     if (this.#poll == undefined && existing && existing.poll != undefined)
@@ -164,6 +172,7 @@ class Message {
       /**
        * The poll responses.
        * @type {MessagePollManager?}
+       * @private
        */
       this.#pollResponses = existing.pollResponses;
     else if (this.#poll)
@@ -173,6 +182,7 @@ class Message {
       /**
        * The message reactions.
        * @type {MessageReactionManager}
+       * @private
        */
       this.#reactions = existing.reactions;
     else
@@ -185,12 +195,18 @@ class Message {
     /**
      * The message embeds.
      * @type {Object[]}
+     * @private
      */
     this.#embeds = data.embeds;
     if (this.#embeds == undefined && existing && existing.embeds != undefined)
       this.#embeds = existing.embeds;
     else if (this.#embeds == undefined) this.#embeds = [];
 
+    /**
+     * The message attributes.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = data._attributes || 0;
 
     if (data.mentions && data.mentions.length != 0)
@@ -237,6 +253,7 @@ class Message {
     /**
      * The message that this message references.
      * @type {Object}
+     * @private
      */
     this.#reference = {};
     if (data.referenced_message)
@@ -247,6 +264,7 @@ class Message {
     /**
      * The type of message.
      * @type {Number}
+     * @private
      */
     this.#type = data.type;
     if (
@@ -259,6 +277,7 @@ class Message {
     /**
      * The id of the webhook this message is from.
      * @type {BigInt?}
+     * @private
      */
     if (data.webhook_id) this.#webhook_id = BigInt(data.webhook_id);
     else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
@@ -266,6 +285,7 @@ class Message {
     /**
      * Stickers sent with this message.
      * @type {Sticker[]}
+     * @private
      */
     this.#sticker_items = [];
     if (data.sticker_items != undefined)
@@ -279,17 +299,11 @@ class Message {
     /**
      * The snapshot data about the message.
      * @type {Object?}
+     * @private
      */
     if (data.message_snapshots) this.#message_snapshots = data.message_snapshots;
     else if (existing && existing.messageSnapshots != undefined)
       this.#message_snapshots = existing.messageSnapshots;
-
-    /**
-     * The parent structure that this message belongs to.
-     * @type {Object}
-     * @readonly
-     */
-    this._parentStructure = _parentStructure ?? this.channel;
 
     /* this.author && this.author.bot != true && !data.webhook_id && */
     if (nocache == false && this.#_client.cacheMessages == true) {
@@ -303,6 +317,7 @@ class Message {
    * The user who sent the message.
    * @type {User}
    * @readonly
+   * @public
    */
   get author() {
     return this.#author;
@@ -312,6 +327,7 @@ class Message {
    * The member who sent the message.
    * @type {Member?}
    * @readonly
+   * @public
    */
   get member() {
     return this.#member;
@@ -321,6 +337,7 @@ class Message {
    * Whether this message includes user mentions.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get mentions() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -330,6 +347,7 @@ class Message {
    * Whether this message includes role mentions.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get mentionRoles() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
@@ -339,6 +357,7 @@ class Message {
    * Whether this message mentions everyone.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get mentionEveryone() {
     return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
@@ -348,6 +367,7 @@ class Message {
    * Whether this message has been pinned.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get pinned() {
     return (this.#_attributes & (0b1 << 3)) == 0b1 << 3;
@@ -357,6 +377,7 @@ class Message {
    * Whether another message has replaced this original message.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get mirrored() {
     return (this.#_attributes & (0b1 << 4)) == 0b1 << 4;
@@ -366,6 +387,7 @@ class Message {
    * The UNIX (seconds) timestamp for when this message was created.
    * @readonly
    * @type {Number}
+   * @public
    */
   get timestamp() {
     return getTimestamp(this.id);
@@ -375,6 +397,7 @@ class Message {
    * The guild that this message belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -384,6 +407,7 @@ class Message {
    * The guild that this message belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -393,6 +417,7 @@ class Message {
    * The channel that this message belongs to.
    * @type {Channel?}
    * @readonly
+   * @public
    */
   get channel() {
     return this.guild?.channels.get(this.channelId) || null;
@@ -402,6 +427,7 @@ class Message {
    * The channel that this message belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get channelId() {
     return String(this.#_channel_id);
@@ -411,6 +437,7 @@ class Message {
    * The id of the message.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -420,6 +447,7 @@ class Message {
    * The message attachments.
    * @type {Attachment[]}
    * @readonly
+   * @public
    */
   get attachments() {
     return this.#attachments;
@@ -429,6 +457,7 @@ class Message {
    * The message content.
    * @type {String?}
    * @readonly
+   * @public
    */
   get content() {
     return this.#content;
@@ -438,6 +467,7 @@ class Message {
    * The message poll.
    * @type {Object?}
    * @readonly
+   * @public
    */
   get poll() {
     return this.#poll;
@@ -447,6 +477,7 @@ class Message {
    * The poll responses.
    * @type {MessagePollManager?}
    * @readonly
+   * @public
    */
   get pollResponses() {
     return this.#pollResponses;
@@ -456,6 +487,7 @@ class Message {
    * The message reactions.
    * @type {MessageReactionManager}
    * @readonly
+   * @public
    */
   get reactions() {
     return this.#reactions;
@@ -465,6 +497,7 @@ class Message {
    * The message embeds.
    * @type {Array<Embed>}
    * @readonly
+   * @public
    */
   get embeds() {
     return this.#embeds;
@@ -474,6 +507,7 @@ class Message {
    * The message that this message references.
    * @type {Object}
    * @readonly
+   * @public
    */
   get reference() {
     return { messageId: this.#reference.message_id };
@@ -483,6 +517,7 @@ class Message {
    * The type of message.
    * @type {Number}
    * @readonly
+   * @public
    */
   get type() {
     return this.#type;
@@ -492,6 +527,7 @@ class Message {
    * The id of the webhook this message is from.
    * @type {String?}
    * @readonly
+   * @public
    */
   get webhookId() {
     return this.#webhook_id ? String(this.#webhook_id) : null;
@@ -501,6 +537,7 @@ class Message {
    * Stickers sent with this message.
    * @type {Sticker[]}
    * @readonly
+   * @public
    */
   get stickerItems() {
     return this.#sticker_items;
@@ -510,6 +547,7 @@ class Message {
    * The snapshot data about the message.
    * @type {Object?}
    * @readonly
+   * @public
    */
   get messageSnapshots() {
     return this.#message_snapshots;
@@ -519,6 +557,7 @@ class Message {
    * The URL of the message.
    * @type {String}
    * @readonly
+   * @public
    */
   get url() {
     return `${BASE_URL}/channels/${this.guildId}/${this.channelId}/${this.id}`;
@@ -533,6 +572,10 @@ class Message {
    * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
+   * @method
+   * @public
+   * @async
+   * @throws {Error}
    */
   async reply(content, { embed, components, files } = {}) {
     if (
@@ -577,6 +620,10 @@ class Message {
    * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
+   * @method
+   * @public
+   * @async
+   * @throws {Error}
    */
   async edit(content, { embed, embeds, components, files } = {}) {
     if (
@@ -616,6 +663,9 @@ class Message {
 
   /**
    * Moves the message to long-term storage.
+   * @returns {void}
+   * @method
+   * @public
    */
   shelf() {
     const encryptedMessage = encryptMessage(this);
@@ -640,10 +690,18 @@ class Message {
     this.channel.messages.delete(this.id);
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Message: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

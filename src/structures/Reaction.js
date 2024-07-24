@@ -20,12 +20,14 @@ class Reaction {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the guild that this reaction belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(guild_id);
 
@@ -33,6 +35,7 @@ class Reaction {
       /**
        * The emoji used for the reaction.
        * @type {Emoji}
+       * @private
        */
       this.#emoji = data.emoji;
     else this.#emoji = new Emoji(client, data, { guild_id, nocache: true });
@@ -40,12 +43,14 @@ class Reaction {
     /**
      * Users who reacted with this emoji.
      * @type {Array<BigInt>}
+     * @private
      */
     this.#_reacted = data._reacted.map((r) => BigInt(r)) || [];
 
     /**
      * The user who added the first reaction.
      * @type {BigInt?}
+     * @private
      */
     if (data.initial_reactor)
       this.#initial_reactor = BigInt(data.initial_reactor);
@@ -55,6 +60,7 @@ class Reaction {
    * The number of reactions to this message.
    * @readonly
    * @type {Number}
+   * @public
    */
   get count() {
     return this.#_reacted.length;
@@ -64,6 +70,7 @@ class Reaction {
    * The member objects of the members who reacted. Returns the user id of the member cannot be found.
    * @readonly
    * @type {Array<Member | String>}
+   * @public
    */
   get reacted() {
     return this.#_reacted.map((userId) => {
@@ -78,6 +85,7 @@ class Reaction {
    * The user ids of the users who reacted.
    * @readonly
    * @type {Array<String>}
+   * @public
    */
   get reactedIds() {
     return this.#_reacted.map((r) => String(r));
@@ -87,6 +95,7 @@ class Reaction {
    * The id of the guild that this reaction belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -96,6 +105,7 @@ class Reaction {
    * The guild that this reaction belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -105,6 +115,7 @@ class Reaction {
    * The emoji used for the reaction.
    * @type {Emoji}
    * @readonly
+   * @public
    */
   get emoji() {
     return this.#emoji;
@@ -114,15 +125,24 @@ class Reaction {
    * The user who added the first reaction.
    * @type {String?}
    * @readonly
+   * @public
    */
   get initialReactor() {
     return this.#initial_reactor ? String(this.#initial_reactor) : null;
   }
   
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Reaction: ${this.emoji}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       emoji: this.emoji,

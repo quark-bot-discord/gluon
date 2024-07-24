@@ -55,6 +55,7 @@ class Guild {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
@@ -79,6 +80,7 @@ class Guild {
     /**
      * The name of the guild.
      * @type {String}
+     * @private
      */
     this.#name = data.name;
     if (this.#name === undefined && existing && existing.name)
@@ -88,6 +90,7 @@ class Guild {
     /**
      * The description of the guild.
      * @type {String?}
+     * @private
      */
     this.#description = data.description;
     if (this.#description === undefined && existing && existing.description)
@@ -97,6 +100,7 @@ class Guild {
     /**
      * The guild icon hash.
      * @type {BigInt?}
+     * @private
      */
     if (data.icon !== undefined)
       this.#_icon = data.icon
@@ -108,6 +112,7 @@ class Guild {
     /**
      * The id of the guild owner.
      * @type {BigInt}
+     * @private
      */
     this.#_owner_id = BigInt(data.owner_id);
 
@@ -115,6 +120,7 @@ class Guild {
       /**
        * UNIX (seconds) timestamp for when the bot user was added to this guild.
        * @type {Number?}
+       * @private
        */
       this.#joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
     else if (existing?.joinedAt) this.#joined_at = existing.joinedAt;
@@ -123,6 +129,7 @@ class Guild {
       /**
        * The member count of this guild.
        * @type {Number}
+       * @private
        */
       this.#member_count = data.member_count;
     else if (existing?.member_count) this.#member_count = existing.member_count;
@@ -131,6 +138,7 @@ class Guild {
     /**
      * The voice state manager of this guild.
      * @type {GuildVoiceStatesManager}
+     * @private
      */
     this.#voice_states = existing
       ? existing.voiceStates
@@ -139,6 +147,7 @@ class Guild {
     /**
      * The member manager of this guild.
      * @type {GuildMemberManager}
+     * @private
      */
     this.#members = existing
       ? existing.members
@@ -147,6 +156,7 @@ class Guild {
     /**
      * The channel manager of this guild.
      * @type {GuildChannelsManager}
+     * @private
      */
     this.#channels = existing
       ? existing.channels
@@ -155,6 +165,7 @@ class Guild {
     /**
      * The role manager of this guild.
      * @type {GuildRoleManager}
+     * @private
      */
     this.#roles = existing
       ? existing.roles
@@ -167,6 +178,7 @@ class Guild {
     /**
      * The emoji manager of this guild.
      * @type {GuildEmojisManager}
+     * @private
      */
     this.#emojis = existing
       ? existing.emojis
@@ -175,11 +187,17 @@ class Guild {
     /**
      * The invite manager of this guild.
      * @type {GuildInviteManager}
+     * @private
      */
     this.#invites = existing
       ? existing.invites
       : new GuildInviteManager(this.#_client, this);
 
+    /**
+     * The system channel id of the guild.
+     * @type {BigInt}
+     * @private
+     */
     if (data.system_channel_id !== undefined)
       this.#system_channel_id = data.system_channel_id
         ? BigInt(data.system_channel_id)
@@ -191,6 +209,11 @@ class Guild {
     )
       this.#system_channel_id = BigInt(existing.systemChannelId);
 
+    /**
+     * The rules channel id of the guild.
+     * @type {BigInt}
+     * @private
+     */
     if (data.rules_channel_id !== undefined)
       this.#rules_channel_id = data.rules_channel_id
         ? BigInt(data.rules_channel_id)
@@ -202,6 +225,11 @@ class Guild {
     )
       this.#rules_channel_id = BigInt(existing.rulesChannelId);
 
+    /**
+     * The premium subscription count of the guild.
+     * @type {Number}
+     * @private
+     */
     if (typeof data.premium_subscription_count == "number")
       this.#premium_subscription_count = data.premium_subscription_count;
     else if (
@@ -212,6 +240,11 @@ class Guild {
       this.#premium_subscription_count = existing.premiumSubscriptionCount;
     else this.#premium_subscription_count = 0;
 
+    /**
+     * The attributes of the guild.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = data._attributes ?? data.system_channel_flags;
 
     if (
@@ -391,12 +424,18 @@ class Guild {
     /**
      * The locale of this guild, if set up as a community.
      * @type {String}
+     * @private
      */
     this.#preferred_locale = data.preferred_locale;
     if (!this.#preferred_locale && existing && existing.preferredLocale)
       this.#preferred_locale = existing.preferredLocale;
     else if (!this.#preferred_locale) this.#preferred_locale = null;
 
+    /**
+     * The cache options for this guild.
+     * @type {GuildCacheOptions}
+     * @private
+     */
     this.#_cacheOptions = new GuildCacheOptions(data._cacheOptions);
 
     if (nocache == false && this.#_client.cacheGuilds == true)
@@ -474,6 +513,7 @@ class Guild {
    * The id of the guild.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -483,6 +523,7 @@ class Guild {
    * The hash of the guild's icon, as it was received from Discord.
    * @readonly
    * @type {String?}
+   * @private
    */
   get #_originalIconHash() {
     return this.#_icon
@@ -495,6 +536,7 @@ class Guild {
    * The hash of the guild icon as a string.
    * @readonly
    * @type {String}
+   * @private
    */
   get #_formattedIconHash() {
     if (!this.#_icon) return null;
@@ -512,6 +554,7 @@ class Guild {
    * The icon URL of the guild.
    * @readonly
    * @type {String?}
+   * @public
    */
   get displayIconURL() {
     return getGuildIcon(this.id, this.#_originalIconHash);
@@ -521,6 +564,7 @@ class Guild {
    * The owner of the guild.
    * @type {Member}
    * @readonly
+   * @public
    */
   get owner() {
     return this.members.get(this.ownerId);
@@ -531,6 +575,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
    * @readonly
    * @type {String}
+   * @public
    */
   get systemChannelFlags() {
     const flags = [];
@@ -556,6 +601,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
    * @readonly
    * @type {String}
+   * @public
    */
   get mfaLevel() {
     if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "NONE";
@@ -568,6 +614,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
    * @readonly
    * @type {String}
+   * @public
    */
   get verificationLevel() {
     if ((this.#_attributes & (0b1 << 8)) == 0b1 << 8) return "NONE";
@@ -583,6 +630,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
    * @readonly
    * @type {String}
+   * @public
    */
   get defaultMessageNotifications() {
     if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return "ALL_MESSAGES";
@@ -596,6 +644,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
    * @readonly
    * @type {String}
+   * @public
    */
   get explicitContentFilter() {
     if ((this.#_attributes & (0b1 << 15)) == 0b1 << 15) return "DISABLED";
@@ -611,6 +660,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
    * @readonly
    * @type {String}
+   * @public
    */
   get nsfwLevel() {
     if ((this.#_attributes & (0b1 << 18)) == 0b1 << 18) return "DEFAULT";
@@ -626,6 +676,7 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
    * @readonly
    * @type {Number}
+   * @public
    */
   get premiumTier() {
     if ((this.#_attributes & (0b1 << 22)) == 0b1 << 22) return 0;
@@ -639,6 +690,7 @@ class Guild {
    * Whether the guild has the boost progress bar enabled.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get premiumProgressBarEnabled() {
     return (this.#_attributes & (0b1 << 26)) == 0b1 << 26;
@@ -648,6 +700,7 @@ class Guild {
    * Whether the guild is unavailable.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get unavailable() {
     return this.#unavailable ?? false;
@@ -657,6 +710,7 @@ class Guild {
    * The name of the guild.
    * @type {String}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
@@ -666,6 +720,7 @@ class Guild {
    * The description of the guild.
    * @type {String?}
    * @readonly
+   * @public
    */
   get description() {
     return this.#description;
@@ -675,6 +730,7 @@ class Guild {
    * The icon hash of the guild.
    * @type {String}
    * @readonly
+   * @public
    */
   get ownerId() {
     return String(this.#_owner_id);
@@ -684,6 +740,7 @@ class Guild {
    * The id of the guild owner.
    * @type {Number}
    * @readonly
+   * @public
    */
   get joinedAt() {
     return this.#joined_at;
@@ -693,6 +750,7 @@ class Guild {
    * The member count of the guild.
    * @type {Number}
    * @readonly
+   * @public
    */
   get memberCount() {
     return this.#member_count;
@@ -700,26 +758,49 @@ class Guild {
 
   /**
    * The system channel id of the guild.
-   * @type {String}
+   * @type {String?}
    * @readonly
+   * @public
    */
   get systemChannelId() {
     return this.#system_channel_id ? String(this.#system_channel_id) : null;
   }
 
   /**
-   * The rules channel id of the guild.
-   * @type {String}
+   * The system channel of the guild.
+   * @type {TextChannel?}
    * @readonly
+   * @public
+   */
+  get systemChannel() {
+    return this.systemChannelId ? this.channels.get(this.systemChannelId) : null;
+  }
+
+  /**
+   * The rules channel id of the guild.
+   * @type {String?}
+   * @readonly
+   * @public
    */
   get rulesChannelId() {
     return this.#rules_channel_id ? String(this.#rules_channel_id) : null;
   }
 
   /**
+   * The rules channel of the guild.
+   * @type {TextChannel?}
+   * @readonly
+   * @public
+   */
+  get rulesChannel() {
+    return this.rulesChannelId ? this.channels.get(this.rulesChannelId) : null;
+  }
+
+  /**
    * The preferred locale of the guild.
    * @type {String}
    * @readonly
+   * @public
    */
   get preferredLocale() {
     return this.#preferred_locale;
@@ -729,6 +810,7 @@ class Guild {
    * The premium subscription count of the guild.
    * @type {Number}
    * @readonly
+   * @public
    */
   get premiumSubscriptionCount() {
     return this.#premium_subscription_count;
@@ -738,6 +820,7 @@ class Guild {
    * The cache options for this guild.
    * @type {GuildCacheOptions}
    * @readonly
+   * @public
    */
   get _cacheOptions() {
     return this.#_cacheOptions;
@@ -747,6 +830,7 @@ class Guild {
    * The members in the guild.
    * @type {GuildMemberManager}
    * @readonly
+   * @public
    */
   get members() {
     return this.#members;
@@ -756,6 +840,7 @@ class Guild {
    * The channels in the guild.
    * @type {GuildChannelsManager}
    * @readonly
+   * @public
    */
   get channels() {
     return this.#channels;
@@ -765,6 +850,7 @@ class Guild {
    * The voice states in the guild.
    * @type {GuildVoiceStatesManager}
    * @readonly
+   * @public
    */
   get voiceStates() {
     return this.#voice_states;
@@ -774,6 +860,7 @@ class Guild {
    * The roles in the guild.
    * @type {GuildRoleManager}
    * @readonly
+   * @public
    */
   get roles() {
     return this.#roles;
@@ -783,6 +870,7 @@ class Guild {
    * The emojis in the guild.
    * @type {GuildEmojisManager}
    * @readonly
+   * @public
    */
   get emojis() {
     return this.#emojis;
@@ -792,6 +880,7 @@ class Guild {
    * The invites in the guild.
    * @type {GuildInviteManager}
    * @readonly
+   * @public
    */
   get invites() {
     return this.#invites;
@@ -800,6 +889,10 @@ class Guild {
   /**
    * Returns the client member for this guild.
    * @returns {Promise<Member>}
+   * @public
+   * @async
+   * @method
+   * @throws {Error}
    */
   me() {
     const cached = this.members.get(this.#_client.user.id.toString());
@@ -814,6 +907,10 @@ class Guild {
    * @param {String} user_id The id of the user to ban.
    * @param {Object?} options Ban options.
    * @returns {void?}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async ban(user_id, { reason, days } = {}) {
     if (
@@ -839,6 +936,10 @@ class Guild {
    * @param {String} user_id The id of the user to unban.
    * @param {Object?} options Unban options.
    * @returns {void?}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async unban(user_id, { reason } = {}) {
     if (
@@ -862,6 +963,10 @@ class Guild {
    * @param {String} user_id The id of the user to kick.
    * @param {Object?} options Kick options.
    * @returns {void?}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async kick(user_id, { reason } = {}) {
     if (
@@ -886,6 +991,10 @@ class Guild {
    * @param {String} role_id The id of the role.
    * @param {Object?} options Remove role options.
    * @returns {void?}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async removeMemberRole(user_id, role_id, { reason } = {}) {
     if (
@@ -908,6 +1017,10 @@ class Guild {
    * Fetches audit logs.
    * @param {Object?} options Audit log fetch options.
    * @returns {Promise<AuditLog[]?>}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async fetchAuditLogs({ limit, type, user_id, before }) {
     if (
@@ -954,6 +1067,10 @@ class Guild {
   /**
    * Fetches the guild invites.
    * @returns {Promise<Object[]?>}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async fetchInvites() {
     if (
@@ -971,6 +1088,10 @@ class Guild {
   /**
    * Fetches all the guild channels.
    * @returns {Promise<Channel[]>}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async fetchChannels() {
     const data = await this.#_client.request.makeRequest("getGuildChannels", [
@@ -988,6 +1109,10 @@ class Guild {
    * Fetches the ban for the provided user id.
    * @param {String} user_id The id of the user to fetch the ban of.
    * @returns {Promise<Object?>}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async fetchBan(user_id) {
     if (
@@ -1005,6 +1130,11 @@ class Guild {
 
   /**
    * Leaves the guild.
+   * @returns {void?}
+   * @async
+   * @public
+   * @method
+   * @throws {Error}
    */
   async leave() {
     await this.#_client.request.makeRequest("deleteLeaveGuild", [this.id]);
@@ -1013,6 +1143,8 @@ class Guild {
   /**
    * Calculates the number of messages that should be cached per channel for this guild.
    * @returns {Number}
+   * @public
+   * @method
    */
   calculateMessageCacheCount() {
     const x = (this.memberCount < 500000 ? this.memberCount : 499999) / 500000;
@@ -1029,6 +1161,8 @@ class Guild {
   /**
    * Calculates the number of members that should be cached for this guild.
    * @returns {Number}
+   * @public
+   * @method
    */
   calculateMemberCacheCount() {
     const x = this.memberCount < 500000 ? this.memberCount : 499999;
@@ -1040,10 +1174,18 @@ class Guild {
     return shouldCacheCount;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Guild: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

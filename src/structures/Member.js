@@ -9,7 +9,6 @@ const getMemberAvatar = require("../util/image/getMemberAvatar");
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
  */
 class Member {
-
   #_client;
   #_guild_id;
   #_id;
@@ -21,7 +20,6 @@ class Member {
   #_avatar;
   #_roles;
   #user;
-
   /**
    * Creates the structure for a guild member.
    * @param {Client} client The client instance.
@@ -43,12 +41,14 @@ class Member {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the guild that this member belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(guild_id);
 
@@ -57,6 +57,7 @@ class Member {
     /**
      * The id of the member.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(user_id);
 
@@ -64,6 +65,7 @@ class Member {
       /**
        * The user object for this member.
        * @type {User?}
+       * @private
        */
       this.#user = new User(this.#_client, data.user, { nocache });
     else if (existing?.user) this.#user = existing.user;
@@ -74,6 +76,7 @@ class Member {
       /**
        * The nickname of this member.
        * @type {String?}
+       * @private
        */
       this.#nick = data.nick;
     else if (data.nick !== null && existing && existing.nick != undefined)
@@ -83,6 +86,7 @@ class Member {
       /**
        * The UNIX timestamp for when this member joined the guild.
        * @type {Number?}
+       * @private
        */
       this.#joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
     else if (existing?.joinedAt) this.#joined_at = existing.joinedAt;
@@ -90,6 +94,7 @@ class Member {
     /**
      * The UNIX timestamp for when this member's timeout expires, if applicable.
      * @type {Number?}
+     * @private
      */
     this.#communication_disabled_until = data.communication_disabled_until
       ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0
@@ -99,6 +104,7 @@ class Member {
       /**
        * The flags for this user.
        * @type {Number}
+       * @private
        * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}
        */
       this.#flags = data.flags;
@@ -106,6 +112,11 @@ class Member {
       this.#flags = existing.flags;
     else this.#flags = 0;
 
+    /**
+     * The attributes for this member.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = data._attributes ?? 0;
 
     if (data.pending !== undefined && data.pending == true)
@@ -116,6 +127,11 @@ class Member {
     if (data.avatar && data.avatar.startsWith("a_") == true)
       this.#_attributes |= 0b1 << 1;
 
+    /**
+     * The hash of the member's avatar.
+     * @type {BigInt?}
+     * @private
+     */
     if (data.avatar !== undefined)
       this.#_avatar = data.avatar
         ? BigInt(`0x${data.avatar.replace("a_", "")}`)
@@ -123,6 +139,11 @@ class Member {
     else if (data.avatar === undefined && existing && existing._avatar)
       this.#_avatar = existing._avatar;
 
+    /**
+     * The roles for this member.
+     * @type {Array<BigInt>?}
+     * @private
+     */
     if (data.roles && this.guild && this.#_client.cacheRoles == true) {
       this.#_roles = [];
       for (let i = 0; i < data.roles.length; i++)
@@ -144,6 +165,7 @@ class Member {
    * The id of the member.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -153,6 +175,7 @@ class Member {
    * The id of the guild that this member belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -162,6 +185,7 @@ class Member {
    * The guild that this member belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -171,6 +195,7 @@ class Member {
    * The nickname of the member.
    * @type {String?}
    * @readonly
+   * @public
    */
   get nick() {
     return this.#nick;
@@ -180,6 +205,7 @@ class Member {
    * The UNIX timestamp for when this member joined the guild.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get joinedAt() {
     return this.#joined_at;
@@ -189,6 +215,7 @@ class Member {
    * The UNIX timestamp for when this member's timeout expires, if applicable.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get timeoutUntil() {
     return this.#communication_disabled_until;
@@ -198,6 +225,7 @@ class Member {
    * The flags for this user.
    * @type {Number}
    * @readonly
+   * @public
    */
   get flags() {
     return this.#flags;
@@ -207,6 +235,7 @@ class Member {
    * The member's roles.
    * @readonly
    * @type {Array<Role>}
+   * @public
    */
   get roles() {
     if (this.#_client.cacheRoles != true) return [];
@@ -229,6 +258,7 @@ class Member {
    * The position of the member's highest role.
    * @readonly
    * @type {Number}
+   * @public
    */
   get highestRolePosition() {
     let highestPosition = 0;
@@ -246,6 +276,7 @@ class Member {
    * The overall calculated permissions for this member.
    * @readonly
    * @type {BigInt}
+   * @public
    */
   get permissions() {
     if (this.id == this.guild.ownerId) return PERMISSIONS.ADMINISTRATOR;
@@ -257,6 +288,7 @@ class Member {
    * Whether the member has joined the guild before.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get rejoined() {
     return (this.#flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
@@ -266,6 +298,7 @@ class Member {
    * The user object for this member.
    * @type {User}
    * @readonly
+   * @public
    */
   get user() {
     return this.#user;
@@ -275,6 +308,7 @@ class Member {
    * The hash of the member's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
+   * @private
    */
   get #_originalAvatarHash() {
     return this.#_avatar
@@ -287,6 +321,7 @@ class Member {
    * The hash of the member's avatar as a string.
    * @readonly
    * @type {String}
+   * @private
    */
   get #_formattedAvatarHash() {
     if (!this.#_avatar) return null;
@@ -304,6 +339,7 @@ class Member {
    * The url of the member's avatar.
    * @readonly
    * @type {String}
+   * @public
    */
   get displayAvatarURL() {
     return (
@@ -316,6 +352,7 @@ class Member {
    * Whether the user has not yet passed the guild's membership screening requirements.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get pending() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -325,6 +362,7 @@ class Member {
    * Whether the user has an animated avatar or not.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get avatarIsAnimated() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
@@ -334,6 +372,7 @@ class Member {
    * The mention string for the member.
    * @type {String}
    * @readonly
+   * @public
    */
   get mention() {
     return `<@${this.id}>`;
@@ -345,6 +384,9 @@ class Member {
    * @param {Object?} options The options for adding the role to the member.
    * @param {String?} options.reason The reason for adding the role to the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
    */
   async addRole(role_id, { reason } = {}) {
     if (
@@ -372,6 +414,9 @@ class Member {
    * @param {Object?} options The options for removing the role from the member.
    * @param {String?} options.reason The reason for removing the role from the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
    */
   async removeRole(role_id, { reason } = {}) {
     if (
@@ -399,6 +444,9 @@ class Member {
    * @param {Object?} options The options for timing out the member.
    * @param {String?} options.reason The reason for timing out the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
     if (
@@ -427,6 +475,9 @@ class Member {
    * @param {Object?} options The options for untiming out the member.
    * @param {String?} options.reason The reason for removing the time out from the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
    */
   async timeoutRemove({ reason } = {}) {
     if (
@@ -455,6 +506,9 @@ class Member {
    * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.
    * @param {Object?} options The options for updating the member's roles.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
    */
   async massUpdateRoles(roles, { reason } = {}) {
     if (
@@ -478,10 +532,18 @@ class Member {
     );
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Member: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       user: this.user,

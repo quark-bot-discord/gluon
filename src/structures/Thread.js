@@ -22,12 +22,14 @@ class Thread extends Channel {
     /**
      * The ID of the user who created this thread.
      * @type {BigInt}
+     * @private
      */
     this.#_owner_id = BigInt(data.owner_id);
 
     /**
      * The ID of the text channel that this thread belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_parent_id = BigInt(data.parent_id);
 
@@ -39,6 +41,7 @@ class Thread extends Channel {
    * The ID of the member who created this thread.
    * @type {String}
    * @readonly
+   * @public
    */
   get ownerId() {
     return String(this.#_owner_id);
@@ -48,6 +51,7 @@ class Thread extends Channel {
    * The member who created this thread.
    * @type {Member?}
    * @readonly
+   * @public
    */
   get owner() {
     return this.guild?.members.get(this.ownerId) || null;
@@ -57,6 +61,7 @@ class Thread extends Channel {
    * The ID of the text channel that this thread belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get parentId() {
     return String(this.#_parent_id);
@@ -66,15 +71,24 @@ class Thread extends Channel {
    * The text channel that this thread belongs to.
    * @type {TextChannel?}
    * @readonly
+   * @public
    */
   get parent() {
     return this.guild?.channels.get(this.parentId) || null;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Thread: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       ...super.toJSON(),

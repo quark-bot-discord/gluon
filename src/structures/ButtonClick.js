@@ -4,6 +4,7 @@ const Message = require("./Message");
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
+ * @extends {Interaction}
  */
 class ButtonClick extends Interaction {
   #custom_id;
@@ -26,6 +27,7 @@ class ButtonClick extends Interaction {
     /**
      * The message which the button belongs to.
      * @type {Message}
+     * @private
      */
     this.#message = new Message(this._client, data.message, {
       channel_id: data.channel_id,
@@ -38,6 +40,7 @@ class ButtonClick extends Interaction {
    * The custom id of the button.
    * @type {String}
    * @readonly
+   * @public
    */
   get customId() {
     return this.#custom_id;
@@ -47,15 +50,25 @@ class ButtonClick extends Interaction {
    * The message which the button belongs to.
    * @type {Message}
    * @readonly
+   * @public
+   * @see {@link Message}
    */
   get message() {
     return this.#message;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<ButtonClick: ${this.customId}>`;
   }
 
+  /** 
+   * @method
+   * @override 
+   */
   toJSON() {
     return {
       ...super.toJSON(),

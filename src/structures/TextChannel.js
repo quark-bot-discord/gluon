@@ -21,6 +21,11 @@ class TextChannel extends Channel {
   constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
     super(client, data, { guild_id });
 
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
     if (nocache == false && this.#_client.cacheChannels == true)
@@ -38,6 +43,10 @@ class TextChannel extends Channel {
    * Bulk deletes all the message IDs provided.
    * @param {String[]} messages An array of message IDs, as strings.
    * @returns {void}
+   * @method
+   * @async
+   * @public
+   * @throws {Error}
    */
   async bulkDelete(messages, { reason } = {}) {
     if (
@@ -61,10 +70,18 @@ class TextChannel extends Channel {
     );
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<TextChannel: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       ...super.toJSON(),

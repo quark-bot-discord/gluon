@@ -24,12 +24,14 @@ class VoiceState {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the guild that this voice state belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(guild_id);
 
@@ -43,9 +45,15 @@ class VoiceState {
     /**
      * The id of the channel involved.
      * @type {BigInt}
+     * @private
      */
     this.#_channel_id = BigInt(data.channel_id);
 
+    /**
+     * The attributes of the voice state.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = 0;
 
     if (data.deaf == true) this.#_attributes |= 0b1 << 0;
@@ -66,6 +74,7 @@ class VoiceState {
       /**
        * The member the voice state is about.
        * @type {Member?}
+       * @private
        */
       this.#member = new Member(this.#_client, data.member, {
         user_id: data.user_id,
@@ -78,12 +87,14 @@ class VoiceState {
     /**
      * The id of the user the voice state is about.
      * @type {BigInt}
+     * @private
      */
     this.#_user_id = BigInt(data.user_id);
 
     /**
      * The UNIX time the user joined the voice channel.
      * @type {Number}
+     * @private
      */
     if (typeof data.joined == "number") this.#joined = data.joined;
     else if (existing && typeof existing.joined == "number")
@@ -93,6 +104,7 @@ class VoiceState {
     /**
      * The UNIX timestamp of when the user requested to speak.
      * @type {Number?}
+     * @private
      */
     if (data.request_to_speak_timestamp)
       this.#request_to_speak_timestamp =
@@ -106,6 +118,7 @@ class VoiceState {
    * Is server deafened?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get deaf() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -115,6 +128,7 @@ class VoiceState {
    * Is server muted?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get mute() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
@@ -124,6 +138,7 @@ class VoiceState {
    * Is self defeaned?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get selfDeaf() {
     return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
@@ -133,6 +148,7 @@ class VoiceState {
    * Is self muted?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get selfMute() {
     return (this.#_attributes & (0b1 << 3)) == 0b1 << 3;
@@ -142,6 +158,7 @@ class VoiceState {
    * Is streaming?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get selfStream() {
     return (this.#_attributes & (0b1 << 4)) == 0b1 << 4;
@@ -151,6 +168,7 @@ class VoiceState {
    * Is sharing video?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get selfVideo() {
     return (this.#_attributes & (0b1 << 5)) == 0b1 << 5;
@@ -160,6 +178,7 @@ class VoiceState {
    * Is suppressed (for stage channels)?
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get suppress() {
     return (this.#_attributes & (0b1 << 6)) == 0b1 << 6;
@@ -169,6 +188,7 @@ class VoiceState {
    * The guild that this voice state belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -178,6 +198,7 @@ class VoiceState {
    * The id of the guild that this voice state belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -187,6 +208,7 @@ class VoiceState {
    * The channel involved.
    * @type {Channel?}
    * @readonly
+   * @public
    */
   get channel() {
     return this.guild?.channels.get(this.channelId) || null;
@@ -196,6 +218,7 @@ class VoiceState {
    * The id of the channel involved.
    * @type {String}
    * @readonly
+   * @public
    */
   get channelId() {
     return String(this.#_channel_id);
@@ -205,6 +228,7 @@ class VoiceState {
    * The member the voice state is about.
    * @type {Member?}
    * @readonly
+   * @public
    */
   get member() {
     return this.#member;
@@ -214,6 +238,7 @@ class VoiceState {
    * The user the voice state is about.
    * @type {User?}
    * @readonly
+   * @public
    */
   get user() {
     return this.#_client.users.get(this.userId) || null;
@@ -223,6 +248,7 @@ class VoiceState {
    * The id of the user the voice state is about.
    * @type {String}
    * @readonly
+   * @public
    */
   get userId() {
     return String(this.#_user_id);
@@ -232,6 +258,7 @@ class VoiceState {
    * The UNIX time the user joined the voice channel.
    * @type {Number}
    * @readonly
+   * @public
    */
   get joined() {
     return this.#joined;
@@ -241,15 +268,24 @@ class VoiceState {
    * The UNIX timestamp of when the user requested to speak.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get requestToSpeakTimestamp() {
     return this.#request_to_speak_timestamp;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<VoiceState: ${this.userId}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       guild_id: this.guildId,

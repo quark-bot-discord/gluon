@@ -27,18 +27,21 @@ class ScheduledEvent {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the scheduled event.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(data.id);
 
     /**
      * The id of the guild that this event belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(data.guild_id);
 
@@ -47,6 +50,7 @@ class ScheduledEvent {
     /**
      * The name of the scheduled event.
      * @type {String}
+     * @private
      */
     this.#name = data.name;
 
@@ -54,6 +58,7 @@ class ScheduledEvent {
       /**
        * The id of the user who created the event.
        * @type {BigInt?}
+       * @private
        */
       this.#_creator_id = BigInt(data.creator_id);
 
@@ -61,12 +66,14 @@ class ScheduledEvent {
       /**
        * The user who created the event.
        * @type {User?}
+       * @private
        */
       this.#creator = new User(this.#_client, data.creator);
 
     /**
      * The UNIX timestamp of the start time for the event.
      * @type {Number}
+     * @private
      */
     this.#scheduled_start_time =
       (new Date(data.scheduled_start_time).getTime() / 1000) | 0;
@@ -75,18 +82,30 @@ class ScheduledEvent {
       /**
        * The UNIX timestamp of the end time for the event.
        * @type {Number?}
+       * @private
        */
       this.#scheduled_end_time =
         (new Date(data.scheduled_end_time).getTime() / 1000) | 0;
 
+    /**
+     * The hash of the event's image.
+     * @type {BigInt?}
+     * @private
+     */
     this.#_image = data.image ? BigInt(`0x${data.image}`) : null;
 
     /**
      * The number of users who have signed up for the event.
      * @type {Number}
+     * @private
      */
     this.#user_count = data.user_count ?? 0;
 
+    /**
+     * The attributes of the event.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = 0;
 
     switch (data.entity_type) {
@@ -134,10 +153,11 @@ class ScheduledEvent {
         break;
     }
 
-    if (this.entity_type == "EXTERNAL")
+    if (this.entityType == "EXTERNAL")
       /**
        * The location of the event.
        * @type {String?}
+       * @private
        */
       this.#location = data.location ?? data.entity_metadata.location;
 
@@ -149,6 +169,7 @@ class ScheduledEvent {
    * The ID of the event.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -158,6 +179,7 @@ class ScheduledEvent {
    * The guild ID of the event.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -167,6 +189,7 @@ class ScheduledEvent {
    * The name of the event.
    * @type {String}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
@@ -176,6 +199,7 @@ class ScheduledEvent {
    * The ID of the user who created the event.
    * @type {String?}
    * @readonly
+   * @public
    */
   get creatorId() {
     return this.#_creator_id ? String(this.#_creator_id) : null;
@@ -185,6 +209,7 @@ class ScheduledEvent {
    * The user who created the event.
    * @type {User?}
    * @readonly
+   * @public
    */
   get creator() {
     return this.#creator;
@@ -194,6 +219,7 @@ class ScheduledEvent {
    * The hash of the event's image, as it was received from Discord.
    * @readonly
    * @type {String?}
+   * @private
    */
   get #_originalImageHash() {
     return this.#_image
@@ -206,6 +232,7 @@ class ScheduledEvent {
    * The hash of the event's image as a string.
    * @readonly
    * @type {String}
+   * @private
    */
   get #_formattedImageHash() {
     let formattedHash = this.#_image.toString(16);
@@ -221,6 +248,7 @@ class ScheduledEvent {
    * The url of the events's image.
    * @readonly
    * @type {String?}
+   * @public
    */
   get displayImageURL() {
     return getEventImage(this.id, this.#_originalImageHash);
@@ -230,6 +258,7 @@ class ScheduledEvent {
    * Where the event is scheduled to take place.
    * @readonly
    * @type {String}
+   * @public
    */
   get entityType() {
     if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) return "STAGE_INSTANCE";
@@ -242,6 +271,7 @@ class ScheduledEvent {
    * The status of the event.
    * @readonly
    * @type {String}
+   * @public
    */
   get status() {
     if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3) return "SCHEDULED";
@@ -255,6 +285,7 @@ class ScheduledEvent {
    * The guild that this event belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -264,6 +295,7 @@ class ScheduledEvent {
    * The UNIX timestamp of the start time for the event.
    * @type {Number}
    * @readonly
+   * @public
    */
   get scheduledStartTime() {
     return this.#scheduled_start_time;
@@ -273,6 +305,7 @@ class ScheduledEvent {
    * The UNIX timestamp of the end time for the event.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get scheduledEndTime() {
     return this.#scheduled_end_time;
@@ -282,6 +315,7 @@ class ScheduledEvent {
    * The number of users who have signed up for the event.
    * @type {Number}
    * @readonly
+   * @public
    */
   get userCount() {
     return this.#user_count;
@@ -291,15 +325,24 @@ class ScheduledEvent {
    * The location of the event.
    * @type {String?}
    * @readonly
+   * @public
    */
   get location() {
     return this.#location;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<ScheduledEvent: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

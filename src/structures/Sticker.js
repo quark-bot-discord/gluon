@@ -21,24 +21,28 @@ class Sticker {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the sticker.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(data.id);
 
     /**
      * The name of the sticker.
      * @type {String}
+     * @private
      */
     this.#name = data.name;
 
     /**
      * The format type of the sticker.
      * @type {Number}
+     * @private
      */
     this.#format_type = data.format_type;
   }
@@ -47,6 +51,7 @@ class Sticker {
    * The ID of the sticker.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -56,6 +61,7 @@ class Sticker {
    * The name of the sticker.
    * @type {String}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
@@ -65,6 +71,7 @@ class Sticker {
    * The format of the sticker.
    * @type {String}
    * @readonly
+   * @public
    */
   get format() {
     return STICKER_FORMATS[this.formatType];
@@ -74,6 +81,7 @@ class Sticker {
    * The format type of the sticker.
    * @type {Number}
    * @readonly
+   * @public
    */
   get formatType() {
     return this.#format_type;
@@ -83,6 +91,7 @@ class Sticker {
    * The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.
    * @type {String?}
    * @readonly
+   * @public
    */
   get previewImageURL() {
     let cdnImageFormat;
@@ -102,10 +111,18 @@ class Sticker {
     return `${CDN_BASE_URL}/stickers/${this.id}.${cdnImageFormat}`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Sticker: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

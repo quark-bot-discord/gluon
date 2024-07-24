@@ -70,6 +70,7 @@ class Attachment {
    * The id of the attachment.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -79,6 +80,7 @@ class Attachment {
    * The name of the file.
    * @type {String}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
@@ -88,6 +90,7 @@ class Attachment {
    * The size of the file.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#size;
@@ -97,12 +100,13 @@ class Attachment {
    * The url to the file.
    * @type {String}
    * @readonly
+   * @public
    */
   get url() {
     const url = new URL(
-      `${CDN_BASE_URL}/attachments/${String(this.#_parentStructure.id)}/${String(
-        this.id
-      )}/${this.name}`
+      `${CDN_BASE_URL}/attachments/${this.#_parentStructure.id}/${this.id}/${
+        this.name
+      }`
     );
     url.searchParams.append("ex", this.#_urlData.ex.toString(16));
     url.searchParams.append("is", this.#_urlData.is.toString(16));
@@ -111,10 +115,18 @@ class Attachment {
     return url.href;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Attachment: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

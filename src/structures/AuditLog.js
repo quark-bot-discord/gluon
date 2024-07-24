@@ -5,7 +5,6 @@ const User = require("./User");
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
  */
 class AuditLog {
-
   #_client;
   #_id;
   #_guild_id;
@@ -54,7 +53,8 @@ class AuditLog {
 
     /**
      * The type of action that occurred.
-     * @type {Number}
+     * @type {Number?}
+     * @private
      */
     if (data.action_type) this.#action_type = data.action_type;
 
@@ -71,6 +71,7 @@ class AuditLog {
         /**
          * The resolved target user.
          * @type {User?}
+         * @private
          */
         this.#target = new User(this.#_client, user);
     }
@@ -88,6 +89,7 @@ class AuditLog {
         /**
          * The resolved executor user.
          * @type {User?}
+         * @private
          */
         this.#executor = new User(this.#_client, user);
     }
@@ -95,6 +97,7 @@ class AuditLog {
     /**
      * The reason for this audit log entry.
      * @type {String?}
+     * @private
      */
     this.#reason = data.reason || null;
 
@@ -112,6 +115,7 @@ class AuditLog {
         /**
          * The count of this type of audit log entry.
          * @type {Number?}
+         * @private
          */
         this.#count = parseInt(data.options.count);
 
@@ -119,6 +123,7 @@ class AuditLog {
         /**
          * The inactivity period for when members are purged.
          * @type {Number?}
+         * @private
          */
         this.#delete_member_days = parseInt(data.options.delete_member_days);
 
@@ -126,6 +131,7 @@ class AuditLog {
         /**
          * The number of members removed for when members are purged.
          * @type {Number?}
+         * @private
          */
         this.#members_removed = parseInt(data.options.members_removed);
 
@@ -141,6 +147,7 @@ class AuditLog {
         /**
          * The type of the overwritten entity - role ("0") or member ("1")
          * @type {Number?}
+         * @private
          */
         this.#special_type = parseInt(data.options.type);
 
@@ -148,6 +155,7 @@ class AuditLog {
         /**
          * The new voice channel status.
          * @type {String?}
+         * @private
          */
         this.#status = data.options.status;
     }
@@ -156,6 +164,7 @@ class AuditLog {
       /**
        * The changes in this audit log entry.
        * @type {Object?}
+       * @private
        */
       this.#changes = data.changes;
   }
@@ -164,6 +173,7 @@ class AuditLog {
    * The id of the audit log entry.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -173,6 +183,7 @@ class AuditLog {
    * The ID of the guild that this audit log belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -182,6 +193,7 @@ class AuditLog {
    * The type of action that occurred.
    * @type {Number}
    * @readonly
+   * @public
    */
   get actionType() {
     return this.#action_type;
@@ -191,6 +203,7 @@ class AuditLog {
    * The id of the target user.
    * @type {String?}
    * @readonly
+   * @public
    */
   get targetId() {
     return this.#_target_id ? String(this.#_target_id) : null;
@@ -200,6 +213,7 @@ class AuditLog {
    * The channel id involved with this audit log entry.
    * @type {String?}
    * @readonly
+   * @public
    */
   get channelId() {
     return this.#_channel_id ? String(this.#_channel_id) : null;
@@ -209,6 +223,7 @@ class AuditLog {
    * The guild that this audit log belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -218,6 +233,7 @@ class AuditLog {
    * The channel involved with this audit log entry.
    * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.
    * @readonly
+   * @public
    */
   get channel() {
     return this.guild?.channels.get(this.channelId) || null;
@@ -227,6 +243,7 @@ class AuditLog {
    * The target user involved with this audit log entry.
    * @type {User?}
    * @readonly
+   * @public
    */
   get target() {
     return this.#target;
@@ -236,6 +253,7 @@ class AuditLog {
    * The executor user involved with this audit log entry.
    * @type {String?}
    * @readonly
+   * @public
    */
   get executorId() {
     return this.#_executor_id ? String(this.#_executor_id) : null;
@@ -245,6 +263,7 @@ class AuditLog {
    * The executor user involved with this audit log entry.
    * @type {User?}
    * @readonly
+   * @public
    */
   get executor() {
     return this.#executor;
@@ -254,6 +273,7 @@ class AuditLog {
    * The reason for this audit log entry.
    * @type {String?}
    * @readonly
+   * @public
    */
   get reason() {
     return this.#reason;
@@ -263,6 +283,7 @@ class AuditLog {
    * The count of this type of audit log entry.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get count() {
     return this.#count;
@@ -272,6 +293,7 @@ class AuditLog {
    * The inactivity period for when members are purged.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get deleteMemberDays() {
     return this.#delete_member_days;
@@ -281,6 +303,7 @@ class AuditLog {
    * The number of members removed for when members are purged.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get membersRemoved() {
     return this.#members_removed;
@@ -290,6 +313,7 @@ class AuditLog {
    * The id of the overwritten entity.
    * @type {String?}
    * @readonly
+   * @public
    */
   get specialId() {
     return this.#special_id ? String(this.#special_id) : null;
@@ -299,6 +323,7 @@ class AuditLog {
    * The type of the overwritten entity - role ("0") or member ("1")
    * @type {Number?}
    * @readonly
+   * @public
    */
   get specialType() {
     return this.#special_type;
@@ -308,6 +333,7 @@ class AuditLog {
    * The new voice channel status.
    * @type {String?}
    * @readonly
+   * @public
    */
   get status() {
     return this.#status;
@@ -317,15 +343,24 @@ class AuditLog {
    * The changes in this audit log entry.
    * @type {Object?}
    * @readonly
+   * @public
    */
   get changes() {
     return this.#changes;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Audit Log Entry: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

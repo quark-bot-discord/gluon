@@ -31,6 +31,7 @@ class Channel {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
@@ -51,6 +52,7 @@ class Channel {
     /**
      * The type of channel.
      * @type {Number}
+     * @private
      */
     this.#type = data.type;
 
@@ -59,6 +61,7 @@ class Channel {
     /**
      * The name of the channel.
      * @type {String}
+     * @private
      */
     if (typeof data.name == "string") this.#name = data.name;
     else if (
@@ -71,6 +74,7 @@ class Channel {
     /**
      * The topic of the channel.
      * @type {String?}
+     * @private
      */
     if (typeof data.topic == "string") this.#topic = data.topic;
     else if (
@@ -83,6 +87,7 @@ class Channel {
     /**
      * The message send cooldown for the channel.
      * @type {Number?}
+     * @private
      */
     if (typeof data.rate_limit_per_user == "number")
       this.#rate_limit_per_user = data.rate_limit_per_user;
@@ -108,6 +113,11 @@ class Channel {
     )
       this.#_parent_id = existing.parentId;
 
+    /**
+     * The attributes of the channel.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = data._attributes ?? 0;
 
     if (data.nsfw !== undefined && data.nsfw == true)
@@ -118,6 +128,7 @@ class Channel {
     /**
      * The cache options for this channel.
      * @type {ChannelCacheOptions}
+     * @private
      */
     this.#_cacheOptions = existing?._cacheOptions
       ? existing._cacheOptions
@@ -126,11 +137,11 @@ class Channel {
     /**
      * The message manager for this channel.
      * @type {ChannelMessageManager}
+     * @private
      */
-    this.#messages =
-      existing?.messages
-        ? existing.messages
-        : new ChannelMessageManager(client, this);
+    this.#messages = existing?.messages
+      ? existing.messages
+      : new ChannelMessageManager(client, this);
   }
 
   /**
@@ -139,6 +150,10 @@ class Channel {
    * @param {Object} param1 Embeds, components and files to include with the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
+   * @method
+   * @public
+   * @async
+   * @throws {Error}
    */
   async send(
     content,
@@ -182,6 +197,7 @@ class Channel {
    * Returns the mention for this channel.
    * @type {String}
    * @readonly
+   * @public
    */
   get mention() {
     return `<#${this.id}>`;
@@ -191,6 +207,7 @@ class Channel {
    * Whether this channel is marked as NSFW or not.
    * @readonly
    * @returns {Boolean}
+   * @public
    */
   get nsfw() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -200,6 +217,7 @@ class Channel {
    * The guild that this channel belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -209,6 +227,7 @@ class Channel {
    * The parent channel.
    * @type {Channel?}
    * @readonly
+   * @public
    */
   get parent() {
     return this.parentId
@@ -220,15 +239,17 @@ class Channel {
    * The ID of the channel.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
   }
-  
+
   /**
    * The ID of the guild that this channel belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -238,15 +259,17 @@ class Channel {
    * The ID of the parent channel.
    * @type {String?}
    * @readonly
+   * @public
    */
   get parentId() {
-    return this.#_parent_id ? String(this.#_parent_id) : null
+    return this.#_parent_id ? String(this.#_parent_id) : null;
   }
 
   /**
    * The type of channel.
    * @type {Number}
    * @readonly
+   * @public
    */
   get type() {
     return this.#type;
@@ -256,6 +279,7 @@ class Channel {
    * The name of the channel.
    * @type {String?}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
@@ -265,6 +289,7 @@ class Channel {
    * The topic of the channel.
    * @type {String?}
    * @readonly
+   * @public
    */
   get topic() {
     return this.#topic;
@@ -274,6 +299,7 @@ class Channel {
    * The message send cooldown for the channel.
    * @type {Number?}
    * @readonly
+   * @public
    */
   get rateLimitPerUser() {
     return this.#rate_limit_per_user;
@@ -283,6 +309,7 @@ class Channel {
    * The cache options for this channel.
    * @type {ChannelCacheOptions}
    * @readonly
+   * @public
    */
   get _cacheOptions() {
     return this.#_cacheOptions;
@@ -292,15 +319,24 @@ class Channel {
    * The messages in this channel.
    * @type {ChannelMessageManager}
    * @readonly
+   * @public
    */
   get messages() {
     return this.#messages;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Channel: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,

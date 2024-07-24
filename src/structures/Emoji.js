@@ -17,10 +17,15 @@ class Emoji {
    * @param {String} guild_id The id of the guild that the emoji belongs to.
    * @param {Boolean?} nocache Whether this emoji should be cached or not.
    */
-  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
+  constructor(
+    client,
+    data,
+    { guild_id, nocache = false } = { nocache: false }
+  ) {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
@@ -34,9 +39,15 @@ class Emoji {
     /**
      * The name of the emoji (if it is custom).
      * @type {String?}
+     * @private
      */
     this.#name = data.name;
 
+    /**
+     * The attributes of the emoji.
+     * @type {Number}
+     * @private
+     */
     this.#_attributes = data._attributes ?? 0;
 
     if (data.require_colons !== undefined && data.require_colons == true)
@@ -66,6 +77,7 @@ class Emoji {
    * Whether the emoji requires colons.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get requireColons() {
     return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
@@ -75,6 +87,7 @@ class Emoji {
    * Whether the emoji is managed.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get managed() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
@@ -84,6 +97,7 @@ class Emoji {
    * Whether the emoji is animated.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get animated() {
     return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
@@ -93,6 +107,7 @@ class Emoji {
    * Whether the emoji is available.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get available() {
     return (this.#_attributes & (0b1 << 3)) == 0b1 << 3;
@@ -102,6 +117,7 @@ class Emoji {
    * The mention string for the emoji.
    * @type {String}
    * @readonly
+   * @public
    */
   get mention() {
     if (this.id)
@@ -113,6 +129,7 @@ class Emoji {
    * The url for the emoji.
    * @type {String}
    * @readonly
+   * @public
    */
   get url() {
     return `${CDN_BASE_URL}/emojis/${this.id}.${
@@ -124,6 +141,7 @@ class Emoji {
    * The id of the guild that this emoji belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -133,6 +151,7 @@ class Emoji {
    * The guild that this emoji belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -142,6 +161,7 @@ class Emoji {
    * The id of the emoji, if it is custom.
    * @type {String?}
    * @readonly
+   * @public
    */
   get id() {
     return this.#_id ? String(this.#_id) : null;
@@ -151,15 +171,24 @@ class Emoji {
    * The name of the emoji.
    * @type {String}
    * @readonly
+   * @public
    */
   get name() {
     return this.#name;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Emoji: ${this.id ?? this.name}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id ?? undefined,

@@ -23,12 +23,14 @@ class Interaction {
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
     this.#_client = client;
 
     /**
      * The id of the message.
      * @type {BigInt}
+     * @private
      */
     this.#_id = BigInt(data.id);
 
@@ -36,18 +38,21 @@ class Interaction {
      * The type of interaction.
      * @type {Number}
      * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-type}
+     * @private
      */
     this.#type = data.type;
 
     /**
      * The id of the guild that this interaction belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_guild_id = BigInt(data.guild_id);
 
     /**
      * The id of the channel that this interaction belongs to.
      * @type {BigInt}
+     * @private
      */
     this.#_channel_id = BigInt(data.channel_id);
 
@@ -55,6 +60,7 @@ class Interaction {
       /**
        * The member that triggered the interaction, if it was run in a guild.
        * @type {Member?}
+       * @private
        */
       this.#member = new Member(this.#_client, data.member, {
         user_id: data.member.user.id,
@@ -64,6 +70,7 @@ class Interaction {
     /**
      * The interaction token, needed to respond to it.
      * @type {String}
+     * @private
      */
     this.#token = data.token;
   }
@@ -72,6 +79,7 @@ class Interaction {
    * The id of the interaction.
    * @type {String}
    * @readonly
+   * @public
    */
   get id() {
     return String(this.#_id);
@@ -81,6 +89,7 @@ class Interaction {
    * The type of interaction.
    * @type {Number}
    * @readonly
+   * @public
    */
   get type() {
     return this.#type;
@@ -90,6 +99,7 @@ class Interaction {
    * The id of the guild that this interaction belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get guildId() {
     return String(this.#_guild_id);
@@ -99,6 +109,7 @@ class Interaction {
    * The guild that this interaction belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
     return this.#_client.guilds.get(this.guildId) || null;
@@ -108,6 +119,7 @@ class Interaction {
    * The id of the channel that this interaction belongs to.
    * @type {String}
    * @readonly
+   * @public
    */
   get channelId() {
     return String(this.#_channel_id);
@@ -117,6 +129,7 @@ class Interaction {
    * The channel that this interaction belongs to.
    * @type {TextChannel? | VoiceChannel? | Thread?}
    * @readonly
+   * @public
    */
   get channel() {
     return this.guild?.channels.get(this.channelId) || null;
@@ -126,6 +139,7 @@ class Interaction {
    * The member that triggered the interaction, if it was run in a guild.
    * @type {Member?}
    * @readonly
+   * @public
    */
   get member() {
     return this.#member;
@@ -135,6 +149,9 @@ class Interaction {
    * Prompts a user to enter text using a modal.
    * @param {Object} options Modal options.
    * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
    */
   async textPrompt({ title, customId, textInputModal }) {
     const body = {};
@@ -162,6 +179,9 @@ class Interaction {
    * Responds to autocomplete interactions.
    * @param {Object} options Autocompletion options.
    * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
    */
   async autocompleteResponse({ choices }) {
     const body = {};
@@ -183,6 +203,9 @@ class Interaction {
    * @param {String?} content The message content to send in the response to the interaction.
    * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message.
    * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
    */
   async reply(
     content,
@@ -218,6 +241,9 @@ class Interaction {
    * @param {String?} content The new interaction response content.
    * @param {Object?} options The new interaction response options.
    * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
    */
   async edit(content, { files, embed, _embed, _embeds, components } = {}) {
     const body = {};
@@ -242,6 +268,9 @@ class Interaction {
   /**
    * Silently acknowledges an interaction.
    * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
    */
   async acknowledge() {
     const body = {};
@@ -257,10 +286,18 @@ class Interaction {
     return this;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `<Interaction: ${this.id}>`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return {
       id: this.id,
