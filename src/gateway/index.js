@@ -29,7 +29,6 @@ class WS {
   #resumeGatewayUrl;
   #retries;
   #addListeners;
-  #heartbeat;
   #identify;
   #reconnect;
   #resume;
