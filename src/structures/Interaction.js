@@ -128,7 +128,7 @@ class Interaction {
 
   /**
    * The channel that this interaction belongs to.
-   * @type {TextChannel? | VoiceChannel? | Thread?}
+   * @type {(TextChannel | VoiceChannel | Thread)?}
    * @readonly
    * @public
    */
