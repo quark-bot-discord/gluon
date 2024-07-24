@@ -6,7 +6,7 @@ const calculateHash = require("hash.js/lib/hash/sha/256");
 const NodeCache = require("node-cache");
 const FastQ = require("fastq");
 const getBucket = require("./getBucket");
-const { GLUON_VERSION, BASE_URL, VERSION, NAME } = require("../constants");
+const { GLUON_VERSION, API_BASE_URL, VERSION, NAME } = require("../constants");
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -26,7 +26,7 @@ class BetterRequestHandler {
   constructor(client, token) {
     this.#_client = client;
 
-    this.#requestURL = `${BASE_URL}/v${VERSION}`;
+    this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
 
     this.#localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
