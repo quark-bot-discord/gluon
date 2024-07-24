@@ -20,7 +20,7 @@ class Emoji {
   constructor(
     client,
     data,
-    { guild_id, nocache = false } = { nocache: false }
+    { guild_id, nocache = false } = { nocache: false },
   ) {
     /**
      * The client instance.

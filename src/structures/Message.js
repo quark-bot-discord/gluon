@@ -1,7 +1,11 @@
 const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
-const { PERMISSIONS, GLUON_CACHING_OPTIONS, BASE_URL } = require("../constants");
+const {
+  PERMISSIONS,
+  GLUON_CACHING_OPTIONS,
+  BASE_URL,
+} = require("../constants");
 const checkPermission = require("../util/discord/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
@@ -44,12 +48,10 @@ class Message {
   constructor(
     client,
     data,
-    {
-      channel_id,
-      guild_id,
-      nocache = false,
-      ignoreExisting = false,
-    } = { nocache: false, ignoreExisting: false }
+    { channel_id, guild_id, nocache = false, ignoreExisting = false } = {
+      nocache: false,
+      ignoreExisting: false,
+    },
   ) {
     let onlyfiles = false;
 
@@ -140,7 +142,7 @@ class Message {
         this.#attachments.push(
           new Attachment(this.#_client, data.attachments[i], {
             _parentStructure: this,
-          })
+          }),
         );
     else if (existing?.attachments) this.#attachments = existing.attachments;
 
@@ -189,7 +191,7 @@ class Message {
       this.#reactions = new MessageReactionManager(
         this.#_client,
         this.guild,
-        data.messageReactions
+        data.messageReactions,
       );
 
     /**
@@ -291,7 +293,7 @@ class Message {
     if (data.sticker_items != undefined)
       for (let i = 0; i < data.sticker_items.length; i++)
         this.#sticker_items.push(
-          new Sticker(this.#_client, data.sticker_items[i])
+          new Sticker(this.#_client, data.sticker_items[i]),
         );
     else if (existing && existing.stickerItems != undefined)
       this.#sticker_items = existing.stickerItems;
@@ -301,7 +303,8 @@ class Message {
      * @type {Object?}
      * @private
      */
-    if (data.message_snapshots) this.#message_snapshots = data.message_snapshots;
+    if (data.message_snapshots)
+      this.#message_snapshots = data.message_snapshots;
     else if (existing && existing.messageSnapshots != undefined)
       this.#message_snapshots = existing.messageSnapshots;
 
@@ -581,13 +584,15 @@ class Message {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.SEND_MESSAGES
+        PERMISSIONS.SEND_MESSAGES,
       )
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     if (!content && !embeds && !components && !files)
-      throw new Error("GLUON: Must provide content, embeds, components or files");
+      throw new Error(
+        "GLUON: Must provide content, embeds, components or files",
+      );
 
     if (typeof content !== "undefined" && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
@@ -617,7 +622,7 @@ class Message {
     const data = await this.#_client.request.makeRequest(
       "postCreateMessage",
       [this.channelId],
-      body
+      body,
     );
 
     return new Message(this.#_client, data, {
@@ -644,13 +649,15 @@ class Message {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.SEND_MESSAGES
+        PERMISSIONS.SEND_MESSAGES,
       )
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     if (!content && !embeds && !components && !files)
-      throw new Error("GLUON: Must provide content, embeds, components or files");
+      throw new Error(
+        "GLUON: Must provide content, embeds, components or files",
+      );
 
     if (typeof content !== "undefined" && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
@@ -682,7 +689,7 @@ class Message {
     const data = await this.#_client.request.makeRequest(
       "patchEditMessage",
       [this.channelId, this.id],
-      body
+      body,
     );
 
     return new Message(this.#_client, data, {
@@ -714,7 +721,7 @@ class Message {
       (err, data) => {
         if (err) console.error(err);
         else console.log(data);
-      }
+      },
     );
 
     this.channel.messages.delete(this.id);

@@ -8,7 +8,8 @@ const { PERMISSIONS } = require("../../constants");
  * @returns {Boolean}
  */
 function checkPermission(memberPermission, permission, adminOverride = true) {
-  if (typeof memberPermission != "string") throw new TypeError("GLUON: Permissions must be a String.");
+  if (typeof memberPermission != "string")
+    throw new TypeError("GLUON: Permissions must be a String.");
   if (typeof permission != "string")
     throw new TypeError("GLUON: Permission must be a String.");
   if (

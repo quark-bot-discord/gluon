@@ -14,7 +14,7 @@ function checkMemberPermissions(roles) {
 
   if (!roles.every((role) => role instanceof Role))
     throw new TypeError(
-      "GLUON: Member roles must be an array of Role instances."
+      "GLUON: Member roles must be an array of Role instances.",
     );
 
   let permissions = 0n;

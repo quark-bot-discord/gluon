@@ -28,14 +28,14 @@ describe("File", function () {
       const file = new File();
       expect(() => file.setName()).to.throw(
         TypeError,
-        "GLUON: File name must be provided."
+        "GLUON: File name must be provided.",
       );
     });
     it("should throw an error if the name is not a string", function () {
       const file = new File();
       expect(() => file.setName(123)).to.throw(
         TypeError,
-        "GLUON: File name must be a string."
+        "GLUON: File name must be a string.",
       );
     });
   });
@@ -57,7 +57,7 @@ describe("File", function () {
       const file = new File();
       expect(() => file.setStream()).to.throw(
         TypeError,
-        "GLUON: File stream must be provided."
+        "GLUON: File stream must be provided.",
       );
     });
   });

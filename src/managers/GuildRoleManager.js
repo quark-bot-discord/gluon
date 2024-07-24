@@ -5,7 +5,6 @@ const Role = require("../structures/Role");
  * Manages all roles belonging to a guild.
  */
 class GuildRoleManager {
-
   #_client;
   #guild;
   #cache;
@@ -48,7 +47,6 @@ class GuildRoleManager {
    * @throws {TypeError | Error}
    */
   async fetch(role_id) {
-
     if (typeof role_id !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
@@ -60,7 +58,9 @@ class GuildRoleManager {
     ]);
     let matchedRole;
     for (let i = 0; i < data.length; i++) {
-      const role = new Role(this.#_client, data[i], { guild_id: this.#guild.id });
+      const role = new Role(this.#_client, data[i], {
+        guild_id: this.#guild.id,
+      });
       if (role.id == role_id) matchedRole = role;
     }
 

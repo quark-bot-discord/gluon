@@ -49,7 +49,6 @@ class GuildChannelsManager {
    * @throws {TypeError | Error}
    */
   async fetch(channel_id) {
-
     if (typeof channel_id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
 
@@ -95,7 +94,7 @@ class GuildChannelsManager {
       )
     )
       throw new TypeError(
-        "GLUON: Channel must be a VoiceChannel, TextChannel or Thread instance."
+        "GLUON: Channel must be a VoiceChannel, TextChannel or Thread instance.",
       );
     if (typeof id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");

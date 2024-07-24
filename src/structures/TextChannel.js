@@ -18,7 +18,11 @@ class TextChannel extends Channel {
    * @param {Boolean?} nocache Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
-  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
+  constructor(
+    client,
+    data,
+    { guild_id, nocache = false } = { nocache: false },
+  ) {
     super(client, data, { guild_id });
 
     /**
@@ -52,12 +56,15 @@ class TextChannel extends Channel {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_MESSAGES
+        PERMISSIONS.MANAGE_MESSAGES,
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
 
-    if (!Array.isArray(messages) || !messages.every((m) => typeof m === "string"))
+    if (
+      !Array.isArray(messages) ||
+      !messages.every((m) => typeof m === "string")
+    )
       throw new TypeError("GLUON: Messages is not an array of strings.");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
@@ -72,7 +79,7 @@ class TextChannel extends Channel {
     await this.#_client.request.makeRequest(
       "postBulkDeleteMessages",
       [this.id],
-      body
+      body,
     );
   }
 

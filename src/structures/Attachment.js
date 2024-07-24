@@ -104,9 +104,7 @@ class Attachment {
    */
   get url() {
     const url = new URL(
-      `${CDN_BASE_URL}/attachments/${this.#_parentStructure.id}/${this.id}/${
-        this.name
-      }`
+      `${CDN_BASE_URL}/attachments/${this.#_parentStructure.id}/${this.id}/${this.name}`,
     );
     url.searchParams.append("ex", this.#_urlData.ex.toString(16));
     url.searchParams.append("is", this.#_urlData.is.toString(16));

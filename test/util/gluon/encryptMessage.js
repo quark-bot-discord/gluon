@@ -19,7 +19,7 @@ describe("EncryptMessage", function () {
     it("should throw an error if no message is provided", function () {
       expect(() => encryptMessage()).to.throw(
         TypeError,
-        "GLUON: Message must be provided."
+        "GLUON: Message must be provided.",
       );
     });
     it("should throw an error if message has no id", function () {
@@ -27,10 +27,10 @@ describe("EncryptMessage", function () {
         encryptMessage({
           _channel_id: BigInt(TEST_DATA.CHANNEL_ID),
           _guild_id: BigInt(TEST_DATA.GUILD_ID),
-        })
+        }),
       ).to.throw(
         TypeError,
-        "GLUON: Message must have an id, channel id and guild id."
+        "GLUON: Message must have an id, channel id and guild id.",
       );
     });
     it("should throw an error if message has no channel id", function () {
@@ -38,10 +38,10 @@ describe("EncryptMessage", function () {
         encryptMessage({
           id: TEST_DATA.MESSAGE_ID,
           _guild_id: BigInt(TEST_DATA.GUILD_ID),
-        })
+        }),
       ).to.throw(
         TypeError,
-        "GLUON: Message must have an id, channel id and guild id."
+        "GLUON: Message must have an id, channel id and guild id.",
       );
     });
     it("should throw an error if message has no guild id", function () {
@@ -49,10 +49,10 @@ describe("EncryptMessage", function () {
         encryptMessage({
           id: BigInt(TEST_DATA.MESSAGE_ID),
           _channel_id: BigInt(TEST_DATA.CHANNEL_ID),
-        })
+        }),
       ).to.throw(
         TypeError,
-        "GLUON: Message must have an id, channel id and guild id."
+        "GLUON: Message must have an id, channel id and guild id.",
       );
     });
   });
@@ -79,7 +79,7 @@ describe("EncryptMessage", function () {
         ignoreExisting: true,
       });
       expect(encryptMessage(message)).to.equal(
-        "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw=="
+        "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==",
       );
     });
   });

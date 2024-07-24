@@ -69,7 +69,7 @@ class ChannelMessageManager {
       const data = await this.#_client.request.makeRequest(
         "getChannelMessages",
         [this.#channel.id],
-        body
+        body,
       );
       const messages = [];
       for (let i = 0; i < data.length; i++)
@@ -77,7 +77,7 @@ class ChannelMessageManager {
           new Message(this.#_client, data[i], {
             channel_id: data[i].channel_id,
             guild_id: this.#channel.guild.id,
-          })
+          }),
         );
       return messages;
     } else if (typeof options === "string") {
@@ -86,7 +86,7 @@ class ChannelMessageManager {
 
       const data = await this.#_client.request.makeRequest(
         "getChannelMessage",
-        [this.#channel.id, options]
+        [this.#channel.id, options],
       );
 
       return new Message(this.#_client, data, {
@@ -95,7 +95,7 @@ class ChannelMessageManager {
       });
     } else
       throw new TypeError(
-        "GLUON: Must provide an object of options or a string of a message ID."
+        "GLUON: Must provide an object of options or a string of a message ID.",
       );
   }
 
@@ -118,7 +118,7 @@ class ChannelMessageManager {
         new Message(this.#_client, data[i], {
           channel_id: data[i].channel_id,
           guild_id: this.#channel.guild.id,
-        })
+        }),
       );
     return messages;
   }
@@ -133,7 +133,6 @@ class ChannelMessageManager {
    * @throws {TypeError}
    */
   sweepMessages(cacheCount, currentTime) {
-
     if (typeof cacheCount !== "number")
       throw new TypeError("GLUON: Cache count must be a number.");
 

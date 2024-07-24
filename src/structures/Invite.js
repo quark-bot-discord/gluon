@@ -24,7 +24,7 @@ class Invite {
   constructor(
     client,
     data,
-    { guild_id, nocache = false } = { nocache: false }
+    { guild_id, nocache = false } = { nocache: false },
   ) {
     /**
      * The client instance.
@@ -106,7 +106,7 @@ class Invite {
         "debug",
         `NOT CACHING INVITE ${this.code} ${this.#expires} ${
           (Date.now() / 1000) | 0
-        }`
+        }`,
       );
   }
 

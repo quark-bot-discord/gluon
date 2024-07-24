@@ -4,7 +4,6 @@ const User = require("../structures/User");
  * Manages all the users belonging to a client.
  */
 class UserManager {
-
   #_client;
   #cache;
 
@@ -38,7 +37,6 @@ class UserManager {
    * @throws {TypeError | Error}
    */
   async fetch(user_id) {
-
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -59,7 +57,6 @@ class UserManager {
    * @throws {TypeError}
    */
   sweepUsers(currentTime) {
-
     if (typeof currentTime !== "number")
       throw new TypeError("GLUON: Current time must be a number.");
 

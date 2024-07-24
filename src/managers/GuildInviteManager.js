@@ -7,7 +7,6 @@ const checkPermission = require("../util/discord/checkPermission");
  * Manages all invites within a guild.
  */
 class GuildInviteManager {
-
   #_client;
   #guild;
   #cache;
@@ -49,7 +48,12 @@ class GuildInviteManager {
    * @throws {Error}
    */
   async fetch() {
-    if (!checkPermission((await this.#guild.me()).permissions, PERMISSIONS.MANAGE_GUILD))
+    if (
+      !checkPermission(
+        (await this.#guild.me()).permissions,
+        PERMISSIONS.MANAGE_GUILD,
+      )
+    )
       return null;
 
     const data = await this.#_client.request.makeRequest("getGuildInvites", [
