@@ -21,9 +21,7 @@ describe("CacheChannel", function () {
       const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.cache.set(TEST_DATA.GUILD_ID, {
-        channels: new GuildChannelsManager(client, guild),
-      });
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const rawChannel = TEST_DATA.VOICE_CHANNEL;
       const channel = cacheChannel(client, rawChannel, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");
@@ -33,9 +31,7 @@ describe("CacheChannel", function () {
       const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.cache.set(TEST_DATA.GUILD_ID, {
-        channels: new GuildChannelsManager(client, guild),
-      });
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const rawThread = TEST_DATA.THREAD;
       const channel = cacheChannel(client, rawThread, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");
@@ -45,9 +41,7 @@ describe("CacheChannel", function () {
       const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.cache.set(TEST_DATA.GUILD_ID, {
-        channels: new GuildChannelsManager(client, guild),
-      });
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const rawChannel = TEST_DATA.TEXT_CHANNEL;
       const channel = cacheChannel(client, rawChannel, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");

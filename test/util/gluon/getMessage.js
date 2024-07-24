@@ -12,7 +12,7 @@ const {
   DEFAULT_INCREASE_CACHE_BY,
 } = require("../../../src/constants");
 const GuildManager = require("../../../src/managers/GuildManager");
-const { Guild, TextChannel } = require("../../../src/structures");
+const { Guild, TextChannel, Message } = require("../../../src/structures");
 const getMessage = require("../../../src/util/gluon/getMessage");
 
 describe("GetMessage", function () {
@@ -70,15 +70,16 @@ describe("GetMessage", function () {
       const client = {};
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
-      const channel = new TextChannel(
-        client,
-        TEST_DATA.TEXT_CHANNEL,
-        TEST_DATA.GUILD_ID
-      );
-      const message = TEST_DATA.MESSAGE;
-      channel.messages.cache.set(TEST_DATA.MESSAGE_ID, message);
-      guild.channels.cache.set(TEST_DATA.CHANNEL_ID, channel);
-      client.guilds.cache.set(TEST_DATA.GUILD_ID, guild);
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      channel.messages.set(TEST_DATA.MESSAGE_ID, message);
+      guild.channels.set(TEST_DATA.CHANNEL_ID, channel);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
       client.increasedCacheMultipliers = new Map();
       client.increasedCache = new Map();
       client.defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS;

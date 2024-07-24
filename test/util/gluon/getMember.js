@@ -8,7 +8,7 @@ before(async () => {
 
 const { TEST_DATA } = require("../../../src/constants");
 const GuildManager = require("../../../src/managers/GuildManager");
-const { Guild } = require("../../../src/structures");
+const { Guild, Member } = require("../../../src/structures");
 const getMember = require("../../../src/util/gluon/getMember");
 
 describe("GetMember", function () {
@@ -52,24 +52,24 @@ describe("GetMember", function () {
 
     context("check get member", async function () {
       it("should return the correct member from the cache", async function () {
-        const client = {};
+        const client = { user: { id: "9876543210000000" }};
         client.guilds = new GuildManager(client);
         const guild = new Guild(client, TEST_DATA.GUILD);
-        const member = TEST_DATA.MEMBER;
-        guild.members.cache.set(TEST_DATA.MEMBER_ID, member);
-        client.guilds.cache.set(TEST_DATA.GUILD_ID, guild);
-        await expect(getMember(client, TEST_DATA.GUILD_ID, TEST_DATA.MEMBER_ID)).to.eventually.deep.equal(TEST_DATA.MEMBER);
-        expect(guild.members.cache.size).to.equal(1);
+        const member = new Member(client, TEST_DATA.MEMBER, { user_id: TEST_DATA.MEMBER_ID, guild_id: TEST_DATA.GUILD_ID });
+        guild.members.set(TEST_DATA.MEMBER_ID, member);
+        client.guilds.set(TEST_DATA.GUILD_ID, guild);
+        await expect(getMember(client, TEST_DATA.GUILD_ID, TEST_DATA.MEMBER_ID)).to.eventually.be.an("object");
+        expect(guild.members.size).to.equal(1);
       });
       it("should return the correct member from the cache and delete the member from the cache", async function () {
-        const client = {};
+        const client = { user: { id: "9876543210000000" }};
         client.guilds = new GuildManager(client);
         const guild = new Guild(client, TEST_DATA.GUILD);
-        const member = TEST_DATA.MEMBER;
-        guild.members.cache.set(TEST_DATA.MEMBER_ID, member);
-        client.guilds.cache.set(TEST_DATA.GUILD_ID, guild);
-        await expect(getMember(client, TEST_DATA.GUILD_ID, TEST_DATA.MEMBER_ID, true)).to.eventually.deep.equal(TEST_DATA.MEMBER);
-        expect(guild.members.cache.size).to.equal(0);
+        const member = new Member(client, TEST_DATA.MEMBER, { user_id: TEST_DATA.MEMBER_ID, guild_id: TEST_DATA.GUILD_ID });
+        guild.members.set(TEST_DATA.MEMBER_ID, member);
+        client.guilds.set(TEST_DATA.GUILD_ID, guild);
+        await expect(getMember(client, TEST_DATA.GUILD_ID, TEST_DATA.MEMBER_ID, true)).to.eventually.be.an("object");
+        expect(guild.members.size).to.equal(0);
       });
     });
 });

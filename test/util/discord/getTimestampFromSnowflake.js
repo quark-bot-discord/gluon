@@ -19,10 +19,10 @@ describe("GetTimestampFromSnowflake", function () {
         "GLUON: Snowflake must be provided."
       );
     });
-    it("should throw an error if snowflake is not a bigint or string", function () {
+    it("should throw an error if snowflake is not a string", function () {
       expect(() => getTimestampFromSnowflake(123456)).to.throw(
         TypeError,
-        "GLUON: Snowflake must be a BigInt or string."
+        "GLUON: Snowflake must be a string."
       );
     });
   });

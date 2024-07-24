@@ -39,13 +39,13 @@ describe("DecryptMessage", function () {
             const client = {};
             client.guilds = new GuildManager(client);
             const message = decryptMessage(client, "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==", TEST_DATA.MESSAGE_ID, TEST_DATA.CHANNEL_ID, TEST_DATA.GUILD_ID);
-            expect(message.id).to.equal(BigInt(TEST_DATA.MESSAGE_ID));
+            expect(message.id).to.equal(TEST_DATA.MESSAGE_ID);
         });
         it("should return a message object with the correct channel id", function () {
             const client = {};
             client.guilds = new GuildManager(client);
             const message = decryptMessage(client, "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==", TEST_DATA.MESSAGE_ID, TEST_DATA.CHANNEL_ID, TEST_DATA.GUILD_ID);
-            expect(message._channel_id).to.equal(BigInt(TEST_DATA.CHANNEL_ID));
+            expect(message.channelId).to.equal(TEST_DATA.CHANNEL_ID);
         });
     });
 });

@@ -12,15 +12,15 @@ const Message = require("../../structures/Message");
  * @returns {Message}
  */
 function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
-
-  if (!client)
-    throw new TypeError("GLUON: Client must be provided.");
+  if (!client) throw new TypeError("GLUON: Client must be provided.");
 
   if (!encryptedMessage)
     throw new TypeError("GLUON: Encrypted message must be provided.");
 
   if (!id || !channelId || !guildId)
-    throw new TypeError("GLUON: Message must have an id, channel id and guild id.");
+    throw new TypeError(
+      "GLUON: Message must have an id, channel id and guild id."
+    );
 
   const key = hash
     .sha512()
@@ -48,7 +48,10 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
 
   const messageObject = JSON.parse(decryptedMessage);
 
-  return new Message(client, messageObject, channelId, guildId);
+  return new Message(client, messageObject, {
+    channel_id: channelId,
+    guild_id: guildId,
+  });
 }
 
 module.exports = decryptMessage;

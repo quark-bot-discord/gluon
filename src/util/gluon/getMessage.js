@@ -18,9 +18,7 @@ async function getMessage(
   message_id,
   destroy = false
 ) {
-
-  if (!client)
-    throw new TypeError("GLUON: Client must be provided.");
+  if (!client) throw new TypeError("GLUON: Client must be provided.");
 
   if (typeof guild_id != "string")
     throw new TypeError("GLUON: Guild id must be a string.");
@@ -35,10 +33,10 @@ async function getMessage(
     throw new TypeError("GLUON: Destroy must be a boolean.");
 
   let message =
-    client.guilds.cache
+    client.guilds
       .get(guild_id)
-      ?.channels.cache.get(channel_id)
-      ?.messages.cache.get(message_id) || null;
+      ?.channels.get(channel_id)
+      ?.messages.get(message_id) || null;
 
   const usedHash = hash
     .sha512()
@@ -80,19 +78,19 @@ async function getMessage(
         .catch(() => null);
 
       if (destroy != false)
-        client.guilds.cache
+        client.guilds
           .get(guild_id)
-          ?.channels.cache.get(channel_id)
-          ?.messages.cache.delete(message_id);
+          ?.channels.get(channel_id)
+          ?.messages.delete(message_id);
 
       return message;
     } else return null;
   } else {
     if (destroy != false)
-      client.guilds.cache
+      client.guilds
         .get(guild_id)
-        ?.channels.cache.get(channel_id)
-        ?.messages.cache.delete(message_id);
+        ?.channels.get(channel_id)
+        ?.messages.delete(message_id);
 
     return message;
   }
