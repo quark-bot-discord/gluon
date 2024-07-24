@@ -1,6 +1,6 @@
 // perhaps voice states should be attached to members instead?
 
-const { VoiceState } = require("../structures");
+const VoiceState = require("../structures/VoiceState");
 
 /**
  * Manages all voice states belonging to a guild.
