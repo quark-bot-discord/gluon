@@ -78,4 +78,21 @@ describe("Attachment", function () {
       expect(`${attachment.url}&`).to.equal(TEST_DATA.ATTACHMENT.url);
     });
   });
+
+  context("check toJSON", function () {
+    it("should return a valid JSON", function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      expect(attachment.toJSON()).to.deep.equal({
+        id: TEST_DATA.ATTACHMENT.id,
+        filename: TEST_DATA.ATTACHMENT.filename,
+        size: TEST_DATA.ATTACHMENT.size,
+        url: TEST_DATA.ATTACHMENT.url.slice(0, -1),
+      });
+    });
+  })
 });
