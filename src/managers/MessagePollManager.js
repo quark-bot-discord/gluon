@@ -8,6 +8,10 @@ class MessagePollManager {
    * @param {Object} existingResponses Existing responses for a poll.
    */
   constructor(existingResponses = {}) {
+    /**
+     * The cache of responses.
+     * @type {Map<String, Array<BigInt>>}
+     */
     this.#cache = new Map();
 
     for (const [answer, answerValue] of Object.entries(existingResponses))

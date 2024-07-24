@@ -12,8 +12,18 @@ class MessageReactionManager {
    * @param {Object} existingReactions Existing reactions for a message.
    */
   constructor(client, guild, existingReactions = {}) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this reaction manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
     /**

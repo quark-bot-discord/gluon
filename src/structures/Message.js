@@ -1,7 +1,7 @@
 const User = require("./User");
 const Member = require("./Member");
 const Attachment = require("./Attachment");
-const { PERMISSIONS, GLUON_CACHING_OPTIONS } = require("../constants");
+const { PERMISSIONS, GLUON_CACHING_OPTIONS, BASE_URL } = require("../constants");
 const checkPermission = require("../util/discord/checkPermission");
 const Sticker = require("./Sticker");
 const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
@@ -14,6 +14,24 @@ const MessageReactionManager = require("../managers/MessageReactionManager");
  * A message belonging to a channel within a guild.
  */
 class Message {
+  #_client;
+  #_guild_id;
+  #_channel_id;
+  #_id;
+  #author;
+  #member;
+  #attachments;
+  #content;
+  #poll;
+  #pollResponses;
+  #reactions;
+  #embeds;
+  #_attributes;
+  #reference;
+  #type;
+  #webhook_id;
+  #sticker_items;
+  #message_snapshots;
   /**
    * Creates the structure for a message.
    * @param {Client} client The client instance.
@@ -26,10 +44,13 @@ class Message {
   constructor(
     client,
     data,
-    channel_id,
-    guild_id,
-    nocache = false,
-    ignoreExisting = false,
+    {
+      channel_id,
+      guild_id,
+      nocache = false,
+      ignoreExisting = false,
+      _parentStructure,
+    } = { nocache: false, ignoreExisting: false }
   ) {
     let onlyfiles = false;
 
@@ -37,23 +58,23 @@ class Message {
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the guild that this message belongs to.
      * @type {BigInt}
      */
-    this._guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guild_id);
 
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
      */
-    this._channel_id = BigInt(channel_id);
+    this.#_channel_id = BigInt(channel_id);
 
     const existing =
       ignoreExisting != true
-        ? this.channel?.messages.cache.get(data.id) || null
+        ? this.channel?.messages.get(data.id) || null
         : null;
 
     if (this.guild) {
@@ -73,204 +94,227 @@ class Message {
      * The id of the message.
      * @type {BigInt}
      */
-    this.id = BigInt(data.id);
+    this.#_id = BigInt(data.id);
 
     // messages only ever need to be cached if logging is enabled
     // but this should always return a "refined" message, so commands can be handled
     if (data.author)
       /**
        * The message author.
-       * @type {User?}
+       * @type {User}
        */
-      this.author = new User(this._client, data.author, {
+      this.#author = new User(this.#_client, data.author, {
         nocache: !data.webhook_id || nocache,
         noDbStore: true,
       });
-    else if (existing?.author) this.author = existing.author;
+    else if (existing?.author) this.#author = existing.author;
 
     if (data.member)
       /**
        * The member who sent the message.
        * @type {Member?}
        */
-      this.member = new Member(
-        this._client,
-        data.member,
-        data.author.id,
+      this.#member = new Member(this.#_client, data.member, {
+        user_id: data.author.id,
         guild_id,
-        new User(this._client, data.author),
-      );
+        user: new User(this.#_client, data.author),
+      });
     else if (data.author)
-      this.member = this.guild
-        ? this.guild.members.cache.get(data.author.id)
-        : null;
-    else if (existing?.member) this.member = existing.member;
+      this.#member = this.guild ? this.guild.members.get(data.author.id) : null;
+    else if (existing?.member) this.#member = existing.member;
 
     // should only be stored if file logging is enabled
     /**
      * The message attachments.
      * @type {Attachment[]?}
      */
-    this.attachments = [];
+    this.#attachments = [];
     if (data.attachments != undefined)
       for (let i = 0; i < data.attachments.length; i++)
-        this.attachments.push(
-          new Attachment(this._client, data.attachments[i]),
+        this.#attachments.push(
+          new Attachment(this.#_client, data.attachments[i], {
+            _parentStructure: this,
+          })
         );
-    else if (existing?.attachments) this.attachments = existing.attachments;
+    else if (existing?.attachments) this.#attachments = existing.attachments;
 
-    if (this.attachments.length == 0 && onlyfiles == true) nocache = true;
+    if (this.#attachments.length == 0 && onlyfiles == true) nocache = true;
 
     /**
      * The message content.
      * @type {String?}
      */
     if (onlyfiles != true) {
-      this.content = data.content;
-      if (!this.content && existing && existing.content)
-        this.content = existing.content;
-      else if (!this.content) this.content = null;
+      this.#content = data.content;
+      if (!this.#content && existing && existing.content)
+        this.#content = existing.content;
+      else if (!this.#content) this.#content = null;
     }
 
     /**
      * The message poll.
      * @type {Object?}
      */
-    this.poll = data.poll;
-    if (this.poll == undefined && existing && existing.poll != undefined)
-      this.poll = existing.poll;
-    else if (this.poll == undefined) this.poll = undefined;
+    this.#poll = data.poll;
+    if (this.#poll == undefined && existing && existing.poll != undefined)
+      this.#poll = existing.poll;
+    else if (this.#poll == undefined) this.#poll = undefined;
 
-    if (this.poll && existing && existing.pollResponses)
+    if (this.#poll && existing && existing.pollResponses)
       /**
        * The poll responses.
        * @type {MessagePollManager?}
        */
-      this.pollResponses = existing.pollResponses;
-    else if (this.poll)
-      this.pollResponses = new MessagePollManager(data.pollResponses);
+      this.#pollResponses = existing.pollResponses;
+    else if (this.#poll)
+      this.#pollResponses = new MessagePollManager(data.pollResponses);
 
     if (existing?.reactions)
       /**
        * The message reactions.
        * @type {MessageReactionManager}
        */
-      this.reactions = existing.reactions;
+      this.#reactions = existing.reactions;
     else
-      this.reactions = new MessageReactionManager(
-        this._client,
+      this.#reactions = new MessageReactionManager(
+        this.#_client,
         this.guild,
-        data.messageReactions,
+        data.messageReactions
       );
 
     /**
      * The message embeds.
      * @type {Object[]}
      */
-    this.embeds = data.embeds;
-    if (this.embeds == undefined && existing && existing.embeds != undefined)
-      this.embeds = existing.embeds;
-    else if (this.embeds == undefined) this.embeds = [];
+    this.#embeds = data.embeds;
+    if (this.#embeds == undefined && existing && existing.embeds != undefined)
+      this.#embeds = existing.embeds;
+    else if (this.#embeds == undefined) this.#embeds = [];
 
-    this._attributes = data._attributes || 0;
+    this.#_attributes = data._attributes || 0;
 
     if (data.mentions && data.mentions.length != 0)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
     else if (
       data.mentions == undefined &&
       existing &&
       existing.mentions == true
     )
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
 
     if (data.mention_roles && data.mention_roles.length != 0)
-      this._attributes |= 0b1 << 1;
+      this.#_attributes |= 0b1 << 1;
     else if (
       data.mention_roles == undefined &&
       existing &&
-      existing.mention_roles == true
+      existing.mentionRoles == true
     )
-      this._attributes |= 0b1 << 1;
+      this.#_attributes |= 0b1 << 1;
 
     if (data.mention_everyone != undefined && data.mention_everyone == true)
-      this._attributes |= 0b1 << 2;
+      this.#_attributes |= 0b1 << 2;
     else if (
       data.mention_everyone == undefined &&
       existing &&
-      existing.mention_everyone == true
+      existing.mentionEveryone == true
     )
-      this._attributes |= 0b1 << 2;
+      this.#_attributes |= 0b1 << 2;
 
     if (data.pinned != undefined && data.pinned == true)
-      this._attributes |= 0b1 << 3;
+      this.#_attributes |= 0b1 << 3;
     else if (data.pinned == undefined && existing && existing.pinned == true)
-      this._attributes |= 0b1 << 3;
+      this.#_attributes |= 0b1 << 3;
 
     if (data.mirrored != undefined && data.mirrored == true)
-      this._attributes |= 0b1 << 4;
+      this.#_attributes |= 0b1 << 4;
     else if (
       data.mirrored == undefined &&
       existing &&
       existing.mirrored == true
     )
-      this._attributes |= 0b1 << 4;
+      this.#_attributes |= 0b1 << 4;
 
     /**
      * The message that this message references.
      * @type {Object}
      */
-    this.reference = {};
+    this.#reference = {};
     if (data.referenced_message)
-      this.reference.message_id = BigInt(data.referenced_message.id);
-    else if (existing && existing.reference?.message_id)
-      this.reference.message_id = existing.reference.message_id;
+      this.#reference.message_id = BigInt(data.referenced_message.id);
+    else if (existing && existing.reference?.messageId)
+      this.#reference.message_id = existing.reference.messageId;
 
     /**
      * The type of message.
      * @type {Number}
      */
-    this.type = data.type;
+    this.#type = data.type;
     if (
-      typeof this.type != "number" &&
+      typeof this.#type != "number" &&
       existing &&
       typeof existing.type == "number"
     )
-      this.type = existing.type;
+      this.#type = existing.type;
 
     /**
      * The id of the webhook this message is from.
      * @type {BigInt?}
      */
-    if (data.webhook_id) this.webhook_id = BigInt(data.webhook_id);
-    else if (existing?.webhook_id) this.webhook_id = existing.webhook_id;
+    if (data.webhook_id) this.#webhook_id = BigInt(data.webhook_id);
+    else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
 
     /**
      * Stickers sent with this message.
      * @type {Sticker[]}
      */
-    this.sticker_items = [];
+    this.#sticker_items = [];
     if (data.sticker_items != undefined)
       for (let i = 0; i < data.sticker_items.length; i++)
-        this.sticker_items.push(
-          new Sticker(this._client, data.sticker_items[i]),
+        this.#sticker_items.push(
+          new Sticker(this.#_client, data.sticker_items[i])
         );
-    else if (existing && existing.sticker_items != undefined)
-      this.sticker_items = existing.sticker_items;
+    else if (existing && existing.stickerItems != undefined)
+      this.#sticker_items = existing.stickerItems;
 
     /**
      * The snapshot data about the message.
      * @type {Object?}
      */
-    if (data.message_snapshots) this.message_snapshots = data.message_snapshots;
-    else if (existing && existing.message_snapshots != undefined)
-      this.message_snapshots = existing.message_snapshots;
+    if (data.message_snapshots) this.#message_snapshots = data.message_snapshots;
+    else if (existing && existing.messageSnapshots != undefined)
+      this.#message_snapshots = existing.messageSnapshots;
+
+    /**
+     * The parent structure that this message belongs to.
+     * @type {Object}
+     * @readonly
+     */
+    this._parentStructure = _parentStructure ?? this.channel;
 
     /* this.author && this.author.bot != true && !data.webhook_id && */
-    if (nocache == false && this._client.cacheMessages == true) {
-      this.channel?.messages.cache.set(data.id, this);
+    if (nocache == false && this.#_client.cacheMessages == true) {
+      this.channel?.messages.set(data.id, this);
       if (!this.channel)
-        this._client.emit("debug", `${this._guild_id?.toString()} NO CHANNEL`);
+        this.#_client.emit("debug", `${this.guildId} NO CHANNEL`);
     }
+  }
+
+  /**
+   * The user who sent the message.
+   * @type {User}
+   * @readonly
+   */
+  get author() {
+    return this.#author;
+  }
+
+  /**
+   * The member who sent the message.
+   * @type {Member?}
+   * @readonly
+   */
+  get member() {
+    return this.#member;
   }
 
   /**
@@ -279,7 +323,7 @@ class Message {
    * @type {Boolean}
    */
   get mentions() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
   }
 
   /**
@@ -287,8 +331,8 @@ class Message {
    * @readonly
    * @type {Boolean}
    */
-  get mention_roles() {
-    return (this._attributes & (0b1 << 1)) == 0b1 << 1;
+  get mentionRoles() {
+    return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
   }
 
   /**
@@ -296,8 +340,8 @@ class Message {
    * @readonly
    * @type {Boolean}
    */
-  get mention_everyone() {
-    return (this._attributes & (0b1 << 2)) == 0b1 << 2;
+  get mentionEveryone() {
+    return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
   /**
@@ -306,7 +350,7 @@ class Message {
    * @type {Boolean}
    */
   get pinned() {
-    return (this._attributes & (0b1 << 3)) == 0b1 << 3;
+    return (this.#_attributes & (0b1 << 3)) == 0b1 << 3;
   }
 
   /**
@@ -315,7 +359,7 @@ class Message {
    * @type {Boolean}
    */
   get mirrored() {
-    return (this._attributes & (0b1 << 4)) == 0b1 << 4;
+    return (this.#_attributes & (0b1 << 4)) == 0b1 << 4;
   }
 
   /**
@@ -333,7 +377,16 @@ class Message {
    * @readonly
    */
   get guild() {
-    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The guild that this message belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get guildId() {
+    return String(this.#_guild_id);
   }
 
   /**
@@ -342,7 +395,133 @@ class Message {
    * @readonly
    */
   get channel() {
-    return this.guild?.channels.cache.get(this._channel_id.toString()) || null;
+    return this.guild?.channels.get(this.channelId) || null;
+  }
+
+  /**
+   * The channel that this message belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get channelId() {
+    return String(this.#_channel_id);
+  }
+
+  /**
+   * The id of the message.
+   * @type {String}
+   * @readonly
+   */
+  get id() {
+    return String(this.#_id);
+  }
+
+  /**
+   * The message attachments.
+   * @type {Attachment[]}
+   * @readonly
+   */
+  get attachments() {
+    return this.#attachments;
+  }
+
+  /**
+   * The message content.
+   * @type {String?}
+   * @readonly
+   */
+  get content() {
+    return this.#content;
+  }
+
+  /**
+   * The message poll.
+   * @type {Object?}
+   * @readonly
+   */
+  get poll() {
+    return this.#poll;
+  }
+
+  /**
+   * The poll responses.
+   * @type {MessagePollManager?}
+   * @readonly
+   */
+  get pollResponses() {
+    return this.#pollResponses;
+  }
+
+  /**
+   * The message reactions.
+   * @type {MessageReactionManager}
+   * @readonly
+   */
+  get reactions() {
+    return this.#reactions;
+  }
+
+  /**
+   * The message embeds.
+   * @type {Array<Embed>}
+   * @readonly
+   */
+  get embeds() {
+    return this.#embeds;
+  }
+
+  /**
+   * The message that this message references.
+   * @type {Object}
+   * @readonly
+   */
+  get reference() {
+    return { messageId: this.#reference.message_id };
+  }
+
+  /**
+   * The type of message.
+   * @type {Number}
+   * @readonly
+   */
+  get type() {
+    return this.#type;
+  }
+
+  /**
+   * The id of the webhook this message is from.
+   * @type {String?}
+   * @readonly
+   */
+  get webhookId() {
+    return this.#webhook_id ? String(this.#webhook_id) : null;
+  }
+
+  /**
+   * Stickers sent with this message.
+   * @type {Sticker[]}
+   * @readonly
+   */
+  get stickerItems() {
+    return this.#sticker_items;
+  }
+
+  /**
+   * The snapshot data about the message.
+   * @type {Object?}
+   * @readonly
+   */
+  get messageSnapshots() {
+    return this.#message_snapshots;
+  }
+
+  /**
+   * The URL of the message.
+   * @type {String}
+   * @readonly
+   */
+  get url() {
+    return `${BASE_URL}/channels/${this.guildId}/${this.channelId}/${this.id}`;
   }
 
   /**
@@ -356,7 +535,12 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
    */
   async reply(content, { embed, components, files } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
@@ -367,18 +551,21 @@ class Message {
     if (files) body.files = files;
 
     body.message_reference = {
-      message_id: this.id.toString(),
-      channel_id: this._channel_id.toString(),
-      guild_id: this._guild_id.toString(),
+      message_id: this.id,
+      channel_id: this.channelId,
+      guild_id: this.guildId,
     };
 
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "postCreateMessage",
-      [this._channel_id],
-      body,
+      [this.channelId],
+      body
     );
 
-    return new Message(this._client, data, this._channel_id, this._guild_id);
+    return new Message(this.#_client, data, {
+      channel_id: this.channelId,
+      guild_id: this.guildId,
+    });
   }
 
   /**
@@ -392,32 +579,39 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
    */
   async edit(content, { embed, embeds, components, files } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     const body = {};
 
     if (content) body.content = content;
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
 
     if (this.referenced_message)
       body.message_reference = {
-        message_id: this.id.toString(),
-        channel_id: this._channel_id.toString(),
-        guild_id: this._guild_id.toString(),
+        message_id: this.id,
+        channel_id: this.channelId,
+        guild_id: this.guildId,
       };
 
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "patchEditMessage",
-      [this._channel_id, this.id],
-      body,
+      [this.channelId, this.id],
+      body
     );
 
-    return new Message(this._client, data, this._channel_id, this._guild_id);
+    return new Message(this.#_client, data, {
+      channel_id: this.channelId,
+      guild_id: this.guildId,
+    });
   }
 
   /**
@@ -426,46 +620,47 @@ class Message {
   shelf() {
     const encryptedMessage = encryptMessage(this);
 
-    const cacheMultiplier =
-      this._client.increasedCacheMultipliers.get(this._guild_id.toString()) ||
-      1;
     const key = hash
       .sha512()
-      .update(`${this._guild_id}_${this._channel_id}_${this.id}`)
+      .update(`${this.guildId}_${this.channelId}_${this.id}`)
       .digest("hex");
 
-    this._client.s3Messages.putObject(
+    this.#_client.s3Messages.putObject(
       {
-        Bucket: this._client.s3MessageBucket,
+        Bucket: this.#_client.s3MessageBucket,
         Key: key,
         Body: encryptedMessage,
       },
       (err, data) => {
-        if (err) console.log(err);
+        if (err) console.error(err);
         else console.log(data);
-      },
+      }
     );
 
-    this.channel.messages.cache.delete(this.id.toString());
+    this.channel.messages.delete(this.id);
+  }
+
+  toString() {
+    return `<Message: ${this.id}>`;
   }
 
   toJSON() {
     return {
-      id: String(this.id),
+      id: this.id,
       author: this.author,
       member: this.member,
       content: this.content,
-      _attributes: this._attributes,
+      _attributes: this.#_attributes,
       attachments: this.attachments,
       embeds: this.embeds,
       poll: this.poll,
       pollResponses: this.pollResponses,
-      message_snapshots: this.message_snapshots,
+      message_snapshots: this.messageSnapshots,
       type: this.type,
-      referenced_message: this.reference?.message_id
-        ? { id: String(this.reference.message_id) }
+      referenced_message: this.reference?.messageId
+        ? { id: this.reference.messageId }
         : undefined,
-      sticker_items: this.sticker_items,
+      sticker_items: this.stickerItems,
       messageReactions: this.reactions,
     };
   }

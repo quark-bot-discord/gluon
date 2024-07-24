@@ -5,13 +5,32 @@ class GuildScheduledEventManager {
   #guild;
   #cache;
   constructor(client, guild) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
+    /**
+     * The cache of scheduled events.
+     * @type {Map<String, ScheduledEvent>}
+     * @private
+     */
     this.#cache = new Map();
   }
 
+  /**
+   * Retrieves all scheduled events for this guild.
+   * @returns {Promise<Array<ScheduledEvent>>}
+   */
   async list() {
     const data = await this.#_client.request.makeRequest(
       "getListGuildScheduledEvents",

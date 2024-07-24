@@ -13,8 +13,18 @@ class UserManager {
    * @param {Client} client The client instance.
    */
   constructor(client) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The cache of users.
+     * @type {Map<String, User>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

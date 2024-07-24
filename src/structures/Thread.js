@@ -6,6 +6,8 @@ const Channel = require("./Channel");
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
  */
 class Thread extends Channel {
+  #_owner_id;
+  #_parent_id;
   /**
    * Creates the structure for a thread.
    * @param {Client} client The client instance.
@@ -15,22 +17,31 @@ class Thread extends Channel {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
   constructor(client, data, guild_id, nocache = false) {
-    super(client, data, guild_id);
+    super(client, data, { guild_id });
 
     /**
      * The ID of the user who created this thread.
      * @type {BigInt}
      */
-    this._owner_id = BigInt(data.owner_id);
+    this.#_owner_id = BigInt(data.owner_id);
 
     /**
      * The ID of the text channel that this thread belongs to.
      * @type {BigInt}
      */
-    this._parent_id = BigInt(data.parent_id);
+    this.#_parent_id = BigInt(data.parent_id);
 
     if (nocache == false && data.archived != true)
-      this.guild?.channels.cache.set(data.id, this);
+      this.guild?.channels.set(data.id, this);
+  }
+
+  /**
+   * The ID of the member who created this thread.
+   * @type {String}
+   * @readonly
+   */
+  get ownerId() {
+    return String(this.#_owner_id);
   }
 
   /**
@@ -39,7 +50,16 @@ class Thread extends Channel {
    * @readonly
    */
   get owner() {
-    return this.guild?.members.cache.get(String(this._owner_id)) || null;
+    return this.guild?.members.get(this.ownerId) || null;
+  }
+
+  /**
+   * The ID of the text channel that this thread belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get parentId() {
+    return String(this.#_parent_id);
   }
 
   /**
@@ -48,14 +68,18 @@ class Thread extends Channel {
    * @readonly
    */
   get parent() {
-    return this.guild?.channels.cache.get(String(this._parent_id)) || null;
+    return this.guild?.channels.get(this.parentId) || null;
+  }
+
+  toString() {
+    return `<Thread: ${this.id}>`;
   }
 
   toJSON() {
     return {
       ...super.toJSON(),
-      owner_id: String(this._owner_id),
-      parent_id: String(this._parent_id),
+      owner_id: this.ownerId,
+      parent_id: this.parentId,
     };
   }
 }

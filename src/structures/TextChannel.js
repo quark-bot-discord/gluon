@@ -9,6 +9,7 @@ const checkPermission = require("../util/discord/checkPermission");
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
  */
 class TextChannel extends Channel {
+  #_client;
   /**
    * Creates the structure for a text channel.
    * @param {Client} client The client instance.
@@ -17,15 +18,20 @@ class TextChannel extends Channel {
    * @param {Boolean?} nocache Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
-  constructor(client, data, guild_id, nocache = false) {
-    super(client, data, guild_id);
+  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
+    super(client, data, { guild_id });
 
-    if (nocache == false && this._client.cacheChannels == true)
-      this.guild?.channels.cache.set(data.id, this);
+    this.#_client = client;
+
+    if (nocache == false && this.#_client.cacheChannels == true)
+      this.guild?.channels.set(data.id, this);
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
-        new Message(this._client, data.messages[i], String(this.id), guild_id);
+        new Message(this.#_client, data.messages[i], {
+          channel_id: this.id,
+          guild_id,
+        });
   }
 
   /**
@@ -34,7 +40,12 @@ class TextChannel extends Channel {
    * @returns {void}
    */
   async bulkDelete(messages, { reason } = {}) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.MANAGE_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.MANAGE_MESSAGES
+      )
+    )
       throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
 
     const body = {};
@@ -43,11 +54,15 @@ class TextChannel extends Channel {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this._client.request.makeRequest(
+    await this.#_client.request.makeRequest(
       "postBulkDeleteMessages",
       [this.id],
-      body,
+      body
     );
+  }
+
+  toString() {
+    return `<TextChannel: ${this.id}>`;
   }
 
   toJSON() {

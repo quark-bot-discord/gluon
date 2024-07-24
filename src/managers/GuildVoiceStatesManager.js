@@ -11,6 +11,11 @@ class GuildVoiceStatesManager {
    * Creates a voice state manager.
    */
   constructor() {
+    /**
+     * The cache of voice states.
+     * @type {Map<String, VoiceState>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

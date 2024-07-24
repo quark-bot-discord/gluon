@@ -6,6 +6,15 @@ const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
  * @see {@link https://discord.com/developers/docs/resources/user}
  */
 class User {
+  #_client;
+  #_id;
+  #_attributes;
+  #_avatar;
+  #username;
+  #global_name;
+  #discriminator;
+  #_cached;
+  #overrideAvatar;
   /**
    * Creates a structure for a user.
    * @param {Client} client The client instance.
@@ -22,26 +31,26 @@ class User {
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the user.
      * @type {BigInt}
      */
-    this.id = BigInt(data.id);
+    this.#_id = BigInt(data.id);
 
-    this._attributes = 0;
+    this.#_attributes = 0;
 
-    if (data.bot == true) this._attributes |= 0b1 << 0;
+    if (data.bot == true) this.#_attributes |= 0b1 << 0;
 
     if (data.avatar && data.avatar.startsWith("a_") == true)
-      this._attributes |= 0b1 << 1;
+      this.#_attributes |= 0b1 << 1;
 
     /**
      * The avatar of the user.
      * @type {BigInt?}
      */
-    this._avatar = data.avatar
+    this.#_avatar = data.avatar
       ? BigInt(`0x${data.avatar.replace("a_", "")}`)
       : null;
 
@@ -49,40 +58,92 @@ class User {
      * The username of the user.
      * @type {String}
      */
-    this.username = data.username;
+    this.#username = data.username;
 
     /**
      * The global name of the user.
      * @type {String}
      */
-    this.global_name = data.global_name;
+    this.#global_name = data.global_name;
 
     if (data.discriminator && data.discriminator != 0)
       /**
        * The discriminator of the user (only if user is a bot).
        * @type {Number?}
        */
-      this.discriminator = Number(data.discriminator);
+      this.#discriminator = Number(data.discriminator);
 
     /**
      * The UNIX (seconds) timestamp when this user was last cached.
      * @type {Number}
      */
-    this._cached = (new Date().getTime() / 1000) | 0;
+    this.#_cached = (new Date().getTime() / 1000) | 0;
 
     if (
       nocache == false &&
-      this._client.cacheUsers == true &&
+      this.#_client.cacheUsers == true &&
       ignoreNoCache == false
     ) {
-      this._client.users.cache.set(data.id, this);
-      // if (noDbStore != true)
-      // this._client.users.store(this);
+      this.#_client.users.set(data.id, this);
     }
   }
 
   overrideAvatarURL(url) {
-    this.overrideAvatar = url;
+    this.#overrideAvatar = url;
+  }
+
+  /**
+   * The ID of the user.
+   * @type {String}
+   * @readonly
+   */
+  get id() {
+    return String(this.#_id);
+  }
+
+  /**
+   * The username of the user.
+   * @type {String}
+   * @readonly
+   */
+  get username() {
+    return this.#username;
+  }
+
+  /**
+   * The global name of the user.
+   * @type {String}
+   * @readonly
+   */
+  get globalName() {
+    return this.#global_name;
+  }
+
+  /**
+   * The discriminator of the user.
+   * @type {Number?}
+   * @readonly
+   */
+  get discriminator() {
+    return this.#discriminator;
+  }
+
+  /**
+   * The UNIX (seconds) timestamp when this user was last cached.
+   * @type {Number}
+   * @readonly
+   */
+  get _cached() {
+    return this.#_cached;
+  }
+
+  /**
+   * The mention string for the user.
+   * @type {String}
+   * @readonly
+   */
+  get mention() {
+    return `<@${this.id}>`;
   }
 
   /**
@@ -90,10 +151,10 @@ class User {
    * @readonly
    * @type {String?}
    */
-  get _originalAvatarHash() {
-    return this._avatar
+  get #_originalAvatarHash() {
+    return this.#_avatar
       ? // eslint-disable-next-line quotes
-        `${this.avatarIsAnimated ? "a_" : ""}${this._formattedAvatarHash}`
+        `${this.avatarIsAnimated ? "a_" : ""}${this.#_formattedAvatarHash}`
       : null;
   }
 
@@ -102,10 +163,10 @@ class User {
    * @readonly
    * @type {String}
    */
-  get _formattedAvatarHash() {
-    if (!this._avatar) return null;
+  get #_formattedAvatarHash() {
+    if (!this.#_avatar) return null;
 
-    let formattedHash = this._avatar.toString(16);
+    let formattedHash = this.#_avatar.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
@@ -120,9 +181,9 @@ class User {
    * @type {String}
    */
   get displayAvatarURL() {
-    if (this.overrideAvatar) return this.overrideAvatar;
+    if (this.#overrideAvatar) return this.#overrideAvatar;
 
-    return getAvatarUrl(this.id, this._originalAvatarHash);
+    return getAvatarUrl(this.id, this.#_originalAvatarHash);
   }
 
   /**
@@ -131,9 +192,9 @@ class User {
    * @type {String}
    */
   get tag() {
-    return this.discriminator
-      ? `${this.username}#${this.discriminator}`
-      : this.username;
+    return this.#discriminator
+      ? `${this.#username}#${this.#discriminator}`
+      : this.#username;
   }
 
   /**
@@ -151,7 +212,7 @@ class User {
    * @type {Boolean}
    */
   get bot() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
   }
 
   /**
@@ -160,16 +221,20 @@ class User {
    * @type {Boolean}
    */
   get avatarIsAnimated() {
-    return (this._attributes & (0b1 << 1)) == 0b1 << 1;
+    return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
+  }
+
+  toString() {
+    return `<User: ${this.id}>`;
   }
 
   toJSON() {
     return {
-      id: String(this.id),
-      avatar: this._originalAvatarHash,
+      id: this.id,
+      avatar: this.#_originalAvatarHash,
       bot: this.bot,
       username: this.username,
-      global_name: this.global_name,
+      global_name: this.globalName,
       discriminator: this.discriminator,
     };
   }

@@ -1,9 +1,19 @@
+const { INVITE_BASE_URL } = require("../constants");
 const User = require("./User");
 
 /**
  * Represents a guild invite.
  */
 class Invite {
+
+  #_client;
+  #_guild_id;
+  #_code;
+  #_channel_id;
+  #uses;
+  #expires;
+  #inviter;
+
   /**
    *
    * @param {Client} client The client instance.
@@ -12,58 +22,58 @@ class Invite {
    * @param {Boolean?} nocache Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
-  constructor(client, data, guild_id, nocache = false) {
+  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the guild that this role belongs to.
      * @type {BigInt}
      */
-    this._guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guild_id);
 
     /**
      * The code for the invite.
      * @type {String}
      */
-    this._code = data.code;
+    this.#_code = data.code;
 
     /**
      * The id of the channel the invite is directed to.
      * @type {BigInt}
      */
-    this._channel_id = BigInt(data.channel_id);
+    this.#_channel_id = BigInt(data.channel_id);
 
     if (data.inviter)
       /**
        * The user who created the invite.
        * @type {User?}
        */
-      this.inviter = new User(this._client, data.inviter, { nocache });
+      this.#inviter = new User(this.#_client, data.inviter, { nocache });
 
     if (typeof data.uses == "number")
       /**
        * The number of times the invite has been used.
        * @type {Number?}
        */
-      this.uses = data.uses;
+      this.#uses = data.uses;
 
     if (data.expires_at)
       /**
        * The UNIX timestamp of when the invite expires.
        * @type {Number?}
        */
-      this.expires = (new Date(data.expires_at).getTime() / 1000) | 0;
-    else if (typeof data.expires == "number") this.expires = data.expires;
+      this.#expires = (new Date(data.expires_at).getTime() / 1000) | 0;
+    else if (typeof data.expires == "number") this.#expires = data.expires;
     else if (
       typeof data.max_age == "number" &&
       data.max_age != 0 &&
       data.created_at
     )
-      this.expires =
+      this.#expires =
         ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
 
     if (typeof data.max_uses == "number")
@@ -75,28 +85,36 @@ class Invite {
 
     if (
       nocache == false &&
-      this._client.cacheInvites == true &&
-      this._code &&
-      ((this.expires && this.expires > Date.now() / 1000) || !this.expires)
+      this.#_client.cacheInvites == true &&
+      this.#_code &&
+      ((this.#expires && this.#expires > Date.now() / 1000) || !this.#expires)
     )
-      this.guild?.invites.cache.set(data.code, this);
+      this.guild?.invites.set(data.code, this);
     else
-      this._client.emit(
+      this.#_client.emit(
         "debug",
-        `NOT CACHING INVITE ${this._code} ${this.expires} ${
+        `NOT CACHING INVITE ${this.code} ${this.#expires} ${
           (Date.now() / 1000) | 0
         }`,
       );
   }
 
   /**
+   * The id of the channel the invite is directed to.
+   * @type {String}
+   * @readonly
+   */
+  get channelId() {
+    return String(this.#_channel_id);
+  }
+
+  /**
    * The channel the invite is directed to.
    * @type {(TextChannel | VoiceChannel)?}
+   * @readonly
    */
   get channel() {
-    return this._channel_id
-      ? this.guild.channels.cache.get(String(this._channel_id))
-      : null;
+    return this.guild.channels.get(this.channelId) || null;
   }
 
   /**
@@ -105,7 +123,25 @@ class Invite {
    * @readonly
    */
   get id() {
-    return this._code;
+    return this.code;
+  }
+
+  /**
+   * The code of the invite.
+   * @type {String}
+   * @readonly
+   */
+  get code() {
+    return this.#_code;
+  }
+
+  /**
+   * The id of the guild that this invite belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get guildId() {
+    return String(this.#_guild_id);
   }
 
   /**
@@ -114,12 +150,52 @@ class Invite {
    * @readonly
    */
   get guild() {
-    return this._client.guilds.cache.get(this._guild_id) || null;
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The number of times the invite has been used.
+   * @type {Number?}
+   * @readonly
+   */
+  get uses() {
+    return this.#uses;
+  }
+
+  /**
+   * The UNIX timestamp of when the invite expires.
+   * @type {Number?}
+   * @readonly
+   */
+  get expires() {
+    return this.#expires;
+  }
+
+  /**
+   * The user who created the invite.
+   * @type {User?}
+   * @readonly
+   */
+  get inviter() {
+    return this.#inviter;
+  }
+
+  /**
+   * The URL of the invite.
+   * @type {String}
+   * @readonly
+   */
+  get url() {
+    return `${INVITE_BASE_URL}/${this.code}`;
+  }
+
+  toString() {
+    return `<Invite: ${this.code}>`;
   }
 
   toJSON() {
     return {
-      code: this._code,
+      code: this.code,
       channel: this.channel,
       inviter: this.inviter,
       uses: this.uses,

@@ -1,4 +1,5 @@
 const { PERMISSIONS } = require("../constants");
+const ChannelCacheOptions = require("../managers/ChannelCacheOptions");
 const ChannelMessageManager = require("../managers/ChannelMessageManager");
 const checkPermission = require("../util/discord/checkPermission");
 const Message = require("./Message");
@@ -8,6 +9,17 @@ const Message = require("./Message");
  * @see {@link https://discord.com/developers/docs/resources/channel}
  */
 class Channel {
+  #_client;
+  #_id;
+  #_guild_id;
+  #type;
+  #name;
+  #topic;
+  #rate_limit_per_user;
+  #_parent_id;
+  #_attributes;
+  #_cacheOptions;
+  #messages;
   /**
    * Creates the base structure for a channel.
    * @param {Client} client The client instance.
@@ -15,122 +27,110 @@ class Channel {
    * @param {String} guild_id The ID of the guild that this channel belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
-  constructor(client, data, guild_id) {
+  constructor(client, data, { guild_id } = {}) {
     /**
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the channel.
      * @type {BigInt}
+     * @private
      */
-    this.id = BigInt(data.id);
+    this.#_id = BigInt(data.id);
 
     /**
      * The ID of the guild that this channel belongs to.
      * @type {BigInt}
+     * @private
      */
-    this._guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guild_id);
 
     /**
      * The type of channel.
      * @type {Number}
      */
-    this.type = data.type;
+    this.#type = data.type;
 
-    const existing = this.guild?.channels.cache.get(data.id) || null;
+    const existing = this.guild?.channels.get(data.id) || null;
 
     /**
      * The name of the channel.
      * @type {String}
      */
-    if (typeof data.name == "string") this.name = data.name;
+    if (typeof data.name == "string") this.#name = data.name;
     else if (
       typeof data.name != "string" &&
       existing &&
       typeof existing.name == "string"
     )
-      this.name = existing.name;
+      this.#name = existing.name;
 
     /**
      * The topic of the channel.
      * @type {String?}
      */
-    if (typeof data.topic == "string") this.topic = data.topic;
+    if (typeof data.topic == "string") this.#topic = data.topic;
     else if (
       typeof data.topic != "string" &&
       existing &&
       typeof existing.topic == "string"
     )
-      this.topic = existing.topic;
+      this.#topic = existing.topic;
 
     /**
      * The message send cooldown for the channel.
      * @type {Number?}
      */
     if (typeof data.rate_limit_per_user == "number")
-      this.rate_limit_per_user = data.rate_limit_per_user;
+      this.#rate_limit_per_user = data.rate_limit_per_user;
     else if (
       typeof data.rate_limit_per_user != "number" &&
       existing &&
-      typeof existing.rate_limit_per_user == "number"
+      typeof existing.rateLimitPerUser == "number"
     )
-      this.rate_limit_per_user = existing.rate_limit_per_user;
+      this.#rate_limit_per_user = existing.rateLimitPerUser;
 
     if (typeof data.parent_id == "string") {
       /**
        * The id of the parent channel.
        * @type {BigInt?}
+       * @private
        */
-      this._parent_id = BigInt(data.parent_id);
+      this.#_parent_id = BigInt(data.parent_id);
     } else if (
       typeof data.parent_id != "string" &&
       data.parent_id === undefined &&
       existing &&
-      typeof existing._parent_id == "bigint"
+      typeof existing.parentId == "string"
     )
-      this._parent_id = existing._parent_id;
+      this.#_parent_id = existing.parentId;
 
-    this._attributes = data._attributes ?? 0;
+    this.#_attributes = data._attributes ?? 0;
 
     if (data.nsfw !== undefined && data.nsfw == true)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
     else if (data.nsfw === undefined && existing && existing.nsfw == true)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
 
-    if (data._cache_options) this._cache_options = data._cache_options;
-    else if (!data._cache_options && existing && existing._cache_options)
-      this._cache_options = existing._cache_options;
-    else this._cache_options = 0;
+    /**
+     * The cache options for this channel.
+     * @type {ChannelCacheOptions}
+     */
+    this.#_cacheOptions = existing?._cacheOptions
+      ? existing._cacheOptions
+      : new ChannelCacheOptions(data._cacheOptions);
 
     /**
      * The message manager for this channel.
      * @type {ChannelMessageManager}
      */
-    this.messages =
-      existing?.messages && existing.messages.cache
+    this.#messages =
+      existing?.messages
         ? existing.messages
         : new ChannelMessageManager(client, this);
-  }
-
-  /**
-   * Whether this channel is marked as NSFW or not.
-   * @readonly
-   * @returns {Boolean}
-   */
-  get nsfw() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
-  }
-
-  /**
-   * The guild that this channel belongs to.
-   * @type {Guild?}
-   * @readonly
-   */
-  get guild() {
-    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
   }
 
   /**
@@ -142,9 +142,14 @@ class Channel {
    */
   async send(
     content,
-    { embed, components, files, embeds, suppressMentions = false } = {},
+    { embed, components, files, embeds, suppressMentions = false } = {}
   ) {
-    if (!checkPermission((await this.guild.me()).permissions, PERMISSIONS.SEND_MESSAGES))
+    if (
+      !checkPermission(
+        (await this.guild.me()).permissions,
+        PERMISSIONS.SEND_MESSAGES
+      )
+    )
       return null;
 
     const body = {};
@@ -152,8 +157,7 @@ class Channel {
     if (content) body.content = content;
 
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
@@ -161,19 +165,44 @@ class Channel {
       body.allowed_mentions.parse = [];
     }
 
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "postCreateMessage",
       [this.id],
-      body,
+      body
     );
 
-    return new Message(
-      this._client,
-      data,
-      String(this.id),
-      String(this._guild_id),
-      false,
-    );
+    return new Message(this.#_client, data, {
+      channel_id: this.id,
+      guild_id: this.guildId,
+      nocache: false,
+    });
+  }
+
+  /**
+   * Returns the mention for this channel.
+   * @type {String}
+   * @readonly
+   */
+  get mention() {
+    return `<#${this.id}>`;
+  }
+
+  /**
+   * Whether this channel is marked as NSFW or not.
+   * @readonly
+   * @returns {Boolean}
+   */
+  get nsfw() {
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
+  }
+
+  /**
+   * The guild that this channel belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this.#_client.guilds.get(this.guildId) || null;
   }
 
   /**
@@ -182,21 +211,106 @@ class Channel {
    * @readonly
    */
   get parent() {
-    return this._parent_id
-      ? this.guild?.channels.cache.get(String(this._parent_id)) || null
+    return this.parentId
+      ? this.guild?.channels.get(this.parentId) || null
       : null;
+  }
+
+  /**
+   * The ID of the channel.
+   * @type {String}
+   * @readonly
+   */
+  get id() {
+    return String(this.#_id);
+  }
+  
+  /**
+   * The ID of the guild that this channel belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get guildId() {
+    return String(this.#_guild_id);
+  }
+
+  /**
+   * The ID of the parent channel.
+   * @type {String?}
+   * @readonly
+   */
+  get parentId() {
+    return this.#_parent_id ? String(this.#_parent_id) : null
+  }
+
+  /**
+   * The type of channel.
+   * @type {Number}
+   * @readonly
+   */
+  get type() {
+    return this.#type;
+  }
+
+  /**
+   * The name of the channel.
+   * @type {String?}
+   * @readonly
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The topic of the channel.
+   * @type {String?}
+   * @readonly
+   */
+  get topic() {
+    return this.#topic;
+  }
+
+  /**
+   * The message send cooldown for the channel.
+   * @type {Number?}
+   * @readonly
+   */
+  get rateLimitPerUser() {
+    return this.#rate_limit_per_user;
+  }
+
+  /**
+   * The cache options for this channel.
+   * @type {ChannelCacheOptions}
+   * @readonly
+   */
+  get _cacheOptions() {
+    return this.#_cacheOptions;
+  }
+
+  /**
+   * The messages in this channel.
+   * @type {ChannelMessageManager}
+   * @readonly
+   */
+  get messages() {
+    return this.#messages;
+  }
+
+  toString() {
+    return `<Channel: ${this.id}>`;
   }
 
   toJSON() {
     return {
-      id: String(this.id),
+      id: this.id,
       type: this.type,
       name: this.name,
       topic: this.topic,
-      rate_limit_per_user: this.rate_limit_per_user,
-      parent_id: this._parent_id ? String(this._parent_id) : undefined,
-      _attributes: this._attributes,
-      _cache_options: this._cache_options,
+      rate_limit_per_user: this.rateLimitPerUser,
+      parent_id: this.parentId ?? undefined,
+      _attributes: this.#_attributes,
+      _cacheOptions: this._cacheOptions,
       messages: this.messages,
     };
   }

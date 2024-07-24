@@ -4,6 +4,16 @@ const getRoleIcon = require("../util/image/getRoleIcon");
  * Represents a role belonging to a guild.
  */
 class Role {
+  #_client;
+  #_guild_id;
+  #_id;
+  #name;
+  #color;
+  #position;
+  #_icon;
+  #permissions;
+  #_attributes;
+  #tags;
   /**
    *
    * @param {Client} client The client instance.
@@ -12,67 +22,76 @@ class Role {
    * @param {Boolean?} nocache Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
-  constructor(client, data, guild_id, nocache = false) {
+  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the guild that this role belongs to.
      * @type {BigInt}
      */
-    this._guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guild_id);
 
     /**
      * The id of the role.
      * @type {BigInt}
      */
-    this.id = BigInt(data.id);
+    this.#_id = BigInt(data.id);
 
     /**
      * The name of the role.
      * @type {String}
      */
-    this.name = data.name;
+    this.#name = data.name;
 
     /**
      * The colour of the role.
      * @type {Number}
      */
-    this.color = data.color;
+    this.#color = data.color;
 
     /**
      * The position of the role.
      * @type {Number}
      */
-    this.position = data.position;
+    this.#position = data.position;
 
     /**
      * The role icon hash.
      * @type {String?}
      */
-    if (data.icon) this._icon = BigInt(`0x${data.icon}`);
+    if (data.icon) this.#_icon = BigInt(`0x${data.icon}`);
 
     /**
      * The permissions for the role.
      * @type {BigInt}
      */
-    this.permissions = BigInt(data.permissions);
+    this.#permissions = BigInt(data.permissions);
 
-    this._attributes = data._attributes ?? 0;
+    this.#_attributes = data._attributes ?? 0;
 
-    if (data.hoist == true) this._attributes |= 0b1 << 0;
+    if (data.hoist == true) this.#_attributes |= 0b1 << 0;
 
-    if (data.managed == true) this._attributes |= 0b1 << 1;
+    if (data.managed == true) this.#_attributes |= 0b1 << 1;
 
-    if (data.mentionable == true) this._attributes |= 0b1 << 2;
+    if (data.mentionable == true) this.#_attributes |= 0b1 << 2;
 
-    if (data.tags) this.tags = data.tags;
+    if (data.tags) this.#tags = data.tags;
 
-    if (nocache == false && this._client.cacheRoles == true)
-      this.guild?.roles.cache.set(data.id, this);
+    if (nocache == false && this.#_client.cacheRoles == true)
+      this.guild?.roles.set(data.id, this);
+  }
+
+  /**
+   * The ID of the role.
+   * @type {String}
+   * @readonly
+   */
+  get id() {
+    return String(this.#_id);
   }
 
   /**
@@ -81,7 +100,7 @@ class Role {
    * @returns {Boolean}
    */
   get hoist() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
   }
 
   /**
@@ -90,7 +109,7 @@ class Role {
    * @returns {Boolean}
    */
   get managed() {
-    return (this._attributes & (0b1 << 1)) == 0b1 << 1;
+    return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
   }
 
   /**
@@ -99,7 +118,7 @@ class Role {
    * @returns {Boolean}
    */
   get mentionable() {
-    return (this._attributes & (0b1 << 2)) == 0b1 << 2;
+    return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
   /**
@@ -107,10 +126,10 @@ class Role {
    * @readonly
    * @type {String?}
    */
-  get _originalIconHash() {
-    return this._icon
+  get #_originalIconHash() {
+    return this.#_icon
       ? // eslint-disable-next-line quotes
-        `${this._formattedIconHash}`
+        `${this.#_formattedIconHash}`
       : null;
   }
 
@@ -119,10 +138,10 @@ class Role {
    * @readonly
    * @type {String}
    */
-  get _formattedIconHash() {
-    if (!this._icon) return null;
+  get #_formattedIconHash() {
+    if (!this.#_icon) return null;
 
-    let formattedHash = this._icon.toString(16);
+    let formattedHash = this.#_icon.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
@@ -137,7 +156,7 @@ class Role {
    * @type {String?}
    */
   get displayIconURL() {
-    return getRoleIcon(this._originalIconHash, this.id);
+    return getRoleIcon(this.#_originalIconHash, this.id);
   }
 
   /**
@@ -146,18 +165,76 @@ class Role {
    * @readonly
    */
   get guild() {
-    return this._client.guilds.cache.get(this._guild_id.toString()) || null;
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The ID of the guild that this role belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get guildId() {
+    return String(this.#_guild_id);
+  }
+
+  /**
+   * The name of the role.
+   * @type {String}
+   * @readonly
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The colour of the role.
+   * @type {Number}
+   * @readonly
+   */
+  get color() {
+    return this.#color;
+  }
+
+  /**
+   * The position of the role.
+   * @type {Number}
+   * @readonly
+   */
+  get position() {
+    return this.#position;
+  }
+
+  /**
+   * The permissions for the role.
+   * @type {String}
+   * @readonly
+   */
+  get permissions() {
+    return String(this.#permissions);
+  }
+
+  /**
+   * The attributes of the role.
+   * @type {Object}
+   * @readonly
+   */
+  get tags() {
+    return this.#tags;
+  }
+
+  toString() {
+    return `<Role: ${this.id}>`;
   }
 
   toJSON() {
     return {
-      id: String(this.id),
+      id: this.id,
       name: this.name,
       color: this.color,
       position: this.position,
-      permissions: String(this.permissions),
-      icon: this._originalIconHash,
-      _attributes: this._attributes,
+      permissions: this.permissions,
+      icon: this.#_originalIconHash,
+      _attributes: this.#_attributes,
       tags: this.tags,
     };
   }

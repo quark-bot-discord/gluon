@@ -5,6 +5,11 @@ const { CDN_BASE_URL } = require("../constants");
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
  */
 class Emoji {
+  #_client;
+  #_id;
+  #name;
+  #_attributes;
+  #_guild_id;
   /**
    * Creates the structure for an emoji.
    * @param {Client} client The client instance.
@@ -12,45 +17,49 @@ class Emoji {
    * @param {String} guild_id The id of the guild that the emoji belongs to.
    * @param {Boolean?} nocache Whether this emoji should be cached or not.
    */
-  constructor(client, data, guild_id, nocache = false) {
+  constructor(client, data, { guild_id, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the emoji (if it is custom).
      * @type {BigInt?}
+     * @private
      */
-    this.id = data.id ? BigInt(data.id) : null;
+    this.#_id = data.id ? BigInt(data.id) : null;
 
     /**
      * The name of the emoji (if it is custom).
      * @type {String?}
      */
-    this.name = data.name;
+    this.#name = data.name;
 
-    this._attributes = data._attributes ?? 0;
+    this.#_attributes = data._attributes ?? 0;
 
     if (data.require_colons !== undefined && data.require_colons == true)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
 
     if (data.managed !== undefined && data.managed == true)
-      this._attributes |= 0b1 << 1;
+      this.#_attributes |= 0b1 << 1;
 
     if (data.animated !== undefined && data.animated == true)
-      this._attributes |= 0b1 << 2;
+      this.#_attributes |= 0b1 << 2;
 
     if (data.available !== undefined && data.available == true)
-      this._attributes |= 0b1 << 3;
+      this.#_attributes |= 0b1 << 3;
 
-    this.guild = this._client.guilds.cache.get(guild_id) || null;
+    /**
+     * The id of the guild that this emoji belongs to.
+     * @type {BigInt}
+     * @private
+     */
+    this.#_guild_id = BigInt(guild_id);
 
-    if (!this.guild) this.guild_id = BigInt(guild_id);
-
-    if (nocache == false && this._client.cacheEmojis == true && this.id)
-      this._client.guilds.cache.get(guild_id)?.emojis.cache.set(data.id, this);
+    if (nocache == false && this.#_client.cacheEmojis == true && this.id)
+      this.#_client.guilds.get(guild_id)?.emojis.set(data.id, this);
   }
 
   /**
@@ -58,8 +67,8 @@ class Emoji {
    * @type {Boolean}
    * @readonly
    */
-  get require_colons() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+  get requireColons() {
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
   }
 
   /**
@@ -68,7 +77,7 @@ class Emoji {
    * @readonly
    */
   get managed() {
-    return (this._attributes & (0b1 << 1)) == 0b1 << 1;
+    return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
   }
 
   /**
@@ -77,7 +86,7 @@ class Emoji {
    * @readonly
    */
   get animated() {
-    return (this._attributes & (0b1 << 2)) == 0b1 << 2;
+    return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
   /**
@@ -86,7 +95,7 @@ class Emoji {
    * @readonly
    */
   get available() {
-    return (this._attributes & (0b1 << 3)) == 0b1 << 3;
+    return (this.#_attributes & (0b1 << 3)) == 0b1 << 3;
   }
 
   /**
@@ -111,11 +120,51 @@ class Emoji {
     }`;
   }
 
+  /**
+   * The id of the guild that this emoji belongs to.
+   * @type {String}
+   * @readonly
+   */
+  get guildId() {
+    return String(this.#_guild_id);
+  }
+
+  /**
+   * The guild that this emoji belongs to.
+   * @type {Guild?}
+   * @readonly
+   */
+  get guild() {
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The id of the emoji, if it is custom.
+   * @type {String?}
+   * @readonly
+   */
+  get id() {
+    return this.#_id ? String(this.#_id) : null;
+  }
+
+  /**
+   * The name of the emoji.
+   * @type {String}
+   * @readonly
+   */
+  get name() {
+    return this.#name;
+  }
+
+  toString() {
+    return `<Emoji: ${this.id ?? this.name}>`;
+  }
+
   toJSON() {
     return {
-      id: this.id ? String(this.id) : undefined,
+      id: this.id ?? undefined,
       name: this.name,
-      _attributes: this._attributes,
+      _attributes: this.#_attributes,
     };
   }
 }
