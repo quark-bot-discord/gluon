@@ -1,5 +1,6 @@
 const ActionRow = require("../util/builder/actionRowBuilder");
 const Member = require("./Member");
+const File = require("./File");
 
 /**
  * Represents an interaction received over the gateway.
@@ -152,8 +153,19 @@ class Interaction {
    * @public
    * @async
    * @method
+   * @throws {Error | TypeError}
    */
   async textPrompt({ title, customId, textInputModal }) {
+
+    if (typeof title !== "undefined" && typeof title !== "string")
+      throw new TypeError("GLUON: No title provided.");
+
+    if (typeof customId !== "undefined" && typeof customId !== "string")
+      throw new TypeError("GLUON: No custom id provided.");
+
+    if (typeof textInputModal !== "undefined" && !(textInputModal instanceof ActionRow))
+      throw new TypeError("GLUON: Text input modal must be an action row.");
+
     const body = {};
 
     body.type = 9;
@@ -182,8 +194,13 @@ class Interaction {
    * @public
    * @async
    * @method
+   * @throws {Error}
    */
-  async autocompleteResponse({ choices }) {
+  async autocompleteResponse({ choices } = {}) {
+
+    if (!choices || !Array.isArray(choices))
+      throw new Error("GLUON: No choices provided.");
+
     const body = {};
 
     body.type = 8;
@@ -209,8 +226,27 @@ class Interaction {
    */
   async reply(
     content,
-    { files, embed, embeds, _embed, _embeds, components, quiet } = {}
+    { files, embeds, components, quiet } = {}
   ) {
+
+    if (!content && !files && !embeds && !components)
+      throw new Error("GLUON: No content, files, embed, or components provided.");
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (typeof files !== "undefined" && !Array.isArray(files) && !files.every((file) => file instanceof File))
+      throw new TypeError("GLUON: Files must be an array of files.");
+
+    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && !embeds.every((embed) => embed instanceof Embed))
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
+
+    if (typeof components !== "undefined" && !Array.isArray(components) && !components.every((component) => component instanceof ActionRow))
+      throw new TypeError("GLUON: Components must be an array of components.");
+
+    if (typeof quiet !== "undefined" && typeof quiet !== "boolean")
+      throw new TypeError("GLUON: Quiet must be a boolean.");
+
     const body = {};
 
     body.type = 4;
@@ -218,10 +254,7 @@ class Interaction {
 
     if (content) body.data.content = content;
     if (files) body.files = files;
-    if (embed) body.data.embeds = [embed];
-    else if (embeds && embeds.length != 0) body.embeds = embeds;
-    else if (_embed) body.data.embeds = [_embed];
-    else if (_embeds) body.data.embeds = _embeds;
+    if (embeds) body.data.embeds = embeds;
     if (components)
       body.data.components =
         Array.isArray(components) != true ? components : [];
@@ -244,15 +277,30 @@ class Interaction {
    * @public
    * @async
    * @method
+   * @throws {Error | TypeError}
    */
-  async edit(content, { files, embed, _embed, _embeds, components } = {}) {
+  async edit(content, { files, embeds, components } = {}) {
+
+    if (!content && !files && !embeds && !components)
+      throw new Error("GLUON: No content, files, embed, or components provided.");
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (typeof files !== "undefined" && !Array.isArray(files) && !files.every((file) => file instanceof File))
+      throw new TypeError("GLUON: Files must be an array of files.");
+
+    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && !embeds.every((embed) => embed instanceof Embed))
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
+
+    if (typeof components !== "undefined" && !Array.isArray(components) && !components.every((component) => component instanceof ActionRow))
+      throw new TypeError("GLUON: Components must be an array of components.");
+
     const body = {};
 
     if (content) body.content = content;
     if (files) body.files = files;
-    if (embed) body.embeds = [embed];
-    else if (_embed) body.embeds = [_embed];
-    else if (_embeds) body.embeds = _embeds;
+    if (embeds) body.embeds = embeds;
     if (components)
       body.components = Array.isArray(components) != true ? components : [];
 

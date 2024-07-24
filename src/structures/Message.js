@@ -575,9 +575,9 @@ class Message {
    * @method
    * @public
    * @async
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
-  async reply(content, { embed, components, files } = {}) {
+  async reply(content, { embeds, components, files } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -586,10 +586,25 @@ class Message {
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
+    if (!content && !embeds && !components && !files)
+      throw new Error("GLUON: Must provide content, embeds, components or files");
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (typeof embeds !== "undefined" && !Array.isArray(embeds))
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
+
+    if (typeof components !== "undefined" && !Array.isArray(components))
+      throw new TypeError("GLUON: Components must be an array of components.");
+
+    if (typeof files !== "undefined" && !Array.isArray(files))
+      throw new TypeError("GLUON: Files must be an array of files.");
+
     const body = {};
 
     if (content) body.content = content;
-    if (embed) body.embeds = [embed];
+    if (embeds) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
 
@@ -623,9 +638,9 @@ class Message {
    * @method
    * @public
    * @async
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
-  async edit(content, { embed, embeds, components, files } = {}) {
+  async edit(content, { embeds, components, files } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -633,6 +648,21 @@ class Message {
       )
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+
+    if (!content && !embeds && !components && !files)
+      throw new Error("GLUON: Must provide content, embeds, components or files");
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (typeof embeds !== "undefined" && !Array.isArray(embeds))
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
+
+    if (typeof components !== "undefined" && !Array.isArray(components))
+      throw new TypeError("GLUON: Components must be an array of components.");
+
+    if (typeof files !== "undefined" && !Array.isArray(files))
+      throw new TypeError("GLUON: Files must be an array of files.");
 
     const body = {};
 

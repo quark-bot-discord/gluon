@@ -387,6 +387,7 @@ class Member {
    * @public
    * @async
    * @method
+   * @throws {TypeError | Error}
    */
   async addRole(role_id, { reason } = {}) {
     if (
@@ -396,6 +397,12 @@ class Member {
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    if (typeof role_id !== "string")
+      throw new TypeError("GLUON: Role id must be a string.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -417,6 +424,7 @@ class Member {
    * @public
    * @async
    * @method
+   * @throws {TypeError | Error}
    */
   async removeRole(role_id, { reason } = {}) {
     if (
@@ -426,6 +434,12 @@ class Member {
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    if (typeof role_id !== "string")
+      throw new TypeError("GLUON: Role ID must be a string.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -447,6 +461,7 @@ class Member {
    * @public
    * @async
    * @method
+   * @throws {TypeError | Error}
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
     if (
@@ -456,6 +471,12 @@ class Member {
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+
+    if (typeof timeout_until !== "number")
+      throw new TypeError("GLUON: Timeout until must be a UNIX timestamp.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -478,6 +499,7 @@ class Member {
    * @public
    * @async
    * @method
+   * @throws {TypeError | Error}
    */
   async timeoutRemove({ reason } = {}) {
     if (
@@ -487,6 +509,9 @@ class Member {
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -509,6 +534,7 @@ class Member {
    * @public
    * @async
    * @method
+   * @throws {TypeError | Error}
    */
   async massUpdateRoles(roles, { reason } = {}) {
     if (
@@ -518,6 +544,12 @@ class Member {
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    if (!Array.isArray(roles))
+      throw new TypeError("GLUON: Roles must be an array of role ids.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 

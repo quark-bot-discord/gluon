@@ -895,7 +895,7 @@ class Guild {
    * @throws {Error}
    */
   me() {
-    const cached = this.members.get(this.#_client.user.id.toString());
+    const cached = this.members.get(this.#_client.user.id);
 
     if (cached) return cached;
 
@@ -910,13 +910,18 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async ban(user_id, { reason, days } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+
+    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: reason");
 
     const body = {};
 
@@ -939,13 +944,18 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async unban(user_id, { reason } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+
+    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: reason");
 
     const body = {};
 
@@ -966,13 +976,18 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async kick(user_id, { reason } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS)
     )
       throw new Error("MISSING PERMISSIONS: KICK_MEMBERS");
+
+    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: reason");
 
     const body = {};
 
@@ -994,13 +1009,20 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async removeMemberRole(user_id, role_id, { reason } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+
+    if (typeof role_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: role_id");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: reason");
 
     const body = {};
 
@@ -1020,7 +1042,7 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async fetchAuditLogs({ limit, type, user_id, before }) {
     if (
@@ -1031,6 +1053,18 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
 
+    if (typeof limit !== "undefined" && typeof limit !== "number")
+      throw new TypeError("GLUON: INVALID_TYPE: limit");
+
+    if (typeof type !== "undefined" && typeof type !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: type");
+
+    if (typeof user_id !== "undefined" && typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
+
+    if (typeof before !== "undefined" && typeof before !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: before");
+
     const body = {};
 
     if (limit) body.limit = limit;
@@ -1038,9 +1072,9 @@ class Guild {
 
     if (type) body.action_type = AUDIT_LOG_TYPES[type];
 
-    if (user_id) body.user_id = user_id.toString();
+    if (user_id) body.user_id = user_id;
 
-    if (before) body.before = before.toString();
+    if (before) body.before = before;
 
     const data = await this.#_client.request.makeRequest(
       "getGuildAuditLog",
@@ -1112,13 +1146,15 @@ class Guild {
    * @async
    * @public
    * @method
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async fetchBan(user_id) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+
+    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
     const data = await this.#_client.request.makeRequest("getGuildBan", [
       this.id,

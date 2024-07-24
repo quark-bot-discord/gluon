@@ -46,7 +46,7 @@ class TextChannel extends Channel {
    * @method
    * @async
    * @public
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async bulkDelete(messages, { reason } = {}) {
     if (
@@ -56,6 +56,12 @@ class TextChannel extends Channel {
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+
+    if (!Array.isArray(messages) || !messages.every((m) => typeof m === "string"))
+      throw new TypeError("GLUON: Messages is not an array of strings.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
 
     const body = {};
 

@@ -153,11 +153,11 @@ class Channel {
    * @method
    * @public
    * @async
-   * @throws {Error}
+   * @throws {Error | TypeError}
    */
   async send(
     content,
-    { embed, components, files, embeds, suppressMentions = false } = {}
+    { components, files, embeds, suppressMentions = false } = {}
   ) {
     if (
       !checkPermission(
@@ -167,12 +167,29 @@ class Channel {
     )
       return null;
 
+    if (!content && !embeds && !components && !files)
+      throw new Error("GLUON: No content, embeds, components or files provided.");
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (typeof suppressMentions !== "boolean")
+      throw new TypeError("GLUON: Suppress mentions must be a boolean.");
+
+    if (typeof components !== "undefined" && !Array.isArray(components) && components.every(c => c instanceof ActionRow))
+      throw new TypeError("GLUON: Components must be an array.");
+
+    if (typeof files !== "undefined" && !Array.isArray(files) && files.every(f => f instanceof File))
+      throw new TypeError("GLUON: Files must be an array.");
+
+    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && embeds.every(e => e instanceof Embed))
+      throw new TypeError("GLUON: Embeds must be an array.");
+
     const body = {};
 
     if (content) body.content = content;
 
-    if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0) body.embeds = embeds;
+    if (embeds) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
