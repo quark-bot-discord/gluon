@@ -50,14 +50,14 @@
         "params": []
     },
     {
-        "comment": "/**\n * Represents when a button is clicked.\n * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}\n */",
+        "comment": "/**\n * Represents when a button is clicked.\n * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                275,
-                910
+                301,
+                1614
             ],
             "filename": "ButtonClick.js",
-            "lineno": 8,
+            "lineno": 9,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -74,6 +74,9 @@
         "see": [
             "{@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}"
         ],
+        "augments": [
+            "Interaction"
+        ],
         "name": "ButtonClick",
         "longname": "ButtonClick",
         "kind": "class",
@@ -81,18 +84,68 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n   * Creates a button click interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                490,
-                908
+                343,
+                354
             ],
             "filename": "ButtonClick.js",
-            "lineno": 14,
+            "lineno": 10,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000018",
+                "name": "custom_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "custom_id",
+        "longname": "ButtonClick#custom_id",
+        "kind": "member",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                357,
+                366
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 11,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000019",
+                "name": "message",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "message",
+        "longname": "ButtonClick#message",
+        "kind": "member",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   * Creates a button click interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
+        "meta": {
+            "range": [
+                542,
+                1015
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 17,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000020",
                 "name": "ButtonClick",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -132,14 +185,14 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n * Represents when a button is clicked.\n * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}\n */",
+        "comment": "/**\n * Represents when a button is clicked.\n * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                275,
-                910
+                301,
+                1614
             ],
             "filename": "ButtonClick.js",
-            "lineno": 8,
+            "lineno": 9,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -158,6 +211,9 @@
         "classdesc": "Represents when a button is clicked.",
         "see": [
             "{@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}"
+        ],
+        "augments": [
+            "Interaction"
         ],
         "scope": "global",
         "description": "Creates a button click interaction structure.",
@@ -183,19 +239,19 @@
         ]
     },
     {
-        "comment": "/**\n     * The custom id of the button.\n     * @type {String}\n     */",
+        "comment": "/**\n     * The custom id of the button.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                622,
-                658
+                690,
+                727
             ],
             "filename": "ButtonClick.js",
-            "lineno": 21,
+            "lineno": 25,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000030",
-                "name": "this.custom_id",
+                "id": "astnode100000032",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.data.custom_id",
                 "paramnames": []
@@ -207,26 +263,27 @@
                 "String"
             ]
         },
-        "name": "custom_id",
-        "longname": "ButtonClick#custom_id",
+        "access": "private",
+        "name": "ButtonClick",
+        "longname": "ButtonClick.ButtonClick",
         "kind": "member",
         "memberof": "ButtonClick",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The message which the button belongs to.\n     * @type {Message}\n     */",
+        "comment": "/**\n     * The message which the button belongs to.\n     * @type {Message}\n     * @private\n     */",
         "meta": {
             "range": [
-                752,
-                903
+                837,
+                1010
             ],
             "filename": "ButtonClick.js",
-            "lineno": 27,
+            "lineno": 32,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000040",
-                "name": "this.message",
+                "id": "astnode100000043",
+                "name": "this.",
                 "type": "NewExpression",
                 "value": "",
                 "paramnames": []
@@ -238,25 +295,279 @@
                 "Message"
             ]
         },
-        "name": "message",
-        "longname": "ButtonClick#message",
+        "access": "private",
+        "name": "ButtonClick",
+        "longname": "ButtonClick.ButtonClick",
         "kind": "member",
         "memberof": "ButtonClick",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                912,
-                940
+                901,
+                928
             ],
             "filename": "ButtonClick.js",
-            "lineno": 37,
+            "lineno": 33,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000057",
+                "name": "channel_id",
+                "type": "MemberExpression",
+                "value": "data.channel_id"
+            }
+        },
+        "undocumented": true,
+        "name": "channel_id",
+        "longname": "channel_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                936,
+                959
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 34,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000061",
+                "name": "guild_id",
+                "type": "MemberExpression",
+                "value": "data.guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guild_id",
+        "longname": "guild_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                967,
+                1002
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 35,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000065",
+                "name": "nocache",
+                "type": "MemberExpression",
+                "value": "this._client.cacheMessages"
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\n   * The custom id of the button.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1113,
+                1161
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 45,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000071",
+                "name": "ButtonClick#customId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The custom id of the button.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "customId",
+        "longname": "ButtonClick#customId",
+        "kind": "member",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The message which the button belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   * @see {@link Message}\n   */",
+        "meta": {
+            "range": [
+                1298,
+                1343
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 56,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000080",
+                "name": "ButtonClick#message",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The message which the button belongs to.",
+        "type": {
+            "names": [
+                "Message"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "see": [
+            "{@link Message}"
+        ],
+        "name": "message",
+        "longname": "ButtonClick#message",
+        "kind": "member",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1385,
+                1447
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 64,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000089",
+                "name": "ButtonClick#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "ButtonClick#toString",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/** \n   * @method\n   * @override \n   */",
+        "meta": {
+            "range": [
+                1493,
+                1612
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 72,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000100",
+                "name": "ButtonClick#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "override": true,
+        "name": "toJSON",
+        "longname": "ButtonClick#toJSON",
+        "memberof": "ButtonClick",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1548,
+                1571
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 75,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000111",
+                "name": "customId",
+                "type": "MemberExpression",
+                "value": "this.customId"
+            }
+        },
+        "undocumented": true,
+        "name": "customId",
+        "longname": "customId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1579,
+                1600
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 76,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000115",
+                "name": "message",
+                "type": "MemberExpression",
+                "value": "this.message"
+            }
+        },
+        "undocumented": true,
+        "name": "message",
+        "longname": "message",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1616,
+                1644
+            ],
+            "filename": "ButtonClick.js",
+            "lineno": 81,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000064",
+                "id": "astnode100000120",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "ButtonClick",

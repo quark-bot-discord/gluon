@@ -29,7 +29,7 @@
         "meta": {
             "range": [
                 110,
-                3601
+                5175
             ],
             "filename": "Role.js",
             "lineno": 6,
@@ -42,8 +42,7 @@
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
@@ -55,25 +54,274 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {String} guild_id The id of the guild that the role belongs to.\n   * @param {Boolean?} nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                499,
-                1817
+                125,
+                134
+            ],
+            "filename": "Role.js",
+            "lineno": 7,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000011",
+                "name": "_client",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_client",
+        "longname": "Role#_client",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                137,
+                148
+            ],
+            "filename": "Role.js",
+            "lineno": 8,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000012",
+                "name": "_guild_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_guild_id",
+        "longname": "Role#_guild_id",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                151,
+                156
+            ],
+            "filename": "Role.js",
+            "lineno": 9,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000013",
+                "name": "_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_id",
+        "longname": "Role#_id",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                159,
+                165
+            ],
+            "filename": "Role.js",
+            "lineno": 10,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000014",
+                "name": "name",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "name",
+        "longname": "Role#name",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                168,
+                175
+            ],
+            "filename": "Role.js",
+            "lineno": 11,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000015",
+                "name": "color",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "color",
+        "longname": "Role#color",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                178,
+                188
+            ],
+            "filename": "Role.js",
+            "lineno": 12,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000016",
+                "name": "position",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "position",
+        "longname": "Role#position",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                191,
+                198
+            ],
+            "filename": "Role.js",
+            "lineno": 13,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000017",
+                "name": "_icon",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_icon",
+        "longname": "Role#_icon",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                201,
+                214
+            ],
+            "filename": "Role.js",
+            "lineno": 14,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000018",
+                "name": "permissions",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "permissions",
+        "longname": "Role#permissions",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                217,
+                230
             ],
             "filename": "Role.js",
             "lineno": 15,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000011",
+                "id": "astnode100000019",
+                "name": "_attributes",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_attributes",
+        "longname": "Role#_attributes",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                233,
+                239
+            ],
+            "filename": "Role.js",
+            "lineno": 16,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000020",
+                "name": "tags",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "tags",
+        "longname": "Role#tags",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {String} guild_id The id of the guild that the role belongs to.\n   * @param {Boolean?} nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
+        "meta": {
+            "range": [
+                616,
+                2185
+            ],
+            "filename": "Role.js",
+            "lineno": 25,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000021",
                 "name": "Role",
                 "type": "MethodDefinition",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             },
             "vars": {
@@ -116,8 +364,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this role should be cached or not.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "nocache"
             }
         ],
         "see": [
@@ -134,7 +381,7 @@
         "meta": {
             "range": [
                 110,
-                3601
+                5175
             ],
             "filename": "Role.js",
             "lineno": 6,
@@ -147,8 +394,7 @@
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
@@ -196,25 +442,96 @@
                 },
                 "nullable": true,
                 "description": "Whether this role should be cached or not.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "nocache"
             }
         ]
     },
     {
-        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     */",
+        "comment": "",
         "meta": {
             "range": [
-                624,
-                645
+                644,
+                652
             ],
             "filename": "Role.js",
-            "lineno": 20,
+            "lineno": 25,
+            "columnno": 30,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000028",
+                "name": "guild_id",
+                "type": "Identifier",
+                "value": "guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guild_id",
+        "longname": "guild_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                654,
+                669
+            ],
+            "filename": "Role.js",
+            "lineno": 25,
+            "columnno": 40,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000030",
+                "name": "nocache",
+                "type": "AssignmentPattern",
+                "value": "nocache"
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                676,
+                690
+            ],
+            "filename": "Role.js",
+            "lineno": 25,
+            "columnno": 62,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000035",
+                "name": "nocache",
+                "type": "Literal",
+                "value": false
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                782,
+                804
+            ],
+            "filename": "Role.js",
+            "lineno": 31,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000022",
-                "name": "this._client",
+                "id": "astnode100000039",
+                "name": "this.",
                 "type": "Identifier",
                 "value": "client",
                 "paramnames": []
@@ -226,26 +543,27 @@
                 "Client"
             ]
         },
-        "name": "_client",
-        "longname": "Role#_client",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                744,
-                777
+                919,
+                953
             ],
             "filename": "Role.js",
-            "lineno": 26,
+            "lineno": 38,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000028",
-                "name": "this._guild_id",
+                "id": "astnode100000046",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -257,26 +575,27 @@
                 "BigInt"
             ]
         },
-        "name": "_guild_id",
-        "longname": "Role#_guild_id",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The id of the role.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The id of the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                849,
-                874
+                1041,
+                1068
             ],
             "filename": "Role.js",
-            "lineno": 32,
+            "lineno": 45,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000036",
-                "name": "this.id",
+                "id": "astnode100000055",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -288,26 +607,27 @@
                 "BigInt"
             ]
         },
-        "name": "id",
-        "longname": "Role#id",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The name of the role.\n     * @type {String}\n     */",
+        "comment": "/**\n     * The name of the role.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                948,
-                969
+                1158,
+                1180
             ],
             "filename": "Role.js",
-            "lineno": 38,
+            "lineno": 52,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000046",
-                "name": "this.name",
+                "id": "astnode100000066",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.name",
                 "paramnames": []
@@ -319,26 +639,27 @@
                 "String"
             ]
         },
-        "name": "name",
-        "longname": "Role#name",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The colour of the role.\n     * @type {Number}\n     */",
+        "comment": "/**\n     * The colour of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1045,
-                1068
+                1272,
+                1296
             ],
             "filename": "Role.js",
-            "lineno": 44,
+            "lineno": 59,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000054",
-                "name": "this.color",
+                "id": "astnode100000075",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.color",
                 "paramnames": []
@@ -350,26 +671,27 @@
                 "Number"
             ]
         },
-        "name": "color",
-        "longname": "Role#color",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The position of the role.\n     * @type {Number}\n     */",
+        "comment": "/**\n     * The position of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1146,
-                1175
+                1390,
+                1420
             ],
             "filename": "Role.js",
-            "lineno": 50,
+            "lineno": 66,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000062",
-                "name": "this.position",
+                "id": "astnode100000084",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.position",
                 "paramnames": []
@@ -381,52 +703,53 @@
                 "Number"
             ]
         },
-        "name": "position",
-        "longname": "Role#position",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1263,
-                1300
+                1524,
+                1562
             ],
             "filename": "Role.js",
-            "lineno": 56,
+            "lineno": 73,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000074",
-                "name": "this._icon",
+                "id": "astnode100000097",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_icon",
-        "longname": "Role#_icon",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The permissions for the role.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The permissions for the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1382,
-                1425
+                1660,
+                1704
             ],
             "filename": "Role.js",
-            "lineno": 62,
+            "lineno": 80,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000087",
-                "name": "this.permissions",
+                "id": "astnode100000111",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -438,155 +761,198 @@
                 "BigInt"
             ]
         },
-        "name": "permissions",
-        "longname": "Role#permissions",
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "",
+        "comment": "/**\n     * The attributes of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1432,
-                1472
+                1800,
+                1841
             ],
             "filename": "Role.js",
-            "lineno": 64,
+            "lineno": 87,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000097",
-                "name": "this._attributes",
+                "id": "astnode100000122",
+                "name": "this.",
                 "type": "LogicalExpression",
                 "value": "",
                 "paramnames": []
             }
         },
-        "undocumented": true,
-        "name": "_attributes",
-        "longname": "Role#_attributes",
+        "description": "The attributes of the role.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "access": "private",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1503,
-                1531
+                1872,
+                1901
             ],
             "filename": "Role.js",
-            "lineno": 66,
+            "lineno": 89,
             "columnno": 28,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000113",
-                "name": "this._attributes",
+                "id": "astnode100000139",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "Role#_attributes",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1564,
-                1592
+                1934,
+                1963
             ],
             "filename": "Role.js",
-            "lineno": 68,
+            "lineno": 91,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000127",
-                "name": "this._attributes",
+                "id": "astnode100000154",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "Role#_attributes",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1629,
-                1657
+                2000,
+                2029
             ],
             "filename": "Role.js",
-            "lineno": 70,
+            "lineno": 93,
             "columnno": 34,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000141",
-                "name": "this._attributes",
+                "id": "astnode100000169",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "Role#_attributes",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1679,
-                1700
+                2051,
+                2073
             ],
             "filename": "Role.js",
-            "lineno": 72,
+            "lineno": 95,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000153",
-                "name": "this.tags",
+                "id": "astnode100000182",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.tags",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "tags",
-        "longname": "Role#tags",
+        "name": "Role",
+        "longname": "Role.Role",
         "kind": "member",
         "memberof": "Role",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n   * Whether the role is hoisted.\n   * @readonly\n   * @returns {Boolean}\n   */",
+        "comment": "/**\n   * The ID of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1906,
-                1979
+                2274,
+                2318
             ],
             "filename": "Role.js",
-            "lineno": 83,
+            "lineno": 107,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000174",
+                "id": "astnode100000205",
+                "name": "Role#id",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The ID of the role.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "id",
+        "longname": "Role#id",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Whether the role is hoisted.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
+        "meta": {
+            "range": [
+                2420,
+                2494
+            ],
+            "filename": "Role.js",
+            "lineno": 117,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000216",
                 "name": "Role#hoist",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -606,6 +972,7 @@
                 }
             }
         ],
+        "access": "public",
         "name": "hoist",
         "longname": "Role#hoist",
         "kind": "member",
@@ -614,18 +981,18 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Whether the role is managed (by an application).\n   * @readonly\n   * @returns {Boolean}\n   */",
+        "comment": "/**\n   * Whether the role is managed (by an application).\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2088,
-                2163
+                2616,
+                2692
             ],
             "filename": "Role.js",
-            "lineno": 92,
+            "lineno": 127,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000190",
+                "id": "astnode100000233",
                 "name": "Role#managed",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -645,6 +1012,7 @@
                 }
             }
         ],
+        "access": "public",
         "name": "managed",
         "longname": "Role#managed",
         "kind": "member",
@@ -653,18 +1021,18 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Whether the role is mentionable.\n   * @readonly\n   * @returns {Boolean}\n   */",
+        "comment": "/**\n   * Whether the role is mentionable.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2256,
-                2335
+                2798,
+                2878
             ],
             "filename": "Role.js",
-            "lineno": 101,
+            "lineno": 137,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000206",
+                "id": "astnode100000250",
                 "name": "Role#mentionable",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -684,79 +1052,9 @@
                 }
             }
         ],
+        "access": "public",
         "name": "mentionable",
         "longname": "Role#mentionable",
-        "kind": "member",
-        "memberof": "Role",
-        "scope": "instance",
-        "params": []
-    },
-    {
-        "comment": "/**\n   * The hash of the role's avatar, as it was received from Discord.\n   * @readonly\n   * @type {String?}\n   */",
-        "meta": {
-            "range": [
-                2456,
-                2601
-            ],
-            "filename": "Role.js",
-            "lineno": 110,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000222",
-                "name": "Role#_originalIconHash",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The hash of the role's avatar, as it was received from Discord.",
-        "readonly": true,
-        "type": {
-            "names": [
-                "String"
-            ]
-        },
-        "nullable": true,
-        "name": "_originalIconHash",
-        "longname": "Role#_originalIconHash",
-        "kind": "member",
-        "memberof": "Role",
-        "scope": "instance",
-        "params": []
-    },
-    {
-        "comment": "/**\n   * The hash of the role icon as a string.\n   * @readonly\n   * @type {String}\n   */",
-        "meta": {
-            "range": [
-                2696,
-                2961
-            ],
-            "filename": "Role.js",
-            "lineno": 122,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000238",
-                "name": "Role#_formattedIconHash",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The hash of the role icon as a string.",
-        "readonly": true,
-        "type": {
-            "names": [
-                "String"
-            ]
-        },
-        "name": "_formattedIconHash",
-        "longname": "Role#_formattedIconHash",
         "kind": "member",
         "memberof": "Role",
         "scope": "instance",
@@ -766,15 +1064,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2766,
-                2805
+                3342,
+                3382
             ],
             "filename": "Role.js",
-            "lineno": 125,
+            "lineno": 163,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000250",
+                "id": "astnode100000300",
                 "name": "formattedHash",
                 "type": "CallExpression",
                 "value": ""
@@ -792,15 +1090,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2894,
-                2929
+                3471,
+                3506
             ],
             "filename": "Role.js",
-            "lineno": 129,
+            "lineno": 167,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000266",
+                "id": "astnode100000317",
                 "name": "formattedHash",
                 "type": "BinaryExpression",
                 "funcscope": "<anonymous>",
@@ -816,18 +1114,18 @@
         "scope": "inner"
     },
     {
-        "comment": "/**\n   * The icon URL of the role.\n   * @readonly\n   * @type {String?}\n   */",
+        "comment": "/**\n   * The icon URL of the role.\n   * @readonly\n   * @type {String?}\n   * @public\n   */",
         "meta": {
             "range": [
-                3044,
-                3127
+                3634,
+                3718
             ],
             "filename": "Role.js",
-            "lineno": 139,
+            "lineno": 178,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000273",
+                "id": "astnode100000324",
                 "name": "Role#displayIconURL",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -844,6 +1142,7 @@
             ]
         },
         "nullable": true,
+        "access": "public",
         "name": "displayIconURL",
         "longname": "Role#displayIconURL",
         "kind": "member",
@@ -852,18 +1151,18 @@
         "params": []
     },
     {
-        "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   */",
+        "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3220,
-                3314
+                3824,
+                3900
             ],
             "filename": "Role.js",
-            "lineno": 148,
+            "lineno": 188,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000286",
+                "id": "astnode100000338",
                 "name": "Role#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -880,6 +1179,7 @@
         },
         "nullable": true,
         "readonly": true,
+        "access": "public",
         "name": "guild",
         "longname": "Role#guild",
         "kind": "member",
@@ -888,18 +1188,263 @@
         "params": []
     },
     {
-        "comment": "",
+        "comment": "/**\n   * The ID of the guild that this role belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3318,
-                3599
+                4016,
+                4071
             ],
             "filename": "Role.js",
-            "lineno": 152,
+            "lineno": 198,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000309",
+                "id": "astnode100000357",
+                "name": "Role#guildId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The ID of the guild that this role belongs to.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "guildId",
+        "longname": "Role#guildId",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The name of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4162,
+                4201
+            ],
+            "filename": "Role.js",
+            "lineno": 208,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000368",
+                "name": "Role#name",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The name of the role.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "name",
+        "longname": "Role#name",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The colour of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4294,
+                4335
+            ],
+            "filename": "Role.js",
+            "lineno": 218,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000377",
+                "name": "Role#color",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The colour of the role.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "color",
+        "longname": "Role#color",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The position of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4430,
+                4477
+            ],
+            "filename": "Role.js",
+            "lineno": 228,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000386",
+                "name": "Role#position",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The position of the role.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "position",
+        "longname": "Role#position",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The permissions for the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4576,
+                4637
+            ],
+            "filename": "Role.js",
+            "lineno": 238,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000395",
+                "name": "Role#permissions",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The permissions for the role.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "permissions",
+        "longname": "Role#permissions",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The attributes of the role.\n   * @type {Object}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4734,
+                4773
+            ],
+            "filename": "Role.js",
+            "lineno": 248,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000406",
+                "name": "Role#tags",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The attributes of the role.",
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "tags",
+        "longname": "Role#tags",
+        "kind": "member",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4815,
+                4864
+            ],
+            "filename": "Role.js",
+            "lineno": 256,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000415",
+                "name": "Role#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "Role#toString",
+        "memberof": "Role",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4906,
+                5173
+            ],
+            "filename": "Role.js",
+            "lineno": 264,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000426",
                 "name": "Role#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -908,10 +1453,10 @@
                 "": null
             }
         },
-        "undocumented": true,
+        "kind": "function",
+        "access": "public",
         "name": "toJSON",
         "longname": "Role#toJSON",
-        "kind": "function",
         "memberof": "Role",
         "scope": "instance",
         "params": []
@@ -920,18 +1465,18 @@
         "comment": "",
         "meta": {
             "range": [
-                3348,
-                3367
+                4936,
+                4947
             ],
             "filename": "Role.js",
-            "lineno": 154,
+            "lineno": 266,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000315",
+                "id": "astnode100000432",
                 "name": "id",
-                "type": "CallExpression",
-                "value": ""
+                "type": "MemberExpression",
+                "value": "this.id"
             }
         },
         "undocumented": true,
@@ -944,15 +1489,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3375,
-                3390
+                4955,
+                4970
             ],
             "filename": "Role.js",
-            "lineno": 155,
+            "lineno": 267,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000321",
+                "id": "astnode100000436",
                 "name": "name",
                 "type": "MemberExpression",
                 "value": "this.name"
@@ -968,15 +1513,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3398,
-                3415
+                4978,
+                4995
             ],
             "filename": "Role.js",
-            "lineno": 156,
+            "lineno": 268,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000325",
+                "id": "astnode100000440",
                 "name": "color",
                 "type": "MemberExpression",
                 "value": "this.color"
@@ -992,15 +1537,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3423,
-                3446
+                5003,
+                5026
             ],
             "filename": "Role.js",
-            "lineno": 157,
+            "lineno": 269,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000329",
+                "id": "astnode100000444",
                 "name": "position",
                 "type": "MemberExpression",
                 "value": "this.position"
@@ -1016,18 +1561,18 @@
         "comment": "",
         "meta": {
             "range": [
-                3454,
-                3491
+                5034,
+                5063
             ],
             "filename": "Role.js",
-            "lineno": 158,
+            "lineno": 270,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000333",
+                "id": "astnode100000448",
                 "name": "permissions",
-                "type": "CallExpression",
-                "value": ""
+                "type": "MemberExpression",
+                "value": "this.permissions"
             }
         },
         "undocumented": true,
@@ -1040,18 +1585,18 @@
         "comment": "",
         "meta": {
             "range": [
-                3499,
-                3527
+                5071,
+                5100
             ],
             "filename": "Role.js",
-            "lineno": 159,
+            "lineno": 271,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000339",
+                "id": "astnode100000452",
                 "name": "icon",
                 "type": "MemberExpression",
-                "value": "this._originalIconHash"
+                "value": "this."
             }
         },
         "undocumented": true,
@@ -1064,18 +1609,18 @@
         "comment": "",
         "meta": {
             "range": [
-                3535,
-                3564
+                5108,
+                5138
             ],
             "filename": "Role.js",
-            "lineno": 160,
+            "lineno": 272,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000343",
+                "id": "astnode100000457",
                 "name": "_attributes",
                 "type": "MemberExpression",
-                "value": "this._attributes"
+                "value": "this."
             }
         },
         "undocumented": true,
@@ -1088,15 +1633,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3572,
-                3587
+                5146,
+                5161
             ],
             "filename": "Role.js",
-            "lineno": 161,
+            "lineno": 273,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000347",
+                "id": "astnode100000462",
                 "name": "tags",
                 "type": "MemberExpression",
                 "value": "this.tags"
@@ -1112,15 +1657,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3603,
-                3624
+                5177,
+                5198
             ],
             "filename": "Role.js",
-            "lineno": 166,
+            "lineno": 278,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000352",
+                "id": "astnode100000467",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "Role",
