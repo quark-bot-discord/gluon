@@ -1,6 +1,6 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
 const {
-  BASE_URL,
+  API_BASE_URL,
   VERSION,
   NAME,
   CHANNEL_TYPES,
@@ -31,6 +31,9 @@ const Role = require("./structures/Role");
  * A client user, which is able to handle multiple shards.
  */
 class Client extends EventsEmitter {
+  #token;
+  #intents;
+
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -68,28 +71,10 @@ class Client extends EventsEmitter {
     this.shards = [];
 
     /**
-     * The Discord API base URL.
-     * @type {String}
-     */
-    this.baseURL = BASE_URL;
-
-    /**
-     * The Discord API version to use.
-     * @type {String}
-     */
-    this.version = VERSION;
-
-    /**
-     * The name of this lib.
-     * @type {String}
-     */
-    this.name = NAME;
-
-    /**
      * The intents to use when connecting with this client.
      * @type {Number?}
      */
-    this.intents = intents;
+    this.#intents = intents;
 
     /**
      * Whether this client should cache messages.
@@ -264,7 +249,7 @@ class Client extends EventsEmitter {
       },
       (err, data) => {
         if (err) console.log(err);
-      },
+      }
     );
   }
 
@@ -287,7 +272,7 @@ class Client extends EventsEmitter {
           case CHANNEL_TYPES.GUILD_TEXT:
           case CHANNEL_TYPES.GUILD_NEWS:
           case CHANNEL_TYPES.GUILD_FORUM: {
-            totalMessages += channel.messages.cache.size;
+            totalMessages += channel.messages.size;
             break;
           }
           default:
@@ -297,14 +282,14 @@ class Client extends EventsEmitter {
         totalChannels++;
       });
 
-      totalMembers += guild.members.cache.size;
+      totalMembers += guild.members.size;
 
-      totalRoles += guild.roles.cache.size;
+      totalRoles += guild.roles.size;
     });
 
     return {
-      users: this.users.cache.size,
-      guilds: this.guilds.cache.size,
+      users: this.users.size,
+      guilds: this.guilds.size,
       messages: totalMessages,
       members: totalMembers,
       channels: totalChannels,
@@ -347,7 +332,10 @@ class Client extends EventsEmitter {
       message_id,
     ]);
 
-    return new Message(this, data, channel_id.toString(), guild_id.toString());
+    return new Message(this, data, {
+      channel_id: channel_id.toString(),
+      guild_id: guild_id.toString(),
+    });
   }
 
   /**
@@ -359,7 +347,7 @@ class Client extends EventsEmitter {
   async postWebhook(
     { id, token },
     content,
-    { embeds, components, files } = {},
+    { embeds, components, files } = {}
   ) {
     const body = {};
 
@@ -384,15 +372,14 @@ class Client extends EventsEmitter {
     channel_id,
     guild_id,
     content,
-    { embed, embeds, components, files, suppressMentions = false } = {},
+    { embed, embeds, components, files, suppressMentions = false } = {}
   ) {
     const body = {};
 
     if (content) body.content = content;
 
     if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
+    else if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
     if (suppressMentions == true) {
@@ -403,16 +390,14 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "postCreateMessage",
       [channel_id],
-      body,
+      body
     );
 
-    return new Message(
-      this,
-      data,
-      channel_id.toString(),
-      guild_id.toString(),
-      false,
-    );
+    return new Message(this, data, {
+      channel_id: channel_id.toString(),
+      guild_id: guild_id.toString(),
+      nocache: false,
+    });
   }
 
   /**
@@ -429,7 +414,7 @@ class Client extends EventsEmitter {
     guild_id,
     message_id,
     content,
-    { embed, components } = {},
+    { embed, components } = {}
   ) {
     const body = {};
 
@@ -447,10 +432,10 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "patchEditMessage",
       [channel_id, message_id],
-      body,
+      body
     );
 
-    return new Message(this, data, channel_id, guild_id);
+    return new Message(this, data, { channel_id, guild_id });
   }
 
   /**
@@ -465,7 +450,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "postFollowNewsChannel",
       ["822906135048487023"],
-      body,
+      body
     );
   }
 
@@ -475,9 +460,7 @@ class Client extends EventsEmitter {
    * @returns {Promise<Array<Object>>}
    */
   fetchChannelWebhooks(channel_id) {
-    return this.request.makeRequest("getChannelWebhooks", [
-      channel_id,
-    ]);;
+    return this.request.makeRequest("getChannelWebhooks", [channel_id]);
   }
 
   /**
@@ -495,10 +478,9 @@ class Client extends EventsEmitter {
    * @returns {Promise<Member>}
    */
   async fetchMember(guild_id, user_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
+    const guild = this.guilds.get(guild_id.toString());
 
-    const cached = await guild.members.localFetch(user_id.toString());
-
+    const cached = guild.members.get(user_id.toString());
     if (cached) return cached;
 
     const data = await this.request.makeRequest("getGuildMember", [
@@ -506,13 +488,11 @@ class Client extends EventsEmitter {
       user_id,
     ]);
 
-    return new Member(
-      this,
-      data,
-      user_id.toString(),
-      guild_id.toString(),
-      data.user,
-    );
+    return new Member(this, data, {
+      user_id: user_id.toString(),
+      guild_id: guild_id.toString(),
+      user: data.user,
+    });
   }
 
   /**
@@ -522,9 +502,9 @@ class Client extends EventsEmitter {
    * @returns {Promise<TextChannel | VoiceChannel>}
    */
   async fetchChannel(guild_id, channel_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
+    const guild = this.guilds.get(guild_id.toString());
 
-    const cached = guild.channels.cache.get(channel_id.toString());
+    const cached = guild.channels.get(channel_id.toString());
 
     if (cached) return cached;
 
@@ -540,21 +520,21 @@ class Client extends EventsEmitter {
    * @returns {Promise<Role | Array<Role>>}
    */
   async fetchRole(guild_id, role_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
+    const guild = this.guilds.get(guild_id.toString());
 
     const cached = role_id
-      ? guild.roles.cache.get(role_id.toString())
+      ? guild.roles.get(role_id.toString())
       : Array.from(guild.roles.cache, ([key, value]) => value);
 
     if (cached) return cached;
 
     const data = await this.request.makeRequest("getRoles", [guild_id]);
 
-    if (!role_id) return data.map((role) => new Role(this, role, guild_id));
+    if (!role_id) return data.map((role) => new Role(this, role, { guild_id }));
 
     let matchedRole;
     for (let i = 0; i < data.length; i++) {
-      const role = new Role(this, data[i], guild_id);
+      const role = new Role(this, data[i], { guild_id });
       if (role.id == role_id) matchedRole = role;
     }
 
@@ -577,7 +557,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "postBulkDeleteMessages",
       [channel_id],
-      body,
+      body
     );
   }
 
@@ -595,7 +575,7 @@ class Client extends EventsEmitter {
     await this.request.makeRequest(
       "deleteChannelMessage",
       [channel_id, message_id],
-      body,
+      body
     );
   }
 
@@ -609,7 +589,7 @@ class Client extends EventsEmitter {
   async fetchChannelMessages(
     guild_id,
     channel_id,
-    { around, before, after, limit },
+    { around, before, after, limit }
   ) {
     const body = {};
 
@@ -624,12 +604,17 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "getChannelMessages",
       [channel_id],
-      body,
+      body
     );
 
     const messages = [];
     for (let i = 0; i < data.length; i++)
-      messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
+      messages.push(
+        new Message(this, data[i], {
+          channel_id: data[i].channel_id,
+          guild_id: guild_id,
+        })
+      );
 
     return messages;
   }
@@ -647,7 +632,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "postCreateWebhook",
       [channel_id],
-      body,
+      body
     );
 
     return data;
@@ -667,7 +652,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "patchModifyWebhook",
       [webhook_id],
-      body,
+      body
     );
 
     return data;
@@ -699,7 +684,7 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
-      body,
+      body
     );
 
     return data;
@@ -749,20 +734,18 @@ class Client extends EventsEmitter {
     const data = await this.request.makeRequest(
       "getSearchGuildMembers",
       [guildId],
-      body,
+      body
     );
     if (data.length != 0) {
       const members = [];
 
       for (let i = 0; i < data.length; i++)
         members.push(
-          new Member(
-            this,
-            data[i],
-            data[i].user.id,
-            guildId.toString(),
-            data[i].user,
-          ),
+          new Member(this, data[i], {
+            user_id: data[i].user.id,
+            guild_id: guildId.toString(),
+            user: data[i].user,
+          })
         );
 
       return members;
@@ -784,15 +767,9 @@ class Client extends EventsEmitter {
    */
   login(token) {
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
-    this.token = token;
+    this.#token = token;
 
-    this.request = new BetterRequestHandler(
-      this,
-      this.baseURL,
-      this.name,
-      this.version,
-      this.token,
-    );
+    this.request = new BetterRequestHandler(this, this.#token);
 
     this.request
       .makeRequest("getGatewayBot")
@@ -818,13 +795,14 @@ class Client extends EventsEmitter {
               this.shards.push(
                 new WS(
                   this,
+                  this.#token,
                   generateWebsocketURL(
                     this._sessionData
                       ? this._sessionData[i].resumeGatewayUrl
-                      : gatewayInfo.url,
+                      : gatewayInfo.url
                   ),
                   [this.shardIds[i], this.totalShards],
-                  this.intents,
+                  this.#intents,
                   this._sessionData
                     ? this._sessionData[i].sessionId
                     : undefined,
@@ -832,8 +810,8 @@ class Client extends EventsEmitter {
                   this._sessionData
                     ? this._sessionData[i].resumeGatewayUrl
                     : undefined,
-                  this.softRestartFunction,
-                ),
+                  this.softRestartFunction
+                )
               );
           }, 6000 * i);
 
@@ -913,7 +891,7 @@ class Client extends EventsEmitter {
                 if (this.cacheMessages == true) {
                   this.emit(
                     "debug",
-                    `Sweeping messages for GUILD ${guild.id}...`,
+                    `Sweeping messages for GUILD ${guild.id}...`
                   );
 
                   let cacheCount = guild.calculateMessageCacheCount() * 2;
@@ -922,25 +900,25 @@ class Client extends EventsEmitter {
 
                   this.emit(
                     "debug",
-                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`,
+                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`
                   );
 
                   guild.channels.cache.forEach(async (channel) => {
                     this.emit(
                       "debug",
-                      `Sweeping messages for CHANNEL ${channel.id}...`,
+                      `Sweeping messages for CHANNEL ${channel.id}...`
                     );
 
                     const nowCached = channel.messages.sweepMessages(
                       cacheCount,
-                      currentTime,
+                      currentTime
                     );
 
                     this.emit(
                       "debug",
                       `New cache size of ${nowCached || 0} for CHANNEL ${
                         guild.id
-                      }...`,
+                      }...`
                     );
                   });
                 }
@@ -951,7 +929,7 @@ class Client extends EventsEmitter {
                 ) {
                   this.emit(
                     "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
+                    `Sweeping members for GUILD ${guild.id}...`
                   );
 
                   let cacheCount = guild.calculateMemberCacheCount();
@@ -960,12 +938,12 @@ class Client extends EventsEmitter {
 
                   this.emit(
                     "debug",
-                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`,
+                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`
                   );
 
                   this.emit(
                     "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
+                    `Sweeping members for GUILD ${guild.id}...`
                   );
 
                   const nowCached = guild.members.sweepMembers(cacheCount);
@@ -974,7 +952,7 @@ class Client extends EventsEmitter {
                     "debug",
                     `New cache size of ${nowCached || 0} for GUILD ${
                       guild.id
-                    }...`,
+                    }...`
                   );
                 }
               });
@@ -991,7 +969,7 @@ class Client extends EventsEmitter {
       .catch((error) => {
         this.emit(
           "debug",
-          "Get gateway bot request failed, terminating process",
+          "Get gateway bot request failed, terminating process"
         );
 
         console.log(error);
