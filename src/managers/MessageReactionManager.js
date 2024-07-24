@@ -29,6 +29,7 @@ class MessageReactionManager {
     /**
      * Cache of message reactions.
      * @type {Object}
+     * @private
      */
     this.#cache = {};
 
@@ -47,6 +48,9 @@ class MessageReactionManager {
    * @param {String} user_id The id of the user who reacted.
    * @param {String} emoji The id or unicode emoji that was reacted with.
    * @param {Object} data The raw MESSAGE_REACTION_ADD data.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   addReaction(user_id, emoji, data) {
     if (typeof user_id !== "string")
@@ -72,6 +76,9 @@ class MessageReactionManager {
    * Removes a reaction from a message.
    * @param {String} user_id The id of the user whose reaction was removed.
    * @param {String} emoji The id or unicode emoji for which the reaction was removed.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   removeReaction(user_id, emoji) {
     if (typeof user_id !== "string")
@@ -89,6 +96,10 @@ class MessageReactionManager {
     }
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     const messageReactions = {};
     for (const [reaction, reactionData] of Object.entries(this.#cache))

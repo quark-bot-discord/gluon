@@ -11,6 +11,7 @@ class MessagePollManager {
     /**
      * The cache of responses.
      * @type {Map<String, Array<BigInt>>}
+     * @private
      */
     this.#cache = new Map();
 
@@ -25,6 +26,9 @@ class MessagePollManager {
    * Adds a response to a poll.
    * @param {String} user_id The id of the user who voted.
    * @param {String} answer_id The id of the answer that was voted for.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   addVote(user_id, answer_id) {
 
@@ -45,6 +49,9 @@ class MessagePollManager {
    * Removes a response from a poll.
    * @param {String} user_id The id of the user whose vote was removed.
    * @param {String} answer_id The id of the answer for which the vote was removed.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   removeVote(user_id, answer_id) {
 
@@ -63,6 +70,10 @@ class MessagePollManager {
       );
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     const pollResponses = {};
     for (const [key, values] of this.#cache)

@@ -41,6 +41,10 @@ class ChannelMessageManager {
    * Fetches a collection of messages or a singular message from the channel.
    * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
    * @returns {Promise<Array<Message>> | Promise<Message>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async fetch(options) {
     if (typeof options === "object") {
@@ -98,6 +102,10 @@ class ChannelMessageManager {
   /**
    * Fetches all the pinned messages that belong to the channel.
    * @returns {Promise<Array<Message>>}
+   * @public
+   * @async
+   * @method
+   * @throws {Error}
    */
   async fetchPinned() {
     const data = await this.#_client.request.makeRequest("getPinned", [
@@ -120,6 +128,9 @@ class ChannelMessageManager {
    * @param {Number} cacheCount The maximum number of messages that may be stored for this channel, or 0 for no limit.
    * @param {Number} currentTime The current UNIX time.
    * @returns {Number} The remaining number of messages in the channel.
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   sweepMessages(cacheCount, currentTime) {
 
@@ -159,6 +170,9 @@ class ChannelMessageManager {
    * Gets a message from the cache.
    * @param {String} id The ID of the message to retrieve.
    * @returns {Message?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -171,6 +185,9 @@ class ChannelMessageManager {
    * @param {String} id The ID of the message to cache.
    * @param {Message} message The message to cache.
    * @returns {Message}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(id, message) {
     if (!(message instanceof Message))
@@ -184,6 +201,9 @@ class ChannelMessageManager {
    * Deletes a message from the cache.
    * @param {String} id The ID of the message to delete.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -195,11 +215,16 @@ class ChannelMessageManager {
    * Returns the size of the cache.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

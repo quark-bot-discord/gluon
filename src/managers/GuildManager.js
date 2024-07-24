@@ -30,6 +30,9 @@ class GuildManager {
    * Retrieves a guild from the cache.
    * @param {String} id The ID of the guild to fetch.
    * @returns {Guild?} The fetched guild.
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -42,6 +45,9 @@ class GuildManager {
    * @param {String} id The ID of the guild to cache
    * @param {Guild} guild The guild to cache.
    * @returns {Guild}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(id, guild) {
     if (!(guild instanceof Guild))
@@ -55,6 +61,9 @@ class GuildManager {
    * Deletes a guild from the cache.
    * @param {String} id The ID of the guild to delete.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -62,6 +71,20 @@ class GuildManager {
     return this.#cache.delete(id);
   }
 
+  /**
+   * Returns the size of the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get size() {
+    return this.#cache.size;
+  }
+
+  /**
+   * @public
+   * @method
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

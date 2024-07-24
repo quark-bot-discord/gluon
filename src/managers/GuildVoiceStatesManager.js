@@ -23,6 +23,10 @@ class GuildVoiceStatesManager {
    * Adds a voice state to the cache.
    * @param {String} id The ID of the voice state to cache.
    * @param {VoiceState} voiceState The voice state to cache.
+   * @returns {VoiceState}
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   set(id, voiceState) {
     if (!(voiceState instanceof VoiceState))
@@ -36,6 +40,9 @@ class GuildVoiceStatesManager {
    * Gets a voice state from the cache.
    * @param {String} id The ID of the voice state to retrieve.
    * @returns {VoiceState?}
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   get(id) {
     if (typeof id !== "string")
@@ -47,6 +54,9 @@ class GuildVoiceStatesManager {
    * Deletes a voice state from the cache.
    * @param {String} id The ID of the voice state to delete.
    * @returns {Boolean}
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   delete(id) {
     if (typeof id !== "string")
@@ -58,11 +68,16 @@ class GuildVoiceStatesManager {
    * Returns the size of the cache.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

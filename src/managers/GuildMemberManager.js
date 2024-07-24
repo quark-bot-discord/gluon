@@ -42,6 +42,10 @@ class GuildMemberManager {
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.
    * @returns {Promise<Member>} The fetched member.
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
    */
   async fetch(user_id) {
     if (typeof user_id !== "string")
@@ -66,6 +70,10 @@ class GuildMemberManager {
    * Searches for members via a search query.
    * @param {String} query The search query.
    * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
    */
   async search(query) {
     if (typeof query !== "string")
@@ -102,6 +110,9 @@ class GuildMemberManager {
    * Sweeps all members which have been flagged for deletion.
    * @param {Number} cacheCount The maximum number of users which may be cached.
    * @returns {Number} The remaining number of cached members.
+   * @method
+   * @public
+   * @throws {TypeError}
    */
   sweepMembers(cacheCount) {
     if (typeof cacheCount !== "number")
@@ -129,6 +140,9 @@ class GuildMemberManager {
    * Gets a member from the cache.
    * @param {String} id The ID of the member to retrieve.
    * @returns {Member?}
+   * @method
+   * @public
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -141,6 +155,9 @@ class GuildMemberManager {
    * @param {String} id The ID of the member
    * @param {Member} member The member to cache.
    * @returns {Member}
+   * @method
+   * @public
+   * @throws {TypeError}
    */
   set(id, member) {
     if (!(member instanceof Member))
@@ -154,6 +171,9 @@ class GuildMemberManager {
    * Deletes a member from the cache.
    * @param {String} id The ID of the member to delete.
    * @returns {Boolean}
+   * @method
+   * @public
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -165,11 +185,16 @@ class GuildMemberManager {
    * Returns the size of the cache.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

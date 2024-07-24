@@ -42,6 +42,10 @@ class GuildRoleManager {
    * Fetches a role that belongs to this guild.
    * @param {String} role_id The id of the role to fetch.
    * @returns {Promise<Role>} The fetched role.
+   * @async
+   * @public
+   * @method
+   * @throws {TypeError | Error}
    */
   async fetch(role_id) {
 
@@ -67,6 +71,9 @@ class GuildRoleManager {
    * Gets a role from the cache.
    * @param {String} id The ID of the role to retrieve.
    * @returns {Role?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -79,6 +86,9 @@ class GuildRoleManager {
    * @param {String} id The ID of the role to cache
    * @param {Role} role The role to cache.
    * @returns {Role}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(id, role) {
     if (!(role instanceof Role))
@@ -92,6 +102,9 @@ class GuildRoleManager {
    * Removes a role from the cache.
    * @param {String} id The ID of the role to remove.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -103,11 +116,16 @@ class GuildRoleManager {
    * The number of roles in the cache.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

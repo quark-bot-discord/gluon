@@ -15,6 +15,8 @@ class ChannelCacheOptions {
   /**
    * Sets whether to cache messages or not.
    * @param {Boolean} option Whether to cache messages or not.
+   * @public
+   * @throws {TypeError}
    */
   set messageCaching(option) {
     if (typeof option !== "boolean")
@@ -29,6 +31,8 @@ class ChannelCacheOptions {
   /**
    * Sets whether to cache files or not.
    * @param {Boolean} option Whether to cache files or not.
+   * @public
+   * @throws {TypeError}
    */
   set fileCaching(option) {
     if (typeof option !== "boolean")
@@ -44,6 +48,7 @@ class ChannelCacheOptions {
    * Returns whether to cache messages or not.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get fileCaching() {
     return (
@@ -56,6 +61,7 @@ class ChannelCacheOptions {
    * Returns whether to cache messages or not.
    * @type {Boolean}
    * @readonly
+   * @public
    */
   get messageCaching() {
     return (
@@ -64,10 +70,18 @@ class ChannelCacheOptions {
     );
   }
 
+  /**
+   * @method
+   * @public
+   */
   toString() {
     return `ChannelCacheOptions { fileCaching: ${this.fileCaching}, messageCaching: ${this.messageCaching} }`;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return this.#_cache_options;
   }

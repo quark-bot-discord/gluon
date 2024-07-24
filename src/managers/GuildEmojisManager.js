@@ -40,6 +40,10 @@ class GuildEmojisManager {
    * Fetches a particular emoji that belongs to this guild.
    * @param {String} emoji_id The id of the emoji to fetch.
    * @returns {Promise<Emoji>} The fetched emoji.
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async fetch(emoji_id) {
 
@@ -61,6 +65,9 @@ class GuildEmojisManager {
    * Gets an emoji from the cache.
    * @param {String} id The ID of the emoji to retrieve.
    * @returns {Emoji?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -73,6 +80,9 @@ class GuildEmojisManager {
    * @param {String} id The ID of the emoji to cache.
    * @param {Emoji} emoji The emoji to cache.
    * @returns {Emoji}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   add(id, emoji) {
     if (!(emoji instanceof Emoji))
@@ -86,6 +96,9 @@ class GuildEmojisManager {
    * Deletes an emoji from the cache.
    * @param {String} id The ID of the emoji to delete.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -93,6 +106,20 @@ class GuildEmojisManager {
     return this.#cache.delete(id);
   }
 
+  /**
+   * Returns the size of the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get size() {
+    return this.#cache.size;
+  }
+
+  /**
+   * @public
+   * @method
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

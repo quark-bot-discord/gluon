@@ -43,6 +43,10 @@ class GuildInviteManager {
   /**
    * Fetches all invites for this guild.
    * @returns {Promise<Array<Invite>?>} The fetched invites.
+   * @public
+   * @async
+   * @method
+   * @throws {Error}
    */
   async fetch() {
     if (!checkPermission((await this.#guild.me()).permissions, PERMISSIONS.MANAGE_GUILD))
@@ -63,6 +67,9 @@ class GuildInviteManager {
    * Gets an invite from the cache.
    * @param {String} id The ID of the invite to retrieve.
    * @returns {Invite?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -75,6 +82,9 @@ class GuildInviteManager {
    * @param {String} code The code of the invite to cache.
    * @param {Invite} invite The invite to cache.
    * @returns {Invite}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(code, invite) {
     if (!(invite instanceof Invite))
@@ -87,13 +97,31 @@ class GuildInviteManager {
   /**
    * Deletes an invite from the cache.
    * @param {String} id The ID of the invite to delete.
+   * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: ID must be a string.");
-    this.#cache.delete(id);
+    return this.#cache.delete(id);
   }
 
+  /**
+   * Returns the size of the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get size() {
+    return this.#cache.size;
+  }
+
+  /**
+   * @public
+   * @method
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

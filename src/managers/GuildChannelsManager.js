@@ -43,6 +43,10 @@ class GuildChannelsManager {
    * Fetches a particular channel belonging to this guild.
    * @param {String} channel_id The id of the channel to fetch.
    * @returns {Promise<VoiceChannel> | Promise<Thread> | Promise<TextChannel>} The fetched channel.
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async fetch(channel_id) {
 
@@ -63,6 +67,9 @@ class GuildChannelsManager {
    * Gets a channel from the cache.
    * @param {String} id The ID of the channel to retrieve.
    * @returns {VoiceChannel? | TextChannel? | Thread?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -75,6 +82,9 @@ class GuildChannelsManager {
    * @param {String} id The ID of the channel to cache.
    * @param {VoiceChannel | TextChannel | Thread} channel The channel to cache.
    * @returns {VoiceChannel | TextChannel | Thread}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(id, channel) {
     if (
@@ -96,6 +106,9 @@ class GuildChannelsManager {
    * Deletes a channel from the cache.
    * @param {String} id The ID of the channel to delete.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -107,11 +120,16 @@ class GuildChannelsManager {
    * Returns the size of the cache.
    * @type {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }

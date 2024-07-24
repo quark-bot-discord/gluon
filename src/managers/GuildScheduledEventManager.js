@@ -30,6 +30,10 @@ class GuildScheduledEventManager {
   /**
    * Retrieves all scheduled events for this guild.
    * @returns {Promise<Array<ScheduledEvent>>}
+   * @async
+   * @method
+   * @public
+   * @throws {Error}
    */
   async list() {
     const data = await this.#_client.request.makeRequest(
@@ -49,13 +53,17 @@ class GuildScheduledEventManager {
    * Fetches a scheduled event from the API.
    * @param {String} scheduled_event_id The ID of the event to fetch.
    * @returns {Promise<ScheduledEvent>}
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
    */
   async fetch(scheduled_event_id) {
 
     if (typeof scheduled_event_id !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 
-    const cachedEvent = this.#cache.get(scheduled_event_id.toString());
+    const cachedEvent = this.#cache.get(scheduled_event_id);
     if (cachedEvent) return cachedEvent;
 
     const data = await this.#_client.request.makeRequest(
@@ -70,6 +78,9 @@ class GuildScheduledEventManager {
    * Retrieves a scheduled event from the cache.
    * @param {String} id The ID of the event to retrieve.
    * @returns {ScheduledEvent?}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(id) {
     if (typeof id !== "string")
@@ -82,6 +93,9 @@ class GuildScheduledEventManager {
    * @param {String} id The ID of the event to cache.
    * @param {ScheduledEvent} event The event to cache.
    * @returns {ScheduledEvent}
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   set(id, event) {
     if (!(event instanceof ScheduledEvent))
@@ -95,6 +109,9 @@ class GuildScheduledEventManager {
    * Deletes a scheduled event from the cache.
    * @param {String} id The ID of the event to delete.
    * @returns {Boolean}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   delete(id) {
     if (typeof id !== "string")
@@ -106,11 +123,16 @@ class GuildScheduledEventManager {
    * The number of scheduled events in the cache.
    * @param {Number}
    * @readonly
+   * @public
    */
   get size() {
     return this.#cache.size;
   }
 
+  /**
+   * @method
+   * @public
+   */
   toJSON() {
     return [...this.#cache.values()];
   }
