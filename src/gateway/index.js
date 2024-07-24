@@ -28,11 +28,6 @@ class WS {
   #ws;
   #resumeGatewayUrl;
   #retries;
-  #addListeners;
-  #identify;
-  #reconnect;
-  #resume;
-  #shutDownWebsocket;
 
   constructor(
     client,
