@@ -506,4 +506,5 @@ module.exports.TEST_DATA = {
         height: 100,
         width: 100
     },
+    FILE_NAME: "test.png",
 };
