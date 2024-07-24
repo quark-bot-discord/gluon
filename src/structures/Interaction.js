@@ -1,6 +1,6 @@
 const ActionRow = require("../util/builder/actionRowBuilder");
 const Member = require("./Member");
-const File = require("./File");
+const File = require("../util/builder/file");
 
 /**
  * Represents an interaction received over the gateway.
