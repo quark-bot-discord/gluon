@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>Embed - Documentation</title>
+    <title>gateway/index.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,2135 +35,462 @@
 
 <div id="main">
     
-    <h1 class="page-title">Embed</h1>
+    <h1 class="page-title">gateway/index.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
-    
-        <h2>
-        
-            Embed
-        
-        </h2>
-        
-            <div class="class-description usertext"><p>Helps to create an embed for a message.</p></div>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Embed"><span class="type-signature"></span>new Embed<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Creates an embed structure.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-structure">https://discord.com/developers/docs/resources/channel#embed-object-embed-structure</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        </div>
-    
-
-    
-
-    
-
-    
-    
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="addField"><span class="type-signature"></span>addField<span class="signature">(name, value, inline<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Adds a field to the embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line159">line 159</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Sets the embed field name.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"><p>Sets the embed field value.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>inline</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>Whether this field should be displayed inline.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setAuthor"><span class="type-signature"></span>setAuthor<span class="signature">(name<span class="signature-attributes">nullable</span>, url<span class="signature-attributes">nullable</span>, icon_url<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the embed author info.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line138">line 138</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The embed author.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The url.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>icon_url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The embed author image url.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setColor"><span class="type-signature"></span>setColor<span class="signature">(colour)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the colour of the embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line81">line 81</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>colour</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Number</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The colour.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setDescription"><span class="type-signature"></span>setDescription<span class="signature">(text)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the embed description.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line38">line 38</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>text</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The description.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setFooter"><span class="type-signature"></span>setFooter<span class="signature">(text, icon<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the embed footer.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line118">line 118</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>text</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The footer text.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>icon</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The url of the footer icon.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setImage"><span class="type-signature"></span>setImage<span class="signature">(url)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the embed image url.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line181">line 181</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The image url.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setThumbnail"><span class="type-signature"></span>setThumbnail<span class="signature">(url)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the embed thumbnail image.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line100">line 100</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The url of the thumbnail.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setTimestamp"><span class="type-signature"></span>setTimestamp<span class="signature">(timestamp<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the timestamp displayed on the embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line69">line 69</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>timestamp</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                    &lt;nullable><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The UNIX timestamp.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setTitle"><span class="type-signature"></span>setTitle<span class="signature">(title)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the title of the embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line22">line 22</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The title of the embed.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setURL"><span class="type-signature"></span>setURL<span class="signature">(url)</span><span class="type-signature"> &rarr; {<a href="Embed.html">Embed</a>}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Sets the url of the embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line54">line 54</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5 class="h5-parameters">Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The url.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="Embed.html">Embed</a></span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="toJSON"><span class="type-signature"></span>toJSON<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Returns the correct Discord format for an embed.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line215">line 215</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Object</span>
-
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
-
-    
-
-
-
-
-<dl class="details">
-    
-    <dt class="tag-description">Description:</dt>
-    <dd class="tag-description"><ul class="dummy"><li><p>Converts the embed into string form.</p></li></ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="util_builder_embedBuilder.js.html">util/builder/embedBuilder.js</a>, <a href="util_builder_embedBuilder.js.html#line193">line 193</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 class="h5-returns">Returns:</h5>
-
-        
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">String</span>
-
-
-
-    </dd>
-</dl>
-
     
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable class-methods-use-this */
+const WebSocket = require("ws");
+const erlpack = require("erlpack");
+const ZlibSync = require("zlib-sync");
+const _heartbeat = require("./structures/_heartbeat");
+const _identify = require("./structures/_identify");
+const EventHandler = require("./eventHandler");
+const chalk = require("chalk");
+const { NAME, GATEWAY_RECONNECT_CLOSE_CODES } = require("../constants");
+const generateWebsocketURL = require("../util/gluon/generateWebsocketURL");
+const { OPEN } = require("ws");
+const _updatePresence = require("./structures/_updatePresence");
+const _resume = require("./structures/_resume");
+
+/* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
+
+class WS {
+  #token;
+  #intents;
+  #_client;
+  #_sessionId;
+  #_s;
+  #resuming;
+  #heartbeatSetInterval;
+  #heartbeatInterval;
+  #waitingForHeartbeatACK;
+  #monitorOpened;
+  #ws;
+  #resumeGatewayUrl;
+  #retries;
+
+  constructor(
+    client,
+    token,
+    url,
+    shard,
+    intents,
+    sessionId = null,
+    sequence = null,
+    resumeGatewayUrl = null,
+    softRestartFunction = null
+  ) {
+    this.#token = token;
+    this.shard = shard;
+
+    this.#intents = intents;
+
+    this.#_client = client;
+
+    this.eventHandler = new EventHandler(this.#_client, this);
+
+    this.#_sessionId = sessionId;
+    this.#_s = sequence;
+
+    this.#resuming = sessionId != null &amp;&amp; sequence != null ? true : false;
+
+    this.#heartbeatSetInterval = null;
+    this.#heartbeatInterval = null;
+    this.#waitingForHeartbeatACK = false;
+
+    this.#monitorOpened = null;
+
+    this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
+    this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
+    this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
+    this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
+
+    this.#ws = new WebSocket(url);
+
+    this.#resumeGatewayUrl = resumeGatewayUrl;
+
+    this.#retries = 1;
+
+    this.softRestartFunction = softRestartFunction
+      ? softRestartFunction
+      : () => process.exit(1);
+
+    this.#addListeners();
+  }
+
+  #handleIncoming(data) {
+    if (!data) return;
+
+    if (data.s) this.#_s = data.s;
+
+    this.#_client.emit("raw", data);
+
+    switch (data.op) {
+      // Dispatch
+      case 0: {
+        try {
+          this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
+        } catch (error) {
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardCatastrophic
+            } @ ${this.time()} => ERROR at ${data.t}: ${error}`
+          );
+          console.error(error);
+        }
+        break;
+      }
+
+      // Heartbeat
+      case 1: {
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardNorminal
+          } @ ${this.time()} => Gateway requested heartbeat`
+        );
+
+        this.#heartbeat(true);
+
+        break;
+      }
+
+      // Reconnect
+      case 7: {
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardWarning
+          } @ ${this.time()} => Received reconnect`
+        );
+
+        // reconnect to websocket with session id
+        this.#reconnect();
+
+        break;
+      }
+
+      // Invalid Session
+      case 9: {
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardWarning
+          } @ ${this.time()} => INVALID SESSION`
+        );
+
+        if (data.d != false) this.#resume();
+        else
+          setTimeout(() => {
+            this.#identify();
+          }, (Math.floor(Math.random() * 6) + 1) * 1000);
+
+        break;
+      }
+
+      // Hello
+      case 10: {
+        this.#heartbeatInterval = data.d.heartbeat_interval;
+
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`
+        );
+
+        if (this.#resuming != true) {
+          this.heartbeatInit();
+          this.#identify();
+        } else this.#resume();
+
+        break;
+      }
+
+      // Heartbeat ACK
+      case 11: {
+        this.#waitingForHeartbeatACK = false;
+
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardNorminal
+          } @ ${this.time()} => Heartbeat acknowledged`
+        );
+
+        break;
+      }
+
+      default: {
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardCatastrophic
+          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`
+        );
+
+        break;
+      }
+    }
+  }
+
+  updatePresence(name, type, status, afk, since) {
+    if (this.#ws.readyState != OPEN) return;
+
+    this.#ws.send(_updatePresence(name, type, status, afk, since));
+  }
+
+  heartbeatInit() {
+    this.#heartbeat();
+
+    this.#heartbeatSetInterval = setInterval(() => {
+      this.#heartbeat();
+    }, this.#heartbeatInterval);
+  }
+
+  #heartbeat(response = false) {
+    if (this.#resuming == true &amp;&amp; response != true) return;
+
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardNorminal
+      } @ ${this.time()} => Sending heartbeat...`
+    );
+
+    if (response != true) this.#waitingForHeartbeatACK = true;
+
+    this.#ws.send(_heartbeat(this.#_s));
+    // we'll close the websocket if a heartbeat ACK is not received
+    // unless its us responding to an opcode 1
+    if (response != true)
+      setTimeout(() => {
+        if (this.#waitingForHeartbeatACK == true &amp;&amp; this.#resuming != true) {
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardCatastrophic
+            } @ ${this.time()} => Heartbeat ACK not received`
+          );
+          this.#shutDownWebsocket(4000);
+        }
+      }, 10000);
+  }
+
+  #identify() {
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardNorminal
+      } @ ${this.time()} => IDENTIFY with TOKEN: "${this.#token}", SHARD: "${
+        this.shard
+      }" and INTENTS: "${this.#intents}"`
+    );
+
+    this.#ws.send(_identify(this.#token, this.shard, this.#intents));
+  }
+
+  #reconnect() {
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardWarning
+      } @ ${this.time()} => Attempting reconnect...`
+    );
+
+    this.#resuming = true;
+
+    this.#shutDownWebsocket(4901);
+
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardWarning
+      } @ ${this.time()} => Shard reconnecting`
+    );
+  }
+
+  #resume() {
+    this.#resuming = true;
+
+    this.#waitingForHeartbeatACK = false;
+
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardWarning
+      } @ ${this.time()} => RESUMING with token ${this.#token}, session id ${
+        this.#_sessionId
+      } and sequence ${this.#_s}`
+    );
+
+    this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
+
+    this.#resuming = false;
+  }
+
+  get time() {
+    return chalk.magenta(new Date().toGMTString());
+  }
+
+  #addListeners() {
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardWarning
+      } @ ${this.time()} => Adding websocket listeners`
+    );
+
+    this.zlib = new ZlibSync.Inflate({
+      chunkSize: 128 * 1024,
+    });
+
+    this.#ws.once("open", () => {
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardNorminal
+        } @ ${this.time()} => Websocket opened`
+      );
+
+      clearTimeout(this.#monitorOpened);
+    });
+
+    this.#ws.once("close", (data) => {
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          data &lt; 2000 ? this.shardNorminal : this.shardCatastrophic
+        } @ ${this.time()} => Websocket closed with code ${data}`
+      );
+
+      this.#ws.removeAllListeners();
+
+      clearInterval(this.terminateSocketTimeout);
+
+      clearInterval(this.#heartbeatSetInterval);
+
+      this.#waitingForHeartbeatACK = false;
+
+      if (
+        data &lt; 2000 ||
+        data == 4901 ||
+        GATEWAY_RECONNECT_CLOSE_CODES.includes(data)
+      )
+        this.#resuming = true;
+      else process.exit(1);
+
+      if (this.#retries &lt;= 5)
+        setTimeout(() => {
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${
+              this.#retries
+            } at re-opening websocket`
+          );
+
+          this.#retries++;
+
+          this.#ws = new WebSocket(generateWebsocketURL(this.#resumeGatewayUrl));
+
+          this.#monitorOpened = setTimeout(() => {
+            this.#_client.emit(
+              "debug",
+              `${this.libName} ${
+                this.shardWarning
+              } @ ${this.time()} => Attempt ${
+                this.#retries
+              } failed to re-open websocket, shutting down websocket with code ${data}`
+            );
+
+            this.#shutDownWebsocket(data);
+          }, 10000);
+
+          this.#addListeners();
+        }, this.#retries * 1000);
+      else process.exit(1);
+    });
+
+    this.#ws.on("message", (data) => {
+      /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
+
+      if (data instanceof ArrayBuffer) data = Buffer.from(data);
+      else if (Array.isArray(data)) data = Buffer.concat(data);
+
+      if (data.length >= 4 &amp;&amp; data.readUInt32BE(data.length - 4) === 0xffff) {
+        this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
+        if (this.zlib.err) throw new Error(this.zlib.msg);
+
+        data = Buffer.from(this.zlib.result);
+        return this.#handleIncoming(erlpack.unpack(data));
+      } else this.zlib.push(data, false);
+    });
+
+    this.#ws.on("error", (data) => {
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardCatastrophic
+        } @ ${this.time()} => ${data?.stack?.toString()}`
+      );
+
+      this.#shutDownWebsocket();
+    });
+  }
+
+  async #shutDownWebsocket(code = 1000) {
+    this.#_client.emit(
+      "debug",
+      `${this.libName} ${
+        this.shardWarning
+      } @ ${this.time()} => Closing websocket...`
+    );
+
+    this.#ws.close(code);
+
+    this.terminateSocketTimeout = setTimeout(() => {
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardCatastrophic
+        } @ ${this.time()} => Terminating websocket`
+      );
+      this.#ws.terminate();
+      setTimeout(() => {
+        this.softRestartFunction();
+      }, 1000);
+    }, 5000);
+  }
+
+  resetRetries() {
+    this.#retries = 0;
+  }
+
+  /**
+   * @param {String} id
+   */
+  set sessionId(id) {
+    this.#_sessionId = id;
+  }
+
+  /**
+   * @param {String} url
+   */
+  set resumeGatewayUrl(url) {
+    this.#resumeGatewayUrl = url;
+  }
+}
+
+module.exports = WS;
+</code></pre>
+        </article>
+    </section>
 
 
 
