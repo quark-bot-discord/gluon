@@ -66,7 +66,7 @@ class GuildChannelsManager {
   /**
    * Gets a channel from the cache.
    * @param {String} id The ID of the channel to retrieve.
-   * @returns {VoiceChannel? | TextChannel? | Thread?}
+   * @returns {(VoiceChannel | TextChannel | Thread)?}
    * @public
    * @method
    * @throws {TypeError}
