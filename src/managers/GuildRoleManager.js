@@ -16,10 +16,25 @@ class GuildRoleManager {
    * @param {Guild} guild The guild that this role manager belongs to.
    */
   constructor(client, guild) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this role manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
+    /**
+     * The cache of roles.
+     * @type {Map<String, Role>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

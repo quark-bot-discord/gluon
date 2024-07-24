@@ -16,10 +16,25 @@ class GuildMemberManager {
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this member manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
+    /**
+     * The cache of members.
+     * @type {Map<String, Member>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

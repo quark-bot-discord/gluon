@@ -4,6 +4,11 @@ class ChannelCacheOptions {
   #_cache_options;
 
   constructor(cache_options) {
+    /**
+     * The cache options for this channel.
+     * @type {Number}
+     * @private
+     */
     this.#_cache_options = cache_options ?? 0;
   }
 

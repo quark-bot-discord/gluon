@@ -15,10 +15,25 @@ class ChannelMessageManager {
    * @param {Channel} channel The channel that is being managed.
    */
   constructor(client, channel) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The channel that is being managed.
+     * @type {Channel}
+     * @private
+     */
     this.#channel = channel;
 
+    /**
+     * The cache for messages.
+     * @type {Map<String, Message>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

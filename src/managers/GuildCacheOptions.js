@@ -4,6 +4,11 @@ class GuildCacheOptions {
   #_cache_options;
 
   constructor(cache_options) {
+    /**
+     * The cache options for this guild.
+     * @type {Number}
+     * @private
+     */
     this.#_cache_options = cache_options ?? 0;
   }
 

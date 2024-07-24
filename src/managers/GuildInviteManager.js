@@ -18,10 +18,25 @@ class GuildInviteManager {
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
   constructor(client, guild) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this invite manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
+    /**
+     * The cache of invites.
+     * @type {Map<String, Invite>}
+     * @private
+     */
     this.#cache = new Map();
   }
 

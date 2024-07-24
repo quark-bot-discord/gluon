@@ -17,10 +17,25 @@ class GuildChannelsManager {
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
   constructor(client, guild) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
+    /**
+     * The guild that this channel manager belongs to.
+     * @type {Guild}
+     * @private
+     */
     this.#guild = guild;
 
+    /**
+     * The cache of channels.
+     * @type {Map<String, VoiceChannel | TextChannel | Thread>}
+     * @private
+     */
     this.#cache = new Map();
   }
 
