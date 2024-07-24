@@ -28,6 +28,8 @@ describe("Attachment", function () {
       expect(attachment).to.have.property("name");
       expect(attachment).to.have.property("size");
       expect(attachment).to.have.property("url");
+      expect(attachment).to.have.property("toString");
+      expect(attachment).to.have.property("toJSON");
     });
   });
 
@@ -94,5 +96,21 @@ describe("Attachment", function () {
         url: TEST_DATA.ATTACHMENT.url.slice(0, -1),
       });
     });
-  })
+  });
+
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).id).to.equal(attachment.id);
+      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).name).to.equal(attachment.name);
+      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).size).to.equal(attachment.size);
+      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).url).to.equal(attachment.url);
+      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).toJSON()).to.deep.equal(attachment.toJSON());
+    });
+  });
 });
