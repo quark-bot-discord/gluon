@@ -7,37 +7,98 @@ const cacheChannel = require("../util/gluon/cacheChannel");
  * Manages all channels within a guild.
  */
 class GuildChannelsManager {
+  #_client;
+  #guild;
+  #cache;
+
   /**
    * Creates a guild channel manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
   constructor(client, guild) {
-    this._client = client;
+    this.#_client = client;
 
-    this.guild = guild;
+    this.#guild = guild;
 
-    this.cache = new Map();
+    this.#cache = new Map();
   }
 
   /**
    * Fetches a particular channel belonging to this guild.
-   * @param {BigInt | String} channel_id The id of the channel to fetch.
+   * @param {String} channel_id The id of the channel to fetch.
    * @returns {Promise<VoiceChannel> | Promise<Thread> | Promise<TextChannel>} The fetched channel.
    */
   async fetch(channel_id) {
-    const cachedChannel = this.cache.get(channel_id.toString()) || null;
-    if (this._client.cacheChannels == true) return cachedChannel;
 
-    const data = await this._client.request.makeRequest("getChannel", [
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+
+    const cachedChannel = this.#cache.get(channel_id) || null;
+    if (this.#_client.cacheChannels == true) return cachedChannel;
+
+    const data = await this.#_client.request.makeRequest("getChannel", [
       channel_id,
     ]);
 
-    return cacheChannel(this._client, data, this.guild.id.toString());
+    return cacheChannel(this.#_client, data, this.#guild.id);
+  }
+
+  /**
+   * Gets a channel from the cache.
+   * @param {String} id The ID of the channel to retrieve.
+   * @returns {VoiceChannel? | TextChannel? | Thread?}
+   */
+  get(id) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: ID must be a string.");
+    return this.#cache.get(id);
+  }
+
+  /**
+   * Adds a channel to the cache.
+   * @param {String} id The ID of the channel to cache.
+   * @param {VoiceChannel | TextChannel | Thread} channel The channel to cache.
+   * @returns {VoiceChannel | TextChannel | Thread}
+   */
+  set(id, channel) {
+    if (
+      !(
+        channel instanceof VoiceChannel ||
+        channel instanceof TextChannel ||
+        channel instanceof Thread
+      )
+    )
+      throw new TypeError(
+        "GLUON: Channel must be a VoiceChannel, TextChannel or Thread instance."
+      );
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    return this.#cache.set(id, channel);
+  }
+
+  /**
+   * Deletes a channel from the cache.
+   * @param {String} id The ID of the channel to delete.
+   * @returns {Boolean}
+   */
+  delete(id) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: ID must be a string.");
+    return this.#cache.delete(id);
+  }
+
+  /**
+   * Returns the size of the cache.
+   * @type {Number}
+   * @readonly
+   */
+  get size() {
+    return this.#cache.size;
   }
 
   toJSON() {
-    return [...this.cache.values()];
+    return [...this.#cache.values()];
   }
 }
 

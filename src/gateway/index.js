@@ -15,64 +15,81 @@ const _resume = require("./structures/_resume");
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
 class WS {
+  #token;
+  #intents;
+  #_client;
+  #_sessionId;
+  #_s;
+  #resuming;
+  #heartbeatSetInterval;
+  #heartbeatInterval;
+  #waitingForHeartbeatACK;
+  #monitorOpened;
+  #ws;
+  #resumeGatewayUrl;
+  #retries;
+  #addListeners;
+  #heartbeat;
+  #identify;
+  #reconnect;
+  #resume;
+  #shutDownWebsocket;
+
   constructor(
     client,
+    token,
     url,
     shard,
     intents,
     sessionId = null,
     sequence = null,
     resumeGatewayUrl = null,
-    softRestartFunction = null,
+    softRestartFunction = null
   ) {
-    this.token = client.token;
+    this.#token = token;
     this.shard = shard;
 
-    this.intents = intents;
+    this.#intents = intents;
 
-    this.url = url;
+    this.#_client = client;
 
-    this._client = client;
+    this.eventHandler = new EventHandler(this.#_client, this);
 
-    this.request = this._client.request;
+    this.#_sessionId = sessionId;
+    this.#_s = sequence;
 
-    this.eventHandler = new EventHandler(this._client, this);
+    this.#resuming = sessionId != null && sequence != null ? true : false;
 
-    this.sessionId = sessionId;
-    this.s = sequence;
+    this.#heartbeatSetInterval = null;
+    this.#heartbeatInterval = null;
+    this.#waitingForHeartbeatACK = false;
 
-    this.resuming = sessionId != null && sequence != null ? true : false;
-
-    this.heartbeatSetInterval = null;
-    this.heartbeatInterval = null;
-    this.waitingForHeartbeatACK = false;
-
-    this.monitorOpened = null;
+    this.#monitorOpened = null;
 
     this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
     this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
     this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
     this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
 
-    this.ws = new WebSocket(url);
+    this.#ws = new WebSocket(url);
 
-    this.resumeGatewayUrl = resumeGatewayUrl;
+    this.#resumeGatewayUrl = resumeGatewayUrl;
 
-    this.retries = 1;
+    this.#retries = 1;
 
     this.softRestartFunction = softRestartFunction
       ? softRestartFunction
       : () => process.exit(1);
 
-    this.addListeners();
+    this.#addListeners();
   }
 
-  handleIncoming(data) {
+  #handleIncoming(data) {
     if (!data) return;
 
-    if (data.s) this.s = data.s;
+    if (data.s) this.#_s = data.s;
 
-    this._client.emit("raw", data);
+    this.#_client.emit("raw", data);
 
     switch (data.op) {
       // Dispatch
@@ -80,11 +97,11 @@ class WS {
         try {
           this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
         } catch (error) {
-          this._client.emit(
+          this.#_client.emit(
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
-            } @ ${this.time()} => ERROR at ${data.t}: ${error}`,
+            } @ ${this.time()} => ERROR at ${data.t}: ${error}`
           );
           console.error(error);
         }
@@ -93,91 +110,88 @@ class WS {
 
       // Heartbeat
       case 1: {
-        this._client.emit(
+        this.#_client.emit(
           "debug",
           `${this.libName} ${
             this.shardNorminal
-          } @ ${this.time()} => Gateway requested heartbeat`,
+          } @ ${this.time()} => Gateway requested heartbeat`
         );
 
-        this.heartbeat(true);
+        this.#heartbeat(true);
 
         break;
       }
 
       // Reconnect
       case 7: {
-        this._client.emit(
+        this.#_client.emit(
           "debug",
           `${this.libName} ${
             this.shardWarning
-          } @ ${this.time()} => Received reconnect`,
+          } @ ${this.time()} => Received reconnect`
         );
 
         // reconnect to websocket with session id
-        this.reconnect();
+        this.#reconnect();
 
         break;
       }
 
       // Invalid Session
       case 9: {
-        this._client.emit(
+        this.#_client.emit(
           "debug",
           `${this.libName} ${
             this.shardWarning
-          } @ ${this.time()} => INVALID SESSION`,
+          } @ ${this.time()} => INVALID SESSION`
         );
 
-        if (data.d != false) this.resume();
+        if (data.d != false) this.#resume();
         else
-          setTimeout(
-            () => {
-              this.identify();
-            },
-            (Math.floor(Math.random() * 6) + 1) * 1000,
-          );
+          setTimeout(() => {
+            this.#identify();
+          }, (Math.floor(Math.random() * 6) + 1) * 1000);
 
         break;
       }
 
       // Hello
       case 10: {
-        this.heartbeatInterval = data.d.heartbeat_interval;
+        this.#heartbeatInterval = data.d.heartbeat_interval;
 
-        this._client.emit(
+        this.#_client.emit(
           "debug",
-          `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`,
+          `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`
         );
 
-        if (this.resuming != true) {
+        if (this.#resuming != true) {
           this.heartbeatInit();
-          this.identify();
-        } else this.resume();
+          this.#identify();
+        } else this.#resume();
 
         break;
       }
 
       // Heartbeat ACK
       case 11: {
-        this.waitingForHeartbeatACK = false;
+        this.#waitingForHeartbeatACK = false;
 
-        this._client.emit(
+        this.#_client.emit(
           "debug",
           `${this.libName} ${
             this.shardNorminal
-          } @ ${this.time()} => Heartbeat acknowledged`,
+          } @ ${this.time()} => Heartbeat acknowledged`
         );
 
         break;
       }
 
       default: {
-        this._client.emit(
+        this.#_client.emit(
           "debug",
           `${this.libName} ${
             this.shardCatastrophic
-          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`,
+          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`
         );
 
         break;
@@ -186,183 +200,183 @@ class WS {
   }
 
   updatePresence(name, type, status, afk, since) {
-    if (this.ws.readyState != OPEN) return;
+    if (this.#ws.readyState != OPEN) return;
 
-    this.ws.send(_updatePresence(name, type, status, afk, since));
+    this.#ws.send(_updatePresence(name, type, status, afk, since));
   }
 
   heartbeatInit() {
-    this.heartbeat();
+    this.#heartbeat();
 
-    this.heartbeatSetInterval = setInterval(() => {
-      this.heartbeat();
-    }, this.heartbeatInterval);
+    this.#heartbeatSetInterval = setInterval(() => {
+      this.#heartbeat();
+    }, this.#heartbeatInterval);
   }
 
-  heartbeat(response = false) {
-    if (this.resuming == true && response != true) return;
+  #heartbeat(response = false) {
+    if (this.#resuming == true && response != true) return;
 
-    this._client.emit(
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardNorminal
-      } @ ${this.time()} => Sending heartbeat...`,
+      } @ ${this.time()} => Sending heartbeat...`
     );
 
-    if (response != true) this.waitingForHeartbeatACK = true;
+    if (response != true) this.#waitingForHeartbeatACK = true;
 
-    this.ws.send(_heartbeat(this.s));
+    this.#ws.send(_heartbeat(this.#_s));
     // we'll close the websocket if a heartbeat ACK is not received
     // unless its us responding to an opcode 1
     if (response != true)
       setTimeout(() => {
-        if (this.waitingForHeartbeatACK == true && this.resuming != true) {
-          this._client.emit(
+        if (this.#waitingForHeartbeatACK == true && this.#resuming != true) {
+          this.#_client.emit(
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
-            } @ ${this.time()} => Heartbeat ACK not received`,
+            } @ ${this.time()} => Heartbeat ACK not received`
           );
-          this.shutDownWebsocket(4000);
+          this.#shutDownWebsocket(4000);
         }
       }, 10000);
   }
 
-  identify() {
-    this._client.emit(
+  #identify() {
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardNorminal
-      } @ ${this.time()} => IDENTIFY with TOKEN: "${this.token}", SHARD: "${
+      } @ ${this.time()} => IDENTIFY with TOKEN: "${this.#token}", SHARD: "${
         this.shard
-      }" and INTENTS: "${this.intents}"`,
+      }" and INTENTS: "${this.#intents}"`
     );
 
-    this.ws.send(_identify(this.token, this.shard, this.intents));
+    this.#ws.send(_identify(this.#token, this.shard, this.#intents));
   }
 
-  reconnect() {
-    this._client.emit(
+  #reconnect() {
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Attempting reconnect...`,
+      } @ ${this.time()} => Attempting reconnect...`
     );
 
-    this.resuming = true;
+    this.#resuming = true;
 
-    this.shutDownWebsocket(4901);
+    this.#shutDownWebsocket(4901);
 
-    this._client.emit(
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Shard reconnecting`,
+      } @ ${this.time()} => Shard reconnecting`
     );
   }
 
-  resume() {
-    this.resuming = true;
+  #resume() {
+    this.#resuming = true;
 
-    this.waitingForHeartbeatACK = false;
+    this.#waitingForHeartbeatACK = false;
 
-    this._client.emit(
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => RESUMING with token ${this.token}, session id ${
-        this.sessionId
-      } and sequence ${this.s}`,
+      } @ ${this.time()} => RESUMING with token ${this.#token}, session id ${
+        this.#_sessionId
+      } and sequence ${this.#_s}`
     );
 
-    this.ws.send(_resume(this.token, this.sessionId, this.s));
+    this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
 
-    this.resuming = false;
+    this.#resuming = false;
   }
 
-  time() {
+  get time() {
     return chalk.magenta(new Date().toGMTString());
   }
 
-  addListeners() {
-    this._client.emit(
+  #addListeners() {
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Adding websocket listeners`,
+      } @ ${this.time()} => Adding websocket listeners`
     );
 
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
     });
 
-    this.ws.once("open", () => {
-      this._client.emit(
+    this.#ws.once("open", () => {
+      this.#_client.emit(
         "debug",
         `${this.libName} ${
           this.shardNorminal
-        } @ ${this.time()} => Websocket opened`,
+        } @ ${this.time()} => Websocket opened`
       );
 
-      clearTimeout(this.monitorOpened);
+      clearTimeout(this.#monitorOpened);
     });
 
-    this.ws.once("close", (data) => {
-      this._client.emit(
+    this.#ws.once("close", (data) => {
+      this.#_client.emit(
         "debug",
         `${this.libName} ${
           data < 2000 ? this.shardNorminal : this.shardCatastrophic
-        } @ ${this.time()} => Websocket closed with code ${data}`,
+        } @ ${this.time()} => Websocket closed with code ${data}`
       );
 
-      this.ws.removeAllListeners();
+      this.#ws.removeAllListeners();
 
       clearInterval(this.terminateSocketTimeout);
 
-      clearInterval(this.heartbeatSetInterval);
+      clearInterval(this.#heartbeatSetInterval);
 
-      this.waitingForHeartbeatACK = false;
+      this.#waitingForHeartbeatACK = false;
 
       if (
         data < 2000 ||
         data == 4901 ||
         GATEWAY_RECONNECT_CLOSE_CODES.includes(data)
       )
-        this.resuming = true;
+        this.#resuming = true;
       else process.exit(1);
 
-      if (this.retries <= 5)
+      if (this.#retries <= 5)
         setTimeout(() => {
-          this._client.emit(
+          this.#_client.emit(
             "debug",
             `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${
-              this.retries
-            } at re-opening websocket`,
+              this.#retries
+            } at re-opening websocket`
           );
 
-          this.retries++;
+          this.#retries++;
 
-          this.ws = new WebSocket(generateWebsocketURL(this.resumeGatewayUrl));
+          this.#ws = new WebSocket(generateWebsocketURL(this.#resumeGatewayUrl));
 
-          this.monitorOpened = setTimeout(() => {
-            this._client.emit(
+          this.#monitorOpened = setTimeout(() => {
+            this.#_client.emit(
               "debug",
               `${this.libName} ${
                 this.shardWarning
               } @ ${this.time()} => Attempt ${
-                this.retries
-              } failed to re-open websocket, shutting down websocket with code ${data}`,
+                this.#retries
+              } failed to re-open websocket, shutting down websocket with code ${data}`
             );
 
-            this.shutDownWebsocket(data);
+            this.#shutDownWebsocket(data);
           }, 10000);
 
-          this.addListeners();
-        }, this.retries * 1000);
+          this.#addListeners();
+        }, this.#retries * 1000);
       else process.exit(1);
     });
 
-    this.ws.on("message", (data) => {
+    this.#ws.on("message", (data) => {
       /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
 
       if (data instanceof ArrayBuffer) data = Buffer.from(data);
@@ -373,44 +387,62 @@ class WS {
         if (this.zlib.err) throw new Error(this.zlib.msg);
 
         data = Buffer.from(this.zlib.result);
-        return this.handleIncoming(erlpack.unpack(data));
+        return this.#handleIncoming(erlpack.unpack(data));
       } else this.zlib.push(data, false);
     });
 
-    this.ws.on("error", (data) => {
-      this._client.emit(
+    this.#ws.on("error", (data) => {
+      this.#_client.emit(
         "debug",
         `${this.libName} ${
           this.shardCatastrophic
-        } @ ${this.time()} => ${data?.stack?.toString()}`,
+        } @ ${this.time()} => ${data?.stack?.toString()}`
       );
 
-      this.shutDownWebsocket();
+      this.#shutDownWebsocket();
     });
   }
 
-  async shutDownWebsocket(code = 1000) {
-    this._client.emit(
+  async #shutDownWebsocket(code = 1000) {
+    this.#_client.emit(
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Closing websocket...`,
+      } @ ${this.time()} => Closing websocket...`
     );
 
-    this.ws.close(code);
+    this.#ws.close(code);
 
     this.terminateSocketTimeout = setTimeout(() => {
-      this._client.emit(
+      this.#_client.emit(
         "debug",
         `${this.libName} ${
           this.shardCatastrophic
-        } @ ${this.time()} => Terminating websocket`,
+        } @ ${this.time()} => Terminating websocket`
       );
-      this.ws.terminate();
+      this.#ws.terminate();
       setTimeout(() => {
         this.softRestartFunction();
       }, 1000);
     }, 5000);
+  }
+
+  resetRetries() {
+    this.#retries = 0;
+  }
+
+  /**
+   * @param {String} id
+   */
+  set sessionId(id) {
+    this.#_sessionId = id;
+  }
+
+  /**
+   * @param {String} url
+   */
+  set resumeGatewayUrl(url) {
+    this.#resumeGatewayUrl = url;
   }
 }
 

@@ -1,44 +1,99 @@
 const ScheduledEvent = require("../structures/ScheduledEvent");
 
 class GuildScheduledEventManager {
+  #_client;
+  #guild;
+  #cache;
   constructor(client, guild) {
-    this._client = client;
+    this.#_client = client;
 
-    this.guild = guild;
+    this.#guild = guild;
 
-    this.cache = new Map();
-
-    // this.list().then(() => null);
+    this.#cache = new Map();
   }
 
   async list() {
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "getListGuildScheduledEvents",
-      [this.guild.id],
+      [this.#guild.id],
     );
 
     const eventsList = [];
 
     for (let i = 0; i < data.length; i++)
-      eventsList.push(new ScheduledEvent(this._client, data[i]));
+      eventsList.push(new ScheduledEvent(this.#_client, data[i]));
 
     return eventsList;
   }
 
+  /**
+   * Fetches a scheduled event from the API.
+   * @param {String} scheduled_event_id The ID of the event to fetch.
+   * @returns {Promise<ScheduledEvent>}
+   */
   async fetch(scheduled_event_id) {
-    const cachedEvent = this.cache.get(scheduled_event_id.toString());
+
+    if (typeof scheduled_event_id !== "string")
+      throw new TypeError("GLUON: Scheduled event ID must be a string.");
+
+    const cachedEvent = this.#cache.get(scheduled_event_id.toString());
     if (cachedEvent) return cachedEvent;
 
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "getGuildScheduledEvent",
-      [this.guild.id, scheduled_event_id],
+      [this.#guild.id, scheduled_event_id],
     );
 
-    return new ScheduledEvent(this._client, data);
+    return new ScheduledEvent(this.#_client, data);
+  }
+
+  /**
+   * Retrieves a scheduled event from the cache.
+   * @param {String} id The ID of the event to retrieve.
+   * @returns {ScheduledEvent?}
+   */
+  get(id) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: ID must be a string.");
+    return this.#cache.get(id);
+  }
+
+  /**
+   * Cache a scheduled event.
+   * @param {String} id The ID of the event to cache.
+   * @param {ScheduledEvent} event The event to cache.
+   * @returns {ScheduledEvent}
+   */
+  set(id, event) {
+    if (!(event instanceof ScheduledEvent))
+      throw new TypeError("GLUON: Event must be a ScheduledEvent instance.");
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Event ID must be a string.");
+    return this.#cache.set(id, event);
+  }
+
+  /**
+   * Deletes a scheduled event from the cache.
+   * @param {String} id The ID of the event to delete.
+   * @returns {Boolean}
+   */
+  delete(id) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: ID must be a string.");
+    return this.#cache.delete(id);
+  }
+
+  /**
+   * The number of scheduled events in the cache.
+   * @param {Number}
+   * @readonly
+   */
+  get size() {
+    return this.#cache.size;
   }
 
   toJSON() {
-    return [...this.cache.values()];
+    return [...this.#cache.values()];
   }
 }
 
