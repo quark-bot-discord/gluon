@@ -40,7 +40,7 @@ jobs:
             output="$output $(basename $file .js.json),\n"
           done
           output="$output };"
-          echo $output > ./src/compiledStructures.js
+          echo -e $output > ./src/compiledStructures.js
 
       - name: Import bot's GPG key for signing commits
         id: import-gpg
