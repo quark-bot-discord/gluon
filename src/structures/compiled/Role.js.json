@@ -1,42 +1,17 @@
 [
     {
-        "comment": "",
-        "meta": {
-            "range": [
-                6,
-                56
-            ],
-            "filename": "Role.js",
-            "lineno": 1,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000003",
-                "name": "getRoleIcon",
-                "type": "CallExpression",
-                "value": ""
-            }
-        },
-        "undocumented": true,
-        "name": "getRoleIcon",
-        "longname": "getRoleIcon",
-        "kind": "constant",
-        "scope": "global",
-        "params": []
-    },
-    {
         "comment": "/**\n * Represents a role belonging to a guild.\n */",
         "meta": {
             "range": [
-                110,
-                5192
+                108,
+                5190
             ],
             "filename": "Role.js",
             "lineno": 6,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000008",
+                "id": "astnode100000006",
                 "name": "Role",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -57,15 +32,15 @@
         "comment": "",
         "meta": {
             "range": [
-                125,
-                134
+                123,
+                132
             ],
             "filename": "Role.js",
             "lineno": 7,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000011",
+                "id": "astnode100000009",
                 "name": "_client",
                 "type": "ClassPrivateProperty"
             }
@@ -82,15 +57,15 @@
         "comment": "",
         "meta": {
             "range": [
-                137,
-                148
+                135,
+                146
             ],
             "filename": "Role.js",
             "lineno": 8,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000012",
+                "id": "astnode100000010",
                 "name": "_guild_id",
                 "type": "ClassPrivateProperty"
             }
@@ -107,15 +82,15 @@
         "comment": "",
         "meta": {
             "range": [
-                151,
-                156
+                149,
+                154
             ],
             "filename": "Role.js",
             "lineno": 9,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000013",
+                "id": "astnode100000011",
                 "name": "_id",
                 "type": "ClassPrivateProperty"
             }
@@ -132,15 +107,15 @@
         "comment": "",
         "meta": {
             "range": [
-                159,
-                165
+                157,
+                163
             ],
             "filename": "Role.js",
             "lineno": 10,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000014",
+                "id": "astnode100000012",
                 "name": "name",
                 "type": "ClassPrivateProperty"
             }
@@ -157,15 +132,15 @@
         "comment": "",
         "meta": {
             "range": [
-                168,
-                175
+                166,
+                173
             ],
             "filename": "Role.js",
             "lineno": 11,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000015",
+                "id": "astnode100000013",
                 "name": "color",
                 "type": "ClassPrivateProperty"
             }
@@ -182,15 +157,15 @@
         "comment": "",
         "meta": {
             "range": [
-                178,
-                188
+                176,
+                186
             ],
             "filename": "Role.js",
             "lineno": 12,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000016",
+                "id": "astnode100000014",
                 "name": "position",
                 "type": "ClassPrivateProperty"
             }
@@ -207,15 +182,15 @@
         "comment": "",
         "meta": {
             "range": [
-                191,
-                198
+                189,
+                196
             ],
             "filename": "Role.js",
             "lineno": 13,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000017",
+                "id": "astnode100000015",
                 "name": "_icon",
                 "type": "ClassPrivateProperty"
             }
@@ -232,15 +207,15 @@
         "comment": "",
         "meta": {
             "range": [
-                201,
-                214
+                199,
+                212
             ],
             "filename": "Role.js",
             "lineno": 14,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000018",
+                "id": "astnode100000016",
                 "name": "permissions",
                 "type": "ClassPrivateProperty"
             }
@@ -257,15 +232,15 @@
         "comment": "",
         "meta": {
             "range": [
-                217,
-                230
+                215,
+                228
             ],
             "filename": "Role.js",
             "lineno": 15,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000019",
+                "id": "astnode100000017",
                 "name": "_attributes",
                 "type": "ClassPrivateProperty"
             }
@@ -282,15 +257,15 @@
         "comment": "",
         "meta": {
             "range": [
-                233,
-                239
+                231,
+                237
             ],
             "filename": "Role.js",
             "lineno": 16,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000020",
+                "id": "astnode100000018",
                 "name": "tags",
                 "type": "ClassPrivateProperty"
             }
@@ -307,15 +282,15 @@
         "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {String} guild_id The id of the guild that the role belongs to.\n   * @param {Boolean?} nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
         "meta": {
             "range": [
-                616,
-                2202
+                614,
+                2200
             ],
             "filename": "Role.js",
             "lineno": 25,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000021",
+                "id": "astnode100000019",
                 "name": "Role",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -380,15 +355,15 @@
         "comment": "/**\n * Represents a role belonging to a guild.\n */",
         "meta": {
             "range": [
-                110,
-                5192
+                108,
+                5190
             ],
             "filename": "Role.js",
             "lineno": 6,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000008",
+                "id": "astnode100000006",
                 "name": "Role",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -450,15 +425,15 @@
         "comment": "",
         "meta": {
             "range": [
-                657,
-                665
+                655,
+                663
             ],
             "filename": "Role.js",
             "lineno": 28,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000028",
+                "id": "astnode100000026",
                 "name": "guild_id",
                 "type": "Identifier",
                 "value": "guild_id"
@@ -474,15 +449,15 @@
         "comment": "",
         "meta": {
             "range": [
-                667,
-                682
+                665,
+                680
             ],
             "filename": "Role.js",
             "lineno": 28,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000030",
+                "id": "astnode100000028",
                 "name": "nocache",
                 "type": "AssignmentPattern",
                 "value": "nocache"
@@ -498,15 +473,15 @@
         "comment": "",
         "meta": {
             "range": [
-                689,
-                703
+                687,
+                701
             ],
             "filename": "Role.js",
             "lineno": 28,
             "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000035",
+                "id": "astnode100000033",
                 "name": "nocache",
                 "type": "Literal",
                 "value": false
@@ -522,15 +497,15 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                799,
-                821
+                797,
+                819
             ],
             "filename": "Role.js",
             "lineno": 35,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000039",
+                "id": "astnode100000037",
                 "name": "this.",
                 "type": "Identifier",
                 "value": "client",
@@ -554,15 +529,15 @@
         "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                936,
-                970
+                934,
+                968
             ],
             "filename": "Role.js",
             "lineno": 42,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000046",
+                "id": "astnode100000044",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -586,15 +561,15 @@
         "comment": "/**\n     * The id of the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1058,
-                1085
+                1056,
+                1083
             ],
             "filename": "Role.js",
             "lineno": 49,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000055",
+                "id": "astnode100000053",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -618,15 +593,15 @@
         "comment": "/**\n     * The name of the role.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1175,
-                1197
+                1173,
+                1195
             ],
             "filename": "Role.js",
             "lineno": 56,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000066",
+                "id": "astnode100000064",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.name",
@@ -650,15 +625,15 @@
         "comment": "/**\n     * The colour of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1289,
-                1313
+                1287,
+                1311
             ],
             "filename": "Role.js",
             "lineno": 63,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000075",
+                "id": "astnode100000073",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.color",
@@ -682,15 +657,15 @@
         "comment": "/**\n     * The position of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1407,
-                1437
+                1405,
+                1435
             ],
             "filename": "Role.js",
             "lineno": 70,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000084",
+                "id": "astnode100000082",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.position",
@@ -714,15 +689,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1541,
-                1579
+                1539,
+                1577
             ],
             "filename": "Role.js",
             "lineno": 77,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000097",
+                "id": "astnode100000095",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -740,15 +715,15 @@
         "comment": "/**\n     * The permissions for the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1677,
-                1721
+                1675,
+                1719
             ],
             "filename": "Role.js",
             "lineno": 84,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000111",
+                "id": "astnode100000109",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -772,15 +747,15 @@
         "comment": "/**\n     * The attributes of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1817,
-                1858
+                1815,
+                1856
             ],
             "filename": "Role.js",
             "lineno": 91,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000122",
+                "id": "astnode100000120",
                 "name": "this.",
                 "type": "LogicalExpression",
                 "value": "",
@@ -804,15 +779,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1889,
-                1918
+                1887,
+                1916
             ],
             "filename": "Role.js",
             "lineno": 93,
             "columnno": 28,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000139",
+                "id": "astnode100000137",
                 "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
@@ -830,15 +805,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1951,
-                1980
+                1949,
+                1978
             ],
             "filename": "Role.js",
             "lineno": 95,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000154",
+                "id": "astnode100000152",
                 "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
@@ -856,15 +831,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2017,
-                2046
+                2015,
+                2044
             ],
             "filename": "Role.js",
             "lineno": 97,
             "columnno": 34,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000169",
+                "id": "astnode100000167",
                 "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
@@ -882,15 +857,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2068,
-                2090
+                2066,
+                2088
             ],
             "filename": "Role.js",
             "lineno": 99,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000182",
+                "id": "astnode100000180",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.tags",
@@ -908,15 +883,15 @@
         "comment": "/**\n   * The ID of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2291,
-                2335
+                2289,
+                2333
             ],
             "filename": "Role.js",
             "lineno": 111,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000205",
+                "id": "astnode100000203",
                 "name": "Role#id",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -944,15 +919,15 @@
         "comment": "/**\n   * Whether the role is hoisted.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2437,
-                2511
+                2435,
+                2509
             ],
             "filename": "Role.js",
             "lineno": 121,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000216",
+                "id": "astnode100000214",
                 "name": "Role#hoist",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -984,15 +959,15 @@
         "comment": "/**\n   * Whether the role is managed (by an application).\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2633,
-                2709
+                2631,
+                2707
             ],
             "filename": "Role.js",
             "lineno": 131,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000233",
+                "id": "astnode100000231",
                 "name": "Role#managed",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1024,15 +999,15 @@
         "comment": "/**\n   * Whether the role is mentionable.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2815,
-                2895
+                2813,
+                2893
             ],
             "filename": "Role.js",
             "lineno": 141,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000250",
+                "id": "astnode100000248",
                 "name": "Role#mentionable",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1064,15 +1039,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3359,
-                3399
+                3357,
+                3397
             ],
             "filename": "Role.js",
             "lineno": 167,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000300",
+                "id": "astnode100000298",
                 "name": "formattedHash",
                 "type": "CallExpression",
                 "value": ""
@@ -1090,15 +1065,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3488,
-                3523
+                3486,
+                3521
             ],
             "filename": "Role.js",
             "lineno": 171,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000317",
+                "id": "astnode100000315",
                 "name": "formattedHash",
                 "type": "BinaryExpression",
                 "funcscope": "<anonymous>",
@@ -1117,15 +1092,15 @@
         "comment": "/**\n   * The icon URL of the role.\n   * @readonly\n   * @type {String?}\n   * @public\n   */",
         "meta": {
             "range": [
-                3651,
-                3735
+                3649,
+                3733
             ],
             "filename": "Role.js",
             "lineno": 182,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000324",
+                "id": "astnode100000322",
                 "name": "Role#displayIconURL",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1154,15 +1129,15 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3841,
-                3917
+                3839,
+                3915
             ],
             "filename": "Role.js",
             "lineno": 192,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000338",
+                "id": "astnode100000336",
                 "name": "Role#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1191,15 +1166,15 @@
         "comment": "/**\n   * The ID of the guild that this role belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4033,
-                4088
+                4031,
+                4086
             ],
             "filename": "Role.js",
             "lineno": 202,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000357",
+                "id": "astnode100000355",
                 "name": "Role#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1227,15 +1202,15 @@
         "comment": "/**\n   * The name of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4179,
-                4218
+                4177,
+                4216
             ],
             "filename": "Role.js",
             "lineno": 212,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000368",
+                "id": "astnode100000366",
                 "name": "Role#name",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1263,15 +1238,15 @@
         "comment": "/**\n   * The colour of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4311,
-                4352
+                4309,
+                4350
             ],
             "filename": "Role.js",
             "lineno": 222,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000377",
+                "id": "astnode100000375",
                 "name": "Role#color",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1299,15 +1274,15 @@
         "comment": "/**\n   * The position of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4447,
-                4494
+                4445,
+                4492
             ],
             "filename": "Role.js",
             "lineno": 232,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000386",
+                "id": "astnode100000384",
                 "name": "Role#position",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1335,15 +1310,15 @@
         "comment": "/**\n   * The permissions for the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4593,
-                4654
+                4591,
+                4652
             ],
             "filename": "Role.js",
             "lineno": 242,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000395",
+                "id": "astnode100000393",
                 "name": "Role#permissions",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1371,15 +1346,15 @@
         "comment": "/**\n   * The attributes of the role.\n   * @type {Object}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4751,
-                4790
+                4749,
+                4788
             ],
             "filename": "Role.js",
             "lineno": 252,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000406",
+                "id": "astnode100000404",
                 "name": "Role#tags",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1407,15 +1382,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4832,
-                4881
+                4830,
+                4879
             ],
             "filename": "Role.js",
             "lineno": 260,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000415",
+                "id": "astnode100000413",
                 "name": "Role#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1436,15 +1411,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4923,
-                5190
+                4921,
+                5188
             ],
             "filename": "Role.js",
             "lineno": 268,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000426",
+                "id": "astnode100000424",
                 "name": "Role#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1465,15 +1440,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4953,
-                4964
+                4951,
+                4962
             ],
             "filename": "Role.js",
             "lineno": 270,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000432",
+                "id": "astnode100000430",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1489,15 +1464,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4972,
-                4987
+                4970,
+                4985
             ],
             "filename": "Role.js",
             "lineno": 271,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000436",
+                "id": "astnode100000434",
                 "name": "name",
                 "type": "MemberExpression",
                 "value": "this.name"
@@ -1513,15 +1488,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4995,
-                5012
+                4993,
+                5010
             ],
             "filename": "Role.js",
             "lineno": 272,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000440",
+                "id": "astnode100000438",
                 "name": "color",
                 "type": "MemberExpression",
                 "value": "this.color"
@@ -1537,15 +1512,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5020,
-                5043
+                5018,
+                5041
             ],
             "filename": "Role.js",
             "lineno": 273,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000444",
+                "id": "astnode100000442",
                 "name": "position",
                 "type": "MemberExpression",
                 "value": "this.position"
@@ -1561,15 +1536,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5051,
-                5080
+                5049,
+                5078
             ],
             "filename": "Role.js",
             "lineno": 274,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000448",
+                "id": "astnode100000446",
                 "name": "permissions",
                 "type": "MemberExpression",
                 "value": "this.permissions"
@@ -1585,15 +1560,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5088,
-                5117
+                5086,
+                5115
             ],
             "filename": "Role.js",
             "lineno": 275,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000452",
+                "id": "astnode100000450",
                 "name": "icon",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1609,15 +1584,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5125,
-                5155
+                5123,
+                5153
             ],
             "filename": "Role.js",
             "lineno": 276,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000457",
+                "id": "astnode100000455",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1633,15 +1608,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5163,
-                5178
+                5161,
+                5176
             ],
             "filename": "Role.js",
             "lineno": 277,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000462",
+                "id": "astnode100000460",
                 "name": "tags",
                 "type": "MemberExpression",
                 "value": "this.tags"
@@ -1657,19 +1632,17 @@
         "comment": "",
         "meta": {
             "range": [
-                5194,
-                5215
+                5192,
+                5212
             ],
             "filename": "Role.js",
             "lineno": 282,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000467",
+                "id": "astnode100000464",
                 "name": "module.exports",
-                "type": "Identifier",
-                "value": "Role",
-                "paramnames": []
+                "type": "Identifier"
             }
         },
         "undocumented": true,
