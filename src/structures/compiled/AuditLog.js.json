@@ -1,2029 +1,2355 @@
 [
-  {
-    "comment": "",
-    "meta": {
-      "range": [6, 30],
-      "filename": "AuditLog.js",
-      "lineno": 1,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000003",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6,
+                30
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 1,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000003",
+                "name": "User",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
         "name": "User",
-        "type": "CallExpression",
-        "value": ""
-      }
+        "longname": "User",
+        "kind": "constant",
+        "scope": "global",
+        "params": []
     },
-    "undocumented": true,
-    "name": "User",
-    "longname": "User",
-    "kind": "constant",
-    "scope": "global",
-    "params": []
-  },
-  {
-    "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
-    "meta": {
-      "range": [170, 8255],
-      "filename": "AuditLog.js",
-      "lineno": 7,
-      "columnno": 0,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000008",
+    {
+        "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
+        "meta": {
+            "range": [
+                170,
+                8323
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 7,
+            "columnno": 0,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000008",
+                "name": "AuditLog",
+                "type": "ClassDeclaration",
+                "paramnames": [
+                    "client",
+                    "data",
+                    ""
+                ]
+            }
+        },
+        "classdesc": "Represents an audit log entry.",
+        "see": [
+            "{@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}"
+        ],
         "name": "AuditLog",
-        "type": "ClassDeclaration",
-        "paramnames": ["client", "data", ""]
-      }
+        "longname": "AuditLog",
+        "kind": "class",
+        "scope": "global",
+        "undocumented": true
     },
-    "classdesc": "Represents an audit log entry.",
-    "see": [
-      "{@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}"
-    ],
-    "name": "AuditLog",
-    "longname": "AuditLog",
-    "kind": "class",
-    "scope": "global",
-    "undocumented": true
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [189, 198],
-      "filename": "AuditLog.js",
-      "lineno": 8,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000011",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                189,
+                198
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 8,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000011",
+                "name": "_client",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_client",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_client",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_client",
-    "longname": "AuditLog#_client",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [201, 206],
-      "filename": "AuditLog.js",
-      "lineno": 9,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000012",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                201,
+                206
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 9,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000012",
+                "name": "_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_id",
-    "longname": "AuditLog#_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [209, 220],
-      "filename": "AuditLog.js",
-      "lineno": 10,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000013",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                209,
+                220
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 10,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000013",
+                "name": "_guild_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_guild_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_guild_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_guild_id",
-    "longname": "AuditLog#_guild_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [223, 236],
-      "filename": "AuditLog.js",
-      "lineno": 11,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000014",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                223,
+                236
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 11,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000014",
+                "name": "action_type",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "action_type",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#action_type",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "action_type",
-    "longname": "AuditLog#action_type",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [239, 251],
-      "filename": "AuditLog.js",
-      "lineno": 12,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000015",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                239,
+                251
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 12,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000015",
+                "name": "_target_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_target_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_target_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_target_id",
-    "longname": "AuditLog#_target_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [254, 262],
-      "filename": "AuditLog.js",
-      "lineno": 13,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000016",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                254,
+                262
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 13,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000016",
+                "name": "target",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "target",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#target",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "target",
-    "longname": "AuditLog#target",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [265, 279],
-      "filename": "AuditLog.js",
-      "lineno": 14,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000017",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                265,
+                279
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 14,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000017",
+                "name": "_executor_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_executor_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_executor_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_executor_id",
-    "longname": "AuditLog#_executor_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [282, 292],
-      "filename": "AuditLog.js",
-      "lineno": 15,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000018",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                282,
+                292
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 15,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000018",
+                "name": "executor",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "executor",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#executor",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "executor",
-    "longname": "AuditLog#executor",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [295, 303],
-      "filename": "AuditLog.js",
-      "lineno": 16,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000019",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                295,
+                303
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 16,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000019",
+                "name": "reason",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "reason",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#reason",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "reason",
-    "longname": "AuditLog#reason",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [306, 319],
-      "filename": "AuditLog.js",
-      "lineno": 17,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000020",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                306,
+                319
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 17,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000020",
+                "name": "_channel_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "_channel_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#_channel_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "_channel_id",
-    "longname": "AuditLog#_channel_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [322, 329],
-      "filename": "AuditLog.js",
-      "lineno": 18,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000021",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                322,
+                329
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 18,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000021",
+                "name": "count",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "count",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#count",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "count",
-    "longname": "AuditLog#count",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [332, 352],
-      "filename": "AuditLog.js",
-      "lineno": 19,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000022",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                332,
+                352
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 19,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000022",
+                "name": "delete_member_days",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "delete_member_days",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#delete_member_days",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "delete_member_days",
-    "longname": "AuditLog#delete_member_days",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [355, 372],
-      "filename": "AuditLog.js",
-      "lineno": 20,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000023",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                355,
+                372
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 20,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000023",
+                "name": "members_removed",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "members_removed",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#members_removed",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "members_removed",
-    "longname": "AuditLog#members_removed",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [375, 387],
-      "filename": "AuditLog.js",
-      "lineno": 21,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000024",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                375,
+                387
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 21,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000024",
+                "name": "special_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "special_id",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#special_id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "special_id",
-    "longname": "AuditLog#special_id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [390, 404],
-      "filename": "AuditLog.js",
-      "lineno": 22,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000025",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                390,
+                404
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 22,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000025",
+                "name": "special_type",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "special_type",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#special_type",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "special_type",
-    "longname": "AuditLog#special_type",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [407, 415],
-      "filename": "AuditLog.js",
-      "lineno": 23,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000026",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                407,
+                415
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 23,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000026",
+                "name": "status",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "status",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#status",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "status",
-    "longname": "AuditLog#status",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [418, 427],
-      "filename": "AuditLog.js",
-      "lineno": 24,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000027",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                418,
+                427
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 24,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000027",
+                "name": "changes",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
         "name": "changes",
-        "type": "ClassPrivateProperty"
-      }
+        "longname": "AuditLog#changes",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "access": "private"
     },
-    "undocumented": true,
-    "name": "changes",
-    "longname": "AuditLog#changes",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "access": "private"
-  },
-  {
-    "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Array<Object>} users Resolved users who are involved with the audit log entries.\n   */",
-    "meta": {
-      "range": [690, 4146],
-      "filename": "AuditLog.js",
-      "lineno": 32,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000028",
+    {
+        "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Array<Object>} users Resolved users who are involved with the audit log entries.\n   */",
+        "meta": {
+            "range": [
+                690,
+                4146
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 32,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000028",
+                "name": "AuditLog",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "client",
+                    "data",
+                    ""
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Creates a structure for an audit log entry.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Client"
+                    ]
+                },
+                "description": "The client instance.",
+                "name": "client"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Audit log data from Discord.",
+                "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Array.<Object>"
+                    ]
+                },
+                "description": "Resolved users who are involved with the audit log entries.",
+                "name": "users"
+            }
+        ],
         "name": "AuditLog",
-        "type": "MethodDefinition",
-        "paramnames": ["client", "data", ""]
-      },
-      "vars": {
-        "": null
-      }
+        "longname": "AuditLog",
+        "kind": "class",
+        "scope": "global",
+        "undocumented": true
     },
-    "description": "Creates a structure for an audit log entry.",
-    "params": [
-      {
-        "type": {
-          "names": ["Client"]
+    {
+        "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
+        "meta": {
+            "range": [
+                170,
+                8323
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 7,
+            "columnno": 0,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000008",
+                "name": "AuditLog",
+                "type": "ClassDeclaration",
+                "paramnames": [
+                    "client",
+                    "data",
+                    ""
+                ]
+            }
         },
-        "description": "The client instance.",
-        "name": "client"
-      },
-      {
-        "type": {
-          "names": ["Object"]
-        },
-        "description": "Audit log data from Discord.",
-        "name": "data"
-      },
-      {
-        "type": {
-          "names": ["Array.<Object>"]
-        },
-        "description": "Resolved users who are involved with the audit log entries.",
-        "name": "users"
-      }
-    ],
-    "name": "AuditLog",
-    "longname": "AuditLog",
-    "kind": "class",
-    "scope": "global",
-    "undocumented": true
-  },
-  {
-    "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
-    "meta": {
-      "range": [170, 8255],
-      "filename": "AuditLog.js",
-      "lineno": 7,
-      "columnno": 0,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000008",
         "name": "AuditLog",
-        "type": "ClassDeclaration",
-        "paramnames": ["client", "data", ""]
-      }
+        "longname": "AuditLog",
+        "kind": "class",
+        "classdesc": "Represents an audit log entry.",
+        "see": [
+            "{@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}"
+        ],
+        "scope": "global",
+        "description": "Creates a structure for an audit log entry.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Client"
+                    ]
+                },
+                "description": "The client instance.",
+                "name": "client"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Audit log data from Discord.",
+                "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Array.<Object>"
+                    ]
+                },
+                "description": "Resolved users who are involved with the audit log entries.",
+                "name": "users"
+            }
+        ]
     },
-    "name": "AuditLog",
-    "longname": "AuditLog",
-    "kind": "class",
-    "classdesc": "Represents an audit log entry.",
-    "see": [
-      "{@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}"
-    ],
-    "scope": "global",
-    "description": "Creates a structure for an audit log entry.",
-    "params": [
-      {
-        "type": {
-          "names": ["Client"]
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                718,
+                723
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 32,
+            "columnno": 30,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000035",
+                "name": "users",
+                "type": "Identifier",
+                "value": "users"
+            }
         },
-        "description": "The client instance.",
-        "name": "client"
-      },
-      {
-        "type": {
-          "names": ["Object"]
-        },
-        "description": "Audit log data from Discord.",
-        "name": "data"
-      },
-      {
-        "type": {
-          "names": ["Array.<Object>"]
-        },
-        "description": "Resolved users who are involved with the audit log entries.",
-        "name": "users"
-      }
-    ]
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [718, 723],
-      "filename": "AuditLog.js",
-      "lineno": 32,
-      "columnno": 30,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000035",
+        "undocumented": true,
         "name": "users",
-        "type": "Identifier",
-        "value": "users"
-      }
+        "longname": "users",
+        "kind": "member",
+        "scope": "global"
     },
-    "undocumented": true,
-    "name": "users",
-    "longname": "users",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
-    "meta": {
-      "range": [820, 842],
-      "filename": "AuditLog.js",
-      "lineno": 38,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000040",
-        "name": "this.",
-        "type": "Identifier",
-        "value": "client",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                820,
+                842
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 38,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000040",
+                "name": "this.",
+                "type": "Identifier",
+                "value": "client",
+                "paramnames": []
+            }
+        },
+        "description": "The client instance.",
+        "type": {
+            "names": [
+                "Client"
+            ]
+        },
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The client instance.",
-    "type": {
-      "names": ["Client"]
+    {
+        "comment": "/**\n     * The id of the audit log entry.\n     * @type {BigInt}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                941,
+                968
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 45,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000047",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The id of the audit log entry.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n     * The id of the audit log entry.\n     * @type {BigInt}\n     * @private\n     */",
-    "meta": {
-      "range": [941, 968],
-      "filename": "AuditLog.js",
-      "lineno": 45,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000047",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n     * The ID of the guild that this audit log belongs to.\n     * @type {BigInt}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                1088,
+                1127
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 52,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000058",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The ID of the guild that this audit log belongs to.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The id of the audit log entry.",
-    "type": {
-      "names": ["BigInt"]
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1252,
+                1288
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 59,
+            "columnno": 26,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000073",
+                "name": "this.",
+                "type": "MemberExpression",
+                "value": "data.action_type",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n     * The ID of the guild that this audit log belongs to.\n     * @type {BigInt}\n     * @private\n     */",
-    "meta": {
-      "range": [1088, 1127],
-      "filename": "AuditLog.js",
-      "lineno": 52,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000058",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n     * The id of the target user.\n     * @type {BigInt?}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                1384,
+                1449
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 66,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000082",
+                "name": "this.",
+                "type": "ConditionalExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The id of the target user.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The ID of the guild that this audit log belongs to.",
-    "type": {
-      "names": ["BigInt"]
-    },
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [1252, 1288],
-      "filename": "AuditLog.js",
-      "lineno": 59,
-      "columnno": 26,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000073",
-        "name": "this.",
-        "type": "MemberExpression",
-        "value": "data.action_type",
-        "paramnames": []
-      }
-    },
-    "undocumented": true,
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n     * The id of the target user.\n     * @type {BigInt?}\n     * @private\n     */",
-    "meta": {
-      "range": [1384, 1449],
-      "filename": "AuditLog.js",
-      "lineno": 66,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000082",
-        "name": "this.",
-        "type": "ConditionalExpression",
-        "value": "",
-        "paramnames": []
-      }
-    },
-    "description": "The id of the target user.",
-    "type": {
-      "names": ["BigInt"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [1522, 1572],
-      "filename": "AuditLog.js",
-      "lineno": 69,
-      "columnno": 12,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000112",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1522,
+                1572
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 69,
+            "columnno": 12,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000112",
+                "name": "user",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
         "name": "user",
-        "type": "CallExpression",
-        "value": ""
-      }
+        "longname": "<anonymous>~user",
+        "kind": "constant",
+        "memberof": "<anonymous>",
+        "scope": "inner",
+        "params": []
     },
-    "undocumented": true,
-    "name": "user",
-    "longname": "<anonymous>~user",
-    "kind": "constant",
-    "memberof": "<anonymous>",
-    "scope": "inner",
-    "params": []
-  },
-  {
-    "comment": "/**\n         * The resolved target user.\n         * @type {User?}\n         * @private\n         */",
-    "meta": {
-      "range": [1704, 1748],
-      "filename": "AuditLog.js",
-      "lineno": 76,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000131",
-        "name": "this.",
-        "type": "NewExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The resolved target user.\n         * @type {User?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                1704,
+                1748
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 76,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000131",
+                "name": "this.",
+                "type": "NewExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The resolved target user.",
+        "type": {
+            "names": [
+                "User"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The resolved target user.",
-    "type": {
-      "names": ["User"]
+    {
+        "comment": "/**\n     * The id of the executor user.\n     * @type {BigInt?}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                1852,
+                1915
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 84,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000144",
+                "name": "this.",
+                "type": "ConditionalExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The id of the executor user.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n     * The id of the executor user.\n     * @type {BigInt?}\n     * @private\n     */",
-    "meta": {
-      "range": [1852, 1915],
-      "filename": "AuditLog.js",
-      "lineno": 84,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000144",
-        "name": "this.",
-        "type": "ConditionalExpression",
-        "value": "",
-        "paramnames": []
-      }
-    },
-    "description": "The id of the executor user.",
-    "type": {
-      "names": ["BigInt"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [1990, 2042],
-      "filename": "AuditLog.js",
-      "lineno": 87,
-      "columnno": 12,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000174",
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1990,
+                2042
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 87,
+            "columnno": 12,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000174",
+                "name": "user",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
         "name": "user",
-        "type": "CallExpression",
-        "value": ""
-      }
+        "longname": "<anonymous>~user",
+        "kind": "constant",
+        "memberof": "<anonymous>",
+        "scope": "inner",
+        "params": []
     },
-    "undocumented": true,
-    "name": "user",
-    "longname": "<anonymous>~user",
-    "kind": "constant",
-    "memberof": "<anonymous>",
-    "scope": "inner",
-    "params": []
-  },
-  {
-    "comment": "/**\n         * The resolved executor user.\n         * @type {User?}\n         * @private\n         */",
-    "meta": {
-      "range": [2176, 2222],
-      "filename": "AuditLog.js",
-      "lineno": 94,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000193",
-        "name": "this.",
-        "type": "NewExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The resolved executor user.\n         * @type {User?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                2176,
+                2222
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 94,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000193",
+                "name": "this.",
+                "type": "NewExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The resolved executor user.",
+        "type": {
+            "names": [
+                "User"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The resolved executor user.",
-    "type": {
-      "names": ["User"]
+    {
+        "comment": "/**\n     * The reason for this audit log entry.\n     * @type {String?}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                2334,
+                2368
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 102,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000206",
+                "name": "this.",
+                "type": "LogicalExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The reason for this audit log entry.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n     * The reason for this audit log entry.\n     * @type {String?}\n     * @private\n     */",
-    "meta": {
-      "range": [2334, 2368],
-      "filename": "AuditLog.js",
-      "lineno": 102,
-      "columnno": 4,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000206",
-        "name": "this.",
-        "type": "LogicalExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The channel id involved with this audit log entry.\n         * @type {BigInt?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                2573,
+                2624
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 111,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000229",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The channel id involved with this audit log entry.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The reason for this audit log entry.",
-    "type": {
-      "names": ["String"]
+    {
+        "comment": "/**\n         * The count of this type of audit log entry.\n         * @type {Number?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                2798,
+                2840
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 120,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000248",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The count of this type of audit log entry.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The channel id involved with this audit log entry.\n         * @type {BigInt?}\n         * @private\n         */",
-    "meta": {
-      "range": [2573, 2624],
-      "filename": "AuditLog.js",
-      "lineno": 111,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000229",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The inactivity period for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                3027,
+                3095
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 128,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000267",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The inactivity period for when members are purged.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The channel id involved with this audit log entry.",
-    "type": {
-      "names": ["BigInt"]
+    {
+        "comment": "/**\n         * The number of members removed for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                3287,
+                3349
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 136,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000286",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The number of members removed for when members are purged.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The count of this type of audit log entry.\n         * @type {Number?}\n         * @private\n         */",
-    "meta": {
-      "range": [2798, 2840],
-      "filename": "AuditLog.js",
-      "lineno": 120,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000248",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The id of the overwritten entity.\n         * @type {BigInt?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                3503,
+                3545
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 144,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000305",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The id of the overwritten entity.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The count of this type of audit log entry.",
-    "type": {
-      "names": ["Number"]
+    {
+        "comment": "/**\n         * The type of the overwritten entity - role (\"0\") or member (\"1\")\n         * @type {Number?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                3731,
+                3779
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 152,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000324",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The type of the overwritten entity - role (\"0\") or member (\"1\")",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The inactivity period for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
-    "meta": {
-      "range": [3027, 3095],
-      "filename": "AuditLog.js",
-      "lineno": 128,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000267",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n         * The new voice channel status.\n         * @type {String?}\n         * @private\n         */",
+        "meta": {
+            "range": [
+                3933,
+                3967
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 160,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000343",
+                "name": "this.",
+                "type": "MemberExpression",
+                "value": "data.options.status",
+                "paramnames": []
+            }
+        },
+        "description": "The new voice channel status.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "description": "The inactivity period for when members are purged.",
-    "type": {
-      "names": ["Number"]
+    {
+        "comment": "/**\n       * The changes in this audit log entry.\n       * @type {Object?}\n       * @private\n       */",
+        "meta": {
+            "range": [
+                4113,
+                4141
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 169,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000358",
+                "name": "this.",
+                "type": "MemberExpression",
+                "value": "data.changes",
+                "paramnames": []
+            }
+        },
+        "description": "The changes in this audit log entry.",
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "nullable": true,
+        "access": "private",
+        "name": "AuditLog",
+        "longname": "AuditLog.AuditLog",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "static"
     },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The number of members removed for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
-    "meta": {
-      "range": [3287, 3349],
-      "filename": "AuditLog.js",
-      "lineno": 136,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000286",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
-    },
-    "description": "The number of members removed for when members are purged.",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The id of the overwritten entity.\n         * @type {BigInt?}\n         * @private\n         */",
-    "meta": {
-      "range": [3503, 3545],
-      "filename": "AuditLog.js",
-      "lineno": 144,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000305",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
-    },
-    "description": "The id of the overwritten entity.",
-    "type": {
-      "names": ["BigInt"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The type of the overwritten entity - role (\"0\") or member (\"1\")\n         * @type {Number?}\n         * @private\n         */",
-    "meta": {
-      "range": [3731, 3779],
-      "filename": "AuditLog.js",
-      "lineno": 152,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000324",
-        "name": "this.",
-        "type": "CallExpression",
-        "value": "",
-        "paramnames": []
-      }
-    },
-    "description": "The type of the overwritten entity - role (\"0\") or member (\"1\")",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n         * The new voice channel status.\n         * @type {String?}\n         * @private\n         */",
-    "meta": {
-      "range": [3933, 3967],
-      "filename": "AuditLog.js",
-      "lineno": 160,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000343",
-        "name": "this.",
-        "type": "MemberExpression",
-        "value": "data.options.status",
-        "paramnames": []
-      }
-    },
-    "description": "The new voice channel status.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n       * The changes in this audit log entry.\n       * @type {Object?}\n       * @private\n       */",
-    "meta": {
-      "range": [4113, 4141],
-      "filename": "AuditLog.js",
-      "lineno": 169,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000358",
-        "name": "this.",
-        "type": "MemberExpression",
-        "value": "data.changes",
-        "paramnames": []
-      }
-    },
-    "description": "The changes in this audit log entry.",
-    "type": {
-      "names": ["Object"]
-    },
-    "nullable": true,
-    "access": "private",
-    "name": "AuditLog",
-    "longname": "AuditLog.AuditLog",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "static"
-  },
-  {
-    "comment": "/**\n   * The id of the audit log entry.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [4246, 4290],
-      "filename": "AuditLog.js",
-      "lineno": 178,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000366",
-        "name": "AuditLog#id",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The id of the audit log entry.",
-    "type": {
-      "names": ["String"]
-    },
-    "readonly": true,
-    "access": "public",
-    "name": "id",
-    "longname": "AuditLog#id",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The ID of the guild that this audit log belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [4411, 4466],
-      "filename": "AuditLog.js",
-      "lineno": 188,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000377",
-        "name": "AuditLog#guildId",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The ID of the guild that this audit log belongs to.",
-    "type": {
-      "names": ["String"]
-    },
-    "readonly": true,
-    "access": "public",
-    "name": "guildId",
-    "longname": "AuditLog#guildId",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The type of action that occurred.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [4569, 4621],
-      "filename": "AuditLog.js",
-      "lineno": 198,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000388",
-        "name": "AuditLog#actionType",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The type of action that occurred.",
-    "type": {
-      "names": ["Number"]
-    },
-    "readonly": true,
-    "access": "public",
-    "name": "actionType",
-    "longname": "AuditLog#actionType",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The id of the target user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [4718, 4801],
-      "filename": "AuditLog.js",
-      "lineno": 208,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000397",
-        "name": "AuditLog#targetId",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The id of the target user.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "targetId",
-    "longname": "AuditLog#targetId",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The channel id involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [4922, 5008],
-      "filename": "AuditLog.js",
-      "lineno": 218,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000414",
-        "name": "AuditLog#channelId",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The channel id involved with this audit log entry.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "channelId",
-    "longname": "AuditLog#channelId",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The guild that this audit log belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [5119, 5195],
-      "filename": "AuditLog.js",
-      "lineno": 228,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000431",
-        "name": "AuditLog#guild",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The guild that this audit log belongs to.",
-    "type": {
-      "names": ["Guild"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "guild",
-    "longname": "AuditLog#guild",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The channel involved with this audit log entry.\n   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [5383, 5463],
-      "filename": "AuditLog.js",
-      "lineno": 238,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000450",
-        "name": "AuditLog#channel",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The channel involved with this audit log entry.",
-    "type": {
-      "names": ["TextChannel", "VoiceChannel"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "channel",
-    "longname": "AuditLog#channel",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The target user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [5583, 5626],
-      "filename": "AuditLog.js",
-      "lineno": 248,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000458",
-        "name": "AuditLog#target",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The target user involved with this audit log entry.",
-    "type": {
-      "names": ["User"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "target",
-    "longname": "AuditLog#target",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [5750, 5839],
-      "filename": "AuditLog.js",
-      "lineno": 258,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000467",
-        "name": "AuditLog#executorId",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The executor user involved with this audit log entry.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "executorId",
-    "longname": "AuditLog#executorId",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [5961, 6008],
-      "filename": "AuditLog.js",
-      "lineno": 268,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000484",
-        "name": "AuditLog#executor",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The executor user involved with this audit log entry.",
-    "type": {
-      "names": ["User"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "executor",
-    "longname": "AuditLog#executor",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The reason for this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [6115, 6158],
-      "filename": "AuditLog.js",
-      "lineno": 278,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000493",
-        "name": "AuditLog#reason",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The reason for this audit log entry.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "reason",
-    "longname": "AuditLog#reason",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The count of this type of audit log entry.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [6271, 6312],
-      "filename": "AuditLog.js",
-      "lineno": 288,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000502",
-        "name": "AuditLog#count",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The count of this type of audit log entry.",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "count",
-    "longname": "AuditLog#count",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The inactivity period for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [6433, 6498],
-      "filename": "AuditLog.js",
-      "lineno": 298,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000511",
-        "name": "AuditLog#deleteMemberDays",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The inactivity period for when members are purged.",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "deleteMemberDays",
-    "longname": "AuditLog#deleteMemberDays",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The number of members removed for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [6627, 6687],
-      "filename": "AuditLog.js",
-      "lineno": 308,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000520",
-        "name": "AuditLog#membersRemoved",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The number of members removed for when members are purged.",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "membersRemoved",
-    "longname": "AuditLog#membersRemoved",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The id of the overwritten entity.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [6791, 6875],
-      "filename": "AuditLog.js",
-      "lineno": 318,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000529",
-        "name": "AuditLog#specialId",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The id of the overwritten entity.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "specialId",
-    "longname": "AuditLog#specialId",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The type of the overwritten entity - role (\"0\") or member (\"1\")\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [7009, 7063],
-      "filename": "AuditLog.js",
-      "lineno": 328,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000546",
-        "name": "AuditLog#specialType",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The type of the overwritten entity - role (\"0\") or member (\"1\")",
-    "type": {
-      "names": ["Number"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "specialType",
-    "longname": "AuditLog#specialType",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The new voice channel status.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [7163, 7206],
-      "filename": "AuditLog.js",
-      "lineno": 338,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000555",
-        "name": "AuditLog#status",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The new voice channel status.",
-    "type": {
-      "names": ["String"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "status",
-    "longname": "AuditLog#status",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * The changes in this audit log entry.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
-    "meta": {
-      "range": [7313, 7358],
-      "filename": "AuditLog.js",
-      "lineno": 348,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000564",
-        "name": "AuditLog#changes",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "description": "The changes in this audit log entry.",
-    "type": {
-      "names": ["Object"]
-    },
-    "nullable": true,
-    "readonly": true,
-    "access": "public",
-    "name": "changes",
-    "longname": "AuditLog#changes",
-    "kind": "member",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * @method\n   * @public\n   */",
-    "meta": {
-      "range": [7400, 7460],
-      "filename": "AuditLog.js",
-      "lineno": 356,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000573",
-        "name": "AuditLog#toString",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "kind": "function",
-    "access": "public",
-    "name": "toString",
-    "longname": "AuditLog#toString",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "/**\n   * @method\n   * @public\n   */",
-    "meta": {
-      "range": [7502, 8253],
-      "filename": "AuditLog.js",
-      "lineno": 364,
-      "columnno": 2,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000584",
-        "name": "AuditLog#toJSON",
-        "type": "MethodDefinition",
-        "paramnames": []
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "kind": "function",
-    "access": "public",
-    "name": "toJSON",
-    "longname": "AuditLog#toJSON",
-    "memberof": "AuditLog",
-    "scope": "instance",
-    "params": []
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7532, 7543],
-      "filename": "AuditLog.js",
-      "lineno": 366,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000590",
+    {
+        "comment": "/**\n   * The id of the audit log entry.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4246,
+                4290
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 178,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000366",
+                "name": "AuditLog#id",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The id of the audit log entry.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
         "name": "id",
-        "type": "MemberExpression",
-        "value": "this.id"
-      }
+        "longname": "AuditLog#id",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "id",
-    "longname": "id",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7551, 7573],
-      "filename": "AuditLog.js",
-      "lineno": 367,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000594",
-        "name": "guild_id",
-        "type": "MemberExpression",
-        "value": "this.guildId"
-      }
+    {
+        "comment": "/**\n   * The ID of the guild that this audit log belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4411,
+                4466
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 188,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000377",
+                "name": "AuditLog#guildId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The ID of the guild that this audit log belongs to.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "guildId",
+        "longname": "AuditLog#guildId",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "guild_id",
-    "longname": "guild_id",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7581, 7609],
-      "filename": "AuditLog.js",
-      "lineno": 368,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000598",
-        "name": "action_type",
-        "type": "MemberExpression",
-        "value": "this.actionType"
-      }
+    {
+        "comment": "/**\n   * The type of action that occurred.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4569,
+                4621
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 198,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000388",
+                "name": "AuditLog#actionType",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The type of action that occurred.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "actionType",
+        "longname": "AuditLog#actionType",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "action_type",
-    "longname": "action_type",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7617, 7654],
-      "filename": "AuditLog.js",
-      "lineno": 369,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000602",
-        "name": "target_id",
-        "type": "LogicalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The id of the target user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4718,
+                4801
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 208,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000397",
+                "name": "AuditLog#targetId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The id of the target user.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "targetId",
+        "longname": "AuditLog#targetId",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "target_id",
-    "longname": "target_id",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7662, 7703],
-      "filename": "AuditLog.js",
-      "lineno": 370,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000608",
-        "name": "executor_id",
-        "type": "LogicalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The channel id involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4922,
+                5008
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 218,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000414",
+                "name": "AuditLog#channelId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The channel id involved with this audit log entry.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "channelId",
+        "longname": "AuditLog#channelId",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "executor_id",
-    "longname": "executor_id",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7711, 7730],
-      "filename": "AuditLog.js",
-      "lineno": 371,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000614",
+    {
+        "comment": "/**\n   * The guild that this audit log belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5119,
+                5195
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 228,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000431",
+                "name": "AuditLog#guild",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The guild that this audit log belongs to.",
+        "type": {
+            "names": [
+                "Guild"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "guild",
+        "longname": "AuditLog#guild",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The channel involved with this audit log entry.\n   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5383,
+                5463
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 238,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000450",
+                "name": "AuditLog#channel",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The channel involved with this audit log entry.",
+        "type": {
+            "names": [
+                "TextChannel",
+                "VoiceChannel"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "channel",
+        "longname": "AuditLog#channel",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The target user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5583,
+                5626
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 248,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000458",
+                "name": "AuditLog#target",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The target user involved with this audit log entry.",
+        "type": {
+            "names": [
+                "User"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "target",
+        "longname": "AuditLog#target",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5750,
+                5839
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 258,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000467",
+                "name": "AuditLog#executorId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The executor user involved with this audit log entry.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "executorId",
+        "longname": "AuditLog#executorId",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5961,
+                6008
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 268,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000484",
+                "name": "AuditLog#executor",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The executor user involved with this audit log entry.",
+        "type": {
+            "names": [
+                "User"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "executor",
+        "longname": "AuditLog#executor",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The reason for this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6115,
+                6158
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 278,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000493",
+                "name": "AuditLog#reason",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The reason for this audit log entry.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
         "name": "reason",
-        "type": "MemberExpression",
-        "value": "this.reason"
-      }
+        "longname": "AuditLog#reason",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "reason",
-    "longname": "reason",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7738, 8212],
-      "filename": "AuditLog.js",
-      "lineno": 372,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000618",
-        "name": "options",
-        "type": "ObjectExpression",
-        "value": "{\"channel_id\":\"\",\"count\":\"\",\"delete_member_days\":\"\",\"members_removed\":\"\",\"id\":\"\",\"type\":\"\",\"status\":\"\"}"
-      }
-    },
-    "undocumented": true,
-    "name": "options",
-    "longname": "options",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7757, 7796],
-      "filename": "AuditLog.js",
-      "lineno": 373,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000620",
-        "name": "channel_id",
-        "type": "LogicalExpression",
-        "value": ""
-      }
-    },
-    "undocumented": true,
-    "name": "channel_id",
-    "longname": "options.channel_id",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7806, 7868],
-      "filename": "AuditLog.js",
-      "lineno": 374,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000626",
+    {
+        "comment": "/**\n   * The count of this type of audit log entry.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6271,
+                6312
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 288,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000502",
+                "name": "AuditLog#count",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The count of this type of audit log entry.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
         "name": "count",
-        "type": "ConditionalExpression",
-        "value": ""
-      }
+        "longname": "AuditLog#count",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "count",
-    "longname": "options.count",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7878, 7975],
-      "filename": "AuditLog.js",
-      "lineno": 375,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000638",
-        "name": "delete_member_days",
-        "type": "ConditionalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The inactivity period for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6433,
+                6498
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 298,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000511",
+                "name": "AuditLog#deleteMemberDays",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The inactivity period for when members are purged.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "deleteMemberDays",
+        "longname": "AuditLog#deleteMemberDays",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "delete_member_days",
-    "longname": "options.delete_member_days",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [7985, 8075],
-      "filename": "AuditLog.js",
-      "lineno": 376,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000650",
-        "name": "members_removed",
-        "type": "ConditionalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The number of members removed for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6627,
+                6687
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 308,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000520",
+                "name": "AuditLog#membersRemoved",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The number of members removed for when members are purged.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "membersRemoved",
+        "longname": "AuditLog#membersRemoved",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "members_removed",
-    "longname": "options.members_removed",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [8085, 8116],
-      "filename": "AuditLog.js",
-      "lineno": 377,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000662",
-        "name": "id",
-        "type": "LogicalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The id of the overwritten entity.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6791,
+                6875
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 318,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000529",
+                "name": "AuditLog#specialId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The id of the overwritten entity.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "specialId",
+        "longname": "AuditLog#specialId",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "id",
-    "longname": "options.id",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [8126, 8161],
-      "filename": "AuditLog.js",
-      "lineno": 378,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000668",
-        "name": "type",
-        "type": "LogicalExpression",
-        "value": ""
-      }
+    {
+        "comment": "/**\n   * The type of the overwritten entity - role (\"0\") or member (\"1\")\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7009,
+                7063
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 328,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000546",
+                "name": "AuditLog#specialType",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The type of the overwritten entity - role (\"0\") or member (\"1\")",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "specialType",
+        "longname": "AuditLog#specialType",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "type",
-    "longname": "options.type",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [8171, 8203],
-      "filename": "AuditLog.js",
-      "lineno": 379,
-      "columnno": 8,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000674",
+    {
+        "comment": "/**\n   * The new voice channel status.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7163,
+                7206
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 338,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000555",
+                "name": "AuditLog#status",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The new voice channel status.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
         "name": "status",
-        "type": "LogicalExpression",
-        "value": ""
-      }
+        "longname": "AuditLog#status",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "status",
-    "longname": "options.status",
-    "kind": "member",
-    "memberof": "options",
-    "scope": "static"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [8220, 8241],
-      "filename": "AuditLog.js",
-      "lineno": 381,
-      "columnno": 6,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000680",
+    {
+        "comment": "/**\n   * The changes in this audit log entry.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7313,
+                7358
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 348,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000564",
+                "name": "AuditLog#changes",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The changes in this audit log entry.",
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
         "name": "changes",
-        "type": "MemberExpression",
-        "value": "this.changes"
-      }
+        "longname": "AuditLog#changes",
+        "kind": "member",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "changes",
-    "longname": "changes",
-    "kind": "member",
-    "scope": "global"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [8257, 8282],
-      "filename": "AuditLog.js",
-      "lineno": 386,
-      "columnno": 0,
-      "path": "/home/runner/work/gluon/gluon/src/structures",
-      "code": {
-        "id": "astnode100000685",
-        "name": "module.exports",
-        "type": "Identifier",
-        "value": "AuditLog",
-        "paramnames": []
-      }
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7400,
+                7460
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 356,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000573",
+                "name": "AuditLog#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "AuditLog#toString",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
     },
-    "undocumented": true,
-    "name": "exports",
-    "longname": "module.exports",
-    "kind": "member",
-    "memberof": "module",
-    "scope": "static"
-  },
-  {
-    "kind": "package",
-    "longname": "package:undefined",
-    "files": ["/home/runner/work/gluon/gluon/src/structures/AuditLog.js"]
-  }
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7502,
+                8321
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 364,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000584",
+                "name": "AuditLog#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toJSON",
+        "longname": "AuditLog#toJSON",
+        "memberof": "AuditLog",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7532,
+                7543
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 366,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000590",
+                "name": "id",
+                "type": "MemberExpression",
+                "value": "this.id"
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7551,
+                7573
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 367,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000594",
+                "name": "guild_id",
+                "type": "MemberExpression",
+                "value": "this.guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guild_id",
+        "longname": "guild_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7581,
+                7609
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 368,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000598",
+                "name": "action_type",
+                "type": "MemberExpression",
+                "value": "this.actionType"
+            }
+        },
+        "undocumented": true,
+        "name": "action_type",
+        "longname": "action_type",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7617,
+                7654
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 369,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000602",
+                "name": "target_id",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "target_id",
+        "longname": "target_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7662,
+                7703
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 370,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000608",
+                "name": "executor_id",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "executor_id",
+        "longname": "executor_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7711,
+                7730
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 371,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000614",
+                "name": "reason",
+                "type": "MemberExpression",
+                "value": "this.reason"
+            }
+        },
+        "undocumented": true,
+        "name": "reason",
+        "longname": "reason",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7738,
+                8280
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 372,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000618",
+                "name": "options",
+                "type": "ObjectExpression",
+                "value": "{\"channel_id\":\"\",\"count\":\"\",\"delete_member_days\":\"\",\"members_removed\":\"\",\"id\":\"\",\"type\":\"\",\"status\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "options",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7757,
+                7796
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 373,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000620",
+                "name": "channel_id",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "channel_id",
+        "longname": "options.channel_id",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7806,
+                7868
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 374,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000626",
+                "name": "count",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "count",
+        "longname": "options.count",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7878,
+                8009
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 375,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000638",
+                "name": "delete_member_days",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "delete_member_days",
+        "longname": "options.delete_member_days",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8019,
+                8143
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 379,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000650",
+                "name": "members_removed",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "members_removed",
+        "longname": "options.members_removed",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8153,
+                8184
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 383,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000662",
+                "name": "id",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "options.id",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8194,
+                8229
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 384,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000668",
+                "name": "type",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "type",
+        "longname": "options.type",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8239,
+                8271
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 385,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000674",
+                "name": "status",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "status",
+        "longname": "options.status",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8288,
+                8309
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 387,
+            "columnno": 6,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000680",
+                "name": "changes",
+                "type": "MemberExpression",
+                "value": "this.changes"
+            }
+        },
+        "undocumented": true,
+        "name": "changes",
+        "longname": "changes",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8325,
+                8350
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 392,
+            "columnno": 0,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000685",
+                "name": "module.exports",
+                "type": "Identifier",
+                "value": "AuditLog",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "member",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "/home/runner/work/gluon/gluon/src/structures/AuditLog.js"
+        ]
+    }
 ]
