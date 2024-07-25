@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES, TEXT_INPUT_STYLES, LIMITS } = require("../../constants");
+const { COMPONENT_TYPES, LIMITS } = require("../../constants");
 
 /**
  * Helps to construct a text input interaction.
