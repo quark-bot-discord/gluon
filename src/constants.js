@@ -442,7 +442,38 @@ module.exports.TEST_DATA = {
         member_count: 1,
         voice_states: [],
         members: [],
-        channels: [],
+        channels: [
+            {
+                id: "123456789012345677",
+                type: 0,
+                guild_id: "123456789012345678",
+                name: "test-channel",
+                position: 0,
+                permission_overwrites: [],
+                rate_limit_per_user: 0,
+                nsfw: false,
+                topic: null,
+                last_message_id: null,
+                parent_id: null,
+                last_pin_timestamp: null
+            },
+            {
+                id: "123456789012345679",
+                type: 2,
+                guild_id: "123456789012345678",
+                name: "test-channel",
+                position: 0,
+                permission_overwrites: [],
+                rate_limit_per_user: 0,
+                nsfw: false,
+                topic: null,
+                last_message_id: null,
+                parent_id: null,
+                last_pin_timestamp: null,
+                bitrate: 64000,
+                user_limit: 0
+            }
+        ],
         threads: [],
     },
     THREAD: {
@@ -526,5 +557,63 @@ module.exports.TEST_DATA = {
             type: 1
         },
         created_at: "2021-01-01T00:00:00.000Z"
+    },
+    BUTTON_CLICK: {
+        id: "123456789012345678",
+        type: 3,
+        data: {
+            custom_id: "test",
+            component_type: 2
+        },
+        guild_id: "123456789012345678",
+        channel_id: "123456789012345677",
+        member: {
+            user: {
+                id: "123456789012345678",
+                username: "test",
+                discriminator: "0001",
+                avatar: null,
+                bot: false,
+                system: false,
+                mfa_enabled: false,
+                locale: "en-US",
+                verified: false,
+                email: null,
+                flags: 0,
+                premium_type: 0,
+                public_flags: 0
+            },
+            roles: [],
+            joined_at: "2021-01-01T00:00:00.000Z",
+            premium_since: null,
+            deaf: false,
+            mute: false,
+            pending: false,
+            permissions: "0"
+        },
+        token: "test",
+        version: 1,
+        message: {
+            id: "123456789012345678",
+            type: 0,
+            content: "test message",
+            channel_id: "123456789012345677",
+        },
+        custom_id: "test",
+    },
+    CLIENT_USER: {
+        id: "704802632660943089",
+        username: "quark",
+        discriminator: "0001",
+        avatar: null,
+        bot: false,
+        system: false,
+        mfa_enabled: false,
+        locale: "en-US",
+        verified: false,
+        email: null,
+        flags: 0,
+        premium_type: 0,
+        public_flags: 0
     },
 };

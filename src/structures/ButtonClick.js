@@ -7,6 +7,7 @@ const Message = require("./Message");
  * @extends {Interaction}
  */
 class ButtonClick extends Interaction {
+  #_client;
   #custom_id;
   #message;
   /**
@@ -16,6 +17,8 @@ class ButtonClick extends Interaction {
    */
   constructor(client, data) {
     super(client, data);
+
+    this.#_client = client;
 
     /**
      * The custom id of the button.
@@ -29,10 +32,10 @@ class ButtonClick extends Interaction {
      * @type {Message}
      * @private
      */
-    this.#message = new Message(this._client, data.message, {
+    this.#message = new Message(this.#_client, data.message, {
       channel_id: data.channel_id,
       guild_id: data.guild_id,
-      nocache: this._client.cacheMessages,
+      nocache: this.#_client.cacheMessages,
     });
   }
 

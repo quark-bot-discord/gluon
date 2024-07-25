@@ -1,6 +1,7 @@
 const ActionRow = require("../util/builder/actionRowBuilder");
 const Member = require("./Member");
 const File = require("../util/builder/file");
+const TextInput = require("../util/builder/textInputBuilder");
 
 /**
  * Represents an interaction received over the gateway.
@@ -149,22 +150,22 @@ class Interaction {
   /**
    * Prompts a user to enter text using a modal.
    * @param {Object} options Modal options.
-   * @returns {Promise<Interaction>}
+   * @returns {Promise<void>}
    * @public
    * @async
    * @method
    * @throws {Error | TypeError}
    */
-  async textPrompt({ title, customId, textInputModal }) {
+  async textPrompt({ title, customId, textInputModal } = {}) {
 
-    if (typeof title !== "undefined" && typeof title !== "string")
+    if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
 
-    if (typeof customId !== "undefined" && typeof customId !== "string")
+    if (typeof customId !== "string")
       throw new TypeError("GLUON: No custom id provided.");
 
-    if (typeof textInputModal !== "undefined" && !(textInputModal instanceof ActionRow))
-      throw new TypeError("GLUON: Text input modal must be an action row.");
+    if (!(textInputModal instanceof TextInput))
+      throw new TypeError("GLUON: Text input modal must be provided.");
 
     const body = {};
 
