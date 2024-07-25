@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+import { CDN_BASE_URL } from "../constants.js";
 
 /**
  * Represents an attachment.
@@ -137,4 +137,4 @@ class Attachment {
   }
 }
 
-module.exports = Attachment;
+export default Attachment;

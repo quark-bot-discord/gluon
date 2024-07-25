@@ -1,27 +1,27 @@
-const Attachment = require("./structures/Attachment");
-const AuditLog = require("./structures/AuditLog");
-const ButtonClick = require("./structures/ButtonClick");
-const Channel = require("./structures/Channel");
-const Emoji = require("./structures/Emoji");
-const Guild = require("./structures/Guild");
-const Interaction = require("./structures/Interaction");
-const Invite = require("./structures/Invite");
-const Member = require("./structures/Member");
-const Message = require("./structures/Message");
-const ModalResponse = require("./structures/ModalResponse");
-const OptionSelect = require("./structures/OptionSelect");
-const Reaction = require("./structures/Reaction");
-const Role = require("./structures/Role");
-const ScheduledEvent = require("./structures/ScheduledEvent");
-const SlashCommand = require("./structures/SlashCommand");
-const Sticker = require("./structures/Sticker");
-const TextChannel = require("./structures/TextChannel");
-const Thread = require("./structures/Thread");
-const User = require("./structures/User");
-const VoiceChannel = require("./structures/VoiceChannel");
-const VoiceState = require("./structures/VoiceState");
+import Attachment from "./structures/Attachment";
+import AuditLog from "./structures/AuditLog";
+import ButtonClick from "./structures/ButtonClick";
+import Channel from "./structures/Channel";
+import Emoji from "./structures/Emoji";
+import Guild from "./structures/Guild";
+import Interaction from "./structures/Interaction";
+import Invite from "./structures/Invite";
+import Member from "./structures/Member";
+import Message from "./structures/Message";
+import ModalResponse from "./structures/ModalResponse";
+import OptionSelect from "./structures/OptionSelect";
+import Reaction from "./structures/Reaction";
+import Role from "./structures/Role";
+import ScheduledEvent from "./structures/ScheduledEvent";
+import SlashCommand from "./structures/SlashCommand";
+import Sticker from "./structures/Sticker";
+import TextChannel from "./structures/TextChannel";
+import Thread from "./structures/Thread";
+import User from "./structures/User";
+import VoiceChannel from "./structures/VoiceChannel";
+import VoiceState from "./structures/VoiceState";
 
-module.exports = {
+export default {
   Attachment,
   AuditLog,
   ButtonClick,

@@ -1,4 +1,4 @@
-const Role = require("../../structures/Role");
+import Role from "../../structures/Role.js";
 
 /**
  * Returns the permissions of a member based on their roles.
@@ -26,4 +26,4 @@ function checkMemberPermissions(roles) {
   } else return String(0n);
 }
 
-module.exports = checkMemberPermissions;
+export default checkMemberPermissions;

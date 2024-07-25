@@ -1,4 +1,4 @@
-const Interaction = require("./Interaction");
+import Interaction from "./Interaction.js";
 
 /**
  * Represents when a modal is submitted.
@@ -72,4 +72,4 @@ class ModalResponse extends Interaction {
   }
 }
 
-module.exports = ModalResponse;
+export default ModalResponse;

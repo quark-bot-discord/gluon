@@ -1,10 +1,6 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const getGuildIcon = require("../../../src/util/image/getGuildIcon");
-const { TEST_DATA } = require("../../../src/constants");
+import { expect } from "chai";
+import { TEST_DATA } from "../../../src/constants.js";
+import getGuildIcon from "../../../src/util/image/getGuildIcon.js";
 
 describe("GetGuildIcon", function () {
   context("check import", function () {

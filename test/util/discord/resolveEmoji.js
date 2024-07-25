@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const resolveEmoji = require("../../../src/util/discord/resolveEmoji");
+import { expect } from "chai";
+import resolveEmoji from "../../../src/util/discord/resolveEmoji.js";
 
 describe("ResolveEmoji", function () {
   context("check import", function () {

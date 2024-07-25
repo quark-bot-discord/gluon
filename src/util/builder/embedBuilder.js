@@ -1,5 +1,5 @@
-const { LIMITS } = require("../../constants");
-const hexToInt = require("../general/hexToInt");
+import { LIMITS } from "../../constants.js";
+import hexToInt from "../general/hexToInt.js";
 
 /**
  * Helps to create an embed for a message.
@@ -255,4 +255,4 @@ class Embed {
   }
 }
 
-module.exports = Embed;
+export default Embed;

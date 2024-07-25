@@ -1,25 +1,25 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-const { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } = require("../constants");
-const AuditLog = require("../structures/AuditLog");
-const ButtonClick = require("../structures/ButtonClick");
-const Emoji = require("../structures/Emoji");
-const Guild = require("../structures/Guild");
-const Member = require("../structures/Member");
-const Message = require("../structures/Message");
-const OptionSelect = require("../structures/OptionSelect");
-const Role = require("../structures/Role");
-const ScheduledEvent = require("../structures/ScheduledEvent");
-const SlashCommand = require("../structures/SlashCommand");
-const Thread = require("../structures/Thread");
-const User = require("../structures/User");
-const VoiceState = require("../structures/VoiceState");
-const Invite = require("../structures/Invite");
-const cacheChannel = require("../util/gluon/cacheChannel");
-const deepCompare = require("../util/general/deepCompare");
-const getMessage = require("../util/gluon/getMessage");
-const ModalResponse = require("../structures/ModalResponse");
-const getMember = require("../util/gluon/getMember");
+import { EVENTS, INTERACTION_TYPES, COMPONENT_TYPES } from "../constants.js";
+import AuditLog from "../structures/AuditLog.js";
+import ButtonClick from "../structures/ButtonClick.js";
+import Emoji from "../structures/Emoji.js";
+import Guild from "../structures/Guild.js";
+import Member from "../structures/Member.js";
+import Message from "../structures/Message.js";
+import OptionSelect from "../structures/OptionSelect.js";
+import Role from "../structures/Role.js";
+import ScheduledEvent from "../structures/ScheduledEvent.js";
+import SlashCommand from "../structures/SlashCommand.js";
+import Thread from "../structures/Thread.js";
+import User from "../structures/User.js";
+import VoiceState from "../structures/VoiceState.js";
+import Invite from "../structures/Invite.js";
+import cacheChannel from "../util/gluon/cacheChannel.js";
+import deepCompare from "../util/general/deepCompare.js";
+import getMessage from "../util/gluon/getMessage.js";
+import ModalResponse from "../structures/ModalResponse.js";
+import getMember from "../util/gluon/getMember.js";
 
 class EventHandler {
   #_client;
@@ -1030,4 +1030,4 @@ class EventHandler {
   }
 }
 
-module.exports = EventHandler;
+export default EventHandler;

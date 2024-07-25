@@ -1,10 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-const hexToInt = require("../../../src/util/general/hexToInt");
-const Embed = require("../../../src/util/builder/embedBuilder");
-const { LIMITS } = require("../../../src/constants");
+import { expect } from "chai";
+import hexToInt from "../../../src/util/general/hexToInt.js";
+import Embed from "../../../src/util/builder/embedBuilder.js";
+import { LIMITS } from "../../../src/constants.js";
 
 describe("Embed", function () {
   context("check import", function () {

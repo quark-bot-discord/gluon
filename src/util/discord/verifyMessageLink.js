@@ -15,4 +15,4 @@ function verifyMessageLink(text) {
   else return null;
 }
 
-module.exports = verifyMessageLink;
+export default verifyMessageLink;

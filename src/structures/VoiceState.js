@@ -1,5 +1,5 @@
-const { GLUON_CACHING_OPTIONS } = require("../constants");
-const Member = require("./Member");
+import { GLUON_CACHING_OPTIONS } from "../constants.js";
+import Member from "./Member.js";
 
 /**
  * Represents a voice state.
@@ -305,4 +305,4 @@ class VoiceState {
   }
 }
 
-module.exports = VoiceState;
+export default VoiceState;

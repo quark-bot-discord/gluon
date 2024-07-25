@@ -1,7 +1,7 @@
-const { CHANNEL_TYPES } = require("../../constants");
-const TextChannel = require("../../structures/TextChannel");
-const Thread = require("../../structures/Thread");
-const VoiceChannel = require("../../structures/VoiceChannel");
+import { CHANNEL_TYPES } from "../../constants.js";
+import TextChannel from "../../structures/TextChannel.js";
+import Thread from "../../structures/Thread.js";
+import VoiceChannel from "../../structures/VoiceChannel.js";
 
 /**
  * Automatically determines the channel type and caches the channel appropriately.
@@ -30,4 +30,4 @@ function cacheChannel(client, data, guild_id, nocache = false) {
   }
 }
 
-module.exports = cacheChannel;
+export default cacheChannel;

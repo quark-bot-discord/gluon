@@ -1,5 +1,5 @@
-const { COMPONENT_TYPES, BUTTON_STYLES, LIMITS } = require("../../constants");
-const resolveEmoji = require("../discord/resolveEmoji");
+import { COMPONENT_TYPES, BUTTON_STYLES, LIMITS } from "../../constants.js";
+import resolveEmoji from "../discord/resolveEmoji.js";
 
 /**
  * Helps to construct a button for a message.
@@ -142,4 +142,4 @@ class Button {
   }
 }
 
-module.exports = Button;
+export default Button;

@@ -1,14 +1,10 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { TEST_DATA } = require("../../src/constants");
-const GuildManager = require("../../src/managers/GuildManager");
-const Guild = require("../../src/structures/Guild");
-const User = require("../../src/structures/User");
-const ButtonClick = require("../../src/structures/ButtonClick");
-const TextInput = require("../../src/util/builder/textInputBuilder");
+import { expect } from "chai";
+import { TEST_DATA } from "../../src/constants.js";
+import GuildManager from "../../src/managers/GuildManager.js";
+import Guild from "../../src/structures/Guild.js";
+import User from "../../src/structures/User.js";
+import ButtonClick from "../../src/structures/ButtonClick.js";
+import TextInput from "../../src/util/builder/textInputBuilder.js";
 
 describe("ButtonClick", function () {
   context("check import", function () {

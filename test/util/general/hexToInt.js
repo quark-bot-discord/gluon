@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const hexToInt = require("../../../src/util/general/hexToInt");
+import { expect } from "chai";
+import hexToInt from "../../../src/util/general/hexToInt.js";
 
 describe("HexToInt", function () {
   context("check import", function () {

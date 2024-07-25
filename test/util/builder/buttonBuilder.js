@@ -1,13 +1,10 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-const {
+import { expect } from "chai";
+import {
   COMPONENT_TYPES,
   BUTTON_STYLES,
   LIMITS,
-} = require("../../../src/constants");
-const Button = require("../../../src/util/builder/buttonBuilder");
+} from "../../../src/constants.js";
+import Button from "../../../src/util/builder/buttonBuilder.js";
 
 describe("ButtonBuilder", () => {
   context("check import", function () {

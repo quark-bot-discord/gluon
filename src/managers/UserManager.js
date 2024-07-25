@@ -1,4 +1,4 @@
-const User = require("../structures/User");
+import User from "../structures/User.js";
 
 /**
  * Manages all the users belonging to a client.
@@ -141,4 +141,4 @@ class UserManager {
   }
 }
 
-module.exports = UserManager;
+export default UserManager;

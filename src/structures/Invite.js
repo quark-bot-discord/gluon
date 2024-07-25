@@ -1,5 +1,5 @@
-const { INVITE_BASE_URL } = require("../constants");
-const User = require("./User");
+import { INVITE_BASE_URL } from "../constants.js";
+import User from "./User.js";
 
 /**
  * Represents a guild invite.
@@ -244,4 +244,4 @@ class Invite {
   }
 }
 
-module.exports = Invite;
+export default Invite;

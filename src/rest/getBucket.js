@@ -13,4 +13,4 @@ async function getBucket(client, localRatelimitCache, hash) {
   } else return localRatelimitCache.get(`gluon.paths.${hash}`);
 }
 
-module.exports = getBucket;
+export default getBucket;

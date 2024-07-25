@@ -1,4 +1,4 @@
-const { APPLICATION_COMMAND_TYPES } = require("../../constants");
+import { APPLICATION_COMMAND_TYPES } from "../../constants.js";
 
 /**
  * Structure for a command.
@@ -149,4 +149,4 @@ class Command {
   }
 }
 
-module.exports = Command;
+export default Command;

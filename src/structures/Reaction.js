@@ -1,4 +1,4 @@
-const Emoji = require("./Emoji");
+import Emoji from "./Emoji.js";
 
 /**
  * Represents a reaction belonging to a message.
@@ -152,4 +152,4 @@ class Reaction {
   }
 }
 
-module.exports = Reaction;
+export default Reaction;

@@ -1,4 +1,4 @@
-const { Guild } = require("../structures");
+import Guild from "../structures/Guild.js";
 
 /**
  * Manages all guilds belonging to this client.
@@ -90,4 +90,4 @@ class GuildManager {
   }
 }
 
-module.exports = GuildManager;
+export default GuildManager;

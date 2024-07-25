@@ -1,10 +1,11 @@
-module.exports.BASE_URL = "https://discord.com";
-module.exports.API_BASE_URL = "https://discord.com/api";
-module.exports.CDN_BASE_URL = "https://cdn.discordapp.com";
-module.exports.INVITE_BASE_URL = "https://discord.gg";
-module.exports.VERSION = 10;
-module.exports.NAME = require("../package.json").name;
-module.exports.INTENTS = {
+import packageJSON from "../package.json" assert { type: "json" };
+export const BASE_URL = "https://discord.com";
+export const API_BASE_URL = "https://discord.com/api";
+export const CDN_BASE_URL = "https://cdn.discordapp.com";
+export const INVITE_BASE_URL = "https://discord.gg";
+export const VERSION = 10;
+export const NAME = packageJSON.name;
+export const INTENTS = {
   GUILDS: 1 << 0,
   GUILD_MEMBERS: 1 << 1,
   GUILD_BANS: 1 << 2,
@@ -27,7 +28,7 @@ module.exports.INTENTS = {
   GUILD_MESSAGE_POLLS: 1 << 24,
   DIRECT_MESSAGE_POLLS: 1 << 25,
 };
-module.exports.EVENTS = {
+export const EVENTS = {
   READY: "ready",
   RESUMED: "resumed",
   GUILD_CREATE: "guildCreate",
@@ -81,7 +82,7 @@ module.exports.EVENTS = {
   MESSAGE_REACTION_REMOVE: "messageReactionRemove",
   WEBHOOKS_UPDATE: "webhooksUpdate",
 };
-module.exports.CHANNEL_TYPES = {
+export const CHANNEL_TYPES = {
   GUILD_TEXT: 0,
   GUILD_VOICE: 2,
   GUILD_NEWS: 5,
@@ -92,7 +93,7 @@ module.exports.CHANNEL_TYPES = {
   GUILD_DIRECTORY: 14,
   GUILD_FORUM: 15,
 };
-module.exports.USER_FLAGS = {
+export const USER_FLAGS = {
   DISCORD_EMPLOYEE: 1 << 0,
   DISCORD_PARTNER: 1 << 1,
   HYPESQUAD_EVENTS: 1 << 2,
@@ -107,13 +108,13 @@ module.exports.USER_FLAGS = {
   VERIFIED_BOT: 1 << 16,
   VERIFIED_BOT_DEVELOPER: 1 << 17,
 };
-module.exports.MEMBER_FLAGS = {
+export const MEMBER_FLAGS = {
   DID_REJOIN: 1 << 0,
   COMPLETED_ONBOARDING: 1 << 1,
   BYPASSES_VERIFICATION: 1 << 2,
   STARTED_ONBOARDING: 1 << 3,
 };
-module.exports.AUDIT_LOG_TYPES = {
+export const AUDIT_LOG_TYPES = {
   GUILD_UPDATE: 1,
   CHANNEL_CREATE: 10,
   CHANNEL_UPDATE: 11,
@@ -172,13 +173,13 @@ module.exports.AUDIT_LOG_TYPES = {
   CREATOR_MONETIZATION_TERMS_ACCEPTED: 151,
   VOICE_CHANNEL_STATUS_UPDATE: 192,
 };
-module.exports.INTERACTION_TYPES = {
+export const INTERACTION_TYPES = {
   COMMAND: 2,
   COMPONENT: 3,
   APPLICATION_COMMAND_AUTOCOMPLETE: 4,
   MODAL_SUBMIT: 5,
 };
-module.exports.COMPONENT_TYPES = {
+export const COMPONENT_TYPES = {
   ACTION_ROW: 1,
   BUTTON: 2,
   SELECT_MENU: 3,
@@ -188,23 +189,23 @@ module.exports.COMPONENT_TYPES = {
   MENTIONABLE_SELECT_MENU: 7,
   CHANNEL_SELECT_MENU: 8,
 };
-module.exports.BUTTON_STYLES = {
+export const BUTTON_STYLES = {
   PRIMARY: 1,
   SECONDARY: 2,
   SUCCESS: 3,
   DANGER: 4,
   LINK: 5,
 };
-module.exports.TEXT_INPUT_STYLES = {
+export const TEXT_INPUT_STYLES = {
   SHORT: 1,
   PARAGRAPH: 2,
 };
-module.exports.APPLICATION_COMMAND_TYPES = {
+export const APPLICATION_COMMAND_TYPES = {
   CHAT_INPUT: 1,
   USER: 2,
   MESSAGE: 3,
 };
-module.exports.APPLICATION_COMMAND_OPTION_TYPES = {
+export const APPLICATION_COMMAND_OPTION_TYPES = {
   SUB_COMMAND: 1,
   SUB_COMMAND_GROUP: 2,
   STRING: 3,
@@ -217,11 +218,11 @@ module.exports.APPLICATION_COMMAND_OPTION_TYPES = {
   NUMBER: 10,
   ATTACHMENT: 11,
 };
-module.exports.DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
-module.exports.DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
-module.exports.DEFAULT_CACHE_CHECK_PERIOD = 1800 * 1 * 1000; // 30 mins, in MILLISECONDS
-module.exports.DEFAULT_INCREASE_CACHE_BY = 28;
-module.exports.PERMISSIONS = {
+export const DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
+export const DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
+export const DEFAULT_CACHE_CHECK_PERIOD = 1800 * 1 * 1000; // 30 mins, in MILLISECONDS
+export const DEFAULT_INCREASE_CACHE_BY = 28;
+export const PERMISSIONS = {
   CREATE_INSTANT_INVITE: String(1n << 0n),
   KICK_MEMBERS: String(1n << 1n),
   BAN_MEMBERS: String(1n << 2n),
@@ -270,24 +271,24 @@ module.exports.PERMISSIONS = {
   SEND_VOICE_MESSAGES: String(1n << 46n),
   SEND_POLLS: String(1n << 49n),
 };
-module.exports.STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
-module.exports.STICKER_FORMATS_ENUM = {
+export const STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
+export const STICKER_FORMATS_ENUM = {
   PNG: 1,
   APNG: 2,
   LOTTIE: 3,
 };
-module.exports.WEBSOCKET_STATES = {
+export const WEBSOCKET_STATES = {
   CONNECTING: 0,
   OPEN: 1,
   CLOSING: 2,
   CLOSED: 3,
 };
-module.exports.GLUON_CACHING_OPTIONS = {
+export const GLUON_CACHING_OPTIONS = {
   NO_MESSAGES: 1 << 0,
   FILES_ONLY: 1 << 1,
   NO_VOICE_STATE: 1 << 2,
 };
-module.exports.GLUON_GUILD_CACHING_OPTIONS = {
+export const GLUON_GUILD_CACHING_OPTIONS = {
   MESSAGES: 1 << 0,
   FILES: 1 << 1,
   VOICE_STATES: 1 << 2,
@@ -298,33 +299,33 @@ module.exports.GLUON_GUILD_CACHING_OPTIONS = {
   MEMBERS: 1 << 7,
   THREADS: 1 << 8,
 };
-module.exports.GLUON_CHANNEL_CACHING_OPTIONS = {
+export const GLUON_CHANNEL_CACHING_OPTIONS = {
   MESSAGES: 1 << 0,
   FILES: 1 << 1,
 };
-module.exports.AUTO_MODERATION_TRIGGER_TYPES = {
+export const AUTO_MODERATION_TRIGGER_TYPES = {
   KEYWORD: 1,
   SPAM: 3,
   KEYWORD_PRESET: 4,
   MENTION_SPAM: 5,
 };
-module.exports.AUTO_MODERATION_EVENT_TYPES = {
+export const AUTO_MODERATION_EVENT_TYPES = {
   MESSAGE_SEND: 1,
 };
-module.exports.AUTO_MODERATION_KEYWORD_PRESET_TYPES = {
+export const AUTO_MODERATION_KEYWORD_PRESET_TYPES = {
   PROFANITY: 1,
   SEXUAL_CONTENT: 2,
   SLURS: 3,
 };
-module.exports.AUTO_MODERATION_ACTION_TYPES = {
+export const AUTO_MODERATION_ACTION_TYPES = {
   BLOCK_MESSAGE: 1,
   SEND_ALERT_MESSAGE: 2,
   TIMEOUT: 3,
 };
-module.exports.GATEWAY_RECONNECT_CLOSE_CODES = [
+export const GATEWAY_RECONNECT_CLOSE_CODES = [
   4000, 4001, 4002, 4003, 4005, 4007, 4008, 4009,
 ];
-module.exports.LIMITS = {
+export const LIMITS = {
   MAX_EMBED_SIZE: 6000,
   MAX_EMBED_DESCRIPTION: 4096,
   MAX_EMBED_TITLE: 256,
@@ -361,8 +362,8 @@ module.exports.LIMITS = {
   MAX_DROPDOWN_OPTION_VALUE: 100,
   MAX_DROPDOWN_OPTION_DESCRIPTION: 100,
 };
-module.exports.GLUON_VERSION = require("../package.json").version;
-module.exports.TEST_DATA = {
+export const GLUON_VERSION = packageJSON.version;
+export const TEST_DATA = {
   GUILD_ID: "123456789012345678",
   TEXT_CHANNEL: {
     id: "123456789012345678",

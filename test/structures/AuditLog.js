@@ -1,10 +1,6 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { TEST_DATA } = require("../../src/constants");
-const AuditLog = require("../../src/structures/AuditLog");
+import { expect } from "chai";
+import { TEST_DATA } from "../../src/constants.js";
+import AuditLog from "../../src/structures/AuditLog.js";
 
 describe("AuditLog", function () {
   context("check import", function () {

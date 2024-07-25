@@ -1,8 +1,8 @@
-const {
+import {
   STICKER_FORMATS,
   CDN_BASE_URL,
   STICKER_FORMATS_ENUM,
-} = require("../constants");
+} from "../constants.js";
 
 /**
  * Represents an sticker.
@@ -132,4 +132,4 @@ class Sticker {
   }
 }
 
-module.exports = Sticker;
+export default Sticker;

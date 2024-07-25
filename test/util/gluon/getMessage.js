@@ -1,19 +1,16 @@
-let expect;
-before(async () => {
-  const chai = await import("chai");
-  const chaiAsPromised = await import("chai-as-promised");
-  chai.use(chaiAsPromised.default);
-  expect = chai.expect;
-});
-
-const {
+import { expect, use } from "chai";
+import chaiAsPromised from "chai-as-promised";
+use(chaiAsPromised);
+import {
   TEST_DATA,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_INCREASE_CACHE_BY,
-} = require("../../../src/constants");
-const GuildManager = require("../../../src/managers/GuildManager");
-const { Guild, TextChannel, Message } = require("../../../src/structures");
-const getMessage = require("../../../src/util/gluon/getMessage");
+} from "../../../src/constants.js";
+import GuildManager from "../../../src/managers/GuildManager.js";
+import Guild from "../../../src/structures/Guild.js";
+import TextChannel from "../../../src/structures/TextChannel.js";
+import Message from "../../../src/structures/Message.js";
+import getMessage from "../../../src/util/gluon/getMessage.js";
 
 describe("GetMessage", function () {
   context("check import", function () {

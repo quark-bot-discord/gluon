@@ -1,4 +1,4 @@
-const User = require("./User");
+import User from "./User.js";
 
 /**
  * Represents an audit log entry.
@@ -389,4 +389,4 @@ class AuditLog {
   }
 }
 
-module.exports = AuditLog;
+export default AuditLog;

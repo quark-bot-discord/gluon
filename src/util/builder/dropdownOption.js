@@ -1,5 +1,5 @@
-const { LIMITS } = require("../../constants");
-const resolveEmoji = require("../discord/resolveEmoji");
+import { LIMITS } from "../../constants.js";
+import resolveEmoji from "../discord/resolveEmoji.js";
 
 /**
  * Helps to create a dropdown option.
@@ -101,4 +101,4 @@ class DropdownOption {
   }
 }
 
-module.exports = DropdownOption;
+export default DropdownOption;

@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../../constants");
+import { CDN_BASE_URL } from "../../constants.js";
 
 /**
  * Returns the avatar url of a user.
@@ -19,4 +19,4 @@ function getMemberAvatar(id, guild_id, hash) {
     : null;
 }
 
-module.exports = getMemberAvatar;
+export default getMemberAvatar;

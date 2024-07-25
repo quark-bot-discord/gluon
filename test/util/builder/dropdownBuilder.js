@@ -1,11 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { LIMITS, COMPONENT_TYPES } = require("../../../src/constants");
-const DropdownBuilder = require("../../../src/util/builder/dropdownBuilder");
-const DropdownOption = require("../../../src/util/builder/dropdownOption");
+import { expect } from "chai";
+import { LIMITS, COMPONENT_TYPES } from "../../../src/constants.js";
+import DropdownBuilder from "../../../src/util/builder/dropdownBuilder.js";
+import DropdownOption from "../../../src/util/builder/dropdownOption.js";
 
 describe("DropdownBuilder", function () {
   context("check import", function () {

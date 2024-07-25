@@ -1,5 +1,5 @@
-const Interaction = require("./Interaction");
-const Message = require("./Message");
+import Interaction from "./Interaction.js";
+import Message from "./Message.js";
 
 /**
  * Represents when a button is clicked.
@@ -81,4 +81,4 @@ class ButtonClick extends Interaction {
   }
 }
 
-module.exports = ButtonClick;
+export default ButtonClick;

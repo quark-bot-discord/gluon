@@ -1,14 +1,10 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const {
+import { expect } from "chai";
+import {
   LIMITS,
   COMPONENT_TYPES,
   TEXT_INPUT_STYLES,
-} = require("../../../src/constants");
-const TextInputBuilder = require("../../../src/util/builder/textInputBuilder");
+} from "../../../src/constants.js";
+import TextInputBuilder from "../../../src/util/builder/textInputBuilder.js";
 
 describe("TextInputBuilder", function () {
   context("check import", function () {

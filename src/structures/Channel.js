@@ -1,8 +1,8 @@
-const { PERMISSIONS } = require("../constants");
-const ChannelCacheOptions = require("../managers/ChannelCacheOptions");
-const ChannelMessageManager = require("../managers/ChannelMessageManager");
-const checkPermission = require("../util/discord/checkPermission");
-const Message = require("./Message");
+import { PERMISSIONS } from "../constants.js";
+import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
+import ChannelMessageManager from "../managers/ChannelMessageManager.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import Message from "./Message.js";
 
 /**
  * Represents a channel within Discord.
@@ -383,4 +383,4 @@ class Channel {
   }
 }
 
-module.exports = Channel;
+export default Channel;

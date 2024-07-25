@@ -1,12 +1,8 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { LIMITS } = require("../../../src/constants");
-const ActionRow = require("../../../src/util/builder/actionRowBuilder");
-const MessageComponents = require("../../../src/util/builder/messageComponents");
-const Button = require("../../../src/util/builder/buttonBuilder");
+import { expect } from "chai";
+import { LIMITS } from "../../../src/constants.js";
+import ActionRow from "../../../src/util/builder/actionRowBuilder.js";
+import MessageComponents from "../../../src/util/builder/messageComponents.js";
+import Button from "../../../src/util/builder/buttonBuilder.js";
 
 describe("MessageComponents", function () {
   context("check import", function () {

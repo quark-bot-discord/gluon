@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../../constants");
+import { CDN_BASE_URL } from "../../constants.js";
 
 /**
  * Returns the image url for a guild event.
@@ -17,4 +17,4 @@ function getEventImage(id, hash) {
     : null;
 }
 
-module.exports = getEventImage;
+export default getEventImage;

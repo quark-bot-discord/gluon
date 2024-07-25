@@ -1,4 +1,4 @@
-const { GLUON_GUILD_CACHING_OPTIONS } = require("../constants");
+import { GLUON_GUILD_CACHING_OPTIONS } from "../constants.js";
 
 class GuildCacheOptions {
   #_cache_options;
@@ -313,4 +313,4 @@ class GuildCacheOptions {
   }
 }
 
-module.exports = GuildCacheOptions;
+export default GuildCacheOptions;

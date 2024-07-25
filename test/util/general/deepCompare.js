@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const deepCompare = require("../../../src/util/general/deepCompare");
+import { expect } from "chai";
+import deepCompare from "../../../src/util/general/deepCompare.js";
 
 describe("DeepCompare", function () {
   context("check import", function () {

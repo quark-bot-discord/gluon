@@ -1,7 +1,7 @@
-const TextChannel = require("../structures/TextChannel");
-const Thread = require("../structures/Thread");
-const VoiceChannel = require("../structures/VoiceChannel");
-const cacheChannel = require("../util/gluon/cacheChannel");
+import TextChannel from "../structures/TextChannel.js";
+import Thread from "../structures/Thread.js";
+import VoiceChannel from "../structures/VoiceChannel.js";
+import cacheChannel from "../util/gluon/cacheChannel.js";
 
 /**
  * Manages all channels within a guild.
@@ -134,4 +134,4 @@ class GuildChannelsManager {
   }
 }
 
-module.exports = GuildChannelsManager;
+export default GuildChannelsManager;

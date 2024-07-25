@@ -1,5 +1,5 @@
 // credit: https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher
-const { createCipheriv } = require("crypto");
+import { createCipheriv } from "crypto";
 
 /**
  * Encrypts text and returns the plain text.
@@ -28,4 +28,4 @@ function encryptText(text, key, iv) {
   );
 }
 
-module.exports = encryptText;
+export default encryptText;

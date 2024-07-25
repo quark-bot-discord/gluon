@@ -1,16 +1,15 @@
 /* eslint-disable class-methods-use-this */
-const WebSocket = require("ws");
-const erlpack = require("erlpack");
-const ZlibSync = require("zlib-sync");
-const _heartbeat = require("./structures/_heartbeat");
-const _identify = require("./structures/_identify");
-const EventHandler = require("./eventHandler");
-const chalk = require("chalk");
-const { NAME, GATEWAY_RECONNECT_CLOSE_CODES } = require("../constants");
-const generateWebsocketURL = require("../util/gluon/generateWebsocketURL");
-const { OPEN } = require("ws");
-const _updatePresence = require("./structures/_updatePresence");
-const _resume = require("./structures/_resume");
+import WebSocket, { OPEN } from "ws";
+import erlpack from "erlpack";
+import ZlibSync from "zlib-sync";
+import _heartbeat from "./structures/_heartbeat.js";
+import _identify from "./structures/_identify.js";
+import EventHandler from "./eventHandler.js";
+import chalk from "chalk";
+import { NAME, GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
+import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
+import _updatePresence from "./structures/_updatePresence.js";
+import _resume from "./structures/_resume.js";
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -445,4 +444,4 @@ class WS {
   }
 }
 
-module.exports = WS;
+export default WS;

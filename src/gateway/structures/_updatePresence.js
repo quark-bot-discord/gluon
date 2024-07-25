@@ -1,4 +1,4 @@
-const erlpack = require("erlpack");
+import erlpack from "erlpack";
 
 function _updatePresence(
   name,
@@ -26,4 +26,4 @@ function _updatePresence(
   });
 }
 
-module.exports = _updatePresence;
+export default _updatePresence;

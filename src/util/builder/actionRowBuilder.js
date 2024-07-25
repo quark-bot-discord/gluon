@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES } = require("../../constants");
+import { COMPONENT_TYPES } from "../../constants.js";
 
 /**
  * Helps to construct an action row for a message.
@@ -35,4 +35,4 @@ class ActionRow {
   }
 }
 
-module.exports = ActionRow;
+export default ActionRow;

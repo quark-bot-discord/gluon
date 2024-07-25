@@ -1,31 +1,28 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const {
-  API_BASE_URL,
-  VERSION,
-  NAME,
+import {
   CHANNEL_TYPES,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_CACHE_CHECK_PERIOD,
   DEFAULT_INCREASE_CACHE_BY,
-} = require("./constants");
+} from "./constants.js";
 
-const EventsEmitter = require("events");
-const mysql = require("mysql2/promise");
-const AWS = require("aws-sdk");
+import EventsEmitter from "events";
+import mysql from "mysql2/promise";
+import AWS from "aws-sdk";
 
-const BetterRequestHandler = require("./rest/betterRequestHandler");
-const WS = require("./gateway/index");
+import BetterRequestHandler from "./rest/betterRequestHandler.js";
+import WS from "./gateway/index.js";
 
-const UserManager = require("./managers/UserManager");
-const GuildManager = require("./managers/GuildManager");
-const Message = require("./structures/Message");
-const Guild = require("./structures/Guild");
-const User = require("./structures/User");
-const generateWebsocketURL = require("./util/gluon/generateWebsocketURL");
-const Member = require("./structures/Member");
-const cacheChannel = require("./util/gluon/cacheChannel");
-const Role = require("./structures/Role");
+import UserManager from "./managers/UserManager.js";
+import GuildManager from "./managers/GuildManager.js";
+import Message from "./structures/Message.js";
+import Guild from "./structures/Guild.js";
+import User from "./structures/User.js";
+import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
+import Member from "./structures/Member.js";
+import cacheChannel from "./util/gluon/cacheChannel.js";
+import Role from "./structures/Role.js";
 
 /**
  * A client user, which is able to handle multiple shards.

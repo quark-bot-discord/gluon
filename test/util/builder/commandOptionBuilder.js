@@ -1,11 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { LIMITS } = require("../../../src/constants");
-const CommandChoice = require("../../../src/util/builder/commandChoiceBuilder");
-const CommandOptionBuilder = require("../../../src/util/builder/commandOptionBuilder");
+import { expect } from "chai";
+import { LIMITS } from "../../../src/constants.js";
+import CommandChoice from "../../../src/util/builder/commandChoiceBuilder.js";
+import CommandOptionBuilder from "../../../src/util/builder/commandOptionBuilder.js";
 
 describe("CommandOptionBuilder", () => {
   context("check import", () => {

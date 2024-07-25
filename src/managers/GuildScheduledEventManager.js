@@ -1,4 +1,4 @@
-const ScheduledEvent = require("../structures/ScheduledEvent");
+import ScheduledEvent from "../structures/ScheduledEvent.js";
 
 class GuildScheduledEventManager {
   #_client;
@@ -137,4 +137,4 @@ class GuildScheduledEventManager {
   }
 }
 
-module.exports = GuildScheduledEventManager;
+export default GuildScheduledEventManager;

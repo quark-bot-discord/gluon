@@ -1,5 +1,5 @@
-const Emoji = require("../structures/Emoji");
-const Guild = require("../structures/Guild");
+import Emoji from "../structures/Emoji.js";
+import Guild from "../structures/Guild.js";
 
 /**
  * Manages all emojis within a guild.
@@ -124,4 +124,4 @@ class GuildEmojisManager {
   }
 }
 
-module.exports = GuildEmojisManager;
+export default GuildEmojisManager;

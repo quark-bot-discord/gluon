@@ -1,18 +1,14 @@
-const User = require("./User");
-const Member = require("./Member");
-const Attachment = require("./Attachment");
-const {
-  PERMISSIONS,
-  GLUON_CACHING_OPTIONS,
-  BASE_URL,
-} = require("../constants");
-const checkPermission = require("../util/discord/checkPermission");
-const Sticker = require("./Sticker");
-const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
-const hash = require("hash.js");
-const encryptMessage = require("../util/gluon/encryptMessage");
-const MessagePollManager = require("../managers/MessagePollManager");
-const MessageReactionManager = require("../managers/MessageReactionManager");
+import User from "./User.js";
+import Member from "./Member.js";
+import Attachment from "./Attachment.js";
+import { PERMISSIONS, GLUON_CACHING_OPTIONS, BASE_URL } from "../constants.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import Sticker from "./Sticker.js";
+import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
+import hash from "hash.js";
+import encryptMessage from "../util/gluon/encryptMessage.js";
+import MessagePollManager from "../managers/MessagePollManager.js";
+import MessageReactionManager from "../managers/MessageReactionManager.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -761,4 +757,4 @@ class Message {
   }
 }
 
-module.exports = Message;
+export default Message;

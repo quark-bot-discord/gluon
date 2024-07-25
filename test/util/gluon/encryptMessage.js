@@ -1,12 +1,8 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { TEST_DATA } = require("../../../src/constants");
-const GuildManager = require("../../../src/managers/GuildManager");
-const { Message } = require("../../../src/structures");
-const encryptMessage = require("../../../src/util/gluon/encryptMessage");
+import { expect } from "chai";
+import { TEST_DATA } from "../../../src/constants.js";
+import GuildManager from "../../../src/managers/GuildManager.js";
+import Message from "../../../src/structures/Message.js";
+import encryptMessage from "../../../src/util/gluon/encryptMessage.js";
 
 describe("EncryptMessage", function () {
   context("check import", function () {

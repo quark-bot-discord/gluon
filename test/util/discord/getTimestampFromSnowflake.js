@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const getTimestampFromSnowflake = require("../../../src/util/discord/getTimestampFromSnowflake");
+import { expect } from "chai";
+import getTimestampFromSnowflake from "../../../src/util/discord/getTimestampFromSnowflake.js";
 
 describe("GetTimestampFromSnowflake", function () {
   context("check import", function () {

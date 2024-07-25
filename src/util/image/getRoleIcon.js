@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../../constants");
+import { CDN_BASE_URL } from "../../constants.js";
 
 /**
  * Returns the role icon url.
@@ -17,4 +17,4 @@ function getRoleIcon(id, hash) {
     : null;
 }
 
-module.exports = getRoleIcon;
+export default getRoleIcon;

@@ -18,4 +18,4 @@ function combinePermissions(...permissions) {
   return String(combined);
 }
 
-module.exports = combinePermissions;
+export default combinePermissions;

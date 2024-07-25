@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../../constants");
+import { CDN_BASE_URL } from "../../constants.js";
 
 /**
  * Returns the url to the user's avatar.
@@ -18,4 +18,4 @@ function getAvatarUrl(id, hash) {
     : `${CDN_BASE_URL}/embed/avatars/${String((BigInt(id) >> 22n) % 6n)}.png`;
 }
 
-module.exports = getAvatarUrl;
+export default getAvatarUrl;

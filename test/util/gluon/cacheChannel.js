@@ -1,13 +1,8 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { TEST_DATA } = require("../../../src/constants");
-const cacheChannel = require("../../../src/util/gluon/cacheChannel");
-const GuildManager = require("../../../src/managers/GuildManager");
-const GuildChannelsManager = require("../../../src/managers/GuildChannelsManager");
-const Guild = require("../../../src/structures/Guild");
+import { expect } from "chai";
+import { TEST_DATA } from "../../../src/constants.js";
+import cacheChannel from "../../../src/util/gluon/cacheChannel.js";
+import GuildManager from "../../../src/managers/GuildManager.js";
+import Guild from "../../../src/structures/Guild.js";
 
 describe("CacheChannel", function () {
   context("check import", function () {

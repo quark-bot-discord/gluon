@@ -1,15 +1,11 @@
-let expect;
-before(async () => {
-  const chai = await import("chai");
-  const chaiAsPromised = await import("chai-as-promised");
-  chai.use(chaiAsPromised.default);
-  expect = chai.expect;
-});
-
-const { TEST_DATA } = require("../../../src/constants");
-const GuildManager = require("../../../src/managers/GuildManager");
-const { Guild, Member } = require("../../../src/structures");
-const getMember = require("../../../src/util/gluon/getMember");
+import { expect, use } from "chai";
+import chaiAsPromised from "chai-as-promised";
+use(chaiAsPromised);
+import { TEST_DATA } from "../../../src/constants.js";
+import GuildManager from "../../../src/managers/GuildManager.js";
+import Guild from "../../../src/structures/Guild.js";
+import Member from "../../../src/structures/Member.js";
+import getMember from "../../../src/util/gluon/getMember.js";
 
 describe("GetMember", function () {
   context("check import", function () {

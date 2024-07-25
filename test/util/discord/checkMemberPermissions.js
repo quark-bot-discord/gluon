@@ -1,12 +1,8 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { PERMISSIONS, TEST_DATA } = require("../../../src/constants");
-const checkMemberPermissions = require("../../../src/util/discord/checkMemberPermissions");
-const Role = require("../../../src/structures/Role");
-const combinePermissions = require("../../../src/util/discord/combinePermissions");
+import { expect } from "chai";
+import { PERMISSIONS, TEST_DATA } from "../../../src/constants.js";
+import checkMemberPermissions from "../../../src/util/discord/checkMemberPermissions.js";
+import Role from "../../../src/structures/Role.js";
+import combinePermissions from "../../../src/util/discord/combinePermissions.js";
 
 describe("CheckMemberPermissions", function () {
   context("check import", function () {

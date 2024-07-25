@@ -1,7 +1,7 @@
-const ActionRow = require("../util/builder/actionRowBuilder");
-const Member = require("./Member");
-const File = require("../util/builder/file");
-const TextInput = require("../util/builder/textInputBuilder");
+import ActionRow from "../util/builder/actionRowBuilder.js";
+import Member from "./Member.js";
+import File from "../util/builder/file.js";
+import TextInput from "../util/builder/textInputBuilder.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -379,4 +379,4 @@ class Interaction {
   }
 }
 
-module.exports = Interaction;
+export default Interaction;

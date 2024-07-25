@@ -1,6 +1,6 @@
-const hash = require("hash.js");
-const decryptText = require("../general/decryptText");
-const Message = require("../../structures/Message");
+import hash from "hash.js";
+import decryptText from "../general/decryptText.js";
+import Message from "../../structures/Message.js";
 
 /**
  * Decrypts a message and returns the message structure for it.
@@ -54,4 +54,4 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
   });
 }
 
-module.exports = decryptMessage;
+export default decryptMessage;

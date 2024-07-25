@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../../constants");
+import { CDN_BASE_URL } from "../../constants.js";
 
 /**
  * Returns the guild icon url.
@@ -17,4 +17,4 @@ function getGuildIcon(id, hash) {
     : null;
 }
 
-module.exports = getGuildIcon;
+export default getGuildIcon;

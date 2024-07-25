@@ -1,10 +1,6 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { VERSION } = require("../../../src/constants");
-const generateWebsocketURL = require("../../../src/util/gluon/generateWebsocketURL");
+import { expect } from "chai";
+import { VERSION } from "../../../src/constants.js";
+import generateWebsocketURL from "../../../src/util/gluon/generateWebsocketURL.js";
 
 describe("GenerateWebsocketURL", function () {
   context("check import", function () {

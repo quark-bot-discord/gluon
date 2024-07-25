@@ -1,5 +1,5 @@
-const Interaction = require("./Interaction");
-const Message = require("./Message");
+import Interaction from "./Interaction.js";
+import Message from "./Message.js";
 
 /**
  * Represents when an option is selected.
@@ -85,4 +85,4 @@ class OptionSelect extends Interaction {
   }
 }
 
-module.exports = OptionSelect;
+export default OptionSelect;

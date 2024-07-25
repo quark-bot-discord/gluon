@@ -1,4 +1,4 @@
-const Interaction = require("./Interaction");
+import Interaction from "./Interaction.js";
 
 /**
  * Represents a slash command.
@@ -43,4 +43,4 @@ class SlashCommand extends Interaction {
   }
 }
 
-module.exports = SlashCommand;
+export default SlashCommand;

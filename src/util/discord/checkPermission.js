@@ -1,4 +1,4 @@
-const { PERMISSIONS } = require("../../constants");
+import { PERMISSIONS } from "../../constants.js";
 
 /**
  * Checks if a set of permissions contains a specific permission.
@@ -21,4 +21,4 @@ function checkPermission(memberPermission, permission, adminOverride = true) {
   return (BigInt(memberPermission) & BigInt(permission)) == BigInt(permission);
 }
 
-module.exports = checkPermission;
+export default checkPermission;

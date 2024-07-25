@@ -1,4 +1,4 @@
-const Channel = require("./Channel");
+import Channel from "./Channel.js";
 
 /**
  * Represents a thread within Discord.
@@ -98,4 +98,4 @@ class Thread extends Channel {
   }
 }
 
-module.exports = Thread;
+export default Thread;

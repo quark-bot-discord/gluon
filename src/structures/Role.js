@@ -1,4 +1,4 @@
-const getRoleIcon = require("../util/image/getRoleIcon");
+import getRoleIcon from "../util/image/getRoleIcon.js";
 
 /**
  * Represents a role belonging to a guild.
@@ -279,4 +279,4 @@ class Role {
   }
 }
 
-module.exports = Role;
+export default Role;

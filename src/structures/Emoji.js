@@ -1,4 +1,4 @@
-const { CDN_BASE_URL } = require("../constants");
+import { CDN_BASE_URL } from "../constants.js";
 
 /**
  * Represents an emoji.
@@ -198,4 +198,4 @@ class Emoji {
   }
 }
 
-module.exports = Emoji;
+export default Emoji;

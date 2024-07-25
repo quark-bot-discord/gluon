@@ -1,4 +1,4 @@
-const { LIMITS } = require("../../constants");
+import { LIMITS } from "../../constants.js";
 
 /**
  * Structure for message components.
@@ -38,4 +38,4 @@ class MessageComponents {
   }
 }
 
-module.exports = MessageComponents;
+export default MessageComponents;

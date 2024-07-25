@@ -1,5 +1,5 @@
-const Guild = require("../structures/Guild");
-const Role = require("../structures/Role");
+import Guild from "../structures/Guild.js";
+import Role from "../structures/Role.js";
 
 /**
  * Manages all roles belonging to a guild.
@@ -131,4 +131,4 @@ class GuildRoleManager {
   }
 }
 
-module.exports = GuildRoleManager;
+export default GuildRoleManager;

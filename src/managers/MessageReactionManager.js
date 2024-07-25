@@ -1,4 +1,4 @@
-const Reaction = require("../structures/Reaction");
+import Reaction from "../structures/Reaction.js";
 
 /**
  * Manages the reactions of a message.
@@ -108,4 +108,4 @@ class MessageReactionManager {
   }
 }
 
-module.exports = MessageReactionManager;
+export default MessageReactionManager;

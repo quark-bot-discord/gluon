@@ -1,6 +1,5 @@
-const Guild = require("../structures/Guild");
-const Member = require("../structures/Member");
-const User = require("../structures/User");
+import Guild from "../structures/Guild.js";
+import Member from "../structures/Member.js";
 
 /**
  * Manages all members belonging to this guild.
@@ -200,4 +199,4 @@ class GuildMemberManager {
   }
 }
 
-module.exports = GuildMemberManager;
+export default GuildMemberManager;

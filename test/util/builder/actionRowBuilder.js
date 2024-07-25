@@ -1,10 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-const Button = require("../../../src/util/builder/buttonBuilder");
-const ActionRow = require("../../../src/util/builder/actionRowBuilder");
-const { COMPONENT_TYPES } = require("../../../src/constants");
+import { expect } from "chai";
+import Button from "../../../src/util/builder/buttonBuilder.js";
+import ActionRow from "../../../src/util/builder/actionRowBuilder.js";
+import { COMPONENT_TYPES } from "../../../src/constants.js";
 
 describe("ActionRowBuilder", () => {
   context("check import", function () {

@@ -25,4 +25,4 @@ function deepCompare(object0, object1) {
   return updatedFields;
 }
 
-module.exports = deepCompare;
+export default deepCompare;

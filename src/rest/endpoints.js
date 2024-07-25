@@ -1,7 +1,7 @@
 /* of course, stick to this format of "methodPath1Path2" */
 /* the arguments passed to the path() function should simply become the parameters of the request */
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
-module.exports = {
+export default {
   getGatewayBot: {
     path: () => {
       return "/gateway/bot";

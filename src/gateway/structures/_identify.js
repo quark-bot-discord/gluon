@@ -1,5 +1,5 @@
-const erlpack = require("erlpack");
-const { NAME, GLUON_VERSION } = require("../../constants");
+import erlpack from "erlpack";
+import { NAME, GLUON_VERSION } from "../../constants.js";
 
 /**
  * Creates an identify payload for the gateway.
@@ -42,4 +42,4 @@ function _identify(token, shard, intents) {
   });
 }
 
-module.exports = _identify;
+export default _identify;

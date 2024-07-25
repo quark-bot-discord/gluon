@@ -1,5 +1,5 @@
-const Channel = require("../structures/Channel");
-const Message = require("../structures/Message");
+import Channel from "../structures/Channel.js";
+import Message from "../structures/Message.js";
 
 /**
  * Manages all messages within a channel.
@@ -229,4 +229,4 @@ class ChannelMessageManager {
   }
 }
 
-module.exports = ChannelMessageManager;
+export default ChannelMessageManager;

@@ -1,5 +1,5 @@
-const User = require("./User");
-const getEventImage = require("../util/image/getEventImage");
+import User from "./User.js";
+import getEventImage from "../util/image/getEventImage.js";
 
 /**
  * Represents an scheduled event.
@@ -363,4 +363,4 @@ class ScheduledEvent {
   }
 }
 
-module.exports = ScheduledEvent;
+export default ScheduledEvent;

@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES, LIMITS } = require("../../constants");
+import { COMPONENT_TYPES, LIMITS } from "../../constants.js";
 
 /**
  * Helps to construct a text input interaction.
@@ -150,4 +150,4 @@ class TextInput {
   }
 }
 
-module.exports = TextInput;
+export default TextInput;

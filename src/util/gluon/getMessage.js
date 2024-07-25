@@ -1,6 +1,6 @@
-const decryptMessage = require("../gluon/decryptMessage");
-const getTimestamp = require("../discord/getTimestampFromSnowflake");
-const hash = require("hash.js");
+import decryptMessage from "../gluon/decryptMessage.js";
+import getTimestamp from "../discord/getTimestampFromSnowflake.js";
+import hash from "hash.js";
 
 /**
  * Fetches a message from cache, or checks the encrypted messages and returns the correct message, if it can be found.
@@ -96,4 +96,4 @@ async function getMessage(
   }
 }
 
-module.exports = getMessage;
+export default getMessage;

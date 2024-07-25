@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const verifyMessageLink = require("../../../src/util/discord/verifyMessageLink");
+import { expect } from "chai";
+import verifyMessageLink from "../../../src/util/discord/verifyMessageLink.js";
 
 describe("VerifyMessageLink", function () {
   context("check import", function () {

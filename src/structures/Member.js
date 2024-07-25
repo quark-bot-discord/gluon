@@ -1,8 +1,8 @@
-const { PERMISSIONS, MEMBER_FLAGS } = require("../constants");
-const User = require("./User");
-const checkPermission = require("../util/discord/checkPermission");
-const checkMemberPermissions = require("../util/discord/checkMemberPermissions");
-const getMemberAvatar = require("../util/image/getMemberAvatar");
+import { PERMISSIONS, MEMBER_FLAGS } from "../constants.js";
+import User from "./User.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
+import getMemberAvatar from "../util/image/getMemberAvatar.js";
 
 /**
  * Represents a guild member.
@@ -595,4 +595,4 @@ class Member {
   }
 }
 
-module.exports = Member;
+export default Member;

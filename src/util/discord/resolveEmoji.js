@@ -25,4 +25,4 @@ function resolveEmoji(text) {
   };
 }
 
-module.exports = resolveEmoji;
+export default resolveEmoji;

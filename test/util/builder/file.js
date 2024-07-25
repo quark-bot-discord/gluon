@@ -1,11 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { TEST_DATA } = require("../../../src/constants");
-const File = require("../../../src/util/builder/file");
-const Stream = require("stream");
+import { expect } from "chai";
+import { TEST_DATA } from "../../../src/constants.js";
+import File from "../../../src/util/builder/file.js";
+import Stream from "stream";
 
 describe("File", function () {
   context("check import", function () {

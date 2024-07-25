@@ -1,5 +1,5 @@
-const getAvatarUrl = require("../util/image/getAvatarUrl");
-const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
+import getAvatarUrl from "../util/image/getAvatarUrl.js";
+import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 
 /**
  * Represents a Discord user.
@@ -273,4 +273,4 @@ class User {
   }
 }
 
-module.exports = User;
+export default User;

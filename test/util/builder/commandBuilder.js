@@ -1,10 +1,6 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { APPLICATION_COMMAND_TYPES } = require("../../../src/constants");
-const Command = require("../../../src/util/builder/commandBuilder");
+import { expect } from "chai";
+import { APPLICATION_COMMAND_TYPES } from "../../../src/constants.js";
+import Command from "../../../src/util/builder/commandBuilder.js";
 
 describe("CommandBuilder", function () {
   context("check import", function () {

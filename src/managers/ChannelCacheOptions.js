@@ -1,4 +1,4 @@
-const { GLUON_CHANNEL_CACHING_OPTIONS } = require("../constants");
+import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
 
 class ChannelCacheOptions {
   #_cache_options;
@@ -87,4 +87,4 @@ class ChannelCacheOptions {
   }
 }
 
-module.exports = ChannelCacheOptions;
+export default ChannelCacheOptions;

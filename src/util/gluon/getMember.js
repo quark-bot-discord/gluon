@@ -27,4 +27,4 @@ async function getMember(client, guild_id, member_id, destroy = false) {
   return member;
 }
 
-module.exports = getMember;
+export default getMember;

@@ -1,12 +1,12 @@
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
-const FormData = require("form-data");
-const { createReadStream } = require("fs");
-const calculateHash = require("hash.js/lib/hash/sha/256");
-const NodeCache = require("node-cache");
-const FastQ = require("fastq");
-const getBucket = require("./getBucket");
-const { GLUON_VERSION, API_BASE_URL, VERSION, NAME } = require("../constants");
+import fetch from "node-fetch";
+import FormData from "form-data";
+import { createReadStream } from "fs";
+import calculateHash from "hash.js/lib/hash/sha/256";
+import NodeCache from "node-cache";
+import FastQ from "fastq";
+import getBucket from "./getBucket.js";
+import { GLUON_VERSION, API_BASE_URL, VERSION, NAME } from "../constants.js";
+import endpoints from "./endpoints.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -38,7 +38,7 @@ class BetterRequestHandler {
     this.#maxQueueSize = 100;
     this.#fuzz = 500;
 
-    this.#endpoints = require("./endpoints");
+    this.#endpoints = endpoints;
 
     this.#queueWorker = (data) => {
       return new Promise(async (resolve, reject) => {

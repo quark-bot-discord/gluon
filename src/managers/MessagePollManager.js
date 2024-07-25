@@ -80,4 +80,4 @@ class MessagePollManager {
   }
 }
 
-module.exports = MessagePollManager;
+export default MessagePollManager;

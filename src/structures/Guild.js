@@ -1,22 +1,22 @@
-const { AUDIT_LOG_TYPES, PERMISSIONS } = require("../constants");
-const GuildChannelsManager = require("../managers/GuildChannelsManager");
-const GuildEmojisManager = require("../managers/GuildEmojisManager");
-const GuildInviteManager = require("../managers/GuildInviteManager");
-const GuildMemberManager = require("../managers/GuildMemberManager");
-const GuildRoleManager = require("../managers/GuildRoleManager");
-const GuildScheduledEventManager = require("../managers/GuildScheduledEventManager");
-const GuildVoiceStatesManager = require("../managers/GuildVoiceStatesManager");
-const cacheChannel = require("../util/gluon/cacheChannel");
-const checkPermission = require("../util/discord/checkPermission");
-const getGuildIcon = require("../util/image/getGuildIcon");
-const AuditLog = require("./AuditLog");
-const Emoji = require("./Emoji");
-const Invite = require("./Invite");
-const Member = require("./Member");
-const Role = require("./Role");
-const Thread = require("./Thread");
-const VoiceState = require("./VoiceState");
-const GuildCacheOptions = require("../managers/GuildCacheOptions");
+import { AUDIT_LOG_TYPES, PERMISSIONS } from "../constants.js";
+import GuildChannelsManager from "../managers/GuildChannelsManager.js";
+import GuildEmojisManager from "../managers/GuildEmojisManager.js";
+import GuildInviteManager from "../managers/GuildInviteManager.js";
+import GuildMemberManager from "../managers/GuildMemberManager.js";
+import GuildRoleManager from "../managers/GuildRoleManager.js";
+import GuildScheduledEventManager from "../managers/GuildScheduledEventManager.js";
+import GuildVoiceStatesManager from "../managers/GuildVoiceStatesManager.js";
+import cacheChannel from "../util/gluon/cacheChannel.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import getGuildIcon from "../util/image/getGuildIcon.js";
+import AuditLog from "./AuditLog.js";
+import Emoji from "./Emoji.js";
+import Invite from "./Invite.js";
+import Member from "./Member.js";
+import Role from "./Role.js";
+import Thread from "./Thread.js";
+import VoiceState from "./VoiceState.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 
 /**
  * Represents a Discord guild.
@@ -1256,4 +1256,4 @@ class Guild {
   }
 }
 
-module.exports = Guild;
+export default Guild;

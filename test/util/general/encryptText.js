@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const encryptText = require("../../../src/util/general/encryptText");
+import { expect } from "chai";
+import encryptText from "../../../src/util/general/encryptText.js";
 
 describe("EncryptText", function () {
   context("check import", function () {

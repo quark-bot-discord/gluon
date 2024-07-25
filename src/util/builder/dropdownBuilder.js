@@ -1,4 +1,4 @@
-const { COMPONENT_TYPES, LIMITS } = require("../../constants");
+import { COMPONENT_TYPES, LIMITS } from "../../constants.js";
 
 /**
  * Helps to create a dropdown message component.
@@ -161,4 +161,4 @@ class Dropdown {
   }
 }
 
-module.exports = Dropdown;
+export default Dropdown;

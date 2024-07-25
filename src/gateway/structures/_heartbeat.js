@@ -1,4 +1,4 @@
-const erlpack = require("erlpack");
+import erlpack from "erlpack";
 
 function _heartbeat(d) {
   return erlpack.pack({
@@ -7,4 +7,4 @@ function _heartbeat(d) {
   });
 }
 
-module.exports = _heartbeat;
+export default _heartbeat;

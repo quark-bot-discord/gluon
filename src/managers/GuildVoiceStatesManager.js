@@ -1,6 +1,4 @@
-// perhaps voice states should be attached to members instead?
-
-const VoiceState = require("../structures/VoiceState");
+import VoiceState from "../structures/VoiceState.js";
 
 /**
  * Manages all voice states belonging to a guild.
@@ -83,4 +81,4 @@ class GuildVoiceStatesManager {
   }
 }
 
-module.exports = GuildVoiceStatesManager;
+export default GuildVoiceStatesManager;

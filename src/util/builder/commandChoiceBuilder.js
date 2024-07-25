@@ -1,4 +1,4 @@
-const { LIMITS } = require("../../constants");
+import { LIMITS } from "../../constants.js";
 
 /**
  * Helps to create a choice for a command.
@@ -97,4 +97,4 @@ class CommandChoice {
   }
 }
 
-module.exports = CommandChoice;
+export default CommandChoice;

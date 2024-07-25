@@ -1,7 +1,7 @@
-const { PERMISSIONS } = require("../constants");
-const Channel = require("./Channel");
-const Message = require("./Message");
-const checkPermission = require("../util/discord/checkPermission");
+import { PERMISSIONS } from "../constants.js";
+import Channel from "./Channel.js";
+import Message from "./Message.js";
+import checkPermission from "../util/discord/checkPermission.js";
 
 /**
  * Represents a text channel within Discord.
@@ -102,4 +102,4 @@ class TextChannel extends Channel {
   }
 }
 
-module.exports = TextChannel;
+export default TextChannel;

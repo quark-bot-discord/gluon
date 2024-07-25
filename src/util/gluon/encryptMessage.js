@@ -1,5 +1,5 @@
-const hash = require("hash.js");
-const encryptText = require("../general/encryptText");
+import hash from "hash.js";
+import encryptText from "../general/encryptText.js";
 
 /**
  * Encrypts a message and returns an encrypted string.
@@ -41,4 +41,4 @@ function encryptMessage(message) {
   return encryptText(messageString, key, iv);
 }
 
-module.exports = encryptMessage;
+export default encryptMessage;

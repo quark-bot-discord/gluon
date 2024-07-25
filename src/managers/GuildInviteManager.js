@@ -1,7 +1,7 @@
-const { PERMISSIONS } = require("../constants");
-const Guild = require("../structures/Guild");
-const Invite = require("../structures/Invite");
-const checkPermission = require("../util/discord/checkPermission");
+import { PERMISSIONS } from "../constants.js";
+import Guild from "../structures/Guild.js";
+import Invite from "../structures/Invite.js";
+import checkPermission from "../util/discord/checkPermission.js";
 
 /**
  * Manages all invites within a guild.
@@ -131,4 +131,4 @@ class GuildInviteManager {
   }
 }
 
-module.exports = GuildInviteManager;
+export default GuildInviteManager;

@@ -1,4 +1,4 @@
-const Channel = require("./Channel");
+import Channel from "./Channel.js";
 
 /**
  * Represents a voice channel.
@@ -114,4 +114,4 @@ class VoiceChannel extends Channel {
   }
 }
 
-module.exports = VoiceChannel;
+export default VoiceChannel;
