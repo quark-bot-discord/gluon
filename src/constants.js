@@ -5,6 +5,7 @@ export const CDN_BASE_URL = "https://cdn.discordapp.com";
 export const INVITE_BASE_URL = "https://discord.gg";
 export const VERSION = 10;
 export const NAME = packageJSON.name;
+export const GLUON_REPOSITORY_URL = packageJSON.repository.url.slice(4);
 export const INTENTS = {
   GUILDS: 1 << 0,
   GUILD_MEMBERS: 1 << 1,
