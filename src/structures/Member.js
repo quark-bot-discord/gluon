@@ -242,7 +242,8 @@ class Member {
 
     const roles = [];
 
-    roles.push(this.guild.roles.get(this.guildId));
+    const everyoneRole = this.guild.roles.get(this.guildId);
+    if (everyoneRole) roles.push(everyoneRole);
 
     if (!this.#_roles) return roles;
 
@@ -584,7 +585,9 @@ class Member {
       avatar: this.#_originalAvatarHash,
       permissions: String(this.permissions),
       roles: Array.isArray(this.#_roles)
-        ? this.#_roles.map((r) => String(r))
+        ? this.#_roles
+            .filter((r) => String(r) !== this.guildId)
+            .map((r) => String(r))
         : undefined,
       communication_disabled_until: this.timeoutUntil
         ? this.timeoutUntil * 1000
