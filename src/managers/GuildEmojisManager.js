@@ -83,7 +83,7 @@ class GuildEmojisManager {
    * @method
    * @throws {TypeError}
    */
-  add(id, emoji) {
+  set(id, emoji) {
     if (!(emoji instanceof Emoji))
       throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
     if (typeof id !== "string")
