@@ -234,15 +234,14 @@ class Interaction {
 
     if (
       typeof files !== "undefined" &&
-      !Array.isArray(files) &&
-      !files.every((file) => file instanceof File)
+      (!Array.isArray(files) || !files.every((file) => file instanceof File))
     )
       throw new TypeError("GLUON: Files must be an array of files.");
 
     if (
       typeof embeds !== "undefined" &&
-      !Array.isArray(embeds) &&
-      !embeds.every((embed) => embed instanceof Embed)
+      (!Array.isArray(embeds) ||
+        !embeds.every((embed) => embed instanceof Embed))
     )
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
