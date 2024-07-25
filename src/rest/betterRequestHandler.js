@@ -1,11 +1,17 @@
 import fetch from "node-fetch";
 import FormData from "form-data";
 import { createReadStream } from "fs";
-import calculateHash from "hash.js/lib/hash/sha/256";
+import hashjs from "hash.js";
 import NodeCache from "node-cache";
 import FastQ from "fastq";
 import getBucket from "./getBucket.js";
-import { GLUON_VERSION, API_BASE_URL, VERSION, NAME } from "../constants.js";
+import {
+  GLUON_VERSION,
+  API_BASE_URL,
+  VERSION,
+  NAME,
+  GLUON_REPOSITORY_URL,
+} from "../constants.js";
 import endpoints from "./endpoints.js";
 const AbortController = globalThis.AbortController;
 
@@ -158,7 +164,7 @@ class BetterRequestHandler {
               )
             : [],
         );
-      const hash = calculateHash().update(toHash).digest("hex");
+      const hash = hashjs.sha256().update(toHash).digest("hex");
 
       this.#_client.emit("debug", `ADD ${hash} to request queue`);
 
@@ -188,7 +194,7 @@ class BetterRequestHandler {
   async #http(hash, request, params, body, resolve, reject) {
     const actualRequest = this.#endpoints[request];
 
-    const path = actualRequest.path(...params);
+    const path = actualRequest.path(...(params ?? []));
 
     const bucket = await getBucket(
       this.#_client,
@@ -212,9 +218,7 @@ class BetterRequestHandler {
 
       const headers = {
         Authorization: this.#authorization,
-        "User-Agent": `DiscordBot (${require("../../package.json").repository.url.slice(
-          4,
-        )}, ${GLUON_VERSION}) ${NAME}`,
+        "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
         Accept: "application/json",
       };
 
@@ -323,7 +327,7 @@ class BetterRequestHandler {
         reject(
           new Error(
             `${res.status}: ${actualRequest.method} ${actualRequest.path(
-              ...params,
+              ...(params ?? []),
             )} FAILED`,
           ),
         );
@@ -331,7 +335,7 @@ class BetterRequestHandler {
       this.#_client.emit("requestCompleted", {
         status: res.status,
         method: actualRequest.method,
-        endpoint: actualRequest.path(...params),
+        endpoint: actualRequest.path(...(params ?? [])),
         hash,
       });
 
@@ -349,4 +353,4 @@ class BetterRequestHandler {
   }
 }
 
-module.exports = BetterRequestHandler;
+export default BetterRequestHandler;
