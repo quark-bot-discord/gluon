@@ -369,8 +369,15 @@ class AuditLog {
       target_id: this.targetId ?? undefined,
       executor_id: this.executorId ?? undefined,
       reason: this.reason,
-      channel_id: this.channelId ?? undefined,
-      count: typeof this.count === "number" ? this.count : undefined,
+      options: {
+        channel_id: this.channelId ?? undefined,
+        count: typeof this.count === "number" ? this.count : undefined,
+        delete_member_days: typeof this.deleteMemberDays === "number" ? this.deleteMemberDays : undefined,
+        members_removed: typeof this.membersRemoved === "number" ? this.membersRemoved : undefined,
+        id: this.specialId ?? undefined,
+        type: this.specialType ?? undefined,
+        status: this.status ?? undefined,
+      },
       changes: this.changes,
     };
   }
