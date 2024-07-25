@@ -507,4 +507,24 @@ module.exports.TEST_DATA = {
         width: 100
     },
     FILE_NAME: "test.png",
+    AUDIT_LOG: {
+        id: "123456789012345678",
+        guild_id: "123456789012345678",
+        user_id: "123456789012345678",
+        target_id: "123456789012345678",
+        executor_id: "123456789012345678",
+        action_type: 1,
+        changes: [],
+        options: {
+            channel_id: "123456789012345678",
+            id: "123456789012345678",
+            type: 1
+        },
+        reason: "test",
+        context: {
+            id: "123456789012345678",
+            type: 1
+        },
+        created_at: "2021-01-01T00:00:00.000Z"
+    },
 };
