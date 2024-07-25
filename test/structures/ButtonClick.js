@@ -1,4 +1,6 @@
-import { expect } from "chai";
+import { expect, use } from "chai";
+import spies from "chai-spies";
+const chai = use(spies);
 import { TEST_DATA } from "../../src/constants.js";
 import GuildManager from "../../src/managers/GuildManager.js";
 import Guild from "../../src/structures/Guild.js";
@@ -211,6 +213,53 @@ describe("ButtonClick", function () {
         "GLUON: Text input modal must be provided.",
       );
     });
+
+    it("should not throw an error if all required fields are provided", async function () {
+      const client = { request: { makeRequest: () => {} } };
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const textInput = new TextInput()
+        .setCustomID("test 2")
+        .setPlaceholder("Test Placeholder")
+        .setMaxLength(100)
+        .setMinLength(1);
+      await expect(
+        buttonClick.textPrompt({
+          title: "test",
+          customId: "test",
+          textInputModal: textInput,
+        }),
+      ).to.not.be.rejected;
+    });
+
+    it("should call makeRequest with the correct parameters", async function () {
+      const client = { request: { makeRequest: async () => {} } };
+      const request = chai.spy.on(client.request, "makeRequest");
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const textInput = new TextInput()
+        .setCustomID("test 2")
+        .setPlaceholder("Test Placeholder")
+        .setMaxLength(100)
+        .setMinLength(1);
+      await buttonClick.textPrompt({
+        title: "test",
+        customId: "test",
+        textInputModal: textInput,
+      });
+      expect(request).to.have.been.called.once;
+      expect(request).to.have.been.called.with("postInteractionResponse");
+      expect(request).to.have.been.called.with([
+        TEST_DATA.BUTTON_CLICK.id,
+        TEST_DATA.BUTTON_CLICK.token,
+      ]);
+    });
   });
 
   context("check autocompleteResponse", function () {
@@ -222,6 +271,44 @@ describe("ButtonClick", function () {
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.autocompleteResponse).to.be.a("function");
+    });
+    it("should throw an error if no choices are provided", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.autocompleteResponse()).to.be.rejectedWith(
+        Error,
+        "GLUON: No choices provided.",
+      );
+    });
+    it("should not throw an error if choices are provided", async function () {
+      const client = { request: { makeRequest: () => {} } };
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.autocompleteResponse({ choices: [] })).to.not.be
+        .rejected;
+    });
+    it("should call makeRequest with the correct parameters", async function () {
+      const client = { request: { makeRequest: async () => {} } };
+      const request = chai.spy.on(client.request, "makeRequest");
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await buttonClick.autocompleteResponse({ choices: [] });
+      expect(request).to.have.been.called.once;
+      expect(request).to.have.been.called.with("postInteractionResponse");
+      expect(request).to.have.been.called.with([
+        TEST_DATA.BUTTON_CLICK.id,
+        TEST_DATA.BUTTON_CLICK.token,
+      ]);
     });
   });
 
@@ -235,6 +322,83 @@ describe("ButtonClick", function () {
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.reply).to.be.a("function");
     });
+    it("should throw an error if no content, files, embeds, or components are provided", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.reply()).to.be.rejectedWith(
+        Error,
+        "GLUON: No content, files, embed, or components provided.",
+      );
+    });
+    it("should throw an error if content is not a string", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.reply(123)).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Content must be a string.",
+      );
+    });
+    it("should throw an error if files is not an array of files", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(
+        buttonClick.reply("test", { files: "test" }),
+      ).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Files must be an array of files.",
+      );
+    });
+    it("should throw an error if embeds is not an array of embeds", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(
+        buttonClick.reply("test", { embeds: "test" }),
+      ).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Embeds must be an array of embeds.",
+      );
+    });
+    it("should not throw an error if content is provided", async function () {
+      const client = { request: { makeRequest: () => {} } };
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.reply("test")).to.not.be.rejected;
+    });
+    it("should call makeRequest with the correct parameters", async function () {
+      const client = { request: { makeRequest: async () => {} } };
+      const request = chai.spy.on(client.request, "makeRequest");
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await buttonClick.reply("test");
+      expect(request).to.have.been.called.once;
+      expect(request).to.have.been.called.with("postInteractionResponse");
+      expect(request).to.have.been.called.with([
+        TEST_DATA.BUTTON_CLICK.id,
+        TEST_DATA.BUTTON_CLICK.token,
+      ]);
+    });
   });
 
   context("check edit", function () {
@@ -247,6 +411,45 @@ describe("ButtonClick", function () {
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.edit).to.be.a("function");
     });
+    it("should throw an error if no content, files, embeds, or components are provided", async function () {
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.edit()).to.be.rejectedWith(
+        Error,
+        "GLUON: No content, files, embed, or components provided.",
+      );
+    });
+    it("should not throw an error if content is provided", async function () {
+      const client = { request: { makeRequest: () => {} } };
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(buttonClick.edit("test")).to.not.be.rejected;
+    });
+    it("should call makeRequest with the correct parameters", async function () {
+      const client = { request: { makeRequest: async () => {} } };
+      const request = chai.spy.on(client.request, "makeRequest");
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await buttonClick.edit("test");
+      expect(request).to.have.been.called.once;
+      expect(request).to.have.been.called.with(
+        "patchOriginalInteractionResponse",
+      );
+      expect(request).to.have.been.called.with([
+        TEST_DATA.CLIENT_USER.id,
+        TEST_DATA.BUTTON_CLICK.token,
+      ]);
+    });
   });
 
   context("check acknowledge", function () {
@@ -258,6 +461,21 @@ describe("ButtonClick", function () {
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.acknowledge).to.be.a("function");
+    });
+    it("should call makeRequest with the correct parameters", async function () {
+      const client = { request: { makeRequest: async () => {} } };
+      const request = chai.spy.on(client.request, "makeRequest");
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await buttonClick.acknowledge();
+      expect(request).to.have.been.called.once;
+      expect(request).to.have.been.called.with("postInteractionResponse", [
+        TEST_DATA.BUTTON_CLICK.id,
+        TEST_DATA.BUTTON_CLICK.token,
+      ]);
     });
   });
 });
