@@ -1,11 +1,11 @@
 {
-  "plugins": ["plugins/markdown", "importAssertions"],
+  "plugins": ["plugins/markdown", "plugins/importAssertions"],
   "opts": {
     "template": "templates/default",
     "encoding": "utf8",
     "recurse": true
   },
   "parserOpts": {
-    "plugins": ["importAttributes"]
+    "plugins": ["plugins/importAttributes"]
   }
 }
