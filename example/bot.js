@@ -1,8 +1,9 @@
-const { Client } = require("../index");
-const ActionRow = require("../src/util/builder/actionRowBuilder");
-const Button = require("../src/util/buttonBuilder");
-const Embed = require("../src/util/builder/embedBuilder");
-const MessageComponents = require("../src/util/builder/messageComponents");
+import Client from "../src/Client.js";
+import { INTENTS } from "../src/constants.js";
+import ActionRow from "../src/util/builder/actionRowBuilder.js";
+import Button from "../src/util/builder/buttonBuilder.js";
+import Embed from "../src/util/builder/embedBuilder.js";
+import MessageComponents from "../src/util/builder/messageComponents.js";
 const client = new Client({
   cacheGuilds: true,
   cacheMessages: true,
@@ -12,6 +13,7 @@ const client = new Client({
   cacheVoiceStates: true,
   cacheRoles: true,
   cacheEmojis: true,
+  intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES,
 });
 
 client.on("ready", () => {
