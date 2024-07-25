@@ -16,13 +16,13 @@ describe("GetTimestampFromSnowflake", function () {
     it("should throw an error if no snowflake is provided", function () {
       expect(() => getTimestampFromSnowflake()).to.throw(
         TypeError,
-        "GLUON: Snowflake must be provided."
+        "GLUON: Snowflake must be provided.",
       );
     });
     it("should throw an error if snowflake is not a string", function () {
       expect(() => getTimestampFromSnowflake(123456)).to.throw(
         TypeError,
-        "GLUON: Snowflake must be a string."
+        "GLUON: Snowflake must be a string.",
       );
     });
   });

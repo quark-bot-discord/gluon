@@ -4,12 +4,11 @@
  * @returns {String?} The link to a message, if it is present.
  */
 function verifyMessageLink(text) {
-
   if (typeof text !== "string")
     throw new TypeError("GLUON: The text must be a string.");
 
   const messageLink = text.match(
-    /(https?:\/\/)(.+[a-z]\.)?(discord\.com|discordapp\.com)\/(channels)\/(.[0-9]+)\/(.[0-9]+)\/(.[0-9]+)/g
+    /(https?:\/\/)(.+[a-z]\.)?(discord\.com|discordapp\.com)\/(channels)\/(.[0-9]+)\/(.[0-9]+)\/(.[0-9]+)/g,
   );
 
   if (messageLink) return messageLink[0];

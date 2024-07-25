@@ -36,7 +36,7 @@ class Member {
     { user_id, guild_id, user, nocache = false, ignoreNoCache = false } = {
       nocache: false,
       ignoreNoCache: false,
-    }
+    },
   ) {
     /**
      * The client instance.
@@ -393,7 +393,7 @@ class Member {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
+        PERMISSIONS.MANAGE_ROLES,
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
@@ -411,7 +411,7 @@ class Member {
     await this.#_client.request.makeRequest(
       "putAddGuildMemberRole",
       [this.guildId, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -430,7 +430,7 @@ class Member {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
+        PERMISSIONS.MANAGE_ROLES,
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
@@ -448,7 +448,7 @@ class Member {
     await this.#_client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.guildId, this.id, role_id],
-      body
+      body,
     );
   }
 
@@ -467,7 +467,7 @@ class Member {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MODERATE_MEMBERS
+        PERMISSIONS.MODERATE_MEMBERS,
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
@@ -487,7 +487,7 @@ class Member {
     await this.#_client.request.makeRequest(
       "patchGuildMember",
       [this.guildId, this.id],
-      body
+      body,
     );
   }
 
@@ -505,7 +505,7 @@ class Member {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MODERATE_MEMBERS
+        PERMISSIONS.MODERATE_MEMBERS,
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
@@ -522,7 +522,7 @@ class Member {
     await this.#_client.request.makeRequest(
       "patchGuildMember",
       [this.guildId, this.id],
-      body
+      body,
     );
   }
 
@@ -540,7 +540,7 @@ class Member {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
+        PERMISSIONS.MANAGE_ROLES,
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
@@ -560,7 +560,7 @@ class Member {
     await this.#_client.request.makeRequest(
       "patchGuildMember",
       [this.guildId, this.id],
-      body
+      body,
     );
   }
 

@@ -16,13 +16,13 @@ describe("ResolveEmoji", function () {
     it("should throw an error if no emoji is provided", function () {
       expect(() => resolveEmoji()).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
     it("should throw an error if emoji is not a string", function () {
       expect(() => resolveEmoji(123456)).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
   });

@@ -1,638 +1,535 @@
 [
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                6,
-                36
-            ],
-            "filename": "Thread.js",
-            "lineno": 1,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000003",
-                "name": "Channel",
-                "type": "CallExpression",
-                "value": ""
-            }
-        },
-        "undocumented": true,
+  {
+    "comment": "",
+    "meta": {
+      "range": [6, 36],
+      "filename": "Thread.js",
+      "lineno": 1,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000003",
         "name": "Channel",
-        "longname": "Channel",
-        "kind": "constant",
-        "scope": "global",
-        "params": []
+        "type": "CallExpression",
+        "value": ""
+      }
     },
-    {
-        "comment": "/**\n * Represents a thread within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n */",
-        "meta": {
-            "range": [
-                216,
-                2191
-            ],
-            "filename": "Thread.js",
-            "lineno": 8,
-            "columnno": 0,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000008",
-                "name": "Thread",
-                "type": "ClassDeclaration",
-                "paramnames": [
-                    "client",
-                    "data",
-                    "guild_id",
-                    "nocache"
-                ]
-            }
-        },
-        "classdesc": "Represents a thread within Discord.",
-        "augments": [
-            "Channel"
-        ],
-        "see": [
-            "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
-        ],
+    "undocumented": true,
+    "name": "Channel",
+    "longname": "Channel",
+    "kind": "constant",
+    "scope": "global",
+    "params": []
+  },
+  {
+    "comment": "/**\n * Represents a thread within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n */",
+    "meta": {
+      "range": [216, 2191],
+      "filename": "Thread.js",
+      "lineno": 8,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000008",
         "name": "Thread",
-        "longname": "Thread",
-        "kind": "class",
-        "scope": "global",
-        "undocumented": true
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data", "guild_id", "nocache"]
+      }
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                249,
-                260
-            ],
-            "filename": "Thread.js",
-            "lineno": 9,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000012",
-                "name": "_owner_id",
-                "type": "ClassPrivateProperty"
-            }
-        },
-        "undocumented": true,
+    "classdesc": "Represents a thread within Discord.",
+    "augments": ["Channel"],
+    "see": [
+      "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
+    ],
+    "name": "Thread",
+    "longname": "Thread",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [249, 260],
+      "filename": "Thread.js",
+      "lineno": 9,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000012",
         "name": "_owner_id",
-        "longname": "Thread#_owner_id",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "access": "private"
+        "type": "ClassPrivateProperty"
+      }
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                263,
-                275
-            ],
-            "filename": "Thread.js",
-            "lineno": 10,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000013",
-                "name": "_parent_id",
-                "type": "ClassPrivateProperty"
-            }
-        },
-        "undocumented": true,
+    "undocumented": true,
+    "name": "_owner_id",
+    "longname": "Thread#_owner_id",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [263, 275],
+      "filename": "Thread.js",
+      "lineno": 10,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000013",
         "name": "_parent_id",
-        "longname": "Thread#_parent_id",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "access": "private"
+        "type": "ClassPrivateProperty"
+      }
     },
-    {
-        "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {String} guild_id The ID of the guild that this thread belongs to.\n   * @param {Boolean?} nocache Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
-        "meta": {
-            "range": [
-                689,
-                1201
-            ],
-            "filename": "Thread.js",
-            "lineno": 19,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000014",
-                "name": "Thread",
-                "type": "MethodDefinition",
-                "paramnames": [
-                    "client",
-                    "data",
-                    "guild_id",
-                    "nocache"
-                ]
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "Creates the structure for a thread.",
-        "params": [
-            {
-                "type": {
-                    "names": [
-                        "Client"
-                    ]
-                },
-                "description": "The client instance.",
-                "name": "client"
-            },
-            {
-                "type": {
-                    "names": [
-                        "Object"
-                    ]
-                },
-                "description": "Raw channel data.",
-                "name": "data"
-            },
-            {
-                "type": {
-                    "names": [
-                        "String"
-                    ]
-                },
-                "description": "The ID of the guild that this thread belongs to.",
-                "name": "guild_id"
-            },
-            {
-                "type": {
-                    "names": [
-                        "Boolean"
-                    ]
-                },
-                "nullable": true,
-                "description": "Whether this thread should be cached or not.",
-                "name": "nocache",
-                "defaultvalue": false
-            }
-        ],
-        "see": [
-            "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
-        ],
+    "undocumented": true,
+    "name": "_parent_id",
+    "longname": "Thread#_parent_id",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {String} guild_id The ID of the guild that this thread belongs to.\n   * @param {Boolean?} nocache Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
+    "meta": {
+      "range": [689, 1201],
+      "filename": "Thread.js",
+      "lineno": 19,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000014",
         "name": "Thread",
-        "longname": "Thread",
-        "kind": "class",
-        "scope": "global",
-        "undocumented": true
+        "type": "MethodDefinition",
+        "paramnames": ["client", "data", "guild_id", "nocache"]
+      },
+      "vars": {
+        "": null
+      }
     },
-    {
-        "comment": "/**\n * Represents a thread within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n */",
-        "meta": {
-            "range": [
-                216,
-                2191
-            ],
-            "filename": "Thread.js",
-            "lineno": 8,
-            "columnno": 0,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000008",
-                "name": "Thread",
-                "type": "ClassDeclaration",
-                "paramnames": [
-                    "client",
-                    "data",
-                    "guild_id",
-                    "nocache"
-                ]
-            }
+    "description": "Creates the structure for a thread.",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
         },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Raw channel data.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": ["String"]
+        },
+        "description": "The ID of the guild that this thread belongs to.",
+        "name": "guild_id"
+      },
+      {
+        "type": {
+          "names": ["Boolean"]
+        },
+        "nullable": true,
+        "description": "Whether this thread should be cached or not.",
+        "name": "nocache",
+        "defaultvalue": false
+      }
+    ],
+    "see": [
+      "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
+    ],
+    "name": "Thread",
+    "longname": "Thread",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "/**\n * Represents a thread within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n */",
+    "meta": {
+      "range": [216, 2191],
+      "filename": "Thread.js",
+      "lineno": 8,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000008",
         "name": "Thread",
-        "longname": "Thread",
-        "kind": "class",
-        "classdesc": "Represents a thread within Discord.",
-        "augments": [
-            "Channel"
-        ],
-        "see": [
-            "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
-        ],
-        "scope": "global",
-        "description": "Creates the structure for a thread.",
-        "params": [
-            {
-                "type": {
-                    "names": [
-                        "Client"
-                    ]
-                },
-                "description": "The client instance.",
-                "name": "client"
-            },
-            {
-                "type": {
-                    "names": [
-                        "Object"
-                    ]
-                },
-                "description": "Raw channel data.",
-                "name": "data"
-            },
-            {
-                "type": {
-                    "names": [
-                        "String"
-                    ]
-                },
-                "description": "The ID of the guild that this thread belongs to.",
-                "name": "guild_id"
-            },
-            {
-                "type": {
-                    "names": [
-                        "Boolean"
-                    ]
-                },
-                "nullable": true,
-                "description": "Whether this thread should be cached or not.",
-                "name": "nocache",
-                "defaultvalue": false
-            }
-        ]
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data", "guild_id", "nocache"]
+      }
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                770,
-                778
-            ],
-            "filename": "Thread.js",
-            "lineno": 20,
-            "columnno": 26,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000030",
-                "name": "guild_id",
-                "type": "Identifier",
-                "value": "guild_id"
-            }
+    "name": "Thread",
+    "longname": "Thread",
+    "kind": "class",
+    "classdesc": "Represents a thread within Discord.",
+    "augments": ["Channel"],
+    "see": [
+      "{@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}"
+    ],
+    "scope": "global",
+    "description": "Creates the structure for a thread.",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
         },
-        "undocumented": true,
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Raw channel data.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": ["String"]
+        },
+        "description": "The ID of the guild that this thread belongs to.",
+        "name": "guild_id"
+      },
+      {
+        "type": {
+          "names": ["Boolean"]
+        },
+        "nullable": true,
+        "description": "Whether this thread should be cached or not.",
+        "name": "nocache",
+        "defaultvalue": false
+      }
+    ]
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [770, 778],
+      "filename": "Thread.js",
+      "lineno": 20,
+      "columnno": 26,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000030",
         "name": "guild_id",
-        "longname": "guild_id",
-        "kind": "member",
-        "scope": "global"
+        "type": "Identifier",
+        "value": "guild_id"
+      }
     },
-    {
-        "comment": "/**\n     * The ID of the user who created this thread.\n     * @type {BigInt}\n     * @private\n     */",
-        "meta": {
-            "range": [
-                893,
-                932
-            ],
-            "filename": "Thread.js",
-            "lineno": 27,
-            "columnno": 4,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000033",
-                "name": "this.",
-                "type": "CallExpression",
-                "value": "",
-                "paramnames": []
-            }
-        },
-        "description": "The ID of the user who created this thread.",
-        "type": {
-            "names": [
-                "BigInt"
-            ]
-        },
-        "access": "private",
-        "name": "Thread",
-        "longname": "Thread.Thread",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "static"
+    "undocumented": true,
+    "name": "guild_id",
+    "longname": "guild_id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "/**\n     * The ID of the user who created this thread.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [893, 932],
+      "filename": "Thread.js",
+      "lineno": 27,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000033",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
     },
-    {
-        "comment": "/**\n     * The ID of the text channel that this thread belongs to.\n     * @type {BigInt}\n     * @private\n     */",
-        "meta": {
-            "range": [
-                1056,
-                1097
-            ],
-            "filename": "Thread.js",
-            "lineno": 34,
-            "columnno": 4,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000044",
-                "name": "this.",
-                "type": "CallExpression",
-                "value": "",
-                "paramnames": []
-            }
-        },
-        "description": "The ID of the text channel that this thread belongs to.",
-        "type": {
-            "names": [
-                "BigInt"
-            ]
-        },
-        "access": "private",
-        "name": "Thread",
-        "longname": "Thread.Thread",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "static"
+    "description": "The ID of the user who created this thread.",
+    "type": {
+      "names": ["BigInt"]
     },
-    {
-        "comment": "/**\n   * The ID of the member who created this thread.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
-        "meta": {
-            "range": [
-                1316,
-                1371
-            ],
-            "filename": "Thread.js",
-            "lineno": 46,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000066",
-                "name": "Thread#ownerId",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The ID of the member who created this thread.",
-        "type": {
-            "names": [
-                "String"
-            ]
-        },
-        "readonly": true,
-        "access": "public",
-        "name": "ownerId",
-        "longname": "Thread#ownerId",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "access": "private",
+    "name": "Thread",
+    "longname": "Thread.Thread",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The ID of the text channel that this thread belongs to.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [1056, 1097],
+      "filename": "Thread.js",
+      "lineno": 34,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000044",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
     },
-    {
-        "comment": "/**\n   * The member who created this thread.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
-        "meta": {
-            "range": [
-                1477,
-                1552
-            ],
-            "filename": "Thread.js",
-            "lineno": 56,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000077",
-                "name": "Thread#owner",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The member who created this thread.",
-        "type": {
-            "names": [
-                "Member"
-            ]
-        },
-        "nullable": true,
-        "readonly": true,
-        "access": "public",
-        "name": "owner",
-        "longname": "Thread#owner",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "description": "The ID of the text channel that this thread belongs to.",
+    "type": {
+      "names": ["BigInt"]
     },
-    {
-        "comment": "/**\n   * The ID of the text channel that this thread belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
-        "meta": {
-            "range": [
-                1677,
-                1734
-            ],
-            "filename": "Thread.js",
-            "lineno": 66,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000085",
-                "name": "Thread#parentId",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The ID of the text channel that this thread belongs to.",
-        "type": {
-            "names": [
-                "String"
-            ]
-        },
-        "readonly": true,
-        "access": "public",
-        "name": "parentId",
-        "longname": "Thread#parentId",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "access": "private",
+    "name": "Thread",
+    "longname": "Thread.Thread",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n   * The ID of the member who created this thread.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1316, 1371],
+      "filename": "Thread.js",
+      "lineno": 46,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000066",
+        "name": "Thread#ownerId",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
     },
-    {
-        "comment": "/**\n   * The text channel that this thread belongs to.\n   * @type {TextChannel?}\n   * @readonly\n   * @public\n   */",
-        "meta": {
-            "range": [
-                1855,
-                1933
-            ],
-            "filename": "Thread.js",
-            "lineno": 76,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000096",
-                "name": "Thread#parent",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "description": "The text channel that this thread belongs to.",
-        "type": {
-            "names": [
-                "TextChannel"
-            ]
-        },
-        "nullable": true,
-        "readonly": true,
-        "access": "public",
-        "name": "parent",
-        "longname": "Thread#parent",
-        "kind": "member",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "description": "The ID of the member who created this thread.",
+    "type": {
+      "names": ["String"]
     },
-    {
-        "comment": "/**\n   * @method\n   * @public\n   */",
-        "meta": {
-            "range": [
-                1975,
-                2026
-            ],
-            "filename": "Thread.js",
-            "lineno": 84,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000104",
-                "name": "Thread#toString",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "kind": "function",
-        "access": "public",
-        "name": "toString",
-        "longname": "Thread#toString",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "readonly": true,
+    "access": "public",
+    "name": "ownerId",
+    "longname": "Thread#ownerId",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The member who created this thread.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1477, 1552],
+      "filename": "Thread.js",
+      "lineno": 56,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000077",
+        "name": "Thread#owner",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
     },
-    {
-        "comment": "/**\n   * @method\n   * @public\n   */",
-        "meta": {
-            "range": [
-                2068,
-                2189
-            ],
-            "filename": "Thread.js",
-            "lineno": 92,
-            "columnno": 2,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000115",
-                "name": "Thread#toJSON",
-                "type": "MethodDefinition",
-                "paramnames": []
-            },
-            "vars": {
-                "": null
-            }
-        },
-        "kind": "function",
-        "access": "public",
-        "name": "toJSON",
-        "longname": "Thread#toJSON",
-        "memberof": "Thread",
-        "scope": "instance",
-        "params": []
+    "description": "The member who created this thread.",
+    "type": {
+      "names": ["Member"]
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                2123,
-                2145
-            ],
-            "filename": "Thread.js",
-            "lineno": 95,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000126",
-                "name": "owner_id",
-                "type": "MemberExpression",
-                "value": "this.ownerId"
-            }
-        },
-        "undocumented": true,
+    "nullable": true,
+    "readonly": true,
+    "access": "public",
+    "name": "owner",
+    "longname": "Thread#owner",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The ID of the text channel that this thread belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1677, 1734],
+      "filename": "Thread.js",
+      "lineno": 66,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000085",
+        "name": "Thread#parentId",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The ID of the text channel that this thread belongs to.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "parentId",
+    "longname": "Thread#parentId",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The text channel that this thread belongs to.\n   * @type {TextChannel?}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1855, 1933],
+      "filename": "Thread.js",
+      "lineno": 76,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000096",
+        "name": "Thread#parent",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The text channel that this thread belongs to.",
+    "type": {
+      "names": ["TextChannel"]
+    },
+    "nullable": true,
+    "readonly": true,
+    "access": "public",
+    "name": "parent",
+    "longname": "Thread#parent",
+    "kind": "member",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [1975, 2026],
+      "filename": "Thread.js",
+      "lineno": 84,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000104",
+        "name": "Thread#toString",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "toString",
+    "longname": "Thread#toString",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [2068, 2189],
+      "filename": "Thread.js",
+      "lineno": 92,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000115",
+        "name": "Thread#toJSON",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "toJSON",
+    "longname": "Thread#toJSON",
+    "memberof": "Thread",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2123, 2145],
+      "filename": "Thread.js",
+      "lineno": 95,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000126",
         "name": "owner_id",
-        "longname": "owner_id",
-        "kind": "member",
-        "scope": "global"
+        "type": "MemberExpression",
+        "value": "this.ownerId"
+      }
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                2153,
-                2177
-            ],
-            "filename": "Thread.js",
-            "lineno": 96,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000130",
-                "name": "parent_id",
-                "type": "MemberExpression",
-                "value": "this.parentId"
-            }
-        },
-        "undocumented": true,
+    "undocumented": true,
+    "name": "owner_id",
+    "longname": "owner_id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2153, 2177],
+      "filename": "Thread.js",
+      "lineno": 96,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000130",
         "name": "parent_id",
-        "longname": "parent_id",
-        "kind": "member",
-        "scope": "global"
+        "type": "MemberExpression",
+        "value": "this.parentId"
+      }
     },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                2193,
-                2216
-            ],
-            "filename": "Thread.js",
-            "lineno": 101,
-            "columnno": 0,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000135",
-                "name": "module.exports",
-                "type": "Identifier",
-                "value": "Thread",
-                "paramnames": []
-            }
-        },
-        "undocumented": true,
-        "name": "exports",
-        "longname": "module.exports",
-        "kind": "member",
-        "memberof": "module",
-        "scope": "static"
+    "undocumented": true,
+    "name": "parent_id",
+    "longname": "parent_id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2193, 2216],
+      "filename": "Thread.js",
+      "lineno": 101,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000135",
+        "name": "module.exports",
+        "type": "Identifier",
+        "value": "Thread",
+        "paramnames": []
+      }
     },
-    {
-        "kind": "package",
-        "longname": "package:undefined",
-        "files": [
-            "/home/runner/work/gluon/gluon/src/structures/Thread.js"
-        ]
-    }
+    "undocumented": true,
+    "name": "exports",
+    "longname": "module.exports",
+    "kind": "member",
+    "memberof": "module",
+    "scope": "static"
+  },
+  {
+    "kind": "package",
+    "longname": "package:undefined",
+    "files": ["/home/runner/work/gluon/gluon/src/structures/Thread.js"]
+  }
 ]

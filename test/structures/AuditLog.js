@@ -74,7 +74,7 @@ describe("AuditLog", function () {
       const client = {};
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
       expect(auditLog.channelId).to.equal(
-        TEST_DATA.AUDIT_LOG.options.channel_id
+        TEST_DATA.AUDIT_LOG.options.channel_id,
       );
     });
   });
@@ -100,7 +100,7 @@ describe("AuditLog", function () {
       const client = {};
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
       expect(auditLog.deleteMemberDays).to.equal(
-        TEST_DATA.AUDIT_LOG.delete_member_days
+        TEST_DATA.AUDIT_LOG.delete_member_days,
       );
     });
   });
@@ -110,7 +110,7 @@ describe("AuditLog", function () {
       const client = {};
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
       expect(auditLog.membersRemoved).to.equal(
-        TEST_DATA.AUDIT_LOG.members_removed
+        TEST_DATA.AUDIT_LOG.members_removed,
       );
     });
   });
@@ -152,7 +152,7 @@ describe("AuditLog", function () {
       const client = {};
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
       expect(auditLog.toString()).to.equal(
-        `<Audit Log Entry: ${TEST_DATA.AUDIT_LOG.id}>`
+        `<Audit Log Entry: ${TEST_DATA.AUDIT_LOG.id}>`,
       );
     });
   });
@@ -169,13 +169,13 @@ describe("AuditLog", function () {
         target_id: TEST_DATA.AUDIT_LOG.target_id,
         executor_id: TEST_DATA.AUDIT_LOG.executor_id,
         options: {
-            channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
-            count: TEST_DATA.AUDIT_LOG.count,
-            delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
-            members_removed: TEST_DATA.AUDIT_LOG.members_removed,
-            id: TEST_DATA.AUDIT_LOG.options.id,
-            type: TEST_DATA.AUDIT_LOG.options.type,
-            status: TEST_DATA.AUDIT_LOG.status,
+          channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
+          count: TEST_DATA.AUDIT_LOG.count,
+          delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
+          members_removed: TEST_DATA.AUDIT_LOG.members_removed,
+          id: TEST_DATA.AUDIT_LOG.options.id,
+          type: TEST_DATA.AUDIT_LOG.options.type,
+          status: TEST_DATA.AUDIT_LOG.status,
         },
         changes: TEST_DATA.AUDIT_LOG.changes,
       });

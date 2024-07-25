@@ -68,9 +68,9 @@ class ButtonClick extends Interaction {
     return `<ButtonClick: ${this.customId}>`;
   }
 
-  /** 
+  /**
    * @method
-   * @override 
+   * @override
    */
   toJSON() {
     return {

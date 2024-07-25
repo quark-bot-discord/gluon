@@ -59,7 +59,6 @@ class GuildScheduledEventManager {
    * @throws {TypeError | Error}
    */
   async fetch(scheduled_event_id) {
-
     if (typeof scheduled_event_id !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 

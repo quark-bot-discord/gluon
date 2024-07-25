@@ -38,7 +38,7 @@ class WS {
     sessionId = null,
     sequence = null,
     resumeGatewayUrl = null,
-    softRestartFunction = null
+    softRestartFunction = null,
   ) {
     this.#token = token;
     this.shard = shard;
@@ -95,7 +95,7 @@ class WS {
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
-            } @ ${this.time()} => ERROR at ${data.t}: ${error}`
+            } @ ${this.time()} => ERROR at ${data.t}: ${error}`,
           );
           console.error(error);
         }
@@ -108,7 +108,7 @@ class WS {
           "debug",
           `${this.libName} ${
             this.shardNorminal
-          } @ ${this.time()} => Gateway requested heartbeat`
+          } @ ${this.time()} => Gateway requested heartbeat`,
         );
 
         this.#heartbeat(true);
@@ -122,7 +122,7 @@ class WS {
           "debug",
           `${this.libName} ${
             this.shardWarning
-          } @ ${this.time()} => Received reconnect`
+          } @ ${this.time()} => Received reconnect`,
         );
 
         // reconnect to websocket with session id
@@ -137,14 +137,17 @@ class WS {
           "debug",
           `${this.libName} ${
             this.shardWarning
-          } @ ${this.time()} => INVALID SESSION`
+          } @ ${this.time()} => INVALID SESSION`,
         );
 
         if (data.d != false) this.#resume();
         else
-          setTimeout(() => {
-            this.#identify();
-          }, (Math.floor(Math.random() * 6) + 1) * 1000);
+          setTimeout(
+            () => {
+              this.#identify();
+            },
+            (Math.floor(Math.random() * 6) + 1) * 1000,
+          );
 
         break;
       }
@@ -155,7 +158,7 @@ class WS {
 
         this.#_client.emit(
           "debug",
-          `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`
+          `${this.libName} ${this.shardNorminal} @ ${this.time()} => HELLO`,
         );
 
         if (this.#resuming != true) {
@@ -174,7 +177,7 @@ class WS {
           "debug",
           `${this.libName} ${
             this.shardNorminal
-          } @ ${this.time()} => Heartbeat acknowledged`
+          } @ ${this.time()} => Heartbeat acknowledged`,
         );
 
         break;
@@ -185,7 +188,7 @@ class WS {
           "debug",
           `${this.libName} ${
             this.shardCatastrophic
-          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`
+          } @ ${this.time()} => ERROR Unknown opcode: ${data.op}`,
         );
 
         break;
@@ -214,7 +217,7 @@ class WS {
       "debug",
       `${this.libName} ${
         this.shardNorminal
-      } @ ${this.time()} => Sending heartbeat...`
+      } @ ${this.time()} => Sending heartbeat...`,
     );
 
     if (response != true) this.#waitingForHeartbeatACK = true;
@@ -229,7 +232,7 @@ class WS {
             "debug",
             `${this.libName} ${
               this.shardCatastrophic
-            } @ ${this.time()} => Heartbeat ACK not received`
+            } @ ${this.time()} => Heartbeat ACK not received`,
           );
           this.#shutDownWebsocket(4000);
         }
@@ -243,7 +246,7 @@ class WS {
         this.shardNorminal
       } @ ${this.time()} => IDENTIFY with TOKEN: "${this.#token}", SHARD: "${
         this.shard
-      }" and INTENTS: "${this.#intents}"`
+      }" and INTENTS: "${this.#intents}"`,
     );
 
     this.#ws.send(_identify(this.#token, this.shard, this.#intents));
@@ -254,7 +257,7 @@ class WS {
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Attempting reconnect...`
+      } @ ${this.time()} => Attempting reconnect...`,
     );
 
     this.#resuming = true;
@@ -265,7 +268,7 @@ class WS {
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Shard reconnecting`
+      } @ ${this.time()} => Shard reconnecting`,
     );
   }
 
@@ -280,7 +283,7 @@ class WS {
         this.shardWarning
       } @ ${this.time()} => RESUMING with token ${this.#token}, session id ${
         this.#_sessionId
-      } and sequence ${this.#_s}`
+      } and sequence ${this.#_s}`,
     );
 
     this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
@@ -297,7 +300,7 @@ class WS {
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Adding websocket listeners`
+      } @ ${this.time()} => Adding websocket listeners`,
     );
 
     this.zlib = new ZlibSync.Inflate({
@@ -309,7 +312,7 @@ class WS {
         "debug",
         `${this.libName} ${
           this.shardNorminal
-        } @ ${this.time()} => Websocket opened`
+        } @ ${this.time()} => Websocket opened`,
       );
 
       clearTimeout(this.#monitorOpened);
@@ -320,7 +323,7 @@ class WS {
         "debug",
         `${this.libName} ${
           data < 2000 ? this.shardNorminal : this.shardCatastrophic
-        } @ ${this.time()} => Websocket closed with code ${data}`
+        } @ ${this.time()} => Websocket closed with code ${data}`,
       );
 
       this.#ws.removeAllListeners();
@@ -345,12 +348,14 @@ class WS {
             "debug",
             `${this.libName} ${this.shardWarning} @ ${this.time()} => Attempt ${
               this.#retries
-            } at re-opening websocket`
+            } at re-opening websocket`,
           );
 
           this.#retries++;
 
-          this.#ws = new WebSocket(generateWebsocketURL(this.#resumeGatewayUrl));
+          this.#ws = new WebSocket(
+            generateWebsocketURL(this.#resumeGatewayUrl),
+          );
 
           this.#monitorOpened = setTimeout(() => {
             this.#_client.emit(
@@ -359,7 +364,7 @@ class WS {
                 this.shardWarning
               } @ ${this.time()} => Attempt ${
                 this.#retries
-              } failed to re-open websocket, shutting down websocket with code ${data}`
+              } failed to re-open websocket, shutting down websocket with code ${data}`,
             );
 
             this.#shutDownWebsocket(data);
@@ -390,7 +395,7 @@ class WS {
         "debug",
         `${this.libName} ${
           this.shardCatastrophic
-        } @ ${this.time()} => ${data?.stack?.toString()}`
+        } @ ${this.time()} => ${data?.stack?.toString()}`,
       );
 
       this.#shutDownWebsocket();
@@ -402,7 +407,7 @@ class WS {
       "debug",
       `${this.libName} ${
         this.shardWarning
-      } @ ${this.time()} => Closing websocket...`
+      } @ ${this.time()} => Closing websocket...`,
     );
 
     this.#ws.close(code);
@@ -412,7 +417,7 @@ class WS {
         "debug",
         `${this.libName} ${
           this.shardCatastrophic
-        } @ ${this.time()} => Terminating websocket`
+        } @ ${this.time()} => Terminating websocket`,
       );
       this.#ws.terminate();
       setTimeout(() => {

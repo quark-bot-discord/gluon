@@ -37,7 +37,7 @@ describe("MessageComponents", function () {
       const messageComponents = new MessageComponents();
       expect(() => messageComponents.addActionRow()).to.throw(
         TypeError,
-        "GLUON: Action row must be provided."
+        "GLUON: Action row must be provided.",
       );
     });
 
@@ -58,7 +58,7 @@ describe("MessageComponents", function () {
       const actionRow = new ActionRow().addComponent(button);
       expect(() => messageComponents.addActionRow(actionRow)).to.throw(
         RangeError,
-        `GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`
+        `GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`,
       );
     });
   });

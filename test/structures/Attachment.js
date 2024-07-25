@@ -22,8 +22,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(attachment).to.have.property("id");
       expect(attachment).to.have.property("name");
       expect(attachment).to.have.property("size");
@@ -39,8 +43,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(attachment.id).to.equal(TEST_DATA.ATTACHMENT.id);
     });
   });
@@ -51,8 +59,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(attachment.name).to.equal(TEST_DATA.ATTACHMENT.filename);
     });
   });
@@ -63,8 +75,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(attachment.size).to.equal(TEST_DATA.ATTACHMENT.size);
     });
   });
@@ -75,8 +91,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(`${attachment.url}&`).to.equal(TEST_DATA.ATTACHMENT.url);
     });
   });
@@ -87,8 +107,12 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
       expect(attachment.toJSON()).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
         filename: TEST_DATA.ATTACHMENT.filename,
@@ -104,13 +128,37 @@ describe("Attachment", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, { guild_id: TEST_DATA.GUILD_ID });
-      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, { _parentStructure: channel });
-      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).id).to.equal(attachment.id);
-      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).name).to.equal(attachment.name);
-      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).size).to.equal(attachment.size);
-      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).url).to.equal(attachment.url);
-      expect(new Attachment(client, attachment.toJSON(), { _parentStructure: channel }).toJSON()).to.deep.equal(attachment.toJSON());
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        _parentStructure: channel,
+      });
+      expect(
+        new Attachment(client, attachment.toJSON(), {
+          _parentStructure: channel,
+        }).id,
+      ).to.equal(attachment.id);
+      expect(
+        new Attachment(client, attachment.toJSON(), {
+          _parentStructure: channel,
+        }).name,
+      ).to.equal(attachment.name);
+      expect(
+        new Attachment(client, attachment.toJSON(), {
+          _parentStructure: channel,
+        }).size,
+      ).to.equal(attachment.size);
+      expect(
+        new Attachment(client, attachment.toJSON(), {
+          _parentStructure: channel,
+        }).url,
+      ).to.equal(attachment.url);
+      expect(
+        new Attachment(client, attachment.toJSON(), {
+          _parentStructure: channel,
+        }).toJSON(),
+      ).to.deep.equal(attachment.toJSON());
     });
   });
 });

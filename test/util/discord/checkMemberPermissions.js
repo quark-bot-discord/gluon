@@ -19,19 +19,19 @@ describe("CheckMemberPermissions", function () {
     it("should throw an error if no member roles are provided", function () {
       expect(() => checkMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Member roles must be provided."
+        "GLUON: Member roles must be provided.",
       );
     });
     it("should throw an error if an array is not provided", function () {
       expect(() => checkMemberPermissions("test")).to.throw(
         TypeError,
-        "GLUON: Member roles must be an array."
+        "GLUON: Member roles must be an array.",
       );
     });
     it("should throw an error if an array of roles is not provided", function () {
       expect(() => checkMemberPermissions(["test"])).to.throw(
         TypeError,
-        "GLUON: Member roles must be an array of Role instances."
+        "GLUON: Member roles must be an array of Role instances.",
       );
     });
   });
@@ -46,10 +46,10 @@ describe("CheckMemberPermissions", function () {
             id: TEST_DATA.ROLE_ID,
             permissions: combinePermissions(
               PERMISSIONS.ADD_REACTIONS,
-              PERMISSIONS.BAN_MEMBERS
+              PERMISSIONS.BAN_MEMBERS,
             ),
           },
-          { guild_id: TEST_DATA.GUILD_ID }
+          { guild_id: TEST_DATA.GUILD_ID },
         ),
         new Role(
           client,
@@ -58,10 +58,10 @@ describe("CheckMemberPermissions", function () {
             permissions: combinePermissions(
               PERMISSIONS.ATTACH_FILES,
               PERMISSIONS.CHANGE_NICKNAME,
-              PERMISSIONS.ADD_REACTIONS
+              PERMISSIONS.ADD_REACTIONS,
             ),
           },
-          { guild_id: TEST_DATA.GUILD_ID }
+          { guild_id: TEST_DATA.GUILD_ID },
         ),
         new Role(
           client,
@@ -69,7 +69,7 @@ describe("CheckMemberPermissions", function () {
             id: TEST_DATA.ROLE_ID,
             permissions: combinePermissions(PERMISSIONS.BAN_MEMBERS),
           },
-          { guild_id: TEST_DATA.GUILD_ID }
+          { guild_id: TEST_DATA.GUILD_ID },
         ),
       ];
       const calculatedPermissions = checkMemberPermissions(roles);
@@ -78,8 +78,8 @@ describe("CheckMemberPermissions", function () {
           PERMISSIONS.ADD_REACTIONS,
           PERMISSIONS.BAN_MEMBERS,
           PERMISSIONS.ATTACH_FILES,
-          PERMISSIONS.CHANGE_NICKNAME
-        )
+          PERMISSIONS.CHANGE_NICKNAME,
+        ),
       );
     });
   });

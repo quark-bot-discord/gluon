@@ -19,7 +19,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
 
   if (!id || !channelId || !guildId)
     throw new TypeError(
-      "GLUON: Message must have an id, channel id and guild id."
+      "GLUON: Message must have an id, channel id and guild id.",
     );
 
   const key = hash
@@ -28,7 +28,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${String(id)}_${String(channelId)}_${String(guildId)}`)
-        .digest("hex")}satoshiNakamoto`
+        .digest("hex")}satoshiNakamoto`,
     )
     .digest("hex")
     .slice(0, 32);
@@ -39,7 +39,7 @@ function decryptMessage(client, encryptedMessage, id, channelId, guildId) {
       `${hash
         .sha512()
         .update(`${String(id)}_${String(channelId)}_${String(guildId)}`)
-        .digest("hex")}${String(id)}`
+        .digest("hex")}${String(id)}`,
     )
     .digest("hex")
     .slice(0, 16);

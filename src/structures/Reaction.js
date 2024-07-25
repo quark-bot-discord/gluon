@@ -130,7 +130,7 @@ class Reaction {
   get initialReactor() {
     return this.#initial_reactor ? String(this.#initial_reactor) : null;
   }
-  
+
   /**
    * @method
    * @public

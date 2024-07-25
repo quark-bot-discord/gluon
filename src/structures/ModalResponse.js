@@ -50,7 +50,7 @@ class ModalResponse extends Interaction {
   get values() {
     return this.#values;
   }
-  
+
   /**
    * @method
    * @public
@@ -70,7 +70,6 @@ class ModalResponse extends Interaction {
       values: this.values,
     };
   }
-
 }
 
 module.exports = ModalResponse;

@@ -64,7 +64,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => RESUMED`
+      } => RESUMED`,
     );
 
     this.#_client.emit(EVENTS.RESUMED);
@@ -77,7 +77,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_CREATE ${data.id}`
+      } => GUILD_CREATE ${data.id}`,
     );
 
     if (
@@ -103,7 +103,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_UPDATE ${data.id}`
+      } => GUILD_UPDATE ${data.id}`,
     );
 
     const oldGuild = this.#_client.guilds.get(data.id);
@@ -117,7 +117,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_DELETE ${data.id}`
+      } => GUILD_DELETE ${data.id}`,
     );
 
     if (data.unavailable != true) {
@@ -136,10 +136,12 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_ROLE_CREATE ${data.guild_id}`
+      } => GUILD_ROLE_CREATE ${data.guild_id}`,
     );
 
-    const role = new Role(this.#_client, data.role, { guild_id: data.guild_id });
+    const role = new Role(this.#_client, data.role, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(EVENTS.GUILD_ROLE_CREATE, role);
   }
@@ -149,13 +151,15 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_ROLE_UPDATE ${data.guild_id}`
+      } => GUILD_ROLE_UPDATE ${data.guild_id}`,
     );
 
     const oldRole = this.#_client.guilds
       .get(data.guild_id)
       ?.roles.get(data.role.id);
-    const newRole = new Role(this.#_client, data.role, { guild_id: data.guild_id });
+    const newRole = new Role(this.#_client, data.role, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
   }
@@ -165,7 +169,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_ROLE_DELETE ${data.guild_id}`
+      } => GUILD_ROLE_DELETE ${data.guild_id}`,
     );
 
     const role = this.#_client.guilds
@@ -181,7 +185,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => CHANNEL_CREATE ${data.guild_id}`
+      } => CHANNEL_CREATE ${data.guild_id}`,
     );
 
     const channel = cacheChannel(this.#_client, data, data.guild_id);
@@ -194,7 +198,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => CHANNEL_UPDATE ${data.guild_id}`
+      } => CHANNEL_UPDATE ${data.guild_id}`,
     );
 
     const oldChannel = this.#_client.guilds
@@ -210,7 +214,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => CHANNEL_DELETE ${data.guild_id}`
+      } => CHANNEL_DELETE ${data.guild_id}`,
     );
 
     const channel = this.#_client.guilds
@@ -226,7 +230,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => CHANNEL_PINS_UPDATE ${data.guild_id}`
+      } => CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.CHANNEL_PINS_UPDATE, data);
@@ -237,7 +241,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => THREAD_CREATE ${data.guild_id}`
+      } => THREAD_CREATE ${data.guild_id}`,
     );
 
     const thread = new Thread(this.#_client, data, data.guild_id);
@@ -250,7 +254,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => THREAD_UPDATE ${data.guild_id}`
+      } => THREAD_UPDATE ${data.guild_id}`,
     );
 
     const oldThread = this.#_client.guilds
@@ -266,7 +270,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => THREAD_DELETE ${data.guild_id}`
+      } => THREAD_DELETE ${data.guild_id}`,
     );
 
     const thread = this.#_client.guilds
@@ -282,7 +286,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => THREAD_LIST_SYNC ${data.guild_id}`
+      } => THREAD_LIST_SYNC ${data.guild_id}`,
     );
 
     const threads = [];
@@ -297,7 +301,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_MEMBER_ADD ${data.guild_id}`
+      } => GUILD_MEMBER_ADD ${data.guild_id}`,
     );
 
     const member = new Member(this.#_client, data, {
@@ -316,7 +320,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_MEMBER_REMOVE ${data.guild_id}`
+      } => GUILD_MEMBER_REMOVE ${data.guild_id}`,
     );
 
     getMember(this.#_client, data.guild_id, data.user.id, true).then(
@@ -334,7 +338,7 @@ class EventHandler {
         member.guild.member_count -= 1;
 
         this.#_client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
-      }
+      },
     );
   }
 
@@ -343,7 +347,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_MEMBER_UPDATE ${data.guild_id}`
+      } => GUILD_MEMBER_UPDATE ${data.guild_id}`,
     );
 
     getMember(this.#_client, data.guild_id, data.user.id).then((oldMember) => {
@@ -362,7 +366,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_MEMBERS_CHUNK ${data.guild_id}`
+      } => GUILD_MEMBERS_CHUNK ${data.guild_id}`,
     );
 
     for (let i = 0; i < data.members.length; i++)
@@ -378,7 +382,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_BAN_ADD ${data.guild_id}`
+      } => GUILD_BAN_ADD ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
@@ -393,7 +397,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_BAN_REMOVE ${data.guild_id}`
+      } => GUILD_BAN_REMOVE ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
@@ -408,7 +412,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => INVITE_CREATE ${data.guild_id}`
+      } => INVITE_CREATE ${data.guild_id}`,
     );
 
     const invite = new Invite(this.#_client, data, { guild_id: data.guild_id });
@@ -421,7 +425,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => INVITE_DELETE ${data.guild_id}`
+      } => INVITE_DELETE ${data.guild_id}`,
     );
 
     const guild = this.#_client.guilds.get(data.guild_id);
@@ -438,7 +442,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => VOICE_STATE_UPDATE ${data.guild_id}`
+      } => VOICE_STATE_UPDATE ${data.guild_id}`,
     );
 
     const oldVoiceState =
@@ -462,7 +466,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`
+      } => VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
@@ -473,7 +477,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_CREATE ${data.guild_id}`
+      } => MESSAGE_CREATE ${data.guild_id}`,
     );
 
     const message = new Message(this.#_client, data, {
@@ -489,7 +493,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_UPDATE ${data.guild_id}`
+      } => MESSAGE_UPDATE ${data.guild_id}`,
     );
 
     getMessage(this.#_client, data.guild_id, data.channel_id, data.id).then(
@@ -500,7 +504,7 @@ class EventHandler {
         });
 
         this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
-      }
+      },
     );
   }
 
@@ -509,7 +513,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_DELETE ${data.guild_id}`
+      } => MESSAGE_DELETE ${data.guild_id}`,
     );
 
     getMessage(
@@ -517,7 +521,7 @@ class EventHandler {
       data.guild_id,
       data.channel_id,
       data.id,
-      true
+      true,
     ).then((message) => {
       this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
     });
@@ -528,7 +532,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_DELETE_BULK ${data.guild_id}`
+      } => MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
 
     const messages = [];
@@ -539,15 +543,15 @@ class EventHandler {
           data.guild_id,
           data.channel_id,
           data.ids[i],
-          true
-        )
+          true,
+        ),
       );
 
     Promise.all(messages).then((m) =>
       this.#_client.emit(
         EVENTS.MESSAGE_DELETE_BULK,
-        m.filter((a) => a != null)
-      )
+        m.filter((a) => a != null),
+      ),
     );
   }
 
@@ -556,7 +560,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => INTERACTION_CREATE ${data.guild_id}`
+      } => INTERACTION_CREATE ${data.guild_id}`,
     );
 
     if (!data.guild_id) return;
@@ -612,7 +616,7 @@ class EventHandler {
 
         this.#_client.emit(
           EVENTS.SLASH_COMMAND_AUTOCOMPLETE,
-          commandInteraction
+          commandInteraction,
         );
 
         break;
@@ -628,7 +632,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`
+      } => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
     );
 
     const auditLogEntry = new AuditLog(this.#_client, data);
@@ -641,7 +645,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => ENTITLEMENT_CREATE ${data.user_id}`
+      } => ENTITLEMENT_CREATE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_CREATE, data);
@@ -652,7 +656,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => ENTITLEMENT_UPDATE ${data.user_id}`
+      } => ENTITLEMENT_UPDATE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
@@ -663,7 +667,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => ENTITLEMENT_DELETE ${data.user_id}`
+      } => ENTITLEMENT_DELETE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_DELETE, data);
@@ -674,7 +678,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`
+      } => GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
     );
 
     const scheduledEvent = new ScheduledEvent(this.#_client, data);
@@ -687,7 +691,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`
+      } => GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
     );
 
     const oldScheduledEvent =
@@ -698,7 +702,7 @@ class EventHandler {
     this.#_client.emit(
       EVENTS.GUILD_SCHEDULED_EVENT_UPDATE,
       oldScheduledEvent,
-      newScheduledEvent
+      newScheduledEvent,
     );
   }
 
@@ -707,7 +711,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`
+      } => GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -723,7 +727,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`
+      } => GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -749,7 +753,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`
+      } => GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -775,7 +779,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => AUTO_MODERATION_RULE_CREATE ${data.guild_id}`
+      } => AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
@@ -786,7 +790,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`
+      } => AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
@@ -797,7 +801,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => AUTO_MODERATION_RULE_DELETE ${data.guild_id}`
+      } => AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
@@ -808,7 +812,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`
+      } => AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
@@ -819,7 +823,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => GUILD_EMOJIS_UPDATE ${data.guild_id}`
+      } => GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
     const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis.cache;
@@ -883,17 +887,17 @@ class EventHandler {
 
       for (let i = 0; i < oldEmojisArray.length; i++) {
         const correspondingNewEmojiRaw = data.emojis.find(
-          (e) => e.id == oldEmojisArray[i].id
+          (e) => e.id == oldEmojisArray[i].id,
         );
         const correspondingNewEmoji = new Emoji(
           this.#_client,
           correspondingNewEmojiRaw,
-          { guild_id: data.guild_id }
+          { guild_id: data.guild_id },
         );
 
         const differences = deepCompare(
           oldEmojisArray[i],
-          correspondingNewEmoji
+          correspondingNewEmoji,
         );
 
         if (differences.length != 0) {
@@ -912,7 +916,7 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => WEBHOOKS_UPDATE ${data.guild_id}`
+      } => WEBHOOKS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.WEBHOOKS_UPDATE, data);
@@ -923,14 +927,14 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_POLL_VOTE_ADD ${data.guild_id}`
+      } => MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
 
     getMessage(
       this.#_client,
       data.guild_id,
       data.channel_id,
-      data.message_id
+      data.message_id,
     ).then((message) => {
       if (!message) return;
 
@@ -945,14 +949,14 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`
+      } => MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
 
     getMessage(
       this.#_client,
       data.guild_id,
       data.channel_id,
-      data.message_id
+      data.message_id,
     ).then((message) => {
       if (!message) return;
 
@@ -967,21 +971,21 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_REACTION_ADD ${data.guild_id}`
+      } => MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
 
     getMessage(
       this.#_client,
       data.guild_id,
       data.channel_id,
-      data.message_id
+      data.message_id,
     ).then((message) => {
       if (!message) return;
 
       message.reactions.addReaction(
         data.user_id,
         data.emoji.id ? data.emoji.id : data.emoji.name,
-        data
+        data,
       );
     });
 
@@ -999,20 +1003,20 @@ class EventHandler {
       "debug",
       `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
         this.#ws.time
-      } => MESSAGE_REACTION_REMOVE ${data.guild_id}`
+      } => MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
 
     getMessage(
       this.#_client,
       data.guild_id,
       data.channel_id,
-      data.message_id
+      data.message_id,
     ).then((message) => {
       if (!message) return;
 
       message.reactions.removeReaction(
         data.user_id,
-        data.emoji.id ? data.emoji.id : data.emoji.name
+        data.emoji.id ? data.emoji.id : data.emoji.name,
       );
     });
 

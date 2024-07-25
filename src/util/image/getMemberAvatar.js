@@ -10,7 +10,8 @@ const { CDN_BASE_URL } = require("../../constants");
 function getMemberAvatar(id, guild_id, hash) {
   if (!id) throw new TypeError("GLUON: Member id must be provided.");
   if (!guild_id) throw new TypeError("GLUON: Guild id must be provided.");
-  if (hash && typeof hash !== "string") throw new TypeError("GLUON: Member avatar hash must be a string.");
+  if (hash && typeof hash !== "string")
+    throw new TypeError("GLUON: Member avatar hash must be a string.");
   return hash
     ? `${CDN_BASE_URL}/guilds/${String(guild_id)}/users/${String(id)}/avatars/${hash}.${
         hash.startsWith("a_") ? "gif" : "png"

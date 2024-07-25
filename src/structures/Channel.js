@@ -157,18 +157,20 @@ class Channel {
    */
   async send(
     content,
-    { components, files, embeds, suppressMentions = false } = {}
+    { components, files, embeds, suppressMentions = false } = {},
   ) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.SEND_MESSAGES
+        PERMISSIONS.SEND_MESSAGES,
       )
     )
       return null;
 
     if (!content && !embeds && !components && !files)
-      throw new Error("GLUON: No content, embeds, components or files provided.");
+      throw new Error(
+        "GLUON: No content, embeds, components or files provided.",
+      );
 
     if (typeof content !== "undefined" && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
@@ -176,13 +178,25 @@ class Channel {
     if (typeof suppressMentions !== "boolean")
       throw new TypeError("GLUON: Suppress mentions must be a boolean.");
 
-    if (typeof components !== "undefined" && !Array.isArray(components) && components.every(c => c instanceof ActionRow))
+    if (
+      typeof components !== "undefined" &&
+      !Array.isArray(components) &&
+      components.every((c) => c instanceof ActionRow)
+    )
       throw new TypeError("GLUON: Components must be an array.");
 
-    if (typeof files !== "undefined" && !Array.isArray(files) && files.every(f => f instanceof File))
+    if (
+      typeof files !== "undefined" &&
+      !Array.isArray(files) &&
+      files.every((f) => f instanceof File)
+    )
       throw new TypeError("GLUON: Files must be an array.");
 
-    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && embeds.every(e => e instanceof Embed))
+    if (
+      typeof embeds !== "undefined" &&
+      !Array.isArray(embeds) &&
+      embeds.every((e) => e instanceof Embed)
+    )
       throw new TypeError("GLUON: Embeds must be an array.");
 
     const body = {};
@@ -200,7 +214,7 @@ class Channel {
     const data = await this.#_client.request.makeRequest(
       "postCreateMessage",
       [this.id],
-      body
+      body,
     );
 
     return new Message(this.#_client, data, {

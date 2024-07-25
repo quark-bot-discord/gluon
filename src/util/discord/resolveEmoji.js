@@ -5,7 +5,6 @@
  * @returns {Object}
  */
 function resolveEmoji(text) {
-
   if (typeof text !== "string")
     throw new TypeError("GLUON: The emoji must be a string.");
 

@@ -157,7 +157,6 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   async textPrompt({ title, customId, textInputModal } = {}) {
-
     if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
 
@@ -184,7 +183,7 @@ class Interaction {
     await this.#_client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.#token],
-      body
+      body,
     );
   }
 
@@ -198,7 +197,6 @@ class Interaction {
    * @throws {Error}
    */
   async autocompleteResponse({ choices } = {}) {
-
     if (!choices || !Array.isArray(choices))
       throw new Error("GLUON: No choices provided.");
 
@@ -212,7 +210,7 @@ class Interaction {
     await this.#_client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.#token],
-      body
+      body,
     );
   }
 
@@ -225,24 +223,34 @@ class Interaction {
    * @async
    * @method
    */
-  async reply(
-    content,
-    { files, embeds, components, quiet } = {}
-  ) {
-
+  async reply(content, { files, embeds, components, quiet } = {}) {
     if (!content && !files && !embeds && !components)
-      throw new Error("GLUON: No content, files, embed, or components provided.");
+      throw new Error(
+        "GLUON: No content, files, embed, or components provided.",
+      );
 
     if (typeof content !== "undefined" && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
 
-    if (typeof files !== "undefined" && !Array.isArray(files) && !files.every((file) => file instanceof File))
+    if (
+      typeof files !== "undefined" &&
+      !Array.isArray(files) &&
+      !files.every((file) => file instanceof File)
+    )
       throw new TypeError("GLUON: Files must be an array of files.");
 
-    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && !embeds.every((embed) => embed instanceof Embed))
+    if (
+      typeof embeds !== "undefined" &&
+      !Array.isArray(embeds) &&
+      !embeds.every((embed) => embed instanceof Embed)
+    )
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
-    if (typeof components !== "undefined" && !Array.isArray(components) && !components.every((component) => component instanceof ActionRow))
+    if (
+      typeof components !== "undefined" &&
+      !Array.isArray(components) &&
+      !components.every((component) => component instanceof ActionRow)
+    )
       throw new TypeError("GLUON: Components must be an array of components.");
 
     if (typeof quiet !== "undefined" && typeof quiet !== "boolean")
@@ -264,7 +272,7 @@ class Interaction {
     await this.#_client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.#token],
-      body
+      body,
     );
 
     return this;
@@ -281,20 +289,33 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   async edit(content, { files, embeds, components } = {}) {
-
     if (!content && !files && !embeds && !components)
-      throw new Error("GLUON: No content, files, embed, or components provided.");
+      throw new Error(
+        "GLUON: No content, files, embed, or components provided.",
+      );
 
     if (typeof content !== "undefined" && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
 
-    if (typeof files !== "undefined" && !Array.isArray(files) && !files.every((file) => file instanceof File))
+    if (
+      typeof files !== "undefined" &&
+      !Array.isArray(files) &&
+      !files.every((file) => file instanceof File)
+    )
       throw new TypeError("GLUON: Files must be an array of files.");
 
-    if (typeof embeds !== "undefined" && !Array.isArray(embeds) && !embeds.every((embed) => embed instanceof Embed))
+    if (
+      typeof embeds !== "undefined" &&
+      !Array.isArray(embeds) &&
+      !embeds.every((embed) => embed instanceof Embed)
+    )
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
-    if (typeof components !== "undefined" && !Array.isArray(components) && !components.every((component) => component instanceof ActionRow))
+    if (
+      typeof components !== "undefined" &&
+      !Array.isArray(components) &&
+      !components.every((component) => component instanceof ActionRow)
+    )
       throw new TypeError("GLUON: Components must be an array of components.");
 
     const body = {};
@@ -308,7 +329,7 @@ class Interaction {
     await this.#_client.request.makeRequest(
       "patchOriginalInteractionResponse",
       [this.#_client.user.id, this.#token],
-      body
+      body,
     );
 
     return this;
@@ -329,7 +350,7 @@ class Interaction {
     await this.#_client.request.makeRequest(
       "postInteractionResponse",
       [this.id, this.#token],
-      body
+      body,
     );
 
     return this;

@@ -22,7 +22,7 @@ class File {
       throw new TypeError("GLUON: File path must be a string.");
     if (path.length > 255)
       throw new RangeError(
-        "GLUON: File path must be less than 256 characters."
+        "GLUON: File path must be less than 256 characters.",
       );
     this.#path = path;
     return this;

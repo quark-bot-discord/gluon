@@ -15,52 +15,52 @@ describe("EncryptText", function () {
   context("check invalid input", function () {
     it("should throw an error if no text is provided", function () {
       expect(() =>
-        encryptText(undefined, "a".repeat(32), "a".repeat(16))
+        encryptText(undefined, "a".repeat(32), "a".repeat(16)),
       ).to.throw(TypeError, "GLUON: Text to encrypt must be a string.");
     });
     it("should throw an error if text is not a string", function () {
       expect(() =>
-        encryptText(123456, "a".repeat(32), "a".repeat(16))
+        encryptText(123456, "a".repeat(32), "a".repeat(16)),
       ).to.throw(TypeError, "GLUON: Text to encrypt must be a string.");
     });
     it("should throw an error if no key is provided", function () {
       expect(() => encryptText("test", undefined, "a".repeat(16))).to.throw(
         TypeError,
-        "GLUON: Encryption key must be a string."
+        "GLUON: Encryption key must be a string.",
       );
     });
     it("should throw an error if key is not a string", function () {
       expect(() => encryptText("test", 123456, "a".repeat(16))).to.throw(
         TypeError,
-        "GLUON: Encryption key must be a string."
+        "GLUON: Encryption key must be a string.",
       );
     });
     it("should throw an error if no iv is provided", function () {
       expect(() => encryptText("test", "a".repeat(32), undefined)).to.throw(
         TypeError,
-        "GLUON: Encryption IV must be a string."
+        "GLUON: Encryption IV must be a string.",
       );
     });
     it("should throw an error if iv is not a string", function () {
       expect(() => encryptText("test", "a".repeat(32), 123456)).to.throw(
         TypeError,
-        "GLUON: Encryption IV must be a string."
+        "GLUON: Encryption IV must be a string.",
       );
     });
     it("should throw an error if the key is not 32 characters long", function () {
       expect(() =>
-        encryptText("test", "a".repeat(31), "a".repeat(16))
+        encryptText("test", "a".repeat(31), "a".repeat(16)),
       ).to.throw(
         RangeError,
-        "GLUON: Encryption key must be 32 characters long."
+        "GLUON: Encryption key must be 32 characters long.",
       );
     });
     it("should throw an error if the iv is not 16 characters long", function () {
       expect(() =>
-        encryptText("test", "a".repeat(32), "a".repeat(15))
+        encryptText("test", "a".repeat(32), "a".repeat(15)),
       ).to.throw(
         RangeError,
-        "GLUON: Encryption IV must be 16 characters long."
+        "GLUON: Encryption IV must be 16 characters long.",
       );
     });
   });

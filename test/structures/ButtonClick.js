@@ -99,7 +99,7 @@ describe("ButtonClick", function () {
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.member.id).to.equal(
-        TEST_DATA.BUTTON_CLICK.member.user.id
+        TEST_DATA.BUTTON_CLICK.member.user.id,
       );
     });
   });
@@ -125,7 +125,7 @@ describe("ButtonClick", function () {
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.message.id).to.equal(
-        TEST_DATA.BUTTON_CLICK.message.id
+        TEST_DATA.BUTTON_CLICK.message.id,
       );
     });
   });
@@ -151,7 +151,7 @@ describe("ButtonClick", function () {
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       expect(buttonClick.channel.id).to.equal(
-        TEST_DATA.BUTTON_CLICK.channel_id
+        TEST_DATA.BUTTON_CLICK.channel_id,
       );
     });
   });
@@ -180,37 +180,40 @@ describe("ButtonClick", function () {
         .setMaxLength(100)
         .setMinLength(1);
       await expect(
-        buttonClick.textPrompt({ customId: "test", textInputModal: textInput })
+        buttonClick.textPrompt({ customId: "test", textInputModal: textInput }),
       ).to.be.rejectedWith(TypeError, "GLUON: No title provided.");
     });
 
     it("should throw an error if no customId is provided", async function () {
-        const client = {};
-        client.guilds = new GuildManager(client);
-        const guild = new Guild(client, TEST_DATA.GUILD);
-        client.guilds.set(TEST_DATA.GUILD_ID, guild);
-        client.user = new User(client, TEST_DATA.CLIENT_USER);
-        const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
-        const textInput = new TextInput()
-            .setCustomID("test 2")
-            .setPlaceholder("Test Placeholder")
-            .setMaxLength(100)
-            .setMinLength(1);
-        await expect(
-            buttonClick.textPrompt({ title: "test", textInputModal: textInput })
-        ).to.be.rejectedWith(TypeError, "GLUON: No custom id provided.");
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const textInput = new TextInput()
+        .setCustomID("test 2")
+        .setPlaceholder("Test Placeholder")
+        .setMaxLength(100)
+        .setMinLength(1);
+      await expect(
+        buttonClick.textPrompt({ title: "test", textInputModal: textInput }),
+      ).to.be.rejectedWith(TypeError, "GLUON: No custom id provided.");
     });
 
     it("should throw an error if no textInputModal is provided", async function () {
-        const client = {};
-        client.guilds = new GuildManager(client);
-        const guild = new Guild(client, TEST_DATA.GUILD);
-        client.guilds.set(TEST_DATA.GUILD_ID, guild);
-        client.user = new User(client, TEST_DATA.CLIENT_USER);
-        const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
-        await expect(
-            buttonClick.textPrompt({ title: "test", customId: "test" })
-        ).to.be.rejectedWith(TypeError, "GLUON: Text input modal must be provided.");
+      const client = {};
+      client.guilds = new GuildManager(client);
+      const guild = new Guild(client, TEST_DATA.GUILD);
+      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      await expect(
+        buttonClick.textPrompt({ title: "test", customId: "test" }),
+      ).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Text input modal must be provided.",
+      );
     });
   });
 

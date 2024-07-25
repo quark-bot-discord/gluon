@@ -773,7 +773,9 @@ class Guild {
    * @public
    */
   get systemChannel() {
-    return this.systemChannelId ? this.channels.get(this.systemChannelId) : null;
+    return this.systemChannelId
+      ? this.channels.get(this.systemChannelId)
+      : null;
   }
 
   /**
@@ -918,7 +920,8 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
-    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
@@ -932,7 +935,7 @@ class Guild {
     await this.#_client.request.makeRequest(
       "putCreateGuildBan",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -952,7 +955,8 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
-    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
@@ -964,7 +968,7 @@ class Guild {
     await this.#_client.request.makeRequest(
       "deleteRemoveGuildBan",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -984,7 +988,8 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: KICK_MEMBERS");
 
-    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
@@ -996,7 +1001,7 @@ class Guild {
     await this.#_client.request.makeRequest(
       "deleteGuildMember",
       [this.id, user_id],
-      body
+      body,
     );
   }
 
@@ -1017,9 +1022,11 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
-    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
-    if (typeof role_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: role_id");
+    if (typeof role_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: role_id");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
@@ -1031,7 +1038,7 @@ class Guild {
     await this.#_client.request.makeRequest(
       "deleteRemoveMemberRole",
       [this.id, user_id, role_id],
-      body
+      body,
     );
   }
 
@@ -1048,7 +1055,7 @@ class Guild {
     if (
       !checkPermission(
         (await this.me()).permissions,
-        PERMISSIONS.VIEW_AUDIT_LOG
+        PERMISSIONS.VIEW_AUDIT_LOG,
       )
     )
       throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
@@ -1079,7 +1086,7 @@ class Guild {
     const data = await this.#_client.request.makeRequest(
       "getGuildAuditLog",
       [this.id],
-      body
+      body,
     );
 
     if (
@@ -1094,7 +1101,7 @@ class Guild {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e) => new AuditLog(this.#_client, e, { users: data.users })
+      (e) => new AuditLog(this.#_client, e, { users: data.users }),
     );
   }
 
@@ -1154,7 +1161,8 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
 
-    if (typeof user_id !== "string") throw new TypeError("GLUON: INVALID_TYPE: user_id");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
     const data = await this.#_client.request.makeRequest("getGuildBan", [
       this.id,

@@ -4,7 +4,6 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -12,7 +11,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.12.0'
+          node-version: "20.12.0"
       - run: CXXFLAGS=-std=c++17 npm ci
       - run: CXXFLAGS=-std=c++17 npm run build --if-present
       - run: npm test

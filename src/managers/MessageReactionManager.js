@@ -34,12 +34,12 @@ class MessageReactionManager {
     this.#cache = {};
 
     for (const [messageReaction, messageReactionValue] of Object.entries(
-      existingReactions
+      existingReactions,
     ))
       this.#cache[messageReaction] = new Reaction(
         this.#_client,
         messageReactionValue,
-        { guild_id: this.#guild.id }
+        { guild_id: this.#guild.id },
       );
   }
 
@@ -89,7 +89,7 @@ class MessageReactionManager {
 
     if (this.#cache[emoji]) {
       this.#cache[emoji]._reacted = this.#cache[emoji]._reacted.filter(
-        (userId) => userId != user_id
+        (userId) => userId != user_id,
       );
 
       if (this.#cache[emoji]._reacted.length == 0) delete this.#cache[emoji];

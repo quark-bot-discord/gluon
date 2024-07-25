@@ -31,7 +31,6 @@ class MessagePollManager {
    * @method
    */
   addVote(user_id, answer_id) {
-
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -54,7 +53,6 @@ class MessagePollManager {
    * @method
    */
   removeVote(user_id, answer_id) {
-
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 

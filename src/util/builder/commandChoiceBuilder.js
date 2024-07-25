@@ -18,15 +18,21 @@ class CommandChoice {
    * @returns {CommandChoice}
    */
   setName(name) {
+    if (!name)
+      throw new TypeError("GLUON: Command choice name must be provided.");
 
-    if (!name) throw new TypeError("GLUON: Command choice name must be provided.");
-    
-    if (typeof name != "string" && typeof name != "object") throw new TypeError("GLUON: Command choice name must be a string or an object.");
+    if (typeof name != "string" && typeof name != "object")
+      throw new TypeError(
+        "GLUON: Command choice name must be a string or an object.",
+      );
 
     if (typeof name == "object") {
-
-      if (name[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
-        throw new RangeError(`GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`);
+      if (
+        name[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME
+      )
+        throw new RangeError(
+          `GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
 
       this.name = name[this.defaultLocale];
 
@@ -34,9 +40,10 @@ class CommandChoice {
 
       this.name_localizations = name;
     } else {
-
       if (name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
-        throw new RangeError(`GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`);
+        throw new RangeError(
+          `GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
 
       this.name = name;
     }
@@ -50,11 +57,13 @@ class CommandChoice {
    * @returns {CommandChoice}
    */
   setValue(value) {
-
-    if (!value) throw new TypeError("GLUON: Command choice value must be provided.");
+    if (!value)
+      throw new TypeError("GLUON: Command choice value must be provided.");
 
     if (value.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE)
-      throw new RangeError(`GLUON: Command choice value must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE} characters.`);
+      throw new RangeError(
+        `GLUON: Command choice value must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE} characters.`,
+      );
 
     this.value = value;
 
@@ -68,7 +77,6 @@ class CommandChoice {
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
   setDefaultLocale(locale) {
-
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;

@@ -1,4 +1,4 @@
-const getAvatarUrl = require("../util/image/getAvatarUrl")
+const getAvatarUrl = require("../util/image/getAvatarUrl");
 const getTimestamp = require("../util/discord/getTimestampFromSnowflake");
 
 /**

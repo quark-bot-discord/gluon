@@ -46,7 +46,6 @@ class GuildEmojisManager {
    * @throws {TypeError | Error}
    */
   async fetch(emoji_id) {
-
     if (typeof emoji_id !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
