@@ -29,7 +29,7 @@
         "meta": {
             "range": [
                 170,
-                7890
+                8255
             ],
             "filename": "AuditLog.js",
             "lineno": 7,
@@ -547,7 +547,7 @@
         "meta": {
             "range": [
                 170,
-                7890
+                8255
             ],
             "filename": "AuditLog.js",
             "lineno": 7,
@@ -1928,7 +1928,7 @@
         "meta": {
             "range": [
                 7502,
-                7888
+                8253
             ],
             "filename": "AuditLog.js",
             "lineno": 364,
@@ -2101,7 +2101,7 @@
         "meta": {
             "range": [
                 7738,
-                7777
+                8212
             ],
             "filename": "AuditLog.js",
             "lineno": 372,
@@ -2109,6 +2109,30 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000618",
+                "name": "options",
+                "type": "ObjectExpression",
+                "value": "{\"channel_id\":\"\",\"count\":\"\",\"delete_member_days\":\"\",\"members_removed\":\"\",\"id\":\"\",\"type\":\"\",\"status\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "options",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7757,
+                7796
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 373,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000620",
                 "name": "channel_id",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2116,23 +2140,24 @@
         },
         "undocumented": true,
         "name": "channel_id",
-        "longname": "channel_id",
+        "longname": "options.channel_id",
         "kind": "member",
-        "scope": "global"
+        "memberof": "options",
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                7785,
-                7847
+                7806,
+                7868
             ],
             "filename": "AuditLog.js",
-            "lineno": 373,
-            "columnno": 6,
+            "lineno": 374,
+            "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000624",
+                "id": "astnode100000626",
                 "name": "count",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -2140,23 +2165,149 @@
         },
         "undocumented": true,
         "name": "count",
-        "longname": "count",
+        "longname": "options.count",
         "kind": "member",
-        "scope": "global"
+        "memberof": "options",
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                7855,
-                7876
+                7878,
+                7975
             ],
             "filename": "AuditLog.js",
-            "lineno": 374,
+            "lineno": 375,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000638",
+                "name": "delete_member_days",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "delete_member_days",
+        "longname": "options.delete_member_days",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7985,
+                8075
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 376,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000650",
+                "name": "members_removed",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "members_removed",
+        "longname": "options.members_removed",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8085,
+                8116
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 377,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000662",
+                "name": "id",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "options.id",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8126,
+                8161
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 378,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000668",
+                "name": "type",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "type",
+        "longname": "options.type",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8171,
+                8203
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 379,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000674",
+                "name": "status",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "status",
+        "longname": "options.status",
+        "kind": "member",
+        "memberof": "options",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8220,
+                8241
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 381,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000636",
+                "id": "astnode100000680",
                 "name": "changes",
                 "type": "MemberExpression",
                 "value": "this.changes"
@@ -2172,15 +2323,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7892,
-                7917
+                8257,
+                8282
             ],
             "filename": "AuditLog.js",
-            "lineno": 379,
+            "lineno": 386,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000641",
+                "id": "astnode100000685",
                 "name": "module.exports",
                 "type": "Identifier",
                 "value": "AuditLog",
