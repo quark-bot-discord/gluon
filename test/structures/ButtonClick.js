@@ -1,6 +1,5 @@
-import { expect, use } from "chai";
-import spies from "chai-spies";
-const chai = use(spies);
+import { expect } from "chai";
+import { spy } from "sinon";
 import { TEST_DATA } from "../../src/constants.js";
 import GuildManager from "../../src/managers/GuildManager.js";
 import Guild from "../../src/structures/Guild.js";
@@ -224,6 +223,8 @@ describe("ButtonClick", function () {
       const textInput = new TextInput()
         .setCustomID("test 2")
         .setPlaceholder("Test Placeholder")
+        .setLabel("Test Label")
+        .setStyle(1)
         .setMaxLength(100)
         .setMinLength(1);
       await expect(
@@ -237,7 +238,7 @@ describe("ButtonClick", function () {
 
     it("should call makeRequest with the correct parameters", async function () {
       const client = { request: { makeRequest: async () => {} } };
-      const request = chai.spy.on(client.request, "makeRequest");
+      const request = spy(client.request, "makeRequest");
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
@@ -246,6 +247,8 @@ describe("ButtonClick", function () {
       const textInput = new TextInput()
         .setCustomID("test 2")
         .setPlaceholder("Test Placeholder")
+        .setLabel("Test Label")
+        .setStyle(1)
         .setMaxLength(100)
         .setMinLength(1);
       await buttonClick.textPrompt({
@@ -253,9 +256,8 @@ describe("ButtonClick", function () {
         customId: "test",
         textInputModal: textInput,
       });
-      expect(request).to.have.been.called.once;
-      expect(request).to.have.been.called.with("postInteractionResponse");
-      expect(request).to.have.been.called.with([
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("postInteractionResponse", [
         TEST_DATA.BUTTON_CLICK.id,
         TEST_DATA.BUTTON_CLICK.token,
       ]);
@@ -296,16 +298,15 @@ describe("ButtonClick", function () {
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = { request: { makeRequest: async () => {} } };
-      const request = chai.spy.on(client.request, "makeRequest");
+      const request = spy(client.request, "makeRequest");
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       await buttonClick.autocompleteResponse({ choices: [] });
-      expect(request).to.have.been.called.once;
-      expect(request).to.have.been.called.with("postInteractionResponse");
-      expect(request).to.have.been.called.with([
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("postInteractionResponse", [
         TEST_DATA.BUTTON_CLICK.id,
         TEST_DATA.BUTTON_CLICK.token,
       ]);
@@ -385,16 +386,15 @@ describe("ButtonClick", function () {
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = { request: { makeRequest: async () => {} } };
-      const request = chai.spy.on(client.request, "makeRequest");
+      const request = spy(client.request, "makeRequest");
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       await buttonClick.reply("test");
-      expect(request).to.have.been.called.once;
-      expect(request).to.have.been.called.with("postInteractionResponse");
-      expect(request).to.have.been.called.with([
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("postInteractionResponse", [
         TEST_DATA.BUTTON_CLICK.id,
         TEST_DATA.BUTTON_CLICK.token,
       ]);
@@ -434,18 +434,15 @@ describe("ButtonClick", function () {
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = { request: { makeRequest: async () => {} } };
-      const request = chai.spy.on(client.request, "makeRequest");
+      const request = spy(client.request, "makeRequest");
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       await buttonClick.edit("test");
-      expect(request).to.have.been.called.once;
-      expect(request).to.have.been.called.with(
-        "patchOriginalInteractionResponse",
-      );
-      expect(request).to.have.been.called.with([
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("patchOriginalInteractionResponse", [
         TEST_DATA.CLIENT_USER.id,
         TEST_DATA.BUTTON_CLICK.token,
       ]);
@@ -464,15 +461,15 @@ describe("ButtonClick", function () {
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = { request: { makeRequest: async () => {} } };
-      const request = chai.spy.on(client.request, "makeRequest");
+      const request = spy(client.request, "makeRequest");
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
       await buttonClick.acknowledge();
-      expect(request).to.have.been.called.once;
-      expect(request).to.have.been.called.with("postInteractionResponse", [
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("postInteractionResponse", [
         TEST_DATA.BUTTON_CLICK.id,
         TEST_DATA.BUTTON_CLICK.token,
       ]);

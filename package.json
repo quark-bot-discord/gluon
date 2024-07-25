@@ -69,7 +69,9 @@
     "lint-staged": "^15.2.7",
     "mocha": "^10.6.0",
     "msw": "^2.3.4",
-    "prettier": "3.3.3"
+    "prettier": "3.3.3",
+    "sinon": "^18.0.0",
+    "sinon-chai": "^4.0.0"
   },
   "script": {
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"

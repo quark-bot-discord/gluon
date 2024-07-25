@@ -1,8 +1,10 @@
 import { PERMISSIONS } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
+import ActionRow from "../util/builder/actionRowBuilder.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Message from "./Message.js";
+import Embed from "../util/builder/embedBuilder.js";
 
 /**
  * Represents a channel within Discord.
@@ -157,7 +159,9 @@ class Channel {
    */
   async send(
     content,
-    { components, files, embeds, suppressMentions = false } = {},
+    { components, files, embeds, suppressMentions = false } = {
+      suppressMentions: false,
+    },
   ) {
     if (
       !checkPermission(
@@ -165,7 +169,7 @@ class Channel {
         PERMISSIONS.SEND_MESSAGES,
       )
     )
-      return null;
+      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
     if (!content && !embeds && !components && !files)
       throw new Error(
@@ -180,24 +184,22 @@ class Channel {
 
     if (
       typeof components !== "undefined" &&
-      !Array.isArray(components) &&
-      components.every((c) => c instanceof ActionRow)
+      (!Array.isArray(components) ||
+        !components.every((c) => c instanceof ActionRow))
     )
-      throw new TypeError("GLUON: Components must be an array.");
+      throw new TypeError("GLUON: Components must be an array of action rows.");
 
     if (
       typeof files !== "undefined" &&
-      !Array.isArray(files) &&
-      files.every((f) => f instanceof File)
+      (!Array.isArray(files) || !files.every((f) => f instanceof File))
     )
-      throw new TypeError("GLUON: Files must be an array.");
+      throw new TypeError("GLUON: Files must be an array of files.");
 
     if (
       typeof embeds !== "undefined" &&
-      !Array.isArray(embeds) &&
-      embeds.every((e) => e instanceof Embed)
+      (!Array.isArray(embeds) || !embeds.every((e) => e instanceof Embed))
     )
-      throw new TypeError("GLUON: Embeds must be an array.");
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
     const body = {};
 
@@ -214,7 +216,7 @@ class Channel {
     const data = await this.#_client.request.makeRequest(
       "postCreateMessage",
       [this.id],
-      body,
+      JSON.parse(JSON.stringify(body)),
     );
 
     return new Message(this.#_client, data, {
