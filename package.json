@@ -19,6 +19,9 @@
       "default": "./src/compiledStructures.js"
     }
   },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "mocha \"test/**/*.js\"",
     "example": "node ../example/bot"
@@ -30,9 +33,10 @@
   "author": "Starman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/quark-bot-discord/gluon/issues"
+    "url": "https://github.com/quark-bot-discord/gluon/issues",
+    "email": "quark@quark.bot"
   },
-  "homepage": "https://github.com/quark-bot-discord/gluon#readme",
+  "homepage": "https://gluon.quark.bot",
   "dependencies": {
     "aws-sdk": "^2.1651.0",
     "bufferutil": "^4.0.3",
