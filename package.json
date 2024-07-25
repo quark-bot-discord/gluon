@@ -40,18 +40,17 @@
   "homepage": "https://gluon.quark.bot",
   "dependencies": {
     "aws-sdk": "^2.1651.0",
-    "bufferutil": "^4.0.3",
-    "chalk": "^4.1.1",
+    "bufferutil": "^4.0.8",
+    "chalk": "^5.3.0",
     "erlpack": "github:quark-bot-discord/erlpack",
-    "fastq": "^1.13.0",
+    "fastq": "^1.17.1",
     "form-data": "^4.0.0",
     "hash.js": "^1.1.7",
     "mysql2": "^3.10.1",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
-    "utf-8-validate": "^5.0.5",
-    "ws": "^7.4.6",
-    "zlib-sync": "^0.1.7"
+    "ws": "^8.18.0",
+    "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
     "chai": "^5.1.1",
