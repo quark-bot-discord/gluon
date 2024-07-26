@@ -37,7 +37,7 @@ describe("GetRoleIcon", function () {
       );
     });
     it("should return the correct icon url for a gif", function () {
-      expect(getRoleIcon(TEST_DATA.GUILD_ID, "a_hash")).to.equal(
+      expect(getRoleIcon(TEST_DATA.ROLE_ID, "a_hash")).to.equal(
         `https://cdn.discordapp.com/role-icons/${TEST_DATA.ROLE_ID}/a_hash.gif`,
       );
     });
