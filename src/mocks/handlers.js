@@ -8,5 +8,5 @@ const handlers = Array.from(Object.values(endpoints)).map((endpoint) => {
     endpoint.mockResponse,
   );
 });
-console.log(handlers);
+
 export { handlers };
