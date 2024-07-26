@@ -191,7 +191,7 @@ class Emoji {
    */
   toJSON() {
     return {
-      id: this.id ?? undefined,
+      id: this.id,
       name: this.name,
       _attributes: this.#_attributes,
     };
