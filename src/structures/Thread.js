@@ -6,6 +6,7 @@ import Channel from "./Channel.js";
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
  */
 class Thread extends Channel {
+  #_client;
   #_owner_id;
   #_parent_id;
   /**
@@ -18,6 +19,13 @@ class Thread extends Channel {
    */
   constructor(client, data, guild_id, nocache = false) {
     super(client, data, { guild_id });
+
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
 
     /**
      * The ID of the user who created this thread.
@@ -33,7 +41,11 @@ class Thread extends Channel {
      */
     this.#_parent_id = BigInt(data.parent_id);
 
-    if (nocache == false && data.archived != true)
+    if (
+      nocache == false &&
+      data.archived != true &&
+      this.#_client.cacheChannels == true
+    )
       this.guild?.channels.set(data.id, this);
   }
 
