@@ -365,11 +365,11 @@ export const LIMITS = {
 };
 export const GLUON_VERSION = packageJSON.version;
 export const TEST_DATA = {
-  GUILD_ID: "123456789012345678",
+  GUILD_ID: "619434557472505857",
   TEXT_CHANNEL: {
     id: "123456789012345678",
     type: 0,
-    guild_id: "123456789012345678",
+    guild_id: "619434557472505857",
     name: "test-channel",
     position: 0,
     permission_overwrites: [],
@@ -377,13 +377,13 @@ export const TEST_DATA = {
     nsfw: false,
     topic: "test topic",
     last_message_id: null,
-    parent_id: "123456789021345678",
+    parent_id: "123456789021345978",
     last_pin_timestamp: null,
   },
   VOICE_CHANNEL: {
     id: "123456789012345678",
     type: 2,
-    guild_id: "123456789012345678",
+    guild_id: "619434557472505857",
     name: "test-channel",
     position: 0,
     permission_overwrites: [],
@@ -396,8 +396,22 @@ export const TEST_DATA = {
     bitrate: 64000,
     user_limit: 0,
   },
+  CATEGORY_CHANNEL: {
+    id: "123456789021345978",
+    type: 4,
+    guild_id: "619434557472505857",
+    name: "test-category",
+    position: 0,
+    permission_overwrites: [],
+    rate_limit_per_user: 0,
+    nsfw: false,
+    topic: null,
+    last_message_id: null,
+    parent_id: null,
+    last_pin_timestamp: null,
+  },
   GUILD: {
-    id: "123456789012345678",
+    id: "619434557472505857",
     name: "test-guild",
     icon: null,
     splash: null,
@@ -450,7 +464,7 @@ export const TEST_DATA = {
       {
         id: "123456789012345677",
         type: 0,
-        guild_id: "123456789012345678",
+        guild_id: "619434557472505857",
         name: "test-channel",
         position: 0,
         permission_overwrites: [],
@@ -464,7 +478,7 @@ export const TEST_DATA = {
       {
         id: "123456789012345679",
         type: 2,
-        guild_id: "123456789012345678",
+        guild_id: "619434557472505857",
         name: "test-channel",
         position: 0,
         permission_overwrites: [],
@@ -483,7 +497,7 @@ export const TEST_DATA = {
   THREAD: {
     id: "123456789012345678",
     type: 11,
-    guild_id: "123456789012345678",
+    guild_id: "619434557472505857",
     name: "test-thread",
     position: 0,
     permission_overwrites: [],
@@ -545,7 +559,7 @@ export const TEST_DATA = {
   FILE_NAME: "test.png",
   AUDIT_LOG: {
     id: "123456789012345678",
-    guild_id: "123456789012345678",
+    guild_id: "619434557472505857",
     user_id: "123456789012345678",
     target_id: "123456789012345678",
     executor_id: "123456789012345678",
@@ -570,7 +584,7 @@ export const TEST_DATA = {
       custom_id: "test",
       component_type: 2,
     },
-    guild_id: "123456789012345678",
+    guild_id: "619434557472505857",
     channel_id: "123456789012345677",
     member: {
       user: {
@@ -655,5 +669,15 @@ export const TEST_DATA = {
     managed: false,
     mentionable: false,
     tags: null,
+  },
+  EMOJI: {
+    id: "844240546246950922",
+    name: "bitcoin",
+    guild_id: "619434557472505857",
+    animated: true,
+  },
+  STANDARD_EMOJI: {
+    id: null,
+    name: "☦️",
   },
 };

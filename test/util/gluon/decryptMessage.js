@@ -42,7 +42,7 @@ describe("DecryptMessage", function () {
       expect(
         decryptMessage(
           client,
-          "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==",
+          "hr4VDg0Ae6dXBv91O69ASuO35+6blxocHvxw4jeEloMYFfA56D38UGaK5hofrdfZHkr6y9LAq2ODqACKrtu7A87CHrmhId6u/IWJIZwiitsG/ZN56AkmrTi4agHr6PP+O3Km/+Bf/VPSFJisdAwk2rqPe3ZpU+dGgCwMwRaHu/hLJe0ZJHUYVtUtnifDYlQecNSrQqYJ5cuB6/ywT1ndAg==",
           TEST_DATA.MESSAGE_ID,
           TEST_DATA.CHANNEL_ID,
           TEST_DATA.GUILD_ID,
@@ -54,7 +54,7 @@ describe("DecryptMessage", function () {
       client.guilds = new GuildManager(client);
       const message = decryptMessage(
         client,
-        "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==",
+        "hr4VDg0Ae6dXBv91O69ASuO35+6blxocHvxw4jeEloMYFfA56D38UGaK5hofrdfZHkr6y9LAq2ODqACKrtu7A87CHrmhId6u/IWJIZwiitsG/ZN56AkmrTi4agHr6PP+O3Km/+Bf/VPSFJisdAwk2rqPe3ZpU+dGgCwMwRaHu/hLJe0ZJHUYVtUtnifDYlQecNSrQqYJ5cuB6/ywT1ndAg==",
         TEST_DATA.MESSAGE_ID,
         TEST_DATA.CHANNEL_ID,
         TEST_DATA.GUILD_ID,
@@ -66,7 +66,7 @@ describe("DecryptMessage", function () {
       client.guilds = new GuildManager(client);
       const message = decryptMessage(
         client,
-        "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==",
+        "hr4VDg0Ae6dXBv91O69ASuO35+6blxocHvxw4jeEloMYFfA56D38UGaK5hofrdfZHkr6y9LAq2ODqACKrtu7A87CHrmhId6u/IWJIZwiitsG/ZN56AkmrTi4agHr6PP+O3Km/+Bf/VPSFJisdAwk2rqPe3ZpU+dGgCwMwRaHu/hLJe0ZJHUYVtUtnifDYlQecNSrQqYJ5cuB6/ywT1ndAg==",
         TEST_DATA.MESSAGE_ID,
         TEST_DATA.CHANNEL_ID,
         TEST_DATA.GUILD_ID,
@@ -78,7 +78,7 @@ describe("DecryptMessage", function () {
       client.guilds = new GuildManager(client);
       const message = decryptMessage(
         client,
-        "DWpQEUQcZNjJ/6gpRJCqN1vDvgDN10ySmHCO7rtZTik9rcYRQCu4/DxiWqbyLyORhBbk/KvQOZ5jAck5y4LTt8GH5BZmErqAzj6k0EWTkmZ4TuipCZGCB6tv8XMaQs49aKfZQJ1qHE5lx5dK8gRQwV8njOx9xneZ16FUX/8t1CAl54xbOna1dph5jA9JT/Cf1MJ1GX676LqOzA+cQyp7Zw==",
+        "hr4VDg0Ae6dXBv91O69ASuO35+6blxocHvxw4jeEloMYFfA56D38UGaK5hofrdfZHkr6y9LAq2ODqACKrtu7A87CHrmhId6u/IWJIZwiitsG/ZN56AkmrTi4agHr6PP+O3Km/+Bf/VPSFJisdAwk2rqPe3ZpU+dGgCwMwRaHu/hLJe0ZJHUYVtUtnifDYlQecNSrQqYJ5cuB6/ywT1ndAg==",
         TEST_DATA.MESSAGE_ID,
         TEST_DATA.CHANNEL_ID,
         TEST_DATA.GUILD_ID,
