@@ -130,31 +130,14 @@ describe("Attachment", function () {
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         _parentStructure: channel,
       });
-      expect(
-        new Attachment(client, attachment.toJSON(), {
-          _parentStructure: channel,
-        }).id,
-      ).to.equal(attachment.id);
-      expect(
-        new Attachment(client, attachment.toJSON(), {
-          _parentStructure: channel,
-        }).name,
-      ).to.equal(attachment.name);
-      expect(
-        new Attachment(client, attachment.toJSON(), {
-          _parentStructure: channel,
-        }).size,
-      ).to.equal(attachment.size);
-      expect(
-        new Attachment(client, attachment.toJSON(), {
-          _parentStructure: channel,
-        }).url,
-      ).to.equal(attachment.url);
-      expect(
-        new Attachment(client, attachment.toJSON(), {
-          _parentStructure: channel,
-        }).toJSON(),
-      ).to.deep.equal(attachment.toJSON());
+      const rebundled = new Attachment(client, attachment.toJSON(), {
+        _parentStructure: channel,
+      });
+      expect(rebundled.id).to.equal(attachment.id);
+      expect(rebundled.name).to.equal(attachment.name);
+      expect(rebundled.size).to.equal(attachment.size);
+      expect(rebundled.url).to.equal(attachment.url);
+      expect(rebundled.toJSON()).to.deep.equal(attachment.toJSON());
     });
   });
 });
