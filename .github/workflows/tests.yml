@@ -4,14 +4,18 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [lts]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.12.0"
+          node-version: ${{ matrix.node }}
+      - run: node --version
       - run: npx prettier . --check
       - run: CXXFLAGS=-std=c++17 npm ci
       - run: CXXFLAGS=-std=c++17 npm run build --if-present
