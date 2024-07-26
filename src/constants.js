@@ -416,7 +416,7 @@ export const TEST_DATA = {
     icon: null,
     splash: null,
     discovery_splash: null,
-    owner_id: "123456789012345678",
+    owner_id: "301655085954367490",
     region: "us-west",
     afk_channel_id: null,
     afk_timeout: 0,
