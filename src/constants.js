@@ -532,7 +532,7 @@ export const TEST_DATA = {
     content: "test message",
     channel_id: "123456789012345678",
   },
-  MEMBER_ID: "123456789012345678",
+  MEMBER_ID: "301655085954367490",
   MEMBER: {
     user: {
       id: "301655085954367490",
