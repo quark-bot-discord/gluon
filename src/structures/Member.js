@@ -157,7 +157,7 @@ class Member {
           this.#_client.cacheAllMembers == true) &&
         ignoreNoCache == false)
     ) {
-      this.#_client.guilds.get(guild_id)?.members.set(user_id, this);
+      this.guild?.members.set(user_id, this);
     }
   }
 
