@@ -908,13 +908,13 @@ class Guild {
    * Bans a user with the given id from the guild.
    * @param {String} user_id The id of the user to ban.
    * @param {Object?} options Ban options.
-   * @returns {void?}
+   * @returns {Promise<void?>}
    * @async
    * @public
    * @method
    * @throws {Error | TypeError}
    */
-  async ban(user_id, { reason, days } = {}) {
+  async ban(user_id, { reason, seconds } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -926,11 +926,20 @@ class Guild {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
 
+    if (typeof reason === "string" && reason.length > 512)
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: reason");
+
+    if (typeof seconds !== "undefined" && typeof seconds !== "number")
+      throw new TypeError("GLUON: INVALID_TYPE: seconds");
+
+    if (typeof seconds === "number" && (seconds < 0 || seconds > 604800))
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: seconds");
+
     const body = {};
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
-    // number of days to delete messages for (0-7)
-    if (days) body.delete_message_days = days;
+    // number of seconds to delete messages for (0-604800)
+    if (seconds) body.delete_message_seconds = seconds;
 
     await this.#_client.request.makeRequest(
       "putCreateGuildBan",
@@ -943,7 +952,7 @@ class Guild {
    * Unbans a user with the given id from the guild.
    * @param {String} user_id The id of the user to unban.
    * @param {Object?} options Unban options.
-   * @returns {void?}
+   * @returns {Promise<void?>}
    * @async
    * @public
    * @method
@@ -961,6 +970,9 @@ class Guild {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
 
+    if (typeof reason === "string" && reason.length > 512)
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: reason");
+
     const body = {};
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
@@ -976,7 +988,7 @@ class Guild {
    * Kicks a user with the given id from the guild.
    * @param {String} user_id The id of the user to kick.
    * @param {Object?} options Kick options.
-   * @returns {void?}
+   * @returns {Promise<void?>}
    * @async
    * @public
    * @method
@@ -994,6 +1006,9 @@ class Guild {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
 
+    if (typeof reason === "string" && reason.length > 512)
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: reason");
+
     const body = {};
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
@@ -1010,7 +1025,7 @@ class Guild {
    * @param {String} user_id The id of the user.
    * @param {String} role_id The id of the role.
    * @param {Object?} options Remove role options.
-   * @returns {void?}
+   * @returns {Promise<void?>}
    * @async
    * @public
    * @method
@@ -1030,6 +1045,9 @@ class Guild {
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: reason");
+
+    if (typeof reason === "string" && reason.length > 512)
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: reason");
 
     const body = {};
 
@@ -1051,7 +1069,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async fetchAuditLogs({ limit, type, user_id, before }) {
+  async fetchAuditLogs({ limit, type, user_id, before, after } = {}) {
     if (
       !checkPermission(
         (await this.me()).permissions,
@@ -1063,7 +1081,10 @@ class Guild {
     if (typeof limit !== "undefined" && typeof limit !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: limit");
 
-    if (typeof type !== "undefined" && typeof type !== "string")
+    if (typeof limit === "number" && (limit < 1 || limit > 100))
+      throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: limit");
+
+    if (typeof type !== "undefined" && typeof type !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: type");
 
     if (typeof user_id !== "undefined" && typeof user_id !== "string")
@@ -1071,6 +1092,9 @@ class Guild {
 
     if (typeof before !== "undefined" && typeof before !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: before");
+
+    if (typeof after !== "undefined" && typeof after !== "string")
+      throw new TypeError("GLUON: INVALID_TYPE: after");
 
     const body = {};
 
@@ -1082,6 +1106,8 @@ class Guild {
     if (user_id) body.user_id = user_id;
 
     if (before) body.before = before;
+
+    if (after) body.after = after;
 
     const data = await this.#_client.request.makeRequest(
       "getGuildAuditLog",
@@ -1119,16 +1145,12 @@ class Guild {
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
 
-    const data = await this.#_client.request.makeRequest("getGuildInvites", [
-      this.id,
-    ]);
-
-    return data;
+    return this.#_client.request.makeRequest("getGuildInvites", [this.id]);
   }
 
   /**
    * Fetches all the guild channels.
-   * @returns {Promise<Channel[]>}
+   * @returns {Promise<Array<TextChannel | VoiceState>>}
    * @async
    * @public
    * @method
@@ -1164,17 +1186,12 @@ class Guild {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
 
-    const data = await this.#_client.request.makeRequest("getGuildBan", [
-      this.id,
-      user_id,
-    ]);
-
-    return data;
+    return this.#_client.request.makeRequest("getGuildBan", [this.id, user_id]);
   }
 
   /**
    * Leaves the guild.
-   * @returns {void?}
+   * @returns {Promise<void?>}
    * @async
    * @public
    * @method
