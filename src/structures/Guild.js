@@ -132,7 +132,7 @@ class Guild {
        * @private
        */
       this.#member_count = data.member_count;
-    else if (existing?.member_count) this.#member_count = existing.member_count;
+    else if (existing?.memberCount) this.#member_count = existing.member_count;
     else this.#member_count = 2;
 
     /**
@@ -574,7 +574,7 @@ class Guild {
    * System channel flags.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
    * @readonly
-   * @type {String}
+   * @type {String[]}
    * @public
    */
   get systemChannelFlags() {
@@ -1213,7 +1213,7 @@ class Guild {
     /* creates a slope for how many members should stay cached */
     /* more members => smaller percentage of users active => a smaller percentage of users should be cached */
     /* a maximum of 500 seems suitable */
-    const shouldCacheCount = Math.floor((1 - Math.sqrt(x / 501000)) * x);
+    const shouldCacheCount = Math.floor(0.5 * Math.exp((-x + 1) / 500000) * x);
 
     return shouldCacheCount;
   }
