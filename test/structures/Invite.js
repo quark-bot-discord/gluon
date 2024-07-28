@@ -159,6 +159,13 @@ describe("Invite", function () {
       });
       expect(invite.toString()).to.be.a("string");
     });
+    it("should return the correct string", function () {
+      const client = {};
+      const invite = new Invite(client, TEST_DATA.INVITE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(invite.toString()).to.equal(`<Invite: ${TEST_DATA.INVITE.code}>`);
+    });
   });
 
   context("check toJSON", function () {
