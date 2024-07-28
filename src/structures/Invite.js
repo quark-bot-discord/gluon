@@ -52,7 +52,7 @@ class Invite {
      * @type {BigInt}
      * @private
      */
-    this.#_channel_id = BigInt(data.channel_id);
+    if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
 
     if (data.inviter)
       /**
@@ -101,13 +101,6 @@ class Invite {
       ((this.#expires && this.#expires > Date.now() / 1000) || !this.#expires)
     )
       this.guild?.invites.set(data.code, this);
-    else
-      this.#_client.emit(
-        "debug",
-        `NOT CACHING INVITE ${this.code} ${this.#expires} ${
-          (Date.now() / 1000) | 0
-        }`,
-      );
   }
 
   /**
