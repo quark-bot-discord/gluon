@@ -524,13 +524,149 @@ export const TEST_DATA = {
     owner_id: "123456789012345678",
     parent_id: "123456789012345678",
   },
-  CHANNEL_ID: "123456789012345678",
-  MESSAGE_ID: "123456789012345678",
+  CHANNEL_ID: "123456789112345678",
+  MESSAGE_ID: "123456339012345678",
   MESSAGE: {
-    id: "123456789012345678",
+    id: "123456339012345678",
     type: 0,
-    content: "test message",
+    content: "test message @everyone",
     channel_id: "123456789012345678",
+    author: {
+      id: "301655085954367490",
+      username: "test",
+      discriminator: "0001",
+      avatar: null,
+      bot: false,
+      system: false,
+      mfa_enabled: false,
+      locale: "en-US",
+      verified: false,
+      email: null,
+      flags: 0,
+      premium_type: 0,
+      public_flags: 0,
+    },
+    edited_timestamp: "2022-01-01T00:00:00.000Z",
+    mention_everyone: true,
+    mentions: [
+      {
+        id: "333456789012345678",
+        username: "test mentioned",
+        discriminator: "0",
+        avatar: null,
+        bot: false,
+        system: false,
+        mfa_enabled: false,
+        locale: "en-US",
+        verified: false,
+        flags: 0,
+        premium_type: 0,
+        public_flags: 0,
+      },
+    ],
+    mention_roles: ["123452789012345678"],
+    mention_channels: ["123456789012345679"],
+    attachments: [
+      {
+        id: "123455789012345678",
+        filename: "test.png",
+        size: 1000,
+        url: "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+        proxy_url:
+          "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+        height: 100,
+        width: 100,
+      },
+    ],
+    embeds: [
+      {
+        title: "test",
+        type: "rich",
+        description: "test description",
+        url: "https://discord.com",
+        timestamp: "2021-01-01T00:00:00.000Z",
+        color: 0,
+        footer: {
+          text: "test",
+          icon_url: null,
+          proxy_icon_url: null,
+        },
+        image: {
+          url: "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+          proxy_url:
+            "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+          height: 100,
+          width: 100,
+        },
+        thumbnail: {
+          url: "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+          proxy_url:
+            "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+          height: 100,
+          width: 100,
+        },
+        video: {
+          url: "https://cdn.discordapp.com/attachments/123456789112345678/123456789012345678/test.png?ex=669ba72f&is=669a55af&hm=b65802a922d51a03762f96dbc52727cf49d1d2e8a96bb0d397b03407b50b4ac2&",
+        },
+      },
+    ],
+    reactions: [
+      {
+        count: 1,
+        me: false,
+        emoji: {
+          id: "844240546246950922",
+          name: "bitcoin",
+        },
+      },
+    ],
+    pinned: true,
+    webhook_id: null,
+    type: 0,
+    message_reference: {
+      message_id: "123456339013345678",
+      channel_id: "123456789112345678",
+      guild_id: "619434557472505857",
+    },
+    message_snapshots: [
+      {
+        id: "123456339012345699",
+        type: 0,
+        content: "test message @everyone",
+        channel_id: "123456789012345678",
+      },
+    ],
+    referenced_message: {
+      id: "123456339013345678",
+      type: 0,
+      content: "test message @everyone",
+      channel_id: "123456789012345678",
+    },
+    sticker_items: [
+      {
+        id: "123456789012345678",
+        name: "test-sticker",
+        format_type: 1,
+      },
+    ],
+    poll: {
+      id: "123456789012345678",
+      channel_id: "123456789012345678",
+      question: "test poll",
+      options: [
+        {
+          id: "123456789012345678",
+          option: "test option",
+        },
+      ],
+      votes: [
+        {
+          user_id: "123456789012345678",
+          option_id: "123456789012345678",
+        },
+      ],
+      end_date: "2021-01-01T00:00:00.000Z",
+    },
   },
   MEMBER_ID: "301655085954367490",
   MEMBER: {

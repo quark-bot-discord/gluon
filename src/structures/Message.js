@@ -32,6 +32,7 @@ class Message {
   #webhook_id;
   #sticker_items;
   #message_snapshots;
+  #edited_timestamp;
   /**
    * Creates the structure for a message.
    * @param {Client} client The client instance.
@@ -97,6 +98,17 @@ class Message {
      */
     this.#_id = BigInt(data.id);
 
+    /**
+     * The timestamp for when this message was last edited.
+     * @type {Number?}
+     * @private
+     */
+    if (data.edited_timestamp)
+      this.#edited_timestamp =
+        (new Date(data.edited_timestamp).getTime() / 1000) | 0;
+    else if (existing?.editedTimestamp)
+      this.#edited_timestamp = existing.editedTimestamp;
+
     // messages only ever need to be cached if logging is enabled
     // but this should always return a "refined" message, so commands can be handled
     if (data.author)
@@ -123,7 +135,7 @@ class Message {
         user: new User(this.#_client, data.author),
       });
     else if (data.author)
-      this.#member = this.guild ? this.guild.members.get(data.author.id) : null;
+      this.#member = this.guild?.members.get(data.author.id) || null;
     else if (existing?.member) this.#member = existing.member;
 
     // should only be stored if file logging is enabled
@@ -313,6 +325,16 @@ class Message {
   }
 
   /**
+   * The timestamp for when this message was last edited.
+   * @type {Number?}
+   * @readonly
+   * @public
+   */
+  get editedTimestamp() {
+    return this.#edited_timestamp;
+  }
+
+  /**
    * The user who sent the message.
    * @type {User}
    * @readonly
@@ -320,6 +342,16 @@ class Message {
    */
   get author() {
     return this.#author;
+  }
+
+  /**
+   * The id of the user who sent the message.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get authorId() {
+    return this.#author.id;
   }
 
   /**
@@ -509,7 +541,7 @@ class Message {
    * @public
    */
   get reference() {
-    return { messageId: this.#reference.message_id };
+    return { messageId: String(this.#reference.message_id) };
   }
 
   /**
@@ -670,8 +702,7 @@ class Message {
     const body = {};
 
     if (content) body.content = content;
-    if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0) body.embeds = embeds;
+    if (embeds && embeds.length != 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
 
@@ -744,6 +775,7 @@ class Message {
       _attributes: this.#_attributes,
       attachments: this.attachments,
       embeds: this.embeds,
+      edited_timestamp: this.editedTimestamp * 1000,
       poll: this.poll,
       pollResponses: this.pollResponses,
       message_snapshots: this.messageSnapshots,
