@@ -7,6 +7,7 @@ import Message from "./Message.js";
  * @extends {Interaction}
  */
 class OptionSelect extends Interaction {
+  #_client;
   #custom_id;
   #message;
   #values;
@@ -17,6 +18,8 @@ class OptionSelect extends Interaction {
    */
   constructor(client, data) {
     super(client, data);
+
+    this.#_client = client;
 
     /**
      * The custom id of the select menu.
@@ -30,10 +33,10 @@ class OptionSelect extends Interaction {
      * @type {Message}
      * @private
      */
-    this.#message = new Message(this._client, data.message, {
+    this.#message = new Message(this.#_client, data.message, {
       channel_id: data.channel_id,
       guild_id: data.guild_id,
-      nocache: this._client.cacheMessages,
+      nocache: this.#_client.cacheMessages,
     });
 
     /**
