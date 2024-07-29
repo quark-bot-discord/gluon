@@ -609,6 +609,7 @@ describe("Guild", function () {
         TEST_DATA.GUILD_ID,
         TEST_DATA.MEMBER_ID,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check unban", function () {
@@ -756,6 +757,7 @@ describe("Guild", function () {
         TEST_DATA.GUILD_ID,
         TEST_DATA.MEMBER_ID,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check kick", function () {
@@ -903,6 +905,7 @@ describe("Guild", function () {
         TEST_DATA.GUILD_ID,
         TEST_DATA.MEMBER_ID,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check removeMemberRole", function () {
@@ -1082,6 +1085,7 @@ describe("Guild", function () {
         TEST_DATA.MEMBER_ID,
         TEST_DATA.ROLE_ADMIN.id,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check fetchAuditLogs", function () {
@@ -1317,6 +1321,7 @@ describe("Guild", function () {
       expect(request).to.be.calledOnceWith("getGuildAuditLog", [
         TEST_DATA.GUILD_ID,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check fetchInvites", function () {

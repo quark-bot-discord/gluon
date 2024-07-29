@@ -230,6 +230,7 @@ describe("Interaction", function () {
         TEST_DATA.INTERACTION.id,
         TEST_DATA.INTERACTION.token,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 
@@ -279,6 +280,7 @@ describe("Interaction", function () {
         TEST_DATA.INTERACTION.id,
         TEST_DATA.INTERACTION.token,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 
@@ -367,6 +369,7 @@ describe("Interaction", function () {
         TEST_DATA.INTERACTION.id,
         TEST_DATA.INTERACTION.token,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 
@@ -415,6 +418,7 @@ describe("Interaction", function () {
         TEST_DATA.CLIENT_USER.id,
         TEST_DATA.INTERACTION.token,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 
@@ -442,6 +446,7 @@ describe("Interaction", function () {
         TEST_DATA.INTERACTION.id,
         TEST_DATA.INTERACTION.token,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 });

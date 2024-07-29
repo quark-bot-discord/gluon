@@ -509,6 +509,7 @@ describe("Channel", function () {
       expect(request).to.be.calledOnceWith("postCreateMessage", [
         TEST_DATA.TEXT_CHANNEL.id,
       ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
   context("check bundling", function () {
