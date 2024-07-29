@@ -557,9 +557,10 @@ export const TEST_DATA = {
     mute: false,
     pending: false,
     permissions: "0",
+    flags: 0,
   },
   EVENT_ID: "123456789012345678",
-  ROLE_ID: "123456789012345678",
+  ROLE_ID: "123452789012345678",
   ATTACHMENT: {
     id: "123456789012345678",
     filename: "test.png",

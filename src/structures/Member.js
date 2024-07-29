@@ -546,7 +546,10 @@ class Member {
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
-    if (!Array.isArray(roles))
+    if (
+      !Array.isArray(roles) ||
+      !roles.every((role) => typeof role === "string")
+    )
       throw new TypeError("GLUON: Roles must be an array of role ids.");
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
