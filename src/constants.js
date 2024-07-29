@@ -901,4 +901,51 @@ export const TEST_DATA = {
     temporary: true,
     created_at: "2021-01-01T00:00:00.000Z",
   },
+  MODAL_RESPONSE: {
+    id: "123451189012345678",
+    type: 5,
+    data: {
+      components: [
+        {
+          type: 1,
+          components: [
+            {
+              custom_id: "test custom id",
+              type: 4,
+              value: "test value",
+            },
+          ],
+        },
+      ],
+    },
+    guild_id: "619434557472505857",
+    channel_id: "123456789012345677",
+    member: {
+      user: {
+        id: "123456789012345678",
+        username: "test",
+        discriminator: "0001",
+        avatar: null,
+        bot: false,
+        system: false,
+        mfa_enabled: false,
+        locale: "en-US",
+        verified: false,
+        email: null,
+        flags: 0,
+        premium_type: 0,
+        public_flags: 0,
+      },
+      roles: [],
+      joined_at: "2021-01-01T00:00:00.000Z",
+      premium_since: null,
+      deaf: false,
+      mute: false,
+      pending: false,
+      permissions: "0",
+    },
+    token: "test",
+    type: 5,
+    version: 1,
+  },
 };
