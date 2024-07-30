@@ -371,8 +371,8 @@ class Interaction {
     return {
       id: this.id,
       type: this.type,
-      guildId: this.guildId,
-      channelId: this.channelId,
+      guild_id: this.guildId,
+      channel_id: this.channelId,
       member: this.member,
     };
   }

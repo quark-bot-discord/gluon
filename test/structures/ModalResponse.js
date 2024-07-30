@@ -49,6 +49,14 @@ describe("ModalResponse", function () {
   });
 
   context("check toString", function () {
+    it("should be a function", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
+      expect(modalResponse.toString).to.be.a("function");
+    });
     it("should return the correct string", function () {
       const client = { cacheGuilds: true };
       client.guilds = new GuildManager(client);
@@ -59,6 +67,32 @@ describe("ModalResponse", function () {
       expect(modalResponse.toString()).to.equal(
         `<ModalResponse: ${TEST_DATA.MODAL_RESPONSE.id}>`,
       );
+    });
+  });
+
+  context("check toJSON", function () {
+    it("should be a function", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
+      expect(modalResponse.toJSON).to.be.a("function");
+    });
+    it("should return the correct JSON object", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
+      expect(modalResponse.toJSON()).to.deep.equal({
+        channel_id: TEST_DATA.MODAL_RESPONSE.channel_id,
+        guild_id: TEST_DATA.MODAL_RESPONSE.guild_id,
+        id: TEST_DATA.MODAL_RESPONSE.id,
+        member: {},
+        type: TEST_DATA.MODAL_RESPONSE.type,
+        values: TEST_DATA.MODAL_RESPONSE.data.components[0].components,
+      });
     });
   });
 });
