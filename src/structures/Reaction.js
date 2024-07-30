@@ -38,14 +38,15 @@ class Reaction {
        * @private
        */
       this.#emoji = data.emoji;
-    else this.#emoji = new Emoji(client, data, { guild_id, nocache: true });
+    else
+      this.#emoji = new Emoji(client, data.emoji, { guild_id, nocache: true });
 
     /**
      * Users who reacted with this emoji.
      * @type {Array<BigInt>}
      * @private
      */
-    this.#_reacted = data._reacted.map((r) => BigInt(r)) || [];
+    this.#_reacted = data._reacted?.map((r) => BigInt(r)) || [];
 
     /**
      * The user who added the first reaction.
@@ -129,6 +130,37 @@ class Reaction {
    */
   get initialReactor() {
     return this.#initial_reactor ? String(this.#initial_reactor) : null;
+  }
+
+  /**
+   * Adds a user to the list of reactors.
+   * @param {String} userId The id of the user to add as a reactor.
+   * @throws {TypeError}
+   * @public
+   * @method
+   */
+  addReactor(userId) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+
+    if (this.#_reacted.length === 0 && !this.#initial_reactor)
+      this.#initial_reactor = BigInt(userId);
+
+    this.#_reacted.push(BigInt(userId));
+  }
+
+  /**
+   * Removes a user from the list of reactors.
+   * @param {String} userId The id of the user to add as a reactor.
+   * @throws {TypeError}
+   * @public
+   * @method
+   */
+  removeReactor(userId) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+
+    this.#_reacted = this.#_reacted.filter((r) => r !== BigInt(userId));
   }
 
   /**

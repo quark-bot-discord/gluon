@@ -62,14 +62,12 @@ class MessageReactionManager {
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object.");
 
-    if (!this.#cache[emoji]) {
-      data.initial_reactor = user_id;
+    if (!this.#cache[emoji])
       this.#cache[emoji] = new Reaction(this.#_client, data, {
         guild_id: this.#guild.id,
       });
-    }
 
-    this.#cache[emoji]._reacted.push(BigInt(user_id));
+    this.#cache[emoji].addReactor(user_id);
   }
 
   /**
@@ -88,11 +86,9 @@ class MessageReactionManager {
       throw new TypeError("GLUON: Emoji must be a string.");
 
     if (this.#cache[emoji]) {
-      this.#cache[emoji]._reacted = this.#cache[emoji]._reacted.filter(
-        (userId) => userId != user_id,
-      );
+      this.#cache[emoji].removeReactor(user_id);
 
-      if (this.#cache[emoji]._reacted.length == 0) delete this.#cache[emoji];
+      if (this.#cache[emoji].count == 0) delete this.#cache[emoji];
     }
   }
 
