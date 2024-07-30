@@ -84,7 +84,20 @@ class OptionSelect extends Interaction {
    * @public
    */
   toString() {
-    return `<OptionSelect: ${this.customId}>`;
+    return `<OptionSelect: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      custom_id: this.customId,
+      message: this.message,
+      values: this.values,
+    };
   }
 }
 

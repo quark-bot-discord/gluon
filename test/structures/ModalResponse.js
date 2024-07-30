@@ -24,7 +24,6 @@ describe("ModalResponse", function () {
       expect(modalResponse).to.have.property("guildId");
       expect(modalResponse).to.have.property("channelId");
       expect(modalResponse).to.have.property("member");
-      expect(modalResponse).to.have.property("customId");
       expect(modalResponse).to.have.property("values");
       expect(modalResponse).to.have.property("guild");
       expect(modalResponse).to.have.property("channel");
@@ -33,19 +32,6 @@ describe("ModalResponse", function () {
       expect(modalResponse).to.have.property("reply");
       expect(modalResponse).to.have.property("edit");
       expect(modalResponse).to.have.property("acknowledge");
-    });
-  });
-
-  context("check customId", function () {
-    it("should have the correct customId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
-      expect(modalResponse.customId).to.equal(
-        TEST_DATA.MODAL_RESPONSE.data.custom_id,
-      );
     });
   });
 
@@ -58,6 +44,20 @@ describe("ModalResponse", function () {
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.values).to.equal(
         TEST_DATA.MODAL_RESPONSE.data.components[0].components,
+      );
+    });
+  });
+
+  context("check toString", function () {
+    it("should return the correct string", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
+      console.log(modalResponse.customId);
+      expect(modalResponse.toString()).to.equal(
+        `<ModalResponse: ${TEST_DATA.MODAL_RESPONSE.id}>`,
       );
     });
   });

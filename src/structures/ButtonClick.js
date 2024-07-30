@@ -65,7 +65,7 @@ class ButtonClick extends Interaction {
    * @public
    */
   toString() {
-    return `<ButtonClick: ${this.customId}>`;
+    return `<ButtonClick: ${this.id}>`;
   }
 
   /**
