@@ -101,7 +101,7 @@ describe("Embed", function () {
       const embed = new Embed();
       expect(() => {
         embed.setColor(undefined);
-      }).to.throw(TypeError, "GLUON: Embed colour must be provided.");
+      }).to.throw(TypeError, "GLUON: Embed color must be provided.");
     });
   });
 

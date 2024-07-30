@@ -73,18 +73,18 @@ class Embed {
   }
 
   /**
-   * Sets the colour of the embed.
-   * @param {String | Number} colour The colour.
+   * Sets the color of the embed.
+   * @param {String | Number} color The color.
    * @returns {Embed}
    */
-  setColor(colour) {
-    if (!colour) throw new TypeError("GLUON: Embed colour must be provided.");
+  setColor(color) {
+    if (!color) throw new TypeError("GLUON: Embed color must be provided.");
 
-    if (typeof colour == "string") {
-      if (colour[0] == "#") colour = colour.substring(1);
+    if (typeof color == "string") {
+      if (color[0] == "#") color = color.substring(1);
 
-      this.color = hexToInt(colour);
-    } else if (typeof colour == "number") this.color = colour;
+      this.color = hexToInt(color);
+    } else if (typeof color == "number") this.color = color;
 
     return this;
   }

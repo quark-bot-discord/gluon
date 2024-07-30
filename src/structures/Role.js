@@ -56,7 +56,7 @@ class Role {
     this.#name = data.name;
 
     /**
-     * The colour of the role.
+     * The color of the role.
      * @type {Number}
      * @private
      */
@@ -180,7 +180,7 @@ class Role {
    * @public
    */
   get displayIconURL() {
-    return getRoleIcon(this.#_originalIconHash, this.id);
+    return getRoleIcon(this.id, this.#_originalIconHash);
   }
 
   /**
@@ -214,7 +214,7 @@ class Role {
   }
 
   /**
-   * The colour of the role.
+   * The color of the role.
    * @type {Number}
    * @readonly
    * @public
