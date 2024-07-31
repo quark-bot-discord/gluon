@@ -298,7 +298,7 @@ class EventHandler {
       } => THREAD_CREATE ${data.guild_id}`,
     );
 
-    const thread = new Thread(this.#_client, data, data.guild_id);
+    const thread = new Thread(this.#_client, data, { guild_id: data.guild_id });
 
     this.#_client.emit(EVENTS.THREAD_CREATE, thread);
   }
@@ -314,7 +314,9 @@ class EventHandler {
     const oldThread = this.#_client.guilds
       .get(data.guild_id)
       ?.channels.get(data.id);
-    const newThread = new Thread(this.#_client, data, data.guild_id);
+    const newThread = new Thread(this.#_client, data, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
   }
@@ -345,7 +347,9 @@ class EventHandler {
 
     const threads = [];
     for (let i = 0; i < data.threads.length; i++)
-      threads.push(new Thread(this.#_client, data.threads[i], data.guild_id));
+      threads.push(
+        new Thread(this.#_client, data.threads[i], { guild_id: data.guild_id }),
+      );
 
     this.#_client.emit(EVENTS.THREAD_LIST_SYNC, threads);
   }
@@ -504,7 +508,9 @@ class EventHandler {
       null;
     let newVoiceState;
     if (data.channel_id)
-      newVoiceState = new VoiceState(this.#_client, data, data.guild_id);
+      newVoiceState = new VoiceState(this.#_client, data, {
+        guild_id: data.guild_id,
+      });
     else {
       newVoiceState = null;
       this.#_client.guilds

@@ -468,7 +468,10 @@ class Guild {
         i < data.threads.length && this.#_client.cacheChannels == true;
         i++
       )
-        new Thread(this.#_client, data.threads[i], data.id, nocache);
+        new Thread(this.#_client, data.threads[i], {
+          guild_id: data.id,
+          nocache,
+        });
 
     if (data.voice_states)
       for (
@@ -476,7 +479,10 @@ class Guild {
         i < data.voice_states.length && this.#_client.cacheVoiceStates == true;
         i++
       )
-        new VoiceState(this.#_client, data.voice_states[i], data.id, nocache);
+        new VoiceState(this.#_client, data.voice_states[i], {
+          guild_id: data.id,
+          nocache,
+        });
 
     if (data.roles)
       for (

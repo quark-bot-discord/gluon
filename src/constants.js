@@ -517,7 +517,7 @@ export const TEST_DATA = {
     permission_overwrites: [],
     rate_limit_per_user: 0,
     nsfw: false,
-    topic: null,
+    topic: "test nice",
     last_message_id: null,
     parent_id: null,
     last_pin_timestamp: null,

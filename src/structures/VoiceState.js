@@ -20,7 +20,7 @@ class VoiceState {
    * @param {String} guild_id The id of the guild that the voice state belongs to.
    * @param {Boolean?} nocache Whether this voice state should be cached.
    */
-  constructor(client, data, guild_id, nocache = false) {
+  constructor(client, data, { guild_id, nocache = false }) {
     /**
      * The client instance.
      * @type {Client}
