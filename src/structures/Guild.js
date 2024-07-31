@@ -551,7 +551,7 @@ class Guild {
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
-      formattedHash = "0" + formattedHash;
+      formattedHash = `0${formattedHash}`;
 
     return formattedHash;
   }

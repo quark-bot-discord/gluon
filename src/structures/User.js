@@ -136,12 +136,17 @@ class User {
 
   /**
    * The discriminator of the user.
-   * @type {Number?}
+   * @type {String?}
    * @readonly
    * @public
    */
   get discriminator() {
-    return this.#discriminator;
+    if (!this.#discriminator) return null;
+    let formattedDiscriminator = String(this.#discriminator);
+    while (formattedDiscriminator.length != 4)
+      // eslint-disable-next-line quotes
+      formattedDiscriminator = `0${formattedDiscriminator}`;
+    return formattedDiscriminator;
   }
 
   /**
@@ -190,7 +195,7 @@ class User {
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
-      formattedHash = "0" + formattedHash;
+      formattedHash = `0${formattedHash}`;
 
     return formattedHash;
   }
@@ -215,7 +220,7 @@ class User {
    */
   get tag() {
     return this.#discriminator
-      ? `${this.#username}#${this.#discriminator}`
+      ? `${this.#username}#${this.discriminator}`
       : this.#username;
   }
 
