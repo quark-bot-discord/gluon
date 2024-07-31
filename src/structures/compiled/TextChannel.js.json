@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 373,
-                2599
+                2608
             ],
             "filename": "TextChannel.js",
             "lineno": 11,
@@ -138,7 +138,7 @@
         "meta": {
             "range": [
                 373,
-                2599
+                2608
             ],
             "filename": "TextChannel.js",
             "lineno": 11,
@@ -410,11 +410,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Bulk deletes all the message IDs provided.\n   * @param {String[]} messages An array of message IDs, as strings.\n   * @returns {void}\n   * @method\n   * @async\n   * @public\n   * @throws {Error | TypeError}\n   */",
+        "comment": "/**\n   * Bulk deletes all the message IDs provided.\n   * @param {String[]} messages An array of message IDs, as strings.\n   * @returns {Promise<void>}\n   * @method\n   * @async\n   * @public\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                1629,
-                2398
+                1638,
+                2407
             ],
             "filename": "TextChannel.js",
             "lineno": 55,
@@ -449,7 +449,7 @@
             {
                 "type": {
                     "names": [
-                        "void"
+                        "Promise.<void>"
                     ]
                 }
             }
@@ -476,8 +476,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1658,
-                1664
+                1667,
+                1673
             ],
             "filename": "TextChannel.js",
             "lineno": 55,
@@ -500,8 +500,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2185,
-                2194
+                2194,
+                2203
             ],
             "filename": "TextChannel.js",
             "lineno": 73,
@@ -526,8 +526,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2201,
-                2225
+                2210,
+                2234
             ],
             "filename": "TextChannel.js",
             "lineno": 75,
@@ -553,8 +553,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2244,
-                2279
+                2253,
+                2288
             ],
             "filename": "TextChannel.js",
             "lineno": 77,
@@ -580,8 +580,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2440,
-                2496
+                2449,
+                2505
             ],
             "filename": "TextChannel.js",
             "lineno": 90,
@@ -609,8 +609,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2538,
-                2597
+                2547,
+                2606
             ],
             "filename": "TextChannel.js",
             "lineno": 98,
@@ -638,8 +638,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2601,
-                2628
+                2610,
+                2637
             ],
             "filename": "TextChannel.js",
             "lineno": 105,
