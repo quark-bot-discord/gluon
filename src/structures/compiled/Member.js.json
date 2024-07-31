@@ -2068,7 +2068,7 @@
             "code": {
                 "id": "astnode100000847",
                 "name": "formattedHash",
-                "type": "BinaryExpression",
+                "type": "TemplateLiteral",
                 "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
@@ -2093,7 +2093,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000854",
+                "id": "astnode100000855",
                 "name": "Member#displayAvatarURL",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2129,7 +2129,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000877",
+                "id": "astnode100000878",
                 "name": "Member#pending",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2165,7 +2165,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000894",
+                "id": "astnode100000895",
                 "name": "Member#avatarIsAnimated",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2201,7 +2201,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000911",
+                "id": "astnode100000912",
                 "name": "Member#mention",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2237,7 +2237,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000922",
+                "id": "astnode100000923",
                 "name": "Member#addRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2320,7 +2320,7 @@
             "columnno": 27,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000928",
+                "id": "astnode100000929",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2344,7 +2344,7 @@
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000976",
+                "id": "astnode100000977",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2370,7 +2370,7 @@
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000982",
+                "id": "astnode100000983",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2397,7 +2397,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001008",
+                "id": "astnode100001009",
                 "name": "Member#removeRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2480,7 +2480,7 @@
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001014",
+                "id": "astnode100001015",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2504,7 +2504,7 @@
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001062",
+                "id": "astnode100001063",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2530,7 +2530,7 @@
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001068",
+                "id": "astnode100001069",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2557,7 +2557,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001094",
+                "id": "astnode100001095",
                 "name": "Member#timeoutAdd",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2640,7 +2640,7 @@
             "columnno": 36,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001100",
+                "id": "astnode100001101",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2664,7 +2664,7 @@
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001148",
+                "id": "astnode100001149",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2690,7 +2690,7 @@
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001154",
+                "id": "astnode100001155",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2717,7 +2717,7 @@
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001160",
+                "id": "astnode100001161",
                 "name": "body.communication_disabled_until",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2744,7 +2744,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001185",
+                "id": "astnode100001186",
                 "name": "Member#timeoutRemove",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2817,7 +2817,7 @@
             "columnno": 24,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001190",
+                "id": "astnode100001191",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2841,7 +2841,7 @@
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001229",
+                "id": "astnode100001230",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2867,7 +2867,7 @@
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001235",
+                "id": "astnode100001236",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2894,7 +2894,7 @@
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001241",
+                "id": "astnode100001242",
                 "name": "body.communication_disabled_until",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -2921,7 +2921,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001266",
+                "id": "astnode100001267",
                 "name": "Member#massUpdateRoles",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2994,7 +2994,7 @@
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001272",
+                "id": "astnode100001273",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -3018,7 +3018,7 @@
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001334",
+                "id": "astnode100001335",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -3044,7 +3044,7 @@
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001340",
+                "id": "astnode100001341",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -3071,7 +3071,7 @@
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001346",
+                "id": "astnode100001347",
                 "name": "body.roles",
                 "type": "CallExpression",
                 "funcscope": "<anonymous>",
@@ -3098,7 +3098,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001380",
+                "id": "astnode100001381",
                 "name": "Member#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3127,7 +3127,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001391",
+                "id": "astnode100001392",
                 "name": "Member#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3156,7 +3156,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001397",
+                "id": "astnode100001398",
                 "name": "user",
                 "type": "MemberExpression",
                 "value": "this.user"
@@ -3180,7 +3180,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001401",
+                "id": "astnode100001402",
                 "name": "nick",
                 "type": "MemberExpression",
                 "value": "this.nick"
@@ -3204,7 +3204,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001405",
+                "id": "astnode100001406",
                 "name": "joined_at",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -3228,7 +3228,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001416",
+                "id": "astnode100001417",
                 "name": "avatar",
                 "type": "MemberExpression",
                 "value": "this."
@@ -3252,7 +3252,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001421",
+                "id": "astnode100001422",
                 "name": "permissions",
                 "type": "CallExpression",
                 "value": ""
@@ -3276,7 +3276,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001427",
+                "id": "astnode100001428",
                 "name": "roles",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -3300,7 +3300,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001462",
+                "id": "astnode100001463",
                 "name": "communication_disabled_until",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -3324,7 +3324,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001473",
+                "id": "astnode100001474",
                 "name": "flags",
                 "type": "MemberExpression",
                 "value": "this.flags"
@@ -3348,7 +3348,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001477",
+                "id": "astnode100001478",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -3372,7 +3372,7 @@
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001482",
+                "id": "astnode100001483",
                 "name": "module.exports",
                 "type": "Identifier"
             }
