@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 278,
-                7668
+                7690
             ],
             "filename": "ScheduledEvent.js",
             "lineno": 8,
@@ -336,7 +336,7 @@
         "meta": {
             "range": [
                 604,
-                3710
+                3732
             ],
             "filename": "ScheduledEvent.js",
             "lineno": 26,
@@ -387,7 +387,7 @@
         "meta": {
             "range": [
                 278,
-                7668
+                7690
             ],
             "filename": "ScheduledEvent.js",
             "lineno": 8,
@@ -437,15 +437,39 @@
         "comment": "",
         "meta": {
             "range": [
-                632,
-                647
+                645,
+                653
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 26,
-            "columnno": 30,
+            "lineno": 29,
+            "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000032",
+                "name": "guild_id",
+                "type": "Identifier",
+                "value": "guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guild_id",
+        "longname": "guild_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                655,
+                670
+            ],
+            "filename": "ScheduledEvent.js",
+            "lineno": 29,
+            "columnno": 16,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000034",
                 "name": "nocache",
                 "type": "AssignmentPattern",
                 "value": "nocache"
@@ -461,15 +485,15 @@
         "comment": "",
         "meta": {
             "range": [
-                654,
-                668
+                677,
+                691
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 26,
-            "columnno": 52,
+            "lineno": 29,
+            "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000037",
+                "id": "astnode100000039",
                 "name": "nocache",
                 "type": "Literal",
                 "value": false
@@ -485,15 +509,15 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                760,
-                782
+                787,
+                809
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 32,
+            "lineno": 36,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000041",
+                "id": "astnode100000043",
                 "name": "this.",
                 "type": "Identifier",
                 "value": "client",
@@ -517,15 +541,15 @@
         "comment": "/**\n     * The id of the scheduled event.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                881,
-                908
+                908,
+                935
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 39,
+            "lineno": 43,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000048",
+                "id": "astnode100000050",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -549,15 +573,15 @@
         "comment": "/**\n     * The id of the guild that this event belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1024,
-                1063
+                1051,
+                1085
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 46,
+            "lineno": 50,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000059",
+                "id": "astnode100000061",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -581,11 +605,11 @@
         "comment": "/**\n     * The name of the scheduled event.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1239,
-                1261
+                1261,
+                1283
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 55,
+            "lineno": 59,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -613,11 +637,11 @@
         "comment": "/**\n       * The id of the user who created the event.\n       * @type {BigInt?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1409,
-                1452
+                1431,
+                1474
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 63,
+            "lineno": 67,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -646,11 +670,11 @@
         "comment": "/**\n       * The user who created the event.\n       * @type {User?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1585,
-                1638
+                1607,
+                1660
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 71,
+            "lineno": 75,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -679,11 +703,11 @@
         "comment": "/**\n     * The UNIX timestamp of the start time for the event.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1758,
-                1851
+                1780,
+                1873
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 78,
+            "lineno": 82,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -711,11 +735,11 @@
         "comment": "/**\n       * The UNIX timestamp of the end time for the event.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2015,
-                2106
+                2037,
+                2128
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 87,
+            "lineno": 91,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -744,11 +768,11 @@
         "comment": "/**\n     * The hash of the event's image.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                2206,
-                2266
+                2228,
+                2288
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 95,
+            "lineno": 99,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -777,11 +801,11 @@
         "comment": "/**\n     * The number of users who have signed up for the event.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                2388,
-                2427
+                2410,
+                2449
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 102,
+            "lineno": 106,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -809,11 +833,11 @@
         "comment": "/**\n     * The attributes of the event.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                2524,
-                2545
+                2546,
+                2567
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 109,
+            "lineno": 113,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -841,11 +865,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2630,
-                2659
+                2652,
+                2681
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 114,
+            "lineno": 118,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -867,11 +891,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2725,
-                2754
+                2747,
+                2776
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 119,
+            "lineno": 123,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -893,11 +917,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2823,
-                2852
+                2845,
+                2874
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 124,
+            "lineno": 128,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -919,11 +943,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2986,
-                3015
+                3008,
+                3037
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 134,
+            "lineno": 138,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -945,11 +969,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3082,
-                3111
+                3104,
+                3133
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 139,
+            "lineno": 143,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -971,11 +995,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3181,
-                3210
+                3203,
+                3232
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 144,
+            "lineno": 148,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -997,11 +1021,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3279,
-                3308
+                3301,
+                3330
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 149,
+            "lineno": 153,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1023,11 +1047,11 @@
         "comment": "/**\n       * The location of the event.\n       * @type {String?}\n       * @private\n       */",
         "meta": {
             "range": [
-                3514,
-                3577
+                3536,
+                3599
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 162,
+            "lineno": 166,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1056,11 +1080,11 @@
         "comment": "/**\n   * The ID of the event.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3800,
-                3844
+                3822,
+                3866
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 174,
+            "lineno": 178,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1092,11 +1116,11 @@
         "comment": "/**\n   * The guild ID of the event.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3940,
-                3995
+                3962,
+                4017
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 184,
+            "lineno": 188,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1128,11 +1152,11 @@
         "comment": "/**\n   * The name of the event.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4087,
-                4126
+                4109,
+                4148
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 194,
+            "lineno": 198,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1164,11 +1188,11 @@
         "comment": "/**\n   * The ID of the user who created the event.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4238,
-                4324
+                4260,
+                4346
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 204,
+            "lineno": 208,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1201,11 +1225,11 @@
         "comment": "/**\n   * The user who created the event.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4424,
-                4469
+                4446,
+                4491
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 214,
+            "lineno": 218,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1238,11 +1262,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4905,
-                4946
+                4927,
+                4968
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 238,
+            "lineno": 242,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1264,11 +1288,11 @@
         "comment": "",
         "meta": {
             "range": [
-                5035,
-                5070
+                5057,
+                5092
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 242,
+            "lineno": 246,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1291,11 +1315,11 @@
         "comment": "/**\n   * The url of the events's image.\n   * @readonly\n   * @type {String?}\n   * @public\n   */",
         "meta": {
             "range": [
-                5203,
-                5291
+                5225,
+                5313
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 253,
+            "lineno": 257,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1328,11 +1352,11 @@
         "comment": "/**\n   * Where the event is scheduled to take place.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                5404,
-                5685
+                5426,
+                5707
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 263,
+            "lineno": 267,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1364,11 +1388,11 @@
         "comment": "/**\n   * The status of the event.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                5779,
-                6131
+                5801,
+                6153
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 276,
+            "lineno": 280,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1400,11 +1424,11 @@
         "comment": "/**\n   * The guild that this event belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6238,
-                6314
+                6260,
+                6336
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 290,
+            "lineno": 294,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1437,11 +1461,11 @@
         "comment": "/**\n   * The UNIX timestamp of the start time for the event.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6435,
-                6504
+                6457,
+                6526
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 300,
+            "lineno": 304,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1473,11 +1497,11 @@
         "comment": "/**\n   * The UNIX timestamp of the end time for the event.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6624,
-                6689
+                6646,
+                6711
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 310,
+            "lineno": 314,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1510,11 +1534,11 @@
         "comment": "/**\n   * The number of users who have signed up for the event.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6812,
-                6862
+                6834,
+                6884
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 320,
+            "lineno": 324,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1546,11 +1570,11 @@
         "comment": "/**\n   * The location of the event.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6959,
-                7006
+                6981,
+                7028
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 330,
+            "lineno": 334,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1583,11 +1607,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7048,
-                7107
+                7070,
+                7129
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 338,
+            "lineno": 342,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1612,11 +1636,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7149,
-                7666
+                7171,
+                7688
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 346,
+            "lineno": 350,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1641,11 +1665,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7179,
-                7190
+                7201,
+                7212
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 348,
+            "lineno": 352,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1665,11 +1689,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7198,
-                7220
+                7220,
+                7242
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 349,
+            "lineno": 353,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1689,11 +1713,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7228,
-                7243
+                7250,
+                7265
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 350,
+            "lineno": 354,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1713,11 +1737,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7251,
-                7290
+                7273,
+                7312
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 351,
+            "lineno": 355,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1737,11 +1761,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7298,
-                7319
+                7320,
+                7341
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 352,
+            "lineno": 356,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1761,11 +1785,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7327,
-                7379
+                7349,
+                7401
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 353,
+            "lineno": 357,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1785,11 +1809,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7387,
-                7487
+                7409,
+                7509
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 354,
+            "lineno": 358,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1809,11 +1833,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7495,
-                7526
+                7517,
+                7548
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 357,
+            "lineno": 361,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1833,11 +1857,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7534,
-                7560
+                7556,
+                7582
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 358,
+            "lineno": 362,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1857,11 +1881,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7568,
-                7596
+                7590,
+                7618
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 359,
+            "lineno": 363,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1881,11 +1905,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7604,
-                7623
+                7626,
+                7645
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 360,
+            "lineno": 364,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1905,11 +1929,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7631,
-                7654
+                7653,
+                7676
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 361,
+            "lineno": 365,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1929,11 +1953,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7670,
-                7700
+                7692,
+                7722
             ],
             "filename": "ScheduledEvent.js",
-            "lineno": 366,
+            "lineno": 370,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
