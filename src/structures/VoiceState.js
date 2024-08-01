@@ -292,8 +292,9 @@ class VoiceState {
       self_video: this.selfVideo,
       suppress: this.suppress,
       member: this.member,
+      user_id: this.memberId,
       joined: this.joined,
-      request_to_speak_timestamp: this.requestToSpeakTimestamp,
+      request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
     };
   }
 }

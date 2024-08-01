@@ -395,7 +395,7 @@ export const TEST_DATA = {
     last_pin_timestamp: null,
   },
   VOICE_CHANNEL: {
-    id: "123456789012345678",
+    id: "333456789012345678",
     type: 2,
     guild_id: "619434557472505857",
     name: "test-channel",
@@ -1097,5 +1097,19 @@ export const TEST_DATA = {
     premium_type: 0,
     public_flags: 0,
     global_name: "starman",
+  },
+  VOICE_STATE: {
+    channel_id: "333456789012345678",
+    user_id: "80351110224678912",
+    session_id: "90326bd25d71d39b9ef95b299e3872ff",
+    deaf: false,
+    mute: false,
+    self_deaf: false,
+    self_mute: true,
+    suppress: false,
+    self_stream: true,
+    self_video: true,
+    request_to_speak_timestamp: "2021-03-31T18:45:31.297561+00:00",
+    joined: 1722533062,
   },
 };
