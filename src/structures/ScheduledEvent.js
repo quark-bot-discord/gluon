@@ -18,6 +18,7 @@ class ScheduledEvent {
   #user_count;
   #_attributes;
   #location;
+  #description;
   /**
    *
    * @param {Client} client The client instance.
@@ -97,6 +98,8 @@ class ScheduledEvent {
      * @private
      */
     this.#_image = data.image ? BigInt(`0x${data.image}`) : null;
+
+    if (data.description) this.#description = data.description;
 
     /**
      * The number of users who have signed up for the event.
@@ -220,6 +223,16 @@ class ScheduledEvent {
   }
 
   /**
+   * The description of the event.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get description() {
+    return this.#description;
+  }
+
+  /**
    * The hash of the event's image, as it was received from Discord.
    * @readonly
    * @type {String?}
@@ -271,6 +284,13 @@ class ScheduledEvent {
     else return "UNKNOWN";
   }
 
+  get #rawEntityType() {
+    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) return 1;
+    else if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1) return 2;
+    else if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2) return 3;
+    else return 0;
+  }
+
   /**
    * The status of the event.
    * @readonly
@@ -283,6 +303,14 @@ class ScheduledEvent {
     else if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5) return "COMPLETED";
     else if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "CANCELED";
     else return "UNKNOWN";
+  }
+
+  get #rawStatus() {
+    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3) return 1;
+    else if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4) return 2;
+    else if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5) return 3;
+    else if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return 4;
+    else return 0;
   }
 
   /**
@@ -352,6 +380,7 @@ class ScheduledEvent {
       id: this.id,
       guild_id: this.guildId,
       name: this.name,
+      description: this.description,
       creator_id: this.creatorId ?? undefined,
       creator: this.creator,
       scheduled_start_time: this.scheduledStartTime * 1000,
@@ -360,9 +389,11 @@ class ScheduledEvent {
         : undefined,
       image: this.#_originalImageHash,
       user_count: this.userCount,
-      entity_type: this.entityType,
-      status: this.status,
-      location: this.location,
+      entity_type: this.#rawEntityType,
+      status: this.#rawStatus,
+      entity_metadata: {
+        location: this.location,
+      },
     };
   }
 }
