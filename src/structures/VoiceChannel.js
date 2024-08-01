@@ -16,7 +16,11 @@ class VoiceChannel extends Channel {
    * @param {String} guild_id The id of the guild that the voice channel belongs to.
    * @param {Boolean?} nocache Whether the voice channel should be cached.
    */
-  constructor(client, data, { guild_id, nocache = false }) {
+  constructor(
+    client,
+    data,
+    { guild_id, nocache = false } = { nocache: false },
+  ) {
     super(client, data, { guild_id });
 
     /**
