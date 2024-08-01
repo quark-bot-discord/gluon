@@ -1,5 +1,8 @@
 /* of course, stick to this format of "methodPath1Path2" */
 /* the arguments passed to the path() function should simply become the parameters of the request */
+
+import { HttpResponse } from "msw";
+
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
 export default {
   getGatewayBot: {
@@ -8,7 +11,18 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json({
+        url: "wss://gateway.discord.gg",
+        shards: 1,
+        session_start_limit: {
+          total: 1000,
+          remaining: 1000,
+          reset_after: 14400000,
+          max_concurrency: 1,
+        },
+      });
+    },
   },
   postCreateMessage: {
     path: (channel_id) => {
