@@ -9,8 +9,21 @@ class Embed {
   /**
    * Creates an embed structure.
    */
-  constructor() {
-    this.type = "rich";
+  constructor(data) {
+    if (data) {
+      if (data.title) this.title = data.title;
+      if (data.description) this.description = data.description;
+      if (data.url) this.url = data.url;
+      if (data.timestamp) this.timestamp = data.timestamp;
+      if (data.color) this.color = data.color;
+      if (data.footer) this.footer = data.footer;
+      if (data.author) this.author = data.author;
+      if (data.fields) this.fields = data.fields;
+      if (data.image) this.image = data.image;
+      if (data.thumbnail) this.thumbnail = data.thumbnail;
+      if (data.video) this.video = data.video;
+    }
+
     this.fields = [];
   }
 
@@ -18,6 +31,9 @@ class Embed {
    * Sets the title of the embed.
    * @param {String} title The title of the embed.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setTitle(title) {
     if (!title) throw new TypeError("GLUON: Embed title must be provided.");
@@ -34,6 +50,9 @@ class Embed {
    * Sets the embed description.
    * @param {String} text The description.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setDescription(text) {
     if (!text)
@@ -51,6 +70,9 @@ class Embed {
    * Sets the url of the embed.
    * @param {String} url The url.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setURL(url) {
     if (!url) throw new TypeError("GLUON: Embed url must be provided.");
@@ -64,6 +86,8 @@ class Embed {
    * Sets the timestamp displayed on the embed.
    * @param {Number?} timestamp The UNIX timestamp.
    * @returns {Embed}
+   * @method
+   * @public
    */
   setTimestamp(timestamp) {
     if (timestamp) this.timestamp = new Date(timestamp * 1000).toISOString();
@@ -76,6 +100,9 @@ class Embed {
    * Sets the color of the embed.
    * @param {String | Number} color The color.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setColor(color) {
     if (!color) throw new TypeError("GLUON: Embed color must be provided.");
@@ -93,6 +120,9 @@ class Embed {
    * Sets the embed thumbnail image.
    * @param {String} url The url of the thumbnail.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setThumbnail(url) {
     if (!url)
@@ -110,6 +140,9 @@ class Embed {
    * @param {String} text The footer text.
    * @param {String?} icon The url of the footer icon.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setFooter(text, icon) {
     if (!text)
@@ -132,6 +165,9 @@ class Embed {
    * @param {String?} url The url.
    * @param {String?} icon_url The embed author image url.
    * @returns {Embed}
+   * @throws {TypeError}
+   * @method
+   * @public
    */
   setAuthor(name, url, icon_url) {
     if (!name)
@@ -156,6 +192,9 @@ class Embed {
    * @param {String} value Sets the embed field value.
    * @param {Boolean?} inline Whether this field should be displayed inline.
    * @returns {Embed}
+   * @throws {RangeError | TypeError}
+   * @method
+   * @public
    */
   addField(name, value, inline = false) {
     if (this.fields.length >= LIMITS.MAX_EMBED_FIELDS)
@@ -187,9 +226,32 @@ class Embed {
    * Sets the embed image url.
    * @param {String} url The image url.
    * @returns {Embed}
+   * @method
+   * @public
    */
   setImage(url) {
+    if (typeof url !== "string")
+      throw new TypeError("GLUON: Embed image url must be a string.");
+
     this.image = {
+      url,
+    };
+
+    return this;
+  }
+
+  /**
+   * Sets the embed video url.
+   * @param {String} url The video url.
+   * @returns {Embed}
+   * @method
+   * @public
+   */
+  setVideo(url) {
+    if (typeof url !== "string")
+      throw new TypeError("GLUON: Embed video url must be a string.");
+
+    this.video = {
       url,
     };
 
@@ -199,6 +261,8 @@ class Embed {
   /**
    * Converts the embed into string form.
    * @returns {String}
+   * @method
+   * @public
    */
   toString() {
     let string = "";
@@ -221,11 +285,12 @@ class Embed {
   /**
    * Returns the correct Discord format for an embed.
    * @returns {Object}
+   * @method
+   * @public
    */
   toJSON() {
     return {
       title: this.title,
-      type: this.type,
       description: this.description,
       url: this.url,
       timestamp: this.timestamp,
@@ -235,6 +300,7 @@ class Embed {
       fields: this.fields,
       image: this.image,
       thumbnail: this.thumbnail,
+      video: this.video,
     };
   }
 

@@ -11,13 +11,6 @@ describe("Embed", function () {
     });
   });
 
-  context("check type", function () {
-    it("should have the correct type", function () {
-      const embed = new Embed();
-      expect(embed.type).to.equal("rich");
-    });
-  });
-
   context("check setTitle", function () {
     it("should have method setTitle", function () {
       const embed = new Embed();
@@ -146,10 +139,34 @@ describe("Embed", function () {
       const embed = new Embed();
       expect(embed).to.respondTo("setImage");
     });
+    it("should throw an error if the url is empty", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.setImage(undefined);
+      }).to.throw(TypeError, "GLUON: Embed image url must be a string.");
+    });
     it("should set the image of the embed", function () {
       const embed = new Embed();
       embed.setImage("https://example.com");
       expect(embed.image.url).to.equal("https://example.com");
+    });
+  });
+
+  context("check setVideo", function () {
+    it("should have method setVideo", function () {
+      const embed = new Embed();
+      expect(embed).to.respondTo("setVideo");
+    });
+    it("should throw an error if the url is empty", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.setVideo(undefined);
+      }).to.throw(TypeError, "GLUON: Embed video url must be a string.");
+    });
+    it("should set the video of the embed", function () {
+      const embed = new Embed();
+      embed.setVideo("https://example.com");
+      expect(embed.video.url).to.equal("https://example.com");
     });
   });
 
@@ -317,11 +334,11 @@ describe("Embed", function () {
       embed.setTimestamp(123456);
       embed.setFooter("footer");
       embed.setImage("https://example.com");
+      embed.setVideo("https://example.com");
       embed.setThumbnail("https://example.com");
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
       expect(embed.toJSON()).to.deep.equal({
-        type: "rich",
         title: "title",
         description: "description",
         url: "https://example.com",
@@ -331,6 +348,9 @@ describe("Embed", function () {
           text: "footer",
         },
         image: {
+          url: "https://example.com",
+        },
+        video: {
           url: "https://example.com",
         },
         thumbnail: {
