@@ -274,6 +274,7 @@ class User {
     return {
       id: this.id,
       avatar: this.#_originalAvatarHash,
+      _cached: this._cached,
       bot: this.bot,
       username: this.username,
       global_name: this.globalName,
