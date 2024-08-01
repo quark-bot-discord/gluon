@@ -545,6 +545,7 @@ export const TEST_DATA = {
       flags: 0,
       premium_type: 0,
       public_flags: 0,
+      _cached: 123456789,
     },
     edited_timestamp: "2022-01-01T00:00:00.000Z",
     mention_everyone: true,

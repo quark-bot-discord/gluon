@@ -93,7 +93,8 @@ class User {
      * @type {Number}
      * @private
      */
-    this.#_cached = (new Date().getTime() / 1000) | 0;
+    if (data._cached) this.#_cached = data._cached;
+    else this.#_cached = (new Date().getTime() / 1000) | 0;
 
     if (
       nocache == false &&
