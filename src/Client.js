@@ -215,39 +215,41 @@ class Client extends EventsEmitter {
 
     this.dataStorage = connection;
 
-    const s3Messages = new AWS.S3({
-      endpoint: `${s3Url}${s3MessageBucket}`,
-      accessKeyId: s3AccessKeyId,
-      secretAccessKey: s3SecretAccessKey,
-      s3BucketEndpoint: true,
-    });
+    if (s3Url) {
+      const s3Messages = new AWS.S3({
+        endpoint: `${s3Url}${s3MessageBucket}`,
+        accessKeyId: s3AccessKeyId,
+        secretAccessKey: s3SecretAccessKey,
+        s3BucketEndpoint: true,
+      });
 
-    this.s3MessageBucket = s3MessageBucket;
+      this.s3MessageBucket = s3MessageBucket;
 
-    this.s3Messages = s3Messages;
+      this.s3Messages = s3Messages;
 
-    this.s3Messages.putBucketLifecycleConfiguration(
-      {
-        Bucket: s3MessageBucket,
-        LifecycleConfiguration: {
-          Rules: [
-            {
-              Expiration: {
-                Days: 30,
+      this.s3Messages.putBucketLifecycleConfiguration(
+        {
+          Bucket: s3MessageBucket,
+          LifecycleConfiguration: {
+            Rules: [
+              {
+                Expiration: {
+                  Days: 30,
+                },
+                Status: "Enabled",
+                Filter: {
+                  Prefix: "",
+                },
+                ID: "DeleteOldFiles",
               },
-              Status: "Enabled",
-              Filter: {
-                Prefix: "",
-              },
-              ID: "DeleteOldFiles",
-            },
-          ],
+            ],
+          },
         },
-      },
-      (err, data) => {
-        if (err) console.log(err);
-      },
-    );
+        (err, data) => {
+          if (err) console.log(err);
+        },
+      );
+    }
   }
 
   /**
