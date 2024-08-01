@@ -44,7 +44,7 @@ class VoiceState {
         (this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) ==
         GLUON_CACHING_OPTIONS.NO_VOICE_STATE;
 
-    const existing = this.guild?.voice_states.get(data.user_id) || null;
+    const existing = this.guild?.voiceStates.get(data.user_id) || null;
 
     /**
      * The id of the channel involved.
@@ -239,22 +239,12 @@ class VoiceState {
   }
 
   /**
-   * The user the voice state is about.
-   * @type {User?}
-   * @readonly
-   * @public
-   */
-  get user() {
-    return this.#_client.users.get(this.userId) || null;
-  }
-
-  /**
    * The id of the user the voice state is about.
    * @type {String}
    * @readonly
    * @public
    */
-  get userId() {
+  get memberId() {
     return String(this.#_user_id);
   }
 
@@ -302,7 +292,6 @@ class VoiceState {
       self_video: this.selfVideo,
       suppress: this.suppress,
       member: this.member,
-      user_id: this.userId,
       joined: this.joined,
       request_to_speak_timestamp: this.requestToSpeakTimestamp,
     };
