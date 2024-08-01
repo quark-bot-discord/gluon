@@ -1075,7 +1075,7 @@
             "code": {
                 "id": "astnode100000315",
                 "name": "formattedHash",
-                "type": "BinaryExpression",
+                "type": "TemplateLiteral",
                 "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
@@ -1100,7 +1100,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000322",
+                "id": "astnode100000323",
                 "name": "Role#displayIconURL",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1137,7 +1137,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000336",
+                "id": "astnode100000337",
                 "name": "Role#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1174,7 +1174,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000355",
+                "id": "astnode100000356",
                 "name": "Role#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1210,7 +1210,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000366",
+                "id": "astnode100000367",
                 "name": "Role#name",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1246,7 +1246,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000375",
+                "id": "astnode100000376",
                 "name": "Role#color",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1282,7 +1282,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000384",
+                "id": "astnode100000385",
                 "name": "Role#position",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1318,7 +1318,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000393",
+                "id": "astnode100000394",
                 "name": "Role#permissions",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1354,7 +1354,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000404",
+                "id": "astnode100000405",
                 "name": "Role#tags",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1390,7 +1390,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000413",
+                "id": "astnode100000414",
                 "name": "Role#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1419,7 +1419,7 @@
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000424",
+                "id": "astnode100000425",
                 "name": "Role#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1448,7 +1448,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000430",
+                "id": "astnode100000431",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1472,7 +1472,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000434",
+                "id": "astnode100000435",
                 "name": "name",
                 "type": "MemberExpression",
                 "value": "this.name"
@@ -1496,7 +1496,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000438",
+                "id": "astnode100000439",
                 "name": "color",
                 "type": "MemberExpression",
                 "value": "this.color"
@@ -1520,7 +1520,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000442",
+                "id": "astnode100000443",
                 "name": "position",
                 "type": "MemberExpression",
                 "value": "this.position"
@@ -1544,7 +1544,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000446",
+                "id": "astnode100000447",
                 "name": "permissions",
                 "type": "MemberExpression",
                 "value": "this.permissions"
@@ -1568,7 +1568,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000450",
+                "id": "astnode100000451",
                 "name": "icon",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1592,7 +1592,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000455",
+                "id": "astnode100000456",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1616,7 +1616,7 @@
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000460",
+                "id": "astnode100000461",
                 "name": "tags",
                 "type": "MemberExpression",
                 "value": "this.tags"
@@ -1640,7 +1640,7 @@
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000464",
+                "id": "astnode100000465",
                 "name": "module.exports",
                 "type": "Identifier"
             }
