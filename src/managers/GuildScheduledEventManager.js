@@ -44,7 +44,11 @@ class GuildScheduledEventManager {
     const eventsList = [];
 
     for (let i = 0; i < data.length; i++)
-      eventsList.push(new ScheduledEvent(this.#_client, data[i]));
+      eventsList.push(
+        new ScheduledEvent(this.#_client, data[i], {
+          guild_id: this.#guild.id,
+        }),
+      );
 
     return eventsList;
   }
@@ -70,7 +74,9 @@ class GuildScheduledEventManager {
       [this.#guild.id, scheduled_event_id],
     );
 
-    return new ScheduledEvent(this.#_client, data);
+    return new ScheduledEvent(this.#_client, data, {
+      guild_id: this.#guild.id,
+    });
   }
 
   /**

@@ -741,7 +741,9 @@ class EventHandler {
       } => GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
     );
 
-    const scheduledEvent = new ScheduledEvent(this.#_client, data);
+    const scheduledEvent = new ScheduledEvent(this.#_client, data, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
   }
@@ -757,7 +759,9 @@ class EventHandler {
     const oldScheduledEvent =
       this.#_client.guilds.get(data.guild_id)?.scheduled_events.get(data.id) ||
       null;
-    const newScheduledEvent = new ScheduledEvent(this.#_client, data);
+    const newScheduledEvent = new ScheduledEvent(this.#_client, data, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(
       EVENTS.GUILD_SCHEDULED_EVENT_UPDATE,
