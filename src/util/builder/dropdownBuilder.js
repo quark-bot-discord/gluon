@@ -325,7 +325,7 @@ class Dropdown {
         return {
           type: this.type,
           custom_id: this.custom_id,
-          options: this.options,
+          options: this.options?.map((o) => o.toJSON(format)),
           channel_types: this.channel_types,
           default_values: this.default_values,
           placeholder: this.placeholder,
