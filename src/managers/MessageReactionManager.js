@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
 
 /**
@@ -52,7 +53,7 @@ class MessageReactionManager {
    * @public
    * @method
    */
-  addReaction(user_id, emoji, data) {
+  _addReaction(user_id, emoji, data) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -67,7 +68,7 @@ class MessageReactionManager {
         guild_id: this.#guild.id,
       });
 
-    this.#cache[emoji].addReactor(user_id);
+    this.#cache[emoji]._addReactor(user_id);
   }
 
   /**
@@ -78,7 +79,7 @@ class MessageReactionManager {
    * @public
    * @method
    */
-  removeReaction(user_id, emoji) {
+  _removeReaction(user_id, emoji) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -86,21 +87,35 @@ class MessageReactionManager {
       throw new TypeError("GLUON: Emoji must be a string.");
 
     if (this.#cache[emoji]) {
-      this.#cache[emoji].removeReactor(user_id);
+      this.#cache[emoji]._removeReactor(user_id);
 
       if (this.#cache[emoji].count == 0) delete this.#cache[emoji];
     }
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    const messageReactions = {};
-    for (const [reaction, reactionData] of Object.entries(this.#cache))
-      messageReactions[reaction] = reactionData;
-    return messageReactions;
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        const messageReactions = {};
+        for (const [reaction, reactionData] of Object.entries(this.#cache))
+          messageReactions[reaction] = reactionData.toJSON(format);
+        return messageReactions;
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return Array.from(Object.values(this.#cache)).map((o) =>
+          o.toJSON(format),
+        );
+      }
+    }
   }
 }
 

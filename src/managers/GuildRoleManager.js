@@ -1,13 +1,13 @@
 import Guild from "../structures/Guild.js";
 import Role from "../structures/Role.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
  * Manages all roles belonging to a guild.
  */
-class GuildRoleManager {
+class GuildRoleManager extends BaseCacheManager {
   #_client;
   #guild;
-  #cache;
 
   /**
    * Creates a role manager.
@@ -15,6 +15,7 @@ class GuildRoleManager {
    * @param {Guild} guild The guild that this role manager belongs to.
    */
   constructor(client, guild) {
+    super(client);
     /**
      * The client instance.
      * @type {Client}
@@ -28,13 +29,6 @@ class GuildRoleManager {
      * @private
      */
     this.#guild = guild;
-
-    /**
-     * The cache of roles.
-     * @type {Map<String, Role>}
-     * @private
-     */
-    this.#cache = new Map();
   }
 
   /**
@@ -50,8 +44,8 @@ class GuildRoleManager {
     if (typeof role_id !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
-    const cachedRole = this.#cache.get(role_id);
-    if (this.#_client.cacheRoles == true) return cachedRole;
+    const cachedRole = await this.get(role_id);
+    if (cachedRole) return cachedRole;
 
     const data = await this.#_client.request.makeRequest("getRoles", [
       this.#guild.id,
@@ -68,20 +62,6 @@ class GuildRoleManager {
   }
 
   /**
-   * Gets a role from the cache.
-   * @param {String} id The ID of the role to retrieve.
-   * @returns {Role?}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  get(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.get(id);
-  }
-
-  /**
    * Adds a role to the cache.
    * @param {String} id The ID of the role to cache
    * @param {Role} role The role to cache.
@@ -89,45 +69,12 @@ class GuildRoleManager {
    * @public
    * @method
    * @throws {TypeError}
+   * @override
    */
   set(id, role) {
     if (!(role instanceof Role))
       throw new TypeError("GLUON: Role must be an instance of Role.");
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: Role ID must be a string.");
-    return this.#cache.set(id, role);
-  }
-
-  /**
-   * Removes a role from the cache.
-   * @param {String} id The ID of the role to remove.
-   * @returns {Boolean}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  delete(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.delete(id);
-  }
-
-  /**
-   * The number of roles in the cache.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get size() {
-    return this.#cache.size;
-  }
-
-  /**
-   * @method
-   * @public
-   */
-  toJSON() {
-    return [...this.#cache.values()];
+    return super.set(id, role);
   }
 }
 

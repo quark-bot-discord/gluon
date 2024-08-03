@@ -1,20 +1,23 @@
+import { PERMISSIONS } from "../constants.js";
 import Channel from "../structures/Channel.js";
 import Message from "../structures/Message.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
  * Manages all messages within a channel.
  */
-class ChannelMessageManager {
+class ChannelMessageManager extends BaseCacheManager {
   #_client;
   #channel;
-  #cache;
-
+  #guild;
   /**
    * Creates a channel message manager.
    * @param {Client} client The client instance.
    * @param {Channel} channel The channel that is being managed.
    */
-  constructor(client, channel) {
+  constructor(client, guild, channel) {
+    super(client, { useRedis: true });
     /**
      * The client instance.
      * @type {Client}
@@ -30,11 +33,11 @@ class ChannelMessageManager {
     this.#channel = channel;
 
     /**
-     * The cache for messages.
-     * @type {Map<String, Message>}
+     * The guild that this message manager belongs to.
+     * @type {Guild}
      * @private
      */
-    this.#cache = new Map();
+    this.#guild = guild;
   }
 
   /**
@@ -47,13 +50,33 @@ class ChannelMessageManager {
    * @throws {TypeError | Error}
    */
   async fetch(options) {
+    if (
+      !checkPermission(
+        (await this.#guild.me()).permissions,
+        PERMISSIONS.VIEW_CHANNEL,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    if (
+      !checkPermission(
+        (await this.#guild.me()).permissions,
+        PERMISSIONS.READ_MESSAGE_HISTORY,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
     if (typeof options === "object") {
-      if (this.#cache.size != 0) {
+      if (this.toJSON().length != 0) {
         const cachedMessages = [];
-        this.#cache.forEach((key, value) => {
-          if (options.before && value.id < options.before)
-            cachedMessages.push(value);
-        });
+        const rawCache = this.toJSON();
+        for (let i = 0; i < rawCache.length; i++) {
+          if (options.before && BigInt(rawCache[i].id) < BigInt(options.before))
+            cachedMessages.push(rawCache[i]);
+          else if (
+            options.after &&
+            BigInt(rawCache[i].id) > BigInt(options.after)
+          )
+            cachedMessages.push(rawCache[i]);
+        }
       }
 
       const body = {};
@@ -81,7 +104,7 @@ class ChannelMessageManager {
         );
       return messages;
     } else if (typeof options === "string") {
-      const cachedMessage = this.#cache.get(options);
+      const cachedMessage = await this.get(options);
       if (cachedMessage) return cachedMessage;
 
       const data = await this.#_client.request.makeRequest(
@@ -124,62 +147,6 @@ class ChannelMessageManager {
   }
 
   /**
-   * Sweeps messages from the channel which have been flagged for deletion, or moves messages to local storage if the guild has increased cache limits.
-   * @param {Number} cacheCount The maximum number of messages that may be stored for this channel, or 0 for no limit.
-   * @param {Number} currentTime The current UNIX time.
-   * @returns {Number} The remaining number of messages in the channel.
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  sweepMessages(cacheCount, currentTime) {
-    if (typeof cacheCount !== "number")
-      throw new TypeError("GLUON: Cache count must be a number.");
-
-    if (typeof currentTime !== "number")
-      throw new TypeError("GLUON: Current time must be a number.");
-
-    if (this.#cache.size == 0) return;
-
-    const currentCacheSize = this.#cache.size;
-    const currentCacheKeys = this.#cache.keys();
-    const currentCacheValues = this.#cache.values();
-
-    for (let i = 0, cacheSize = currentCacheSize; i < currentCacheSize; i++) {
-      const currentCacheValue = currentCacheValues.next().value;
-      if (currentCacheValue)
-        if (
-          currentCacheValue.timestamp + this.#_client.defaultMessageExpiry <
-            currentTime ||
-          (cacheCount != 0 ? cacheSize > cacheCount : false)
-        ) {
-          if (this.#_client.increasedCache.get(this.#channel.guild.id))
-            currentCacheValue.shelf();
-          else {
-            this.#cache.delete(currentCacheKeys.next().value);
-            cacheSize--;
-          }
-        }
-    }
-
-    return this.#cache.size;
-  }
-
-  /**
-   * Gets a message from the cache.
-   * @param {String} id The ID of the message to retrieve.
-   * @returns {Message?}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  get(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.get(id);
-  }
-
-  /**
    * Adds a message to the cache.
    * @param {String} id The ID of the message to cache.
    * @param {Message} message The message to cache.
@@ -187,45 +154,12 @@ class ChannelMessageManager {
    * @public
    * @method
    * @throws {TypeError}
+   * @override
    */
   set(id, message) {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: Message ID must be a string.");
-    return this.#cache.set(id, message);
-  }
-
-  /**
-   * Deletes a message from the cache.
-   * @param {String} id The ID of the message to delete.
-   * @returns {Boolean}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  delete(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.delete(id);
-  }
-
-  /**
-   * Returns the size of the cache.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get size() {
-    return this.#cache.size;
-  }
-
-  /**
-   * @method
-   * @public
-   */
-  toJSON() {
-    return [...this.#cache.values()];
+    return super.set(id, message);
   }
 }
 

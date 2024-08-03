@@ -1,4 +1,7 @@
-import { GLUON_GUILD_CACHING_OPTIONS } from "../constants.js";
+import {
+  GLUON_GUILD_CACHING_OPTIONS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 
 class GuildCacheOptions {
   #_cache_options;
@@ -305,11 +308,21 @@ class GuildCacheOptions {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return this.#_cache_options;
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return this.#_cache_options;
+      }
+    }
   }
 }
 

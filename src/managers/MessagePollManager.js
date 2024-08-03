@@ -1,3 +1,5 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
+
 /**
  * Manages a poll for a message.
  */
@@ -30,7 +32,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  addVote(user_id, answer_id) {
+  _addVote(user_id, answer_id) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -52,7 +54,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  removeVote(user_id, answer_id) {
+  _removeVote(user_id, answer_id) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -69,14 +71,36 @@ class MessagePollManager {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    const pollResponses = {};
-    for (const [key, values] of this.#cache)
-      pollResponses[key] = values.map((v) => String(v));
-    return pollResponses;
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        const pollResponses = {};
+        for (const [key, values] of this.#cache)
+          pollResponses[key] = values.map((v) => String(v));
+        return pollResponses;
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        const pollResponses = {};
+        for (const [key, values] of this.#cache)
+          pollResponses[key] = values.map((v) => String(v));
+        return {
+          answer_counts: Object.keys(this.#cache).map((k) => {
+            return {
+              answer_id: k,
+              count: this.#cache.get(k).length,
+            };
+          }),
+        };
+      }
+    }
   }
 }
 

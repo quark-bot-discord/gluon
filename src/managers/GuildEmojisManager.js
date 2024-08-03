@@ -1,19 +1,20 @@
 import Emoji from "../structures/Emoji.js";
 import Guild from "../structures/Guild.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
  * Manages all emojis within a guild.
  */
-class GuildEmojisManager {
+class GuildEmojisManager extends BaseCacheManager {
   #_client;
   #guild;
-  #cache;
   /**
    * Creates a guild emoji manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
   constructor(client, guild) {
+    super(client);
     /**
      * The client instance.
      * @type {Client}
@@ -27,13 +28,6 @@ class GuildEmojisManager {
      * @private
      */
     this.#guild = guild;
-
-    /**
-     * The cache of emojis.
-     * @type {Map<String, Emoji>}
-     * @private
-     */
-    this.#cache = new Map();
   }
 
   /**
@@ -49,7 +43,7 @@ class GuildEmojisManager {
     if (typeof emoji_id !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
-    const cached = this.#cache.get(emoji_id);
+    const cached = await this.get(emoji_id);
     if (cached) return cached;
 
     const data = await this.#_client.request.makeRequest("getEmoji", [
@@ -61,20 +55,6 @@ class GuildEmojisManager {
   }
 
   /**
-   * Gets an emoji from the cache.
-   * @param {String} id The ID of the emoji to retrieve.
-   * @returns {Emoji?}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  get(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.get(id);
-  }
-
-  /**
    * Adds an emoji to the cache.
    * @param {String} id The ID of the emoji to cache.
    * @param {Emoji} emoji The emoji to cache.
@@ -82,45 +62,12 @@ class GuildEmojisManager {
    * @public
    * @method
    * @throws {TypeError}
+   * @override
    */
   set(id, emoji) {
     if (!(emoji instanceof Emoji))
       throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: Emoji ID must be a string.");
-    return this.#cache.set(id, emoji);
-  }
-
-  /**
-   * Deletes an emoji from the cache.
-   * @param {String} id The ID of the emoji to delete.
-   * @returns {Boolean}
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  delete(id) {
-    if (typeof id !== "string")
-      throw new TypeError("GLUON: ID must be a string.");
-    return this.#cache.delete(id);
-  }
-
-  /**
-   * Returns the size of the cache.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get size() {
-    return this.#cache.size;
-  }
-
-  /**
-   * @public
-   * @method
-   */
-  toJSON() {
-    return [...this.#cache.values()];
+    return super.set(id, emoji);
   }
 }
 
