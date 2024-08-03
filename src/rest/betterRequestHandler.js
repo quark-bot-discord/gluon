@@ -129,20 +129,20 @@ class BetterRequestHandler {
     try {
       if (this.#_client.redis)
         await this.#_client.redis.set(
-          `gluon.paths.${hash}`,
+          `${NAME.toLowerCase()}.paths.${hash}`,
           JSON.stringify(bucket),
           "EX",
           expireFromCache,
         );
 
       this.#localRatelimitCache.set(
-        `gluon.paths.${hash}`,
+        `${NAME.toLowerCase()}.paths.${hash}`,
         bucket,
         expireFromCache,
       );
     } catch (error) {
       this.#localRatelimitCache.set(
-        `gluon.paths.${hash}`,
+        `${NAME.toLowerCase()}.paths.${hash}`,
         bucket,
         expireFromCache,
       );
