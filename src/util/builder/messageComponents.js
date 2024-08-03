@@ -39,7 +39,7 @@ class MessageComponents {
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       default: {
-        return this.actionRows;
+        return this.actionRows.map((a) => a.toJSON(format));
       }
     }
   }
