@@ -1,4 +1,9 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import {
+  APPLICATION_COMMAND_TYPES,
+  COMMAND_NAME_REGEX,
+  LIMITS,
+  TO_JSON_TYPES_ENUM,
+} from "../../constants.js";
 
 /**
  * Helps to create a choice for a command.
@@ -283,11 +288,130 @@ class CommandOption {
     if (suppressValidation !== true) {
       if (!this.name)
         throw new TypeError("GLUON: Command option name must be provided.");
+      if (typeof this.name !== "string")
+        throw new TypeError("GLUON: Command option name must be a string.");
+      if (
+        this.name.length > LIMITS.MAX_COMMAND_OPTION_NAME ||
+        this.name.length < LIMITS.MIN_COMMAND_OPTION_NAME
+      )
+        throw new RangeError(
+          `GLUON: Command option name must be between ${LIMITS.MIN_COMMAND_OPTION_NAME} and ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
+        );
       if (!this.type)
         throw new TypeError("GLUON: Command option type must be provided.");
+      if (typeof this.type !== "number")
+        throw new TypeError("GLUON: Command option type must be a number.");
+      if (
+        (this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT ||
+          typeof this.type === "undefined") &&
+        !COMMAND_NAME_REGEX.test(this.name)
+      )
+        throw new TypeError("GLUON: Command option name must match the regex.");
       if (!this.description)
         throw new TypeError(
           "GLUON: Command option description must be provided.",
+        );
+      if (typeof this.description !== "string")
+        throw new TypeError(
+          "GLUON: Command option description must be a string.",
+        );
+      if (
+        this.description.length > LIMITS.MAX_COMMAND_OPTION_DESCRIPTION ||
+        this.description.length < LIMITS.MIN_COMMAND_OPTION_DESCRIPTION
+      )
+        throw new RangeError(
+          `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
+        );
+      if (
+        this.name_localizations &&
+        typeof this.name_localizations !== "object"
+      )
+        throw new TypeError(
+          "GLUON: Command option name localizations must be an object.",
+        );
+      if (
+        this.description_localizations &&
+        typeof this.description_localizations !== "object"
+      )
+        throw new TypeError(
+          "GLUON: Command option description localizations must be an object.",
+        );
+      if (
+        typeof this.required !== "undefined" &&
+        typeof this.required !== "boolean"
+      )
+        throw new TypeError(
+          "GLUON: Command option required status must be a boolean.",
+        );
+      if (this.choices && !Array.isArray(this.choices))
+        throw new TypeError("GLUON: Command option choices must be an array.");
+      if (
+        this.choices &&
+        this.choices.length > LIMITS.MAX_COMMAND_OPTION_CHOICES
+      )
+        throw new RangeError(
+          `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`,
+        );
+      if (this.options && !Array.isArray(this.options))
+        throw new TypeError("GLUON: Command option options must be an array.");
+      if (this.options && this.options.length > LIMITS.MAX_COMMAND_OPTIONS)
+        throw new RangeError(
+          `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`,
+        );
+      if (this.channel_types && !Array.isArray(this.channel_types))
+        throw new TypeError(
+          "GLUON: Command option channel types must be an array.",
+        );
+      if (
+        typeof this.min_value !== "undefined" &&
+        typeof this.min_value !== "number"
+      )
+        throw new TypeError(
+          "GLUON: Command option min value must be a number.",
+        );
+      if (
+        typeof this.max_value !== "undefined" &&
+        typeof this.max_value !== "number"
+      )
+        throw new TypeError(
+          "GLUON: Command option max value must be a number.",
+        );
+      if (
+        typeof this.min_length !== "undefined" &&
+        typeof this.min_length !== "number"
+      )
+        throw new TypeError(
+          "GLUON: Command option min length must be a number.",
+        );
+      if (
+        typeof this.min_length !== "undefined" &&
+        (this.min_length < LIMITS.MIN_MIN_COMMAND_OPTION_LENGTH ||
+          this.min_length > LIMITS.MAX_MIN_COMMAND_OPTION_LENGTH)
+      )
+        throw new RangeError(
+          `GLUON: Command option min length must be between ${LIMITS.MIN_MIN_COMMAND_OPTION_LENGTH} and ${LIMITS.MAX_MIN_COMMAND_OPTION_LENGTH}.`,
+        );
+      if (
+        typeof this.max_length !== "undefined" &&
+        typeof this.max_length !== "number"
+      )
+        throw new TypeError(
+          "GLUON: Command option max length must be a number.",
+        );
+      if (
+        typeof this.max_length !== "undefined" &&
+        (this.max_length < LIMITS.MIN_MAX_COMMAND_OPTION_LENGTH ||
+          this.max_length > LIMITS.MAX_MAX_COMMAND_OPTION_LENGTH)
+      )
+        throw new RangeError(
+          `GLUON: Command option max length must be between ${LIMITS.MIN_MAX_COMMAND_OPTION_LENGTH} and ${LIMITS.MAX_MAX_COMMAND_OPTION_LENGTH}.`,
+        );
+      if (
+        typeof this.autocomplete !== "undefined" &&
+        typeof this.autocomplete !== "boolean"
+      )
+        throw new TypeError(
+          "GLUON: Command option autocomplete must be a boolean.",
         );
     }
     switch (format) {
