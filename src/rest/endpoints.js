@@ -30,7 +30,9 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(params.body);
+    },
   },
   patchEditMessage: {
     path: (channel_id, message_id) => {
