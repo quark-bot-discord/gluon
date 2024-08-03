@@ -15,6 +15,7 @@ import encryptMessage from "../util/gluon/encryptMessage.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import MessageReactionManager from "../managers/MessageReactionManager.js";
 import Poll from "./Poll.js";
+import Embed from "../util/builder/embedBuilder.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -201,11 +202,11 @@ class Message {
 
     /**
      * The message embeds.
-     * @type {Object[]}
+     * @type {Embed[]}
      * @private
      */
-    this.#embeds = data.embeds;
-    if (this.#embeds == undefined && existing && existing.embeds != undefined)
+    if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
+    else if (existing && existing.embeds != undefined)
       this.#embeds = existing.embeds;
     else if (this.#embeds == undefined) this.#embeds = [];
 
