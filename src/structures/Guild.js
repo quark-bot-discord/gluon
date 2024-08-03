@@ -1,4 +1,8 @@
-import { AUDIT_LOG_TYPES, PERMISSIONS } from "../constants.js";
+import {
+  AUDIT_LOG_TYPES,
+  PERMISSIONS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildEmojisManager from "../managers/GuildEmojisManager.js";
 import GuildInviteManager from "../managers/GuildInviteManager.js";
@@ -603,6 +607,26 @@ class Guild {
   }
 
   /**
+   * Raw system channel flags.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawSystemChannelFlags() {
+    let rawFlags = 0;
+
+    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) rawFlags |= 0b1 << 0;
+    if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1) rawFlags |= 0b1 << 1;
+    if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2) rawFlags |= 0b1 << 2;
+    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3) rawFlags |= 0b1 << 3;
+    if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4) rawFlags |= 0b1 << 4;
+    if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5) rawFlags |= 0b1 << 5;
+
+    return rawFlags;
+  }
+
+  /**
    * Server MFA level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
    * @readonly
@@ -612,6 +636,19 @@ class Guild {
   get mfaLevel() {
     if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "NONE";
     else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7) return "ELEVATED";
+    else return null;
+  }
+
+  /**
+   * Server MFA level.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawMfaLevel() {
+    if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return 0;
+    else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7) return 1;
     else return null;
   }
 
@@ -632,6 +669,22 @@ class Guild {
   }
 
   /**
+   * Server verification level.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawVerificationLevel() {
+    if ((this.#_attributes & (0b1 << 8)) == 0b1 << 8) return 0;
+    else if ((this.#_attributes & (0b1 << 9)) == 0b1 << 9) return 1;
+    else if ((this.#_attributes & (0b1 << 10)) == 0b1 << 10) return 2;
+    else if ((this.#_attributes & (0b1 << 11)) == 0b1 << 11) return 3;
+    else if ((this.#_attributes & (0b1 << 12)) == 0b1 << 12) return 4;
+    else return null;
+  }
+
+  /**
    * Default notification setting.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
    * @readonly
@@ -642,6 +695,19 @@ class Guild {
     if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return "ALL_MESSAGES";
     else if ((this.#_attributes & (0b1 << 14)) == 0b1 << 14)
       return "ONLY_MENTIONS";
+    else return null;
+  }
+
+  /**
+   * Default notification setting.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawDefaultMessageNotifications() {
+    if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return 0;
+    else if ((this.#_attributes & (0b1 << 14)) == 0b1 << 14) return 1;
     else return null;
   }
 
@@ -662,6 +728,20 @@ class Guild {
   }
 
   /**
+   * Explicit content filter level.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawExplicitContentFilter() {
+    if ((this.#_attributes & (0b1 << 15)) == 0b1 << 15) return 0;
+    else if ((this.#_attributes & (0b1 << 16)) == 0b1 << 16) return 1;
+    else if ((this.#_attributes & (0b1 << 17)) == 0b1 << 17) return 2;
+    else return null;
+  }
+
+  /**
    * Server NSFW level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
    * @readonly
@@ -674,6 +754,21 @@ class Guild {
     else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20) return "SAFE";
     else if ((this.#_attributes & (0b1 << 21)) == 0b1 << 21)
       return "AGE_RESTRICTED";
+    else return null;
+  }
+
+  /**
+   * Server NSFW level.
+   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
+   * @readonly
+   * @type {Number}
+   * @public
+   */
+  get rawNsfwLevel() {
+    if ((this.#_attributes & (0b1 << 18)) == 0b1 << 18) return 0;
+    else if ((this.#_attributes & (0b1 << 19)) == 0b1 << 19) return 1;
+    else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20) return 2;
+    else if ((this.#_attributes & (0b1 << 21)) == 0b1 << 21) return 3;
     else return null;
   }
 
@@ -1133,7 +1228,11 @@ class Guild {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e) => new AuditLog(this.#_client, e, { users: data.users }),
+      (e) =>
+        new AuditLog(this.#_client, e, {
+          users: data.users,
+          guild_id: this.id,
+        }),
     );
   }
 
@@ -1250,32 +1349,69 @@ class Guild {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name,
-      icon: this.#_originalIconHash,
-      owner_id: this.ownerId,
-      joined_at: this.joinedAt * 1000,
-      premium_tier: this.premiumTier,
-      unavailable: this.unavailable,
-      member_count: this.memberCount,
-      preferred_locale: this.preferredLocale,
-      _cache_options: this._cacheOptions,
-      _attributes: this.#_attributes,
-      system_channel_id: this.systemChannelId ?? undefined,
-      rules_channel_id: this.rulesChannelId ?? undefined,
-      premium_subscription_count: this.premiumSubscriptionCount,
-      members: this.members,
-      channels: this.channels,
-      voice_states: this.voiceStates,
-      roles: this.roles,
-      emojis: this.emojis,
-      invites: this.invites,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          name: this.name,
+          icon: this.#_originalIconHash,
+          owner_id: this.ownerId,
+          joined_at: this.joinedAt * 1000,
+          unavailable: this.unavailable,
+          member_count: this.memberCount,
+          preferred_locale: this.preferredLocale,
+          _cache_options: this._cacheOptions,
+          _attributes: this.#_attributes,
+          system_channel_id: this.systemChannelId ?? undefined,
+          rules_channel_id: this.rulesChannelId ?? undefined,
+          premium_subscription_count: this.premiumSubscriptionCount,
+          members: this.members.toJSON(format),
+          channels: this.channels.toJSON(format),
+          voice_states: this.voiceStates.toJSON(format),
+          roles: this.roles.toJSON(format),
+          emojis: this.emojis.toJSON(format),
+          invites: this.invites.toJSON(format),
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          name: this.name,
+          icon: this.#_originalIconHash,
+          owner_id: this.ownerId,
+          joined_at: this.joinedAt * 1000,
+          premium_tier: this.premiumTier,
+          unavailable: this.unavailable,
+          member_count: this.memberCount,
+          preferred_locale: this.preferredLocale,
+          system_channel_flags: this.rawSystemChannelFlags,
+          system_channel_id: this.systemChannelId ?? undefined,
+          rules_channel_id: this.rulesChannelId ?? undefined,
+          premium_subscription_count: this.premiumSubscriptionCount,
+          premium_progress_bar_enabled: this.premiumProgressBarEnabled,
+          default_message_notifications: this.rawDefaultMessageNotifications,
+          explicit_content_filter: this.rawExplicitContentFilter,
+          verification_level: this.rawVerificationLevel,
+          nsfw_level: this.rawNsfwLevel,
+          mfa_level: this.rawMfaLevel,
+          members: this.members.toJSON(format),
+          channels: this.channels.toJSON(format),
+          voice_states: this.voiceStates.toJSON(format),
+          roles: this.roles.toJSON(format),
+          emojis: this.emojis.toJSON(format),
+          invites: this.invites.toJSON(format),
+        };
+      }
+    }
   }
 }
 

@@ -47,7 +47,6 @@ class Client extends EventsEmitter {
     cacheScheduledEvents = false,
     cacheEmojis = false,
     cacheInvites = false,
-    cacheAllMembers = false,
     defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS,
     defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS,
     increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
@@ -132,13 +131,6 @@ class Client extends EventsEmitter {
      * @type {Boolean}
      */
     this.cacheInvites = cacheInvites;
-
-    /**
-     * Whether this client should fetch and subsequently cache all members.
-     * Overrides cacheMembers
-     * @type {Boolean}
-     */
-    this.cacheAllMembers = cacheAllMembers;
 
     /**
      * The base message expiry time, in seconds.
@@ -816,7 +808,7 @@ class Client extends EventsEmitter {
 
         if (
           this.cacheMessages == true ||
-          (this.cacheMembers == true && this.cacheAllMembers != true) ||
+          this.cacheMembers == true ||
           this.cacheUsers == true
         )
           setInterval(async () => {
@@ -882,10 +874,7 @@ class Client extends EventsEmitter {
 
             const currentTime = Math.floor(new Date().getTime() / 1000);
 
-            if (
-              this.cacheMessages == true ||
-              (this.cacheMembers == true && this.cacheAllMembers != true)
-            )
+            if (this.cacheMessages == true || this.cacheMembers == true)
               this.guilds.cache.forEach((guild) => {
                 if (this.cacheMessages == true) {
                   this.emit(
@@ -922,10 +911,7 @@ class Client extends EventsEmitter {
                   });
                 }
 
-                if (
-                  (this.cacheMembers == true && this.cacheAllMembers != true) ||
-                  this.cacheMessages == true
-                ) {
+                if (this.cacheMembers == true || this.cacheMessages == true) {
                   this.emit(
                     "debug",
                     `Sweeping members for GUILD ${guild.id}...`,

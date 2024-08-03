@@ -1,4 +1,4 @@
-import { LIMITS } from "../../constants.js";
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Structure for message components.
@@ -33,8 +33,15 @@ class MessageComponents {
    * Returns the correct Discord format for message components.
    * @returns {Object}
    */
-  toJSON() {
-    return this.actionRows;
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return this.actionRows;
+      }
+    }
   }
 }
 

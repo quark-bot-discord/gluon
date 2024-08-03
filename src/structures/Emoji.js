@@ -1,4 +1,4 @@
-import { CDN_BASE_URL } from "../constants.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents an emoji.
@@ -186,15 +186,34 @@ class Emoji {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name,
-      _attributes: this.#_attributes,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+        return {
+          id: this.id,
+          name: this.name,
+          _attributes: this.#_attributes,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          name: this.name,
+          animated: this.animated,
+          managed: this.managed,
+          require_colons: this.requireColons,
+          available: this.available,
+        };
+      }
+    }
   }
 }
 

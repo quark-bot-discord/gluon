@@ -1,4 +1,4 @@
-import { LIMITS } from "../../constants.js";
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Helps to create a choice for a command.
@@ -88,12 +88,22 @@ class CommandChoice {
    * Returns the correct Discord format for a command choice.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      name: this.name,
-      name_localizations: this.name_localizations,
-      value: this.value,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          name: this.name,
+          name_localizations: this.name_localizations,
+          value: this.value,
+        };
+      }
+    }
   }
 }
 

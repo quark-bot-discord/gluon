@@ -1,5 +1,6 @@
-import { LIMITS } from "../../constants.js";
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
+import isValidUrl from "../general/isValidUrl.js";
 
 /**
  * Helps to create an embed for a message.
@@ -259,6 +260,28 @@ class Embed {
   }
 
   /**
+   * Returns the character count of the embed.
+   * @returns {Number}
+   * @readonly
+   * @public
+   */
+  get characterCount() {
+    let count = 0;
+
+    count += this.title ? this.title.length : 0;
+    count += this.description ? this.description.length : 0;
+    count += this.footer?.text ? this.footer.text.length : 0;
+    count += this.author?.name ? this.author.name.length : 0;
+
+    for (let i = 0; i < this.fields.length; i++)
+      count +=
+        (this.fields[i].name?.length || 0) +
+        (this.fields[i].value?.length || 0);
+
+    return count;
+  }
+
+  /**
    * Converts the embed into string form.
    * @returns {String}
    * @method
@@ -288,36 +311,143 @@ class Embed {
    * @method
    * @public
    */
-  toJSON() {
-    return {
-      title: this.title,
-      description: this.description,
-      url: this.url,
-      timestamp: this.timestamp,
-      color: this.color,
-      footer: this.footer,
-      author: this.author,
-      fields: this.fields,
-      image: this.image,
-      thumbnail: this.thumbnail,
-      video: this.video,
-    };
-  }
-
-  get characterCount() {
-    let count = 0;
-
-    count += this.title ? this.title.length : 0;
-    count += this.description ? this.description.length : 0;
-    count += this.footer?.text ? this.footer.text.length : 0;
-    count += this.author?.name ? this.author.name.length : 0;
-
-    for (let i = 0; i < this.fields.length; i++)
-      count +=
-        (this.fields[i].name?.length || 0) +
-        (this.fields[i].value?.length || 0);
-
-    return count;
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (this.title && typeof this.title !== "string")
+        throw new TypeError("GLUON: Embed title must be a string.");
+      if (this.title && this.title.length > LIMITS.MAX_EMBED_TITLE)
+        throw new RangeError(
+          `GLUON: Embed title must be less than ${LIMITS.MAX_EMBED_TITLE} characters.`,
+        );
+      if (this.description && typeof this.description !== "string")
+        throw new TypeError("GLUON: Embed description must be a string.");
+      if (
+        this.description &&
+        this.description.length > LIMITS.MAX_EMBED_DESCRIPTION
+      )
+        throw new RangeError(
+          `GLUON: Embed description must be less than ${LIMITS.MAX_EMBED_DESCRIPTION} characters.`,
+        );
+      if (this.url && typeof this.url !== "string")
+        throw new TypeError("GLUON: Embed url must be a string.");
+      if (this.url && isValidUrl(this.url) === false)
+        throw new TypeError("GLUON: Embed url must be a valid url.");
+      if (this.timestamp && typeof this.timestamp !== "string")
+        throw new TypeError("GLUON: Embed timestamp must be a string.");
+      if (this.color && typeof this.color !== "number")
+        throw new TypeError("GLUON: Embed color must be a number.");
+      if (this.footer && typeof this.footer !== "object")
+        throw new TypeError("GLUON: Embed footer must be an object.");
+      if (this.footer && typeof this.footer.text !== "string")
+        throw new TypeError("GLUON: Embed footer text must be a string.");
+      if (
+        this.footer &&
+        this.footer.text &&
+        this.footer.text.length > LIMITS.MAX_EMBED_FOOTER_TEXT
+      )
+        throw new RangeError(
+          `GLUON: Embed footer text must be less than ${LIMITS.MAX_EMBED_FOOTER_TEXT} characters.`,
+        );
+      if (
+        this.footer &&
+        this.footer.icon_url &&
+        typeof this.footer.icon_url !== "string"
+      )
+        throw new TypeError("GLUON: Embed footer icon url must be a string.");
+      if (
+        this.footer &&
+        this.footer.icon_url &&
+        isValidUrl(this.footer.icon_url) === false
+      )
+        throw new TypeError(
+          "GLUON: Embed footer icon url must be a valid url.",
+        );
+      if (this.author && typeof this.author !== "object")
+        throw new TypeError("GLUON: Embed author must be an object.");
+      if (this.author && typeof this.author.name !== "string")
+        throw new TypeError("GLUON: Embed author name must be a string.");
+      if (
+        this.author &&
+        this.author.name &&
+        this.author.name.length > LIMITS.MAX_EMBED_AUTHOR_NAME
+      )
+        throw new RangeError(
+          `GLUON: Embed author name must be less than ${LIMITS.MAX_EMBED_AUTHOR_NAME} characters.`,
+        );
+      if (this.author && this.author.url && typeof this.author.url !== "string")
+        throw new TypeError("GLUON: Embed author url must be a string.");
+      if (
+        this.author &&
+        this.author.url &&
+        isValidUrl(this.author.url) === false
+      )
+        throw new TypeError("GLUON: Embed author url must be a valid url.");
+      if (
+        this.author &&
+        this.author.icon_url &&
+        typeof this.author.icon_url !== "string"
+      )
+        throw new TypeError("GLUON: Embed author icon url must be a string.");
+      if (
+        this.author &&
+        this.author.icon_url &&
+        isValidUrl(this.author.icon_url) === false
+      )
+        throw new TypeError(
+          "GLUON: Embed author icon url must be a valid url.",
+        );
+      if (this.fields && !Array.isArray(this.fields))
+        throw new TypeError("GLUON: Embed fields must be an array.");
+      if (this.fields && this.fields.length > LIMITS.MAX_EMBED_FIELDS)
+        throw new RangeError(
+          `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
+        );
+      if (this.image && typeof this.image !== "object")
+        throw new TypeError("GLUON: Embed image must be an object.");
+      if (this.image && typeof this.image.url !== "string")
+        throw new TypeError("GLUON: Embed image url must be a string.");
+      if (this.image && this.image.url && isValidUrl(this.image.url) === false)
+        throw new TypeError("GLUON: Embed image url must be a valid url.");
+      if (this.thumbnail && typeof this.thumbnail !== "object")
+        throw new TypeError("GLUON: Embed thumbnail must be an object.");
+      if (this.thumbnail && typeof this.thumbnail.url !== "string")
+        throw new TypeError("GLUON: Embed thumbnail url must be a string.");
+      if (
+        this.thumbnail &&
+        this.thumbnail.url &&
+        isValidUrl(this.thumbnail.url) === false
+      )
+        throw new TypeError("GLUON: Embed thumbnail url must be a valid url.");
+      if (this.video && typeof this.video !== "object")
+        throw new TypeError("GLUON: Embed video must be an object.");
+      if (this.video && typeof this.video.url !== "string")
+        throw new TypeError("GLUON: Embed video url must be a string.");
+      if (this.video && this.video.url && isValidUrl(this.video.url) === false)
+        throw new TypeError("GLUON: Embed video url must be a valid url.");
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          title: this.title,
+          description: this.description,
+          url: this.url,
+          timestamp: this.timestamp,
+          color: this.color,
+          footer: this.footer,
+          author: this.author,
+          fields: this.fields,
+          image: this.image,
+          thumbnail: this.thumbnail,
+          video: this.video,
+        };
+      }
+    }
   }
 }
 

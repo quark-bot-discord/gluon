@@ -12,7 +12,9 @@ describe("AuditLog", function () {
   context("check structure", function () {
     it("should have the correct structure", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog).to.have.property("id");
       expect(auditLog).to.have.property("guildId");
       expect(auditLog).to.have.property("actionType");
@@ -36,7 +38,9 @@ describe("AuditLog", function () {
   context("check id", function () {
     it("should have the correct id", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.id).to.equal(TEST_DATA.AUDIT_LOG.id);
     });
   });
@@ -44,7 +48,9 @@ describe("AuditLog", function () {
   context("check actionType", function () {
     it("should have the correct actionType", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.actionType).to.equal(TEST_DATA.AUDIT_LOG.action_type);
     });
   });
@@ -52,7 +58,9 @@ describe("AuditLog", function () {
   context("check reason", function () {
     it("should have the correct reason", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.reason).to.equal(TEST_DATA.AUDIT_LOG.reason);
     });
   });
@@ -60,7 +68,9 @@ describe("AuditLog", function () {
   context("check targetId", function () {
     it("should have the correct targetId", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.targetId).to.equal(TEST_DATA.AUDIT_LOG.target_id);
     });
   });
@@ -68,7 +78,9 @@ describe("AuditLog", function () {
   context("check channelId", function () {
     it("should have the correct channelId", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.channelId).to.equal(
         TEST_DATA.AUDIT_LOG.options.channel_id,
       );
@@ -78,7 +90,9 @@ describe("AuditLog", function () {
   context("check executorId", function () {
     it("should have the correct executorId", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.executorId).to.equal(TEST_DATA.AUDIT_LOG.executor_id);
     });
   });
@@ -86,7 +100,9 @@ describe("AuditLog", function () {
   context("check count", function () {
     it("should have the correct count", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.count).to.equal(TEST_DATA.AUDIT_LOG.count);
     });
   });
@@ -94,7 +110,9 @@ describe("AuditLog", function () {
   context("check deleteMemberDays", function () {
     it("should have the correct deleteMemberDays", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.deleteMemberDays).to.equal(
         TEST_DATA.AUDIT_LOG.delete_member_days,
       );
@@ -104,7 +122,9 @@ describe("AuditLog", function () {
   context("check membersRemoved", function () {
     it("should have the correct membersRemoved", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.membersRemoved).to.equal(
         TEST_DATA.AUDIT_LOG.members_removed,
       );
@@ -114,7 +134,9 @@ describe("AuditLog", function () {
   context("check specialId", function () {
     it("should have the correct specialId", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.specialId).to.equal(TEST_DATA.AUDIT_LOG.options.id);
     });
   });
@@ -122,7 +144,9 @@ describe("AuditLog", function () {
   context("check specialType", function () {
     it("should have the correct specialType", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.specialType).to.equal(TEST_DATA.AUDIT_LOG.options.type);
     });
   });
@@ -130,7 +154,9 @@ describe("AuditLog", function () {
   context("check status", function () {
     it("should have the correct status", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.status).to.equal(TEST_DATA.AUDIT_LOG.status);
     });
   });
@@ -138,7 +164,9 @@ describe("AuditLog", function () {
   context("check changes", function () {
     it("should have the correct changes", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.changes).to.equal(TEST_DATA.AUDIT_LOG.changes);
     });
   });
@@ -146,7 +174,9 @@ describe("AuditLog", function () {
   context("check toString", function () {
     it("should return the correct string", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.toString()).to.equal(
         `<Audit Log Entry: ${TEST_DATA.AUDIT_LOG.id}>`,
       );
@@ -156,10 +186,12 @@ describe("AuditLog", function () {
   context("check toJSON", function () {
     it("should return the correct JSON", function () {
       const client = {};
-      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG);
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(auditLog.toJSON()).to.deep.equal({
         id: TEST_DATA.AUDIT_LOG.id,
-        guild_id: TEST_DATA.AUDIT_LOG.guild_id,
+        guild_id: TEST_DATA.GUILD_ID,
         action_type: TEST_DATA.AUDIT_LOG.action_type,
         reason: TEST_DATA.AUDIT_LOG.reason,
         target_id: TEST_DATA.AUDIT_LOG.target_id,

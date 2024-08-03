@@ -1,4 +1,4 @@
-import { GLUON_CACHING_OPTIONS } from "../constants.js";
+import { GLUON_CACHING_OPTIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Member from "./Member.js";
 
 /**
@@ -273,29 +273,49 @@ class VoiceState {
    * @public
    */
   toString() {
-    return `<VoiceState: ${this.userId}>`;
+    return `<VoiceState: ${this.memberId}>`;
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      guild_id: this.guildId,
-      channel_id: this.channelId,
-      deaf: this.deaf,
-      mute: this.mute,
-      self_deaf: this.selfDeaf,
-      self_mute: this.selfMute,
-      self_stream: this.selfStream,
-      self_video: this.selfVideo,
-      suppress: this.suppress,
-      member: this.member,
-      user_id: this.memberId,
-      joined: this.joined,
-      request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+        return {
+          guild_id: this.guildId,
+          channel_id: this.channelId,
+          _attributes: this.#_attributes,
+          member: this.member.toJSON(format),
+          user_id: this.memberId,
+          joined: this.joined,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          guild_id: this.guildId,
+          channel_id: this.channelId,
+          deaf: this.deaf,
+          mute: this.mute,
+          self_deaf: this.selfDeaf,
+          self_mute: this.selfMute,
+          self_stream: this.selfStream,
+          self_video: this.selfVideo,
+          suppress: this.suppress,
+          member: this.member,
+          user_id: this.memberId,
+          joined: this.joined,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+        };
+      }
+    }
   }
 }
 

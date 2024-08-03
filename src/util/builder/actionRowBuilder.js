@@ -1,4 +1,4 @@
-import { COMPONENT_TYPES } from "../../constants.js";
+import { COMPONENT_TYPES, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Helps to construct an action row for a message.
@@ -27,11 +27,21 @@ class ActionRow {
    * Returns the correct Discord format for an action row.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      type: this.type,
-      components: this.components,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          type: this.type,
+          components: this.components,
+        };
+      }
+    }
   }
 }
 

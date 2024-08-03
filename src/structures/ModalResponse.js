@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 
 /**
@@ -42,14 +43,36 @@ class ModalResponse extends Interaction {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
+   * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      values: this.values,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          ...super.toJSON(format),
+          values: this.values,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          data: {
+            components: [
+              {
+                components: this.values,
+              },
+            ],
+          },
+        };
+      }
+    }
   }
 }
 

@@ -88,16 +88,36 @@ class OptionSelect extends Interaction {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
+   * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      custom_id: this.customId,
-      message: this.message,
-      values: this.values,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          ...super.toJSON(format),
+          custom_id: this.customId,
+          message: this.message.toJSON(format),
+          values: this.values,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          data: {
+            custom_id: this.customId,
+            values: this.values,
+          },
+          message: this.message.toJSON(format),
+        };
+      }
+    }
   }
 }
 

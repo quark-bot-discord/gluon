@@ -1,5 +1,6 @@
 import User from "./User.js";
 import getEventImage from "../util/image/getEventImage.js";
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents an scheduled event.
@@ -372,29 +373,39 @@ class ScheduledEvent {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      guild_id: this.guildId,
-      name: this.name,
-      description: this.description,
-      creator_id: this.creatorId ?? undefined,
-      creator: this.creator,
-      scheduled_start_time: this.scheduledStartTime * 1000,
-      scheduled_end_time: this.scheduledEndTime
-        ? this.scheduledEndTime * 1000
-        : undefined,
-      image: this.#_originalImageHash,
-      user_count: this.userCount,
-      entity_type: this.#rawEntityType,
-      status: this.#rawStatus,
-      entity_metadata: {
-        location: this.location,
-      },
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          name: this.name,
+          description: this.description,
+          creator_id: this.creatorId ?? undefined,
+          creator: this.creator.toJSON(format),
+          scheduled_start_time: this.scheduledStartTime * 1000,
+          scheduled_end_time: this.scheduledEndTime
+            ? this.scheduledEndTime * 1000
+            : undefined,
+          image: this.#_originalImageHash,
+          user_count: this.userCount,
+          entity_type: this.#rawEntityType,
+          status: this.#rawStatus,
+          entity_metadata: {
+            location: this.location,
+          },
+        };
+      }
+    }
   }
 }
 

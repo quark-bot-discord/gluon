@@ -1,4 +1,7 @@
-import { APPLICATION_COMMAND_TYPES } from "../../constants.js";
+import {
+  APPLICATION_COMMAND_TYPES,
+  TO_JSON_TYPES_ENUM,
+} from "../../constants.js";
 
 /**
  * Structure for a command.
@@ -135,17 +138,27 @@ class Command {
    * Returns the correct Discord format for a command.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      name: this.name,
-      name_localizations: this.name_localizations,
-      type: this.type,
-      description: this.description,
-      description_localizations: this.description_localizations,
-      default_member_permissions: Number(this.default_member_permissions),
-      nsfw: this.nsfw,
-      options: this.options,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          name: this.name,
+          name_localizations: this.name_localizations,
+          type: this.type,
+          description: this.description,
+          description_localizations: this.description_localizations,
+          default_member_permissions: Number(this.default_member_permissions),
+          nsfw: this.nsfw,
+          options: this.options,
+        };
+      }
+    }
   }
 }
 

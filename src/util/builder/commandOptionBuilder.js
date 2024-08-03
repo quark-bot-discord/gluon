@@ -1,4 +1,4 @@
-import { LIMITS } from "../../constants.js";
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Helps to create a choice for a command.
@@ -276,31 +276,43 @@ class CommandOption {
    * Returns the correct Discord format for a command option.
    * @returns {Object}
    */
-  toJSON() {
-    if (!this.name)
-      throw new TypeError("GLUON: Command option name must be provided.");
-    if (!this.type)
-      throw new TypeError("GLUON: Command option type must be provided.");
-    if (!this.description)
-      throw new TypeError(
-        "GLUON: Command option description must be provided.",
-      );
-    return {
-      name: this.name,
-      name_localizations: this.name_localizations,
-      type: this.type,
-      description: this.description,
-      description_localizations: this.description_localizations,
-      required: this.required,
-      choices: this.choices,
-      options: this.options,
-      channel_types: this.channel_types,
-      min_value: this.min_value,
-      max_value: this.max_value,
-      min_length: this.min_length,
-      max_length: this.max_length,
-      autocomplete: this.autocomplete,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (!this.name)
+        throw new TypeError("GLUON: Command option name must be provided.");
+      if (!this.type)
+        throw new TypeError("GLUON: Command option type must be provided.");
+      if (!this.description)
+        throw new TypeError(
+          "GLUON: Command option description must be provided.",
+        );
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          name: this.name,
+          name_localizations: this.name_localizations,
+          type: this.type,
+          description: this.description,
+          description_localizations: this.description_localizations,
+          required: this.required,
+          choices: this.choices,
+          options: this.options,
+          channel_types: this.channel_types,
+          min_value: this.min_value,
+          max_value: this.max_value,
+          min_length: this.min_length,
+          max_length: this.max_length,
+          autocomplete: this.autocomplete,
+        };
+      }
+    }
   }
 }
 

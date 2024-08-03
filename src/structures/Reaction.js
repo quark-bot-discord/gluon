@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
 
 /**
@@ -139,7 +140,7 @@ class Reaction {
    * @public
    * @method
    */
-  addReactor(userId) {
+  _addReactor(userId) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -156,7 +157,7 @@ class Reaction {
    * @public
    * @method
    */
-  removeReactor(userId) {
+  _removeReactor(userId) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -172,15 +173,30 @@ class Reaction {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      emoji: this.emoji,
-      _reacted: this.reactedIds,
-      initial_reactor: this.initialReactor ?? undefined,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          emoji: this.emoji.toJSON(format),
+          _reacted: this.reactedIds,
+          initial_reactor: this.initialReactor ?? undefined,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          emoji: this.emoji.toJSON(format),
+          count: this.count,
+        };
+      }
+    }
   }
 }
 

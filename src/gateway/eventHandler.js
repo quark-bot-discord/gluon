@@ -629,7 +629,10 @@ class EventHandler {
       case INTERACTION_TYPES.COMPONENT: {
         switch (data.data.component_type) {
           case COMPONENT_TYPES.BUTTON: {
-            const componentInteraction = new ButtonClick(this.#_client, data);
+            const componentInteraction = new ButtonClick(this.#_client, data, {
+              guild_id: data.guild_id,
+              channel_id: data.channel_id,
+            });
 
             this.#_client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
 
@@ -695,7 +698,9 @@ class EventHandler {
       } => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
     );
 
-    const auditLogEntry = new AuditLog(this.#_client, data);
+    const auditLogEntry = new AuditLog(this.#_client, data, {
+      guild_id: data.guild_id,
+    });
 
     this.#_client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
   }
@@ -1002,7 +1007,7 @@ class EventHandler {
     ).then((message) => {
       if (!message) return;
 
-      message.pollResponses.addVote(data.user_id, data.answer_id);
+      message.poll.results._addVote(data.user_id, data.answer_id);
     });
 
     this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
@@ -1024,7 +1029,7 @@ class EventHandler {
     ).then((message) => {
       if (!message) return;
 
-      message.pollResponses.removeVote(data.user_id, data.answer_id);
+      message.poll.results._removeVote(data.user_id, data.answer_id);
     });
 
     this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
@@ -1046,7 +1051,7 @@ class EventHandler {
     ).then((message) => {
       if (!message) return;
 
-      message.reactions.addReaction(
+      message.reactions._addReaction(
         data.user_id,
         data.emoji.id ? data.emoji.id : data.emoji.name,
         data,
@@ -1078,7 +1083,7 @@ class EventHandler {
     ).then((message) => {
       if (!message) return;
 
-      message.reactions.removeReaction(
+      message.reactions._removeReaction(
         data.user_id,
         data.emoji.id ? data.emoji.id : data.emoji.name,
       );

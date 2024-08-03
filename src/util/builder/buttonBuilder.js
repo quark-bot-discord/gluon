@@ -1,4 +1,9 @@
-import { COMPONENT_TYPES, BUTTON_STYLES, LIMITS } from "../../constants.js";
+import {
+  COMPONENT_TYPES,
+  BUTTON_STYLES,
+  LIMITS,
+  TO_JSON_TYPES_ENUM,
+} from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 
 /**
@@ -105,40 +110,52 @@ class Button {
    * Returns the correct Discord format for a button.
    * @returns {Object}
    */
-  toJSON() {
-    if (!this.label)
-      throw new TypeError("GLUON: Button label must be provided.");
-    if (!this.style)
-      throw new TypeError("GLUON: Button style must be provided.");
-    if (this.style === BUTTON_STYLES.LINK && !this.url)
-      throw new TypeError(
-        "GLUON: Button url must be provided for link buttons.",
-      );
-    if (this.style !== BUTTON_STYLES.LINK && !this.custom_id)
-      throw new TypeError(
-        "GLUON: Button custom id must be provided for non-link buttons.",
-      );
-    if (this.style === BUTTON_STYLES.LINK && this.custom_id)
-      throw new TypeError(
-        "GLUON: Button custom id must not be provided for link buttons.",
-      );
-    if (this.style !== BUTTON_STYLES.LINK && this.url)
-      throw new TypeError(
-        "GLUON: Button url must not be provided for non-link buttons.",
-      );
-    if (this.style === BUTTON_STYLES.LINK && this.emoji)
-      throw new TypeError(
-        "GLUON: Button emoji must not be provided for link buttons.",
-      );
-    return {
-      type: this.type,
-      label: this.label,
-      emoji: this.emoji,
-      style: this.style,
-      custom_id: this.custom_id,
-      url: this.url,
-      disabled: this.disabled,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (!this.label)
+        throw new TypeError("GLUON: Button label must be provided.");
+      if (!this.style)
+        throw new TypeError("GLUON: Button style must be provided.");
+      if (this.style === BUTTON_STYLES.LINK && !this.url)
+        throw new TypeError(
+          "GLUON: Button url must be provided for link buttons.",
+        );
+      if (this.style !== BUTTON_STYLES.LINK && !this.custom_id)
+        throw new TypeError(
+          "GLUON: Button custom id must be provided for non-link buttons.",
+        );
+      if (this.style === BUTTON_STYLES.LINK && this.custom_id)
+        throw new TypeError(
+          "GLUON: Button custom id must not be provided for link buttons.",
+        );
+      if (this.style !== BUTTON_STYLES.LINK && this.url)
+        throw new TypeError(
+          "GLUON: Button url must not be provided for non-link buttons.",
+        );
+      if (this.style === BUTTON_STYLES.LINK && this.emoji)
+        throw new TypeError(
+          "GLUON: Button emoji must not be provided for link buttons.",
+        );
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          type: this.type,
+          label: this.label,
+          emoji: this.emoji,
+          style: this.style,
+          custom_id: this.custom_id,
+          url: this.url,
+          disabled: this.disabled,
+        };
+      }
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import getAvatarUrl from "../util/image/getAvatarUrl.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents a Discord user.
@@ -105,6 +106,13 @@ class User {
     }
   }
 
+  /**
+   * Overrides the user's avatar with a custom URL.
+   * @param {String} url The URL of the avatar to override the user's avatar with.
+   * @public
+   * @method
+   * @returns {void}
+   */
   overrideAvatarURL(url) {
     this.#overrideAvatar = url;
   }
@@ -268,19 +276,38 @@ class User {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      avatar: this.#_originalAvatarHash,
-      _cached: this._cached,
-      bot: this.bot,
-      username: this.username,
-      global_name: this.globalName,
-      discriminator: this.discriminator,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+        return {
+          id: this.id,
+          avatar: this.#_originalAvatarHash,
+          _cached: this._cached,
+          bot: this.bot,
+          username: this.username,
+          global_name: this.globalName,
+          discriminator: this.discriminator,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          avatar: this.#_originalAvatarHash,
+          bot: this.bot,
+          username: this.username,
+          global_name: this.globalName,
+          discriminator: this.discriminator,
+        };
+      }
+    }
   }
 }
 

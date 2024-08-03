@@ -1,4 +1,4 @@
-import { PERMISSIONS } from "../constants.js";
+import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -92,13 +92,24 @@ class TextChannel extends Channel {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
+   * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+        };
+      }
+    }
   }
 }
 

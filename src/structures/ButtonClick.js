@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 
@@ -15,7 +16,7 @@ class ButtonClick extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client, data) {
+  constructor(client, data, { guild_id, channel_id } = {}) {
     super(client, data);
 
     this.#_client = client;
@@ -33,8 +34,8 @@ class ButtonClick extends Interaction {
      * @private
      */
     this.#message = new Message(this.#_client, data.message, {
-      channel_id: data.channel_id,
-      guild_id: data.guild_id,
+      channel_id: channel_id,
+      guild_id: guild_id,
       nocache: this.#_client.cacheMessages,
     });
   }
@@ -69,15 +70,28 @@ class ButtonClick extends Interaction {
   }
 
   /**
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
+   * @public
    * @method
    * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      customId: this.customId,
-      message: this.message,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          data: {
+            custom_id: this.customId,
+          },
+          message: this.message,
+        };
+      }
+    }
   }
 }
 

@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 
 /**
@@ -40,6 +41,29 @@ class SlashCommand extends Interaction {
    */
   toString() {
     return `<SlashCommand: ${this.id}>`;
+  }
+
+  /**
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
+   * @public
+   * @method
+   * @override
+   */
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          id: this.id,
+          data: this.#data,
+        };
+      }
+    }
   }
 }
 

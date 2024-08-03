@@ -1,4 +1,4 @@
-import { INVITE_BASE_URL } from "../constants.js";
+import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 
 /**
@@ -222,18 +222,28 @@ class Invite {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      code: this.code,
-      channel: this.channel,
-      inviter: this.inviter,
-      uses: this.uses,
-      expires: this.expires,
-      max_uses: this.maxUses,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          code: this.code,
+          channel: this.channel.toJSON(format),
+          inviter: this.inviter.toJSON(format),
+          uses: this.uses,
+          expires: this.expires,
+          max_uses: this.maxUses,
+        };
+      }
+    }
   }
 }
 

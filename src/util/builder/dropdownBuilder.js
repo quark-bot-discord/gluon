@@ -1,4 +1,10 @@
-import { COMPONENT_TYPES, LIMITS } from "../../constants.js";
+import {
+  CHANNEL_TYPES,
+  COMPONENT_TYPES,
+  LIMITS,
+  SELECT_MENU_TYPES,
+  TO_JSON_TYPES_ENUM,
+} from "../../constants.js";
 
 /**
  * Helps to create a dropdown message component.
@@ -11,6 +17,7 @@ class Dropdown {
   constructor() {
     this.type = COMPONENT_TYPES.SELECT_MENU;
     this.options = [];
+    this.default_values = [];
   }
 
   /**
@@ -110,6 +117,14 @@ class Dropdown {
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown min value must be a number.");
 
+    if (
+      value < LIMITS.MIN_MIN_DROPDOWN_VALUES ||
+      value > LIMITS.MAX_MIN_DROPDOWN_VALUES
+    )
+      throw new RangeError(
+        `GLUON: Dropdown min values must be between ${LIMITS.MIN_MAX_DROPDOWN_VALUES} and ${LIMITS.MAX_MAX_DROPDOWN_VALUES}.`,
+      );
+
     this.min_values = value;
 
     return this;
@@ -123,6 +138,14 @@ class Dropdown {
   setMaxValue(value) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown max value must be a number.");
+
+    if (
+      value < LIMITS.MIN_MAX_DROPDOWN_VALUES ||
+      value > LIMITS.MAX_MAX_DROPDOWN_VALUES
+    )
+      throw new RangeError(
+        `GLUON: Dropdown max values must be between ${LIMITS.MIN_MAX_DROPDOWN_VALUES} and ${LIMITS.MAX_MAX_DROPDOWN_VALUES}.`,
+      );
 
     this.max_values = value;
 
@@ -144,20 +167,174 @@ class Dropdown {
   }
 
   /**
+   * Adds a default option to the dropdown.
+   * @param {Object} option The default option to add to the dropdown.
+   * @returns {Dropdown}
+   */
+  addDefaultOption(option) {
+    if (!option)
+      throw new TypeError("GLUON: Dropdown option must be provided.");
+
+    if (this.default_values.length >= LIMITS.MAX_DROPDOWN_OPTIONS)
+      throw new RangeError(
+        `GLUON: Default dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`,
+      );
+
+    if (
+      !this.default_values.every(
+        (o) => o.id !== undefined && o.type !== undefined,
+      )
+    )
+      throw new TypeError(
+        "GLUON: Dropdown option must have an id and type fields.",
+      );
+
+    this.default_values.push(option);
+
+    return this;
+  }
+
+  /**
    * Returns the correct Discord format for a dropdown.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      type: this.type,
-      custom_id: this.custom_id,
-      options: this.options,
-      channel_types: this.channel_types,
-      placeholder: this.placeholder,
-      min_values: this.min_values,
-      max_values: this.max_values,
-      disabled: this.disabled,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (!this.type || typeof this.type != "number")
+        throw new TypeError("GLUON: Dropdown type must be a number.");
+      if (this.type && !Object.values(SELECT_MENU_TYPES).includes(this.type))
+        throw new TypeError(
+          `GLUON: Select menu type must be one of ${Object.values(
+            SELECT_MENU_TYPES,
+          ).join(", ")}.`,
+        );
+      if (typeof this.custom_id != "string")
+        throw new TypeError("GLUON: Dropdown custom id must be a string.");
+      if (
+        this.custom_id &&
+        this.custom_id.length > LIMITS.MAX_DROPDOWN_CUSTOM_ID
+      )
+        throw new RangeError(
+          `GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`,
+        );
+      if (this.type === SELECT_MENU_TYPES.TEXT && !this.options)
+        throw new TypeError("GLUON: Dropdown options must be provided.");
+      if (this.options && !Array.isArray(this.options))
+        throw new TypeError("GLUON: Dropdown options must be an array.");
+      if (this.options && this.options.length > LIMITS.MAX_DROPDOWN_OPTIONS)
+        throw new RangeError(
+          `GLUON: Dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`,
+        );
+      if (
+        this.options &&
+        !this.options.every((o) => o instanceof DropdownOption)
+      )
+        throw new TypeError(
+          "GLUON: Dropdown options must be an array of DropdownOption.",
+        );
+      if (this.type === SELECT_MENU_TYPES.CHANNEL && !this.channel_types)
+        throw new TypeError("GLUON: Dropdown channel types must be provided.");
+      if (this.channel_types && !Array.isArray(this.channel_types))
+        throw new TypeError("GLUON: Dropdown channel types must be an array.");
+      if (
+        this.channel_types &&
+        !this.channel_types.every((c) => typeof c === "number")
+      )
+        throw new TypeError(
+          "GLUON: Dropdown channel types must be an array of numbers.",
+        );
+      if (
+        this.channel_types &&
+        !this.channel_types.every((c) =>
+          Object.values(CHANNEL_TYPES).includes(c),
+        )
+      )
+        throw new TypeError(
+          `GLUON: Dropdown channel types must be one of ${Object.values(CHANNEL_TYPES).join(", ")}.`,
+        );
+      if (this.placeholder && typeof this.placeholder !== "string")
+        throw new TypeError("GLUON: Dropdown placeholder must be a string.");
+      if (
+        this.placeholder &&
+        this.placeholder.length > LIMITS.MAX_DROPDOWN_PLACEHOLDER
+      )
+        throw new RangeError(
+          `GLUON: Dropdown placeholder must be less than ${LIMITS.MAX_DROPDOWN_PLACEHOLDER} characters.`,
+        );
+      if (
+        this.default_values &&
+        [
+          SELECT_MENU_TYPES.USER,
+          SELECT_MENU_TYPES.ROLE,
+          SELECT_MENU_TYPES.MENTIONABLE,
+          SELECT_MENU_TYPES.CHANNEL,
+        ].includes(this.type)
+      )
+        throw new TypeError(
+          "GLUON: Dropdown default values are not allowed for this type.",
+        );
+      if (this.default_values && !Array.isArray(this.default_values))
+        throw new TypeError("GLUON: Dropdown default values must be an array.");
+      if (
+        this.default_values &&
+        this.default_values.length > LIMITS.MAX_DROPDOWN_OPTIONS
+      )
+        throw new RangeError(
+          `GLUON: Default dropdown options must be less than ${LIMITS.MAX_DROPDOWN_OPTIONS}.`,
+        );
+      if (
+        typeof this.min_values !== "undefined" &&
+        typeof this.min_values !== "number"
+      )
+        throw new TypeError("GLUON: Dropdown min values must be a number.");
+      if (
+        typeof this.min_values === "number" &&
+        (this.min_values < LIMITS.MIN_MIN_DROPDOWN_VALUES ||
+          this.min_values > LIMITS.MAX_MIN_DROPDOWN_VALUES)
+      )
+        throw new RangeError(
+          `GLUON: Dropdown min values must be between ${LIMITS.MIN_MAX_DROPDOWN_VALUES} and ${LIMITS.MAX_MAX_DROPDOWN_VALUES}.`,
+        );
+      if (
+        typeof this.max_values !== "undefined" &&
+        typeof this.max_values !== "number"
+      )
+        throw new TypeError("GLUON: Dropdown max values must be a number.");
+      if (
+        typeof this.max_values === "number" &&
+        (this.max_values < LIMITS.MIN_MAX_DROPDOWN_VALUES ||
+          this.max_values > LIMITS.MAX_MAX_DROPDOWN_VALUES)
+      )
+        throw new RangeError(
+          `GLUON: Dropdown max values must be between ${LIMITS.MIN_MAX_DROPDOWN_VALUES} and ${LIMITS.MAX_MAX_DROPDOWN_VALUES}.`,
+        );
+      if (
+        typeof this.disabled !== "undefined" &&
+        typeof this.disabled !== "boolean"
+      )
+        throw new TypeError("GLUON: Dropdown disabled must be a boolean.");
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          type: this.type,
+          custom_id: this.custom_id,
+          options: this.options,
+          channel_types: this.channel_types,
+          default_values: this.default_values,
+          placeholder: this.placeholder,
+          min_values: this.min_values,
+          max_values: this.max_values,
+          disabled: this.disabled,
+        };
+      }
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { PERMISSIONS, MEMBER_FLAGS } from "../constants.js";
+import { PERMISSIONS, MEMBER_FLAGS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
@@ -153,8 +153,7 @@ class Member {
     if (
       this.id == this.#_client.user.id ||
       (nocache == false &&
-        (this.#_client.cacheMembers == true ||
-          this.#_client.cacheAllMembers == true) &&
+        this.#_client.cacheMembers == true &&
         ignoreNoCache == false)
     ) {
       this.guild?.members.set(user_id, this);
@@ -577,27 +576,55 @@ class Member {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      user: this.user,
-      nick: this.nick,
-      joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
-      avatar: this.#_originalAvatarHash,
-      permissions: String(this.permissions),
-      roles: Array.isArray(this.#_roles)
-        ? this.#_roles
-            .filter((r) => String(r) !== this.guildId)
-            .map((r) => String(r))
-        : undefined,
-      communication_disabled_until: this.timeoutUntil
-        ? this.timeoutUntil * 1000
-        : undefined,
-      flags: this.flags,
-      _attributes: this.#_attributes,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          user: this.user.toJSON(format),
+          nick: this.nick,
+          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
+          avatar: this.#_originalAvatarHash,
+          permissions: String(this.permissions),
+          roles: Array.isArray(this.#_roles)
+            ? this.#_roles
+                .filter((r) => String(r) !== this.guildId)
+                .map((r) => String(r))
+            : undefined,
+          communication_disabled_until: this.timeoutUntil
+            ? this.timeoutUntil * 1000
+            : undefined,
+          flags: this.flags,
+          _attributes: this.#_attributes,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          user: this.user.toJSON(format),
+          nick: this.nick,
+          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
+          avatar: this.#_originalAvatarHash,
+          permissions: String(this.permissions),
+          roles: Array.isArray(this.#_roles)
+            ? this.#_roles
+                .filter((r) => String(r) !== this.guildId)
+                .map((r) => String(r))
+            : undefined,
+          communication_disabled_until: this.timeoutUntil
+            ? this.timeoutUntil * 1000
+            : undefined,
+          flags: this.flags,
+          pending: this.pending,
+        };
+      }
+    }
   }
 }
 

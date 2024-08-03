@@ -2,6 +2,7 @@ import ActionRow from "../util/builder/actionRowBuilder.js";
 import Member from "./Member.js";
 import File from "../util/builder/file.js";
 import TextInput from "../util/builder/textInputBuilder.js";
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -364,17 +365,27 @@ class Interaction {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      type: this.type,
-      guild_id: this.guildId,
-      channel_id: this.channelId,
-      member: this.member,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          type: this.type,
+          guild_id: this.guildId,
+          channel_id: this.channelId,
+          member: this.member.toJSON(format),
+        };
+      }
+    }
   }
 }
 

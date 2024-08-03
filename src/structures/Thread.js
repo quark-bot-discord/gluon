@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 
 /**
@@ -102,15 +103,26 @@ class Thread extends Channel {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
+   * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      owner_id: this.ownerId,
-      parent_id: this.parentId,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          owner_id: this.ownerId,
+          parent_id: this.parentId,
+        };
+      }
+    }
   }
 }
 

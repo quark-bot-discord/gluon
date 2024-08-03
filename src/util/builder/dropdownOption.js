@@ -1,4 +1,4 @@
-import { LIMITS } from "../../constants.js";
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 
 /**
@@ -90,14 +90,58 @@ class DropdownOption {
    * Returns the correct Discord format for a dropdown option.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      label: this.label,
-      value: this.value,
-      description: this.description,
-      emoji: this.emoji,
-      default: this.default,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (typeof this.label !== "string")
+        throw new TypeError("GLUON: Dropdown option label must be a string.");
+      if (this.label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL)
+        throw new RangeError(
+          `GLUON: Dropdown option label must be less than ${LIMITS.MAX_DROPDOWN_OPTION_LABEL} characters.`,
+        );
+      if (typeof this.value !== "string")
+        throw new TypeError("GLUON: Dropdown option value must be a string.");
+      if (this.value.length > LIMITS.MAX_DROPDOWN_OPTION_VALUE)
+        throw new RangeError(
+          `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`,
+        );
+      if (this.description && typeof this.description !== "string")
+        throw new TypeError(
+          "GLUON: Dropdown option description must be a string.",
+        );
+      if (
+        this.description &&
+        this.description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION
+      )
+        throw new RangeError(
+          `GLUON: Dropdown option description must be less than ${LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION} characters.`,
+        );
+      if (this.emoji && typeof this.emoji !== "object")
+        throw new TypeError("GLUON: Dropdown option emoji must be an object.");
+      if (
+        typeof this.default !== "undefined" &&
+        typeof this.default !== "boolean"
+      )
+        throw new TypeError(
+          "GLUON: Dropdown option default must be a boolean.",
+        );
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          label: this.label,
+          value: this.value,
+          description: this.description,
+          emoji: this.emoji,
+          default: this.default,
+        };
+      }
+    }
   }
 }
 

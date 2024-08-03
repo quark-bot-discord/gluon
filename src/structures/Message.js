@@ -1,7 +1,12 @@
 import User from "./User.js";
 import Member from "./Member.js";
 import Attachment from "./Attachment.js";
-import { PERMISSIONS, GLUON_CACHING_OPTIONS, BASE_URL } from "../constants.js";
+import {
+  PERMISSIONS,
+  GLUON_CACHING_OPTIONS,
+  BASE_URL,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
@@ -9,6 +14,7 @@ import hash from "hash.js";
 import encryptMessage from "../util/gluon/encryptMessage.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import MessageReactionManager from "../managers/MessageReactionManager.js";
+import Poll from "./Poll.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -173,20 +179,11 @@ class Message {
      * @type {Object?}
      * @private
      */
-    this.#poll = data.poll;
-    if (this.#poll == undefined && existing && existing.poll != undefined)
+    if (data.poll)
+      this.#poll = new Poll(this.#_client, data.poll, { guild_id });
+    else if (this.#poll == undefined && existing && existing.poll != undefined)
       this.#poll = existing.poll;
     else if (this.#poll == undefined) this.#poll = undefined;
-
-    if (this.#poll && existing && existing.pollResponses)
-      /**
-       * The poll responses.
-       * @type {MessagePollManager?}
-       * @private
-       */
-      this.#pollResponses = existing.pollResponses;
-    else if (this.#poll)
-      this.#pollResponses = new MessagePollManager(data.pollResponses);
 
     if (existing?.reactions)
       /**
@@ -505,16 +502,6 @@ class Message {
   }
 
   /**
-   * The poll responses.
-   * @type {MessagePollManager?}
-   * @readonly
-   * @public
-   */
-  get pollResponses() {
-    return this.#pollResponses;
-  }
-
-  /**
    * The message reactions.
    * @type {MessageReactionManager}
    * @readonly
@@ -763,29 +750,60 @@ class Message {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      author: this.author,
-      member: this.member,
-      content: this.content,
-      _attributes: this.#_attributes,
-      attachments: this.attachments,
-      embeds: this.embeds,
-      edited_timestamp: this.editedTimestamp * 1000,
-      poll: this.poll,
-      pollResponses: this.pollResponses,
-      message_snapshots: this.messageSnapshots,
-      type: this.type,
-      referenced_message: this.reference?.messageId
-        ? { id: this.reference.messageId }
-        : undefined,
-      sticker_items: this.stickerItems,
-      messageReactions: this.reactions,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          author: this.author.toJSON(format),
+          member: this.member.toJSON(format),
+          content: this.content,
+          _attributes: this.#_attributes,
+          attachments: this.attachments.map((a) => a.toJSON(format)),
+          embeds: this.embeds.map((e) => e.toJSON(format)),
+          edited_timestamp: this.editedTimestamp * 1000,
+          poll: this.poll.toJSON(format),
+          message_snapshots: this.messageSnapshots,
+          type: this.type,
+          referenced_message: this.reference?.messageId
+            ? { id: this.reference.messageId }
+            : undefined,
+          sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
+          messageReactions: this.reactions.toJSON(format),
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          author: this.author.toJSON(format),
+          member: this.member.toJSON(format),
+          content: this.content,
+          pinned: this.pinned,
+          attachments: this.attachments.map((a) => a.toJSON(format)),
+          embeds: this.embeds.map((e) => e.toJSON(format)),
+          edited_timestamp: this.editedTimestamp * 1000,
+          poll: this.poll.toJSON(format),
+          message_snapshots: this.messageSnapshots,
+          type: this.type,
+          referenced_message: this.reference?.messageId
+            ? { id: this.reference.messageId }
+            : undefined,
+          sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
+          reactions: this.reactions.toJSON(format),
+          mention_everyone: this.mentionEveryone,
+          mention_roles: this.mentionRoles ? [""] : [],
+          mentions: this.mentions ? [""] : [],
+        };
+      }
+    }
   }
 }
 

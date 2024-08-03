@@ -2,6 +2,7 @@ import {
   STICKER_FORMATS,
   CDN_BASE_URL,
   STICKER_FORMATS_ENUM,
+  TO_JSON_TYPES_ENUM,
 } from "../constants.js";
 
 /**
@@ -120,15 +121,25 @@ class Sticker {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name,
-      format_type: this.formatType,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          name: this.name,
+          format_type: this.formatType,
+        };
+      }
+    }
   }
 }
 

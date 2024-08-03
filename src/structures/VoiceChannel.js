@@ -1,4 +1,6 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
+import Message from "./Message.js";
 
 /**
  * Represents a voice channel.
@@ -64,6 +66,13 @@ class VoiceChannel extends Channel {
 
     if (nocache == false && this.#_client.cacheChannels == true)
       this.guild?.channels.set(data.id, this);
+
+    if (data.messages)
+      for (let i = 0; i < data.messages.length; i++)
+        new Message(this.#_client, data.messages[i], {
+          channel_id: this.id,
+          guild_id,
+        });
   }
 
   /**
@@ -105,16 +114,27 @@ class VoiceChannel extends Channel {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
+   * @override
    */
-  toJSON() {
-    return {
-      ...super.toJSON(),
-      bitrate: this.bitrate,
-      user_limit: this.userLimit,
-      rtc_region: this.rtcRegion,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          ...super.toJSON(format),
+          bitrate: this.bitrate,
+          user_limit: this.userLimit,
+          rtc_region: this.rtcRegion,
+        };
+      }
+    }
   }
 }
 

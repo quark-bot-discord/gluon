@@ -21,7 +21,10 @@ describe("ButtonClick", function () {
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
       expect(buttonClick).to.have.property("id");
       expect(buttonClick).to.have.property("type");
       expect(buttonClick).to.have.property("guildId");
@@ -46,7 +49,10 @@ describe("ButtonClick", function () {
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
       expect(buttonClick.customId).to.equal(TEST_DATA.BUTTON_CLICK.custom_id);
     });
   });
@@ -58,7 +64,10 @@ describe("ButtonClick", function () {
       const guild = new Guild(client, TEST_DATA.GUILD);
       client.guilds.set(TEST_DATA.GUILD_ID, guild);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK);
+      const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
       expect(buttonClick.message.id).to.equal(
         TEST_DATA.BUTTON_CLICK.message.id,
       );

@@ -1,4 +1,4 @@
-import { CDN_BASE_URL } from "../constants.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents an attachment.
@@ -124,16 +124,32 @@ class Attachment {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      filename: this.name,
-      size: this.size,
-      url: this.url,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          filename: this.name,
+          size: this.size,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          filename: this.name,
+          size: this.size,
+          url: this.url,
+        };
+      }
+    }
   }
 }
 

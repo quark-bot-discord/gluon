@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import getRoleIcon from "../util/image/getRoleIcon.js";
 
 /**
@@ -262,20 +263,43 @@ class Role {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      name: this.name,
-      color: this.color,
-      position: this.position,
-      permissions: this.permissions,
-      icon: this.#_originalIconHash,
-      _attributes: this.#_attributes,
-      tags: this.tags,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          name: this.name,
+          color: this.color,
+          position: this.position,
+          permissions: this.permissions,
+          icon: this.#_originalIconHash,
+          _attributes: this.#_attributes,
+          tags: this.tags,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          name: this.name,
+          color: this.color,
+          position: this.position,
+          permissions: this.permissions,
+          icon: this.#_originalIconHash,
+          tags: this.tags,
+          hoist: this.hoist,
+          managed: this.managed,
+          mentionable: this.mentionable,
+        };
+      }
+    }
   }
 }
 

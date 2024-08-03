@@ -259,7 +259,7 @@ describe("Reaction", function () {
     const reaction = new Reaction(client, TEST_DATA.REACTION, {
       guild_id: TEST_DATA.GUILD_ID,
     });
-    reaction.addReactor(TEST_DATA.MEMBER_ID);
+    reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(client, reaction.toJSON(), {
       guild_id: TEST_DATA.GUILD_ID,
     });

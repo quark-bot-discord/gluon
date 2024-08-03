@@ -1,4 +1,4 @@
-import { PERMISSIONS } from "../constants.js";
+import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import ActionRow from "../util/builder/actionRowBuilder.js";
@@ -143,7 +143,7 @@ class Channel {
      */
     this.#messages = existing?.messages
       ? existing.messages
-      : new ChannelMessageManager(client, this);
+      : new ChannelMessageManager(client, this.guild, this);
   }
 
   /**
@@ -367,21 +367,42 @@ class Channel {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      type: this.type,
-      name: this.name,
-      topic: this.topic,
-      rate_limit_per_user: this.rateLimitPerUser,
-      parent_id: this.parentId ?? undefined,
-      _attributes: this.#_attributes,
-      _cacheOptions: this._cacheOptions,
-      messages: this.messages,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+        return {
+          id: this.id,
+          type: this.type,
+          name: this.name,
+          topic: this.topic,
+          rate_limit_per_user: this.rateLimitPerUser,
+          parent_id: this.parentId ?? undefined,
+          _attributes: this.#_attributes,
+          _cacheOptions: this._cacheOptions.toJSON(format),
+          messages: this.messages.toJSON(format),
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          type: this.type,
+          name: this.name,
+          topic: this.topic,
+          rate_limit_per_user: this.rateLimitPerUser,
+          parent_id: this.parentId ?? undefined,
+          nsfw: this.nsfw,
+          messages: this.messages.toJSON(format),
+        };
+      }
+    }
   }
 }
 

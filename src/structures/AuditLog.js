@@ -1,3 +1,4 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 
 /**
@@ -29,7 +30,7 @@ class AuditLog {
    * @param {Object} data Audit log data from Discord.
    * @param {Array<Object>} users Resolved users who are involved with the audit log entries.
    */
-  constructor(client, data, { users } = {}) {
+  constructor(client, data, { users, guild_id } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -49,7 +50,7 @@ class AuditLog {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(data.guild_id);
+    this.#_guild_id = BigInt(guild_id);
 
     /**
      * The type of action that occurred.
@@ -358,34 +359,44 @@ class AuditLog {
   }
 
   /**
-   * @method
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
    * @public
+   * @method
    */
-  toJSON() {
-    return {
-      id: this.id,
-      guild_id: this.guildId,
-      action_type: this.actionType,
-      target_id: this.targetId ?? undefined,
-      executor_id: this.executorId ?? undefined,
-      reason: this.reason,
-      options: {
-        channel_id: this.channelId ?? undefined,
-        count: typeof this.count === "number" ? this.count : undefined,
-        delete_member_days:
-          typeof this.deleteMemberDays === "number"
-            ? this.deleteMemberDays
-            : undefined,
-        members_removed:
-          typeof this.membersRemoved === "number"
-            ? this.membersRemoved
-            : undefined,
-        id: this.specialId ?? undefined,
-        type: this.specialType ?? undefined,
-        status: this.status ?? undefined,
-      },
-      changes: this.changes,
-    };
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          action_type: this.actionType,
+          target_id: this.targetId ?? undefined,
+          executor_id: this.executorId ?? undefined,
+          reason: this.reason,
+          options: {
+            channel_id: this.channelId ?? undefined,
+            count: typeof this.count === "number" ? this.count : undefined,
+            delete_member_days:
+              typeof this.deleteMemberDays === "number"
+                ? this.deleteMemberDays
+                : undefined,
+            members_removed:
+              typeof this.membersRemoved === "number"
+                ? this.membersRemoved
+                : undefined,
+            id: this.specialId ?? undefined,
+            type: this.specialType ?? undefined,
+            status: this.status ?? undefined,
+          },
+          changes: this.changes,
+        };
+      }
+    }
   }
 }
 
