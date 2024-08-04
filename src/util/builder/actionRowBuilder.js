@@ -1,4 +1,8 @@
-import { COMPONENT_TYPES, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import {
+  COMPONENT_TYPES,
+  LIMITS,
+  TO_JSON_TYPES_ENUM,
+} from "../../constants.js";
 
 /**
  * Helps to construct an action row for a message.
@@ -31,6 +35,16 @@ class ActionRow {
     format,
     { suppressValidation = false } = { suppressValidation: false },
   ) {
+    if (suppressValidation !== true) {
+      if (this.components.length > LIMITS.MAX_ACTION_ROW_BUTTONS)
+        throw new RangeError(
+          `GLUON: Action rows must have less than ${LIMITS.MAX_ACTION_ROW_BUTTONS} buttons.`,
+        );
+      if (this.type !== COMPONENT_TYPES.ACTION_ROW)
+        throw new TypeError(
+          `GLUON: Action row type must be set to 'ACTION_ROW' (${COMPONENT_TYPES.ACTION_ROW}).`,
+        );
+    }
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

@@ -125,6 +125,18 @@ class CommandChoice {
         throw new TypeError(
           "GLUON: Command choice name localizations must be an object.",
         );
+      if (
+        this.name_localizations &&
+        !Object.values(this.name_localizations).every(
+          (v) =>
+            typeof v === "string" &&
+            v.length >= LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME &&
+            v.length <= LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME,
+        )
+      )
+        throw new RangeError(
+          `GLUON: Command choice name localizations must be a string between ${LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME} and ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
     }
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

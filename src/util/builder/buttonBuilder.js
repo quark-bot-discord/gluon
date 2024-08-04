@@ -5,6 +5,7 @@ import {
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
+import isValidUrl from "../general/isValidUrl.js";
 
 /**
  * Helps to construct a button for a message.
@@ -117,8 +118,14 @@ class Button {
     if (suppressValidation !== true) {
       if (!this.label)
         throw new TypeError("GLUON: Button label must be provided.");
-      if (!this.style)
-        throw new TypeError("GLUON: Button style must be provided.");
+      if (typeof this.label !== "string")
+        throw new TypeError("GLUON: Button label must be a string.");
+      if (this.label.length > LIMITS.MAX_BUTTON_LABEL)
+        throw new RangeError(
+          `GLUON: Button label must be less than ${LIMITS.MAX_BUTTON_LABEL} characters.`,
+        );
+      if (typeof this.style !== "number")
+        throw new TypeError("GLUON: Button style must be a number.");
       if (this.style === BUTTON_STYLES.LINK && !this.url)
         throw new TypeError(
           "GLUON: Button url must be provided for link buttons.",
@@ -139,6 +146,25 @@ class Button {
         throw new TypeError(
           "GLUON: Button emoji must not be provided for link buttons.",
         );
+      if (this.type !== COMPONENT_TYPES.BUTTON)
+        throw new TypeError("GLUON: Button type must be set to 'BUTTON'.");
+      if (this.emoji && typeof this.emoji !== "object")
+        throw new TypeError("GLUON: Button emoji must be an object.");
+      if (this.custom_id && typeof this.custom_id !== "string")
+        throw new TypeError("GLUON: Button custom id must be a string.");
+      if (this.custom_id && this.custom_id.length > LIMITS.MAX_BUTTON_CUSTOM_ID)
+        throw new RangeError(
+          `GLUON: Button custom id must be less than ${LIMITS.MAX_BUTTON_CUSTOM_ID} characters.`,
+        );
+      if (this.url && typeof this.url !== "string")
+        throw new TypeError("GLUON: Button url must be a string.");
+      if (this.url && !isValidUrl(this.url))
+        throw new TypeError("GLUON: Button url must be a valid url.");
+      if (
+        typeof this.disabled !== "undefined" &&
+        typeof this.disabled !== "boolean"
+      )
+        throw new TypeError("GLUON: Button disabled must be a boolean.");
     }
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

@@ -330,11 +330,35 @@ class CommandOption {
           "GLUON: Command option name localizations must be an object.",
         );
       if (
+        this.name_localizations &&
+        !Object.values(this.name_localizations).every(
+          (v) =>
+            typeof v === "string" &&
+            v.length >= LIMITS.MIN_COMMAND_OPTION_NAME &&
+            v.length <= LIMITS.MAX_COMMAND_OPTION_NAME,
+        )
+      )
+        throw new RangeError(
+          `GLUON: Command option name localizations must be a string between ${LIMITS.MIN_COMMAND_OPTION_NAME} and ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
+        );
+      if (
         this.description_localizations &&
         typeof this.description_localizations !== "object"
       )
         throw new TypeError(
           "GLUON: Command option description localizations must be an object.",
+        );
+      if (
+        this.description_localizations &&
+        !Object.values(this.description_localizations).every(
+          (v) =>
+            typeof v === "string" &&
+            v.length >= LIMITS.MIN_COMMAND_OPTION_DESCRIPTION &&
+            v.length <= LIMITS.MAX_COMMAND_OPTION_DESCRIPTION,
+        )
+      )
+        throw new RangeError(
+          `GLUON: Command option description localizations must be a string between ${LIMITS.MIN_COMMAND_OPTION_DESCRIPTION} and ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
         );
       if (
         typeof this.required !== "undefined" &&
