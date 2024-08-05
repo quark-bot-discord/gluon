@@ -123,16 +123,15 @@ describe("Thread", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON()).to.deep.equal({
-        _attributes: 0,
-        _cacheOptions: {},
         id: TEST_DATA.THREAD.id,
-        messages: {},
+        messages: [],
         name: TEST_DATA.THREAD.name,
         owner_id: TEST_DATA.THREAD.owner_id,
         parent_id: TEST_DATA.THREAD.parent_id,
         rate_limit_per_user: TEST_DATA.THREAD.rate_limit_per_user,
         topic: TEST_DATA.THREAD.topic,
         type: TEST_DATA.THREAD.type,
+        nsfw: TEST_DATA.THREAD.nsfw,
       });
     });
   });

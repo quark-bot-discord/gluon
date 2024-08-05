@@ -198,15 +198,14 @@ describe("TextChannel", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(textChannel.toJSON()).to.deep.equal({
-        _attributes: 0,
-        _cacheOptions: {},
         id: TEST_DATA.TEXT_CHANNEL.id,
-        messages: {},
+        messages: [],
         name: TEST_DATA.TEXT_CHANNEL.name,
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         topic: TEST_DATA.TEXT_CHANNEL.topic,
         type: TEST_DATA.TEXT_CHANNEL.type,
+        nsfw: TEST_DATA.TEXT_CHANNEL.nsfw,
       });
     });
   });

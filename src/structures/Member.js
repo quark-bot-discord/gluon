@@ -609,7 +609,9 @@ class Member {
         return {
           user: this.user.toJSON(format),
           nick: this.nick,
-          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
+          joined_at: this.joinedAt
+            ? new Date(this.joinedAt * 1000).toISOString()
+            : undefined,
           avatar: this.#_originalAvatarHash,
           permissions: String(this.permissions),
           roles: Array.isArray(this.#_roles)

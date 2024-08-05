@@ -30,7 +30,6 @@ class Message {
   #attachments;
   #content;
   #poll;
-  #pollResponses;
   #reactions;
   #embeds;
   #_attributes;
@@ -156,7 +155,7 @@ class Message {
       for (let i = 0; i < data.attachments.length; i++)
         this.#attachments.push(
           new Attachment(this.#_client, data.attachments[i], {
-            _parentStructure: this,
+            channel_id: this.channelId,
           }),
         );
     else if (existing?.attachments) this.#attachments = existing.attachments;
@@ -529,7 +528,11 @@ class Message {
    * @public
    */
   get reference() {
-    return { messageId: String(this.#reference.message_id) };
+    return {
+      messageId: this.#reference.message_id
+        ? String(this.#reference.message_id)
+        : undefined,
+    };
   }
 
   /**
@@ -774,7 +777,11 @@ class Message {
           message_snapshots: this.messageSnapshots,
           type: this.type,
           referenced_message: this.reference?.messageId
-            ? { id: this.reference.messageId }
+            ? {
+                id: this.reference.messageId
+                  ? this.reference.messageId
+                  : undefined,
+              }
             : undefined,
           sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
           messageReactions: this.reactions.toJSON(format),
@@ -784,21 +791,28 @@ class Message {
       default: {
         return {
           id: this.id,
+          channel_id: this.channelId,
           author: this.author.toJSON(format),
-          member: this.member.toJSON(format),
+          member: this.member?.toJSON(format),
           content: this.content,
           pinned: this.pinned,
           attachments: this.attachments.map((a) => a.toJSON(format)),
           embeds: this.embeds.map((e) => e.toJSON(format)),
-          edited_timestamp: this.editedTimestamp * 1000,
-          poll: this.poll.toJSON(format),
+          edited_timestamp: this.editedTimestamp
+            ? this.editedTimestamp * 1000
+            : null,
+          poll: this.poll?.toJSON(format),
           message_snapshots: this.messageSnapshots,
           type: this.type,
           referenced_message: this.reference?.messageId
-            ? { id: this.reference.messageId }
+            ? {
+                id: this.reference.messageId
+                  ? this.reference.messageId
+                  : undefined,
+              }
             : undefined,
-          sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
-          reactions: this.reactions.toJSON(format),
+          sticker_items: this.stickerItems?.map((s) => s.toJSON(format)),
+          reactions: this.reactions?.toJSON(format),
           mention_everyone: this.mentionEveryone,
           mention_roles: this.mentionRoles ? [""] : [],
           mentions: this.mentions ? [""] : [],

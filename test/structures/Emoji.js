@@ -125,9 +125,12 @@ describe("Emoji", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.deep.equal({
+        animated: true,
+        available: true,
         id: "844240546246950922",
         name: "bitcoin",
-        _attributes: 4,
+        managed: false,
+        require_colons: true,
       });
     });
     it("should return the correct object for a standard emoji", function () {
@@ -138,7 +141,10 @@ describe("Emoji", function () {
       expect(emoji.toJSON()).to.deep.equal({
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
-        _attributes: 0,
+        animated: false,
+        available: true,
+        require_colons: true,
+        managed: false,
       });
     });
   });

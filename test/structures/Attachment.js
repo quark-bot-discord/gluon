@@ -14,15 +14,11 @@ describe("Attachment", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = {};
+      const client = { cacheGuilds: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment).to.have.property("id");
       expect(attachment).to.have.property("name");
@@ -35,15 +31,11 @@ describe("Attachment", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = {};
+      const client = { cacheGuilds: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.id).to.equal(TEST_DATA.ATTACHMENT.id);
     });
@@ -51,15 +43,11 @@ describe("Attachment", function () {
 
   context("check filename", function () {
     it("should have the correct filename", function () {
-      const client = {};
+      const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.name).to.equal(TEST_DATA.ATTACHMENT.filename);
     });
@@ -67,15 +55,11 @@ describe("Attachment", function () {
 
   context("check size", function () {
     it("should have the correct size", function () {
-      const client = {};
+      const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.size).to.equal(TEST_DATA.ATTACHMENT.size);
     });
@@ -83,15 +67,11 @@ describe("Attachment", function () {
 
   context("check url", function () {
     it("should have the correct url", function () {
-      const client = {};
+      const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(`${attachment.url}&`).to.equal(TEST_DATA.ATTACHMENT.url);
     });
@@ -99,15 +79,11 @@ describe("Attachment", function () {
 
   context("check toJSON", function () {
     it("should return a valid JSON", function () {
-      const client = {};
+      const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.toJSON()).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
@@ -120,18 +96,14 @@ describe("Attachment", function () {
 
   context("check bundling", function () {
     it("should bundle correctly", function () {
-      const client = {};
+      const client = { cacheChannels: true };
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      new Guild(client, TEST_DATA.GUILD);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       const rebundled = new Attachment(client, attachment.toJSON(), {
-        _parentStructure: channel,
+        channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(rebundled.id).to.equal(attachment.id);
       expect(rebundled.name).to.equal(attachment.name);

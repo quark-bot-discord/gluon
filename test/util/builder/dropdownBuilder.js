@@ -234,22 +234,23 @@ describe("DropdownBuilder", function () {
         .setLabel("test")
         .setValue("testValue");
       dropdown
-        .setType(1)
+        .setType(3)
         .setCustomID("test")
         .addOption(dropdownOption)
-        .addChannelTypes([1, 2, 3])
+        .addChannelTypes([0, 2, 4])
         .setPlaceholder("test")
         .setMinValue(1)
-        .setMaxValue(1)
+        .setMaxValue(3)
         .setDisabled(true);
       expect(dropdown.toJSON()).to.eql({
-        type: 1,
+        type: 3,
         custom_id: "test",
-        options: [dropdownOption],
-        channel_types: [1, 2, 3],
+        options: [dropdownOption.toJSON()],
+        default_values: [],
+        channel_types: [0, 2, 4],
         placeholder: "test",
         min_values: 1,
-        max_values: 1,
+        max_values: 3,
         disabled: true,
       });
     });

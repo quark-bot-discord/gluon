@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { APPLICATION_COMMAND_TYPES } from "../../../src/constants.js";
 import Command from "../../../src/util/builder/commandBuilder.js";
+import CommandOption from "../../../src/util/builder/commandOptionBuilder.js";
 
 describe("CommandBuilder", function () {
   context("check import", function () {
@@ -62,14 +63,14 @@ describe("CommandBuilder", function () {
     });
     it("should set the default permission of the command", function () {
       const command = new Command();
-      command.setDefaultMemberPermissions(8);
-      expect(command.default_member_permissions).to.equal(8);
+      command.setDefaultMemberPermissions("8");
+      expect(command.default_member_permissions).to.equal("8");
     });
     it("should throw an error if no default permission is provided", function () {
       const command = new Command();
       expect(() => command.setDefaultMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Command default permission must be a number.",
+        "GLUON: Command default permission must be a string.",
       );
     });
   });
@@ -119,7 +120,7 @@ describe("CommandBuilder", function () {
     });
     it("should add an option to the command", function () {
       const command = new Command();
-      const option = { name: "test" };
+      const option = new CommandOption();
       command.addOption(option);
       expect(command.options).to.include(option);
     });

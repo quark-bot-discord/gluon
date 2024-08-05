@@ -126,11 +126,9 @@ describe("VoiceChannel", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(voiceChannel.toJSON()).to.deep.equal({
-        _attributes: 0,
-        _cacheOptions: {},
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
-        messages: {},
+        messages: [],
         name: TEST_DATA.VOICE_CHANNEL.name,
         parent_id: TEST_DATA.VOICE_CHANNEL.parent_id,
         rate_limit_per_user: TEST_DATA.VOICE_CHANNEL.rate_limit_per_user,
@@ -138,6 +136,7 @@ describe("VoiceChannel", function () {
         topic: TEST_DATA.VOICE_CHANNEL.topic,
         type: TEST_DATA.VOICE_CHANNEL.type,
         user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
+        nsfw: TEST_DATA.VOICE_CHANNEL.nsfw,
       });
     });
   });

@@ -185,7 +185,6 @@ describe("User", function () {
         id: TEST_DATA.USER.id,
         global_name: TEST_DATA.USER.global_name,
         username: TEST_DATA.USER.username,
-        _cached: user._cached,
       });
     });
   });

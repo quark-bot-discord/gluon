@@ -233,9 +233,8 @@ describe("Channel", function () {
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         topic: TEST_DATA.TEXT_CHANNEL.topic,
-        _attributes: 0,
-        _cacheOptions: {},
-        messages: {},
+        messages: [],
+        nsfw: false,
       });
     });
   });

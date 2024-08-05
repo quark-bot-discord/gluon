@@ -93,6 +93,16 @@ class BaseCacheManager {
   }
 
   /**
+   * Returns the size of the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get size() {
+    return this.#cache.size;
+  }
+
+  /**
    * Returns the JSON representation of this structure.
    * @param {Number} format The format to return the data in.
    * @returns {Object}

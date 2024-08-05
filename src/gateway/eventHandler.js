@@ -895,7 +895,7 @@ class EventHandler {
       } => GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
-    const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis.cache;
+    const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis;
 
     if (oldEmojis.size < data.emojis.length) {
       // EMOJI ADDED

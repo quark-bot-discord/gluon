@@ -328,7 +328,14 @@ describe("ScheduledEvent", function () {
       );
       expect(scheduledEvent.toJSON()).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
-        creator: {},
+        creator: {
+          id: TEST_DATA.SCHEDULED_EVENT.creator.id,
+          username: TEST_DATA.SCHEDULED_EVENT.creator.username,
+          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
+          bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
+          global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
+        },
         creator_id: TEST_DATA.SCHEDULED_EVENT.creator_id,
         description: TEST_DATA.SCHEDULED_EVENT.description,
         entity_type: 2,

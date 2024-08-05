@@ -193,7 +193,9 @@ describe("Role", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(role.toJSON()).to.deep.equal({
-        _attributes: 7,
+        hoist: TEST_DATA.ROLE_ADMIN.hoist,
+        managed: TEST_DATA.ROLE_ADMIN.managed,
+        mentionable: TEST_DATA.ROLE_ADMIN.mentionable,
         icon: TEST_DATA.ROLE_ADMIN.icon,
         id: TEST_DATA.ROLE_ID,
         name: TEST_DATA.ROLE_ADMIN.name,

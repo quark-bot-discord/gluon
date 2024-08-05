@@ -11,6 +11,7 @@ class Embed {
    * Creates an embed structure.
    */
   constructor(data) {
+    this.fields = [];
     if (data) {
       if (data.title) this.title = data.title;
       if (data.description) this.description = data.description;
@@ -19,13 +20,11 @@ class Embed {
       if (data.color) this.color = data.color;
       if (data.footer) this.footer = data.footer;
       if (data.author) this.author = data.author;
-      if (data.fields) this.fields = data.fields;
+      if (data.fields && Array.isArray(data.fields)) this.fields = data.fields;
       if (data.image) this.image = data.image;
       if (data.thumbnail) this.thumbnail = data.thumbnail;
       if (data.video) this.video = data.video;
     }
-
-    this.fields = [];
   }
 
   /**

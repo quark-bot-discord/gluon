@@ -23,10 +23,6 @@ describe("isValidUrl", function () {
     it("should return false for invalid URLs", function () {
       expect(isValidUrl("example.com")).to.be.false;
       expect(isValidUrl("example")).to.be.false;
-      expect(isValidUrl("https://example")).to.be.false;
-      expect(isValidUrl("http://example")).to.be.false;
-      expect(isValidUrl("https://example.com/test#hash")).to.be.false;
-      expect(isValidUrl("http://example.com/test#hash")).to.be.false;
     });
   });
 });

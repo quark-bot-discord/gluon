@@ -1388,7 +1388,7 @@ class Guild {
           name: this.name,
           icon: this.#_originalIconHash,
           owner_id: this.ownerId,
-          joined_at: this.joinedAt * 1000,
+          joined_at: new Date(this.joinedAt * 1000).toISOString(),
           premium_tier: this.premiumTier,
           unavailable: this.unavailable,
           member_count: this.memberCount,

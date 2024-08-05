@@ -178,11 +178,30 @@ describe("Invite", function () {
       });
       expect(invite.toJSON()).to.deep.equal({
         code: TEST_DATA.INVITE.code,
-        channel: {},
+        channel: {
+          id: TEST_DATA.INVITE.channel.id,
+          messages: [],
+          name: TEST_DATA.INVITE.channel.name,
+          nsfw: TEST_DATA.INVITE.channel.nsfw,
+          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
+          topic: TEST_DATA.INVITE.channel.topic,
+          type: TEST_DATA.INVITE.channel.type,
+          rate_limit_per_user: 0,
+        },
         uses: TEST_DATA.INVITE.uses,
-        expires: (new Date(TEST_DATA.INVITE.expires_at).getTime() / 1000) | 0,
+        expires_at: new Date(
+          ((new Date(TEST_DATA.INVITE.expires_at).getTime() / 1000) | 0) * 1000,
+        ).toISOString(),
         max_uses: TEST_DATA.INVITE.max_uses,
-        inviter: {},
+        inviter: {
+          id: TEST_DATA.INVITE.inviter.id,
+          username: TEST_DATA.INVITE.inviter.username,
+          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          avatar: TEST_DATA.INVITE.inviter.avatar,
+          bot: TEST_DATA.INVITE.inviter.bot,
+          global_name: TEST_DATA.INVITE.inviter.global_name,
+        },
       });
     });
   });

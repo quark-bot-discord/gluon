@@ -345,27 +345,33 @@ describe("Guild", function () {
       client.guilds = new GuildManager(client);
       const guild = new Guild(client, TEST_DATA.GUILD);
       expect(guild.toJSON()).to.deep.equal({
-        _attributes: 75800896,
-        _cache_options: {},
-        channels: {},
-        emojis: {},
+        channels: [],
+        emojis: [],
         icon: null,
         id: TEST_DATA.GUILD_ID,
-        invites: {},
-        joined_at:
+        invites: [],
+        joined_at: new Date(
           ((new Date(TEST_DATA.GUILD.joined_at).getTime() / 1000) | 0) * 1000,
+        ).toISOString(),
         member_count: TEST_DATA.GUILD.member_count,
-        members: {},
+        members: [],
+        mfa_level: 0,
+        nsfw_level: 0,
+        premium_progress_bar_enabled: true,
         name: TEST_DATA.GUILD.name,
         owner_id: TEST_DATA.GUILD.owner_id,
         preferred_locale: TEST_DATA.GUILD.preferred_locale,
         premium_subscription_count: TEST_DATA.GUILD.premium_subscription_count,
         premium_tier: TEST_DATA.GUILD.premium_tier,
-        roles: {},
+        roles: [],
         rules_channel_id: TEST_DATA.GUILD.rules_channel_id,
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
+        system_channel_flags: 0,
+        verification_level: 0,
         unavailable: TEST_DATA.GUILD.unavailable,
-        voice_states: {},
+        voice_states: [],
+        default_message_notifications: 0,
+        explicit_content_filter: 0,
       });
     });
   });

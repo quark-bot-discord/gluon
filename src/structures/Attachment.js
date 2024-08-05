@@ -7,7 +7,7 @@ import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 class Attachment {
   #_client;
   #_id;
-  #_parentStructure;
+  #_channel_id;
   #_urlData;
   #name;
   #size;
@@ -17,7 +17,7 @@ class Attachment {
    * @param {Client} client The client instance.
    * @param {Object} data Attachment data from Discord.
    */
-  constructor(client, data, { _parentStructure } = {}) {
+  constructor(client, data, { channel_id } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -59,11 +59,11 @@ class Attachment {
     this.#_urlData.hm = BigInt(`0x${urlParams.get("hm")}`);
 
     /**
-     * The parent structure that this attachment belongs to.
-     * @type {Object}
+     * The channel that this attachment belongs to.
+     * @type {BigInt?}
      * @private
      */
-    this.#_parentStructure = _parentStructure;
+    if (channel_id) this.#_channel_id = BigInt(channel_id);
   }
 
   /**
@@ -104,15 +104,23 @@ class Attachment {
    */
   get url() {
     const url = new URL(
-      `${CDN_BASE_URL}/attachments/${this.#_parentStructure.id}/${this.id}/${
-        this.name
-      }`,
+      `${CDN_BASE_URL}/attachments/${this.channelId}/${this.id}/${this.name}`,
     );
     url.searchParams.append("ex", this.#_urlData.ex.toString(16));
     url.searchParams.append("is", this.#_urlData.is.toString(16));
     url.searchParams.append("hm", this.#_urlData.hm.toString(16));
 
     return url.href;
+  }
+
+  /**
+   * The channel that this attachment belongs to.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get channelId() {
+    return this.#_channel_id ? String(this.#_channel_id) : undefined;
   }
 
   /**

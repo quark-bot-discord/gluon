@@ -5,6 +5,7 @@ import {
   SELECT_MENU_TYPES,
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import DropdownOption from "./dropdownOption.js";
 
 /**
  * Helps to create a dropdown message component.

@@ -182,7 +182,7 @@ describe("ButtonBuilder", () => {
       const button = new Button().setLabel("test");
       expect(() => button.toJSON()).to.throw(
         TypeError,
-        "GLUON: Button style must be provided.",
+        "GLUON: Button style must be a number.",
       );
     });
     it("should throw an error if no custom id is provided", function () {

@@ -10,6 +10,7 @@ import MessagePollManager from "../../src/managers/MessagePollManager.js";
 import MessageReactionManager from "../../src/managers/MessageReactionManager.js";
 import Member from "../../src/structures/Member.js";
 import Role from "../../src/structures/Role.js";
+import Poll from "../../src/structures/Poll.js";
 
 describe("Message", function () {
   context("check import", function () {
@@ -47,7 +48,6 @@ describe("Message", function () {
       expect(message).to.have.property("embeds");
       expect(message).to.have.property("reference");
       expect(message).to.have.property("poll");
-      expect(message).to.have.property("pollResponses");
       expect(message).to.have.property("reactions");
       expect(message).to.have.property("pinned");
       expect(message).to.have.property("mirrored");
@@ -300,21 +300,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      expect(message.poll).to.equal(TEST_DATA.MESSAGE.poll);
-    });
-  });
-
-  context("check pollResponses", function () {
-    it("should have the correct pollResponses", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const message = new Message(client, TEST_DATA.MESSAGE, {
-        guild_id: TEST_DATA.GUILD_ID,
-        channel_id: TEST_DATA.CHANNEL_ID,
-      });
-      expect(message.pollResponses).to.be.an.instanceOf(MessagePollManager);
+      expect(message.poll).to.be.an.instanceOf(Poll);
     });
   });
 
@@ -1173,24 +1159,82 @@ describe("Message", function () {
       expect(message.toJSON()).to.deep.equal({
         id: TEST_DATA.MESSAGE_ID,
         type: TEST_DATA.MESSAGE.type,
+        channel_id: TEST_DATA.CHANNEL_ID,
         content: TEST_DATA.MESSAGE.content,
-        _attributes: 15,
-        attachments: [{}],
-        author: {},
+        attachments: [
+          {
+            id: TEST_DATA.MESSAGE.attachments[0].id,
+            filename: TEST_DATA.MESSAGE.attachments[0].filename,
+            size: TEST_DATA.MESSAGE.attachments[0].size,
+            url: TEST_DATA.MESSAGE.attachments[0].url.slice(0, -1),
+          },
+        ],
+        author: {
+          id: TEST_DATA.MESSAGE.author.id,
+          username: TEST_DATA.MESSAGE.author.username,
+          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          avatar: TEST_DATA.MESSAGE.author.avatar,
+          bot: TEST_DATA.MESSAGE.author.bot,
+          global_name: TEST_DATA.MESSAGE.author.global_name,
+        },
+        pinned: true,
         edited_timestamp:
           ((new Date(TEST_DATA.MESSAGE.edited_timestamp).getTime() / 1000) |
             0) *
           1000,
-        embeds: TEST_DATA.MESSAGE.embeds,
-        sticker_items: [{}],
-        pollResponses: {},
+        embeds: [
+          {
+            title: TEST_DATA.MESSAGE.embeds[0].title,
+            description: TEST_DATA.MESSAGE.embeds[0].description,
+            url: TEST_DATA.MESSAGE.embeds[0].url,
+            color: TEST_DATA.MESSAGE.embeds[0].color,
+            timestamp: TEST_DATA.MESSAGE.embeds[0].timestamp,
+            footer: TEST_DATA.MESSAGE.embeds[0].footer,
+            image: TEST_DATA.MESSAGE.embeds[0].image,
+            thumbnail: TEST_DATA.MESSAGE.embeds[0].thumbnail,
+            video: TEST_DATA.MESSAGE.embeds[0].video,
+            fields: TEST_DATA.MESSAGE.embeds[0].fields,
+            author: TEST_DATA.MESSAGE.embeds[0].author,
+          },
+        ],
+        sticker_items: [...TEST_DATA.MESSAGE.sticker_items],
         referenced_message: {
           id: TEST_DATA.MESSAGE.referenced_message.id,
         },
-        poll: TEST_DATA.MESSAGE.poll,
-        messageReactions: {},
+        poll: {
+          allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
+          answers: [],
+          expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).toISOString(),
+          layout_type: undefined,
+          question: TEST_DATA.MESSAGE.poll.question,
+          results: {
+            answer_counts: [],
+          },
+        },
         message_snapshots: TEST_DATA.MESSAGE.message_snapshots,
-        member: {},
+        member: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: TEST_DATA.MEMBER.flags,
+          joined_at: TEST_DATA.MEMBER.joined_at,
+          nick: TEST_DATA.MEMBER.nick,
+          pending: TEST_DATA.MEMBER.pending,
+          roles: undefined,
+          permissions: "8",
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            id: TEST_DATA.MEMBER.user.id,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        reactions: [],
+        mention_everyone: true,
+        mention_roles: [""],
+        mentions: [""],
       });
     });
   });
@@ -1242,9 +1286,6 @@ describe("Message", function () {
       expect(rebundled.mentionEveryone).to.equal(message.mentionEveryone);
       expect(rebundled.mentionRoles).to.deep.equal(message.mentionRoles);
       expect(rebundled.poll).to.deep.equal(message.poll);
-      expect(rebundled.pollResponses.toJSON()).to.deep.equal(
-        message.pollResponses.toJSON(),
-      );
       expect(rebundled.pinned).to.equal(message.pinned);
       expect(rebundled.mirrored).to.equal(message.mirrored);
       expect(rebundled.webhookId).to.equal(message.webhookId);

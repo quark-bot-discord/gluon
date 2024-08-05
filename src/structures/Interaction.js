@@ -383,6 +383,7 @@ class Interaction {
           guild_id: this.guildId,
           channel_id: this.channelId,
           member: this.member.toJSON(format),
+          type: this.type,
         };
       }
     }

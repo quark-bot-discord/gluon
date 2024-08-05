@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_DATA, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import Reaction from "../../src/structures/Reaction.js";
 import GuildManager from "../../src/managers/GuildManager.js";
 import Guild from "../../src/structures/Guild.js";
@@ -30,8 +30,8 @@ describe("Reaction", function () {
       expect(reaction).to.have.property("guild");
       expect(reaction).to.have.property("emoji");
       expect(reaction).to.have.property("initialReactor");
-      expect(reaction).to.have.property("addReactor");
-      expect(reaction).to.have.property("removeReactor");
+      expect(reaction).to.have.property("_addReactor");
+      expect(reaction).to.have.property("_removeReactor");
       expect(reaction).to.have.property("toString");
       expect(reaction).to.have.property("toJSON");
     });
@@ -46,8 +46,8 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor("123456");
-      reaction.addReactor("654321");
+      reaction._addReactor("123456");
+      reaction._addReactor("654321");
       expect(reaction.count).to.equal(2);
     });
   });
@@ -65,7 +65,7 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
       expect(reaction.reacted[0]).to.be.an.instanceOf(Member);
       expect(reaction.reacted[0].id).to.equal(TEST_DATA.MEMBER_ID);
@@ -85,7 +85,7 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reactedIds.length).to.equal(1);
       expect(reaction.reactedIds[0]).to.equal(TEST_DATA.MEMBER_ID);
     });
@@ -145,7 +145,7 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.initialReactor).to.be.a("string");
       expect(reaction.initialReactor).to.equal(TEST_DATA.MEMBER_ID);
     });
@@ -164,7 +164,7 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
       expect(reaction.reactedIds.length).to.equal(1);
       expect(reaction.reacted[0]).to.be.an.instanceOf(Member);
@@ -185,10 +185,10 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
       expect(reaction.reactedIds.length).to.equal(1);
-      reaction.removeReactor(TEST_DATA.MEMBER_ID);
+      reaction._removeReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(0);
       expect(reaction.reactedIds.length).to.equal(0);
     });
@@ -238,11 +238,17 @@ describe("Reaction", function () {
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      reaction.addReactor(TEST_DATA.MEMBER_ID);
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.toJSON()).to.deep.equal({
-        _reacted: [TEST_DATA.MEMBER_ID],
-        emoji: {},
-        initial_reactor: TEST_DATA.MEMBER_ID,
+        count: 1,
+        emoji: {
+          animated: false,
+          available: true,
+          id: null,
+          name: TEST_DATA.REACTION.emoji.name,
+          require_colons: true,
+          managed: false,
+        },
       });
     });
   });
@@ -260,9 +266,13 @@ describe("Reaction", function () {
       guild_id: TEST_DATA.GUILD_ID,
     });
     reaction._addReactor(TEST_DATA.MEMBER_ID);
-    const rebundled = new Reaction(client, reaction.toJSON(), {
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    const rebundled = new Reaction(
+      client,
+      reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      {
+        guild_id: TEST_DATA.GUILD_ID,
+      },
+    );
     expect(reaction.count).to.equal(rebundled.count);
     expect(reaction.reacted).to.deep.equal(rebundled.reacted);
     expect(reaction.reactedIds).to.deep.equal(rebundled.reactedIds);

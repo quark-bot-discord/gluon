@@ -50,17 +50,19 @@ class Emoji {
      */
     this.#_attributes = data._attributes ?? 0;
 
-    if (data.require_colons !== undefined && data.require_colons == true)
+    if (data.require_colons !== undefined && data.require_colons === true)
       this.#_attributes |= 0b1 << 0;
+    else if (data.require_colons === undefined) this.#_attributes |= 0b1 << 0;
 
-    if (data.managed !== undefined && data.managed == true)
+    if (data.managed !== undefined && data.managed === true)
       this.#_attributes |= 0b1 << 1;
 
-    if (data.animated !== undefined && data.animated == true)
+    if (data.animated !== undefined && data.animated === true)
       this.#_attributes |= 0b1 << 2;
 
-    if (data.available !== undefined && data.available == true)
+    if (data.available !== undefined && data.available === true)
       this.#_attributes |= 0b1 << 3;
+    else if (data.available === undefined) this.#_attributes |= 0b1 << 3;
 
     /**
      * The id of the guild that this emoji belongs to.

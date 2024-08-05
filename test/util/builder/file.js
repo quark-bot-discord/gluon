@@ -17,6 +17,8 @@ describe("File", function () {
     });
     it("should set the name of the file", function () {
       const file = new File();
+      const readableStream = new Stream.Readable();
+      file.setStream(readableStream);
       file.setName(TEST_DATA.FILE_NAME);
       expect(file.toJSON().name).to.equal(TEST_DATA.FILE_NAME);
     });
@@ -46,6 +48,7 @@ describe("File", function () {
       const file = new File();
       const readableStream = new Stream.Readable();
       file.setStream(readableStream);
+      file.setName(TEST_DATA.FILE_NAME);
       expect(file.toJSON().stream).to.equal(readableStream);
     });
 
