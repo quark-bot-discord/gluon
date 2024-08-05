@@ -458,13 +458,16 @@ export const TEST_DATA = {
     guild_id: "619434557472505857",
     name: "test-category",
     position: 0,
-    permission_overwrites: [],
-    rate_limit_per_user: 0,
+    permission_overwrites: [
+      {
+        id: "123456789012345678",
+        type: 0,
+        allow: "2",
+        deny: "1",
+      },
+    ],
     nsfw: false,
-    topic: null,
-    last_message_id: null,
     parent_id: null,
-    last_pin_timestamp: null,
   },
   GUILD: {
     id: "619434557472505857",

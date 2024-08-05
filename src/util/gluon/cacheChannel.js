@@ -1,4 +1,5 @@
 import { CHANNEL_TYPES } from "../../constants.js";
+import CategoryChannel from "../../structures/CategoryChannel.js";
 import TextChannel from "../../structures/TextChannel.js";
 import Thread from "../../structures/Thread.js";
 import VoiceChannel from "../../structures/VoiceChannel.js";
@@ -22,6 +23,10 @@ function cacheChannel(client, data, guild_id, nocache = false) {
     case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
     case CHANNEL_TYPES.GUILD_PRIVATE_THREAD: {
       return new Thread(client, data, { guild_id, nocache });
+    }
+
+    case CHANNEL_TYPES.GUILD_CATEGORY: {
+      return new CategoryChannel(client, data, { guild_id, nocache });
     }
 
     default: {

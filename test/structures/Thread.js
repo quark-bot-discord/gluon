@@ -132,6 +132,7 @@ describe("Thread", function () {
         topic: TEST_DATA.THREAD.topic,
         type: TEST_DATA.THREAD.type,
         nsfw: TEST_DATA.THREAD.nsfw,
+        permission_overwrites: [],
       });
     });
   });

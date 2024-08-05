@@ -188,6 +188,7 @@ describe("Invite", function () {
           topic: TEST_DATA.INVITE.channel.topic,
           type: TEST_DATA.INVITE.channel.type,
           rate_limit_per_user: 0,
+          permission_overwrites: [],
         },
         uses: TEST_DATA.INVITE.uses,
         expires_at: new Date(

@@ -137,6 +137,7 @@ describe("VoiceChannel", function () {
         type: TEST_DATA.VOICE_CHANNEL.type,
         user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
         nsfw: TEST_DATA.VOICE_CHANNEL.nsfw,
+        permission_overwrites: [],
       });
     });
   });

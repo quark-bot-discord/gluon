@@ -1,3 +1,4 @@
+import CategoryChannel from "../structures/CategoryChannel.js";
 import TextChannel from "../structures/TextChannel.js";
 import Thread from "../structures/Thread.js";
 import VoiceChannel from "../structures/VoiceChannel.js";
@@ -71,11 +72,12 @@ class GuildChannelsManager extends BaseCacheManager {
       !(
         channel instanceof VoiceChannel ||
         channel instanceof TextChannel ||
-        channel instanceof Thread
+        channel instanceof Thread ||
+        channel instanceof CategoryChannel
       )
     )
       throw new TypeError(
-        "GLUON: Channel must be a VoiceChannel, TextChannel or Thread instance.",
+        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel or Thread instance.",
       );
     return super.set(id, channel);
   }

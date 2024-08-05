@@ -206,6 +206,7 @@ describe("TextChannel", function () {
         topic: TEST_DATA.TEXT_CHANNEL.topic,
         type: TEST_DATA.TEXT_CHANNEL.type,
         nsfw: TEST_DATA.TEXT_CHANNEL.nsfw,
+        permission_overwrites: [],
       });
     });
   });

@@ -5,6 +5,7 @@ import ActionRow from "../util/builder/actionRowBuilder.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Message from "./Message.js";
 import Embed from "../util/builder/embedBuilder.js";
+import PermissionOverwrite from "./PermissionOverwrite.js";
 
 /**
  * Represents a channel within Discord.
@@ -17,6 +18,7 @@ class Channel {
   #type;
   #name;
   #topic;
+  #permission_overwrites;
   #rate_limit_per_user;
   #_parent_id;
   #_attributes;
@@ -85,6 +87,23 @@ class Channel {
       typeof existing.topic == "string"
     )
       this.#topic = existing.topic;
+
+    /**
+     * The permission overwrites for this channel.
+     * @type {Array<Object>}
+     * @private
+     * @see {@link https://discord.com/developers/docs/resources/channel#overwrite-object}
+     */
+    if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
+      this.#permission_overwrites = data.permission_overwrites.map(
+        (p) => new PermissionOverwrite(this.#_client, p),
+      );
+    else if (
+      !data.permission_overwrites &&
+      existing &&
+      Array.isArray(existing.permissionOverwrites)
+    )
+      this.#permission_overwrites = existing.permissionOverwrites;
 
     /**
      * The message send cooldown for the channel.
@@ -329,6 +348,16 @@ class Channel {
   }
 
   /**
+   * The permission overwrites for this channel.
+   * @type {Array<Object>}
+   * @readonly
+   * @public
+   */
+  get permissionOverwrites() {
+    return this.#permission_overwrites;
+  }
+
+  /**
    * The message send cooldown for the channel.
    * @type {Number?}
    * @readonly
@@ -387,6 +416,9 @@ class Channel {
           _attributes: this.#_attributes,
           _cacheOptions: this._cacheOptions.toJSON(format),
           messages: this.messages.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
+          ),
         };
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -400,6 +432,9 @@ class Channel {
           parent_id: this.parentId ?? undefined,
           nsfw: this.nsfw,
           messages: this.messages.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
+          ),
         };
       }
     }
