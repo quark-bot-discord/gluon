@@ -8,6 +8,6 @@
   "source": {
     "include": ["."],
     "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "compiledStructures.js|constants.js"
+    "excludePattern": "compiledStructures.js|constants.js|test/*"
   }
 }
