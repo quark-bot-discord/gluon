@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>structures/VoiceChannel.js - Documentation</title>
+    <title>structures/CategoryChannel.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">structures/VoiceChannel.js</h1>
+    <h1 class="page-title">structures/CategoryChannel.js</h1>
     
 
     
@@ -46,32 +46,20 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import Channel from "./Channel.js";
-import Message from "./Message.js";
+import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
+import PermissionOverwrite from "./PermissionOverwrite.js";
 
-/**
- * Represents a voice channel.
- * @extends {Channel}
- */
-class VoiceChannel extends Channel {
+class CategoryChannel {
   #_client;
-  #bitrate;
-  #user_limit;
-  #rtc_region;
-  /**
-   * Creates the structure for a voice channel.
-   * @param {Client} client The client instance.
-   * @param {Object} data The raw channel data from Discord.
-   * @param {String} guild_id The id of the guild that the voice channel belongs to.
-   * @param {Boolean?} nocache Whether the voice channel should be cached.
-   */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
-    super(client, data, { guild_id });
-
+  #_id;
+  #_guild_id;
+  #type;
+  #name;
+  #_parent_id;
+  #_attributes;
+  #permission_overwrites;
+  #_cacheOptions;
+  constructor(client, data, { guild_id, nocache } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -79,77 +67,209 @@ class VoiceChannel extends Channel {
      */
     this.#_client = client;
 
+    /**
+     * The id of the channel.
+     * @type {BigInt}
+     * @private
+     */
+    this.#_id = BigInt(data.id);
+
+    /**
+     * The ID of the guild that this channel belongs to.
+     * @type {BigInt}
+     * @private
+     */
+    this.#_guild_id = BigInt(guild_id);
+
+    /**
+     * The type of channel.
+     * @type {Number}
+     * @private
+     */
+    this.#type = data.type;
+
     const existing = this.guild?.channels.get(data.id) || null;
 
-    if (typeof data.bitrate == "number")
-      /**
-       * The bitrate of the channel.
-       * @type {Number}
-       * @private
-       */
-      this.#bitrate = data.bitrate;
-    else if (existing &amp;&amp; typeof existing.bitrate)
-      this.#bitrate = existing.bitrate;
+    /**
+     * The name of the channel.
+     * @type {String}
+     * @private
+     */
+    if (typeof data.name == "string") this.#name = data.name;
+    else if (
+      typeof data.name != "string" &amp;&amp;
+      existing &amp;&amp;
+      typeof existing.name == "string"
+    )
+      this.#name = existing.name;
 
-    if (typeof data.user_limit == "number")
+    if (typeof data.parent_id == "string") {
       /**
-       * The user limit of the channel.
-       * @type {Number}
+       * The id of the parent channel.
+       * @type {BigInt?}
        * @private
        */
-      this.#user_limit = data.user_limit;
-    else if (existing &amp;&amp; typeof existing.userLimit == "number")
-      this.#user_limit = existing.userLimit;
+      this.#_parent_id = BigInt(data.parent_id);
+    } else if (
+      typeof data.parent_id != "string" &amp;&amp;
+      data.parent_id === undefined &amp;&amp;
+      existing &amp;&amp;
+      typeof existing.parentId == "string"
+    )
+      this.#_parent_id = existing.parentId;
 
-    if (typeof data.rtc_region == "string")
-      /**
-       * The region of the voice channel.
-       * @type {String}
-       * @private
-       */
-      this.#rtc_region = data.rtc_region;
-    else if (existing &amp;&amp; typeof existing.rtcRegion == "string")
-      this.#rtc_region = existing.rtcRegion;
+    /**
+     * The attributes of the channel.
+     * @type {Number}
+     * @private
+     */
+    this.#_attributes = data._attributes ?? 0;
+
+    if (data.nsfw !== undefined &amp;&amp; data.nsfw == true)
+      this.#_attributes |= 0b1 &lt;&lt; 0;
+    else if (data.nsfw === undefined &amp;&amp; existing &amp;&amp; existing.nsfw == true)
+      this.#_attributes |= 0b1 &lt;&lt; 0;
+
+    /**
+     * The permission overwrites for this channel.
+     * @type {Array&lt;Object>}
+     * @private
+     * @see {@link https://discord.com/developers/docs/resources/channel#overwrite-object}
+     */
+    if (data.permission_overwrites &amp;&amp; Array.isArray(data.permission_overwrites))
+      this.#permission_overwrites = data.permission_overwrites.map(
+        (p) => new PermissionOverwrite(this.#_client, p),
+      );
+    else if (
+      !data.permission_overwrites &amp;&amp;
+      existing &amp;&amp;
+      Array.isArray(existing.permissionOverwrites)
+    )
+      this.#permission_overwrites = existing.permissionOverwrites;
+
+    /**
+     * The cache options for this channel.
+     * @type {ChannelCacheOptions}
+     * @private
+     */
+    this.#_cacheOptions = existing?._cacheOptions
+      ? existing._cacheOptions
+      : new ChannelCacheOptions(data._cacheOptions);
 
     if (nocache == false &amp;&amp; this.#_client.cacheChannels == true)
       this.guild?.channels.set(data.id, this);
-
-    if (data.messages)
-      for (let i = 0; i &lt; data.messages.length; i++)
-        new Message(this.#_client, data.messages[i], {
-          channel_id: this.id,
-          guild_id,
-        });
   }
 
   /**
-   * The bitrate of the channel.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get bitrate() {
-    return this.#bitrate;
-  }
-
-  /**
-   * The user limit of the channel.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get userLimit() {
-    return this.#user_limit;
-  }
-
-  /**
-   * The region of the voice channel.
+   * The ID of the channel.
    * @type {String}
    * @readonly
    * @public
    */
-  get rtcRegion() {
-    return this.#rtc_region;
+  get id() {
+    return String(this.#_id);
+  }
+
+  /**
+   * The ID of the guild that this channel belongs to.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get guildId() {
+    return String(this.#_guild_id);
+  }
+
+  /**
+   * The guild that this channel belongs to.
+   * @type {Guild?}
+   * @readonly
+   * @public
+   */
+  get guild() {
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The ID of the parent channel.
+   * @type {String?}
+   * @readonly
+   * @public
+   */
+  get parentId() {
+    return this.#_parent_id ? String(this.#_parent_id) : null;
+  }
+
+  /**
+   * The parent channel.
+   * @type {Channel?}
+   * @readonly
+   * @public
+   */
+  get parent() {
+    return this.parentId
+      ? this.guild?.channels.get(this.parentId) || null
+      : null;
+  }
+
+  /**
+   * The name of the channel.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The type of channel.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get type() {
+    return this.#type;
+  }
+
+  /**
+   * The permission overwrites for the channel.
+   * @type {Array&lt;PermissionOverwrite>}
+   * @readonly
+   * @public
+   */
+  get permissionOverwrites() {
+    return this.#permission_overwrites;
+  }
+
+  /**
+   * Whether the channel is nsfw.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get nsfw() {
+    return (this.#_attributes &amp; (0b1 &lt;&lt; 0)) == 0b1 &lt;&lt; 0;
+  }
+
+  /**
+   * The mention string of the channel.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get mention() {
+    return `&lt;#${this.id}>`;
+  }
+
+  /**
+   * The cache options for this channel.
+   * @type {ChannelCacheOptions}
+   * @readonly
+   * @public
+   */
+  get _cacheOptions() {
+    return this.#_cacheOptions;
   }
 
   /**
@@ -157,7 +277,7 @@ class VoiceChannel extends Channel {
    * @public
    */
   toString() {
-    return `&lt;VoiceChannel: ${this.id}>`;
+    return `&lt;CategoryChannel: ${this.id}>`;
   }
 
   /**
@@ -166,26 +286,30 @@ class VoiceChannel extends Channel {
    * @returns {Object}
    * @public
    * @method
-   * @override
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return {
-          ...super.toJSON(format),
-          bitrate: this.bitrate,
-          user_limit: this.userLimit,
-          rtc_region: this.rtcRegion,
+          id: this.id,
+          guild_id: this.guildId,
+          parent_id: this.parentId,
+          name: this.name,
+          type: this.type,
+          nsfw: this.nsfw,
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
+          ),
         };
       }
     }
   }
 }
 
-export default VoiceChannel;
+export default CategoryChannel;
 </code></pre>
         </article>
     </section>
