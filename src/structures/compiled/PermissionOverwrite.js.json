@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 55,
-                2010
+                2026
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 3,
@@ -520,7 +520,7 @@
         "meta": {
             "range": [
                 1665,
-                2008
+                2024
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 97,
@@ -619,7 +619,7 @@
         "meta": {
             "range": [
                 1934,
-                1951
+                1959
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 106,
@@ -628,8 +628,8 @@
             "code": {
                 "id": "astnode100000149",
                 "name": "allow",
-                "type": "MemberExpression",
-                "value": "this.allow"
+                "type": "CallExpression",
+                "value": ""
             }
         },
         "undocumented": true,
@@ -642,18 +642,18 @@
         "comment": "",
         "meta": {
             "range": [
-                1963,
-                1978
+                1971,
+                1994
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 107,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000153",
+                "id": "astnode100000155",
                 "name": "deny",
-                "type": "MemberExpression",
-                "value": "this.deny"
+                "type": "CallExpression",
+                "value": ""
             }
         },
         "undocumented": true,
@@ -666,15 +666,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2012,
-                2047
+                2028,
+                2063
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 114,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000157",
+                "id": "astnode100000161",
                 "name": "module.exports",
                 "type": "Identifier"
             }
