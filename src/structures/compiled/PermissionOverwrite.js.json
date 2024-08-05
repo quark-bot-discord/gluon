@@ -1,0 +1,696 @@
+[
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                55,
+                2010
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 3,
+            "columnno": 0,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000006",
+                "name": "PermissionOverwrite",
+                "type": "ClassDeclaration",
+                "paramnames": [
+                    "client",
+                    "data"
+                ]
+            }
+        },
+        "undocumented": true,
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite",
+        "kind": "class",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                85,
+                94
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 4,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000009",
+                "name": "_client",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_client",
+        "longname": "PermissionOverwrite#_client",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                97,
+                102
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 5,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000010",
+                "name": "_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_id",
+        "longname": "PermissionOverwrite#_id",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                105,
+                111
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 6,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000011",
+                "name": "type",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "type",
+        "longname": "PermissionOverwrite#type",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                114,
+                121
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 7,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000012",
+                "name": "allow",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "allow",
+        "longname": "PermissionOverwrite#allow",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                124,
+                130
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 8,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000013",
+                "name": "deny",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "deny",
+        "longname": "PermissionOverwrite#deny",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                133,
+                782
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 9,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000014",
+                "name": "PermissionOverwrite",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "client",
+                    "data"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite",
+        "kind": "class",
+        "scope": "global",
+        "params": []
+    },
+    {
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                247,
+                269
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 15,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000021",
+                "name": "this.",
+                "type": "Identifier",
+                "value": "client",
+                "paramnames": []
+            }
+        },
+        "description": "The client instance.",
+        "type": {
+            "names": [
+                "Client"
+            ]
+        },
+        "access": "private",
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite.PermissionOverwrite",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n     * The id of the overwrite.\n     * @type {BigInt}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                361,
+                388
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 21,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000028",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The id of the overwrite.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "access": "private",
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite.PermissionOverwrite",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n     * The type of the overwrite.\n     * @type {String}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                482,
+                504
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 27,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000039",
+                "name": "this.",
+                "type": "MemberExpression",
+                "value": "data.type",
+                "paramnames": []
+            }
+        },
+        "description": "The type of the overwrite.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "access": "private",
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite.PermissionOverwrite",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n     * The permissions for the overwrite.\n     * @type {BigInt}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                606,
+                638
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 33,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000048",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The permissions for the overwrite.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "access": "private",
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite.PermissionOverwrite",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n     * The denied permissions for the overwrite.\n     * @type {BigInt}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                747,
+                777
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 39,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000059",
+                "name": "this.",
+                "type": "CallExpression",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "description": "The denied permissions for the overwrite.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "access": "private",
+        "name": "PermissionOverwrite",
+        "longname": "PermissionOverwrite.PermissionOverwrite",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * The ID of the overwrite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                876,
+                920
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 48,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000069",
+                "name": "PermissionOverwrite#id",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The ID of the overwrite.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "id",
+        "longname": "PermissionOverwrite#id",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The type of the overwrite. 0 for role, 1 for member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1042,
+                1081
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 58,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000080",
+                "name": "PermissionOverwrite#type",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The type of the overwrite. 0 for role, 1 for member.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "type",
+        "longname": "PermissionOverwrite#type",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The permissions for the overwrite.\n   * @type {BigInt}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1185,
+                1226
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 68,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000089",
+                "name": "PermissionOverwrite#allow",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The permissions for the overwrite.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "allow",
+        "longname": "PermissionOverwrite#allow",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The denied permissions for the overwrite.\n   * @type {BigInt}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1337,
+                1376
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 78,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000098",
+                "name": "PermissionOverwrite#deny",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The denied permissions for the overwrite.",
+        "type": {
+            "names": [
+                "BigInt"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "deny",
+        "longname": "PermissionOverwrite#deny",
+        "kind": "member",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1418,
+                1482
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 86,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000107",
+                "name": "PermissionOverwrite#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "PermissionOverwrite#toString",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "meta": {
+            "range": [
+                1665,
+                2008
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 97,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000118",
+                "name": "PermissionOverwrite#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "format"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Returns the JSON representation of this structure.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Number"
+                    ]
+                },
+                "description": "The format to return the data in.",
+                "name": "format"
+            }
+        ],
+        "returns": [
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                }
+            }
+        ],
+        "access": "public",
+        "kind": "function",
+        "name": "toJSON",
+        "longname": "PermissionOverwrite#toJSON",
+        "memberof": "PermissionOverwrite",
+        "scope": "instance"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1884,
+                1895
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 104,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000141",
+                "name": "id",
+                "type": "MemberExpression",
+                "value": "this.id"
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1907,
+                1922
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 105,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000145",
+                "name": "type",
+                "type": "MemberExpression",
+                "value": "this.type"
+            }
+        },
+        "undocumented": true,
+        "name": "type",
+        "longname": "type",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1934,
+                1951
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 106,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000149",
+                "name": "allow",
+                "type": "MemberExpression",
+                "value": "this.allow"
+            }
+        },
+        "undocumented": true,
+        "name": "allow",
+        "longname": "allow",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1963,
+                1978
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 107,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000153",
+                "name": "deny",
+                "type": "MemberExpression",
+                "value": "this.deny"
+            }
+        },
+        "undocumented": true,
+        "name": "deny",
+        "longname": "deny",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2012,
+                2047
+            ],
+            "filename": "PermissionOverwrite.js",
+            "lineno": 114,
+            "columnno": 0,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000157",
+                "name": "module.exports",
+                "type": "Identifier"
+            }
+        },
+        "undocumented": true,
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "member",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "/home/runner/work/gluon/gluon/src/structures/PermissionOverwrite.js"
+        ]
+    }
+]
