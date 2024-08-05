@@ -103,8 +103,8 @@ class PermissionOverwrite {
         return {
           id: this.id,
           type: this.type,
-          allow: this.allow,
-          deny: this.deny,
+          allow: String(this.allow),
+          deny: String(this.deny),
         };
       }
     }

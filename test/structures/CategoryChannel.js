@@ -149,7 +149,12 @@ describe("CategoryChannel", function () {
         nsfw: TEST_DATA.CATEGORY_CHANNEL.nsfw,
         guild_id: TEST_DATA.GUILD_ID,
         permission_overwrites: [
-          { allow: "2", deny: "1", id: "123456789012345678", type: 0 },
+          {
+            allow: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].allow,
+            deny: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].deny,
+            id: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].id,
+            type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
+          },
         ],
         parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
       });
