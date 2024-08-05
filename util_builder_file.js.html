@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>managers/GuildCacheOptions.js - Documentation</title>
+    <title>util/builder/file.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">managers/GuildCacheOptions.js</h1>
+    <h1 class="page-title">util/builder/file.js</h1>
     
 
     
@@ -45,335 +45,84 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import {
-  GLUON_GUILD_CACHING_OPTIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+            <pre class="prettyprint source linenums"><code>import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
-class GuildCacheOptions {
-  #_cache_options;
-
-  constructor(cache_options) {
-    /**
-     * The cache options for this guild.
-     * @type {Number}
-     * @private
-     */
-    this.#_cache_options = cache_options ?? 0;
-  }
-
+class File {
+  #name;
+  #stream;
+  #path;
   /**
-   * Whether to cache messages or not.
-   * @param {Boolean} option Whether to cache messages or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
+   * The name of the file.
+   * @param {String} name The name of the file.
+   * @returns {File}
    */
-  set messageCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
+  setName(name) {
+    if (!name) throw new TypeError("GLUON: File name must be provided.");
+    if (typeof name !== "string")
+      throw new TypeError("GLUON: File name must be a string.");
+    if (name.length > LIMITS.MAX_FILE_NAME_LENGTH)
+      throw new RangeError(
+        `GLUON: File name must be less than ${LIMITS.MAX_FILE_NAME_LENGTH} characters.`,
+      );
+    this.#name = name;
     return this;
   }
 
   /**
-   * Whether to cache files or not.
-   * @param {Boolean} option Whether to cache files or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
+   * The stream of the file.
+   * @param {Stream} stream The stream of the file.
+   * @returns {File}
    */
-  set fileCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.FILES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.FILES;
+  setStream(stream) {
+    if (!stream) throw new TypeError("GLUON: File stream must be provided.");
+    this.#stream = stream;
+    return this;
   }
 
   /**
-   * Whether to cache voice states or not.
-   * @param {Boolean} option Whether to cache voice states or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
+   * The path of the file.
+   * @param {String} path The path of the file.
+   * @returns {File}
    */
-  set voiceStateCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES;
+  setPath(path) {
+    if (!path) throw new TypeError("GLUON: File path must be provided.");
+    if (typeof path !== "string")
+      throw new TypeError("GLUON: File path must be a string.");
+    this.#path = path;
+    return this;
   }
 
-  /**
-   * Whether to cache members or not.
-   * @param {Boolean} option Whether to cache members or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set memberCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
-  }
-
-  /**
-   * Whether to cache roles or not.
-   * @param {Boolean} option Whether to cache roles or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set roleCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.ROLES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.ROLES;
-  }
-
-  /**
-   * Whether to cache channels or not.
-   * @param {Boolean} option Whether to cache channels or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set channelCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
-  }
-
-  /**
-   * Whether to cache emojis or not.
-   * @param {Boolean} option Whether to cache emojis or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set emojiCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
-  }
-
-  /**
-   * Whether to cache threads or not.
-   * @param {Boolean} option Whether to cache threads or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set threadCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.THREADS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.THREADS;
-  }
-
-  /**
-   * Whether to cache invites or not.
-   * @param {Boolean} option Whether to cache invites or not.
-   * @returns {GuildCacheOptions}
-   * @throws {TypeError}
-   * @public
-   */
-  set inviteCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.INVITES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_GUILD_CACHING_OPTIONS.INVITES;
-  }
-
-  /**
-   * Returns whether to cache files or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get messageCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_GUILD_CACHING_OPTIONS.MESSAGES
-    );
-  }
-
-  /**
-   * Returns whether to cache files or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get fileCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.FILES) ===
-      GLUON_GUILD_CACHING_OPTIONS.FILES
-    );
-  }
-
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get messageCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_GUILD_CACHING_OPTIONS.MESSAGES
-    );
-  }
-
-  /**
-   * Returns whether to cache voice states or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get voiceStateCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES) ===
-      GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES
-    );
-  }
-
-  /**
-   * Returns whether to cache members or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get memberCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.MEMBERS) ===
-      GLUON_GUILD_CACHING_OPTIONS.MEMBERS
-    );
-  }
-
-  /**
-   * Returns whether to cache roles or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get roleCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.ROLES) ===
-      GLUON_GUILD_CACHING_OPTIONS.ROLES
-    );
-  }
-
-  /**
-   * Returns whether to cache channels or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get channelCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.CHANNELS) ===
-      GLUON_GUILD_CACHING_OPTIONS.CHANNELS
-    );
-  }
-
-  /**
-   * Returns whether to cache emojis or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get emojiCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.EMOJIS) ===
-      GLUON_GUILD_CACHING_OPTIONS.EMOJIS
-    );
-  }
-
-  /**
-   * Returns whether to cache threads or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get threadCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.THREADS) ===
-      GLUON_GUILD_CACHING_OPTIONS.THREADS
-    );
-  }
-
-  /**
-   * Returns whether to cache invites or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get inviteCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_GUILD_CACHING_OPTIONS.INVITES) ===
-      GLUON_GUILD_CACHING_OPTIONS.INVITES
-    );
-  }
-
-  /**
-   * @method
-   * @public
-   */
-  toString() {
-    return `GuildCacheOptions { fileCaching: ${this.fileCaching}, messageCaching: ${this.messageCaching}, voiceStateCaching: ${this.voiceStateCaching}, memberCaching: ${this.memberCaching}, roleCaching: ${this.roleCaching}, channelCaching: ${this.channelCaching}, emojiCaching: ${this.emojiCaching}, threadCaching: ${this.threadCaching}, inviteCaching: ${this.inviteCaching} }`;
-  }
-
-  /**
-   * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
-   */
-  toJSON(format) {
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (!this.#name)
+        throw new TypeError("GLUON: File name must be provided.");
+      if (!this.#stream &amp;&amp; !this.#path)
+        throw new TypeError("GLUON: File stream or path must be provided.");
+    }
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       default: {
-        return this.#_cache_options;
+        if (this.#stream)
+          return {
+            name: this.#name,
+            stream: this.#stream,
+          };
+        else
+          return {
+            name: this.#name,
+            attachment: this.#path,
+          };
       }
     }
   }
 }
 
-export default GuildCacheOptions;
+export default File;
 </code></pre>
         </article>
     </section>
