@@ -63,7 +63,6 @@ describe("ModalResponse", function () {
       new Guild(client, TEST_DATA.GUILD);
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
-      console.log(modalResponse.customId);
       expect(modalResponse.toString()).to.equal(
         `<ModalResponse: ${TEST_DATA.MODAL_RESPONSE.id}>`,
       );
