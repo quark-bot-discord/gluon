@@ -61,22 +61,22 @@ class PermissionOverwrite {
 
   /**
    * The permissions for the overwrite.
-   * @type {BigInt}
+   * @type {String}
    * @readonly
    * @public
    */
   get allow() {
-    return this.#allow;
+    return String(this.#allow);
   }
 
   /**
    * The denied permissions for the overwrite.
-   * @type {BigInt}
+   * @type {String}
    * @readonly
    * @public
    */
   get deny() {
-    return this.#deny;
+    return String(this.#deny);
   }
 
   /**
@@ -103,8 +103,8 @@ class PermissionOverwrite {
         return {
           id: this.id,
           type: this.type,
-          allow: String(this.allow),
-          deny: String(this.deny),
+          allow: this.allow,
+          deny: this.deny,
         };
       }
     }

@@ -1272,4 +1272,10 @@ export const TEST_DATA = {
       ],
     },
   },
+  PERMISSION_OVERWRITE: {
+    id: "123456789012345678",
+    type: 0,
+    allow: "1",
+    deny: "0",
+  },
 };
