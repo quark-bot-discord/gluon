@@ -46,17 +46,19 @@ class Attachment {
      */
     this.#size = data.size;
 
-    /**
-     * Data about the file url.
-     * @type {Object}
-     * @private
-     */
-    this.#_urlData = {};
+    if (data.url) {
+      /**
+       * Data about the file url.
+       * @type {Object?}
+       * @private
+       */
+      this.#_urlData = {};
 
-    const urlParams = new URL(data.url).searchParams;
-    this.#_urlData.ex = BigInt(`0x${urlParams.get("ex")}`);
-    this.#_urlData.is = BigInt(`0x${urlParams.get("is")}`);
-    this.#_urlData.hm = BigInt(`0x${urlParams.get("hm")}`);
+      const urlParams = new URL(data.url).searchParams;
+      this.#_urlData.ex = BigInt(`0x${urlParams.get("ex")}`);
+      this.#_urlData.is = BigInt(`0x${urlParams.get("is")}`);
+      this.#_urlData.hm = BigInt(`0x${urlParams.get("hm")}`);
+    }
 
     /**
      * The channel that this attachment belongs to.
@@ -103,6 +105,8 @@ class Attachment {
    * @public
    */
   get url() {
+    if (!this.#_urlData) return null;
+
     const url = new URL(
       `${CDN_BASE_URL}/attachments/${this.channelId}/${this.id}/${this.name}`,
     );

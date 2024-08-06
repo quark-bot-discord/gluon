@@ -767,7 +767,7 @@ class Message {
         return {
           id: this.id,
           author: this.author.toJSON(format),
-          member: this.member.toJSON(format),
+          member: this.member?.toJSON(format),
           content: this.content,
           _attributes: this.#_attributes,
           attachments: this.attachments.map((a) => a.toJSON(format)),

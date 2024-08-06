@@ -66,7 +66,7 @@ class Poll {
      * @type {MessagePollManager}
      * @private
      */
-    this.#results = new MessagePollManager(data.results);
+    this.#results = new MessagePollManager(this.#_client, data._results);
   }
 
   /**
@@ -90,12 +90,7 @@ class Poll {
     return this.#answers.map((a) => {
       return {
         answerId: a.answer_id,
-        answer:
-          a.poll_media.text ??
-          new Emoji(this.#_client, a.poll_media.emoji, {
-            guild_id: this.#_guild_id,
-          }),
-        answerString: a.poll_media.text ?? a.poll_media.emoji.mention,
+        answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
       };
     });
   }
@@ -147,7 +142,7 @@ class Poll {
    * @readonly
    * @public
    */
-  get results() {
+  get _results() {
     return this.#results;
   }
 
@@ -169,7 +164,18 @@ class Poll {
   toJSON(format) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          question: this.question,
+          answers: this.answers,
+          expiry: this.expiry
+            ? new Date(this.expiry * 1000).toISOString()
+            : null,
+          allow_multiselect: this.allowMultiselect,
+          layout_type: this.rawLayoutType,
+          _results: this._results.toJSON(format),
+        };
+      }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return {
@@ -180,7 +186,7 @@ class Poll {
             : null,
           allow_multiselect: this.allowMultiselect,
           layout_type: this.rawLayoutType,
-          results: this.results.toJSON(format),
+          results: this._results.toJSON(format),
         };
       }
     }

@@ -4,12 +4,20 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
  * Manages a poll for a message.
  */
 class MessagePollManager {
+  #_client;
   #cache;
   /**
    * Creates a message poll manager.
    * @param {Object} existingResponses Existing responses for a poll.
    */
-  constructor(existingResponses = {}) {
+  constructor(client, existingResponses = {}) {
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
+
     /**
      * The cache of responses.
      * @type {Map<String, Array<BigInt>>}
@@ -19,7 +27,7 @@ class MessagePollManager {
 
     for (const [answer, answerValue] of Object.entries(existingResponses))
       this.#cache.set(
-        answer,
+        String(answer),
         answerValue.map((v) => BigInt(v)),
       );
   }
@@ -27,7 +35,7 @@ class MessagePollManager {
   /**
    * Adds a response to a poll.
    * @param {String} user_id The id of the user who voted.
-   * @param {String} answer_id The id of the answer that was voted for.
+   * @param {Number} answer_id The id of the answer that was voted for.
    * @throws {TypeError}
    * @public
    * @method
@@ -36,20 +44,20 @@ class MessagePollManager {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    if (typeof answer_id !== "string")
-      throw new TypeError("GLUON: Answer ID must be a string.");
+    if (typeof answer_id !== "number")
+      throw new TypeError("GLUON: Answer ID must be a number.");
 
-    const currentUserList = this.#cache.get(answer_id);
+    const currentUserList = this.#cache.get(String(answer_id));
 
     if (currentUserList)
-      this.#cache.set(answer_id, [...currentUserList, BigInt(user_id)]);
-    else this.#cache.set(answer_id, [BigInt(user_id)]);
+      this.#cache.set(String(answer_id), [...currentUserList, BigInt(user_id)]);
+    else this.#cache.set(String(answer_id), [BigInt(user_id)]);
   }
 
   /**
    * Removes a response from a poll.
    * @param {String} user_id The id of the user whose vote was removed.
-   * @param {String} answer_id The id of the answer for which the vote was removed.
+   * @param {Number} answer_id The id of the answer for which the vote was removed.
    * @throws {TypeError}
    * @public
    * @method
@@ -58,14 +66,14 @@ class MessagePollManager {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    if (typeof answer_id !== "string")
-      throw new TypeError("GLUON: Answer ID must be a string.");
+    if (typeof answer_id !== "number")
+      throw new TypeError("GLUON: Answer ID must be a number.");
 
-    const currentUserList = this.#cache.get(answer_id);
+    const currentUserList = this.#cache.get(String(answer_id));
 
     if (currentUserList)
       this.#cache.set(
-        answer_id,
+        String(answer_id),
         currentUserList.filter((x) => x != BigInt(user_id)),
       );
   }
@@ -88,16 +96,15 @@ class MessagePollManager {
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
-        const pollResponses = {};
+        const counts = [];
         for (const [key, values] of this.#cache)
-          pollResponses[key] = values.map((v) => String(v));
+          counts.push({
+            id: Number(key),
+            count: values.length,
+            me_voted: values.includes(BigInt(this.#_client.user.id)),
+          });
         return {
-          answer_counts: Object.keys(this.#cache).map((k) => {
-            return {
-              answer_id: k,
-              count: this.#cache.get(k).length,
-            };
-          }),
+          answer_counts: counts,
         };
       }
     }

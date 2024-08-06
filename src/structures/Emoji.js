@@ -122,9 +122,7 @@ class Emoji {
    * @public
    */
   get mention() {
-    if (this.id)
-      return `<${this.animated == true ? "a" : ""}:${this.name}:${this.id}>`;
-    else return this.name;
+    return Emoji.getMention(this.name, this.id, this.animated);
   }
 
   /**
@@ -177,6 +175,21 @@ class Emoji {
    */
   get name() {
     return this.#name;
+  }
+
+  /**
+   * Returns the mention string for an emoji.
+   * @param {String} name The name of the emoji.
+   * @param {String?} id The id of the emoji.
+   * @param {Boolean?} animated Whether the emoji is animated.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(name, id, animated) {
+    if (id) return `<${animated == true ? "a" : ""}:${name}:${id}>`;
+    else return name;
   }
 
   /**

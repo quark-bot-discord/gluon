@@ -1244,4 +1244,32 @@ export const TEST_DATA = {
     user_count: 10,
     image: "000000000000000000000000deadbeef",
   },
+  POLL: {
+    question: "test poll",
+    answers: [
+      {
+        answer_id: 1,
+        poll_media: {
+          text: "test",
+          emoji: {
+            id: "123456789012345678",
+            name: "test",
+          },
+        },
+      },
+    ],
+    expiry: "2021-01-01T00:00:00.000Z",
+    allow_multiselect: false,
+    layout_type: 1,
+    results: {
+      is_finalized: false,
+      answer_counts: [
+        {
+          id: 1,
+          count: 1,
+          me_voted: true,
+        },
+      ],
+    },
+  },
 };
