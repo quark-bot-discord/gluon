@@ -1,6 +1,5 @@
-import getAvatarUrl from "../util/image/getAvatarUrl.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents a Discord user.
@@ -222,7 +221,7 @@ class User {
   get displayAvatarURL() {
     if (this.#overrideAvatar) return this.#overrideAvatar;
 
-    return getAvatarUrl(this.id, this.#_originalAvatarHash);
+    return User.getAvatarUrl(this.id, this.#_originalAvatarHash);
   }
 
   /**
@@ -279,6 +278,28 @@ class User {
     if (typeof id !== "string")
       throw new TypeError("GLUON: User id must be a string.");
     return `<@${id}>`;
+  }
+
+  /**
+   * Returns the URL to the user's avatar.
+   * @param {String} id The ID of the user to get the avatar for.
+   * @param {String?} hash The hash of the avatar.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getAvatarUrl(id, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: User id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Avatar hash must be a string.");
+    return hash
+      ? // eslint-disable-next-line quotes
+        `${CDN_BASE_URL}/avatars/${id}/${hash}.${
+          hash.startsWith("a_") == true ? "gif" : "png"
+        }`
+      : `${CDN_BASE_URL}/embed/avatars/${String((BigInt(id) >> 22n) % 6n)}.png`;
   }
 
   /**

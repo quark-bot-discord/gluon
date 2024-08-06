@@ -1,8 +1,12 @@
-import { PERMISSIONS, MEMBER_FLAGS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  PERMISSIONS,
+  MEMBER_FLAGS,
+  TO_JSON_TYPES_ENUM,
+  CDN_BASE_URL,
+} from "../constants.js";
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
-import getMemberAvatar from "../util/image/getMemberAvatar.js";
 
 /**
  * Represents a guild member.
@@ -343,7 +347,7 @@ class Member {
    */
   get displayAvatarURL() {
     return (
-      getMemberAvatar(this.id, this.guildId, this.#_originalAvatarHash) ??
+      Member.getAvatarUrl(this.id, this.guildId, this.#_originalAvatarHash) ??
       this.user.displayAvatarURL
     );
   }
@@ -390,6 +394,30 @@ class Member {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
     return `<@${userId}>`;
+  }
+
+  /**
+   * Returns the avatar url for the member.
+   * @param {String} id The id of the user.
+   * @param {String} guild_id The id of the guild the user belongs to.
+   * @param {String?} hash The avatar hash of the user.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getAvatarUrl(id, guild_id, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Member id must be a string.");
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Member avatar hash must be a string.");
+    return hash
+      ? `${CDN_BASE_URL}/guilds/${guild_id}/users/${id}/avatars/${hash}.${
+          hash.startsWith("a_") ? "gif" : "png"
+        }`
+      : null;
   }
 
   /**

@@ -274,6 +274,33 @@ describe("ScheduledEvent", function () {
     });
   });
 
+  context("check imageUrl", function () {
+    it("should throw an error if no event id is provided", function () {
+      expect(() => ScheduledEvent.getImageUrl(undefined, "hash")).to.throw(
+        TypeError,
+        "GLUON: Event id must be a string.",
+      );
+    });
+    it("should throw an error if the hash is not a string and not null", function () {
+      expect(() =>
+        ScheduledEvent.getImageUrl(TEST_DATA.EVENT_ID, 123),
+      ).to.throw(TypeError, "GLUON: Event hash must be a string.");
+    });
+    it("should return null if no hash is provided", function () {
+      expect(ScheduledEvent.getImageUrl(TEST_DATA.EVENT_ID)).to.be.null;
+    });
+    it("should return the correct event image url", function () {
+      expect(ScheduledEvent.getImageUrl(TEST_DATA.EVENT_ID, "hash")).to.equal(
+        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/hash.png`,
+      );
+    });
+    it("should return the correct event image url for gif", function () {
+      expect(ScheduledEvent.getImageUrl(TEST_DATA.EVENT_ID, "a_hash")).to.equal(
+        `https://cdn.discordapp.com/guild-events/${TEST_DATA.EVENT_ID}/a_hash.gif`,
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = { cacheGuilds: true };

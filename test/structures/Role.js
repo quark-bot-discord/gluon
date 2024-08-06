@@ -178,6 +178,37 @@ describe("Role", function () {
     });
   });
 
+  context("check getIconUrl", function () {
+    it("should throw an error if no role id is provided", function () {
+      expect(() => Role.getIconUrl(undefined, "hash")).to.throw(
+        TypeError,
+        "GLUON: Role id must be a string.",
+      );
+    });
+    it("should throw an error if the hash is not a string and not null", function () {
+      expect(() => Role.getIconUrl(TEST_DATA.ROLE_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Role icon hash must be a string.",
+      );
+    });
+    it("should return a string", function () {
+      expect(Role.getIconUrl(TEST_DATA.ROLE_ID, "hash")).to.be.a("string");
+    });
+    it("should return null if no hash is provided", function () {
+      expect(Role.getIconUrl(TEST_DATA.ROLE_ID)).to.be.null;
+    });
+    it("should return the correct icon url", function () {
+      expect(Role.getIconUrl(TEST_DATA.ROLE_ID, "hash")).to.equal(
+        `https://cdn.discordapp.com/role-icons/${TEST_DATA.ROLE_ID}/hash.png`,
+      );
+    });
+    it("should return the correct icon url for a gif", function () {
+      expect(Role.getIconUrl(TEST_DATA.ROLE_ID, "a_hash")).to.equal(
+        `https://cdn.discordapp.com/role-icons/${TEST_DATA.ROLE_ID}/a_hash.gif`,
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = { cacheGuilds: true };

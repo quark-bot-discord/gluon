@@ -162,6 +162,36 @@ describe("User", function () {
     });
   });
 
+  context("check getAvatarUrl", function () {
+    it("should return the correct default avatar url", function () {
+      expect(User.getAvatarUrl(TEST_DATA.MEMBER_ID)).to.equal(
+        "https://cdn.discordapp.com/embed/avatars/0.png",
+      );
+    });
+    it("should return the correct avatar url", function () {
+      expect(User.getAvatarUrl(TEST_DATA.MEMBER_ID, "hash")).to.equal(
+        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/hash.png`,
+      );
+    });
+    it("should return the correct avatar url for a gif", function () {
+      expect(User.getAvatarUrl(TEST_DATA.MEMBER_ID, "a_hash")).to.equal(
+        `https://cdn.discordapp.com/avatars/${TEST_DATA.MEMBER_ID}/a_hash.gif`,
+      );
+    });
+    it("should throw an error if no user id is provided", function () {
+      expect(() => User.getAvatarUrl(undefined, "hash")).to.throw(
+        TypeError,
+        "GLUON: User id must be a string.",
+      );
+    });
+    it("should throw an error if the hash is not a string and not null", function () {
+      expect(() => User.getAvatarUrl(TEST_DATA.MEMBER_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Avatar hash must be a string.",
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = { cacheGuilds: true };

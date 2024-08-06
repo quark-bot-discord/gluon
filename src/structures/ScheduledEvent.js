@@ -1,6 +1,5 @@
 import User from "./User.js";
-import getEventImage from "../util/image/getEventImage.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents an scheduled event.
@@ -269,7 +268,7 @@ class ScheduledEvent {
    * @public
    */
   get displayImageURL() {
-    return getEventImage(this.id, this.#_originalImageHash);
+    return ScheduledEvent.getImageUrl(this.id, this.#_originalImageHash);
   }
 
   /**
@@ -362,6 +361,27 @@ class ScheduledEvent {
    */
   get location() {
     return this.#location;
+  }
+
+  /**
+   * Returns the URL of the event's image.
+   * @param {String} id The id of the event.
+   * @param {String?} hash The hash of the event's image.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getImageUrl(id, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Event id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Event hash must be a string.");
+    return hash
+      ? `${CDN_BASE_URL}/guild-events/${id}/${hash}.${
+          hash.startsWith("a_") ? "gif" : "png"
+        }`
+      : null;
   }
 
   /**

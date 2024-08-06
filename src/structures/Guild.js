@@ -1,5 +1,6 @@
 import {
   AUDIT_LOG_TYPES,
+  CDN_BASE_URL,
   PERMISSIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
@@ -12,7 +13,6 @@ import GuildScheduledEventManager from "../managers/GuildScheduledEventManager.j
 import GuildVoiceStatesManager from "../managers/GuildVoiceStatesManager.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import checkPermission from "../util/discord/checkPermission.js";
-import getGuildIcon from "../util/image/getGuildIcon.js";
 import AuditLog from "./AuditLog.js";
 import Emoji from "./Emoji.js";
 import Invite from "./Invite.js";
@@ -567,7 +567,7 @@ class Guild {
    * @public
    */
   get displayIconURL() {
-    return getGuildIcon(this.id, this.#_originalIconHash);
+    return Guild.getIcon(this.id, this.#_originalIconHash);
   }
 
   /**
@@ -1338,6 +1338,27 @@ class Guild {
     const shouldCacheCount = Math.floor(0.5 * Math.exp((-x + 1) / 500000) * x);
 
     return shouldCacheCount;
+  }
+
+  /**
+   * Returns the icon URL of the guild.
+   * @param {String} id The id of the guild.
+   * @param {String?} hash The hash of the guild icon.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getIcon(id, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Guild id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Guild icon hash must be a string.");
+    return hash
+      ? `${CDN_BASE_URL}/icons/${id}/${hash}.${
+          hash.startsWith("a_") ? "gif" : "png"
+        }`
+      : null;
   }
 
   /**

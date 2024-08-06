@@ -307,6 +307,33 @@ describe("Guild", function () {
       expect(guild._cacheOptions).to.be.an.instanceOf(GuildCacheOptions);
     });
   });
+  context("check getIcon", function () {
+    it("should throw an error if no guild id is provided", function () {
+      expect(() => Guild.getIcon(undefined, "hash")).to.throw(
+        TypeError,
+        "GLUON: Guild id must be a string.",
+      );
+    });
+    it("should throw an error if the hash is not a string and not null", function () {
+      expect(() => Guild.getIcon(TEST_DATA.GUILD_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Guild icon hash must be a string.",
+      );
+    });
+    it("should return null if no hash is provided", function () {
+      expect(Guild.getIcon(TEST_DATA.GUILD_ID)).to.be.null;
+    });
+    it("should return the correct icon url", function () {
+      expect(Guild.getIcon(TEST_DATA.GUILD_ID, "hash")).to.equal(
+        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/hash.png`,
+      );
+    });
+    it("should return the correct icon url for a gif", function () {
+      expect(Guild.getIcon(TEST_DATA.GUILD_ID, "a_hash")).to.equal(
+        `https://cdn.discordapp.com/icons/${TEST_DATA.GUILD_ID}/a_hash.gif`,
+      );
+    });
+  });
   context("check toString", function () {
     it("should be a function", function () {
       const client = {};

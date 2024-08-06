@@ -1,5 +1,4 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import getRoleIcon from "../util/image/getRoleIcon.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
  * Represents a role belonging to a guild.
@@ -181,7 +180,7 @@ class Role {
    * @public
    */
   get displayIconURL() {
-    return getRoleIcon(this.id, this.#_originalIconHash);
+    return Role.getIconUrl(this.id, this.#_originalIconHash);
   }
 
   /**
@@ -276,6 +275,24 @@ class Role {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
     return `<@&${roleId}>`;
+  }
+
+  /**
+   * Returns the URL of the role's icon.
+   * @param {String} id The ID of the role.
+   * @param {String?} hash The hash of the role's icon.
+   * @returns {String}
+   */
+  static getIconUrl(id, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Role id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Role icon hash must be a string.");
+    return hash
+      ? `${CDN_BASE_URL}/role-icons/${id}/${hash}.${
+          hash.startsWith("a_") ? "gif" : "png"
+        }`
+      : null;
   }
 
   /**
