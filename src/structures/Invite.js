@@ -200,7 +200,7 @@ class Invite {
    * @public
    */
   get url() {
-    return `${INVITE_BASE_URL}/${this.code}`;
+    return Invite.getUrl(this.code);
   }
 
   /**
@@ -211,6 +211,20 @@ class Invite {
    */
   get maxUses() {
     return this.#max_uses;
+  }
+
+  /**
+   * Returns the URL of the invite.
+   * @param {String} code The code of the invite.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getUrl(code) {
+    if (typeof code != "string")
+      throw new TypeError("GLUON: Invalid invite code.");
+    return `${INVITE_BASE_URL}/${code}`;
   }
 
   /**

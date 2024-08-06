@@ -430,6 +430,35 @@ describe("Message", function () {
     });
   });
 
+  context("check getUrl", function () {
+    it("should return the correct url", function () {
+      expect(
+        Message.getUrl(
+          TEST_DATA.GUILD_ID,
+          TEST_DATA.CHANNEL_ID,
+          TEST_DATA.MESSAGE_ID,
+        ),
+      ).to.equal(
+        `https://discord.com/channels/${TEST_DATA.GUILD_ID}/${TEST_DATA.CHANNEL_ID}/${TEST_DATA.MESSAGE.id}`,
+      );
+    });
+    it("should throw an error if no guildId is provided", function () {
+      expect(() =>
+        Message.getUrl(null, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID),
+      ).to.throw(TypeError, "GLUON: Guild ID must be a string.");
+    });
+    it("should throw an error if no channelId is provided", function () {
+      expect(() =>
+        Message.getUrl(TEST_DATA.GUILD_ID, null, TEST_DATA.MESSAGE_ID),
+      ).to.throw(TypeError, "GLUON: Channel ID must be a string.");
+    });
+    it("should throw an error if no messageId is provided", function () {
+      expect(() =>
+        Message.getUrl(TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, null),
+      ).to.throw(TypeError, "GLUON: Message ID must be a string.");
+    });
+  });
+
   context("check reply", function () {
     it("should be a function", function () {
       const client = { cacheGuilds: true, cacheChannels: true };

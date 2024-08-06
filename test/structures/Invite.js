@@ -151,6 +151,20 @@ describe("Invite", function () {
     });
   });
 
+  context("check getUrl", function () {
+    it("should return the correct url", function () {
+      expect(Invite.getUrl(TEST_DATA.INVITE.code)).to.equal(
+        `${INVITE_BASE_URL}/${TEST_DATA.INVITE.code}`,
+      );
+    });
+    it("should throw an error if no code is provided", function () {
+      expect(() => Invite.getUrl()).to.throw(
+        TypeError,
+        "GLUON: Invalid invite code.",
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = {};

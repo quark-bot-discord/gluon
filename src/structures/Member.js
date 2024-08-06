@@ -375,7 +375,21 @@ class Member {
    * @public
    */
   get mention() {
-    return `<@${this.id}>`;
+    return Member.getMention(this.id);
+  }
+
+  /**
+   * Returns the mention string for the member.
+   * @param {String} userId The id of the user to mention.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(userId) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+    return `<@${userId}>`;
   }
 
   /**

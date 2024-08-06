@@ -252,7 +252,7 @@ class Channel {
    * @public
    */
   get mention() {
-    return `<#${this.id}>`;
+    return Channel.getMention(this.id);
   }
 
   /**
@@ -385,6 +385,19 @@ class Channel {
    */
   get messages() {
     return this.#messages;
+  }
+
+  /**
+   * Returns the mention string for a channel.
+   * @param {String} channelId The ID of the channel to mention.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(channelId) {
+    if (!channelId) throw new TypeError("GLUON: No channel ID provided.");
+    return `<#${channelId}>`;
   }
 
   /**

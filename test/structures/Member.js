@@ -1063,6 +1063,20 @@ describe("Member", function () {
     });
   });
 
+  context("check getMention", function () {
+    it("should return the correct mention", function () {
+      expect(Member.getMention(TEST_DATA.MEMBER_ID)).to.equal(
+        `<@${TEST_DATA.MEMBER_ID}>`,
+      );
+    });
+    it("should throw an error if the input is not a string", function () {
+      expect(() => Member.getMention(123)).to.throw(
+        TypeError,
+        "GLUON: User ID must be a string.",
+      );
+    });
+  });
+
   context("check bundling", function () {
     it("should bundle correctly", function () {
       const client = { cacheGuilds: true };

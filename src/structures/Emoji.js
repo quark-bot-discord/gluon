@@ -188,6 +188,12 @@ class Emoji {
    * @method
    */
   static getMention(name, id, animated) {
+    if (typeof name !== "string")
+      throw new TypeError("GLUON: Emoji name must be a string.");
+    if (id && typeof id !== "string")
+      throw new TypeError("GLUON: Emoji id must be a string.");
+    if (animated && typeof animated !== "boolean")
+      throw new TypeError("GLUON: Emoji animated must be a boolean.");
     if (id) return `<${animated == true ? "a" : ""}:${name}:${id}>`;
     else return name;
   }

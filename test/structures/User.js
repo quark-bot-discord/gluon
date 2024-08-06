@@ -148,6 +148,20 @@ describe("User", function () {
     });
   });
 
+  context("check getMention", function () {
+    it("should return the correct mention", function () {
+      expect(User.getMention(TEST_DATA.USER.id)).to.equal(
+        `<@${TEST_DATA.USER.id}>`,
+      );
+    });
+    it("should throw an error if no id is provided", function () {
+      expect(() => User.getMention()).to.throw(
+        TypeError,
+        "GLUON: User id must be a string.",
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = { cacheGuilds: true };

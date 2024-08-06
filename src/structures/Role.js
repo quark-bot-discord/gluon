@@ -255,6 +255,30 @@ class Role {
   }
 
   /**
+   * Returns a mention for the role.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get mention() {
+    return Role.getMention(this.id);
+  }
+
+  /**
+   * Returns a mention for the role.
+   * @param {String} roleId The ID of the role to mention.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(roleId) {
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID must be a string.");
+    return `<@&${roleId}>`;
+  }
+
+  /**
    * @method
    * @public
    */

@@ -204,6 +204,23 @@ describe("Channel", function () {
     });
   });
 
+  context("check getMention", function () {
+    it("should throw an error if no parameters are passed", function () {
+      expect(() => Channel.getMention()).to.throw(
+        TypeError,
+        "GLUON: No channel ID provided.",
+      );
+    });
+    it("should return the correct mention", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      expect(Channel.getMention(TEST_DATA.CHANNEL_ID)).to.equal(
+        `<#${TEST_DATA.TEXT_CHANNEL.id}>`,
+      );
+    });
+  });
+
   context("check toString", function () {
     it("should have the correct toString", function () {
       const client = { cacheGuilds: true };

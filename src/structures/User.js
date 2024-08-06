@@ -179,7 +179,7 @@ class User {
    * @public
    */
   get mention() {
-    return `<@${this.id}>`;
+    return User.getMention(this.id);
   }
 
   /**
@@ -265,6 +265,20 @@ class User {
    */
   get avatarIsAnimated() {
     return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
+  }
+
+  /**
+   * Returns a mention string for the user.
+   * @param {String} id The ID of the user to mention.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(id) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: User id must be a string.");
+    return `<@${id}>`;
   }
 
   /**

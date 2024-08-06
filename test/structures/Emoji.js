@@ -85,6 +85,44 @@ describe("Emoji", function () {
     });
   });
 
+  context("check getMention", function () {
+    it("should return the correct mention", function () {
+      expect(
+        Emoji.getMention(
+          TEST_DATA.EMOJI.name,
+          TEST_DATA.EMOJI.id,
+          TEST_DATA.EMOJI.animated,
+        ),
+      ).to.equal("<a:bitcoin:844240546246950922>");
+    });
+    it("should return the correct mention for a standard emoji", function () {
+      expect(
+        Emoji.getMention(
+          TEST_DATA.STANDARD_EMOJI.name,
+          TEST_DATA.STANDARD_EMOJI.id,
+          TEST_DATA.STANDARD_EMOJI.animated,
+        ),
+      ).to.equal(TEST_DATA.STANDARD_EMOJI.name);
+    });
+    it("should throw an error if the name is not a string", function () {
+      expect(() => Emoji.getMention(null, TEST_DATA.EMOJI.id)).to.throw(
+        TypeError,
+        "GLUON: Emoji name must be a string",
+      );
+    });
+    it("should throw an error if the id is provided and not a string", function () {
+      expect(() => Emoji.getMention(TEST_DATA.EMOJI.name, 123)).to.throw(
+        TypeError,
+        "GLUON: Emoji id must be a string",
+      );
+    });
+    it("should throw an error if animated is provided and not a boolean", function () {
+      expect(() =>
+        Emoji.getMention(TEST_DATA.EMOJI.name, TEST_DATA.EMOJI.id, 123),
+      ).to.throw(TypeError, "GLUON: Emoji animated must be a boolean");
+    });
+  });
+
   context("check toString", function () {
     it("should return a string", function () {
       const client = {};

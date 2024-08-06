@@ -26,6 +26,7 @@ describe("Role", function () {
       expect(role).to.have.property("name");
       expect(role).to.have.property("managed");
       expect(role).to.have.property("mentionable");
+      expect(role).to.have.property("mention");
       expect(role).to.have.property("displayIconURL");
       expect(role).to.have.property("guild");
       expect(role).to.have.property("guildId");
@@ -74,6 +75,19 @@ describe("Role", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(role.position).to.equal(TEST_DATA.ROLE_ADMIN.position);
+    });
+  });
+
+  context("check mention", function () {
+    it("should have the correct mention", function () {
+      const client = { cacheGuilds: true };
+      client.guilds = new GuildManager(client);
+      new Guild(client, TEST_DATA.GUILD);
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(role.mention).to.equal(`<@&${TEST_DATA.ROLE_ID}>`);
     });
   });
 
@@ -147,6 +161,20 @@ describe("Role", function () {
         integration_id: null,
         premium_subscriber: null,
       });
+    });
+  });
+
+  context("check getMention", function () {
+    it("should return the correct mention", function () {
+      expect(Role.getMention(TEST_DATA.ROLE_ID)).to.equal(
+        `<@&${TEST_DATA.ROLE_ID}>`,
+      );
+    });
+    it("should throw an error if the role id is not a string", function () {
+      expect(() => Role.getMention(123)).to.throw(
+        TypeError,
+        "GLUON: Role ID must be a string",
+      );
     });
   });
 
@@ -232,6 +260,7 @@ describe("Role", function () {
       expect(rebundled.hoist).to.equal(role.hoist);
       expect(rebundled.managed).to.equal(role.managed);
       expect(rebundled.mentionable).to.equal(role.mentionable);
+      expect(rebundled.mention).to.equal(role.mention);
       expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);

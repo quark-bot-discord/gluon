@@ -582,7 +582,27 @@ class Message {
    * @public
    */
   get url() {
-    return `${BASE_URL}/channels/${this.guildId}/${this.channelId}/${this.id}`;
+    return Message.getUrl(this.guildId, this.channelId, this.id);
+  }
+
+  /**
+   * The URL of the message.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} channelId The id of the channel that the message belongs to.
+   * @param {String} messageId The id of the message.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getUrl(guildId, channelId, messageId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    if (typeof messageId !== "string")
+      throw new TypeError("GLUON: Message ID must be a string.");
+    return `${BASE_URL}/channels/${guildId}/${channelId}/${messageId}`;
   }
 
   /**
