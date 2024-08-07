@@ -15,7 +15,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { useRedis: true });
+    super(client, { useRedis: true, identifier: "members" });
     /**
      * The client instance.
      * @type {Client}

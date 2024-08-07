@@ -14,7 +14,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
   constructor(client, guild) {
-    super(client);
+    super(client, { identifier: "emojis" });
     /**
      * The client instance.
      * @type {Client}

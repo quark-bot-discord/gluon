@@ -15,7 +15,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this role manager belongs to.
    */
   constructor(client, guild) {
-    super(client);
+    super(client, { identifier: "roles" });
     /**
      * The client instance.
      * @type {Client}

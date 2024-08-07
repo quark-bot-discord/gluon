@@ -48,6 +48,7 @@ class Guild {
   #roles;
   #emojis;
   #invites;
+  #scheduled_events;
   /**
    * Creates the structure for a guild.
    * @param {Client} client The client instance.
@@ -175,8 +176,8 @@ class Guild {
       ? existing.roles
       : new GuildRoleManager(this.#_client, this);
 
-    this.scheduled_events = existing
-      ? existing.scheduled_events
+    this.#scheduled_events = existing
+      ? existing.scheduledEvents
       : new GuildScheduledEventManager(this.#_client, this);
 
     /**
@@ -970,6 +971,16 @@ class Guild {
   }
 
   /**
+   * The scheduled events in the guild.
+   * @type {GuildScheduledEventManager}
+   * @readonly
+   * @public
+   */
+  get scheduledEvents() {
+    return this.#scheduled_events;
+  }
+
+  /**
    * The emojis in the guild.
    * @type {GuildEmojisManager}
    * @readonly
@@ -1359,6 +1370,20 @@ class Guild {
           hash.startsWith("a_") ? "gif" : "png"
         }`
       : null;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  _intervalCallback() {
+    this.#voice_states._intervalCallback();
+    this.#members._intervalCallback();
+    this.#channels._intervalCallback();
+    this.#roles._intervalCallback();
+    this.#scheduled_events._intervalCallback();
+    this.#emojis._intervalCallback();
+    this.#invites._intervalCallback();
   }
 
   /**

@@ -17,7 +17,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @param {Channel} channel The channel that is being managed.
    */
   constructor(client, guild, channel) {
-    super(client, { useRedis: true });
+    super(client, { useRedis: true, identifier: "messages" });
     /**
      * The client instance.
      * @type {Client}

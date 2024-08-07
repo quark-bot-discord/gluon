@@ -5,7 +5,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
   #_client;
   #guild;
   constructor(client, guild) {
-    super(client);
+    super(client, { identifier: "events" });
     /**
      * The client instance.
      * @type {Client}

@@ -11,7 +11,7 @@ class GuildManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    super(client);
+    super(client, { identifier: "guilds" });
     /**
      * The client instance.
      * @type {Client}

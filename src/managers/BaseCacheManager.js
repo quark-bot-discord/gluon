@@ -4,9 +4,13 @@ import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 class BaseCacheManager {
   #redisCache;
   #cache;
-  constructor(client, { useRedis = false } = {}) {
+  constructor(client, { useRedis = false, identifier = "cache" } = {}) {
     if (client.redis && useRedis === true) this.#redisCache = client.redis;
     else this.#cache = new Map();
+
+    this.expiryBucket = new Map();
+
+    this.identifier = identifier;
   }
 
   /**
@@ -15,7 +19,7 @@ class BaseCacheManager {
    * @readonly
    */
   get #keyPrefix() {
-    return `${NAME.toLowerCase()}.caches.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
+    return `${NAME.toLowerCase()}.caches.${this.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
   }
 
   /**
@@ -35,7 +39,7 @@ class BaseCacheManager {
    * @returns {String}
    */
   #getKey(key) {
-    return `${this.#keyPrefix}${key}`;
+    return `${this.#keyPrefix}${this.#getHash(key)}`;
   }
 
   /**
@@ -71,7 +75,64 @@ class BaseCacheManager {
         "EX",
         expiry,
       );
-    else return this.#cache.set(key, value);
+    else {
+      this.addToExpiryBucket(key, expiry);
+      return this.#cache.set(key, value);
+    }
+  }
+
+  /**
+   * Adds a key to the expiry bucket.
+   * @param {String} key The key to add to the expiry bucket.
+   * @param {Number} expiry The expiry time in seconds.
+   * @returns {void}
+   */
+  addToExpiryBucket(key, expiry) {
+    if (expiry === 0) return;
+    const expiryDate = new Date(Date.now() + expiry * 1000);
+    const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
+    if (!this.expiryBucket.has(bucket))
+      this.expiryBucket.set(bucket, new Set());
+    this.expiryBucket.get(bucket).add(key);
+  }
+
+  /**
+   * Expires a bucket.
+   * @param {String} bucket The bucket to expire.
+   * @returns {void}
+   */
+  expireBucket(bucket) {
+    if (!this.expiryBucket.has(bucket)) return;
+    for (const key of this.expiryBucket.get(bucket)) {
+      this.delete(key);
+    }
+    this.expiryBucket.delete(bucket);
+  }
+
+  /**
+   * Clears stale buckets.
+   * @returns {void}
+   */
+  clearStaleBuckets() {
+    const now = new Date();
+    const buckets = [...this.expiryBucket.keys()];
+    for (const bucket of buckets) {
+      const [date, hour, minute] = bucket.split("_").map(Number);
+      if (now.getUTCDate() > date) {
+        this.expireBucket(bucket);
+        continue;
+      } else if (now.getUTCDate() === date && now.getUTCHours() > hour) {
+        this.expireBucket(bucket);
+        continue;
+      } else if (
+        now.getUTCDate() === date &&
+        now.getUTCHours() === hour &&
+        now.getUTCMinutes() > minute
+      ) {
+        this.expireBucket(bucket);
+        continue;
+      }
+    }
   }
 
   /**
@@ -87,9 +148,24 @@ class BaseCacheManager {
 
   /**
    * Clears the cache.
+   * @returns {void}
    */
   clear() {
     return this.#cache.clear();
+  }
+
+  /**
+   * The callback for expiring buckets.
+   * @returns {void}
+   */
+  _intervalCallback() {
+    const now = new Date();
+    const bucket = `${now.getUTCDate()}_${now.getUTCHours()}_${now.getUTCMinutes()}`;
+    this.expireBucket(bucket);
+    if (now.getUTCMinutes() === 0) this.clearStaleBuckets();
+    return {
+      i: this.identifier,
+    };
   }
 
   /**

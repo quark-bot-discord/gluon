@@ -18,7 +18,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
   constructor(client, guild) {
-    super(client);
+    super(client, { identifier: "channels" });
     /**
      * The client instance.
      * @type {Client}

@@ -812,144 +812,12 @@ class Client extends EventsEmitter {
           this.cacheUsers == true
         )
           setInterval(async () => {
-            // store all members
+            this.guilds.cache.forEach((guild) => {
+              guild._intervalCallback();
+            });
 
-            // if (this.cacheMembers == true) {
-            //     let fullMembersList = [];
-            //     this.guilds.cache.forEach(guild => {
-
-            //         Array.from(guild.members.cache, ([key, value]) => fullMembersList.push(value));
-
-            //     });
-
-            //     const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
-            //     let values = [];
-            //     let memberRolesValues = [];
-
-            //     for (let i = 0; i < fullMembersList.length; i++) {
-            //         // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
-            //         values.push(fullMembersList[i].id);
-            //         values.push(fullMembersList[i].guild.id);
-            //         values.push(fullMembersList[i].nick);
-            //         values.push(fullMembersList[i].joined_at);
-            //         values.push(fullMembersList[i].formattedAvatarHash);
-            //         values.push(fullMembersList[i].communication_disabled_until);
-            //         values.push(fullMembersList[i]._attributes);
-            //         if (Array.isArray(fullMembersList[i]._roles) && fullMembersList[i]._roles.length > 0) {
-            //             for (let n = 0; n < fullMembersList[i]._roles.length; n++)
-            //                 memberRolesValues.push(fullMembersList[i].id, fullMembersList[i]._roles[n], fullMembersList[i].guild.id);
-            //         }
-            //     }
-
-            //     await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
-            //         .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
-
-            //     await this.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${Array(memberRolesValues.length / 3).fill("(?, ?, ?)").join(',')} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, memberRolesValues)
-            //         .then(() => this.emit("debug", `ADDED ${memberRolesValues.length} TO MEMBER ROLES STORAGE`));
-
-            // }
-
-            // if (this.cacheUsers == true) {
-            //     let fullUsersList = [];
-
-            //     Array.from(this.users.cache, ([key, value]) => fullUsersList.push(value));
-
-            //     const valuesTemplate = fullUsersList.map(() => `(?, ?, ?, ?, ?, ?)`).join(',');
-            //     const values = [];
-
-            //     for (let i = 0; i < fullUsersList.length; i++) {
-            //         // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
-            //         values.push(fullUsersList[i].id);
-            //         values.push(fullUsersList[i].formattedAvatarHash);
-            //         values.push(fullUsersList[i].username);
-            //         values.push(fullUsersList[i].global_name);
-            //         values.push(fullUsersList[i].discriminator);
-            //         values.push(fullUsersList[i]._attributes);
-            //     }
-
-            //     await this.dataStorage.query(`INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);`, values)
-            //         .then(() => this.emit("debug", `ADDED ${fullUsersList.length} USERS TO STORAGE`));
-
-            // }
-
-            const currentTime = Math.floor(new Date().getTime() / 1000);
-
-            if (this.cacheMessages == true || this.cacheMembers == true)
-              this.guilds.cache.forEach((guild) => {
-                if (this.cacheMessages == true) {
-                  this.emit(
-                    "debug",
-                    `Sweeping messages for GUILD ${guild.id}...`,
-                  );
-
-                  let cacheCount = guild.calculateMessageCacheCount() * 2;
-                  // if (this.increasedCache.get(guild.id.toString()))
-                  //     cacheCount = 0;
-
-                  this.emit(
-                    "debug",
-                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`,
-                  );
-
-                  guild.channels.cache.forEach(async (channel) => {
-                    this.emit(
-                      "debug",
-                      `Sweeping messages for CHANNEL ${channel.id}...`,
-                    );
-
-                    const nowCached = channel.messages.sweepMessages(
-                      cacheCount,
-                      currentTime,
-                    );
-
-                    this.emit(
-                      "debug",
-                      `New cache size of ${nowCached || 0} for CHANNEL ${
-                        guild.id
-                      }...`,
-                    );
-                  });
-                }
-
-                if (this.cacheMembers == true || this.cacheMessages == true) {
-                  this.emit(
-                    "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
-                  );
-
-                  let cacheCount = guild.calculateMemberCacheCount();
-                  // if (this.increasedCache.get(guild.id.toString()))
-                  //     cacheCount *= this.increaseCacheBy;
-
-                  this.emit(
-                    "debug",
-                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`,
-                  );
-
-                  this.emit(
-                    "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
-                  );
-
-                  const nowCached = guild.members.sweepMembers(cacheCount);
-
-                  this.emit(
-                    "debug",
-                    `New cache size of ${nowCached || 0} for GUILD ${
-                      guild.id
-                    }...`,
-                  );
-                }
-              });
-
-            if (this.cacheUsers == true || this.cacheMessages == true) {
-              this.emit("debug", "Sweeping users...");
-
-              const nowCached = this.users.sweepUsers(currentTime);
-
-              this.emit("debug", `New user cache size is ${nowCached || 0}...`);
-            }
-          }, DEFAULT_CACHE_CHECK_PERIOD); // every 1 hour 1000 * 60 * 60
+            this.users._intervalCallback();
+          }, 60 * 1000); // every 1 minute 1000 * 60
       })
       .catch((error) => {
         this.emit(
@@ -957,7 +825,7 @@ class Client extends EventsEmitter {
           "Get gateway bot request failed, terminating process",
         );
 
-        console.log(error);
+        console.error(error);
 
         process.exit(0);
       });
