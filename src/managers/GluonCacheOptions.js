@@ -1,15 +1,44 @@
-const {
+import {
   GLUON_GLOBAL_CACHE_ENUM,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
-} = require("../constants");
+} from "../constants.js";
 
 class GluonCacheOptions {
   #_cache_options;
-  constructor() {
+  #userTTL;
+  #messageTTL;
+  constructor({
+    userTTL,
+    messageTTL,
+    cacheMessages,
+    cacheUsers,
+    cacheMembers,
+    cacheChannels,
+    cacheGuilds,
+    cacheRoles,
+    cacheVoiceStates,
+    cacheEmojis,
+    cacheInvites,
+    cacheScheduledEvents,
+  }) {
     this.#_cache_options = 0;
-    this.userTTL = DEFAULT_USER_EXPIRY_SECONDS;
-    this.messageTTL = DEFAULT_MESSAGE_EXPIRY_SECONDS;
+
+    this.#userTTL = DEFAULT_USER_EXPIRY_SECONDS;
+    this.#messageTTL = DEFAULT_MESSAGE_EXPIRY_SECONDS;
+
+    this.setUserTTL(userTTL);
+    this.setMessageTTL(messageTTL);
+    this.setCacheMessages(cacheMessages);
+    this.setCacheUsers(cacheUsers);
+    this.setCacheMembers(cacheMembers);
+    this.setCacheChannels(cacheChannels);
+    this.setCacheGuilds(cacheGuilds);
+    this.setCacheRoles(cacheRoles);
+    this.setCacheVoiceStates(cacheVoiceStates);
+    this.setCacheEmojis(cacheEmojis);
+    this.setCacheInvites(cacheInvites);
+    this.setCacheScheduledEvents(cacheScheduledEvents);
   }
   //   increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
 
@@ -17,6 +46,9 @@ class GluonCacheOptions {
    * Set whether gluon should cache messages by default.
    * @param {Boolean} value Whether to cache messages or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheMessages(value) {
     if (typeof value != "boolean")
@@ -30,9 +62,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache messages by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheMessages() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.MESSAGES) ===
+      GLUON_GLOBAL_CACHE_ENUM.MESSAGES
+    );
+  }
+
+  /**
    * Set whether gluon should cache users by default.
    * @param {Boolean} value Whether to cache users or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheUsers(value) {
     if (typeof value != "boolean")
@@ -45,9 +93,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache users by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheUsers() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.USERS) ===
+      GLUON_GLOBAL_CACHE_ENUM.USERS
+    );
+  }
+
+  /**
    * Set whether gluon should cache members by default.
    * @param {Boolean} value Whether to cache members or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheMembers(value) {
     if (typeof value != "boolean")
@@ -60,9 +124,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache members by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheMembers() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.MEMBERS) ===
+      GLUON_GLOBAL_CACHE_ENUM.MEMBERS
+    );
+  }
+
+  /**
    * Set whether gluon should cache channels by default.
    * @param {Boolean} value Whether to cache channels or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheChannels(value) {
     if (typeof value != "boolean")
@@ -76,9 +156,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache channels by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheChannels() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.CHANNELS) ===
+      GLUON_GLOBAL_CACHE_ENUM.CHANNELS
+    );
+  }
+
+  /**
    * Set whether gluon should cache guilds by default.
    * @param {Boolean} value Whether to cache guilds or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheGuilds(value) {
     if (typeof value != "boolean")
@@ -91,9 +187,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache guilds by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheGuilds() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.GUILDS) ===
+      GLUON_GLOBAL_CACHE_ENUM.GUILDS
+    );
+  }
+
+  /**
    * Set whether gluon should cache roles by default.
    * @param {Boolean} value Whether to cache roles or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheRoles(value) {
     if (typeof value != "boolean")
@@ -106,9 +218,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache roles by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheRoles() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.ROLES) ===
+      GLUON_GLOBAL_CACHE_ENUM.ROLES
+    );
+  }
+
+  /**
    * Set whether gluon should cache voice states by default.
    * @param {Boolean} value Whether to cache voice states or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheVoiceStates(value) {
     if (typeof value != "boolean")
@@ -122,9 +250,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache voice states by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheVoiceStates() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES) ===
+      GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES
+    );
+  }
+
+  /**
    * Set whether gluon should cache emojis by default.
    * @param {Boolean} value Whether to cache emojis or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheEmojis(value) {
     if (typeof value != "boolean")
@@ -137,9 +281,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache emojis by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheEmojis() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.EMOJIS) ===
+      GLUON_GLOBAL_CACHE_ENUM.EMOJIS
+    );
+  }
+
+  /**
    * Set whether gluon should cache invites by default.
    * @param {Boolean} value Whether to cache invites or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheInvites(value) {
     if (typeof value != "boolean")
@@ -152,9 +312,25 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache invites by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheInvites() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.INVITES) ===
+      GLUON_GLOBAL_CACHE_ENUM.INVITES
+    );
+  }
+
+  /**
    * Set whether gluon should cache scheduled events by default.
    * @param {Boolean} value Whether to cache scheduled events or not.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setCacheScheduledEvents(value) {
     if (typeof value != "boolean")
@@ -168,31 +344,70 @@ class GluonCacheOptions {
   }
 
   /**
+   * Get whether gluon should cache scheduled events by default.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get cacheScheduledEvents() {
+    return (
+      (this.#_cache_options & GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS) ===
+      GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS
+    );
+  }
+
+  /**
    * Set the default TTL for users in the cache.
    * @param {Number} seconds The number of seconds to cache users for.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setUserTTL(seconds) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");
 
-    this.defaultUserExpiry = seconds;
+    this.#userTTL = seconds;
 
     return this;
+  }
+
+  /**
+   * Get the default TTL for users in the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get userTTL() {
+    return this.#userTTL;
   }
 
   /**
    * Set the default TTL for messages in the cache.
    * @param {Number} seconds The number of seconds to cache messages for.
    * @returns {GluonCacheOptions}
+   * @public
+   * @throws {TypeError}
+   * @method
    */
   setMessageTTL(seconds) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: Message TTL must be a number.");
 
-    this.defaultMessageExpiry = seconds;
+    this.#messageTTL = seconds;
 
     return this;
+  }
+
+  /**
+   * Get the default TTL for messages in the cache.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get messageTTL() {
+    return this.#messageTTL;
   }
 
   addCacheRule(gluonCacheRule) {}

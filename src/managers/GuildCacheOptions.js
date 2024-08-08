@@ -22,7 +22,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set messageCaching(option) {
+  setMessageCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -40,7 +40,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set fileCaching(option) {
+  setFileCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -57,7 +57,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set voiceStateCaching(option) {
+  setVoiceStateCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -74,7 +74,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set memberCaching(option) {
+  setMemberCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -91,7 +91,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set roleCaching(option) {
+  setRoleCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -108,7 +108,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set channelCaching(option) {
+  setChannelCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -125,7 +125,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set emojiCaching(option) {
+  setEmojiCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -142,7 +142,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set threadCaching(option) {
+  setThreadCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -159,7 +159,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  set inviteCaching(option) {
+  setInviteCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 

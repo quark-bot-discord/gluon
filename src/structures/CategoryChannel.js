@@ -100,15 +100,6 @@ class CategoryChannel {
     )
       this.#permission_overwrites = existing.permissionOverwrites;
 
-    /**
-     * The cache options for this channel.
-     * @type {ChannelCacheOptions}
-     * @private
-     */
-    this.#_cacheOptions = existing?._cacheOptions
-      ? existing._cacheOptions
-      : new ChannelCacheOptions(data._cacheOptions);
-
     if (nocache == false && this.#_client.cacheChannels == true)
       this.guild?.channels.set(data.id, this);
   }

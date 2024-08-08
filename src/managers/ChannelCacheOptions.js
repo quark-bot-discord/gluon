@@ -21,7 +21,7 @@ class ChannelCacheOptions {
    * @public
    * @throws {TypeError}
    */
-  set messageCaching(option) {
+  setMessageCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -37,7 +37,7 @@ class ChannelCacheOptions {
    * @public
    * @throws {TypeError}
    */
-  set fileCaching(option) {
+  setFileCaching(option) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 

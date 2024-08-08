@@ -23,6 +23,7 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import Member from "./structures/Member.js";
 import cacheChannel from "./util/gluon/cacheChannel.js";
 import Role from "./structures/Role.js";
+import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -30,6 +31,7 @@ import Role from "./structures/Role.js";
 class Client extends EventsEmitter {
   #token;
   #intents;
+  #_cacheOptions;
 
   /**
    * Creates the client and sets the default options.
@@ -49,7 +51,7 @@ class Client extends EventsEmitter {
     cacheInvites = false,
     defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS,
     defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS,
-    increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
+    // increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
     intents,
     totalShards,
     shardIds,
@@ -71,6 +73,26 @@ class Client extends EventsEmitter {
      * @type {Number?}
      */
     this.#intents = intents;
+
+    /**
+     * The cache options for this client.
+     * @type {GluonCacheOptions}
+     * @private
+     * @readonly
+     * @see {@link GluonCacheOptions}
+     */
+    this.#_cacheOptions = new GluonCacheOptions({
+      cacheMessages,
+      cacheUsers,
+      cacheMembers,
+      cacheChannels,
+      cacheGuilds,
+      cacheVoiceStates,
+      cacheRoles,
+      cacheScheduledEvents,
+      cacheEmojis,
+      cacheInvites,
+    });
 
     /**
      * Whether this client should cache messages.
@@ -286,6 +308,16 @@ class Client extends EventsEmitter {
       channels: totalChannels,
       roles: totalRoles,
     };
+  }
+
+  /**
+   * Returns the cache options for this client.
+   * @type {GluonCacheOptions}
+   * @readonly
+   * @public
+   */
+  get _cacheOptions() {
+    return this.#_cacheOptions;
   }
 
   /**
@@ -806,18 +838,13 @@ class Client extends EventsEmitter {
               );
           }, 6000 * i);
 
-        if (
-          this.cacheMessages == true ||
-          this.cacheMembers == true ||
-          this.cacheUsers == true
-        )
-          setInterval(async () => {
-            this.guilds.cache.forEach((guild) => {
-              guild._intervalCallback();
-            });
+        setInterval(async () => {
+          this.guilds.cache.forEach((guild) => {
+            guild._intervalCallback();
+          });
 
-            this.users._intervalCallback();
-          }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
+          this.users._intervalCallback();
+        }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
       })
       .catch((error) => {
         this.emit(
