@@ -3,7 +3,7 @@ import {
   CHANNEL_TYPES,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
-  DEFAULT_CACHE_CHECK_PERIOD,
+  DEFAULT_POLLING_TIME,
   DEFAULT_INCREASE_CACHE_BY,
 } from "./constants.js";
 
@@ -817,7 +817,7 @@ class Client extends EventsEmitter {
             });
 
             this.users._intervalCallback();
-          }, 60 * 1000); // every 1 minute 1000 * 60
+          }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
       })
       .catch((error) => {
         this.emit(

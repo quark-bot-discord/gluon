@@ -230,7 +230,7 @@ export const APPLICATION_COMMAND_OPTION_TYPES = {
 };
 export const DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
 export const DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
-export const DEFAULT_CACHE_CHECK_PERIOD = 1800 * 1 * 1000; // 30 mins, in MILLISECONDS
+export const DEFAULT_POLLING_TIME = 60 * 1000; // 1 min, in MILLISECONDS
 export const DEFAULT_INCREASE_CACHE_BY = 28;
 export const PERMISSIONS = {
   CREATE_INSTANT_INVITE: String(1n << 0n),
