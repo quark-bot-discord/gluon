@@ -27,18 +27,19 @@ class GluonCacheOptions {
     this.#userTTL = DEFAULT_USER_EXPIRY_SECONDS;
     this.#messageTTL = DEFAULT_MESSAGE_EXPIRY_SECONDS;
 
-    this.setUserTTL(userTTL);
-    this.setMessageTTL(messageTTL);
-    this.setCacheMessages(cacheMessages);
-    this.setCacheUsers(cacheUsers);
-    this.setCacheMembers(cacheMembers);
-    this.setCacheChannels(cacheChannels);
-    this.setCacheGuilds(cacheGuilds);
-    this.setCacheRoles(cacheRoles);
-    this.setCacheVoiceStates(cacheVoiceStates);
-    this.setCacheEmojis(cacheEmojis);
-    this.setCacheInvites(cacheInvites);
-    this.setCacheScheduledEvents(cacheScheduledEvents);
+    if (userTTL) this.setUserTTL(userTTL);
+    if (messageTTL) this.setMessageTTL(messageTTL);
+    if (cacheMessages) this.setCacheMessages(cacheMessages);
+    if (cacheUsers) this.setCacheUsers(cacheUsers);
+    if (cacheMembers) this.setCacheMembers(cacheMembers);
+    if (cacheChannels) this.setCacheChannels(cacheChannels);
+    if (cacheGuilds) this.setCacheGuilds(cacheGuilds);
+    if (cacheRoles) this.setCacheRoles(cacheRoles);
+    if (cacheVoiceStates) this.setCacheVoiceStates(cacheVoiceStates);
+    if (cacheEmojis) this.setCacheEmojis(cacheEmojis);
+    if (cacheInvites) this.setCacheInvites(cacheInvites);
+    if (cacheScheduledEvents)
+      this.setCacheScheduledEvents(cacheScheduledEvents);
   }
   //   increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
 
