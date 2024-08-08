@@ -206,7 +206,7 @@ class Client extends EventsEmitter {
 
     this.increasedCache = new Map();
     this.increasedCacheMultipliers = new Map();
-    this.increaseCacheBy = increaseCacheBy;
+    // this.increaseCacheBy = increaseCacheBy;
 
     this.softRestartFunction = softRestartFunction;
 
