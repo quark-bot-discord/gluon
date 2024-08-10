@@ -21,6 +21,13 @@ describe("VerifyMessageLink", function () {
         "GLUON: The text must be a string.",
       );
     });
+    it("should throw an error if the text provided is too long", function () {
+      const messageLink = "a".repeat(4001);
+      expect(() => verifyMessageLink(messageLink)).to.throw(
+        RangeError,
+        "GLUON: Text must be less than 4000 characters.",
+      );
+    });
   });
 
   context("check verified message link", function () {
