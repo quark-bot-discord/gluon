@@ -31,7 +31,9 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: async ({ params, request } = {}) => {
+      if (request.headers.get("content-type") !== "application/json")
+        await request.formData();
       return HttpResponse.json(TEST_DATA.MESSAGE);
     },
   },
@@ -41,7 +43,9 @@ export default {
     },
     method: "PATCH",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: async ({ params, request } = {}) => {
+      if (request.headers.get("content-type") !== "application/json")
+        await request.formData();
       return HttpResponse.json(TEST_DATA.MESSAGE);
     },
   },

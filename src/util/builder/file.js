@@ -45,6 +45,33 @@ class File {
     return this;
   }
 
+  /**
+   * The name of the file.
+   * @type {String}
+   * @readonly
+   */
+  get name() {
+    return this.#name;
+  }
+
+  /**
+   * The stream of the file.
+   * @type {Stream}
+   * @readonly
+   */
+  get stream() {
+    return this.#stream;
+  }
+
+  /**
+   * The path of the file.
+   * @type {String}
+   * @readonly
+   */
+  get attachment() {
+    return this.#path;
+  }
+
   toJSON(
     format,
     { suppressValidation = false } = { suppressValidation: false },

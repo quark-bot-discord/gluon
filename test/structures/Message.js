@@ -13,6 +13,8 @@ import Role from "../../src/structures/Role.js";
 import Poll from "../../src/structures/Poll.js";
 import Guild from "../../src/structures/Guild.js";
 import File from "../../src/util/builder/file.js";
+import MessageComponents from "../../src/util/builder/messageComponents.js";
+import path from "path";
 
 describe("Message", function () {
   context("check import", function () {
@@ -583,7 +585,7 @@ describe("Message", function () {
       });
       await expect(message.reply("test", { embeds: [{}] })).to.not.be.rejected;
     });
-    it("should not throw an error if components is provided as an array", async function () {
+    it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
@@ -597,8 +599,8 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { components: [{}] })).to.not.be
-        .rejected;
+      const components = new MessageComponents();
+      await expect(message.reply("test", { components })).to.not.be.rejected;
     });
     it("should not throw an error if files is provided as an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -614,7 +616,10 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { files: [{}] })).to.not.be.rejected;
+      const file = new File()
+        .setName("test.txt")
+        .setPath(path.join(process.cwd(), "media", "quark.png"));
+      await expect(message.reply("test", { files: [file] })).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -794,7 +799,7 @@ describe("Message", function () {
       });
       await expect(message.edit("test", { embeds: [{}] })).to.not.be.rejected;
     });
-    it("should not throw an error if components is provided as an array", async function () {
+    it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
@@ -808,8 +813,8 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test", { components: [{}] })).to.not.be
-        .rejected;
+      const components = new MessageComponents();
+      await expect(message.edit("test", { components })).to.not.be.rejected;
     });
     it("should not throw an error if files is provided as an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -827,7 +832,7 @@ describe("Message", function () {
       });
       const file = new File()
         .setName("test.txt")
-        .setStream(Buffer.from("test"));
+        .setPath(path.join(process.cwd(), "media", "quark.png"));
       await expect(message.edit("test", { files: [file] })).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
