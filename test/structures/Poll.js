@@ -1,8 +1,6 @@
 import { expect } from "chai";
 import Poll from "../../src/structures/Poll.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import MessagePollManager from "../../src/managers/MessagePollManager.js";
 
 describe("Poll", function () {
@@ -14,9 +12,8 @@ describe("Poll", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const poll = new Poll(client, TEST_DATA.POLL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -33,7 +30,7 @@ describe("Poll", function () {
 
     context("check question", function () {
       it("should have the correct question", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -43,7 +40,7 @@ describe("Poll", function () {
 
     context("check answers", function () {
       it("should have the correct answers", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -58,7 +55,7 @@ describe("Poll", function () {
 
     context("check expiry", function () {
       it("should have the correct expiry", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -70,7 +67,7 @@ describe("Poll", function () {
 
     context("check allowMultiselect", function () {
       it("should have the correct allowMultiselect", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -82,7 +79,7 @@ describe("Poll", function () {
 
     context("check layoutType", function () {
       it("should have the correct layoutType", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -92,7 +89,7 @@ describe("Poll", function () {
 
     context("check rawLayoutType", function () {
       it("should have the correct rawLayoutType", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -102,7 +99,7 @@ describe("Poll", function () {
 
     context("check results", function () {
       it("should have the correct results", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -112,7 +109,7 @@ describe("Poll", function () {
 
     context("check toString", function () {
       it("should return a string", function () {
-        const client = {};
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
@@ -122,12 +119,12 @@ describe("Poll", function () {
 
     context("check toJSON", function () {
       it("should return the correct JSON", function () {
-        const client = { user: { id: TEST_DATA.USER.id } };
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
         const poll = new Poll(client, TEST_DATA.POLL, {
           guild_id: TEST_DATA.GUILD_ID,
         });
         poll._results._addVote(
-          TEST_DATA.USER.id,
+          TEST_DATA.CLIENT_USER.id,
           TEST_DATA.POLL.answers[0].answer_id,
         );
         expect(poll.toJSON()).to.deep.equal({

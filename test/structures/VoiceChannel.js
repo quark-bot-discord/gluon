@@ -1,8 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import VoiceChannel from "../../src/structures/VoiceChannel.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
 
 describe("VoiceChannel", function () {
   context("check import", function () {
@@ -13,9 +11,8 @@ describe("VoiceChannel", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -45,9 +42,8 @@ describe("VoiceChannel", function () {
 
   context("check bitrate", function () {
     it("should have the correct bitrate", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -57,9 +53,8 @@ describe("VoiceChannel", function () {
 
   context("check userLimit", function () {
     it("should have the correct userLimit", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -71,9 +66,8 @@ describe("VoiceChannel", function () {
 
   context("check rtcRegion", function () {
     it("should have the correct rtcRegion", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -85,9 +79,8 @@ describe("VoiceChannel", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -95,9 +88,8 @@ describe("VoiceChannel", function () {
     });
 
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -109,9 +101,8 @@ describe("VoiceChannel", function () {
 
   context("check toJSON", function () {
     it("should return an object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -119,9 +110,8 @@ describe("VoiceChannel", function () {
     });
 
     it("should return the correct object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });

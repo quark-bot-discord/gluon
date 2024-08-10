@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import { spy } from "sinon";
-import { TEST_DATA } from "../../src/constants.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import ButtonClick from "../../src/structures/ButtonClick.js";
-import TextInput from "../../src/util/builder/textInputBuilder.js";
 
 describe("ButtonClick", function () {
   context("check import", function () {
@@ -16,11 +16,9 @@ describe("ButtonClick", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
@@ -44,11 +42,9 @@ describe("ButtonClick", function () {
 
   context("check customId", function () {
     it("should have the correct customId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
@@ -59,11 +55,9 @@ describe("ButtonClick", function () {
 
   context("check message", function () {
     it("should have the correct message", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,

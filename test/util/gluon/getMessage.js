@@ -2,12 +2,10 @@ import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
 use(chaiAsPromised);
 import {
-  TEST_DATA,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_INCREASE_CACHE_BY,
 } from "../../../src/constants.js";
-import GuildManager from "../../../src/managers/GuildManager.js";
-import Guild from "../../../src/structures/Guild.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
 import TextChannel from "../../../src/structures/TextChannel.js";
 import Message from "../../../src/structures/Message.js";
 import getMessage from "../../../src/util/gluon/getMessage.js";
@@ -64,19 +62,15 @@ describe("GetMessage", function () {
 
   context("check get message", async function () {
     it("should return the correct message from the cache", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       const message = new Message(client, TEST_DATA.MESSAGE, {
         channel_id: TEST_DATA.CHANNEL_ID,
         guild_id: TEST_DATA.GUILD_ID,
       });
-      channel.messages.set(TEST_DATA.MESSAGE_ID, message);
-      guild.channels.set(TEST_DATA.CHANNEL_ID, channel);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
       client.increasedCacheMultipliers = new Map();
       client.increasedCache = new Map();
       client.defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS;

@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
+import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 
 class CategoryChannel {
@@ -12,7 +13,11 @@ class CategoryChannel {
   #_attributes;
   #permission_overwrites;
   #_cacheOptions;
-  constructor(client, data, { guild_id, nocache } = {}) {
+  constructor(
+    client,
+    data,
+    { guild_id, nocache = false } = { nocache: false },
+  ) {
     /**
      * The client instance.
      * @type {Client}
@@ -100,7 +105,10 @@ class CategoryChannel {
     )
       this.#permission_overwrites = existing.permissionOverwrites;
 
-    if (nocache == false && this.#_client.cacheChannels == true)
+    if (
+      nocache === false &&
+      Channel.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
+    )
       this.guild?.channels.set(data.id, this);
   }
 

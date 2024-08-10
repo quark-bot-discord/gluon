@@ -50,11 +50,10 @@ async function getMessage(
     !message &&
     client.increasedCache.get(guild_id) &&
     getTimestamp(message_id) +
-      client.defaultMessageExpiry *
+      client._cacheOptions.messageTTL *
         client.increaseCacheBy *
         guildCacheMultiplier >
-      ((new Date().getTime() / 1000) |
-        0) /* && ((getTimestamp(message_id) + client.defaultMessageExpiry) < ((new Date().getTime() / 1000) | 0))*/
+      ((new Date().getTime() / 1000) | 0)
   ) {
     const rawMessage = await client.s3Messages
       .getObject({ Bucket: client.s3MessageBucket, Key: usedHash })

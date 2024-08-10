@@ -36,7 +36,6 @@ class ButtonClick extends Interaction {
     this.#message = new Message(this.#_client, data.message, {
       channel_id: channel_id,
       guild_id: guild_id,
-      nocache: this.#_client.cacheMessages,
     });
   }
 

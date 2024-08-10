@@ -1,5 +1,7 @@
 import User from "./User.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 
 /**
  * Represents an scheduled event.
@@ -168,8 +170,14 @@ class ScheduledEvent {
        */
       this.#location = data.location ?? data.entity_metadata.location;
 
-    if (nocache == false && this.#_client.cacheScheduledEvents == true)
-      this.guild?.scheduled_events.set(data.id, this);
+    if (
+      nocache === false &&
+      ScheduledEvent.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      )
+    )
+      this.guild.scheduledEvents.set(data.id, this);
   }
 
   /**
@@ -382,6 +390,29 @@ class ScheduledEvent {
           hash.startsWith("a_") ? "gif" : "png"
         }`
       : null;
+  }
+
+  /**
+   * Determines whether the scheduled event should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheScheduledEvents === false) return false;
+    if (guildCacheOptions.scheduledEventCaching === false) return false;
+    return true;
   }
 
   /**

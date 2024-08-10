@@ -32,8 +32,11 @@ class TextChannel extends Channel {
      */
     this.#_client = client;
 
-    if (nocache == false && this.#_client.cacheChannels == true)
-      this.guild?.channels.set(data.id, this);
+    if (
+      nocache === false &&
+      Channel.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
+    )
+      this.guild.channels.set(data.id, this);
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)

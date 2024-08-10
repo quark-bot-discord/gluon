@@ -1,4 +1,6 @@
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 
 /**
  * Represents an emoji.
@@ -71,7 +73,14 @@ class Emoji {
      */
     this.#_guild_id = BigInt(guild_id);
 
-    if (nocache == false && this.#_client.cacheEmojis == true && this.id)
+    if (
+      nocache === false &&
+      Emoji.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      ) &&
+      this.id
+    )
       this.#_client.guilds.get(guild_id)?.emojis.set(data.id, this);
   }
 
@@ -196,6 +205,29 @@ class Emoji {
       throw new TypeError("GLUON: Emoji animated must be a boolean.");
     if (id) return `<${animated == true ? "a" : ""}:${name}:${id}>`;
     else return name;
+  }
+
+  /**
+   * Determines whether the emoji should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheEmojis === false) return false;
+    if (guildCacheOptions.emojiCaching === false) return false;
+    return true;
   }
 
   /**

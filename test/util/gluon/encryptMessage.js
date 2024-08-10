@@ -1,6 +1,5 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../../src/constants.js";
-import GuildManager from "../../../src/managers/GuildManager.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
 import Message from "../../../src/structures/Message.js";
 import encryptMessage from "../../../src/util/gluon/encryptMessage.js";
 
@@ -28,8 +27,7 @@ describe("EncryptMessage", function () {
 
   context("check valid output", function () {
     it("should return a string", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const message = new Message(client, TEST_DATA.MESSAGE, {
         channel_id: TEST_DATA.CHANNEL_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -39,8 +37,7 @@ describe("EncryptMessage", function () {
       expect(encryptMessage(message)).to.be.a("string");
     });
     it("should return an encrypted string", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const message = new Message(client, TEST_DATA.MESSAGE, {
         channel_id: TEST_DATA.CHANNEL_ID,
         guild_id: TEST_DATA.GUILD_ID,

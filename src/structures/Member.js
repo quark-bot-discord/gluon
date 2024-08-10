@@ -7,6 +7,9 @@ import {
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import Role from "./Role.js";
 
 /**
  * Represents a guild member.
@@ -32,14 +35,12 @@ class Member {
    * @param {String} guild_id The id of the guild that the member belongs to.
    * @param {User?} user A user object for this member.
    * @param {Boolean?} nocache Whether this member should be cached.
-   * @param {Boolean?} ignoreNoCache Whether the cache options should be overriden.
    */
   constructor(
     client,
     data,
-    { user_id, guild_id, user, nocache = false, ignoreNoCache = false } = {
+    { user_id, guild_id, user, nocache = false } = {
       nocache: false,
-      ignoreNoCache: false,
     },
   ) {
     /**
@@ -148,19 +149,25 @@ class Member {
      * @type {Array<BigInt>?}
      * @private
      */
-    if (data.roles && this.guild && this.#_client.cacheRoles == true) {
+    if (
+      data.roles &&
+      this.guild &&
+      Role.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
+    ) {
       this.#_roles = [];
       for (let i = 0; i < data.roles.length; i++)
         if (data.roles[i] != guild_id) this.#_roles.push(BigInt(data.roles[i]));
     }
 
     if (
-      this.id == this.#_client.user.id ||
-      (nocache == false &&
-        this.#_client.cacheMembers == true &&
-        ignoreNoCache == false)
+      this.id === this.#_client.user.id ||
+      (nocache === false &&
+        Member.shouldCache(
+          this.#_client._cacheOptions,
+          this.guild._cacheOptions,
+        ))
     ) {
-      this.guild?.members.set(user_id, this);
+      this.guild.members.set(user_id, this);
     }
   }
 
@@ -241,7 +248,13 @@ class Member {
    * @public
    */
   get roles() {
-    if (this.#_client.cacheRoles != true) return [];
+    if (
+      Role.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      ) === false
+    )
+      return null;
 
     const roles = [];
 
@@ -607,6 +620,29 @@ class Member {
       [this.guildId, this.id],
       body,
     );
+  }
+
+  /**
+   * Determines whether the member should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheMembers === false) return false;
+    if (guildCacheOptions.memberCaching === false) return false;
+    return true;
   }
 
   /**

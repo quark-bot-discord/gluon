@@ -1,9 +1,6 @@
 import { expect } from "chai";
 import CategoryChannel from "../../src/structures/CategoryChannel.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 
 describe("CategoryChannel", function () {
   context("check import", function () {
@@ -14,10 +11,8 @@ describe("CategoryChannel", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -34,10 +29,8 @@ describe("CategoryChannel", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -49,10 +42,8 @@ describe("CategoryChannel", function () {
 
   context("check type", function () {
     it("should have the correct type", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -64,10 +55,8 @@ describe("CategoryChannel", function () {
 
   context("check nsfw", function () {
     it("should have the correct nsfw", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -79,10 +68,8 @@ describe("CategoryChannel", function () {
 
   context("check mention", function () {
     it("should have the correct mention", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -96,10 +83,8 @@ describe("CategoryChannel", function () {
 
   context("check permissionOverwrites", function () {
     it("should have the correct permissionOverwrites", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -116,10 +101,8 @@ describe("CategoryChannel", function () {
 
   context("check toString", function () {
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
@@ -133,10 +116,8 @@ describe("CategoryChannel", function () {
 
   context("check toJSON", function () {
     it("should return the correct JSON structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,

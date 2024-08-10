@@ -170,6 +170,23 @@ class GuildCacheOptions {
   }
 
   /**
+   * Whether to cache scheduled events or not.
+   * @param {Boolean} option Whether to cache scheduled events or not.
+   * @returns {GuildCacheOptions}
+   * @throws {TypeError}
+   * @public
+   */
+  setScheduledEventCaching(option) {
+    if (typeof option !== "boolean")
+      throw new TypeError("GLUON: Setting must be a boolean");
+
+    if (option === true)
+      this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS;
+    else if (option === false)
+      this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS;
+  }
+
+  /**
    * Returns whether to cache files or not.
    * @type {Boolean}
    * @readonly
@@ -296,6 +313,19 @@ class GuildCacheOptions {
     return (
       (this.#_cache_options & GLUON_GUILD_CACHING_OPTIONS.INVITES) ===
       GLUON_GUILD_CACHING_OPTIONS.INVITES
+    );
+  }
+
+  /**
+   * Returns whether to cache scheduled events or not.
+   * @type {Boolean}
+   * @readonly
+   * @public
+   */
+  get scheduledEventCaching() {
+    return (
+      (this.#_cache_options & GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS) ===
+      GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS
     );
   }
 

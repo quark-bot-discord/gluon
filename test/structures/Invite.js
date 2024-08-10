@@ -1,8 +1,12 @@
 import { expect } from "chai";
-import { INVITE_BASE_URL, TEST_DATA } from "../../src/constants.js";
+import { INVITE_BASE_URL } from "../../src/constants.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import Invite from "../../src/structures/Invite.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
 
 describe("Invite", function () {
   context("check import", function () {
@@ -13,9 +17,8 @@ describe("Invite", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -37,7 +40,8 @@ describe("Invite", function () {
 
   context("check code", function () {
     it("should have the correct code", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -47,7 +51,9 @@ describe("Invite", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -57,7 +63,8 @@ describe("Invite", function () {
 
   context("check channelId", function () {
     it("should have the correct channelId", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -67,7 +74,8 @@ describe("Invite", function () {
 
   context("check uses", function () {
     it("should have the correct uses", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -77,7 +85,8 @@ describe("Invite", function () {
 
   context("check expires", function () {
     it("should have the correct expires", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -89,7 +98,8 @@ describe("Invite", function () {
 
   context("check inviter", function () {
     it("should have the correct inviter", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -99,7 +109,8 @@ describe("Invite", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -109,7 +120,8 @@ describe("Invite", function () {
 
   context("check url", function () {
     it("should have the correct url", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -121,7 +133,8 @@ describe("Invite", function () {
 
   context("check maxUses", function () {
     it("should have the correct maxUses", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -131,7 +144,8 @@ describe("Invite", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -141,9 +155,8 @@ describe("Invite", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -167,14 +180,16 @@ describe("Invite", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(invite.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -184,9 +199,9 @@ describe("Invite", function () {
 
   context("check toJSON", function () {
     it("should return the correct JSON", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -223,9 +238,9 @@ describe("Invite", function () {
 
   context("check bundling", function () {
     it("should bundle correctly", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guild_id: TEST_DATA.GUILD_ID,
       });

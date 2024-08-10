@@ -12,10 +12,12 @@ import Sticker from "./Sticker.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import hash from "hash.js";
 import encryptMessage from "../util/gluon/encryptMessage.js";
-import MessagePollManager from "../managers/MessagePollManager.js";
 import MessageReactionManager from "../managers/MessageReactionManager.js";
 import Poll from "./Poll.js";
 import Embed from "../util/builder/embedBuilder.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -313,8 +315,14 @@ class Message {
     else if (existing && existing.messageSnapshots != undefined)
       this.#message_snapshots = existing.messageSnapshots;
 
-    /* this.author && this.author.bot != true && !data.webhook_id && */
-    if (nocache == false && this.#_client.cacheMessages == true) {
+    if (
+      nocache === false &&
+      Message.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+        this.channel._cacheOptions,
+      )
+    ) {
       this.channel?.messages.set(data.id, this);
       if (!this.channel)
         this.#_client.emit("debug", `${this.guildId} NO CHANNEL`);
@@ -763,6 +771,61 @@ class Message {
     );
 
     this.channel.messages.delete(this.id);
+  }
+
+  /**
+   * Determines whether the file attached to this message should be cached.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCacheFile(guildCacheOptions, channelCacheOptions) {}
+
+  /**
+   * Determines whether the content of this message should be cached.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCacheContent(guildCacheOptions, channelCacheOptions) {}
+
+  /**
+   * Determines whether the message should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(
+    gluonCacheOptions,
+    guildCacheOptions,
+    channelCacheOptions,
+  ) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (!(channelCacheOptions instanceof ChannelCacheOptions))
+      throw new TypeError(
+        "GLUON: Channel cache options must be a ChannelCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheMessages === false) return false;
+    if (guildCacheOptions.messageCaching === false) return false;
+    if (channelCacheOptions.messageCaching === false) return false;
+    return true;
   }
 
   /**

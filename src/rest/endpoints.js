@@ -2,6 +2,7 @@
 /* the arguments passed to the path() function should simply become the parameters of the request */
 
 import { HttpResponse } from "msw";
+import { TEST_DATA } from "../testData.js";
 
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
 export default {
@@ -31,7 +32,7 @@ export default {
     method: "POST",
     majorParams: [0],
     mockResponse: ({ params } = {}) => {
-      return HttpResponse.json(params.body);
+      return HttpResponse.json(TEST_DATA.MESSAGE);
     },
   },
   patchEditMessage: {
@@ -40,7 +41,9 @@ export default {
     },
     method: "PATCH",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.MESSAGE);
+    },
   },
   putCreateGuildBan: {
     path: (guild_id, user_id) => {
@@ -49,7 +52,9 @@ export default {
     method: "PUT",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   getGuildAuditLog: {
     path: (guild_id) => {
@@ -57,7 +62,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json({ audit_log_entries: [TEST_DATA.AUDIT_LOG] });
+    },
   },
   getChannel: {
     path: (channel_id) => {
@@ -65,7 +72,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.TEXT_CHANNEL);
+    },
   },
   getChannelMessages: {
     path: (channel_id) => {
@@ -73,7 +82,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.MESSAGE]);
+    },
   },
   getChannelMessage: {
     path: (channel_id, message_id) => {
@@ -81,7 +92,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.MESSAGE);
+    },
   },
   getGuildInvites: {
     path: (guild_id) => {
@@ -89,7 +102,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.INVITE]);
+    },
   },
   postInteractionResponse: {
     path: (interaction_id, interaction_token) => {
@@ -98,7 +113,7 @@ export default {
     method: "POST",
     majorParams: [],
     mockResponse: ({ params } = {}) => {
-      console.log(params);
+      return new HttpResponse(undefined, { status: 204 });
     },
   },
   patchOriginalInteractionResponse: {
@@ -107,7 +122,9 @@ export default {
     },
     method: "PATCH",
     majorParams: [0, 1],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   postBulkDeleteMessages: {
     path: (channel_id) => {
@@ -116,7 +133,9 @@ export default {
     method: "POST",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   postExecuteWebhook: {
     path: (webhook_id, webhook_token) => {
@@ -124,7 +143,9 @@ export default {
     },
     method: "POST",
     majorParams: [0, 1],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   getGuildChannels: {
     path: (guild_id) => {
@@ -132,7 +153,14 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([
+        TEST_DATA.TEXT_CHANNEL,
+        TEST_DATA.CATEGORY_CHANNEL,
+        TEST_DATA.VOICE_CHANNEL,
+        TEST_DATA.TEXT_CHANNEL_2,
+      ]);
+    },
   },
   postFollowNewsChannel: {
     path: (channel_id) => {
@@ -140,7 +168,9 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.FOLLOWED_CHANNEL);
+    },
   },
   getGuildMember: {
     path: (guild_id, user_id) => {
@@ -148,7 +178,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.MEMBER);
+    },
   },
   patchGuildMember: {
     path: (guild_id, user_id) => {
@@ -157,7 +189,9 @@ export default {
     method: "PATCH",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.MEMBER);
+    },
   },
   getGuildBan: {
     path: (guild_id, user_id) => {
@@ -165,7 +199,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.BAN);
+    },
   },
   deleteChannelMessage: {
     path: (channel_id, message_id) => {
@@ -174,7 +210,9 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   deleteGuildMember: {
     path: (guild_id, user_id) => {
@@ -183,7 +221,9 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   deleteRemoveGuildBan: {
     path: (guild_id, user_id) => {
@@ -192,7 +232,9 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   putAddGuildMemberRole: {
     path: (guild_id, user_id, role_id) => {
@@ -201,7 +243,9 @@ export default {
     method: "PUT",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   deleteRemoveMemberRole: {
     path: (guild_id, user_id, role_id) => {
@@ -210,7 +254,9 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   getUser: {
     path: (user_id) => {
@@ -218,7 +264,9 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.USER);
+    },
   },
   getChannelWebhooks: {
     path: (channel_id) => {
@@ -226,7 +274,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.WEBHOOK]);
+    },
   },
   getWebhook: {
     path: (webhook_id) => {
@@ -234,7 +284,9 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.WEBHOOK);
+    },
   },
   deleteWebhook: {
     path: (webhook_id) => {
@@ -242,7 +294,9 @@ export default {
     },
     method: "DELETE",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   getSearchGuildMembers: {
     path: (guild_id) => {
@@ -250,7 +304,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.MEMBER]);
+    },
   },
   postCreateWebhook: {
     path: (channel_id) => {
@@ -258,7 +314,9 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.WEBHOOK);
+    },
   },
   patchModifyWebhook: {
     path: (webhook_id) => {
@@ -266,7 +324,9 @@ export default {
     },
     method: "PATCH",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.WEBHOOK);
+    },
   },
   deleteLeaveGuild: {
     path: (guild_id) => {
@@ -274,7 +334,9 @@ export default {
     },
     method: "DELETE",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
   },
   getListGuildScheduledEvents: {
     path: (guild_id) => {
@@ -282,7 +344,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.SCHEDULED_EVENT]);
+    },
   },
   getGuildScheduledEvent: {
     path: (guild_id, scheduled_event_id) => {
@@ -290,7 +354,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.SCHEDULED_EVENT);
+    },
   },
   bulkOverwriteGlobalApplicationCommands: {
     path: (application_id) => {
@@ -306,7 +372,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.ROLE_ADMIN]);
+    },
   },
   getEmoji: {
     path: (guild_id, emoji_id) => {
@@ -314,7 +382,9 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.EMOJI);
+    },
   },
   getPinned: {
     path: (channel_id) => {
@@ -322,6 +392,8 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.MESSAGE]);
+    },
   },
 };

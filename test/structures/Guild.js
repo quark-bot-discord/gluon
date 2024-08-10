@@ -2,9 +2,13 @@ import { expect } from "chai";
 import { spy } from "sinon";
 import Guild from "../../src/structures/Guild.js";
 import GuildManager from "../../src/managers/GuildManager.js";
-import { TEST_DATA } from "../../src/constants.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import Member from "../../src/structures/Member.js";
-import User from "../../src/structures/User.js";
 import cacheChannel from "../../src/util/gluon/cacheChannel.js";
 import GuildEmojisManager from "../../src/managers/GuildEmojisManager.js";
 import GuildInviteManager from "../../src/managers/GuildInviteManager.js";
@@ -23,9 +27,8 @@ describe("Guild", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild).to.have.property("id");
       expect(guild).to.have.property("name");
       expect(guild).to.have.property("displayIconURL");
@@ -75,42 +78,37 @@ describe("Guild", function () {
   });
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.id).to.equal(TEST_DATA.GUILD.id);
     });
   });
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.name).to.equal(TEST_DATA.GUILD.name);
     });
   });
   context("check displayIconURL", function () {
     it("should have the correct displayIconURL", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.displayIconURL).to.equal(TEST_DATA.GUILD.icon);
     });
   });
   context("check ownerId", function () {
     it("should have the correct ownerId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.ownerId).to.equal(TEST_DATA.GUILD.owner_id);
     });
   });
   context("check owner", function () {
     it("should have the correct owner", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -120,82 +118,72 @@ describe("Guild", function () {
   });
   context("check verificationLevel", function () {
     it("should have the correct verificationLevel", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.verificationLevel).to.equal("NONE");
     });
   });
   context("check defaultMessageNotifications", function () {
     it("should have the correct defaultMessageNotifications", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.defaultMessageNotifications).to.equal("ALL_MESSAGES");
     });
   });
   context("check explicitContentFilter", function () {
     it("should have the correct explicitContentFilter", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.explicitContentFilter).to.equal("DISABLED");
     });
   });
   context("check available", function () {
     it("should have the correct available", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.unavailable).to.equal(TEST_DATA.GUILD.unavailable);
     });
   });
   context("check memberCount", function () {
     it("should have the correct memberCount", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.memberCount).to.equal(TEST_DATA.GUILD.member_count);
     });
   });
   context("check description", function () {
     it("should have the correct description", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.description).to.equal(TEST_DATA.GUILD.description);
     });
   });
   context("check mfaLevel", function () {
     it("should have the correct mfaLevel", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.mfaLevel).to.equal("NONE");
     });
   });
   context("check systemChannelId", function () {
     it("should have the correct systemChannelId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.systemChannelId).to.equal(TEST_DATA.GUILD.system_channel_id);
     });
   });
   context("check systemChannelFlags", function () {
     it("should have the correct systemChannelFlags", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.systemChannelFlags).to.deep.equal([]);
     });
   });
   context("check systemChannel", function () {
     it("should have the correct systemChannel", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      cacheChannel(client, TEST_DATA.TEXT_CHANNEL, TEST_DATA.GUILD_ID);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(guild.systemChannel.id).to.equal(
         TEST_DATA.GUILD.system_channel_id,
       );
@@ -203,107 +191,94 @@ describe("Guild", function () {
   });
   context("check rulesChannelId", function () {
     it("should have the correct rulesChannelId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.rulesChannelId).to.equal(TEST_DATA.GUILD.rules_channel_id);
     });
   });
   context("check rulesChannel", function () {
     it("should have the correct rulesChannel", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      cacheChannel(client, TEST_DATA.TEXT_CHANNEL_2, TEST_DATA.GUILD_ID);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_2_ALL_CACHES_ENABLED(client);
       expect(guild.rulesChannel.id).to.equal(TEST_DATA.GUILD.rules_channel_id);
     });
   });
   context("check premiumTier", function () {
     it("should have the correct premiumTier", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.premiumTier).to.equal(1);
     });
   });
   context("check premiumSubscriptionCount", function () {
     it("should have the correct premiumSubscriptionCount", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.premiumSubscriptionCount).to.equal(9);
     });
   });
   context("check premiumProgressBarEnabled", function () {
     it("should have the correct premiumProgressBarEnabled", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.premiumProgressBarEnabled).to.equal(true);
     });
   });
   context("check preferredLocale", function () {
     it("should have the correct preferredLocale", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.preferredLocale).to.equal("en-US");
     });
   });
   context("check nsfwLevel", function () {
     it("should have the correct nsfwLevel", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.nsfwLevel).to.equal("DEFAULT");
     });
   });
   context("check emojis", function () {
     it("should have the correct emojis", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.emojis).to.be.an.instanceOf(GuildEmojisManager);
     });
   });
   context("check invites", function () {
     it("should have the correct invites", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.invites).to.be.an.instanceOf(GuildInviteManager);
     });
   });
   context("check voiceStates", function () {
     it("should have the correct voiceStates", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.voiceStates).to.be.an.instanceOf(GuildVoiceStatesManager);
     });
   });
   context("check members", function () {
     it("should have the correct members", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.members).to.be.an.instanceOf(GuildMemberManager);
     });
   });
   context("check channels", function () {
     it("should have the correct channels", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      cacheChannel(client, TEST_DATA.TEXT_CHANNEL, TEST_DATA.GUILD_ID);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(guild.channels).to.be.an.instanceOf(GuildChannelsManager);
     });
   });
   context("check _cacheOptions", function () {
     it("should have the correct _cacheOptions", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild._cacheOptions).to.be.an.instanceOf(GuildCacheOptions);
     });
   });
@@ -336,41 +311,35 @@ describe("Guild", function () {
   });
   context("check toString", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toString).to.be.a("function");
     });
     it("should return a string", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toString()).to.equal(`<Guild: ${TEST_DATA.GUILD_ID}>`);
     });
   });
   context("check toJSON", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON).to.be.a("function");
     });
     it("should return an object", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON()).to.be.a("object");
     });
     it("should return the correct object", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON()).to.deep.equal({
         channels: [],
         emojis: [],
@@ -404,16 +373,13 @@ describe("Guild", function () {
   });
   context("check me", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.me).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -423,22 +389,18 @@ describe("Guild", function () {
   });
   context("check ban", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.ban).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.ban()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -449,14 +411,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no user id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -469,14 +425,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if a reason is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -488,14 +438,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
     });
     it("should throw an error if seconds is provided but it is not a number", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -507,14 +451,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: seconds");
     });
     it("should throw an error if seconds is provided but it is less than 0", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -526,14 +464,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: seconds");
     });
     it("should throw an error if seconds is provided but it is too large", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -545,14 +477,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: seconds");
     });
     it("should throw an error if a reason is provided but it is too long", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -564,15 +490,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -582,15 +501,8 @@ describe("Guild", function () {
       await expect(guild.ban(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -601,15 +513,8 @@ describe("Guild", function () {
         .rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -620,16 +525,9 @@ describe("Guild", function () {
         .rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -647,22 +545,20 @@ describe("Guild", function () {
   });
   context("check unban", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.unban).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.unban()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -673,14 +569,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no user id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -693,14 +583,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if a reason is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -712,14 +596,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
     });
     it("should throw an error if a reason is provided but it is too long", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -731,15 +609,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -749,15 +620,8 @@ describe("Guild", function () {
       await expect(guild.unban(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -768,16 +632,9 @@ describe("Guild", function () {
         .be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -795,22 +652,20 @@ describe("Guild", function () {
   });
   context("check kick", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.kick).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.kick()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -821,14 +676,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no user id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -841,14 +690,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if a reason is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -860,14 +703,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
     });
     it("should throw an error if a reason is provided but it is too long", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -879,15 +716,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -897,15 +727,8 @@ describe("Guild", function () {
       await expect(guild.kick(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -916,16 +739,9 @@ describe("Guild", function () {
         .be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -943,22 +759,20 @@ describe("Guild", function () {
   });
   context("check removeMemberRole", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.removeMemberRole).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.removeMemberRole()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -969,14 +783,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no user id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -989,14 +797,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no role id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1008,14 +810,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: role_id");
     });
     it("should throw an error if a reason is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1029,14 +825,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
     });
     it("should throw an error if a reason is provided but it is too long", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1050,15 +840,8 @@ describe("Guild", function () {
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1070,15 +853,8 @@ describe("Guild", function () {
       ).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1092,16 +868,9 @@ describe("Guild", function () {
       ).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1123,22 +892,20 @@ describe("Guild", function () {
   });
   context("check fetchAuditLogs", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchAuditLogs).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchAuditLogs()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -1149,14 +916,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if limit is provided but it is not a number", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1169,14 +930,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if limit is provided but it is less than 1", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1189,14 +944,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if limit is provided but it is greater than 100", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1209,14 +958,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if type is provided but it is not a number", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1229,14 +972,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if user id is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1249,14 +986,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if before is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1269,14 +1000,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if after is provided but it is not a string", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1289,15 +1014,8 @@ describe("Guild", function () {
       );
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1307,15 +1025,8 @@ describe("Guild", function () {
       await expect(guild.fetchAuditLogs()).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1333,16 +1044,9 @@ describe("Guild", function () {
       ).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1359,22 +1063,20 @@ describe("Guild", function () {
   });
   context("check fetchInvites", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchInvites).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchInvites()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -1385,15 +1087,8 @@ describe("Guild", function () {
       );
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1403,16 +1098,9 @@ describe("Guild", function () {
       await expect(guild.fetchInvites()).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1428,27 +1116,18 @@ describe("Guild", function () {
   });
   context("check fetchChannels", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchChannels).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchChannels()).to.be.a("promise");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => [TEST_DATA.TEXT_CHANNEL] },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -1456,14 +1135,9 @@ describe("Guild", function () {
       await expect(guild.fetchChannels()).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheChannels: true,
-        request: { makeRequest: () => [TEST_DATA.TEXT_CHANNEL] },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       await guild.fetchChannels();
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("getGuildChannels", [
@@ -1473,22 +1147,18 @@ describe("Guild", function () {
   });
   context("check fetchBan", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchBan).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchBan()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -1499,14 +1169,8 @@ describe("Guild", function () {
       );
     });
     it("should throw an error if no user id is provided", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1519,15 +1183,8 @@ describe("Guild", function () {
       );
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1537,16 +1194,9 @@ describe("Guild", function () {
       await expect(guild.fetchBan(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheRoles: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -1563,34 +1213,24 @@ describe("Guild", function () {
   });
   context("check leave", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.leave).to.be.a("function");
     });
     it("should return a promise", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.leave()).to.be.a("promise");
     });
     it("should not be rejected if the input is valid", async function () {
-      const client = {
-        cacheGuilds: true,
-        request: { makeRequest: () => {} },
-      };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       await expect(guild.leave()).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
-      const client = {
-        cacheGuilds: true,
-        request: { makeRequest: () => {} },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       await guild.leave();
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("deleteLeaveGuild", [
@@ -1600,50 +1240,44 @@ describe("Guild", function () {
   });
   context("check calculateMessageCacheCount", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMessageCacheCount).to.be.a("function");
     });
     it("should return a number", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMessageCacheCount()).to.be.a("number");
     });
     it("should return the correct number", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMessageCacheCount()).to.equal(50);
     });
   });
   context("check calculateMemberCacheCount", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMemberCacheCount).to.be.a("function");
     });
     it("should return a number", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMemberCacheCount()).to.be.a("number");
     });
     it("should return the correct number", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMemberCacheCount()).to.equal(249);
     });
   });
   context("check bundling", function () {
     it("should bundle correctly", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
         guild_id: TEST_DATA.GUILD_ID,

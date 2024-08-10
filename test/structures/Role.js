@@ -1,9 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Role from "../../src/structures/Role.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
 
 describe("Role", function () {
   context("check import", function () {
@@ -14,10 +11,8 @@ describe("Role", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -41,10 +36,8 @@ describe("Role", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -54,10 +47,8 @@ describe("Role", function () {
 
   context("check color", function () {
     it("should have the correct color", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -67,10 +58,8 @@ describe("Role", function () {
 
   context("check position", function () {
     it("should have the correct position", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -80,10 +69,8 @@ describe("Role", function () {
 
   context("check mention", function () {
     it("should have the correct mention", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -93,10 +80,8 @@ describe("Role", function () {
 
   context("check permissions", function () {
     it("should have the correct permissions", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -108,10 +93,8 @@ describe("Role", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -121,10 +104,8 @@ describe("Role", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -134,10 +115,8 @@ describe("Role", function () {
 
   context("check displayIconURL", function () {
     it("should have the correct displayIconURL", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -149,10 +128,8 @@ describe("Role", function () {
 
   context("check tags", function () {
     it("should have the correct tags", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -211,20 +188,16 @@ describe("Role", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(role.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -234,20 +207,16 @@ describe("Role", function () {
 
   context("check toJSON", function () {
     it("should return a JSON object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(role.toJSON()).to.be.a("object");
     });
     it("should return the correct JSON object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -272,10 +241,8 @@ describe("Role", function () {
 
   context("check bundling", function () {
     it("should return the correct bundle", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
         guild_id: TEST_DATA.GUILD_ID,
       });

@@ -1,9 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import ModalResponse from "../../src/structures/ModalResponse.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
 
 describe("ModalResponse", function () {
   context("check import", function () {
@@ -14,10 +11,8 @@ describe("ModalResponse", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse).to.have.property("id");
       expect(modalResponse).to.have.property("type");
@@ -37,10 +32,8 @@ describe("ModalResponse", function () {
 
   context("check values", function () {
     it("should have the correct values", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.values).to.equal(
         TEST_DATA.MODAL_RESPONSE.data.components[0].components,
@@ -50,18 +43,14 @@ describe("ModalResponse", function () {
 
   context("check toString", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.toString).to.be.a("function");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.toString()).to.equal(
         `<ModalResponse: ${TEST_DATA.MODAL_RESPONSE.id}>`,
@@ -71,18 +60,14 @@ describe("ModalResponse", function () {
 
   context("check toJSON", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.toJSON).to.be.a("function");
     });
     it("should return the correct JSON object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse.toJSON()).to.deep.equal({
         channel_id: TEST_DATA.MODAL_RESPONSE.channel_id,

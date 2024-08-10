@@ -1,10 +1,12 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import Thread from "../../src/structures/Thread.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
 import Member from "../../src/structures/Member.js";
-import User from "../../src/structures/User.js";
 import cacheChannel from "../../src/util/gluon/cacheChannel.js";
 
 describe("Thread", function () {
@@ -16,9 +18,8 @@ describe("Thread", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -34,9 +35,8 @@ describe("Thread", function () {
 
   context("check ownerId", function () {
     it("should have the correct ownerId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -46,10 +46,8 @@ describe("Thread", function () {
 
   context("check owner", function () {
     it("should have the correct owner", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         guild_id: TEST_DATA.GUILD_ID,
         user_id: TEST_DATA.THREAD.owner_id,
@@ -63,9 +61,8 @@ describe("Thread", function () {
 
   context("check parentId", function () {
     it("should have the correct parentId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -75,9 +72,8 @@ describe("Thread", function () {
 
   context("check parent", function () {
     it("should have the correct parent", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -86,18 +82,16 @@ describe("Thread", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(thread.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -107,18 +101,16 @@ describe("Thread", function () {
 
   context("check toJSON", function () {
     it("should return an object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON()).to.be.an("object");
     });
     it("should return the correct data", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -139,19 +131,13 @@ describe("Thread", function () {
 
   context("check bundling", function () {
     it("should bundle", function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheChannels: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.THREAD.owner_id,
         guild_id: TEST_DATA.GUILD_ID,
       });
-      cacheChannel(client, TEST_DATA.TEXT_CHANNEL, TEST_DATA.GUILD_ID);
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guild_id: TEST_DATA.GUILD_ID,
       });

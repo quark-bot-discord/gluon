@@ -1,8 +1,6 @@
 import { expect } from "chai";
 import Emoji from "../../src/structures/Emoji.js";
-import { TEST_DATA } from "../../src/constants.js";
-import Guild from "../../src/structures/Guild.js";
-import GuildManager from "../../src/managers/GuildManager.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 
 describe("Emoji", function () {
   context("check import", function () {
@@ -13,9 +11,8 @@ describe("Emoji", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -36,14 +33,16 @@ describe("Emoji", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.id).to.equal(TEST_DATA.EMOJI.id);
     });
     it("should have the correct id for a standard emoji", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -53,14 +52,16 @@ describe("Emoji", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.name).to.equal("bitcoin");
     });
     it("should have the correct name for a standard emoji", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -70,14 +71,16 @@ describe("Emoji", function () {
 
   context("check animated", function () {
     it("should have the correct animated", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.animated).to.equal(true);
     });
     it("should have the correct animated for a standard emoji", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -125,21 +128,24 @@ describe("Emoji", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toString()).to.equal("<Emoji: 844240546246950922>");
     });
     it("should return the correct string for a standard emoji", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -151,14 +157,16 @@ describe("Emoji", function () {
 
   context("check toJSON", function () {
     it("should return an object", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.be.an("object");
     });
     it("should return the correct object", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -172,7 +180,8 @@ describe("Emoji", function () {
       });
     });
     it("should return the correct object for a standard emoji", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guild_id: TEST_DATA.GUILD_ID,
       });

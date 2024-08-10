@@ -1,9 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
 import Attachment from "../../src/structures/Attachment.js";
-import TextChannel from "../../src/structures/TextChannel.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 
 describe("Attachment", function () {
   context("check import", function () {
@@ -14,9 +11,8 @@ describe("Attachment", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -31,9 +27,8 @@ describe("Attachment", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -43,9 +38,8 @@ describe("Attachment", function () {
 
   context("check filename", function () {
     it("should have the correct filename", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -55,9 +49,8 @@ describe("Attachment", function () {
 
   context("check size", function () {
     it("should have the correct size", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -67,9 +60,8 @@ describe("Attachment", function () {
 
   context("check url", function () {
     it("should have the correct url", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -79,9 +71,8 @@ describe("Attachment", function () {
 
   context("check toJSON", function () {
     it("should return a valid JSON", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
@@ -96,9 +87,8 @@ describe("Attachment", function () {
 
   context("check bundling", function () {
     it("should bundle correctly", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channel_id: TEST_DATA.CHANNEL_ID,
       });

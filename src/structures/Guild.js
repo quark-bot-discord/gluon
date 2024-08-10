@@ -21,6 +21,8 @@ import Role from "./Role.js";
 import Thread from "./Thread.js";
 import VoiceState from "./VoiceState.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import Channel from "./Channel.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 
 /**
  * Represents a Discord guild.
@@ -74,7 +76,7 @@ class Guild {
     if (data.unavailable == true) {
       this.#unavailable = true;
 
-      if (nocache == false && this.#_client.cacheGuilds == true)
+      if (nocache === false && Guild.shouldCache(this.#_client._cacheOptions))
         this.#_client.guilds.set(data.id, this);
       return;
     }
@@ -443,15 +445,15 @@ class Guild {
      */
     this.#_cacheOptions = new GuildCacheOptions(data._cacheOptions);
 
-    if (nocache == false && this.#_client.cacheGuilds == true)
+    if (nocache === false && Guild.shouldCache(this.#_client._cacheOptions))
       this.#_client.guilds.set(data.id, this);
 
-    if (data.members)
-      for (
-        let i = 0;
-        i < data.members.length && this.#_client.cacheMembers == true;
-        i++
-      )
+    if (
+      data.members &&
+      Member.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
+        true
+    )
+      for (let i = 0; i < data.members.length; i++)
         new Member(this.#_client, data.members[i], {
           user_id: data.members[i].user.id,
           guild_id: data.id,
@@ -459,61 +461,62 @@ class Guild {
           nocache,
         });
 
-    if (data.channels)
-      for (
-        let i = 0;
-        i < data.channels.length && this.#_client.cacheChannels == true;
-        i++
-      )
+    if (
+      data.channels &&
+      Channel.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
+        true
+    )
+      for (let i = 0; i < data.channels.length; i++)
         cacheChannel(this.#_client, data.channels[i], data.id, nocache);
 
-    if (data.threads)
-      for (
-        let i = 0;
-        i < data.threads.length && this.#_client.cacheChannels == true;
-        i++
-      )
+    if (
+      data.threads &&
+      Thread.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
+        true
+    )
+      for (let i = 0; i < data.threads.length; i++)
         new Thread(this.#_client, data.threads[i], {
           guild_id: data.id,
           nocache,
         });
 
-    if (data.voice_states)
-      for (
-        let i = 0;
-        i < data.voice_states.length && this.#_client.cacheVoiceStates == true;
-        i++
-      )
+    if (
+      data.voice_states &&
+      VoiceState.shouldCache(
+        this.#_client._cacheOptions,
+        this._cacheOptions,
+      ) === true
+    )
+      for (let i = 0; i < data.voice_states.length; i++)
         new VoiceState(this.#_client, data.voice_states[i], {
           guild_id: data.id,
           nocache,
         });
 
-    if (data.roles)
-      for (
-        let i = 0;
-        i < data.roles.length && this.#_client.cacheRoles == true;
-        i++
-      )
+    if (
+      data.roles &&
+      Role.shouldCache(this.#_client._cacheOptions, this._cacheOptions) === true
+    )
+      for (let i = 0; i < data.roles.length; i++)
         new Role(this.#_client, data.roles[i], { guild_id: data.id, nocache });
 
-    if (data.emojis)
-      for (
-        let i = 0;
-        i < data.emojis.length && this.#_client.cacheEmojis == true;
-        i++
-      )
+    if (
+      data.emojis &&
+      Emoji.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
+        true
+    )
+      for (let i = 0; i < data.emojis.length; i++)
         new Emoji(this.#_client, data.emojis[i], {
           guild_id: data.id,
           nocache,
         });
 
-    if (data.invites)
-      for (
-        let i = 0;
-        i < data.invites.length && this.#_client.cacheInvites == true;
-        i++
-      )
+    if (
+      data.invites &&
+      Invite.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
+        true
+    )
+      for (let i = 0; i < data.invites.length; i++)
         new Invite(this.#_client, data.invites[i], {
           guild_id: data.id,
           nocache,
@@ -1384,6 +1387,23 @@ class Guild {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
+  }
+
+  /**
+   * Determines whether the emoji should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheGuilds === false) return false;
+    return true;
   }
 
   /**

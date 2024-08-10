@@ -64,8 +64,11 @@ class VoiceChannel extends Channel {
     else if (existing && typeof existing.rtcRegion == "string")
       this.#rtc_region = existing.rtcRegion;
 
-    if (nocache == false && this.#_client.cacheChannels == true)
-      this.guild?.channels.set(data.id, this);
+    if (
+      nocache === false &&
+      Channel.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
+    )
+      this.guild.channels.set(data.id, this);
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)

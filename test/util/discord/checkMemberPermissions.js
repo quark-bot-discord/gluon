@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { PERMISSIONS, TEST_DATA } from "../../../src/constants.js";
+import { PERMISSIONS } from "../../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
 import checkMemberPermissions from "../../../src/util/discord/checkMemberPermissions.js";
 import Role from "../../../src/structures/Role.js";
 import combinePermissions from "../../../src/util/discord/combinePermissions.js";
@@ -34,7 +35,8 @@ describe("CheckMemberPermissions", function () {
 
   context("check calculated permissions", function () {
     it("should return the correct calculated permissions", function () {
-      const client = {};
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const roles = [
         new Role(
           client,

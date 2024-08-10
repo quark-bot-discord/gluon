@@ -644,7 +644,10 @@ class EventHandler {
           case COMPONENT_TYPES.ROLE_SELECT_MENU:
           case COMPONENT_TYPES.MENTIONABLE_SELECT_MENU:
           case COMPONENT_TYPES.CHANNEL_SELECT_MENU: {
-            const componentInteraction = new OptionSelect(this.#_client, data);
+            const componentInteraction = new OptionSelect(this.#_client, data, {
+              guild_id: data.guild_id,
+              channel_id: data.channel_id,
+            });
 
             this.#_client.emit(EVENTS.MENU_SELECT, componentInteraction);
 

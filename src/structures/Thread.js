@@ -1,4 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
 
 /**
@@ -47,11 +49,11 @@ class Thread extends Channel {
     this.#_parent_id = BigInt(data.parent_id);
 
     if (
-      nocache == false &&
-      data.archived != true &&
-      this.#_client.cacheChannels == true
+      nocache === false &&
+      data.archived !== true &&
+      Thread.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
     )
-      this.guild?.channels.set(data.id, this);
+      this.guild.channels.set(data.id, this);
   }
 
   /**
@@ -92,6 +94,30 @@ class Thread extends Channel {
    */
   get parent() {
     return this.guild?.channels.get(this.parentId) || null;
+  }
+
+  /**
+   * Determines whether the thread should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   * @override
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheChannels === false) return false;
+    if (guildCacheOptions.threadCaching === false) return false;
+    return true;
   }
 
   /**

@@ -1,9 +1,11 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import VoiceState from "../../src/structures/VoiceState.js";
-import Guild from "../../src/structures/Guild.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import User from "../../src/structures/User.js";
 import cacheChannel from "../../src/util/gluon/cacheChannel.js";
 import VoiceChannel from "../../src/structures/VoiceChannel.js";
 import Member from "../../src/structures/Member.js";
@@ -17,10 +19,8 @@ describe("VoiceState", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -46,10 +46,8 @@ describe("VoiceState", function () {
 
   context("check deaf", function () {
     it("should have the correct deaf value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -59,10 +57,8 @@ describe("VoiceState", function () {
 
   context("check mute", function () {
     it("should have the correct mute value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -72,10 +68,8 @@ describe("VoiceState", function () {
 
   context("check selfDeaf", function () {
     it("should have the correct selfDeaf value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -85,10 +79,8 @@ describe("VoiceState", function () {
 
   context("check selfMute", function () {
     it("should have the correct selfMute value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -98,10 +90,8 @@ describe("VoiceState", function () {
 
   context("check selfStream", function () {
     it("should have the correct selfStream value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -111,10 +101,8 @@ describe("VoiceState", function () {
 
   context("check selfVideo", function () {
     it("should have the correct selfVideo value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -124,10 +112,8 @@ describe("VoiceState", function () {
 
   context("check suppress", function () {
     it("should have the correct suppress value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -137,10 +123,8 @@ describe("VoiceState", function () {
 
   context("check guild", function () {
     it("should have the correct guild value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -150,10 +134,8 @@ describe("VoiceState", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -163,11 +145,9 @@ describe("VoiceState", function () {
 
   context("check channel", function () {
     it("should have the correct channel value", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      cacheChannel(client, TEST_DATA.VOICE_CHANNEL, TEST_DATA.GUILD_ID);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -177,10 +157,8 @@ describe("VoiceState", function () {
 
   context("check channelId", function () {
     it("should have the correct channelId value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -190,10 +168,8 @@ describe("VoiceState", function () {
 
   context("check member", function () {
     it("should have the correct member value", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         guild_id: TEST_DATA.GUILD_ID,
         user_id: TEST_DATA.VOICE_STATE.user_id,
@@ -207,10 +183,8 @@ describe("VoiceState", function () {
 
   context("check memberId", function () {
     it("should have the correct memberId value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -220,10 +194,8 @@ describe("VoiceState", function () {
 
   context("check joined", function () {
     it("should have the correct joined value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -234,10 +206,8 @@ describe("VoiceState", function () {
 
   context("check requestToSpeakTimestamp", function () {
     it("should have the correct requestToSpeakTimestamp value", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -252,10 +222,8 @@ describe("VoiceState", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -265,20 +233,16 @@ describe("VoiceState", function () {
 
   context("check toJSON", function () {
     it("should return a json", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toJSON()).to.be.a("object");
     });
     it("should return the correct json", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         guild_id: TEST_DATA.GUILD_ID,
         user_id: TEST_DATA.VOICE_STATE.user_id,
@@ -312,19 +276,13 @@ describe("VoiceState", function () {
 
   context("check bundling", function () {
     it("should bundle correctly", function () {
-      const client = {
-        cacheGuilds: true,
-        cacheMembers: true,
-        cacheChannels: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         guild_id: TEST_DATA.GUILD_ID,
         user_id: TEST_DATA.VOICE_STATE.user_id,
       });
-      cacheChannel(client, TEST_DATA.VOICE_CHANNEL, TEST_DATA.GUILD_ID);
+      TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guild_id: TEST_DATA.GUILD_ID,
       });

@@ -1,5 +1,6 @@
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 
 /**
  * Represents a Discord user.
@@ -25,9 +26,8 @@ class User {
   constructor(
     client,
     data,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {
+    { nocache = false, noDbStore = false } = {
       nocache: false,
-      ignoreNoCache: false,
       noDbStore: false,
     },
   ) {
@@ -96,11 +96,7 @@ class User {
     if (data._cached) this.#_cached = data._cached;
     else this.#_cached = (new Date().getTime() / 1000) | 0;
 
-    if (
-      nocache == false &&
-      this.#_client.cacheUsers == true &&
-      ignoreNoCache == false
-    ) {
+    if (nocache === false && User.shouldCache(this.#_client._cacheOptions)) {
       this.#_client.users.set(data.id, this);
     }
   }
@@ -300,6 +296,24 @@ class User {
           hash.startsWith("a_") == true ? "gif" : "png"
         }`
       : `${CDN_BASE_URL}/embed/avatars/${String((BigInt(id) >> 22n) % 6n)}.png`;
+  }
+
+  /**
+   * Determines whether the user should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheUsers === false) return false;
+    return true;
   }
 
   /**

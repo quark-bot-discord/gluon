@@ -1,9 +1,8 @@
 import { expect } from "chai";
-import { TEST_DATA, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Reaction from "../../src/structures/Reaction.js";
-import GuildManager from "../../src/managers/GuildManager.js";
 import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
 import Member from "../../src/structures/Member.js";
 import Emoji from "../../src/structures/Emoji.js";
 
@@ -16,10 +15,8 @@ describe("Reaction", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -39,10 +36,8 @@ describe("Reaction", function () {
 
   context("check count", function () {
     it("should have the correct count", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -54,10 +49,8 @@ describe("Reaction", function () {
 
   context("check reacted", function () {
     it("should have the correct reacted", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -74,10 +67,8 @@ describe("Reaction", function () {
 
   context("check reactedIds", function () {
     it("should have the correct reactedIds", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -93,10 +84,8 @@ describe("Reaction", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -106,11 +95,8 @@ describe("Reaction", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -121,10 +107,8 @@ describe("Reaction", function () {
 
   context("check emoji", function () {
     it("should have the correct emoji", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -134,10 +118,8 @@ describe("Reaction", function () {
 
   context("check initialReactor", function () {
     it("should have the correct initialReactor", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -153,10 +135,8 @@ describe("Reaction", function () {
 
   context("check addReactor", function () {
     it("should add a reactor to the reaction", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -174,10 +154,8 @@ describe("Reaction", function () {
 
   context("check removeReactor", function () {
     it("should remove a reactor from the reaction", function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
@@ -196,20 +174,16 @@ describe("Reaction", function () {
 
   context("check toString", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(reaction.toString).to.be.a("function");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -221,20 +195,16 @@ describe("Reaction", function () {
 
   context("check toJSON", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(reaction.toJSON).to.be.a("function");
     });
     it("should return the correct JSON object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guild_id: TEST_DATA.GUILD_ID,
       });
@@ -254,10 +224,8 @@ describe("Reaction", function () {
   });
 
   context("check bundling", function () {
-    const client = { cacheGuilds: true, cacheMembers: true };
-    client.guilds = new GuildManager(client);
-    new Guild(client, TEST_DATA.GUILD);
-    client.user = new User(client, TEST_DATA.CLIENT_USER);
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
     new Member(client, TEST_DATA.MEMBER, {
       user_id: TEST_DATA.MEMBER_ID,
       guild_id: TEST_DATA.GUILD_ID,

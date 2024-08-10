@@ -6,6 +6,8 @@ import checkPermission from "../util/discord/checkPermission.js";
 import Message from "./Message.js";
 import Embed from "../util/builder/embedBuilder.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 
 /**
  * Represents a channel within Discord.
@@ -398,6 +400,29 @@ class Channel {
   static getMention(channelId) {
     if (!channelId) throw new TypeError("GLUON: No channel ID provided.");
     return `<#${channelId}>`;
+  }
+
+  /**
+   * Determines whether the channel should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheChannels === false) return false;
+    if (guildCacheOptions.channelCaching === false) return false;
+    return true;
   }
 
   /**

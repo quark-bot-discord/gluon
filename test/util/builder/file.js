@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
 import File from "../../../src/util/builder/file.js";
 import Stream from "stream";
 

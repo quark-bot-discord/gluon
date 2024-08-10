@@ -1,8 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
 import cacheChannel from "../../../src/util/gluon/cacheChannel.js";
-import GuildManager from "../../../src/managers/GuildManager.js";
-import Guild from "../../../src/structures/Guild.js";
 
 describe("CacheChannel", function () {
   context("check import", function () {
@@ -13,30 +11,24 @@ describe("CacheChannel", function () {
 
   context("check channel type", function () {
     it("should return a VoiceChannel object for voice channels", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const rawChannel = TEST_DATA.VOICE_CHANNEL;
       const channel = cacheChannel(client, rawChannel, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");
       expect(channel.constructor.name).to.equal("VoiceChannel");
     });
     it("should return a Thread object for thread channels", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const rawThread = TEST_DATA.THREAD;
       const channel = cacheChannel(client, rawThread, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");
       expect(channel.constructor.name).to.equal("Thread");
     });
     it("should return a TextChannel object for other channel types", function () {
-      const client = { cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const rawChannel = TEST_DATA.TEXT_CHANNEL;
       const channel = cacheChannel(client, rawChannel, TEST_DATA.GUILD_ID);
       expect(channel).to.be.an("object");

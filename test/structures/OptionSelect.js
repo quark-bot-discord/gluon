@@ -1,9 +1,12 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import OptionSelect from "../../src/structures/OptionSelect.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
+import cacheChannel from "../../src/util/gluon/cacheChannel.js";
 
 describe("OptionSelect", function () {
   context("check import", function () {
@@ -14,11 +17,13 @@ describe("OptionSelect", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect).to.have.property("id");
       expect(optionSelect).to.have.property("type");
       expect(optionSelect).to.have.property("guildId");
@@ -39,11 +44,13 @@ describe("OptionSelect", function () {
 
   context("check customId", function () {
     it("should have the correct customId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.customId).to.equal(
         TEST_DATA.OPTION_SELECT.data.custom_id,
       );
@@ -52,11 +59,13 @@ describe("OptionSelect", function () {
 
   context("check message", function () {
     it("should have the correct message", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.message.id).to.equal(
         TEST_DATA.OPTION_SELECT.message.id,
       );
@@ -65,11 +74,13 @@ describe("OptionSelect", function () {
 
   context("check values", function () {
     it("should have the correct values", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.values).to.deep.equal(
         TEST_DATA.OPTION_SELECT.data.values,
       );
@@ -78,19 +89,23 @@ describe("OptionSelect", function () {
 
   context("check toString", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.toString).to.be.a("function");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.toString()).to.equal(
         `<OptionSelect: ${TEST_DATA.OPTION_SELECT.id}>`,
       );
@@ -99,19 +114,23 @@ describe("OptionSelect", function () {
 
   context("check toJSON", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.toJSON).to.be.a("function");
     });
     it("should return the correct JSON", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
       expect(optionSelect.toJSON()).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
         type: TEST_DATA.OPTION_SELECT.type,
@@ -128,7 +147,7 @@ describe("OptionSelect", function () {
           nick: TEST_DATA.OPTION_SELECT.member.nick,
           pending: TEST_DATA.OPTION_SELECT.member.pending,
           permissions: TEST_DATA.OPTION_SELECT.member.permissions,
-          roles: undefined,
+          roles: [],
           user: {
             avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
             bot: TEST_DATA.OPTION_SELECT.member.user.bot,

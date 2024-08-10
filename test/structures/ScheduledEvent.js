@@ -1,7 +1,6 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import ScheduledEvent from "../../src/structures/ScheduledEvent.js";
-import GuildManager from "../../src/managers/GuildManager.js";
 import Guild from "../../src/structures/Guild.js";
 import User from "../../src/structures/User.js";
 
@@ -14,10 +13,8 @@ describe("ScheduledEvent", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -35,10 +32,8 @@ describe("ScheduledEvent", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -50,10 +45,8 @@ describe("ScheduledEvent", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -65,10 +58,8 @@ describe("ScheduledEvent", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -80,10 +71,8 @@ describe("ScheduledEvent", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -95,10 +84,8 @@ describe("ScheduledEvent", function () {
 
   context("check creatorId", function () {
     it("should have the correct creatorId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -112,10 +99,8 @@ describe("ScheduledEvent", function () {
 
   context("check creator", function () {
     it("should have the correct creator", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -130,10 +115,8 @@ describe("ScheduledEvent", function () {
 
   context("check displayImageURL", function () {
     it("should have the correct displayImageURL", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -147,10 +130,8 @@ describe("ScheduledEvent", function () {
 
   context("check description", function () {
     it("should have the correct description", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -164,10 +145,8 @@ describe("ScheduledEvent", function () {
 
   context("check entityType", function () {
     it("should have the correct entityType", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -176,10 +155,8 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent.entityType).to.equal("VOICE");
     });
     it("should have the correct entityType", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
@@ -191,10 +168,8 @@ describe("ScheduledEvent", function () {
 
   context("check status", function () {
     it("should have the correct status", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -206,10 +181,8 @@ describe("ScheduledEvent", function () {
 
   context("check scheduledStartTime", function () {
     it("should have the correct scheduledStartTime", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -225,10 +198,8 @@ describe("ScheduledEvent", function () {
 
   context("check scheduledEndTime", function () {
     it("should have the correct scheduledEndTime", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -242,10 +213,8 @@ describe("ScheduledEvent", function () {
 
   context("check userCount", function () {
     it("should have the correct userCount", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -259,10 +228,8 @@ describe("ScheduledEvent", function () {
 
   context("check location", function () {
     it("should have the correct location", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
@@ -303,10 +270,8 @@ describe("ScheduledEvent", function () {
 
   context("check toString", function () {
     it("should return a string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -315,10 +280,8 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -332,10 +295,8 @@ describe("ScheduledEvent", function () {
 
   context("check toJSON", function () {
     it("should return an object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,
@@ -344,10 +305,8 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent.toJSON()).to.be.a("object");
     });
     it("should return the correct object", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent = new ScheduledEvent(
         client,
         TEST_DATA.SCHEDULED_EVENT,

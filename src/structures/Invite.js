@@ -1,4 +1,6 @@
 import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 
 /**
@@ -95,12 +97,15 @@ class Invite {
       this.#max_uses = data.max_uses;
 
     if (
-      nocache == false &&
-      this.#_client.cacheInvites == true &&
+      nocache === false &&
+      Invite.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      ) &&
       this.#_code &&
       ((this.#expires && this.#expires > Date.now() / 1000) || !this.#expires)
     )
-      this.guild?.invites.set(data.code, this);
+      this.guild.invites.set(data.code, this);
   }
 
   /**
@@ -225,6 +230,29 @@ class Invite {
     if (typeof code != "string")
       throw new TypeError("GLUON: Invalid invite code.");
     return `${INVITE_BASE_URL}/${code}`;
+  }
+
+  /**
+   * Determines whether the invite should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheInvites === false) return false;
+    if (guildCacheOptions.inviteCaching === false) return false;
+    return true;
   }
 
   /**

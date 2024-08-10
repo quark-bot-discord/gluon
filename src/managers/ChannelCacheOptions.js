@@ -3,6 +3,10 @@ import {
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
 
+/**
+ * Represents the cache options for a channel.
+ * All options are enabled by default.
+ */
 class ChannelCacheOptions {
   #_cache_options;
 
@@ -12,7 +16,10 @@ class ChannelCacheOptions {
      * @type {Number}
      * @private
      */
-    this.#_cache_options = cache_options ?? 0;
+    this.#_cache_options =
+      cache_options ??
+      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES |
+        GLUON_CHANNEL_CACHING_OPTIONS.FILES;
   }
 
   /**

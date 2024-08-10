@@ -1,9 +1,7 @@
 import { expect } from "chai";
-import { CDN_BASE_URL, TEST_DATA } from "../../src/constants.js";
+import { CDN_BASE_URL } from "../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Sticker from "../../src/structures/Sticker.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
 
 describe("Sticker", function () {
   context("check import", function () {
@@ -14,10 +12,8 @@ describe("Sticker", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker).to.have.property("id");
       expect(sticker).to.have.property("name");
@@ -31,10 +27,8 @@ describe("Sticker", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker.id).to.equal(TEST_DATA.STICKER.id);
     });
@@ -42,10 +36,8 @@ describe("Sticker", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker.name).to.equal(TEST_DATA.STICKER.name);
     });
@@ -53,10 +45,8 @@ describe("Sticker", function () {
 
   context("check formatType", function () {
     it("should have the correct format_type", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker.formatType).to.equal(TEST_DATA.STICKER.format_type);
     });
@@ -64,10 +54,8 @@ describe("Sticker", function () {
 
   context("check previewImageURL", function () {
     it("should have the correct previewImageURL", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker.previewImageURL).to.equal(
         `${CDN_BASE_URL}/stickers/${TEST_DATA.STICKER.id}.png`,

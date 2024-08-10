@@ -1,11 +1,14 @@
 import { expect } from "chai";
 import { spy } from "sinon";
 import Interaction from "../../src/structures/Interaction.js";
-import { TEST_DATA } from "../../src/constants.js";
-import GuildManager from "../../src/managers/GuildManager.js";
-import Guild from "../../src/structures/Guild.js";
-import User from "../../src/structures/User.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import TextInput from "../../src/util/builder/textInputBuilder.js";
+import TextChannel from "../../src/structures/TextChannel.js";
 
 describe("Interaction", function () {
   context("check import", function () {
@@ -16,10 +19,8 @@ describe("Interaction", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction).to.have.property("id");
       expect(interaction).to.have.property("type");
@@ -38,11 +39,8 @@ describe("Interaction", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.id).to.equal(TEST_DATA.INTERACTION.id);
     });
@@ -50,11 +48,8 @@ describe("Interaction", function () {
 
   context("check type", function () {
     it("should have the correct type", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.type).to.equal(TEST_DATA.INTERACTION.type);
     });
@@ -62,11 +57,8 @@ describe("Interaction", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.guildId).to.equal(TEST_DATA.INTERACTION.guild_id);
     });
@@ -74,11 +66,8 @@ describe("Interaction", function () {
 
   context("check channelId", function () {
     it("should have the correct channelId", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.channelId).to.equal(TEST_DATA.INTERACTION.channel_id);
     });
@@ -86,11 +75,8 @@ describe("Interaction", function () {
 
   context("check member", function () {
     it("should have the correct member", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.member.id).to.equal(
         TEST_DATA.INTERACTION.member.user.id,
@@ -100,11 +86,8 @@ describe("Interaction", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.guild.id).to.equal(TEST_DATA.GUILD.id);
     });
@@ -112,33 +95,26 @@ describe("Interaction", function () {
 
   context("check channel", function () {
     it("should have the correct channel", function () {
-      const client = { cacheChannels: true, cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.channel.id).to.equal(TEST_DATA.INTERACTION.channel_id);
+      expect(interaction.channel).to.be.an.instanceOf(TextChannel);
     });
   });
 
   context("check textPrompt", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.textPrompt).to.be.a("function");
     });
 
     it("should throw an error if no title is provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       const textInput = new TextInput()
         .setCustomID("test 2")
@@ -151,11 +127,8 @@ describe("Interaction", function () {
     });
 
     it("should throw an error if no customId is provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       const textInput = new TextInput()
         .setCustomID("test 2")
@@ -168,11 +141,8 @@ describe("Interaction", function () {
     });
 
     it("should throw an error if no textInputModal is provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(
         interaction.textPrompt({ title: "test", customId: "test" }),
@@ -183,11 +153,8 @@ describe("Interaction", function () {
     });
 
     it("should not throw an error if all required fields are provided", async function () {
-      const client = { request: { makeRequest: () => {} } };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       const textInput = new TextInput()
         .setCustomID("test 2")
@@ -206,12 +173,9 @@ describe("Interaction", function () {
     });
 
     it("should call makeRequest with the correct parameters", async function () {
-      const client = { request: { makeRequest: async () => {} } };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       const textInput = new TextInput()
         .setCustomID("test 2")
@@ -236,20 +200,14 @@ describe("Interaction", function () {
 
   context("check autocompleteResponse", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.autocompleteResponse).to.be.a("function");
     });
     it("should throw an error if no choices are provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.autocompleteResponse()).to.be.rejectedWith(
         Error,
@@ -257,22 +215,16 @@ describe("Interaction", function () {
       );
     });
     it("should not throw an error if choices are provided", async function () {
-      const client = { request: { makeRequest: () => {} } };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.autocompleteResponse({ choices: [] })).to.not.be
         .rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
-      const client = { request: { makeRequest: async () => {} } };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await interaction.autocompleteResponse({ choices: [] });
       expect(request).to.be.calledOnce;
@@ -286,20 +238,14 @@ describe("Interaction", function () {
 
   context("check reply", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.reply).to.be.a("function");
     });
     it("should throw an error if no content, files, embeds, or components are provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.reply()).to.be.rejectedWith(
         Error,
@@ -307,11 +253,8 @@ describe("Interaction", function () {
       );
     });
     it("should throw an error if content is not a string", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.reply(123)).to.be.rejectedWith(
         TypeError,
@@ -319,11 +262,8 @@ describe("Interaction", function () {
       );
     });
     it("should throw an error if files is not an array of files", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(
         interaction.reply("test", { files: "test" }),
@@ -333,11 +273,8 @@ describe("Interaction", function () {
       );
     });
     it("should throw an error if embeds is not an array of embeds", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(
         interaction.reply("test", { embeds: "test" }),
@@ -347,21 +284,15 @@ describe("Interaction", function () {
       );
     });
     it("should not throw an error if content is provided", async function () {
-      const client = { request: { makeRequest: () => {} } };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.reply("test")).to.not.be.rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
-      const client = { request: { makeRequest: async () => {} } };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await interaction.reply("test");
       expect(request).to.be.calledOnce;
@@ -375,20 +306,14 @@ describe("Interaction", function () {
 
   context("check edit", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.edit).to.be.a("function");
     });
     it("should throw an error if no content, files, embeds, or components are provided", async function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.edit()).to.be.rejectedWith(
         Error,
@@ -396,21 +321,15 @@ describe("Interaction", function () {
       );
     });
     it("should not throw an error if content is provided", async function () {
-      const client = { request: { makeRequest: () => {} } };
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.edit("test")).to.not.be.rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
-      const client = { request: { makeRequest: async () => {} } };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await interaction.edit("test");
       expect(request).to.be.calledOnce;
@@ -424,21 +343,15 @@ describe("Interaction", function () {
 
   context("check acknowledge", function () {
     it("should be a function", function () {
-      const client = {};
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.acknowledge).to.be.a("function");
     });
     it("should call makeRequest with the correct parameters", async function () {
-      const client = { request: { makeRequest: async () => {} } };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      const guild = new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
-      client.guilds.set(TEST_DATA.GUILD_ID, guild);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await interaction.acknowledge();
       expect(request).to.be.calledOnce;

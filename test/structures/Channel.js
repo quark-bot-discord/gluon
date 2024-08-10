@@ -1,12 +1,15 @@
 import { expect } from "chai";
 import { spy } from "sinon";
 import Channel from "../../src/structures/Channel.js";
-import { TEST_DATA } from "../../src/constants.js";
-import GuildManager from "../../src/managers/GuildManager.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import Guild from "../../src/structures/Guild.js";
 import ChannelMessageManager from "../../src/managers/ChannelMessageManager.js";
 import ChannelCacheOptions from "../../src/managers/ChannelCacheOptions.js";
-import User from "../../src/structures/User.js";
 import Member from "../../src/structures/Member.js";
 import Role from "../../src/structures/Role.js";
 import cacheChannel from "../../src/util/gluon/cacheChannel.js";
@@ -20,9 +23,8 @@ describe("Channel", function () {
 
   context("check structure", function () {
     it("should have the correct structure", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -47,9 +49,8 @@ describe("Channel", function () {
 
   context("check id", function () {
     it("should have the correct id", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -59,9 +60,8 @@ describe("Channel", function () {
 
   context("check name", function () {
     it("should have the correct name", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -71,9 +71,8 @@ describe("Channel", function () {
 
   context("check type", function () {
     it("should have the correct type", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -83,9 +82,8 @@ describe("Channel", function () {
 
   context("check guildId", function () {
     it("should have the correct guildId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -95,9 +93,8 @@ describe("Channel", function () {
 
   context("check mention", function () {
     it("should have the correct mention", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -107,9 +104,8 @@ describe("Channel", function () {
 
   context("check guild", function () {
     it("should have the correct guild", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -119,9 +115,8 @@ describe("Channel", function () {
 
   context("check parentId", function () {
     it("should have the correct parentId", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -131,22 +126,18 @@ describe("Channel", function () {
 
   context("check parent", function () {
     it("should have the correct parent", function () {
-      const client = { cacheGuilds: true, cacheChannels: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      cacheChannel(client, TEST_DATA.CATEGORY_CHANNEL, TEST_DATA.GUILD_ID);
-      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
-      });
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(channel.parent.id).to.equal(TEST_DATA.CATEGORY_CHANNEL.id);
     });
   });
 
   context("check rateLimitPerUser", function () {
     it("should have the correct rateLimitPerUser", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -158,9 +149,8 @@ describe("Channel", function () {
 
   context("check nsfw", function () {
     it("should have the correct nsfw", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -170,9 +160,8 @@ describe("Channel", function () {
 
   context("check topic", function () {
     it("should have the correct topic", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -182,9 +171,8 @@ describe("Channel", function () {
 
   context("check _cacheOptions", function () {
     it("should have the correct _cacheOptions", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -194,9 +182,8 @@ describe("Channel", function () {
 
   context("check messages", function () {
     it("should have the correct messages", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -212,9 +199,8 @@ describe("Channel", function () {
       );
     });
     it("should return the correct mention", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(Channel.getMention(TEST_DATA.CHANNEL_ID)).to.equal(
         `<#${TEST_DATA.TEXT_CHANNEL.id}>`,
       );
@@ -223,9 +209,8 @@ describe("Channel", function () {
 
   context("check toString", function () {
     it("should have the correct toString", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -237,9 +222,8 @@ describe("Channel", function () {
 
   context("check toJSON", function () {
     it("should have the correct toJSON", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
@@ -259,19 +243,16 @@ describe("Channel", function () {
 
   context("check send", function () {
     it("should be a function", function () {
-      const client = { cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.send).to.be.a("function");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
-      const client = { cacheGuilds: true, cacheMembers: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -285,14 +266,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if no parameters are passed", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -308,14 +283,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if content is not a string", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -331,14 +300,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if suppressMentions is not a boolean", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -356,14 +319,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if embeds is not an array", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -379,14 +336,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if embeds is not an array of embeds", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -404,14 +355,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if components is not an array", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -429,14 +374,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if components is not an array of components", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -454,14 +393,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if files is not an array", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -477,14 +410,8 @@ describe("Channel", function () {
       );
     });
     it("should throw an error if files is not an array of files", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-      };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -502,16 +429,10 @@ describe("Channel", function () {
       );
     });
     it("should call makeRequest with the correct parameters", async function () {
-      const client = {
-        cacheMembers: true,
-        cacheRoles: true,
-        cacheGuilds: true,
-        request: { makeRequest: async () => TEST_DATA.MESSAGE },
-      };
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
@@ -531,10 +452,9 @@ describe("Channel", function () {
   });
   context("check bundling", function () {
     it("should bundle correctly", async function () {
-      const client = { cacheChannels: true, cacheGuilds: true };
-      client.guilds = new GuildManager(client);
-      new Guild(client, TEST_DATA.GUILD);
-      cacheChannel(client, TEST_DATA.CATEGORY_CHANNEL, TEST_DATA.GUILD_ID);
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });

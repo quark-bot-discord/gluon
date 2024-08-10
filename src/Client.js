@@ -58,7 +58,6 @@ class Client extends EventsEmitter {
     sessionData,
     initCache,
     softRestartFunction,
-    mySqlPassword,
     s3Url,
     s3MessageBucket,
     s3AccessKeyId,
@@ -92,79 +91,9 @@ class Client extends EventsEmitter {
       cacheScheduledEvents,
       cacheEmojis,
       cacheInvites,
+      userTTL: defaultUserExpiry,
+      messageTTL: defaultMessageExpiry,
     });
-
-    /**
-     * Whether this client should cache messages.
-     * @type {Boolean}
-     */
-    this.cacheMessages = cacheMessages;
-
-    /**
-     * Whether this client should cache users.
-     * @type {Boolean}
-     */
-    this.cacheUsers = cacheUsers;
-
-    /**
-     * Whether this client should cache members.
-     * @type {Boolean}
-     */
-    this.cacheMembers = cacheMembers;
-
-    /**
-     * Whether this client should cache channels.
-     * @type {Boolean}
-     */
-    this.cacheChannels = cacheChannels;
-
-    /**
-     * Whether this client should cache guilds.
-     * @type {Boolean}
-     */
-    this.cacheGuilds = cacheGuilds;
-
-    /**
-     * Whether this client should cache voice states.
-     * @type {Boolean}
-     */
-    this.cacheVoiceStates = cacheVoiceStates;
-
-    /**
-     * Whether this client should cache roles.
-     * @type {Boolean}
-     */
-    this.cacheRoles = cacheRoles;
-
-    /**
-     * Whether this client should cache scheduled events.
-     * @type {Boolean}
-     */
-    this.cacheScheduledEvents = cacheScheduledEvents;
-
-    /**
-     * Whether this client should cache emojis.
-     * @type {Boolean}
-     */
-    this.cacheEmojis = cacheEmojis;
-
-    /**
-     * Whether this client should cache invites.
-     * @type {Boolean}
-     */
-    this.cacheInvites = cacheInvites;
-
-    /**
-     * The base message expiry time, in seconds.
-     * @type {Number}
-     */
-    this.defaultMessageExpiry = defaultMessageExpiry;
-
-    /**
-     * The base user expiry time, in seconds.
-     * @type {Number}
-     */
-    this.defaultUserExpiry = defaultUserExpiry;
 
     /**
      * An array of the shard ids that this client is handling.
@@ -210,25 +139,6 @@ class Client extends EventsEmitter {
 
     this.softRestartFunction = softRestartFunction;
 
-    const connection = mysql.createPool({
-      host: "localhost",
-      user: "root",
-      password: mySqlPassword,
-      database: "dataStorage",
-      waitForConnections: true,
-      connectionLimit: 10,
-      maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-      idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
-      namedPlaceholders: true,
-      bigNumberStrings: true,
-      supportBigNumbers: true,
-    });
-
-    this.dataStorage = connection;
-
     if (s3Url) {
       const s3Messages = new AWS.S3({
         endpoint: `${s3Url}${s3MessageBucket}`,
@@ -260,7 +170,7 @@ class Client extends EventsEmitter {
           },
         },
         (err, data) => {
-          if (err) console.log(err);
+          if (err) console.error(err);
         },
       );
     }

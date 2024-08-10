@@ -1,4 +1,6 @@
 import { GLUON_CACHING_OPTIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Member from "./Member.js";
 
 /**
@@ -114,8 +116,14 @@ class VoiceState {
       this.#request_to_speak_timestamp =
         (new Date(data.request_to_speak_timestamp).getTime() / 1000) | 0;
 
-    if (nocache == false && this.#_client.cacheVoiceStates == true)
-      this.guild?.voice_states.set(data.user_id, this);
+    if (
+      nocache === false &&
+      VoiceState.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      )
+    )
+      this.guild.voiceStates.set(data.user_id, this);
   }
 
   /**
@@ -266,6 +274,29 @@ class VoiceState {
    */
   get requestToSpeakTimestamp() {
     return this.#request_to_speak_timestamp;
+  }
+
+  /**
+   * Determines whether the voice state should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheVoiceStates === false) return false;
+    if (guildCacheOptions.voiceStateCaching === false) return false;
+    return true;
   }
 
   /**
