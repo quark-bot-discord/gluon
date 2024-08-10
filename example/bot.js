@@ -1,8 +1,9 @@
 import Client from "../src/Client.js";
-import { INTENTS } from "../src/constants.js";
+import { BUTTON_STYLES, INTENTS } from "../src/constants.js";
 import ActionRow from "../src/util/builder/actionRowBuilder.js";
 import Button from "../src/util/builder/buttonBuilder.js";
 import Embed from "../src/util/builder/embedBuilder.js";
+import File from "../src/util/builder/file.js";
 import MessageComponents from "../src/util/builder/messageComponents.js";
 const client = new Client({
   cacheGuilds: true,
@@ -13,13 +14,27 @@ const client = new Client({
   cacheVoiceStates: true,
   cacheRoles: true,
   cacheEmojis: true,
-  intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES,
+  intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.MESSAGE_CONTENT,
 });
+
+client._defaultGuildCacheOptions.setChannelCaching(true);
+client._defaultGuildCacheOptions.setRoleCaching(true);
 
 client.on("ready", () => {
   console.log("ready");
   console.log(client.user);
   client.increasedCache.set("721401585300930562", true);
+  client.guilds.forEach((guild) => {
+    guild._cacheOptions.setChannelCaching(true);
+    guild._cacheOptions.setEmojiCaching(true);
+    guild._cacheOptions.setRoleCaching(true);
+    guild._cacheOptions.setMessageCaching(true);
+    guild._cacheOptions.setFileCaching(true);
+    guild._cacheOptions.setMemberCaching(true);
+    guild._cacheOptions.setVoiceStateCaching(true);
+    guild._cacheOptions.setScheduledEventCaching(true);
+    guild._cacheOptions.setInviteCaching(true);
+  });
 });
 
 client.on("raw", (raw) => {
@@ -35,12 +50,14 @@ client.on("debug", (data) => {
 client.on("messageCreate", (message) => {
   console.log("messageCreate");
   console.log(message);
+  // console.log(message.toJSON());
   if (message.author.bot == true) return;
+  console.log(message.content);
   if (message.content == "button") {
     const actionRow = new ActionRow();
     const button = new Button()
       .setLabel("button")
-      .setStyle(1)
+      .setStyle(BUTTON_STYLES.PRIMARY)
       .setCustomID(message.guild.id.toString());
     actionRow.addComponent(button);
     const messageComponents = new MessageComponents().addActionRow(actionRow);
@@ -52,7 +69,7 @@ client.on("messageCreate", (message) => {
         console.log(m);
       })
       .catch((e) => {
-        console.log(e.errors);
+        console.error(e);
       });
   }
   if (message.content == "embed") {
@@ -61,7 +78,13 @@ client.on("messageCreate", (message) => {
       .setColor("5865F2")
       .setDescription("hello world!");
     message.channel.send("", {
-      embed,
+      embeds: [embed],
+    });
+  }
+  if (message.content == "file") {
+    const file = new File().setName("file.txt").setStream("hello world!");
+    message.channel.send("", {
+      files: [file],
     });
   }
 });
@@ -78,3 +101,8 @@ client.on("messageDelete", (message) => {
 });
 
 client.login("ODQ5NzM0MjM0MzM5NjcyMDg0.YLferA.RYFIAP-qz_U-wJB-qXmTD87p5gA");
+client.on("buttonClick", (interaction) => {
+  console.log("buttonClick");
+  console.log(interaction);
+  interaction.reply("hello world!", { quiet: true });
+});
