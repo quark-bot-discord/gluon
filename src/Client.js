@@ -8,7 +8,6 @@ import {
 } from "./constants.js";
 
 import EventsEmitter from "events";
-import mysql from "mysql2/promise";
 import AWS from "aws-sdk";
 
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
@@ -24,6 +23,7 @@ import Member from "./structures/Member.js";
 import cacheChannel from "./util/gluon/cacheChannel.js";
 import Role from "./structures/Role.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
+import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -32,6 +32,7 @@ class Client extends EventsEmitter {
   #token;
   #intents;
   #_cacheOptions;
+  #_defaultGuildCacheOptions;
 
   /**
    * Creates the client and sets the default options.
@@ -94,6 +95,8 @@ class Client extends EventsEmitter {
       userTTL: defaultUserExpiry,
       messageTTL: defaultMessageExpiry,
     });
+
+    this.#_defaultGuildCacheOptions = new GuildCacheOptions();
 
     /**
      * An array of the shard ids that this client is handling.
@@ -228,6 +231,16 @@ class Client extends EventsEmitter {
    */
   get _cacheOptions() {
     return this.#_cacheOptions;
+  }
+
+  /**
+   * Returns the global guild cache options for this client.
+   * @type {GuildCacheOptions}
+   * @readonly
+   * @public
+   */
+  get _defaultGuildCacheOptions() {
+    return this.#_defaultGuildCacheOptions;
   }
 
   /**
@@ -749,7 +762,7 @@ class Client extends EventsEmitter {
           }, 6000 * i);
 
         setInterval(async () => {
-          this.guilds.cache.forEach((guild) => {
+          this.guilds.forEach((guild) => {
             guild._intervalCallback();
           });
 
