@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 351,
-                2129
+                2085
             ],
             "filename": "ButtonClick.js",
             "lineno": 10,
@@ -114,7 +114,7 @@
         "meta": {
             "range": [
                 604,
-                1129
+                1085
             ],
             "filename": "ButtonClick.js",
             "lineno": 19,
@@ -166,7 +166,7 @@
         "meta": {
             "range": [
                 351,
-                2129
+                2085
             ],
             "filename": "ButtonClick.js",
             "lineno": 10,
@@ -327,7 +327,7 @@
         "meta": {
             "range": [
                 959,
-                1124
+                1080
             ],
             "filename": "ButtonClick.js",
             "lineno": 36,
@@ -403,42 +403,18 @@
         "scope": "global"
     },
     {
-        "comment": "",
-        "meta": {
-            "range": [
-                1080,
-                1116
-            ],
-            "filename": "ButtonClick.js",
-            "lineno": 39,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000077",
-                "name": "nocache",
-                "type": "MemberExpression",
-                "value": "this..cacheMessages"
-            }
-        },
-        "undocumented": true,
-        "name": "nocache",
-        "longname": "nocache",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
         "comment": "/**\n   * The custom id of the button.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1227,
-                1275
+                1183,
+                1231
             ],
             "filename": "ButtonClick.js",
-            "lineno": 49,
+            "lineno": 48,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000084",
+                "id": "astnode100000077",
                 "name": "ButtonClick#customId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -466,15 +442,15 @@
         "comment": "/**\n   * The message which the button belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   * @see {@link Message}\n   */",
         "meta": {
             "range": [
-                1412,
-                1457
+                1368,
+                1413
             ],
             "filename": "ButtonClick.js",
-            "lineno": 60,
+            "lineno": 59,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000093",
+                "id": "astnode100000086",
                 "name": "ButtonClick#message",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -505,15 +481,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1499,
-                1555
+                1455,
+                1511
             ],
             "filename": "ButtonClick.js",
-            "lineno": 68,
+            "lineno": 67,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000102",
+                "id": "astnode100000095",
                 "name": "ButtonClick#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -534,15 +510,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                1753,
-                2127
+                1709,
+                2083
             ],
             "filename": "ButtonClick.js",
-            "lineno": 80,
+            "lineno": 79,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000113",
+                "id": "astnode100000106",
                 "name": "ButtonClick#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -586,15 +562,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2007,
-                2064
+                1963,
+                2020
             ],
             "filename": "ButtonClick.js",
-            "lineno": 88,
+            "lineno": 87,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000142",
+                "id": "astnode100000135",
                 "name": "data",
                 "type": "ObjectExpression",
                 "value": "{\"custom_id\":\"\"}"
@@ -610,15 +586,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2027,
-                2051
+                1983,
+                2007
             ],
             "filename": "ButtonClick.js",
-            "lineno": 89,
+            "lineno": 88,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000144",
+                "id": "astnode100000137",
                 "name": "custom_id",
                 "type": "MemberExpression",
                 "value": "this.customId"
@@ -635,15 +611,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2076,
-                2097
+                2032,
+                2053
             ],
             "filename": "ButtonClick.js",
-            "lineno": 91,
+            "lineno": 90,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000148",
+                "id": "astnode100000141",
                 "name": "message",
                 "type": "MemberExpression",
                 "value": "this.message"
@@ -659,15 +635,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2131,
-                2158
+                2087,
+                2114
             ],
             "filename": "ButtonClick.js",
-            "lineno": 98,
+            "lineno": 97,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000152",
+                "id": "astnode100000145",
                 "name": "module.exports",
                 "type": "Identifier"
             }
