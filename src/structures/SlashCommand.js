@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
+import util from "util";
 
 /**
  * Represents a slash command.
@@ -41,6 +42,14 @@ class SlashCommand extends Interaction {
    */
   toString() {
     return `<SlashCommand: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

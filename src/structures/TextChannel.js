@@ -2,6 +2,7 @@ import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
+import util from "util";
 
 /**
  * Represents a text channel within Discord.
@@ -92,6 +93,14 @@ class TextChannel extends Channel {
    */
   toString() {
     return `<TextChannel: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

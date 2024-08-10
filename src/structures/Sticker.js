@@ -4,6 +4,7 @@ import {
   STICKER_FORMATS_ENUM,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
+import util from "util";
 
 /**
  * Represents an sticker.
@@ -118,6 +119,14 @@ class Sticker {
    */
   toString() {
     return `<Sticker: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

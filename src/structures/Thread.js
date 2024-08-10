@@ -2,6 +2,7 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
+import util from "util";
 
 /**
  * Represents a thread within Discord.
@@ -126,6 +127,14 @@ class Thread extends Channel {
    */
   toString() {
     return `<Thread: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

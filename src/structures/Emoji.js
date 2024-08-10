@@ -1,6 +1,7 @@
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import util from "util";
 
 /**
  * Represents an emoji.
@@ -236,6 +237,14 @@ class Emoji {
    */
   toString() {
     return `<Emoji: ${this.id ?? this.name}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

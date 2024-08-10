@@ -2,6 +2,7 @@ import { GLUON_CACHING_OPTIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Member from "./Member.js";
+import util from "util";
 
 /**
  * Represents a voice state.
@@ -305,6 +306,14 @@ class VoiceState {
    */
   toString() {
     return `<VoiceState: ${this.memberId}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

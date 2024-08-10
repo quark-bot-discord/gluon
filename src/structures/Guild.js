@@ -23,6 +23,7 @@ import VoiceState from "./VoiceState.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import util from "util";
 
 /**
  * Represents a Discord guild.
@@ -443,7 +444,9 @@ class Guild {
      * @type {GuildCacheOptions}
      * @private
      */
-    this.#_cacheOptions = new GuildCacheOptions(data._cacheOptions);
+    this.#_cacheOptions = new GuildCacheOptions(
+      data._cacheOptions || this.#_client._defaultGuildCacheOptions.toJSON(),
+    );
 
     if (nocache === false && Guild.shouldCache(this.#_client._cacheOptions))
       this.#_client.guilds.set(data.id, this);
@@ -1412,6 +1415,14 @@ class Guild {
    */
   toString() {
     return `<Guild: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

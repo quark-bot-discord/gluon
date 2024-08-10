@@ -18,6 +18,8 @@ import Embed from "../util/builder/embedBuilder.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
+import util from "util";
+import MessageComponents from "../util/builder/messageComponents.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -647,7 +649,10 @@ class Message {
     if (typeof embeds !== "undefined" && !Array.isArray(embeds))
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
-    if (typeof components !== "undefined" && !Array.isArray(components))
+    if (
+      typeof components !== "undefined" &&
+      !(components instanceof MessageComponents)
+    )
       throw new TypeError("GLUON: Components must be an array of components.");
 
     if (typeof files !== "undefined" && !Array.isArray(files))
@@ -712,7 +717,10 @@ class Message {
     if (typeof embeds !== "undefined" && !Array.isArray(embeds))
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
-    if (typeof components !== "undefined" && !Array.isArray(components))
+    if (
+      typeof components !== "undefined" &&
+      !(components instanceof MessageComponents)
+    )
       throw new TypeError("GLUON: Components must be an array of components.");
 
     if (typeof files !== "undefined" && !Array.isArray(files))
@@ -834,6 +842,14 @@ class Message {
    */
   toString() {
     return `<Message: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

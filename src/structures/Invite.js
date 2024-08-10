@@ -2,6 +2,7 @@ import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
+import util from "util";
 
 /**
  * Represents a guild invite.
@@ -261,6 +262,14 @@ class Invite {
    */
   toString() {
     return `<Invite: ${this.code}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

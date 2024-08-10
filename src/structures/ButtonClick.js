@@ -1,6 +1,7 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
+import util from "util";
 
 /**
  * Represents when a button is clicked.
@@ -66,6 +67,14 @@ class ButtonClick extends Interaction {
    */
   toString() {
     return `<ButtonClick: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

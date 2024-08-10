@@ -8,6 +8,9 @@ import Embed from "../util/builder/embedBuilder.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import util from "util";
+import MessageComponents from "../util/builder/messageComponents.js";
+import File from "../util/builder/file.js";
 
 /**
  * Represents a channel within Discord.
@@ -205,8 +208,7 @@ class Channel {
 
     if (
       typeof components !== "undefined" &&
-      (!Array.isArray(components) ||
-        !components.every((c) => c instanceof ActionRow))
+      !(components instanceof MessageComponents)
     )
       throw new TypeError("GLUON: Components must be an array of action rows.");
 
@@ -431,6 +433,14 @@ class Channel {
    */
   toString() {
     return `<Channel: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

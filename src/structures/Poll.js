@@ -1,6 +1,7 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
+import util from "util";
 
 class Poll {
   #_client;
@@ -152,6 +153,14 @@ class Poll {
    */
   toString() {
     return `<Poll: ${this.question}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

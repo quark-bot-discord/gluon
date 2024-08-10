@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
+import util from "util";
 
 /**
  * Represents when a modal is submitted.
@@ -40,6 +41,14 @@ class ModalResponse extends Interaction {
    */
   toString() {
     return `<ModalResponse: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

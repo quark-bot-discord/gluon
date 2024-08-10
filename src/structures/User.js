@@ -1,6 +1,7 @@
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import util from "util";
 
 /**
  * Represents a Discord user.
@@ -322,6 +323,14 @@ class User {
    */
   toString() {
     return `<User: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

@@ -1,6 +1,7 @@
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import util from "util";
 
 /**
  * Represents a role belonging to a guild.
@@ -329,6 +330,14 @@ class Role {
    */
   toString() {
     return `<Role: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

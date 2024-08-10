@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
+import util from "util";
 
 /**
  * Represents an audit log entry.
@@ -356,6 +357,14 @@ class AuditLog {
    */
   toString() {
     return `<Audit Log Entry: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

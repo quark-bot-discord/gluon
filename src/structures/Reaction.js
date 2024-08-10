@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
+import util from "util";
 
 /**
  * Represents a reaction belonging to a message.
@@ -170,6 +171,14 @@ class Reaction {
    */
   toString() {
     return `<Reaction: ${this.emoji}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

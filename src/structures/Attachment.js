@@ -1,4 +1,5 @@
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import util from "util";
 
 /**
  * Represents an attachment.
@@ -133,6 +134,14 @@ class Attachment {
    */
   toString() {
     return `<Attachment: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

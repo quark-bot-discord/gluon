@@ -3,6 +3,9 @@ import Member from "./Member.js";
 import File from "../util/builder/file.js";
 import TextInput from "../util/builder/textInputBuilder.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import util from "util";
+import MessageComponents from "../util/builder/messageComponents.js";
+import Embed from "../util/builder/embedBuilder.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -248,8 +251,7 @@ class Interaction {
 
     if (
       typeof components !== "undefined" &&
-      !Array.isArray(components) &&
-      !components.every((component) => component instanceof ActionRow)
+      !(components instanceof MessageComponents)
     )
       throw new TypeError("GLUON: Components must be an array of components.");
 
@@ -313,8 +315,7 @@ class Interaction {
 
     if (
       typeof components !== "undefined" &&
-      !Array.isArray(components) &&
-      !components.every((component) => component instanceof ActionRow)
+      !(components instanceof MessageComponents)
     )
       throw new TypeError("GLUON: Components must be an array of components.");
 
@@ -362,6 +363,14 @@ class Interaction {
    */
   toString() {
     return `<Interaction: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

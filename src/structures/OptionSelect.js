@@ -1,6 +1,7 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
+import util from "util";
 
 /**
  * Represents when an option is selected.
@@ -85,6 +86,14 @@ class OptionSelect extends Interaction {
    */
   toString() {
     return `<OptionSelect: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

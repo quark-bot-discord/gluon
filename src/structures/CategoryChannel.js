@@ -2,6 +2,7 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
+import util from "util";
 
 class CategoryChannel {
   #_client;
@@ -230,6 +231,14 @@ class CategoryChannel {
    */
   toString() {
     return `<CategoryChannel: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

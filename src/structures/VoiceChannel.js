@@ -1,6 +1,7 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
+import util from "util";
 
 /**
  * Represents a voice channel.
@@ -114,6 +115,14 @@ class VoiceChannel extends Channel {
    */
   toString() {
     return `<VoiceChannel: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

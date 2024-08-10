@@ -10,6 +10,7 @@ import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Role from "./Role.js";
+import util from "util";
 
 /**
  * Represents a guild member.
@@ -651,6 +652,14 @@ class Member {
    */
   toString() {
     return `<Member: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**

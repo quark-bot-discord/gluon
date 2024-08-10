@@ -1,4 +1,5 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import util from "util";
 
 class PermissionOverwrite {
   #_client;
@@ -85,6 +86,14 @@ class PermissionOverwrite {
    */
   toString() {
     return `<PermissionOverwrite: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
   }
 
   /**
