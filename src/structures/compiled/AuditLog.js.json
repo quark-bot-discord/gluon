@@ -3,15 +3,15 @@
         "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
         "meta": {
             "range": [
-                222,
-                8812
+                247,
+                8936
             ],
             "filename": "AuditLog.js",
-            "lineno": 8,
+            "lineno": 9,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000010",
+                "id": "astnode100000014",
                 "name": "AuditLog",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -35,15 +35,15 @@
         "comment": "",
         "meta": {
             "range": [
-                241,
-                250
+                266,
+                275
             ],
             "filename": "AuditLog.js",
-            "lineno": 9,
+            "lineno": 10,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000013",
+                "id": "astnode100000017",
                 "name": "_client",
                 "type": "ClassPrivateProperty"
             }
@@ -60,15 +60,15 @@
         "comment": "",
         "meta": {
             "range": [
-                253,
-                258
+                278,
+                283
             ],
             "filename": "AuditLog.js",
-            "lineno": 10,
+            "lineno": 11,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000014",
+                "id": "astnode100000018",
                 "name": "_id",
                 "type": "ClassPrivateProperty"
             }
@@ -85,15 +85,15 @@
         "comment": "",
         "meta": {
             "range": [
-                261,
-                272
+                286,
+                297
             ],
             "filename": "AuditLog.js",
-            "lineno": 11,
+            "lineno": 12,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000015",
+                "id": "astnode100000019",
                 "name": "_guild_id",
                 "type": "ClassPrivateProperty"
             }
@@ -110,15 +110,15 @@
         "comment": "",
         "meta": {
             "range": [
-                275,
-                288
+                300,
+                313
             ],
             "filename": "AuditLog.js",
-            "lineno": 12,
+            "lineno": 13,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000016",
+                "id": "astnode100000020",
                 "name": "action_type",
                 "type": "ClassPrivateProperty"
             }
@@ -135,15 +135,15 @@
         "comment": "",
         "meta": {
             "range": [
-                291,
-                303
+                316,
+                328
             ],
             "filename": "AuditLog.js",
-            "lineno": 13,
+            "lineno": 14,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000017",
+                "id": "astnode100000021",
                 "name": "_target_id",
                 "type": "ClassPrivateProperty"
             }
@@ -160,15 +160,15 @@
         "comment": "",
         "meta": {
             "range": [
-                306,
-                314
+                331,
+                339
             ],
             "filename": "AuditLog.js",
-            "lineno": 14,
+            "lineno": 15,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000018",
+                "id": "astnode100000022",
                 "name": "target",
                 "type": "ClassPrivateProperty"
             }
@@ -185,15 +185,15 @@
         "comment": "",
         "meta": {
             "range": [
-                317,
-                331
+                342,
+                356
             ],
             "filename": "AuditLog.js",
-            "lineno": 15,
+            "lineno": 16,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000019",
+                "id": "astnode100000023",
                 "name": "_executor_id",
                 "type": "ClassPrivateProperty"
             }
@@ -210,15 +210,15 @@
         "comment": "",
         "meta": {
             "range": [
-                334,
-                344
+                359,
+                369
             ],
             "filename": "AuditLog.js",
-            "lineno": 16,
+            "lineno": 17,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000020",
+                "id": "astnode100000024",
                 "name": "executor",
                 "type": "ClassPrivateProperty"
             }
@@ -235,15 +235,15 @@
         "comment": "",
         "meta": {
             "range": [
-                347,
-                355
+                372,
+                380
             ],
             "filename": "AuditLog.js",
-            "lineno": 17,
+            "lineno": 18,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000021",
+                "id": "astnode100000025",
                 "name": "reason",
                 "type": "ClassPrivateProperty"
             }
@@ -260,15 +260,15 @@
         "comment": "",
         "meta": {
             "range": [
-                358,
-                371
+                383,
+                396
             ],
             "filename": "AuditLog.js",
-            "lineno": 18,
+            "lineno": 19,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000022",
+                "id": "astnode100000026",
                 "name": "_channel_id",
                 "type": "ClassPrivateProperty"
             }
@@ -285,15 +285,15 @@
         "comment": "",
         "meta": {
             "range": [
-                374,
-                381
+                399,
+                406
             ],
             "filename": "AuditLog.js",
-            "lineno": 19,
+            "lineno": 20,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000023",
+                "id": "astnode100000027",
                 "name": "count",
                 "type": "ClassPrivateProperty"
             }
@@ -310,15 +310,15 @@
         "comment": "",
         "meta": {
             "range": [
-                384,
-                404
+                409,
+                429
             ],
             "filename": "AuditLog.js",
-            "lineno": 20,
+            "lineno": 21,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000024",
+                "id": "astnode100000028",
                 "name": "delete_member_days",
                 "type": "ClassPrivateProperty"
             }
@@ -335,15 +335,15 @@
         "comment": "",
         "meta": {
             "range": [
-                407,
-                424
+                432,
+                449
             ],
             "filename": "AuditLog.js",
-            "lineno": 21,
+            "lineno": 22,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000025",
+                "id": "astnode100000029",
                 "name": "members_removed",
                 "type": "ClassPrivateProperty"
             }
@@ -360,15 +360,15 @@
         "comment": "",
         "meta": {
             "range": [
-                427,
-                439
+                452,
+                464
             ],
             "filename": "AuditLog.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000026",
+                "id": "astnode100000030",
                 "name": "special_id",
                 "type": "ClassPrivateProperty"
             }
@@ -385,15 +385,15 @@
         "comment": "",
         "meta": {
             "range": [
-                442,
-                456
+                467,
+                481
             ],
             "filename": "AuditLog.js",
-            "lineno": 23,
+            "lineno": 24,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000027",
+                "id": "astnode100000031",
                 "name": "special_type",
                 "type": "ClassPrivateProperty"
             }
@@ -410,15 +410,15 @@
         "comment": "",
         "meta": {
             "range": [
-                459,
-                467
+                484,
+                492
             ],
             "filename": "AuditLog.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000028",
+                "id": "astnode100000032",
                 "name": "status",
                 "type": "ClassPrivateProperty"
             }
@@ -435,15 +435,15 @@
         "comment": "",
         "meta": {
             "range": [
-                470,
-                479
+                495,
+                504
             ],
             "filename": "AuditLog.js",
-            "lineno": 25,
+            "lineno": 26,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000029",
+                "id": "astnode100000033",
                 "name": "changes",
                 "type": "ClassPrivateProperty"
             }
@@ -460,15 +460,15 @@
         "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Array<Object>} users Resolved users who are involved with the audit log entries.\n   */",
         "meta": {
             "range": [
-                742,
-                4203
+                767,
+                4228
             ],
             "filename": "AuditLog.js",
-            "lineno": 33,
+            "lineno": 34,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000030",
+                "id": "astnode100000034",
                 "name": "AuditLog",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -521,15 +521,15 @@
         "comment": "/**\n * Represents an audit log entry.\n * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}\n */",
         "meta": {
             "range": [
-                222,
-                8812
+                247,
+                8936
             ],
             "filename": "AuditLog.js",
-            "lineno": 8,
+            "lineno": 9,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000010",
+                "id": "astnode100000014",
                 "name": "AuditLog",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -582,15 +582,15 @@
         "comment": "",
         "meta": {
             "range": [
-                770,
-                775
+                795,
+                800
             ],
             "filename": "AuditLog.js",
-            "lineno": 33,
+            "lineno": 34,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000037",
+                "id": "astnode100000041",
                 "name": "users",
                 "type": "Identifier",
                 "value": "users"
@@ -606,15 +606,15 @@
         "comment": "",
         "meta": {
             "range": [
-                777,
-                785
+                802,
+                810
             ],
             "filename": "AuditLog.js",
-            "lineno": 33,
+            "lineno": 34,
             "columnno": 37,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000039",
+                "id": "astnode100000043",
                 "name": "guild_id",
                 "type": "Identifier",
                 "value": "guild_id"
@@ -630,15 +630,15 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                882,
-                904
+                907,
+                929
             ],
             "filename": "AuditLog.js",
-            "lineno": 39,
+            "lineno": 40,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000044",
+                "id": "astnode100000048",
                 "name": "this.",
                 "type": "Identifier",
                 "value": "client",
@@ -662,15 +662,15 @@
         "comment": "/**\n     * The id of the audit log entry.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1003,
-                1030
+                1028,
+                1055
             ],
             "filename": "AuditLog.js",
-            "lineno": 46,
+            "lineno": 47,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000051",
+                "id": "astnode100000055",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -694,15 +694,15 @@
         "comment": "/**\n     * The ID of the guild that this audit log belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1150,
-                1184
+                1175,
+                1209
             ],
             "filename": "AuditLog.js",
-            "lineno": 53,
+            "lineno": 54,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000062",
+                "id": "astnode100000066",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -726,15 +726,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1309,
-                1345
+                1334,
+                1370
             ],
             "filename": "AuditLog.js",
-            "lineno": 60,
+            "lineno": 61,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000075",
+                "id": "astnode100000079",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.action_type",
@@ -752,15 +752,15 @@
         "comment": "/**\n     * The id of the target user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1441,
-                1506
+                1466,
+                1531
             ],
             "filename": "AuditLog.js",
-            "lineno": 67,
+            "lineno": 68,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000084",
+                "id": "astnode100000088",
                 "name": "this.",
                 "type": "ConditionalExpression",
                 "value": "",
@@ -785,15 +785,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1579,
-                1629
+                1604,
+                1654
             ],
             "filename": "AuditLog.js",
-            "lineno": 70,
+            "lineno": 71,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000114",
+                "id": "astnode100000118",
                 "name": "user",
                 "type": "CallExpression",
                 "value": ""
@@ -811,15 +811,15 @@
         "comment": "/**\n         * The resolved target user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                1761,
-                1805
+                1786,
+                1830
             ],
             "filename": "AuditLog.js",
-            "lineno": 77,
+            "lineno": 78,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000133",
+                "id": "astnode100000137",
                 "name": "this.",
                 "type": "NewExpression",
                 "value": "",
@@ -844,15 +844,15 @@
         "comment": "/**\n     * The id of the executor user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1909,
-                1972
+                1934,
+                1997
             ],
             "filename": "AuditLog.js",
-            "lineno": 85,
+            "lineno": 86,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000146",
+                "id": "astnode100000150",
                 "name": "this.",
                 "type": "ConditionalExpression",
                 "value": "",
@@ -877,15 +877,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2047,
-                2099
+                2072,
+                2124
             ],
             "filename": "AuditLog.js",
-            "lineno": 88,
+            "lineno": 89,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000176",
+                "id": "astnode100000180",
                 "name": "user",
                 "type": "CallExpression",
                 "value": ""
@@ -903,15 +903,15 @@
         "comment": "/**\n         * The resolved executor user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2233,
-                2279
+                2258,
+                2304
             ],
             "filename": "AuditLog.js",
-            "lineno": 95,
+            "lineno": 96,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000195",
+                "id": "astnode100000199",
                 "name": "this.",
                 "type": "NewExpression",
                 "value": "",
@@ -936,15 +936,15 @@
         "comment": "/**\n     * The reason for this audit log entry.\n     * @type {String?}\n     * @private\n     */",
         "meta": {
             "range": [
-                2391,
-                2425
+                2416,
+                2450
             ],
             "filename": "AuditLog.js",
-            "lineno": 103,
+            "lineno": 104,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000208",
+                "id": "astnode100000212",
                 "name": "this.",
                 "type": "LogicalExpression",
                 "value": "",
@@ -969,15 +969,15 @@
         "comment": "/**\n         * The channel id involved with this audit log entry.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2630,
-                2681
+                2655,
+                2706
             ],
             "filename": "AuditLog.js",
-            "lineno": 112,
+            "lineno": 113,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000231",
+                "id": "astnode100000235",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1002,15 +1002,15 @@
         "comment": "/**\n         * The count of this type of audit log entry.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2855,
-                2897
+                2880,
+                2922
             ],
             "filename": "AuditLog.js",
-            "lineno": 121,
+            "lineno": 122,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000250",
+                "id": "astnode100000254",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1035,15 +1035,15 @@
         "comment": "/**\n         * The inactivity period for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3084,
-                3152
+                3109,
+                3177
             ],
             "filename": "AuditLog.js",
-            "lineno": 129,
+            "lineno": 130,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000269",
+                "id": "astnode100000273",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1068,15 +1068,15 @@
         "comment": "/**\n         * The number of members removed for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3344,
-                3406
+                3369,
+                3431
             ],
             "filename": "AuditLog.js",
-            "lineno": 137,
+            "lineno": 138,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000288",
+                "id": "astnode100000292",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1101,15 +1101,15 @@
         "comment": "/**\n         * The id of the overwritten entity.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3560,
-                3602
+                3585,
+                3627
             ],
             "filename": "AuditLog.js",
-            "lineno": 145,
+            "lineno": 146,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000307",
+                "id": "astnode100000311",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1134,15 +1134,15 @@
         "comment": "/**\n         * The type of the overwritten entity - role (\"0\") or member (\"1\")\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3788,
-                3836
+                3813,
+                3861
             ],
             "filename": "AuditLog.js",
-            "lineno": 153,
+            "lineno": 154,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000326",
+                "id": "astnode100000330",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -1167,15 +1167,15 @@
         "comment": "/**\n         * The new voice channel status.\n         * @type {String?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3990,
-                4024
+                4015,
+                4049
             ],
             "filename": "AuditLog.js",
-            "lineno": 161,
+            "lineno": 162,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000345",
+                "id": "astnode100000349",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.options.status",
@@ -1200,15 +1200,15 @@
         "comment": "/**\n       * The changes in this audit log entry.\n       * @type {Object?}\n       * @private\n       */",
         "meta": {
             "range": [
-                4170,
-                4198
+                4195,
+                4223
             ],
             "filename": "AuditLog.js",
-            "lineno": 170,
+            "lineno": 171,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000360",
+                "id": "astnode100000364",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.changes",
@@ -1233,15 +1233,15 @@
         "comment": "/**\n   * The id of the audit log entry.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4303,
-                4347
+                4328,
+                4372
             ],
             "filename": "AuditLog.js",
-            "lineno": 179,
+            "lineno": 180,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000368",
+                "id": "astnode100000372",
                 "name": "AuditLog#id",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1269,15 +1269,15 @@
         "comment": "/**\n   * The ID of the guild that this audit log belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4468,
-                4523
+                4493,
+                4548
             ],
             "filename": "AuditLog.js",
-            "lineno": 189,
+            "lineno": 190,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000379",
+                "id": "astnode100000383",
                 "name": "AuditLog#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1305,15 +1305,15 @@
         "comment": "/**\n   * The type of action that occurred.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4626,
-                4678
+                4651,
+                4703
             ],
             "filename": "AuditLog.js",
-            "lineno": 199,
+            "lineno": 200,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000390",
+                "id": "astnode100000394",
                 "name": "AuditLog#actionType",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1341,15 +1341,15 @@
         "comment": "/**\n   * The id of the target user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4775,
-                4858
+                4800,
+                4883
             ],
             "filename": "AuditLog.js",
-            "lineno": 209,
+            "lineno": 210,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000399",
+                "id": "astnode100000403",
                 "name": "AuditLog#targetId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1378,15 +1378,15 @@
         "comment": "/**\n   * The channel id involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4979,
-                5065
+                5004,
+                5090
             ],
             "filename": "AuditLog.js",
-            "lineno": 219,
+            "lineno": 220,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000416",
+                "id": "astnode100000420",
                 "name": "AuditLog#channelId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1415,15 +1415,15 @@
         "comment": "/**\n   * The guild that this audit log belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5176,
-                5252
+                5201,
+                5277
             ],
             "filename": "AuditLog.js",
-            "lineno": 229,
+            "lineno": 230,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000433",
+                "id": "astnode100000437",
                 "name": "AuditLog#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1452,15 +1452,15 @@
         "comment": "/**\n   * The channel involved with this audit log entry.\n   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5440,
-                5520
+                5465,
+                5545
             ],
             "filename": "AuditLog.js",
-            "lineno": 239,
+            "lineno": 240,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000452",
+                "id": "astnode100000456",
                 "name": "AuditLog#channel",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1490,15 +1490,15 @@
         "comment": "/**\n   * The target user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5640,
-                5683
+                5665,
+                5708
             ],
             "filename": "AuditLog.js",
-            "lineno": 249,
+            "lineno": 250,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000460",
+                "id": "astnode100000464",
                 "name": "AuditLog#target",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1527,15 +1527,15 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5807,
-                5896
+                5832,
+                5921
             ],
             "filename": "AuditLog.js",
-            "lineno": 259,
+            "lineno": 260,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000469",
+                "id": "astnode100000473",
                 "name": "AuditLog#executorId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1564,15 +1564,15 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6018,
-                6065
+                6043,
+                6090
             ],
             "filename": "AuditLog.js",
-            "lineno": 269,
+            "lineno": 270,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000486",
+                "id": "astnode100000490",
                 "name": "AuditLog#executor",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1601,15 +1601,15 @@
         "comment": "/**\n   * The reason for this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6172,
-                6215
+                6197,
+                6240
             ],
             "filename": "AuditLog.js",
-            "lineno": 279,
+            "lineno": 280,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000495",
+                "id": "astnode100000499",
                 "name": "AuditLog#reason",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1638,15 +1638,15 @@
         "comment": "/**\n   * The count of this type of audit log entry.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6328,
-                6369
+                6353,
+                6394
             ],
             "filename": "AuditLog.js",
-            "lineno": 289,
+            "lineno": 290,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000504",
+                "id": "astnode100000508",
                 "name": "AuditLog#count",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1675,15 +1675,15 @@
         "comment": "/**\n   * The inactivity period for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6490,
-                6555
+                6515,
+                6580
             ],
             "filename": "AuditLog.js",
-            "lineno": 299,
+            "lineno": 300,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000513",
+                "id": "astnode100000517",
                 "name": "AuditLog#deleteMemberDays",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1712,15 +1712,15 @@
         "comment": "/**\n   * The number of members removed for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6684,
-                6744
+                6709,
+                6769
             ],
             "filename": "AuditLog.js",
-            "lineno": 309,
+            "lineno": 310,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000522",
+                "id": "astnode100000526",
                 "name": "AuditLog#membersRemoved",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1749,15 +1749,15 @@
         "comment": "/**\n   * The id of the overwritten entity.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6848,
-                6932
+                6873,
+                6957
             ],
             "filename": "AuditLog.js",
-            "lineno": 319,
+            "lineno": 320,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000531",
+                "id": "astnode100000535",
                 "name": "AuditLog#specialId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1786,15 +1786,15 @@
         "comment": "/**\n   * The type of the overwritten entity - role (\"0\") or member (\"1\")\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7066,
-                7120
+                7091,
+                7145
             ],
             "filename": "AuditLog.js",
-            "lineno": 329,
+            "lineno": 330,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000548",
+                "id": "astnode100000552",
                 "name": "AuditLog#specialType",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1823,15 +1823,15 @@
         "comment": "/**\n   * The new voice channel status.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7220,
-                7263
+                7245,
+                7288
             ],
             "filename": "AuditLog.js",
-            "lineno": 339,
+            "lineno": 340,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000557",
+                "id": "astnode100000561",
                 "name": "AuditLog#status",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1860,15 +1860,15 @@
         "comment": "/**\n   * The changes in this audit log entry.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7370,
-                7415
+                7395,
+                7440
             ],
             "filename": "AuditLog.js",
-            "lineno": 349,
+            "lineno": 350,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000566",
+                "id": "astnode100000570",
                 "name": "AuditLog#changes",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1897,15 +1897,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7457,
-                7517
+                7482,
+                7542
             ],
             "filename": "AuditLog.js",
-            "lineno": 357,
+            "lineno": 358,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000575",
+                "id": "astnode100000579",
                 "name": "AuditLog#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1923,18 +1923,47 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7700,
-                8810
+                7584,
+                7641
             ],
             "filename": "AuditLog.js",
-            "lineno": 368,
+            "lineno": 366,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000586",
+                "id": "astnode100000590",
+                "name": "AuditLog#util.inspect.custom",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "custom",
+        "longname": "AuditLog#util.inspect.custom",
+        "memberof": "AuditLog#util.inspect",
+        "scope": "static",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "meta": {
+            "range": [
+                7824,
+                8934
+            ],
+            "filename": "AuditLog.js",
+            "lineno": 377,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000603",
                 "name": "AuditLog#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1977,15 +2006,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7919,
-                7930
+                8043,
+                8054
             ],
             "filename": "AuditLog.js",
-            "lineno": 375,
+            "lineno": 384,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000609",
+                "id": "astnode100000626",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -2001,15 +2030,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7942,
-                7964
+                8066,
+                8088
             ],
             "filename": "AuditLog.js",
-            "lineno": 376,
+            "lineno": 385,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000613",
+                "id": "astnode100000630",
                 "name": "guild_id",
                 "type": "MemberExpression",
                 "value": "this.guildId"
@@ -2025,15 +2054,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7976,
-                8004
+                8100,
+                8128
             ],
             "filename": "AuditLog.js",
-            "lineno": 377,
+            "lineno": 386,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000617",
+                "id": "astnode100000634",
                 "name": "action_type",
                 "type": "MemberExpression",
                 "value": "this.actionType"
@@ -2049,15 +2078,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8016,
-                8053
+                8140,
+                8177
             ],
             "filename": "AuditLog.js",
-            "lineno": 378,
+            "lineno": 387,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000621",
+                "id": "astnode100000638",
                 "name": "target_id",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2073,15 +2102,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8065,
-                8106
+                8189,
+                8230
             ],
             "filename": "AuditLog.js",
-            "lineno": 379,
+            "lineno": 388,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000627",
+                "id": "astnode100000644",
                 "name": "executor_id",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2097,15 +2126,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8118,
-                8137
+                8242,
+                8261
             ],
             "filename": "AuditLog.js",
-            "lineno": 380,
+            "lineno": 389,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000633",
+                "id": "astnode100000650",
                 "name": "reason",
                 "type": "MemberExpression",
                 "value": "this.reason"
@@ -2121,15 +2150,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8149,
-                8747
+                8273,
+                8871
             ],
             "filename": "AuditLog.js",
-            "lineno": 381,
+            "lineno": 390,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000637",
+                "id": "astnode100000654",
                 "name": "options",
                 "type": "ObjectExpression",
                 "value": "{\"channel_id\":\"\",\"count\":\"\",\"delete_member_days\":\"\",\"members_removed\":\"\",\"id\":\"\",\"type\":\"\",\"status\":\"\"}"
@@ -2145,15 +2174,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8172,
-                8211
+                8296,
+                8335
             ],
             "filename": "AuditLog.js",
-            "lineno": 382,
+            "lineno": 391,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000639",
+                "id": "astnode100000656",
                 "name": "channel_id",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2170,15 +2199,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8225,
-                8287
+                8349,
+                8411
             ],
             "filename": "AuditLog.js",
-            "lineno": 383,
+            "lineno": 392,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000645",
+                "id": "astnode100000662",
                 "name": "count",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -2195,15 +2224,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8301,
-                8444
+                8425,
+                8568
             ],
             "filename": "AuditLog.js",
-            "lineno": 384,
+            "lineno": 393,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000657",
+                "id": "astnode100000674",
                 "name": "delete_member_days",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -2220,15 +2249,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8458,
-                8594
+                8582,
+                8718
             ],
             "filename": "AuditLog.js",
-            "lineno": 388,
+            "lineno": 397,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000669",
+                "id": "astnode100000686",
                 "name": "members_removed",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -2245,15 +2274,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8608,
-                8639
+                8732,
+                8763
             ],
             "filename": "AuditLog.js",
-            "lineno": 392,
+            "lineno": 401,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000681",
+                "id": "astnode100000698",
                 "name": "id",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2270,15 +2299,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8653,
-                8688
+                8777,
+                8812
             ],
             "filename": "AuditLog.js",
-            "lineno": 393,
+            "lineno": 402,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000687",
+                "id": "astnode100000704",
                 "name": "type",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2295,15 +2324,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8702,
-                8734
+                8826,
+                8858
             ],
             "filename": "AuditLog.js",
-            "lineno": 394,
+            "lineno": 403,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000693",
+                "id": "astnode100000710",
                 "name": "status",
                 "type": "LogicalExpression",
                 "value": ""
@@ -2320,15 +2349,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8759,
-                8780
+                8883,
+                8904
             ],
             "filename": "AuditLog.js",
-            "lineno": 396,
+            "lineno": 405,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000699",
+                "id": "astnode100000716",
                 "name": "changes",
                 "type": "MemberExpression",
                 "value": "this.changes"
@@ -2344,15 +2373,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8814,
-                8838
+                8938,
+                8962
             ],
             "filename": "AuditLog.js",
-            "lineno": 403,
+            "lineno": 412,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000703",
+                "id": "astnode100000720",
                 "name": "module.exports",
                 "type": "Identifier"
             }

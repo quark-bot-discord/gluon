@@ -3,15 +3,15 @@
         "comment": "/**\n * Represents when a modal is submitted.\n * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                299,
-                1703
+                324,
+                1827
             ],
             "filename": "ModalResponse.js",
-            "lineno": 9,
+            "lineno": 10,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000010",
+                "id": "astnode100000014",
                 "name": "ModalResponse",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -37,15 +37,15 @@
         "comment": "",
         "meta": {
             "range": [
-                343,
-                351
+                368,
+                376
             ],
             "filename": "ModalResponse.js",
-            "lineno": 10,
+            "lineno": 11,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000014",
+                "id": "astnode100000018",
                 "name": "values",
                 "type": "ClassPrivateProperty"
             }
@@ -62,15 +62,15 @@
         "comment": "/**\n   * Creates a modal submitted interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
         "meta": {
             "range": [
-                530,
-                736
+                555,
+                761
             ],
             "filename": "ModalResponse.js",
-            "lineno": 16,
+            "lineno": 17,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000015",
+                "id": "astnode100000019",
                 "name": "ModalResponse",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -113,15 +113,15 @@
         "comment": "/**\n * Represents when a modal is submitted.\n * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                299,
-                1703
+                324,
+                1827
             ],
             "filename": "ModalResponse.js",
-            "lineno": 9,
+            "lineno": 10,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000010",
+                "id": "astnode100000014",
                 "name": "ModalResponse",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -167,15 +167,15 @@
         "comment": "/**\n     * The entered modal values.\n     * @type {Array<Object>}\n     * @private\n     */",
         "meta": {
             "range": [
-                682,
-                731
+                707,
+                756
             ],
             "filename": "ModalResponse.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000027",
+                "id": "astnode100000031",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.data.components[0].components",
@@ -199,15 +199,15 @@
         "comment": "/**\n   * The entered modal values.\n   * @type {Array<Object>}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                838,
-                881
+                863,
+                906
             ],
             "filename": "ModalResponse.js",
-            "lineno": 33,
+            "lineno": 34,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000041",
+                "id": "astnode100000045",
                 "name": "ModalResponse#values",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -235,15 +235,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                923,
-                981
+                948,
+                1006
             ],
             "filename": "ModalResponse.js",
-            "lineno": 41,
+            "lineno": 42,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000050",
+                "id": "astnode100000054",
                 "name": "ModalResponse#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -261,18 +261,47 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1179,
-                1701
+                1048,
+                1105
             ],
             "filename": "ModalResponse.js",
-            "lineno": 53,
+            "lineno": 50,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000061",
+                "id": "astnode100000065",
+                "name": "ModalResponse#util.inspect.custom",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "custom",
+        "longname": "ModalResponse#util.inspect.custom",
+        "memberof": "ModalResponse#util.inspect",
+        "scope": "static",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "meta": {
+            "range": [
+                1303,
+                1825
+            ],
+            "filename": "ModalResponse.js",
+            "lineno": 62,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000078",
                 "name": "ModalResponse#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -316,15 +345,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1372,
-                1391
+                1496,
+                1515
             ],
             "filename": "ModalResponse.js",
-            "lineno": 59,
+            "lineno": 68,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000085",
+                "id": "astnode100000102",
                 "name": "values",
                 "type": "MemberExpression",
                 "value": "this.values"
@@ -340,15 +369,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1537,
-                1671
+                1661,
+                1795
             ],
             "filename": "ModalResponse.js",
-            "lineno": 66,
+            "lineno": 75,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000103",
+                "id": "astnode100000120",
                 "name": "data",
                 "type": "ObjectExpression",
                 "value": "{\"components\":\"\"}"
@@ -364,15 +393,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1557,
-                1658
+                1681,
+                1782
             ],
             "filename": "ModalResponse.js",
-            "lineno": 67,
+            "lineno": 76,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000105",
+                "id": "astnode100000122",
                 "name": "components",
                 "type": "ArrayExpression",
                 "value": "[\"{\\\"components\\\":\\\"\\\"}\"]"
@@ -389,15 +418,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1603,
-                1626
+                1727,
+                1750
             ],
             "filename": "ModalResponse.js",
-            "lineno": 69,
+            "lineno": 78,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000108",
+                "id": "astnode100000125",
                 "name": "components",
                 "type": "MemberExpression",
                 "value": "this.values"
@@ -413,15 +442,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1705,
-                1734
+                1829,
+                1858
             ],
             "filename": "ModalResponse.js",
-            "lineno": 79,
+            "lineno": 88,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000112",
+                "id": "astnode100000129",
                 "name": "module.exports",
                 "type": "Identifier"
             }

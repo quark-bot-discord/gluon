@@ -3,15 +3,15 @@
         "comment": "/**\n * Represents a text channel within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n */",
         "meta": {
             "range": [
-                393,
-                3054
+                418,
+                3178
             ],
             "filename": "TextChannel.js",
-            "lineno": 11,
+            "lineno": 12,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000020",
+                "id": "astnode100000024",
                 "name": "TextChannel",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -38,15 +38,15 @@
         "comment": "",
         "meta": {
             "range": [
-                431,
-                440
+                456,
+                465
             ],
             "filename": "TextChannel.js",
-            "lineno": 12,
+            "lineno": 13,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000024",
+                "id": "astnode100000028",
                 "name": "_client",
                 "type": "ClassPrivateProperty"
             }
@@ -63,15 +63,15 @@
         "comment": "/**\n   * Creates the structure for a text channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {String} guild_id The ID of the guild that this channel belongs to.\n   * @param {Boolean?} nocache Whether this channel should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n   */",
         "meta": {
             "range": [
-                866,
-                1481
+                891,
+                1506
             ],
             "filename": "TextChannel.js",
-            "lineno": 21,
+            "lineno": 22,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000025",
+                "id": "astnode100000029",
                 "name": "TextChannel",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -137,15 +137,15 @@
         "comment": "/**\n * Represents a text channel within Discord.\n * @extends {Channel}\n * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n */",
         "meta": {
             "range": [
-                393,
-                3054
+                418,
+                3178
             ],
             "filename": "TextChannel.js",
-            "lineno": 11,
+            "lineno": 12,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000020",
+                "id": "astnode100000024",
                 "name": "TextChannel",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -211,15 +211,15 @@
         "comment": "",
         "meta": {
             "range": [
-                907,
-                915
+                932,
+                940
             ],
             "filename": "TextChannel.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000032",
+                "id": "astnode100000036",
                 "name": "guild_id",
                 "type": "Identifier",
                 "value": "guild_id"
@@ -235,15 +235,15 @@
         "comment": "",
         "meta": {
             "range": [
-                917,
-                932
+                942,
+                957
             ],
             "filename": "TextChannel.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000034",
+                "id": "astnode100000038",
                 "name": "nocache",
                 "type": "AssignmentPattern",
                 "value": "nocache"
@@ -259,15 +259,15 @@
         "comment": "",
         "meta": {
             "range": [
-                939,
-                953
+                964,
+                978
             ],
             "filename": "TextChannel.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000039",
+                "id": "astnode100000043",
                 "name": "nocache",
                 "type": "Literal",
                 "value": false
@@ -283,15 +283,15 @@
         "comment": "",
         "meta": {
             "range": [
-                989,
-                997
+                1014,
+                1022
             ],
             "filename": "TextChannel.js",
-            "lineno": 26,
+            "lineno": 27,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000048",
+                "id": "astnode100000052",
                 "name": "guild_id",
                 "type": "Identifier",
                 "value": "guild_id"
@@ -307,15 +307,15 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1089,
-                1111
+                1114,
+                1136
             ],
             "filename": "TextChannel.js",
-            "lineno": 33,
+            "lineno": 34,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000051",
+                "id": "astnode100000055",
                 "name": "this.",
                 "type": "Identifier",
                 "value": "client",
@@ -339,15 +339,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1322,
-                1327
+                1347,
+                1352
             ],
             "filename": "TextChannel.js",
-            "lineno": 42,
+            "lineno": 43,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000096",
+                "id": "astnode100000100",
                 "name": "i",
                 "type": "Literal",
                 "value": 0
@@ -365,15 +365,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1425,
-                1444
+                1450,
+                1469
             ],
             "filename": "TextChannel.js",
-            "lineno": 44,
+            "lineno": 45,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000121",
+                "id": "astnode100000125",
                 "name": "channel_id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -389,15 +389,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1456,
-                1464
+                1481,
+                1489
             ],
             "filename": "TextChannel.js",
-            "lineno": 45,
+            "lineno": 46,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000125",
+                "id": "astnode100000129",
                 "name": "guild_id",
                 "type": "Identifier",
                 "value": "guild_id"
@@ -413,15 +413,15 @@
         "comment": "/**\n   * Bulk deletes all the message IDs provided.\n   * @param {String[]} messages An array of message IDs, as strings.\n   * @returns {Promise<void>}\n   * @method\n   * @async\n   * @public\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                1715,
-                2484
+                1740,
+                2509
             ],
             "filename": "TextChannel.js",
-            "lineno": 58,
+            "lineno": 59,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000127",
+                "id": "astnode100000131",
                 "name": "TextChannel#bulkDelete",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -476,15 +476,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1744,
-                1750
+                1769,
+                1775
             ],
             "filename": "TextChannel.js",
-            "lineno": 58,
+            "lineno": 59,
             "columnno": 31,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000133",
+                "id": "astnode100000137",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -500,15 +500,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2271,
-                2280
+                2296,
+                2305
             ],
             "filename": "TextChannel.js",
-            "lineno": 76,
+            "lineno": 77,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000195",
+                "id": "astnode100000199",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -526,15 +526,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2287,
-                2311
+                2312,
+                2336
             ],
             "filename": "TextChannel.js",
-            "lineno": 78,
+            "lineno": 79,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000199",
+                "id": "astnode100000203",
                 "name": "body.messages",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -553,15 +553,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2330,
-                2365
+                2355,
+                2390
             ],
             "filename": "TextChannel.js",
-            "lineno": 80,
+            "lineno": 81,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000207",
+                "id": "astnode100000211",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -580,15 +580,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2526,
-                2582
+                2551,
+                2607
             ],
             "filename": "TextChannel.js",
-            "lineno": 93,
+            "lineno": 94,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000229",
+                "id": "astnode100000233",
                 "name": "TextChannel#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -606,18 +606,47 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2780,
-                3052
+                2649,
+                2706
             ],
             "filename": "TextChannel.js",
-            "lineno": 105,
+            "lineno": 102,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000240",
+                "id": "astnode100000244",
+                "name": "TextChannel#util.inspect.custom",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "custom",
+        "longname": "TextChannel#util.inspect.custom",
+        "memberof": "TextChannel#util.inspect",
+        "scope": "static",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "meta": {
+            "range": [
+                2904,
+                3176
+            ],
+            "filename": "TextChannel.js",
+            "lineno": 114,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000257",
                 "name": "TextChannel#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -661,15 +690,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3056,
-                3083
+                3180,
+                3207
             ],
             "filename": "TextChannel.js",
-            "lineno": 119,
+            "lineno": 128,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000269",
+                "id": "astnode100000286",
                 "name": "module.exports",
                 "type": "Identifier"
             }
