@@ -179,6 +179,14 @@ class BaseCacheManager {
   }
 
   /**
+   * Calls a function on each item in the cache.
+   * @param {Function} callback Callback function to run on each item in the cache.
+   */
+  forEach(callback) {
+    return this.#cache.forEach(callback);
+  }
+
+  /**
    * Returns the JSON representation of this structure.
    * @param {Number} format The format to return the data in.
    * @returns {Object}
