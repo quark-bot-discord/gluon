@@ -10,14 +10,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildInviteManager extends BaseCacheManager {
   #_client;
   #guild;
-
+  static identifier = "invites";
   /**
    * Creates a guild invite manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { useRedis: true, identifier: "invites" });
+    super(client, { useRedis: true, structureType: GuildInviteManager });
     /**
      * The client instance.
      * @type {Client}

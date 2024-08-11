@@ -4,13 +4,14 @@ import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 class BaseCacheManager {
   #redisCache;
   #cache;
-  constructor(client, { useRedis = false, identifier = "cache" } = {}) {
+  static rules = {};
+  constructor(client, { useRedis = false, structureType } = {}) {
     if (client.redis && useRedis === true) this.#redisCache = client.redis;
     else this.#cache = new Map();
 
     this.expiryBucket = new Map();
 
-    this.identifier = identifier;
+    this.structureType = structureType;
   }
 
   /**
@@ -19,7 +20,7 @@ class BaseCacheManager {
    * @readonly
    */
   get #keyPrefix() {
-    return `${NAME.toLowerCase()}.caches.${this.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
+    return `${NAME.toLowerCase()}.caches.${this.structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
   }
 
   /**
@@ -104,6 +105,8 @@ class BaseCacheManager {
   expireBucket(bucket) {
     if (!this.expiryBucket.has(bucket)) return;
     for (const key of this.expiryBucket.get(bucket)) {
+      const value = this.get(key);
+      if (value) this._callRules(value);
       this.delete(key);
     }
     this.expiryBucket.delete(bucket);
@@ -164,8 +167,14 @@ class BaseCacheManager {
     this.expireBucket(bucket);
     if (now.getUTCMinutes() === 0) this.clearStaleBuckets();
     return {
-      i: this.identifier,
+      i: this.structureType.identifier,
     };
+  }
+
+  _callRules(value) {
+    const rules = Object.values(BaseCacheManager.rules);
+    for (const rule of rules)
+      if (rule.structure === this.structureType) rule.handlerFunction(value);
   }
 
   /**

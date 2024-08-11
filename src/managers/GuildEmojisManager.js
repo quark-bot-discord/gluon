@@ -8,13 +8,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildEmojisManager extends BaseCacheManager {
   #_client;
   #guild;
+  static identifier = "emojis";
   /**
    * Creates a guild emoji manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { identifier: "emojis" });
+    super(client, { structureType: GuildEmojisManager });
     /**
      * The client instance.
      * @type {Client}

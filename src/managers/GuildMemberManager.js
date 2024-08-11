@@ -8,14 +8,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildMemberManager extends BaseCacheManager {
   #_client;
   #guild;
-
+  static identifier = "members";
   /**
    * Creates a member manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { useRedis: true, identifier: "members" });
+    super(client, { useRedis: true, structureType: GuildMemberManager });
     /**
      * The client instance.
      * @type {Client}

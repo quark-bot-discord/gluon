@@ -5,8 +5,9 @@ import BaseCacheManager from "./BaseCacheManager.js";
  * Manages all voice states belonging to a guild.
  */
 class GuildVoiceStatesManager extends BaseCacheManager {
+  static identifier = "voicestates";
   constructor(client) {
-    super(client, { identifier: "voicestates" });
+    super(client, { structureType: GuildVoiceStatesManager });
   }
   /**
    * Adds a voice state to the cache.

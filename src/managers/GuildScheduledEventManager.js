@@ -4,8 +4,9 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildScheduledEventManager extends BaseCacheManager {
   #_client;
   #guild;
+  static identifier = "events";
   constructor(client, guild) {
-    super(client, { identifier: "events" });
+    super(client, { structureType: GuildScheduledEventManager });
     /**
      * The client instance.
      * @type {Client}

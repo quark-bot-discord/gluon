@@ -6,12 +6,13 @@ import BaseCacheManager from "./BaseCacheManager.js";
  */
 class GuildManager extends BaseCacheManager {
   #_client;
+  static identifier = "guilds";
   /**
    * Creates a guild manager.
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    super(client, { identifier: "guilds" });
+    super(client, { structureType: GuildManager });
     /**
      * The client instance.
      * @type {Client}

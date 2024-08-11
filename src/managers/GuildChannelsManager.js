@@ -11,14 +11,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildChannelsManager extends BaseCacheManager {
   #_client;
   #guild;
-
+  static identifier = "channels";
   /**
    * Creates a guild channel manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { identifier: "channels" });
+    super(client, { structureType: GuildChannelsManager });
     /**
      * The client instance.
      * @type {Client}

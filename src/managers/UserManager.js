@@ -6,13 +6,13 @@ import BaseCacheManager from "./BaseCacheManager.js";
  */
 class UserManager extends BaseCacheManager {
   #_client;
-
+  static identifier = "users";
   /**
    * Creates a user manager.
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    super(client, { useRedis: true, identifier: "users" });
+    super(client, { useRedis: true, structureType: UserManager });
     /**
      * The client instance.
      * @type {Client}

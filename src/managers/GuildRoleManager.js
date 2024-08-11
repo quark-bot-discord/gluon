@@ -8,14 +8,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 class GuildRoleManager extends BaseCacheManager {
   #_client;
   #guild;
-
+  static identifier = "roles";
   /**
    * Creates a role manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this role manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { identifier: "roles" });
+    super(client, { structureType: GuildRoleManager });
     /**
      * The client instance.
      * @type {Client}
