@@ -105,8 +105,12 @@ class BaseCacheManager {
   expireBucket(bucket) {
     if (!this.expiryBucket.has(bucket)) return;
     for (const key of this.expiryBucket.get(bucket)) {
-      const value = this.get(key);
-      if (value) this._callRules(value);
+      try {
+        const value = this.get(key);
+        if (value) this._callRules(value);
+      } catch (e) {
+        console.error(e);
+      }
       this.delete(key);
     }
     this.expiryBucket.delete(bucket);
