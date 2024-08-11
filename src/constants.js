@@ -325,6 +325,14 @@ export const GLUON_GUILD_CACHING_OPTIONS = {
 export const GLUON_CHANNEL_CACHING_OPTIONS = {
   MESSAGES: 1 << 0,
   FILES: 1 << 1,
+  CONTENT: 1 << 2,
+  POLL: 1 << 3,
+  REACTIONS: 1 << 4,
+  EMBEDS: 1 << 5,
+  ATTRIBUTES: 1 << 6,
+  REFERENCE: 1 << 7,
+  WEBHOOK: 1 << 8,
+  STICKER: 1 << 9,
 };
 export const AUTO_MODERATION_TRIGGER_TYPES = {
   KEYWORD: 1,

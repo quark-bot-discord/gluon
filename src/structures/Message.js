@@ -60,8 +60,6 @@ class Message {
       ignoreExisting: false,
     },
   ) {
-    let onlyfiles = false;
-
     /**
      * The client instance.
      * @type {Client}
@@ -87,19 +85,6 @@ class Message {
       ignoreExisting != true
         ? this.channel?.messages.get(data.id) || null
         : null;
-
-    if (this.guild) {
-      onlyfiles =
-        (this.guild._cache_options & GLUON_CACHING_OPTIONS.FILES_ONLY) ==
-        GLUON_CACHING_OPTIONS.FILES_ONLY;
-
-      if (this.channel)
-        nocache =
-          (this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) ==
-            GLUON_CACHING_OPTIONS.NO_MESSAGES ||
-          (this.channel._cache_options & GLUON_CACHING_OPTIONS.NO_MESSAGES) ==
-            GLUON_CACHING_OPTIONS.NO_MESSAGES;
-    }
 
     /**
      * The id of the message.
@@ -164,113 +149,125 @@ class Message {
         );
     else if (existing?.attachments) this.#attachments = existing.attachments;
 
-    if (this.#attachments.length == 0 && onlyfiles == true) nocache = true;
-
     /**
      * The message content.
      * @type {String?}
      * @private
      */
-    if (onlyfiles != true) {
+    if (this.channel._cacheOptions.contentCaching === true) {
       this.#content = data.content;
       if (!this.#content && existing && existing.content)
         this.#content = existing.content;
       else if (!this.#content) this.#content = null;
     }
 
-    /**
-     * The message poll.
-     * @type {Object?}
-     * @private
-     */
-    if (data.poll)
-      this.#poll = new Poll(this.#_client, data.poll, { guild_id });
-    else if (this.#poll == undefined && existing && existing.poll != undefined)
-      this.#poll = existing.poll;
-    else if (this.#poll == undefined) this.#poll = undefined;
-
-    if (existing?.reactions)
+    if (this.channel._cacheOptions.pollCaching === true) {
       /**
-       * The message reactions.
-       * @type {MessageReactionManager}
+       * The message poll.
+       * @type {Object?}
        * @private
        */
-      this.#reactions = existing.reactions;
-    else
-      this.#reactions = new MessageReactionManager(
-        this.#_client,
-        this.guild,
-        data.messageReactions,
-      );
+      if (data.poll)
+        this.#poll = new Poll(this.#_client, data.poll, { guild_id });
+      else if (
+        this.#poll == undefined &&
+        existing &&
+        existing.poll != undefined
+      )
+        this.#poll = existing.poll;
+      else if (this.#poll == undefined) this.#poll = undefined;
+    }
 
-    /**
-     * The message embeds.
-     * @type {Embed[]}
-     * @private
-     */
-    if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
-    else if (existing && existing.embeds != undefined)
-      this.#embeds = existing.embeds;
-    else if (this.#embeds == undefined) this.#embeds = [];
+    if (this.channel._cacheOptions.reactionCaching === true) {
+      if (existing?.reactions)
+        /**
+         * The message reactions.
+         * @type {MessageReactionManager}
+         * @private
+         */
+        this.#reactions = existing.reactions;
+      else
+        this.#reactions = new MessageReactionManager(
+          this.#_client,
+          this.guild,
+          data.messageReactions,
+        );
+    }
 
-    /**
-     * The message attributes.
-     * @type {Number}
-     * @private
-     */
-    this.#_attributes = data._attributes || 0;
+    if (this.channel._cacheOptions.embedCaching === true) {
+      /**
+       * The message embeds.
+       * @type {Embed[]}
+       * @private
+       */
+      if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
+      else if (existing && existing.embeds != undefined)
+        this.#embeds = existing.embeds;
+      else if (this.#embeds == undefined) this.#embeds = [];
+    }
 
-    if (data.mentions && data.mentions.length != 0)
-      this.#_attributes |= 0b1 << 0;
-    else if (
-      data.mentions == undefined &&
-      existing &&
-      existing.mentions == true
-    )
-      this.#_attributes |= 0b1 << 0;
+    if (this.channel._cacheOptions.attributeCaching === true) {
+      /**
+       * The message attributes.
+       * @type {Number}
+       * @private
+       */
+      this.#_attributes = data._attributes || 0;
 
-    if (data.mention_roles && data.mention_roles.length != 0)
-      this.#_attributes |= 0b1 << 1;
-    else if (
-      data.mention_roles == undefined &&
-      existing &&
-      existing.mentionRoles == true
-    )
-      this.#_attributes |= 0b1 << 1;
+      if (data.mentions && data.mentions.length != 0)
+        this.#_attributes |= 0b1 << 0;
+      else if (
+        data.mentions == undefined &&
+        existing &&
+        existing.mentions == true
+      )
+        this.#_attributes |= 0b1 << 0;
 
-    if (data.mention_everyone != undefined && data.mention_everyone == true)
-      this.#_attributes |= 0b1 << 2;
-    else if (
-      data.mention_everyone == undefined &&
-      existing &&
-      existing.mentionEveryone == true
-    )
-      this.#_attributes |= 0b1 << 2;
+      if (data.mention_roles && data.mention_roles.length != 0)
+        this.#_attributes |= 0b1 << 1;
+      else if (
+        data.mention_roles == undefined &&
+        existing &&
+        existing.mentionRoles == true
+      )
+        this.#_attributes |= 0b1 << 1;
 
-    if (data.pinned != undefined && data.pinned == true)
-      this.#_attributes |= 0b1 << 3;
-    else if (data.pinned == undefined && existing && existing.pinned == true)
-      this.#_attributes |= 0b1 << 3;
+      if (data.mention_everyone != undefined && data.mention_everyone == true)
+        this.#_attributes |= 0b1 << 2;
+      else if (
+        data.mention_everyone == undefined &&
+        existing &&
+        existing.mentionEveryone == true
+      )
+        this.#_attributes |= 0b1 << 2;
 
-    if (data.mirrored != undefined && data.mirrored == true)
-      this.#_attributes |= 0b1 << 4;
-    else if (
-      data.mirrored == undefined &&
-      existing &&
-      existing.mirrored == true
-    )
-      this.#_attributes |= 0b1 << 4;
+      if (data.pinned != undefined && data.pinned == true)
+        this.#_attributes |= 0b1 << 3;
+      else if (data.pinned == undefined && existing && existing.pinned == true)
+        this.#_attributes |= 0b1 << 3;
 
-    /**
-     * The message that this message references.
-     * @type {Object}
-     * @private
-     */
-    this.#reference = {};
-    if (data.referenced_message)
-      this.#reference.message_id = BigInt(data.referenced_message.id);
-    else if (existing && existing.reference?.messageId)
-      this.#reference.message_id = existing.reference.messageId;
+      if (data.mirrored != undefined && data.mirrored == true)
+        this.#_attributes |= 0b1 << 4;
+      else if (
+        data.mirrored == undefined &&
+        existing &&
+        existing.mirrored == true
+      )
+        this.#_attributes |= 0b1 << 4;
+    }
+
+    if (this.channel._cacheOptions.referenceCaching === true) {
+      /**
+       * The message that this message references.
+       * @type {Object}
+       * @private
+       */
+      this.#reference = {};
+      if (data.referenced_message)
+        this.#reference.message_id = BigInt(data.referenced_message.id);
+      else if (existing && existing.reference?.messageId)
+        this.#reference.message_id = existing.reference.messageId;
+    }
 
     /**
      * The type of message.
@@ -285,37 +282,43 @@ class Message {
     )
       this.#type = existing.type;
 
-    /**
-     * The id of the webhook this message is from.
-     * @type {BigInt?}
-     * @private
-     */
-    if (data.webhook_id) this.#webhook_id = BigInt(data.webhook_id);
-    else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
+    if (this.channel._cacheOptions.webhookCaching === true) {
+      /**
+       * The id of the webhook this message is from.
+       * @type {BigInt?}
+       * @private
+       */
+      if (data.webhook_id) this.#webhook_id = BigInt(data.webhook_id);
+      else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
+    }
 
-    /**
-     * Stickers sent with this message.
-     * @type {Sticker[]}
-     * @private
-     */
-    this.#sticker_items = [];
-    if (data.sticker_items != undefined)
-      for (let i = 0; i < data.sticker_items.length; i++)
-        this.#sticker_items.push(
-          new Sticker(this.#_client, data.sticker_items[i]),
-        );
-    else if (existing && existing.stickerItems != undefined)
-      this.#sticker_items = existing.stickerItems;
+    if (this.channel._cacheOptions.stickerCaching === true) {
+      /**
+       * Stickers sent with this message.
+       * @type {Sticker[]}
+       * @private
+       */
+      this.#sticker_items = [];
+      if (data.sticker_items != undefined)
+        for (let i = 0; i < data.sticker_items.length; i++)
+          this.#sticker_items.push(
+            new Sticker(this.#_client, data.sticker_items[i]),
+          );
+      else if (existing && existing.stickerItems != undefined)
+        this.#sticker_items = existing.stickerItems;
+    }
 
-    /**
-     * The snapshot data about the message.
-     * @type {Object?}
-     * @private
-     */
-    if (data.message_snapshots)
-      this.#message_snapshots = data.message_snapshots;
-    else if (existing && existing.messageSnapshots != undefined)
-      this.#message_snapshots = existing.messageSnapshots;
+    if (this.channel._cacheOptions.referenceCaching === true) {
+      /**
+       * The snapshot data about the message.
+       * @type {Object?}
+       * @private
+       */
+      if (data.message_snapshots)
+        this.#message_snapshots = data.message_snapshots;
+      else if (existing && existing.messageSnapshots != undefined)
+        this.#message_snapshots = existing.messageSnapshots;
+    }
 
     if (
       nocache === false &&
@@ -323,7 +326,25 @@ class Message {
         this.#_client._cacheOptions,
         this.guild._cacheOptions,
         this.channel._cacheOptions,
-      )
+      ) &&
+      ((this.#attachments.length !== 0 &&
+        this.channel._cacheOptions.fileCaching === true) ||
+        (this.#content && this.channel._cacheOptions.contentCaching === true) ||
+        (this.#poll && this.channel._cacheOptions.pollCaching === true) ||
+        (this.#reactions &&
+          this.channel._cacheOptions.reactionCaching === true) ||
+        (this.#embeds.length !== 0 &&
+          this.channel._cacheOptions.embedCaching === true) ||
+        (this.#_attributes !== 0 &&
+          this.channel._cacheOptions.attributeCaching === true) ||
+        (this.#reference.message_id &&
+          this.channel._cacheOptions.referenceCaching === true) ||
+        (this.#webhook_id &&
+          this.channel._cacheOptions.webhookCaching === true) ||
+        (this.#sticker_items.length !== 0 &&
+          this.channel._cacheOptions.stickerCaching === true) ||
+        (this.#message_snapshots &&
+          this.channel._cacheOptions.referenceCaching === true))
     ) {
       this.channel?.messages.set(data.id, this);
       if (!this.channel)
