@@ -13,17 +13,22 @@ class Embed {
   constructor(data) {
     this.fields = [];
     if (data) {
-      if (data.title) this.title = data.title;
-      if (data.description) this.description = data.description;
-      if (data.url) this.url = data.url;
-      if (data.timestamp) this.timestamp = data.timestamp;
-      if (data.color) this.color = data.color;
-      if (data.footer) this.footer = data.footer;
-      if (data.author) this.author = data.author;
-      if (data.fields && Array.isArray(data.fields)) this.fields = data.fields;
-      if (data.image) this.image = data.image;
-      if (data.thumbnail) this.thumbnail = data.thumbnail;
-      if (data.video) this.video = data.video;
+      if (data.title) this.setTitle(data.title);
+      if (data.description) this.setDescription(data.description);
+      if (data.url) this.setURL(data.url);
+      if (data.timestamp)
+        this.setTimestamp((new Date(data.timestamp).getTime() / 1000) | 0);
+      if (data.color) this.setColor(data.color);
+      if (data.footer) this.setFooter(data.footer.text, data.footer.icon_url);
+      if (data.author)
+        this.setAuthor(data.author.name, data.author.url, data.author.icon_url);
+      if (data.fields && Array.isArray(data.fields))
+        data.fields.map((field) =>
+          this.addField(field.name, field.value, field.inline),
+        );
+      if (data.image) this.setImage(data.image.url);
+      if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
+      if (data.video) this.setVideo(data.video.url);
     }
   }
 
@@ -90,8 +95,8 @@ class Embed {
    * @public
    */
   setTimestamp(timestamp) {
-    if (timestamp) this.timestamp = new Date(timestamp * 1000).toISOString();
-    else this.timestamp = new Date().toISOString();
+    if (timestamp) this.timestamp = timestamp * 1000;
+    else this.timestamp = Date.now();
 
     return this;
   }
@@ -334,8 +339,8 @@ class Embed {
         throw new TypeError("GLUON: Embed url must be a string.");
       if (this.url && isValidUrl(this.url) === false)
         throw new TypeError("GLUON: Embed url must be a valid url.");
-      if (this.timestamp && typeof this.timestamp !== "string")
-        throw new TypeError("GLUON: Embed timestamp must be a string.");
+      if (this.timestamp && typeof this.timestamp !== "number")
+        throw new TypeError("GLUON: Embed timestamp must be a number.");
       if (this.color && typeof this.color !== "number")
         throw new TypeError("GLUON: Embed color must be a number.");
       if (this.footer && typeof this.footer !== "object")
@@ -428,15 +433,29 @@ class Embed {
         throw new TypeError("GLUON: Embed video url must be a valid url.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      default: {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
         return {
           title: this.title,
           description: this.description,
           url: this.url,
           timestamp: this.timestamp,
+          color: this.color,
+          footer: this.footer,
+          author: this.author,
+          fields: this.fields,
+          image: this.image,
+          thumbnail: this.thumbnail,
+          video: this.video,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          title: this.title,
+          description: this.description,
+          url: this.url,
+          timestamp: new Date(this.timestamp).toISOString(),
           color: this.color,
           footer: this.footer,
           author: this.author,

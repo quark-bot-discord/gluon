@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import Guild from "../structures/Guild.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -35,6 +36,17 @@ class GuildManager extends BaseCacheManager {
     if (!(guild instanceof Guild))
       throw new TypeError("GLUON: Guild must be an instance of Guild.");
     return super.set(id, guild);
+  }
+
+  /**
+   * Returns the cache manager.
+   * @param {Client} client The client instance.
+   * @returns {GuildManager}
+   */
+  static getCacheManager(client) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    return client.guilds;
   }
 }
 

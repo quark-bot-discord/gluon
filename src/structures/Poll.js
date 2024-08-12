@@ -71,6 +71,26 @@ class Poll {
   }
 
   /**
+   * The ID of the guild that this poll belongs to.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get guildId() {
+    return String(this.#_guild_id);
+  }
+
+  /**
+   * The guild that this poll belongs to.
+   * @type {Guild}
+   * @readonly
+   * @public
+   */
+  get guild() {
+    return this.#_client.guilds.get(this.guildId);
+  }
+
+  /**
    * The question of the poll.
    * @type {String}
    * @readonly
@@ -177,9 +197,7 @@ class Poll {
         return {
           question: this.question,
           answers: this.answers,
-          expiry: this.expiry
-            ? new Date(this.expiry * 1000).toISOString()
-            : null,
+          expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
           layout_type: this.rawLayoutType,
           _results: this._results.toJSON(format),

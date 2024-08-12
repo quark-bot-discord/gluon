@@ -11,6 +11,8 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Role from "./Role.js";
 import util from "util";
+import encryptStructure from "../util/gluon/encryptStructure.js";
+import decryptStructure from "../util/gluon/decryptStructure.js";
 
 /**
  * Represents a guild member.
@@ -397,6 +399,16 @@ class Member {
   }
 
   /**
+   * The hash name for the member.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get hashName() {
+    return Member.getHashName(this.guildId, this.id);
+  }
+
+  /**
    * Returns the mention string for the member.
    * @param {String} userId The id of the user to mention.
    * @returns {String}
@@ -644,6 +656,53 @@ class Member {
     if (gluonCacheOptions.cacheMembers === false) return false;
     if (guildCacheOptions.memberCaching === false) return false;
     return true;
+  }
+
+  /**
+   * Returns the hash name for the message.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} memberId The id of the member.
+   * @returns {String}
+   */
+  static getHashName(guildId, memberId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof memberId !== "string")
+      throw new TypeError("GLUON: Member ID must be a string.");
+    return structureHashName(guildId, memberId);
+  }
+
+  /**
+   * Decrypts a member.
+   * @param {Client} client The client instance.
+   * @param {String} data The encrypted message data.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} userId The id of the member.
+   * @returns {Member}
+   */
+  static decrypt(client, data, guildId, userId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof data !== "string")
+      throw new TypeError("GLUON: Data must be a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+    return new Member(client, decryptStructure(data), {
+      user_id: userId,
+      guild_id: guildId,
+    });
+  }
+
+  /**
+   * Encrypts the member.
+   * @returns {String}
+   * @public
+   * @method
+   */
+  encrypt() {
+    return encryptStructure(this, this.id, this.guildId);
   }
 
   /**

@@ -47,11 +47,15 @@ class BaseCacheManager {
    * Gets a value from the cache.
    * @param {String} key The key to get.
    */
-  get(key) {
+  get(key, { useRules = false } = { useRules: false }) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    if (this.#redisCache) return this.#redisCache.get(this.#getKey(key));
-    else return this.#cache.get(key);
+    let value;
+    if (this.#redisCache) value = this.#redisCache.get(this.#getKey(key));
+    else value = this.#cache.get(key);
+    if (value) return value;
+    else if (useRules) return this._callFetches(value);
+    else return null;
   }
 
   /**
@@ -179,6 +183,17 @@ class BaseCacheManager {
     const rules = Object.values(BaseCacheManager.rules);
     for (const rule of rules)
       if (rule.structure === this.structureType) rule.handlerFunction(value);
+  }
+
+  async _callFetches(id) {
+    const rules = Object.values(BaseCacheManager.rules);
+    let fetchValue;
+    for (const rule of rules) {
+      if (rule.structure === this.structureType)
+        fetchValue = await rule.retrieveFunction(id, this);
+      if (fetchValue) return fetchValue;
+    }
+    return null;
   }
 
   /**

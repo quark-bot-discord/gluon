@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { PERMISSIONS } from "../constants.js";
 import Channel from "../structures/Channel.js";
 import Message from "../structures/Message.js";
@@ -18,7 +19,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @param {Channel} channel The channel that is being managed.
    */
   constructor(client, guild, channel) {
-    super(client, { useRedis: true, structureType: ChannelMessageManager });
+    super(client, { structureType: ChannelMessageManager });
     /**
      * The client instance.
      * @type {Client}
@@ -161,6 +162,23 @@ class ChannelMessageManager extends BaseCacheManager {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
     return super.set(id, message);
+  }
+
+  /**
+   * Returns the cache manager.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild.
+   * @param {String} channelId The ID of the channel.
+   * @returns {ChannelMessageManager}
+   */
+  static getCacheManager(client, guildId, channelId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    return client.guilds.get(guildId).channels.get(channelId).messages;
   }
 }
 

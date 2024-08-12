@@ -60,9 +60,15 @@ describe("Message", function () {
       expect(message).to.have.property("url");
       expect(message).to.have.property("reply");
       expect(message).to.have.property("edit");
-      expect(message).to.have.property("shelf");
+      expect(message).to.have.property("hashName");
+      expect(message).to.have.property("encrypt");
       expect(message).to.have.property("toString");
       expect(message).to.have.property("toJSON");
+    });
+    it("should have the correct static structure", function () {
+      expect(Message).to.have.property("getHashName");
+      expect(Message).to.have.property("decrypt");
+      expect(Message).to.have.property("shouldCache");
     });
   });
 
@@ -258,7 +264,34 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      expect(message.embeds).to.deep.equal(TEST_DATA.MESSAGE.embeds);
+      expect(message.embeds).to.deep.equal([
+        {
+          color: TEST_DATA.MESSAGE.embeds[0].color,
+          description: TEST_DATA.MESSAGE.embeds[0].description,
+          fields: [
+            {
+              name: TEST_DATA.MESSAGE.embeds[0].fields[0].name,
+              value: TEST_DATA.MESSAGE.embeds[0].fields[0].value,
+              inline: TEST_DATA.MESSAGE.embeds[0].fields[0].inline,
+            },
+          ],
+          footer: {
+            text: TEST_DATA.MESSAGE.embeds[0].footer.text,
+          },
+          image: {
+            url: TEST_DATA.MESSAGE.embeds[0].image.url,
+          },
+          thumbnail: {
+            url: TEST_DATA.MESSAGE.embeds[0].thumbnail.url,
+          },
+          timestamp: new Date(TEST_DATA.MESSAGE.embeds[0].timestamp).getTime(),
+          title: TEST_DATA.MESSAGE.embeds[0].title,
+          url: TEST_DATA.MESSAGE.embeds[0].url,
+          video: {
+            url: TEST_DATA.MESSAGE.embeds[0].video.url,
+          },
+        },
+      ]);
     });
   });
 
@@ -860,8 +893,8 @@ describe("Message", function () {
     });
   });
 
-  context("check shelf", function () {
-    it("should be a function", function () {
+  context("check hashName", function () {
+    it("should return the correct hashName", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
@@ -869,7 +902,80 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      expect(message.shelf).to.be.a("function");
+      expect(message.hashName).to.equal(
+        "f5c5c86b4cb6ccf0e4aadf5d80eecb8bc19f005225ae37c856f95b50b02bad4482cbff6a2ca6a0a411eec7cc82e9c1ac654cc9d44c2f1c87f07d90b88da025b8",
+      );
+    });
+  });
+
+  context("check encrypt", function () {
+    it("should return the correct encrypted message", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const encrypted = message.encrypt();
+      expect(encrypted).to.equal(
+        "D7VouuLdNv/GOhSZHlt6sW6b3/LIoNHYIMOjkFzFgpw10SAjFZ6eeQXF6/mxBxgG4zC1h1GwI5dvCFA3LLnQrqXB/ToylQte2qiNhwAZ5oKWFbrE8YYCjGMGfIRA9cwIENjWytyYmbcE529uleVWsj0yIl9rfzSHLE/LrslM9cpTOXYv3NBN50cKvYTDaeNfx1T2kFwlE3jlqjNxKBQYKGeyoB0wqvnrjyLgOxa4jhdPnb/95ZHUa30tGiwqbDW4Is0KOBdxePJ5NVxok9fGWFqaFPGG3bmY1Ln2Oz5qTAkPDsqlYFY0mna+gEsk0o1AggRJ6Bru4xHH1g09S7CPKHmD2DkbF/gVVm3HI5h7v4mPZfwAtFBXn6rCySl3QrQ+TaU9/pafwmkOaKIkQAkcC8I7q6O4C9EEalBBHheu1jFlLE2Y1Gz2SZRNjwopARIeCS7bT/03Llm1XVv8pVd60vicMkLw41yoTnlJsPgQ+RZ4Xwa5eW9aofk6U+yHGzyV+x8V57s4gIPpX7rcLBWXBk60El2amyJHWVsWf6DJfFyk6c52U8yHoK4HnlJL52Dqx7R6vYa1on2UzJcOVBh9UQHdXIiOCKAxq1+sn8iiX2KqGHXo/JhHnRkMTJOULeH3XEkGItaDe3y5zweHHIhj0W/dnHwUslv+pYcr9hR6kYBZVpYerHtQdCVuYdnNcyCBF+iwKgvoX+1AqyJsJlUT7/En5xXScnrZNxRjh/ZCdrRHLAOS19uQfzfNto39XaAtEWb8kdBQMpL1TRsj35E7YJCqgSMkRqsCjnva5E6qawcRU/RfxLNMikcO7Yyq3pqYA5Xy34xkLpCSgSBS1mGNt/maHyxOAVt2LVA74pb0cATC9GcB7irqj57ayTZ3msuyjbY613ArY+/0xfju+GHf2yQBASrLYa5LL3nmtoCzrsWQzbdLIdv+XdVckriqs4uNk1k7wvZs4mawJnNhhIeU2fxKxin99rHOU4exmbbUMVqeWoMb8BkgKLO6Cn1BUU6IPS4t8YY8n9Y34m4cRJ9k2pKXfjHGgbzWRAaTBxx7I0WMZFnX2oLSmaiv3mT8hcBhDWEMyHhYOrNGjLgY+sEJiK50POisCJNC0rsq7aNbNvP8r/wjjLyEwcdEsItbeKwZhYuoAcynWODHM6slOT+IPfXVhtSB85vK8JgYcrfK1r2aO16vf01c7ZHCMuthNsZ8U8xw9iLW/R7ouyH4zzM1DnVQ1QiiBdzCh6SKpSWsMOsQTLrLqrmRHoZR5zMw9ZbPaZgJ6y/pIEpXSHNJWMCNub3qg/VoYjrQmU7NnyIbLjW0ktwlrjIssd1QTJysv7kcAuj4dGRKs0V1Vw9D/aMgh6T6WggHyYxivWCa33pDeMf57HT7hy3lUYf44PL+5p4WMb7yxkhABhdDd3okOpZvD77o2XnHr8acOLA8xoYOSfFKmc0FTau8qrVN88R7bIe/X/VGGLut/G2gK0Ibt4i8eEgx8TRwGbMh2odHxj9ANveZj0U4gxkA1x9x2k0dmDLxFhtpcCZACgjVA4mQOTrux4SZ8vYkKT3/EByC3R8TCPl44hymlAldWGjcoMqGiqS1rfibaQXFy4p/pYGgTVrItwX5w4XLIoUIblScQPjKeXV4TbACt9BtDGXVRUb4REDc8ufDvNdDHlddcjVv633gwQdgi39vXKflrxed+mfOsWIiI5DZRKL/gCVh2s1EzpnZF875enjnH64KxVSQsjlx7k0wL31J6oFSxuiMNlAXrtEJxZkkCouklQ/Hl+9ub9x5nofQsZhwo/TW22G6x9ljmBeXdWRjMDyULNwZoZzOCCmqMcNZY//jIADjRW5mqF/J4hx2lpj5RT8nKGTv5RChiDk5M3NF/lUXsXOplpDvyr89RXkB9tXvFwXQjkNemiujUjc3maTjD4ppmXqiqe8WUIN5usXy1Xhs7Bj3LL7W++U=",
+      );
+    });
+  });
+
+  context("check decrypt", function () {
+    it("should return the correct decrypted message", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const decrypted = Message.decrypt(
+        client,
+        "D7VouuLdNv/GOhSZHlt6sW6b3/LIoNHYIMOjkFzFgpw10SAjFZ6eeQXF6/mxBxgG4zC1h1GwI5dvCFA3LLnQrqXB/ToylQte2qiNhwAZ5oKWFbrE8YYCjGMGfIRA9cwIENjWytyYmbcE529uleVWsj0yIl9rfzSHLE/LrslM9cpTOXYv3NBN50cKvYTDaeNfx1T2kFwlE3jlqjNxKBQYKGeyoB0wqvnrjyLgOxa4jhdPnb/95ZHUa30tGiwqbDW4Is0KOBdxePJ5NVxok9fGWFqaFPGG3bmY1Ln2Oz5qTAkPDsqlYFY0mna+gEsk0o1AggRJ6Bru4xHH1g09S7CPKHmD2DkbF/gVVm3HI5h7v4mPZfwAtFBXn6rCySl3QrQ+TaU9/pafwmkOaKIkQAkcC8I7q6O4C9EEalBBHheu1jFlLE2Y1Gz2SZRNjwopARIeCS7bT/03Llm1XVv8pVd60vicMkLw41yoTnlJsPgQ+RZ4Xwa5eW9aofk6U+yHGzyV+x8V57s4gIPpX7rcLBWXBk60El2amyJHWVsWf6DJfFyk6c52U8yHoK4HnlJL52Dqx7R6vYa1on2UzJcOVBh9UQHdXIiOCKAxq1+sn8iiX2KqGHXo/JhHnRkMTJOULeH3XEkGItaDe3y5zweHHIhj0W/dnHwUslv+pYcr9hR6kYBZVpYerHtQdCVuYdnNcyCBF+iwKgvoX+1AqyJsJlUT7/En5xXScnrZNxRjh/ZCdrRHLAOS19uQfzfNto39XaAtEWb8kdBQMpL1TRsj35E7YJCqgSMkRqsCjnva5E6qawcRU/RfxLNMikcO7Yyq3pqYA5Xy34xkLpCSgSBS1mGNt/maHyxOAVt2LVA74pb0cATC9GcB7irqj57ayTZ3msuyjbY613ArY+/0xfju+GHf2yQBASrLYa5LL3nmtoCzrsWQzbdLIdv+XdVckriqs4uNk1k7wvZs4mawJnNhhIeU2fxKxin99rHOU4exmbbUMVqeWoMb8BkgKLO6Cn1BUU6IPS4t8YY8n9Y34m4cRJ9k2pKXfjHGgbzWRAaTBxx7I0WMZFnX2oLSmaiv3mT8hcBhDWEMyHhYOrNGjLgY+sEJiK50POisCJNC0rsq7aNbNvP8r/wjjLyEwcdEsItbeKwZhYuoAcynWODHM6slOT+IPfXVhtSB85vK8JgYcrfK1r2aO16vf01c7ZHCMuthNsZ8U8xw9iLW/R7ouyH4zzM1DnVQ1QiiBdzCh6SKpSWsMOsQTLrLqrmRHoZR5zMw9ZbPaZgJ6y/pIEpXSHNJWMCNub3qg/VoYjrQmU7NnyIbLjW0ktwlrjIssd1QTJysv7kcAuj4dGRKs0V1Vw9D/aMgh6T6WggHyYxivWCa33pDeMf57HT7hy3lUYf44PL+5p4WMb7yxkhABhdDd3okOpZvD77o2XnHr8acOLA8xoYOSfFKmc0FTau8qrVN88R7bIe/X/VGGLut/G2gK0Ibt4i8eEgx8TRwGbMh2odHxj9ANveZj0U4gxkA1x9x2k0dmDLxFhtpcCZACgjVA4mQOTrux4SZ8vYkKT3/EByC3R8TCPl44hymlAldWGjcoMqGiqS1rfibaQXFy4p/pYGgTVrItwX5w4XLIoUIblScQPjKeXV4TbACt9BtDGXVRUb4REDc8ufDvNdDHlddcjVv633gwQdgi39vXKflrxed+mfOsWIiI5DZRKL/gCVh2s1EzpnZF875enjnH64KxVSQsjlx7k0wL31J6oFSxuiMNlAXrtEJxZkkCouklQ/Hl+9ub9x5nofQsZhwo/TW22G6x9ljmBeXdWRjMDyULNwZoZzOCCmqMcNZY//jIADjRW5mqF/J4hx2lpj5RT8nKGTv5RChiDk5M3NF/lUXsXOplpDvyr89RXkB9tXvFwXQjkNemiujUjc3maTjD4ppmXqiqe8WUIN5usXy1Xhs7Bj3LL7W++U=",
+        TEST_DATA.GUILD_ID,
+        TEST_DATA.CHANNEL_ID,
+        TEST_DATA.MESSAGE_ID,
+      );
+      expect(decrypted.id).to.equal(TEST_DATA.MESSAGE_ID);
+    });
+  });
+
+  context("check shouldCache", function () {
+    it("should return true if the message is not a partial", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      expect(
+        Message.shouldCache(
+          client._cacheOptions,
+          guild._cacheOptions,
+          channel._cacheOptions,
+        ),
+      ).to.be.true;
+    });
+    it("should return false if message caching is disabled for the client", function () {
+      const client = TEST_CLIENTS.NO_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      expect(
+        Message.shouldCache(
+          client._cacheOptions,
+          guild._cacheOptions,
+          channel._cacheOptions,
+        ),
+      ).to.be.false;
+    });
+    it("should return false if message caching is disabled for the guild", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.NO_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      expect(
+        Message.shouldCache(
+          client._cacheOptions,
+          guild._cacheOptions,
+          channel._cacheOptions,
+        ),
+      ).to.be.false;
     });
   });
 
@@ -962,9 +1068,15 @@ describe("Message", function () {
             url: TEST_DATA.MESSAGE.embeds[0].url,
             color: TEST_DATA.MESSAGE.embeds[0].color,
             timestamp: TEST_DATA.MESSAGE.embeds[0].timestamp,
-            footer: TEST_DATA.MESSAGE.embeds[0].footer,
-            image: TEST_DATA.MESSAGE.embeds[0].image,
-            thumbnail: TEST_DATA.MESSAGE.embeds[0].thumbnail,
+            footer: {
+              text: TEST_DATA.MESSAGE.embeds[0].footer.text,
+            },
+            image: {
+              url: TEST_DATA.MESSAGE.embeds[0].image.url,
+            },
+            thumbnail: {
+              url: TEST_DATA.MESSAGE.embeds[0].thumbnail.url,
+            },
             video: TEST_DATA.MESSAGE.embeds[0].video,
             fields: TEST_DATA.MESSAGE.embeds[0].fields,
             author: TEST_DATA.MESSAGE.embeds[0].author,

@@ -1007,6 +1007,24 @@ class Guild {
   }
 
   /**
+   * Increases the member count of the guild.
+   * @method
+   * @public
+   */
+  _incrementMemberCount() {
+    this.#member_count++;
+  }
+
+  /**
+   * Decreases the member count of the guild.
+   * @method
+   * @public
+   */
+  _decrementMemberCount() {
+    this.#member_count--;
+  }
+
+  /**
    * Returns the client member for this guild.
    * @returns {Promise<Member>}
    * @public

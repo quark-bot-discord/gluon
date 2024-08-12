@@ -106,7 +106,7 @@ describe("Embed", function () {
     it("should set the timestamp of the embed", function () {
       const embed = new Embed();
       embed.setTimestamp(123456);
-      expect(embed.timestamp).to.equal(new Date(123456 * 1000).toISOString());
+      expect(embed.timestamp).to.equal(new Date(123456 * 1000).getTime());
     });
   });
 

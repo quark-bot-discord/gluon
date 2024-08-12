@@ -932,6 +932,23 @@ export const TEST_CLIENTS = {
     client.request = new BetterRequestHandler(client, "TOKEN");
     return client;
   },
+  NO_CACHES_ENABLED: () => {
+    const client = new Client({
+      cacheChannels: false,
+      cacheEmojis: false,
+      cacheGuilds: true,
+      cacheMessages: false,
+      cacheRoles: false,
+      cacheUsers: false,
+      cacheMembers: false,
+      cacheVoiceStates: false,
+      cacheScheduledEvents: false,
+      cacheInvites: false,
+    });
+    client.user = new User(client, TEST_DATA.CLIENT_USER);
+    client.request = new BetterRequestHandler(client, "TOKEN");
+    return client;
+  },
 };
 
 export const TEST_GUILDS = {
@@ -946,6 +963,19 @@ export const TEST_GUILDS = {
     guild._cacheOptions.setVoiceStateCaching(true);
     guild._cacheOptions.setScheduledEventCaching(true);
     guild._cacheOptions.setInviteCaching(true);
+    return guild;
+  },
+  NO_CACHES_ENABLED: (client) => {
+    const guild = new Guild(client, TEST_DATA.GUILD);
+    guild._cacheOptions.setChannelCaching(false);
+    guild._cacheOptions.setEmojiCaching(false);
+    guild._cacheOptions.setRoleCaching(false);
+    guild._cacheOptions.setMessageCaching(false);
+    guild._cacheOptions.setFileCaching(false);
+    guild._cacheOptions.setMemberCaching(false);
+    guild._cacheOptions.setVoiceStateCaching(false);
+    guild._cacheOptions.setScheduledEventCaching(false);
+    guild._cacheOptions.setInviteCaching(false);
     return guild;
   },
 };

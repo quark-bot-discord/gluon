@@ -251,7 +251,7 @@ class Client extends EventsEmitter {
     let memberCount = 0;
 
     this.guilds.cache.forEach((guild) => {
-      memberCount += guild.member_count;
+      memberCount += guild.memberCount;
     });
 
     return memberCount;

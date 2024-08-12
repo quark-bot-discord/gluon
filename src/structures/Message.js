@@ -1,17 +1,10 @@
 import User from "./User.js";
 import Member from "./Member.js";
 import Attachment from "./Attachment.js";
-import {
-  PERMISSIONS,
-  GLUON_CACHING_OPTIONS,
-  BASE_URL,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { PERMISSIONS, BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import hash from "hash.js";
-import encryptMessage from "../util/gluon/encryptMessage.js";
 import MessageReactionManager from "../managers/MessageReactionManager.js";
 import Poll from "./Poll.js";
 import Embed from "../util/builder/embedBuilder.js";
@@ -20,6 +13,10 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
+import encryptStructure from "../util/gluon/encryptStructure.js";
+import structureHashName from "../util/general/structureHashName.js";
+import decryptStructure from "../util/gluon/decryptStructure.js";
+import Client from "../Client.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -524,7 +521,7 @@ class Message {
 
   /**
    * The message poll.
-   * @type {Object?}
+   * @type {Poll?}
    * @readonly
    * @public
    */
@@ -614,6 +611,16 @@ class Message {
    */
   get url() {
     return Message.getUrl(this.guildId, this.channelId, this.id);
+  }
+
+  /**
+   * The hash name for the message.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get hashName() {
+    return Message.getHashName(this.guildId, this.channelId, this.id);
   }
 
   /**
@@ -774,35 +781,6 @@ class Message {
   }
 
   /**
-   * Moves the message to long-term storage.
-   * @returns {void}
-   * @method
-   * @public
-   */
-  shelf() {
-    const encryptedMessage = encryptMessage(this);
-
-    const key = hash
-      .sha512()
-      .update(`${this.guildId}_${this.channelId}_${this.id}`)
-      .digest("hex");
-
-    this.#_client.s3Messages.putObject(
-      {
-        Bucket: this.#_client.s3MessageBucket,
-        Key: key,
-        Body: encryptedMessage,
-      },
-      (err, data) => {
-        if (err) console.error(err);
-        else console.log(data);
-      },
-    );
-
-    this.channel.messages.delete(this.id);
-  }
-
-  /**
    * Determines whether the message should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
    * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
@@ -833,6 +811,60 @@ class Message {
     if (guildCacheOptions.messageCaching === false) return false;
     if (channelCacheOptions.messageCaching === false) return false;
     return true;
+  }
+
+  /**
+   * Returns the hash name for the message.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} channelId The id of the channel that the message belongs to.
+   * @param {String} messageId The id of the message.
+   * @returns {String}
+   */
+  static getHashName(guildId, channelId, messageId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    if (typeof messageId !== "string")
+      throw new TypeError("GLUON: Message ID must be a string.");
+    return structureHashName(guildId, channelId, messageId);
+  }
+
+  /**
+   * Decrypts a message.
+   * @param {Client} client The client instance.
+   * @param {String} data The encrypted message data.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} channelId The id of the channel that the message belongs to.
+   * @param {String} messageId The id of the message.
+   * @returns {Message}
+   */
+  static decrypt(client, data, guildId, channelId, messageId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof data !== "string")
+      throw new TypeError("GLUON: Data must be a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    if (typeof messageId !== "string")
+      throw new TypeError("GLUON: Message ID must be a string.");
+    return new Message(
+      client,
+      decryptStructure(data, messageId, channelId, guildId),
+      { channel_id: channelId, guild_id: guildId },
+    );
+  }
+
+  /**
+   * Encrypts the message.
+   * @returns {String}
+   * @public
+   * @method
+   */
+  encrypt() {
+    return encryptStructure(this, this.id, this.channelId, this.guildId);
   }
 
   /**

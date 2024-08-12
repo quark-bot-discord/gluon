@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import Guild from "../structures/Guild.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
@@ -15,7 +16,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { useRedis: true, structureType: GuildMemberManager });
+    super(client, { structureType: GuildMemberManager });
     /**
      * The client instance.
      * @type {Client}
@@ -113,6 +114,20 @@ class GuildMemberManager extends BaseCacheManager {
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member instance.");
     return super.set(id, member);
+  }
+
+  /**
+   * Returns the cache manager.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild.
+   * @returns {GuildMemberManager}
+   */
+  static getCacheManager(client, guildId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    return client.guilds.get(guildId).members;
   }
 }
 
