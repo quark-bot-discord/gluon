@@ -2,6 +2,7 @@ import { expect } from "chai";
 import Poll from "../../src/structures/Poll.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import MessagePollManager from "../../src/managers/MessagePollManager.js";
+import Guild from "../../src/structures/Guild.js";
 
 describe("Poll", function () {
   context("check import", function () {
@@ -17,6 +18,8 @@ describe("Poll", function () {
       const poll = new Poll(client, TEST_DATA.POLL, {
         guild_id: TEST_DATA.GUILD_ID,
       });
+      expect(poll).to.have.property("guildId");
+      expect(poll).to.have.property("guild");
       expect(poll).to.have.property("question");
       expect(poll).to.have.property("answers");
       expect(poll).to.have.property("expiry");
@@ -35,6 +38,28 @@ describe("Poll", function () {
           guild_id: TEST_DATA.GUILD_ID,
         });
         expect(poll.question).to.equal(TEST_DATA.POLL.question);
+      });
+    });
+
+    context("check guildId", function () {
+      it("should have the correct guildId", function () {
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+        const poll = new Poll(client, TEST_DATA.POLL, {
+          guild_id: TEST_DATA.GUILD_ID,
+        });
+        expect(poll.guildId).to.equal(TEST_DATA.GUILD_ID);
+      });
+    });
+
+    context("check guild", function () {
+      it("should have the correct guild", function () {
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+        TEST_GUILDS.ALL_CACHES_ENABLED(client);
+        const poll = new Poll(client, TEST_DATA.POLL, {
+          guild_id: TEST_DATA.GUILD_ID,
+        });
+        expect(poll.guild.id).to.equal(TEST_DATA.GUILD_ID);
+        expect(poll.guild).to.be.an.instanceOf(Guild);
       });
     });
 

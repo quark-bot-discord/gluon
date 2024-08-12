@@ -282,6 +282,32 @@ describe("Guild", function () {
       expect(guild._cacheOptions).to.be.an.instanceOf(GuildCacheOptions);
     });
   });
+  context("check _incrementMemberCount", function () {
+    it("should be a function", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      expect(guild._incrementMemberCount).to.be.a("function");
+    });
+    it("should increment the member count", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      guild._incrementMemberCount();
+      expect(guild.memberCount).to.equal(TEST_DATA.GUILD.member_count + 1);
+    });
+  });
+  context("check _decrementMemberCount", function () {
+    it("should be a function", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      expect(guild._decrementMemberCount).to.be.a("function");
+    });
+    it("should decrement the member count", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      guild._decrementMemberCount();
+      expect(guild.memberCount).to.equal(TEST_DATA.GUILD.member_count - 1);
+    });
+  });
   context("check getIcon", function () {
     it("should throw an error if no guild id is provided", function () {
       expect(() => Guild.getIcon(undefined, "hash")).to.throw(

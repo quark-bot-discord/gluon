@@ -40,8 +40,15 @@ describe("Member", function () {
       expect(member).to.have.property("timeoutAdd");
       expect(member).to.have.property("timeoutRemove");
       expect(member).to.have.property("massUpdateRoles");
+      expect(member).to.have.property("hashName");
+      expect(member).to.have.property("encrypt");
       expect(member).to.have.property("toString");
       expect(member).to.have.property("toJSON");
+    });
+    it("should have the correct static structure", function () {
+      expect(Member).to.have.property("getHashName");
+      expect(Member).to.have.property("decrypt");
+      expect(Member).to.have.property("shouldCache");
     });
   });
 
@@ -904,6 +911,70 @@ describe("Member", function () {
       ).to.equal(
         `https://cdn.discordapp.com/guilds/${TEST_DATA.GUILD_ID}/users/${TEST_DATA.MEMBER_ID}/avatars/a_hash.gif`,
       );
+    });
+  });
+
+  context("check hashName", function () {
+    it("should return the correct hashName", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(member.hashName).to.equal(
+        "8aa59de8144e3679c9e2ec87d00e5644b7b2adca0dea60fc1a3dc2bd52907ecf2f09397765e4e5310e840556a4e62b6afa9b85708a2f4ea1120c25a1099105a5",
+      );
+    });
+  });
+
+  context("check encrypt", function () {
+    it("should return the correct encrypted member", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const encrypted = member.encrypt();
+      expect(encrypted).to.equal(
+        "GZhWQoPL07tKRkr0dMP66gDiDBe2GwslYJEWQJKeXa/sWfZq5VJOsNRitkJQvSR/prD8QHJqAhp889GoLQfSvEv0NXeiU8NTL4nYIKLIIDWrwVlhSXDIStVEGvqtoP0JFi9OHBujvqofe4hkn6SAjlYWgxeqRZj4gXAgFJ+mWWlX63X+4wUZeL8cy2r3eThvjKFmBzAMp3X2i1WGYSKUyaum/zHiu89K9IZ26ewOAgX6RHz3dNrQpE/APOGrAeBM0fa27jBFqW8YDnsgQhrm185GAt4ky12xqbWvJPu+EEA=",
+      );
+    });
+  });
+
+  context("check decrypt", function () {
+    it("should return the correct decrypted message", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const decrypted = Member.decrypt(
+        client,
+        "GZhWQoPL07tKRkr0dMP66gDiDBe2GwslYJEWQJKeXa/sWfZq5VJOsNRitkJQvSR/prD8QHJqAhp889GoLQfSvEv0NXeiU8NTL4nYIKLIIDWrwVlhSXDIStVEGvqtoP0JFi9OHBujvqofe4hkn6SAjlYWgxeqRZj4gXAgFJ+mWWlX63X+4wUZeL8cy2r3eThvjKFmBzAMp3X2i1WGYSKUyaum/zHiu89K9IZ26ewOAgX6RHz3dNrQpE/APOGrAeBM0fa27jBFqW8YDnsgQhrm185GAt4ky12xqbWvJPu+EEA=",
+        TEST_DATA.GUILD_ID,
+        TEST_DATA.MEMBER_ID,
+      );
+      expect(decrypted.id).to.equal(TEST_DATA.MEMBER_ID);
+    });
+  });
+
+  context("check shouldCache", function () {
+    it("should return true if all caches are enabled", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      expect(Member.shouldCache(client._cacheOptions, guild._cacheOptions)).to
+        .be.true;
+    });
+    it("should return false if message caching is disabled for the client", function () {
+      const client = TEST_CLIENTS.NO_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      expect(Member.shouldCache(client._cacheOptions, guild._cacheOptions)).to
+        .be.false;
+    });
+    it("should return false if message caching is disabled for the guild", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.NO_CACHES_ENABLED(client);
+      expect(Member.shouldCache(client._cacheOptions, guild._cacheOptions)).to
+        .be.false;
     });
   });
 

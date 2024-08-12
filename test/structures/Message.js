@@ -941,7 +941,7 @@ describe("Message", function () {
   });
 
   context("check shouldCache", function () {
-    it("should return true if the message is not a partial", function () {
+    it("should return true if message caching is enabled", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);

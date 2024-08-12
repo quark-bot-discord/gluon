@@ -13,6 +13,8 @@ import Role from "./Role.js";
 import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
+import structureHashName from "../util/general/structureHashName.js";
+import Client from "../Client.js";
 
 /**
  * Represents a guild member.
@@ -689,7 +691,7 @@ class Member {
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
-    return new Member(client, decryptStructure(data), {
+    return new Member(client, decryptStructure(data, userId, guildId), {
       user_id: userId,
       guild_id: guildId,
     });
