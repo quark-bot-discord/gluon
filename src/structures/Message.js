@@ -803,28 +803,6 @@ class Message {
   }
 
   /**
-   * Determines whether the file attached to this message should be cached.
-   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
-   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.
-   * @returns {Boolean}
-   * @public
-   * @static
-   * @method
-   */
-  static shouldCacheFile(guildCacheOptions, channelCacheOptions) {}
-
-  /**
-   * Determines whether the content of this message should be cached.
-   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
-   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.
-   * @returns {Boolean}
-   * @public
-   * @static
-   * @method
-   */
-  static shouldCacheContent(guildCacheOptions, channelCacheOptions) {}
-
-  /**
    * Determines whether the message should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
    * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
