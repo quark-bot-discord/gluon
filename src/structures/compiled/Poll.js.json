@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 180,
-                4195
+                4491
             ],
             "filename": "Poll.js",
             "lineno": 6,
@@ -540,11 +540,11 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * The question of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "comment": "/**\n   * The ID of the guild that this poll belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1597,
-                1644
+                1618,
+                1673
             ],
             "filename": "Poll.js",
             "lineno": 79,
@@ -552,6 +552,78 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000125",
+                "name": "Poll#guildId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The ID of the guild that this poll belongs to.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "guildId",
+        "longname": "Poll#guildId",
+        "kind": "member",
+        "memberof": "Poll",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The guild that this poll belongs to.\n   * @type {Guild}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1778,
+                1846
+            ],
+            "filename": "Poll.js",
+            "lineno": 89,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000136",
+                "name": "Poll#guild",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The guild that this poll belongs to.",
+        "type": {
+            "names": [
+                "Guild"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "guild",
+        "longname": "Poll#guild",
+        "kind": "member",
+        "memberof": "Poll",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The question of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1941,
+                1988
+            ],
+            "filename": "Poll.js",
+            "lineno": 99,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000153",
                 "name": "Poll#question",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -579,15 +651,15 @@
         "comment": "/**\n   * The answers of the poll.\n   * @type {Array<Object>}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1745,
-                2068
+                2089,
+                2412
             ],
             "filename": "Poll.js",
-            "lineno": 89,
+            "lineno": 109,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000134",
+                "id": "astnode100000162",
                 "name": "Poll#answers",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -615,15 +687,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1857,
-                1878
+                2201,
+                2222
             ],
             "filename": "Poll.js",
-            "lineno": 93,
+            "lineno": 113,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000159",
+                "id": "astnode100000187",
                 "name": "answerId",
                 "type": "MemberExpression",
                 "value": "a.answer_id"
@@ -639,15 +711,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1888,
-                2046
+                2232,
+                2390
             ],
             "filename": "Poll.js",
-            "lineno": 94,
+            "lineno": 114,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000163",
+                "id": "astnode100000191",
                 "name": "answer",
                 "type": "TemplateLiteral",
                 "value": ""
@@ -663,15 +735,15 @@
         "comment": "/**\n   * The UNIX timestamp of the expiry time for the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2189,
-                2232
+                2533,
+                2576
             ],
             "filename": "Poll.js",
-            "lineno": 105,
+            "lineno": 125,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000208",
+                "id": "astnode100000236",
                 "name": "Poll#expiry",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -699,15 +771,15 @@
         "comment": "/**\n   * Whether the poll allows multiselect.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2339,
-                2403
+                2683,
+                2747
             ],
             "filename": "Poll.js",
-            "lineno": 115,
+            "lineno": 135,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000217",
+                "id": "astnode100000245",
                 "name": "Poll#allowMultiselect",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -735,15 +807,15 @@
         "comment": "/**\n   * The layout type of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2501,
-                2596
+                2845,
+                2940
             ],
             "filename": "Poll.js",
-            "lineno": 125,
+            "lineno": 145,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000226",
+                "id": "astnode100000254",
                 "name": "Poll#layoutType",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -771,15 +843,15 @@
         "comment": "/**\n   * The raw layout type of the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2698,
-                2753
+                3042,
+                3097
             ],
             "filename": "Poll.js",
-            "lineno": 136,
+            "lineno": 156,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000241",
+                "id": "astnode100000269",
                 "name": "Poll#rawLayoutType",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -807,15 +879,15 @@
         "comment": "/**\n   * The poll responses.\n   * @type {MessagePollManager}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2854,
-                2900
+                3198,
+                3244
             ],
             "filename": "Poll.js",
-            "lineno": 146,
+            "lineno": 166,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000250",
+                "id": "astnode100000278",
                 "name": "Poll#_results",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -843,15 +915,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2942,
-                2997
+                3286,
+                3341
             ],
             "filename": "Poll.js",
-            "lineno": 154,
+            "lineno": 174,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000259",
+                "id": "astnode100000287",
                 "name": "Poll#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -872,15 +944,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3039,
-                3096
+                3383,
+                3440
             ],
             "filename": "Poll.js",
-            "lineno": 162,
+            "lineno": 182,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000270",
+                "id": "astnode100000298",
                 "name": "Poll#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -901,15 +973,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                3279,
-                4193
+                3623,
+                4489
             ],
             "filename": "Poll.js",
-            "lineno": 173,
+            "lineno": 193,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000283",
+                "id": "astnode100000311",
                 "name": "Poll#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -952,15 +1024,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3437,
-                3460
+                3781,
+                3804
             ],
             "filename": "Poll.js",
-            "lineno": 178,
+            "lineno": 198,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000301",
+                "id": "astnode100000329",
                 "name": "question",
                 "type": "MemberExpression",
                 "value": "this.question"
@@ -976,15 +1048,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3472,
-                3493
+                3816,
+                3837
             ],
             "filename": "Poll.js",
-            "lineno": 179,
+            "lineno": 199,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000305",
+                "id": "astnode100000333",
                 "name": "answers",
                 "type": "MemberExpression",
                 "value": "this.answers"
@@ -1000,15 +1072,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3505,
-                3600
+                3849,
+                3896
             ],
             "filename": "Poll.js",
-            "lineno": 180,
+            "lineno": 200,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000309",
+                "id": "astnode100000337",
                 "name": "expiry",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -1024,15 +1096,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3612,
-                3652
+                3908,
+                3948
             ],
             "filename": "Poll.js",
-            "lineno": 183,
+            "lineno": 201,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000325",
+                "id": "astnode100000348",
                 "name": "allow_multiselect",
                 "type": "MemberExpression",
                 "value": "this.allowMultiselect"
@@ -1048,15 +1120,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3664,
-                3695
+                3960,
+                3991
             ],
             "filename": "Poll.js",
-            "lineno": 184,
+            "lineno": 202,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000329",
+                "id": "astnode100000352",
                 "name": "layout_type",
                 "type": "MemberExpression",
                 "value": "this.rawLayoutType"
@@ -1072,15 +1144,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3707,
-                3745
+                4003,
+                4041
             ],
             "filename": "Poll.js",
-            "lineno": 185,
+            "lineno": 203,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000333",
+                "id": "astnode100000356",
                 "name": "_results",
                 "type": "CallExpression",
                 "value": ""
@@ -1096,15 +1168,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3856,
-                3879
+                4152,
+                4175
             ],
             "filename": "Poll.js",
-            "lineno": 191,
+            "lineno": 209,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000349",
+                "id": "astnode100000372",
                 "name": "question",
                 "type": "MemberExpression",
                 "value": "this.question"
@@ -1120,15 +1192,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3891,
-                3912
+                4187,
+                4208
             ],
             "filename": "Poll.js",
-            "lineno": 192,
+            "lineno": 210,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000353",
+                "id": "astnode100000376",
                 "name": "answers",
                 "type": "MemberExpression",
                 "value": "this.answers"
@@ -1144,15 +1216,15 @@
         "comment": "",
         "meta": {
             "range": [
-                3924,
-                4019
+                4220,
+                4315
             ],
             "filename": "Poll.js",
-            "lineno": 193,
+            "lineno": 211,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000357",
+                "id": "astnode100000380",
                 "name": "expiry",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -1168,15 +1240,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4031,
-                4071
+                4327,
+                4367
             ],
             "filename": "Poll.js",
-            "lineno": 196,
+            "lineno": 214,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000373",
+                "id": "astnode100000396",
                 "name": "allow_multiselect",
                 "type": "MemberExpression",
                 "value": "this.allowMultiselect"
@@ -1192,15 +1264,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4083,
-                4114
+                4379,
+                4410
             ],
             "filename": "Poll.js",
-            "lineno": 197,
+            "lineno": 215,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000377",
+                "id": "astnode100000400",
                 "name": "layout_type",
                 "type": "MemberExpression",
                 "value": "this.rawLayoutType"
@@ -1216,15 +1288,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4126,
-                4163
+                4422,
+                4459
             ],
             "filename": "Poll.js",
-            "lineno": 198,
+            "lineno": 216,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000381",
+                "id": "astnode100000404",
                 "name": "results",
                 "type": "CallExpression",
                 "value": ""
@@ -1240,15 +1312,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4197,
-                4217
+                4493,
+                4513
             ],
             "filename": "Poll.js",
-            "lineno": 205,
+            "lineno": 223,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000389",
+                "id": "astnode100000412",
                 "name": "module.exports",
                 "type": "Identifier"
             }
