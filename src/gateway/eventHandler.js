@@ -116,8 +116,6 @@ class EventHandler {
   RESUMED(data) {
     this.#ws.resetRetries();
 
-    this.#ws.heartbeatInit();
-
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "RESUMED");
 
     this.#_client.emit(EVENTS.RESUMED);

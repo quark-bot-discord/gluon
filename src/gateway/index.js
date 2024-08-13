@@ -15,7 +15,7 @@ import _resume from "./structures/_resume.js";
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
-class WS {
+class Shard {
   #token;
   #intents;
   #_client;
@@ -29,12 +29,14 @@ class WS {
   #ws;
   #resumeGatewayUrl;
   #retries;
-
+  #halted;
+  #lastReconnect;
   constructor(
     client,
     token,
     url,
-    shard,
+    shardId,
+    totalShards,
     intents,
     sessionId = null,
     sequence = null,
@@ -42,7 +44,8 @@ class WS {
     softRestartFunction = null,
   ) {
     this.#token = token;
-    this.shard = shard;
+    this.shard = shardId;
+    this.totalShards = totalShards;
 
     this.#intents = intents;
 
@@ -71,13 +74,15 @@ class WS {
       ? softRestartFunction
       : () => process.exit(1);
 
-    this.halted = false;
+    this.#halted = false;
+
+    this.#lastReconnect = null;
 
     this.#addListeners();
   }
 
   #handleIncoming(data) {
-    if (this.halted === true) return;
+    if (this.#halted === true) return;
 
     if (!data) return;
 
@@ -147,10 +152,12 @@ class WS {
 
         this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Hello received");
 
-        if (this.#resuming != true) {
-          this.heartbeatInit();
-          this.#identify();
-        } else this.#resume();
+        this.#lastReconnect = Date.now();
+
+        this.#heartbeatInit();
+
+        if (this.#resuming != true) this.#identify();
+        else this.#resume();
 
         break;
       }
@@ -179,8 +186,21 @@ class WS {
   }
 
   halt() {
-    this.halted = true;
+    this.#halted = true;
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.DANGER, "Halting websocket");
+  }
+
+  check() {
+    return {
+      shard: this.shard,
+      websocketState: this.#ws.readyState,
+      sessionId: this.#_sessionId,
+      lastReconnect: this.#lastReconnect,
+    };
+  }
+
+  jitter() {
+    return Math.random();
   }
 
   updatePresence(name, type, status, afk, since) {
@@ -189,12 +209,14 @@ class WS {
     this.#ws.send(_updatePresence(name, type, status, afk, since));
   }
 
-  heartbeatInit() {
-    this.#heartbeat();
-
-    this.#heartbeatSetInterval = setInterval(() => {
+  #heartbeatInit() {
+    setTimeout(() => {
       this.#heartbeat();
-    }, this.#heartbeatInterval);
+
+      this.#heartbeatSetInterval = setInterval(() => {
+        this.#heartbeat();
+      }, this.#heartbeatInterval);
+    }, this.#heartbeatInterval * this.jitter());
   }
 
   #heartbeat(response = false) {
@@ -222,10 +244,12 @@ class WS {
   #identify() {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
-      `Identifying with token ${this.#token}, shard ${this.shard} and intents ${this.#intents}`,
+      `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.totalShards}) and intents ${this.#intents}`,
     );
 
-    this.#ws.send(_identify(this.#token, this.shard, this.#intents));
+    this.#ws.send(
+      _identify(this.#token, [this.shard, this.totalShards], this.#intents),
+    );
   }
 
   #reconnect() {
@@ -385,4 +409,4 @@ class WS {
   }
 }
 
-export default WS;
+export default Shard;

@@ -9,9 +9,10 @@ import {
 } from "./constants.js";
 
 import EventsEmitter from "events";
+import hash from "hash.js";
 
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
-import WS from "./gateway/index.js";
+import Shard from "./gateway/index.js";
 const chalk =
   process.env.NODE_ENV === "development"
     ? (await import("chalk")).default
@@ -37,6 +38,7 @@ class Client extends EventsEmitter {
   #intents;
   #_cacheOptions;
   #_defaultGuildCacheOptions;
+  #_sessionData;
 
   /**
    * Creates the client and sets the default options.
@@ -109,7 +111,7 @@ class Client extends EventsEmitter {
      */
     this.totalShards = totalShards;
 
-    this._sessionData = sessionData;
+    this.#_sessionData = sessionData;
 
     /**
      * The client user.
@@ -143,6 +145,26 @@ class Client extends EventsEmitter {
 
   halt() {
     for (let i = 0; i < this.shards.length; i++) this.shards[i].halt();
+  }
+
+  checkShards() {
+    let guildIds = [];
+    this.guilds.forEach((guild) => guildIds.push(guild.id));
+    const processInformation = {
+      totalShards: this.totalShards,
+      shards: [],
+      guildCount: this.guilds.size,
+      memberCount: this.getMemberCount(),
+      cacheCounts: this.getCacheCounts(),
+      guilds: guildIds,
+      processId: hash
+        .sha256()
+        .update(`${this.shardIds.join("_")}-${this.totalShards}`)
+        .digest("hex"),
+    };
+    for (let i = 0; i < this.shards.length; i++)
+      processInformation.shards.push(this.shards[i].check());
+    return processInformation;
   }
 
   _emitDebug(status, message) {
@@ -188,8 +210,8 @@ class Client extends EventsEmitter {
     let totalChannels = 0;
     let totalRoles = 0;
 
-    this.guilds.cache.forEach((guild) => {
-      guild.channels.cache.forEach((channel) => {
+    this.guilds.forEach((guild) => {
+      guild.channels.forEach((channel) => {
         switch (channel.type) {
           case CHANNEL_TYPES.GUILD_NEWS_THREAD:
           case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
@@ -249,7 +271,7 @@ class Client extends EventsEmitter {
   getMemberCount() {
     let memberCount = 0;
 
-    this.guilds.cache.forEach((guild) => {
+    this.guilds.forEach((guild) => {
       memberCount += guild.memberCount;
     });
 
@@ -738,22 +760,25 @@ class Client extends EventsEmitter {
               n++
             )
               this.shards.push(
-                new WS(
+                new Shard(
                   this,
                   this.#token,
                   generateWebsocketURL(
-                    this._sessionData
-                      ? this._sessionData[i].resumeGatewayUrl
+                    this.#_sessionData
+                      ? this.#_sessionData[i].resumeGatewayUrl
                       : gatewayInfo.url,
                   ),
-                  [this.shardIds[i], this.totalShards],
+                  this.shardIds[i],
+                  this.totalShards,
                   this.#intents,
-                  this._sessionData
-                    ? this._sessionData[i].sessionId
+                  this.#_sessionData
+                    ? this.#_sessionData[i].sessionId
                     : undefined,
-                  this._sessionData ? this._sessionData[i].sequence : undefined,
-                  this._sessionData
-                    ? this._sessionData[i].resumeGatewayUrl
+                  this.#_sessionData
+                    ? this.#_sessionData[i].sequence
+                    : undefined,
+                  this.#_sessionData
+                    ? this.#_sessionData[i].resumeGatewayUrl
                     : undefined,
                   this.softRestartFunction,
                 ),
