@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 297,
-                6950
+                6990
             ],
             "filename": "Invite.js",
             "lineno": 10,
@@ -233,7 +233,7 @@
         "meta": {
             "range": [
                 794,
-                2840
+                2853
             ],
             "filename": "Invite.js",
             "lineno": 27,
@@ -306,7 +306,7 @@
         "meta": {
             "range": [
                 297,
-                6950
+                6990
             ],
             "filename": "Invite.js",
             "lineno": 10,
@@ -692,18 +692,18 @@
         "comment": "",
         "meta": {
             "range": [
-                2098,
-                2126
+                2104,
+                2139
             ],
             "filename": "Invite.js",
-            "lineno": 83,
-            "columnno": 46,
+            "lineno": 84,
+            "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000160",
                 "name": "this.",
-                "type": "MemberExpression",
-                "value": "data.expires",
+                "type": "BinaryExpression",
+                "value": "",
                 "paramnames": []
             }
         },
@@ -718,15 +718,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2244,
-                2333
+                2257,
+                2346
             ],
             "filename": "Invite.js",
-            "lineno": 89,
+            "lineno": 90,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000186",
+                "id": "astnode100000188",
                 "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
@@ -744,15 +744,15 @@
         "comment": "/**\n       * The maximum number of uses allowed for the invite.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2507,
-                2537
+                2520,
+                2550
             ],
             "filename": "Invite.js",
-            "lineno": 98,
+            "lineno": 99,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000215",
+                "id": "astnode100000217",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.max_uses",
@@ -777,15 +777,15 @@
         "comment": "/**\n   * The id of the channel the invite is directed to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2958,
-                3017
+                2971,
+                3030
             ],
             "filename": "Invite.js",
-            "lineno": 118,
+            "lineno": 119,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000284",
+                "id": "astnode100000286",
                 "name": "Invite#channelId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -813,15 +813,15 @@
         "comment": "/**\n   * The channel the invite is directed to.\n   * @type {(TextChannel | VoiceChannel)?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3148,
-                3227
+                3161,
+                3240
             ],
             "filename": "Invite.js",
-            "lineno": 128,
+            "lineno": 129,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000295",
+                "id": "astnode100000297",
                 "name": "Invite#channel",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -851,15 +851,15 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3320,
-                3356
+                3333,
+                3369
             ],
             "filename": "Invite.js",
-            "lineno": 138,
+            "lineno": 139,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000313",
+                "id": "astnode100000315",
                 "name": "Invite#id",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -887,15 +887,15 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3449,
-                3489
+                3462,
+                3502
             ],
             "filename": "Invite.js",
-            "lineno": 148,
+            "lineno": 149,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000321",
+                "id": "astnode100000323",
                 "name": "Invite#code",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -923,15 +923,15 @@
         "comment": "/**\n   * The id of the guild that this invite belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3607,
-                3662
+                3620,
+                3675
             ],
             "filename": "Invite.js",
-            "lineno": 158,
+            "lineno": 159,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000330",
+                "id": "astnode100000332",
                 "name": "Invite#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -959,15 +959,15 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3768,
-                3844
+                3781,
+                3857
             ],
             "filename": "Invite.js",
-            "lineno": 168,
+            "lineno": 169,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000341",
+                "id": "astnode100000343",
                 "name": "Invite#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -996,15 +996,15 @@
         "comment": "/**\n   * The number of times the invite has been used.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3960,
-                3999
+                3973,
+                4012
             ],
             "filename": "Invite.js",
-            "lineno": 178,
+            "lineno": 179,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000360",
+                "id": "astnode100000362",
                 "name": "Invite#uses",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1033,15 +1033,15 @@
         "comment": "/**\n   * The UNIX timestamp of when the invite expires.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4116,
-                4161
+                4129,
+                4174
             ],
             "filename": "Invite.js",
-            "lineno": 188,
+            "lineno": 189,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000369",
+                "id": "astnode100000371",
                 "name": "Invite#expires",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1070,15 +1070,15 @@
         "comment": "/**\n   * The user who created the invite.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4262,
-                4307
+                4275,
+                4320
             ],
             "filename": "Invite.js",
-            "lineno": 198,
+            "lineno": 199,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000378",
+                "id": "astnode100000380",
                 "name": "Invite#inviter",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1107,15 +1107,15 @@
         "comment": "/**\n   * The URL of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4399,
-                4451
+                4412,
+                4464
             ],
             "filename": "Invite.js",
-            "lineno": 208,
+            "lineno": 209,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000387",
+                "id": "astnode100000389",
                 "name": "Invite#url",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1143,15 +1143,15 @@
         "comment": "/**\n   * The maximum number of uses allowed for the invite.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4572,
-                4618
+                4585,
+                4631
             ],
             "filename": "Invite.js",
-            "lineno": 218,
+            "lineno": 219,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000399",
+                "id": "astnode100000401",
                 "name": "Invite#maxUses",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1180,15 +1180,15 @@
         "comment": "/**\n   * Returns the URL of the invite.\n   * @param {String} code The code of the invite.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                4782,
-                4939
+                4795,
+                4952
             ],
             "filename": "Invite.js",
-            "lineno": 230,
+            "lineno": 231,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000408",
+                "id": "astnode100000410",
                 "name": "Invite.getUrl",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1231,15 +1231,15 @@
         "comment": "/**\n   * Determines whether the invite should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5238,
-                5770
+                5251,
+                5783
             ],
             "filename": "Invite.js",
-            "lineno": 245,
+            "lineno": 246,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000429",
+                "id": "astnode100000431",
                 "name": "Invite.shouldCache",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1292,15 +1292,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                5812,
-                5865
+                5825,
+                5878
             ],
             "filename": "Invite.js",
-            "lineno": 263,
+            "lineno": 264,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000471",
+                "id": "astnode100000473",
                 "name": "Invite#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1321,15 +1321,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                5907,
-                5964
+                5920,
+                5977
             ],
             "filename": "Invite.js",
-            "lineno": 271,
+            "lineno": 272,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000482",
+                "id": "astnode100000484",
                 "name": "Invite#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1350,15 +1350,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                6147,
-                6948
+                6160,
+                6988
             ],
             "filename": "Invite.js",
-            "lineno": 282,
+            "lineno": 283,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000495",
+                "id": "astnode100000497",
                 "name": "Invite#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1401,15 +1401,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6305,
-                6320
+                6318,
+                6333
             ],
             "filename": "Invite.js",
-            "lineno": 287,
+            "lineno": 288,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000513",
+                "id": "astnode100000515",
                 "name": "code",
                 "type": "MemberExpression",
                 "value": "this.code"
@@ -1425,15 +1425,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6332,
-                6368
+                6345,
+                6381
             ],
             "filename": "Invite.js",
-            "lineno": 288,
+            "lineno": 289,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000517",
+                "id": "astnode100000519",
                 "name": "channel",
                 "type": "CallExpression",
                 "value": ""
@@ -1449,15 +1449,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6380,
-                6416
+                6393,
+                6429
             ],
             "filename": "Invite.js",
-            "lineno": 289,
+            "lineno": 290,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000525",
+                "id": "astnode100000527",
                 "name": "inviter",
                 "type": "CallExpression",
                 "value": ""
@@ -1473,15 +1473,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6428,
-                6443
+                6441,
+                6456
             ],
             "filename": "Invite.js",
-            "lineno": 290,
+            "lineno": 291,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000533",
+                "id": "astnode100000535",
                 "name": "uses",
                 "type": "MemberExpression",
                 "value": "this.uses"
@@ -1497,17 +1497,17 @@
         "comment": "",
         "meta": {
             "range": [
-                6455,
-                6483
+                6468,
+                6523
             ],
             "filename": "Invite.js",
-            "lineno": 291,
+            "lineno": 292,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000537",
+                "id": "astnode100000539",
                 "name": "expires",
-                "type": "BinaryExpression",
+                "type": "ConditionalExpression",
                 "value": ""
             }
         },
@@ -1521,15 +1521,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6495,
-                6517
+                6535,
+                6557
             ],
             "filename": "Invite.js",
-            "lineno": 292,
+            "lineno": 293,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000543",
+                "id": "astnode100000550",
                 "name": "max_uses",
                 "type": "MemberExpression",
                 "value": "this.maxUses"
@@ -1545,15 +1545,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6628,
-                6643
+                6668,
+                6683
             ],
             "filename": "Invite.js",
-            "lineno": 298,
+            "lineno": 299,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000555",
+                "id": "astnode100000562",
                 "name": "code",
                 "type": "MemberExpression",
                 "value": "this.code"
@@ -1569,15 +1569,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6655,
-                6691
+                6695,
+                6731
             ],
             "filename": "Invite.js",
-            "lineno": 299,
+            "lineno": 300,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000559",
+                "id": "astnode100000566",
                 "name": "channel",
                 "type": "CallExpression",
                 "value": ""
@@ -1593,15 +1593,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6703,
-                6739
+                6743,
+                6779
             ],
             "filename": "Invite.js",
-            "lineno": 300,
+            "lineno": 301,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000567",
+                "id": "astnode100000574",
                 "name": "inviter",
                 "type": "CallExpression",
                 "value": ""
@@ -1617,15 +1617,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6751,
-                6766
+                6791,
+                6806
             ],
             "filename": "Invite.js",
-            "lineno": 301,
+            "lineno": 302,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000575",
+                "id": "astnode100000582",
                 "name": "uses",
                 "type": "MemberExpression",
                 "value": "this.uses"
@@ -1641,15 +1641,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6778,
-                6884
+                6818,
+                6924
             ],
             "filename": "Invite.js",
-            "lineno": 302,
+            "lineno": 303,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000579",
+                "id": "astnode100000586",
                 "name": "expires_at",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -1665,15 +1665,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6896,
-                6918
+                6936,
+                6958
             ],
             "filename": "Invite.js",
-            "lineno": 305,
+            "lineno": 306,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000595",
+                "id": "astnode100000602",
                 "name": "max_uses",
                 "type": "MemberExpression",
                 "value": "this.maxUses"
@@ -1689,15 +1689,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6952,
-                6974
+                6992,
+                7014
             ],
             "filename": "Invite.js",
-            "lineno": 312,
+            "lineno": 313,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000599",
+                "id": "astnode100000606",
                 "name": "module.exports",
                 "type": "Identifier"
             }
