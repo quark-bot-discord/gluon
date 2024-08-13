@@ -334,6 +334,10 @@ export const GLUON_CHANNEL_CACHING_OPTIONS = {
   WEBHOOK: 1 << 8,
   STICKER: 1 << 9,
 };
+export const PERMISSION_OVERWRITE_TYPES = {
+  ROLE: 0,
+  MEMBER: 1,
+};
 export const AUTO_MODERATION_TRIGGER_TYPES = {
   KEYWORD: 1,
   SPAM: 3,

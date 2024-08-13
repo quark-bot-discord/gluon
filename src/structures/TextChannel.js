@@ -59,7 +59,7 @@ class TextChannel extends Channel {
   async bulkDelete(messages, { reason } = {}) {
     if (
       !checkPermission(
-        (await this.guild.me()).permissions,
+        this.checkPermission(await this.guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
     )

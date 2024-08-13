@@ -660,7 +660,7 @@ class Message {
   async reply(content, { embeds, components, files } = {}) {
     if (
       !checkPermission(
-        (await this.guild.me()).permissions,
+        this.channel.checkPermission(await this.guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -728,7 +728,7 @@ class Message {
   async edit(content, { embeds, components, files } = {}) {
     if (
       !checkPermission(
-        (await this.guild.me()).permissions,
+        this.channel.checkPermission(await this.guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )

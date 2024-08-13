@@ -12,8 +12,7 @@ import ChannelMessageManager from "../../src/managers/ChannelMessageManager.js";
 import ChannelCacheOptions from "../../src/managers/ChannelCacheOptions.js";
 import Member from "../../src/structures/Member.js";
 import Role from "../../src/structures/Role.js";
-import cacheChannel from "../../src/util/gluon/cacheChannel.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Channel", function () {
   context("check import", function () {
@@ -45,6 +44,7 @@ describe("Channel", function () {
       expect(channel).to.have.property("toString");
       expect(channel).to.have.property("toJSON");
       expect(channel).to.have.property("send");
+      expect(channel).to.have.property("checkPermission");
     });
   });
 
@@ -189,6 +189,53 @@ describe("Channel", function () {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.messages).to.be.an.instanceOf(ChannelMessageManager);
+    });
+  });
+
+  context("check checkPermission", function () {
+    it("should throw an error if no parameters are passed", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      expect(() => channel.checkPermission()).to.throw(
+        TypeError,
+        "GLUON: No member provided.",
+      );
+    });
+    it("should throw an error if member is not a Member instance", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      expect(() => channel.checkPermission(123)).to.throw(
+        TypeError,
+        "GLUON: Member must be a Member.",
+      );
+    });
+    it("should return the correct permissions", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Role(client, TEST_DATA.ROLE_OVERRIDES, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_OVERRIDES.id];
+      const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
+        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL_2, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      expect(channel.checkPermission(member)).to.equal(
+        String(
+          PERMISSIONS.ADD_REACTIONS |
+            PERMISSIONS.VIEW_CHANNEL |
+            PERMISSIONS.ATTACH_FILES,
+        ),
+      );
     });
   });
 

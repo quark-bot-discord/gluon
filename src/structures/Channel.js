@@ -1,7 +1,10 @@
-import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  PERMISSION_OVERWRITE_TYPES,
+  PERMISSIONS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
-import ActionRow from "../util/builder/actionRowBuilder.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Message from "./Message.js";
 import Embed from "../util/builder/embedBuilder.js";
@@ -11,6 +14,7 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
 import File from "../util/builder/file.js";
+import Member from "./Member.js";
 
 /**
  * Represents a channel within Discord.
@@ -189,7 +193,7 @@ class Channel {
   ) {
     if (
       !checkPermission(
-        (await this.guild.me()).permissions,
+        this.checkPermission(await this.guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -425,6 +429,49 @@ class Channel {
     if (gluonCacheOptions.cacheChannels === false) return false;
     if (guildCacheOptions.channelCaching === false) return false;
     return true;
+  }
+
+  /**
+   * Returns the permissions for a member in this channel.
+   * @param {Member} member The member to check the permissions for.
+   * @returns {String}
+   */
+  checkPermission(member) {
+    if (!member) throw new TypeError("GLUON: No member provided.");
+    if (!(member instanceof Member))
+      throw new TypeError("GLUON: Member must be a Member.");
+    let overallPermissions = BigInt(member.permissions);
+    const everyoneRole = this.permissionOverwrites.find(
+      (p) =>
+        p.id === this.guildId && p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+    );
+    if (everyoneRole) {
+      overallPermissions &= ~BigInt(everyoneRole.deny);
+      overallPermissions |= BigInt(everyoneRole.allow);
+    }
+    let overallRoleDenyPermissions = 0n;
+    let overallRoleAllowPermissions = 0n;
+    for (let i = 0; i < member.roles.length; i++) {
+      const role = this.permissionOverwrites.find(
+        (p) =>
+          p.id === member.roles[i].id &&
+          p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+      );
+      if (role) {
+        overallRoleDenyPermissions |= BigInt(role.deny);
+        overallRoleAllowPermissions |= BigInt(role.allow);
+      }
+    }
+    overallPermissions &= ~overallRoleDenyPermissions;
+    overallPermissions |= overallRoleAllowPermissions;
+    const memberOverwritePermissions = this.permissionOverwrites.find(
+      (p) => p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
+    );
+    if (memberOverwritePermissions) {
+      overallPermissions &= ~BigInt(memberOverwritePermissions.deny);
+      overallPermissions |= BigInt(memberOverwritePermissions.allow);
+    }
+    return String(overallPermissions);
   }
 
   /**

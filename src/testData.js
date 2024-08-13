@@ -1,4 +1,5 @@
 import Client from "./Client.js";
+import { PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
@@ -28,7 +29,20 @@ export const TEST_DATA = {
     guild_id: "619434557472505857",
     name: "test-channel",
     position: 0,
-    permission_overwrites: [],
+    permission_overwrites: [
+      {
+        id: "123453333333345678",
+        type: 0,
+        allow: PERMISSIONS.ADD_REACTIONS | PERMISSIONS.VIEW_CHANNEL,
+        deny: PERMISSIONS.SEND_MESSAGES,
+      },
+      {
+        id: "619434557472505857",
+        type: 0,
+        allow: PERMISSIONS.ATTACH_FILES,
+        deny: PERMISSIONS.SEND_MESSAGES | PERMISSIONS.VIEW_CHANNEL,
+      },
+    ],
     rate_limit_per_user: 0,
     nsfw: false,
     topic: "test topic",
@@ -475,6 +489,17 @@ export const TEST_DATA = {
       integration_id: null,
       premium_subscriber: null,
     },
+    icon: "000000000000000000000000deadbeef",
+  },
+  ROLE_OVERRIDES: {
+    id: "123453333333345678",
+    name: "overrides",
+    color: 0,
+    hoist: false,
+    position: 0,
+    permissions: "0",
+    managed: false,
+    mentionable: true,
     icon: "000000000000000000000000deadbeef",
   },
   EMOJI: {
