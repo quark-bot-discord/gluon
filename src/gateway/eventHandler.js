@@ -5,6 +5,7 @@ import {
   INTERACTION_TYPES,
   COMPONENT_TYPES,
   GLUON_VERSION,
+  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
@@ -107,6 +108,8 @@ class EventHandler {
                                              v${GLUON_VERSION}
       `);
 
+    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "READY");
+
     this.#_client.emit(EVENTS.READY, this.#initialGuilds);
   }
 
@@ -115,12 +118,7 @@ class EventHandler {
 
     this.#ws.heartbeatInit();
 
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => RESUMED`,
-    );
+    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "RESUMED");
 
     this.#_client.emit(EVENTS.RESUMED);
   }
@@ -128,11 +126,9 @@ class EventHandler {
   GUILD_CREATE(data) {
     let guild;
 
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_CREATE ${data.id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_CREATE ${data.id}`,
     );
 
     if (
@@ -154,11 +150,9 @@ class EventHandler {
   }
 
   GUILD_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_UPDATE ${data.id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_UPDATE ${data.id}`,
     );
 
     const oldGuild = this.#_client.guilds.get(data.id);
@@ -168,11 +162,9 @@ class EventHandler {
   }
 
   GUILD_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_DELETE ${data.id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_DELETE ${data.id}`,
     );
 
     if (data.unavailable != true) {
@@ -187,11 +179,9 @@ class EventHandler {
   }
 
   GUILD_ROLE_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_ROLE_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_ROLE_CREATE ${data.guild_id}`,
     );
 
     const role = new Role(this.#_client, data.role, {
@@ -202,11 +192,9 @@ class EventHandler {
   }
 
   GUILD_ROLE_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_ROLE_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_ROLE_UPDATE ${data.guild_id}`,
     );
 
     const oldRole = this.#_client.guilds
@@ -220,11 +208,9 @@ class EventHandler {
   }
 
   GUILD_ROLE_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_ROLE_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_ROLE_DELETE ${data.guild_id}`,
     );
 
     const role = this.#_client.guilds
@@ -236,11 +222,9 @@ class EventHandler {
   }
 
   CHANNEL_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => CHANNEL_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `CHANNEL_CREATE ${data.guild_id}`,
     );
 
     const channel = cacheChannel(this.#_client, data, data.guild_id);
@@ -249,11 +233,9 @@ class EventHandler {
   }
 
   CHANNEL_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => CHANNEL_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `CHANNEL_UPDATE ${data.guild_id}`,
     );
 
     const oldChannel = this.#_client.guilds
@@ -265,11 +247,9 @@ class EventHandler {
   }
 
   CHANNEL_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => CHANNEL_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `CHANNEL_DELETE ${data.guild_id}`,
     );
 
     const channel = this.#_client.guilds
@@ -281,22 +261,18 @@ class EventHandler {
   }
 
   CHANNEL_PINS_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => CHANNEL_PINS_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.CHANNEL_PINS_UPDATE, data);
   }
 
   THREAD_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => THREAD_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `THREAD_CREATE ${data.guild_id}`,
     );
 
     const thread = new Thread(this.#_client, data, { guild_id: data.guild_id });
@@ -305,11 +281,9 @@ class EventHandler {
   }
 
   THREAD_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => THREAD_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `THREAD_UPDATE ${data.guild_id}`,
     );
 
     const oldThread = this.#_client.guilds
@@ -323,11 +297,9 @@ class EventHandler {
   }
 
   THREAD_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => THREAD_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `THREAD_DELETE ${data.guild_id}`,
     );
 
     const thread = this.#_client.guilds
@@ -339,11 +311,9 @@ class EventHandler {
   }
 
   THREAD_LIST_SYNC(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => THREAD_LIST_SYNC ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `THREAD_LIST_SYNC ${data.guild_id}`,
     );
 
     const threads = [];
@@ -356,11 +326,9 @@ class EventHandler {
   }
 
   GUILD_MEMBER_ADD(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_MEMBER_ADD ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_MEMBER_ADD ${data.guild_id}`,
     );
 
     const member = new Member(this.#_client, data, {
@@ -375,11 +343,9 @@ class EventHandler {
   }
 
   GUILD_MEMBER_REMOVE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_MEMBER_REMOVE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_MEMBER_REMOVE ${data.guild_id}`,
     );
 
     GuildMemberManager.getCacheManager(this.#_client, data.guild_id)
@@ -403,11 +369,9 @@ class EventHandler {
   }
 
   GUILD_MEMBER_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_MEMBER_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_MEMBER_UPDATE ${data.guild_id}`,
     );
 
     GuildMemberManager.getCacheManager(this.#_client, data.guild_id)
@@ -424,11 +388,9 @@ class EventHandler {
   }
 
   GUILD_MEMBERS_CHUNK(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_MEMBERS_CHUNK ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_MEMBERS_CHUNK ${data.guild_id}`,
     );
 
     for (let i = 0; i < data.members.length; i++)
@@ -440,11 +402,9 @@ class EventHandler {
   }
 
   GUILD_BAN_ADD(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_BAN_ADD ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_BAN_ADD ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
@@ -455,11 +415,9 @@ class EventHandler {
   }
 
   GUILD_BAN_REMOVE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_BAN_REMOVE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_BAN_REMOVE ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
@@ -470,11 +428,9 @@ class EventHandler {
   }
 
   INVITE_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => INVITE_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `INVITE_CREATE ${data.guild_id}`,
     );
 
     const invite = new Invite(this.#_client, data, { guild_id: data.guild_id });
@@ -483,11 +439,9 @@ class EventHandler {
   }
 
   INVITE_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => INVITE_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `INVITE_DELETE ${data.guild_id}`,
     );
 
     const guild = this.#_client.guilds.get(data.guild_id);
@@ -500,11 +454,9 @@ class EventHandler {
   }
 
   VOICE_STATE_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => VOICE_STATE_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `VOICE_STATE_UPDATE ${data.guild_id}`,
     );
 
     const oldVoiceState =
@@ -526,22 +478,18 @@ class EventHandler {
   }
 
   VOICE_CHANNEL_STATUS_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
   }
 
   MESSAGE_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_CREATE ${data.guild_id}`,
     );
 
     const message = new Message(this.#_client, data, {
@@ -553,11 +501,9 @@ class EventHandler {
   }
 
   MESSAGE_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_UPDATE ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(
@@ -577,11 +523,9 @@ class EventHandler {
   }
 
   MESSAGE_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_DELETE ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(
@@ -596,11 +540,9 @@ class EventHandler {
   }
 
   MESSAGE_DELETE_BULK(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_DELETE_BULK ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
 
     const messages = [];
@@ -622,11 +564,9 @@ class EventHandler {
   }
 
   INTERACTION_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => INTERACTION_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `INTERACTION_CREATE ${data.guild_id}`,
     );
 
     if (!data.guild_id) return;
@@ -700,11 +640,9 @@ class EventHandler {
   }
 
   GUILD_AUDIT_LOG_ENTRY_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
     );
 
     const auditLogEntry = new AuditLog(this.#_client, data, {
@@ -715,44 +653,36 @@ class EventHandler {
   }
 
   ENTITLEMENT_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => ENTITLEMENT_CREATE ${data.user_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `ENTITLEMENT_CREATE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_CREATE, data);
   }
 
   ENTITLEMENT_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => ENTITLEMENT_UPDATE ${data.user_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `ENTITLEMENT_UPDATE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
   }
 
   ENTITLEMENT_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => ENTITLEMENT_DELETE ${data.user_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `ENTITLEMENT_DELETE ${data.user_id}`,
     );
 
     this.#_client.emit(EVENTS.ENTITLEMENT_DELETE, data);
   }
 
   GUILD_SCHEDULED_EVENT_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
     );
 
     const scheduledEvent = new ScheduledEvent(this.#_client, data, {
@@ -763,11 +693,9 @@ class EventHandler {
   }
 
   GUILD_SCHEDULED_EVENT_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
     );
 
     const oldScheduledEvent =
@@ -785,11 +713,9 @@ class EventHandler {
   }
 
   GUILD_SCHEDULED_EVENT_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -801,11 +727,9 @@ class EventHandler {
   }
 
   GUILD_SCHEDULED_EVENT_USER_ADD(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -827,11 +751,9 @@ class EventHandler {
   }
 
   GUILD_SCHEDULED_EVENT_USER_REMOVE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
     );
 
     const scheduledEvent =
@@ -853,55 +775,45 @@ class EventHandler {
   }
 
   AUTO_MODERATION_RULE_CREATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_RULE_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_RULE_DELETE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_ACTION_EXECUTION(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
   }
 
   GUILD_EMOJIS_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => GUILD_EMOJIS_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
     const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis;
@@ -990,22 +902,18 @@ class EventHandler {
   }
 
   WEBHOOKS_UPDATE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => WEBHOOKS_UPDATE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `WEBHOOKS_UPDATE ${data.guild_id}`,
     );
 
     this.#_client.emit(EVENTS.WEBHOOKS_UPDATE, data);
   }
 
   MESSAGE_POLL_VOTE_ADD(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(
@@ -1023,11 +931,9 @@ class EventHandler {
   }
 
   MESSAGE_POLL_VOTE_REMOVE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(
@@ -1045,11 +951,9 @@ class EventHandler {
   }
 
   MESSAGE_REACTION_ADD(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_REACTION_ADD ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(
@@ -1077,11 +981,9 @@ class EventHandler {
   }
 
   MESSAGE_REACTION_REMOVE(data) {
-    this.#_client.emit(
-      "debug",
-      `${this.#ws.libName} ${this.#ws.shardNorminal} @ ${
-        this.#ws.time
-      } => MESSAGE_REACTION_REMOVE ${data.guild_id}`,
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
 
     ChannelMessageManager.getCacheManager(

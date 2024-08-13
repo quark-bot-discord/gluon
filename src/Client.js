@@ -4,12 +4,18 @@ import {
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_POLLING_TIME,
+  GLUON_DEBUG_LEVELS,
+  NAME,
 } from "./constants.js";
 
 import EventsEmitter from "events";
 
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import WS from "./gateway/index.js";
+const chalk =
+  process.env.NODE_ENV === "development"
+    ? (await import("chalk")).default
+    : null;
 
 import UserManager from "./managers/UserManager.js";
 import GuildManager from "./managers/GuildManager.js";
@@ -56,10 +62,6 @@ class Client extends EventsEmitter {
     sessionData,
     initCache,
     softRestartFunction,
-    s3Url,
-    s3MessageBucket,
-    s3AccessKeyId,
-    s3SecretAccessKey,
   } = {}) {
     super();
 
@@ -135,9 +137,41 @@ class Client extends EventsEmitter {
 
     this.increasedCache = new Map();
     this.increasedCacheMultipliers = new Map();
-    // this.increaseCacheBy = increaseCacheBy;
 
     this.softRestartFunction = softRestartFunction;
+  }
+
+  _emitDebug(status, message) {
+    if (process.env.NODE_ENV !== "development") return;
+    const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
+    let shardStatus;
+    const shardString = `[Shard: ${this.shardIds ? this.shardIds.join(", ") : "???"}]`;
+    switch (status) {
+      case GLUON_DEBUG_LEVELS.INFO: {
+        shardStatus = chalk.blue(chalk.bgWhite("[Info]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.WARN: {
+        shardStatus = chalk.yellow(chalk.bgYellowBright("[Warn]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.DANGER: {
+        shardStatus = chalk.yellow(chalk.bgRed("[Danger]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.ERROR: {
+        shardStatus = chalk.red(chalk.bgRedBright("[Error]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.NONE:
+      default: {
+        shardStatus = chalk.gray(shardString);
+        break;
+      }
+    }
+    const time = chalk.magenta(new Date().toGMTString());
+    const emitString = `${libName} ${shardStatus} @ ${time} => ${message}`;
+    console.log(emitString);
   }
 
   /**

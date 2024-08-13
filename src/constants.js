@@ -338,6 +338,13 @@ export const PERMISSION_OVERWRITE_TYPES = {
   ROLE: 0,
   MEMBER: 1,
 };
+export const GLUON_DEBUG_LEVELS = {
+  NONE: 0,
+  ERROR: 1,
+  WARN: 2,
+  DANGER: 3,
+  INFO: 4,
+};
 export const AUTO_MODERATION_TRIGGER_TYPES = {
   KEYWORD: 1,
   SPAM: 3,

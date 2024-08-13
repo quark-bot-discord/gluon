@@ -11,6 +11,7 @@ import {
   VERSION,
   NAME,
   GLUON_REPOSITORY_URL,
+  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 const AbortController = globalThis.AbortController;
@@ -68,18 +69,20 @@ class BetterRequestHandler {
             reject,
           );
         else {
-          if (process.env.NODE_ENV == "development")
-            this.#_client.emit(
-              "debug",
-              `RATELIMITED ${data.hash} (bucket reset):${
-                bucket.reset
-              } (latency):${this.#latency}  (time until retry):${
-                (bucket.reset + this.#latency) * 1000 - new Date().getTime()
-              } (current time):${(new Date().getTime() / 1000) | 0}`,
-            );
+          this.#_client._emitDebug(
+            GLUON_DEBUG_LEVELS.WARN,
+            `RATELIMITED ${data.hash} (bucket reset):${
+              bucket.reset
+            } (latency):${this.#latency}  (time until retry):${
+              (bucket.reset + this.#latency) * 1000 - new Date().getTime()
+            } (current time):${(new Date().getTime() / 1000) | 0}`,
+          );
           if (this.#queues[data.hash].length() > this.#maxQueueSize) {
             if (process.env.NODE_ENV == "development")
-              this.#_client.emit("debug", `KILL QUEUE ${data.hash}`);
+              this.#_client._emitDebug(
+                GLUON_DEBUG_LEVELS.DANGER,
+                `KILL QUEUE ${data.hash}`,
+              );
             this.#queues[data.hash].kill();
             delete this.#queues[data.hash];
           }
@@ -168,8 +171,10 @@ class BetterRequestHandler {
         );
       const hash = hashjs.sha256().update(toHash).digest("hex");
 
-      if (process.env.NODE_ENV == "development")
-        this.#_client.emit("debug", `ADD ${hash} to request queue`);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `ADD ${hash} to request queue`,
+      );
 
       if (!this.#queues[hash])
         this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
@@ -342,8 +347,10 @@ class BetterRequestHandler {
         hash,
       });
 
-      if (process.env.NODE_ENV == "development")
-        this.#_client.emit("debug", `REMOVE ${hash} from request queue`);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `REMOVE ${hash} from request queue`,
+      );
     } else {
       const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
@@ -352,8 +359,10 @@ class BetterRequestHandler {
         reject(new Error(`429: Hit ratelimit, retry in ${retryNextIn}`));
       }, 1500);
 
-      if (process.env.NODE_ENV == "development")
-        this.#_client.emit("debug", `READD ${hash} to request queue`);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.WARN,
+        `READD ${hash} to request queue`,
+      );
     }
   }
 }
