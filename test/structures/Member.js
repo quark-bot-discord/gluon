@@ -3,6 +3,7 @@ import { spy } from "sinon";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Member from "../../src/structures/Member.js";
 import Role from "../../src/structures/Role.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Member", function () {
   context("check import", function () {
@@ -708,7 +709,91 @@ describe("Member", function () {
         user_id: TEST_DATA.MEMBER_ID,
         guild_id: TEST_DATA.GUILD_ID,
       });
-      expect(member.toJSON).to.be.a("function");
+      expect(member.toJSON()).to.deep.equal({
+        avatar: null,
+        communication_disabled_until:
+          TEST_DATA.MEMBER.communication_disabled_until,
+        flags: TEST_DATA.MEMBER.flags,
+        joined_at: TEST_DATA.MEMBER.joined_at,
+        nick: TEST_DATA.MEMBER.nick,
+        pending: TEST_DATA.MEMBER.pending,
+        permissions: "8",
+        roles: [],
+        user: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          bot: TEST_DATA.MEMBER.user.bot,
+          discriminator: TEST_DATA.MEMBER.user.discriminator,
+          global_name: TEST_DATA.MEMBER.user.global_name,
+          id: TEST_DATA.MEMBER.user.id,
+          username: TEST_DATA.MEMBER.user.username,
+        },
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(member.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 0,
+        avatar: null,
+        communication_disabled_until:
+          TEST_DATA.MEMBER.communication_disabled_until,
+        flags: TEST_DATA.MEMBER.flags,
+        joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+        nick: TEST_DATA.MEMBER.nick,
+        permissions: "8",
+        roles: [],
+        user: {
+          _cached: member.user._cached,
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          bot: TEST_DATA.MEMBER.user.bot,
+          discriminator: TEST_DATA.MEMBER.user.discriminator,
+          global_name: TEST_DATA.MEMBER.user.global_name,
+          id: TEST_DATA.MEMBER.user.id,
+          username: TEST_DATA.MEMBER.user.username,
+        },
+      });
+      expect(member.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 0,
+        avatar: null,
+        communication_disabled_until:
+          TEST_DATA.MEMBER.communication_disabled_until,
+        flags: TEST_DATA.MEMBER.flags,
+        joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+        nick: TEST_DATA.MEMBER.nick,
+        permissions: "8",
+        roles: [],
+        user: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          bot: TEST_DATA.MEMBER.user.bot,
+          discriminator: TEST_DATA.MEMBER.user.discriminator,
+          global_name: TEST_DATA.MEMBER.user.global_name,
+          id: TEST_DATA.MEMBER.user.id,
+          username: TEST_DATA.MEMBER.user.username,
+        },
+      });
+      expect(member.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+        avatar: null,
+        communication_disabled_until:
+          TEST_DATA.MEMBER.communication_disabled_until,
+        flags: TEST_DATA.MEMBER.flags,
+        joined_at: TEST_DATA.MEMBER.joined_at,
+        nick: TEST_DATA.MEMBER.nick,
+        pending: TEST_DATA.MEMBER.pending,
+        permissions: "8",
+        roles: [],
+        user: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          bot: TEST_DATA.MEMBER.user.bot,
+          discriminator: TEST_DATA.MEMBER.user.discriminator,
+          global_name: TEST_DATA.MEMBER.user.global_name,
+          id: TEST_DATA.MEMBER.user.id,
+          username: TEST_DATA.MEMBER.user.username,
+        },
+      });
     });
   });
 

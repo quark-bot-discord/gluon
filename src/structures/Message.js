@@ -902,8 +902,10 @@ class Message {
           _attributes: this.#_attributes,
           attachments: this.attachments.map((a) => a.toJSON(format)),
           embeds: this.embeds.map((e) => e.toJSON(format)),
-          edited_timestamp: this.editedTimestamp * 1000,
-          poll: this.poll.toJSON(format),
+          edited_timestamp: this.editedTimestamp
+            ? this.editedTimestamp * 1000
+            : null,
+          poll: this.poll?.toJSON(format),
           message_snapshots: this.messageSnapshots,
           type: this.type,
           referenced_message: this.reference?.messageId

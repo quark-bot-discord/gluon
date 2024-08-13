@@ -15,6 +15,7 @@ import Guild from "../../src/structures/Guild.js";
 import File from "../../src/util/builder/file.js";
 import MessageComponents from "../../src/util/builder/messageComponents.js";
 import path from "path";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Message", function () {
   context("check import", function () {
@@ -1036,6 +1037,270 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       expect(message.toJSON()).to.deep.equal({
+        id: TEST_DATA.MESSAGE_ID,
+        type: TEST_DATA.MESSAGE.type,
+        channel_id: TEST_DATA.CHANNEL_ID,
+        content: TEST_DATA.MESSAGE.content,
+        attachments: [
+          {
+            id: TEST_DATA.MESSAGE.attachments[0].id,
+            filename: TEST_DATA.MESSAGE.attachments[0].filename,
+            size: TEST_DATA.MESSAGE.attachments[0].size,
+            url: TEST_DATA.MESSAGE.attachments[0].url.slice(0, -1),
+          },
+        ],
+        author: {
+          id: TEST_DATA.MESSAGE.author.id,
+          username: TEST_DATA.MESSAGE.author.username,
+          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          avatar: TEST_DATA.MESSAGE.author.avatar,
+          bot: TEST_DATA.MESSAGE.author.bot,
+          global_name: TEST_DATA.MESSAGE.author.global_name,
+        },
+        pinned: true,
+        edited_timestamp:
+          ((new Date(TEST_DATA.MESSAGE.edited_timestamp).getTime() / 1000) |
+            0) *
+          1000,
+        embeds: [
+          {
+            title: TEST_DATA.MESSAGE.embeds[0].title,
+            description: TEST_DATA.MESSAGE.embeds[0].description,
+            url: TEST_DATA.MESSAGE.embeds[0].url,
+            color: TEST_DATA.MESSAGE.embeds[0].color,
+            timestamp: TEST_DATA.MESSAGE.embeds[0].timestamp,
+            footer: {
+              text: TEST_DATA.MESSAGE.embeds[0].footer.text,
+            },
+            image: {
+              url: TEST_DATA.MESSAGE.embeds[0].image.url,
+            },
+            thumbnail: {
+              url: TEST_DATA.MESSAGE.embeds[0].thumbnail.url,
+            },
+            video: TEST_DATA.MESSAGE.embeds[0].video,
+            fields: TEST_DATA.MESSAGE.embeds[0].fields,
+            author: TEST_DATA.MESSAGE.embeds[0].author,
+          },
+        ],
+        sticker_items: [...TEST_DATA.MESSAGE.sticker_items],
+        referenced_message: {
+          id: TEST_DATA.MESSAGE.referenced_message.id,
+        },
+        poll: {
+          allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
+          answers: [],
+          expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).toISOString(),
+          layout_type: undefined,
+          question: TEST_DATA.MESSAGE.poll.question,
+          results: {
+            answer_counts: [],
+          },
+        },
+        message_snapshots: TEST_DATA.MESSAGE.message_snapshots,
+        member: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: TEST_DATA.MEMBER.flags,
+          joined_at: TEST_DATA.MEMBER.joined_at,
+          nick: TEST_DATA.MEMBER.nick,
+          pending: TEST_DATA.MEMBER.pending,
+          roles: [],
+          permissions: "8",
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            id: TEST_DATA.MEMBER.user.id,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        reactions: [],
+        mention_everyone: true,
+        mention_roles: [""],
+        mentions: [""],
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      expect(message.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 15,
+        id: TEST_DATA.MESSAGE_ID,
+        type: TEST_DATA.MESSAGE.type,
+        content: TEST_DATA.MESSAGE.content,
+        attachments: [
+          {
+            id: TEST_DATA.MESSAGE.attachments[0].id,
+            filename: TEST_DATA.MESSAGE.attachments[0].filename,
+            size: TEST_DATA.MESSAGE.attachments[0].size,
+            url: TEST_DATA.MESSAGE.attachments[0].url.slice(0, -1),
+          },
+        ],
+        author: {
+          _cached: message.author._cached,
+          id: TEST_DATA.MESSAGE.author.id,
+          username: TEST_DATA.MESSAGE.author.username,
+          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          avatar: TEST_DATA.MESSAGE.author.avatar,
+          bot: TEST_DATA.MESSAGE.author.bot,
+          global_name: TEST_DATA.MESSAGE.author.global_name,
+        },
+        edited_timestamp:
+          ((new Date(TEST_DATA.MESSAGE.edited_timestamp).getTime() / 1000) |
+            0) *
+          1000,
+        embeds: [
+          {
+            title: TEST_DATA.MESSAGE.embeds[0].title,
+            description: TEST_DATA.MESSAGE.embeds[0].description,
+            url: TEST_DATA.MESSAGE.embeds[0].url,
+            color: TEST_DATA.MESSAGE.embeds[0].color,
+            timestamp: new Date(
+              TEST_DATA.MESSAGE.embeds[0].timestamp,
+            ).getTime(),
+            footer: {
+              text: TEST_DATA.MESSAGE.embeds[0].footer.text,
+            },
+            image: {
+              url: TEST_DATA.MESSAGE.embeds[0].image.url,
+            },
+            thumbnail: {
+              url: TEST_DATA.MESSAGE.embeds[0].thumbnail.url,
+            },
+            video: TEST_DATA.MESSAGE.embeds[0].video,
+            fields: TEST_DATA.MESSAGE.embeds[0].fields,
+            author: TEST_DATA.MESSAGE.embeds[0].author,
+          },
+        ],
+        sticker_items: [...TEST_DATA.MESSAGE.sticker_items],
+        referenced_message: {
+          id: TEST_DATA.MESSAGE.referenced_message.id,
+        },
+        poll: {
+          allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
+          answers: [],
+          expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).getTime(),
+          layout_type: undefined,
+          question: TEST_DATA.MESSAGE.poll.question,
+          _results: {},
+        },
+        message_snapshots: TEST_DATA.MESSAGE.message_snapshots,
+        member: {
+          _attributes: 0,
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: TEST_DATA.MEMBER.flags,
+          joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+          nick: TEST_DATA.MEMBER.nick,
+          roles: [],
+          permissions: "8",
+          user: {
+            _cached: message.member.user._cached,
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            id: TEST_DATA.MEMBER.user.id,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        messageReactions: {},
+      });
+      expect(message.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 15,
+        id: TEST_DATA.MESSAGE_ID,
+        type: TEST_DATA.MESSAGE.type,
+        content: TEST_DATA.MESSAGE.content,
+        attachments: [
+          {
+            id: TEST_DATA.MESSAGE.attachments[0].id,
+            filename: TEST_DATA.MESSAGE.attachments[0].filename,
+            size: TEST_DATA.MESSAGE.attachments[0].size,
+          },
+        ],
+        author: {
+          id: TEST_DATA.MESSAGE.author.id,
+          username: TEST_DATA.MESSAGE.author.username,
+          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          avatar: TEST_DATA.MESSAGE.author.avatar,
+          bot: TEST_DATA.MESSAGE.author.bot,
+          global_name: TEST_DATA.MESSAGE.author.global_name,
+        },
+        edited_timestamp:
+          ((new Date(TEST_DATA.MESSAGE.edited_timestamp).getTime() / 1000) |
+            0) *
+          1000,
+        embeds: [
+          {
+            title: TEST_DATA.MESSAGE.embeds[0].title,
+            description: TEST_DATA.MESSAGE.embeds[0].description,
+            url: TEST_DATA.MESSAGE.embeds[0].url,
+            color: TEST_DATA.MESSAGE.embeds[0].color,
+            timestamp: new Date(
+              TEST_DATA.MESSAGE.embeds[0].timestamp,
+            ).getTime(),
+            footer: {
+              text: TEST_DATA.MESSAGE.embeds[0].footer.text,
+            },
+            image: {
+              url: TEST_DATA.MESSAGE.embeds[0].image.url,
+            },
+            thumbnail: {
+              url: TEST_DATA.MESSAGE.embeds[0].thumbnail.url,
+            },
+            video: TEST_DATA.MESSAGE.embeds[0].video,
+            fields: TEST_DATA.MESSAGE.embeds[0].fields,
+            author: TEST_DATA.MESSAGE.embeds[0].author,
+          },
+        ],
+        sticker_items: [...TEST_DATA.MESSAGE.sticker_items],
+        referenced_message: {
+          id: TEST_DATA.MESSAGE.referenced_message.id,
+        },
+        poll: {
+          allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
+          answers: [],
+          expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).getTime(),
+          layout_type: undefined,
+          question: TEST_DATA.MESSAGE.poll.question,
+          _results: {},
+        },
+        message_snapshots: TEST_DATA.MESSAGE.message_snapshots,
+        member: {
+          _attributes: 0,
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: TEST_DATA.MEMBER.flags,
+          joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+          nick: TEST_DATA.MEMBER.nick,
+          roles: [],
+          permissions: "8",
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            id: TEST_DATA.MEMBER.user.id,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        messageReactions: {},
+      });
+      expect(message.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.MESSAGE_ID,
         type: TEST_DATA.MESSAGE.type,
         channel_id: TEST_DATA.CHANNEL_ID,

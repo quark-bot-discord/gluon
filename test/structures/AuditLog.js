@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import AuditLog from "../../src/structures/AuditLog.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("AuditLog", function () {
   context("check import", function () {
@@ -190,6 +191,66 @@ describe("AuditLog", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(auditLog.toJSON()).to.deep.equal({
+        id: TEST_DATA.AUDIT_LOG.id,
+        guild_id: TEST_DATA.GUILD_ID,
+        action_type: TEST_DATA.AUDIT_LOG.action_type,
+        reason: TEST_DATA.AUDIT_LOG.reason,
+        target_id: TEST_DATA.AUDIT_LOG.target_id,
+        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        options: {
+          channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
+          count: TEST_DATA.AUDIT_LOG.count,
+          delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
+          members_removed: TEST_DATA.AUDIT_LOG.members_removed,
+          id: TEST_DATA.AUDIT_LOG.options.id,
+          type: TEST_DATA.AUDIT_LOG.options.type,
+          status: TEST_DATA.AUDIT_LOG.status,
+        },
+        changes: TEST_DATA.AUDIT_LOG.changes,
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        id: TEST_DATA.AUDIT_LOG.id,
+        guild_id: TEST_DATA.GUILD_ID,
+        action_type: TEST_DATA.AUDIT_LOG.action_type,
+        reason: TEST_DATA.AUDIT_LOG.reason,
+        target_id: TEST_DATA.AUDIT_LOG.target_id,
+        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        options: {
+          channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
+          count: TEST_DATA.AUDIT_LOG.count,
+          delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
+          members_removed: TEST_DATA.AUDIT_LOG.members_removed,
+          id: TEST_DATA.AUDIT_LOG.options.id,
+          type: TEST_DATA.AUDIT_LOG.options.type,
+          status: TEST_DATA.AUDIT_LOG.status,
+        },
+        changes: TEST_DATA.AUDIT_LOG.changes,
+      });
+      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+        id: TEST_DATA.AUDIT_LOG.id,
+        guild_id: TEST_DATA.GUILD_ID,
+        action_type: TEST_DATA.AUDIT_LOG.action_type,
+        reason: TEST_DATA.AUDIT_LOG.reason,
+        target_id: TEST_DATA.AUDIT_LOG.target_id,
+        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        options: {
+          channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
+          count: TEST_DATA.AUDIT_LOG.count,
+          delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
+          members_removed: TEST_DATA.AUDIT_LOG.members_removed,
+          id: TEST_DATA.AUDIT_LOG.options.id,
+          type: TEST_DATA.AUDIT_LOG.options.type,
+          status: TEST_DATA.AUDIT_LOG.status,
+        },
+        changes: TEST_DATA.AUDIT_LOG.changes,
+      });
+      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.AUDIT_LOG.id,
         guild_id: TEST_DATA.GUILD_ID,
         action_type: TEST_DATA.AUDIT_LOG.action_type,

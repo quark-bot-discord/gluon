@@ -6,9 +6,9 @@ import {
   TEST_GUILDS,
 } from "../../src/testData.js";
 import VoiceState from "../../src/structures/VoiceState.js";
-import cacheChannel from "../../src/util/gluon/cacheChannel.js";
 import VoiceChannel from "../../src/structures/VoiceChannel.js";
 import Member from "../../src/structures/Member.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("VoiceState", function () {
   context("check import", function () {
@@ -251,6 +251,109 @@ describe("VoiceState", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toJSON()).to.deep.equal({
+        deaf: TEST_DATA.VOICE_STATE.deaf,
+        mute: TEST_DATA.VOICE_STATE.mute,
+        self_deaf: TEST_DATA.VOICE_STATE.self_deaf,
+        self_mute: TEST_DATA.VOICE_STATE.self_mute,
+        self_stream: TEST_DATA.VOICE_STATE.self_stream,
+        self_video: TEST_DATA.VOICE_STATE.self_video,
+        suppress: TEST_DATA.VOICE_STATE.suppress,
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.VOICE_STATE.channel_id,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+        member: {},
+        joined: TEST_DATA.VOICE_STATE.joined,
+        request_to_speak_timestamp:
+          ((new Date(
+            TEST_DATA.VOICE_STATE.request_to_speak_timestamp,
+          ).getTime() /
+            1000) |
+            0) *
+          1000,
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        guild_id: TEST_DATA.GUILD_ID,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+      });
+      const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 56,
+        member: {
+          _attributes: 0,
+          avatar: null,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: 0,
+          joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+          nick: TEST_DATA.MEMBER.nick,
+          permissions: TEST_DATA.MEMBER.permissions,
+          roles: [],
+          user: {
+            _cached: voiceState.member.user._cached,
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            id: TEST_DATA.MEMBER.user.id,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.VOICE_STATE.channel_id,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+        joined: TEST_DATA.VOICE_STATE.joined,
+        request_to_speak_timestamp:
+          ((new Date(
+            TEST_DATA.VOICE_STATE.request_to_speak_timestamp,
+          ).getTime() /
+            1000) |
+            0) *
+          1000,
+      });
+      expect(
+        voiceState.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      ).to.deep.equal({
+        _attributes: 56,
+        member: {
+          _attributes: 0,
+          avatar: null,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: 0,
+          joined_at: new Date(TEST_DATA.MEMBER.joined_at).getTime(),
+          nick: TEST_DATA.MEMBER.nick,
+          permissions: TEST_DATA.MEMBER.permissions,
+          roles: [],
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            id: TEST_DATA.MEMBER.user.id,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.VOICE_STATE.channel_id,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+        joined: TEST_DATA.VOICE_STATE.joined,
+        request_to_speak_timestamp:
+          ((new Date(
+            TEST_DATA.VOICE_STATE.request_to_speak_timestamp,
+          ).getTime() /
+            1000) |
+            0) *
+          1000,
+      });
+      expect(
+        voiceState.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      ).to.deep.equal({
         deaf: TEST_DATA.VOICE_STATE.deaf,
         mute: TEST_DATA.VOICE_STATE.mute,
         self_deaf: TEST_DATA.VOICE_STATE.self_deaf,

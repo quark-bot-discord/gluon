@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { INVITE_BASE_URL } from "../../src/constants.js";
+import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import {
   TEST_CHANNELS,
   TEST_CLIENTS,
@@ -206,6 +206,97 @@ describe("Invite", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(invite.toJSON()).to.deep.equal({
+        code: TEST_DATA.INVITE.code,
+        channel: {
+          id: TEST_DATA.INVITE.channel.id,
+          messages: [],
+          name: TEST_DATA.INVITE.channel.name,
+          nsfw: TEST_DATA.INVITE.channel.nsfw,
+          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
+          topic: TEST_DATA.INVITE.channel.topic,
+          type: TEST_DATA.INVITE.channel.type,
+          rate_limit_per_user: 0,
+          permission_overwrites: [],
+        },
+        uses: TEST_DATA.INVITE.uses,
+        expires_at: new Date(
+          ((new Date(TEST_DATA.INVITE.expires_at).getTime() / 1000) | 0) * 1000,
+        ).toISOString(),
+        max_uses: TEST_DATA.INVITE.max_uses,
+        inviter: {
+          id: TEST_DATA.INVITE.inviter.id,
+          username: TEST_DATA.INVITE.inviter.username,
+          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          avatar: TEST_DATA.INVITE.inviter.avatar,
+          bot: TEST_DATA.INVITE.inviter.bot,
+          global_name: TEST_DATA.INVITE.inviter.global_name,
+        },
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const invite = new Invite(client, TEST_DATA.INVITE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        code: TEST_DATA.INVITE.code,
+        channel: {
+          _attributes: 0,
+          _cacheOptions: 1023,
+          id: TEST_DATA.INVITE.channel.id,
+          messages: [],
+          name: TEST_DATA.INVITE.channel.name,
+          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
+          topic: TEST_DATA.INVITE.channel.topic,
+          type: TEST_DATA.INVITE.channel.type,
+          rate_limit_per_user: 0,
+          permission_overwrites: [],
+        },
+        uses: TEST_DATA.INVITE.uses,
+        expires: new Date(TEST_DATA.INVITE.expires_at).getTime(),
+        max_uses: TEST_DATA.INVITE.max_uses,
+        inviter: {
+          _cached: invite.inviter._cached,
+          id: TEST_DATA.INVITE.inviter.id,
+          username: TEST_DATA.INVITE.inviter.username,
+          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          avatar: TEST_DATA.INVITE.inviter.avatar,
+          bot: TEST_DATA.INVITE.inviter.bot,
+          global_name: TEST_DATA.INVITE.inviter.global_name,
+        },
+      });
+      expect(invite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        code: TEST_DATA.INVITE.code,
+        channel: {
+          _attributes: 0,
+          _cacheOptions: 1023,
+          id: TEST_DATA.INVITE.channel.id,
+          messages: [],
+          name: TEST_DATA.INVITE.channel.name,
+          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
+          topic: TEST_DATA.INVITE.channel.topic,
+          type: TEST_DATA.INVITE.channel.type,
+          rate_limit_per_user: 0,
+          permission_overwrites: [],
+        },
+        uses: TEST_DATA.INVITE.uses,
+        expires: new Date(TEST_DATA.INVITE.expires_at).getTime(),
+        max_uses: TEST_DATA.INVITE.max_uses,
+        inviter: {
+          id: TEST_DATA.INVITE.inviter.id,
+          username: TEST_DATA.INVITE.inviter.username,
+          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          avatar: TEST_DATA.INVITE.inviter.avatar,
+          bot: TEST_DATA.INVITE.inviter.bot,
+          global_name: TEST_DATA.INVITE.inviter.global_name,
+        },
+      });
+      expect(invite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         code: TEST_DATA.INVITE.code,
         channel: {
           id: TEST_DATA.INVITE.channel.id,

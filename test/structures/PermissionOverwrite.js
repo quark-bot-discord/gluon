@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import PermissionOverwrite from "../../src/structures/PermissionOverwrite.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("PermissionOverwrite", function () {
   context("check import", function () {
@@ -106,6 +107,22 @@ describe("PermissionOverwrite", function () {
       expect(permissionOverwrite.toJSON()).to.deep.equal(
         TEST_DATA.PERMISSION_OVERWRITE,
       );
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const permissionOverwrite = new PermissionOverwrite(
+        client,
+        TEST_DATA.PERMISSION_OVERWRITE,
+      );
+      expect(
+        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
+      expect(
+        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
+      expect(
+        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
     });
   });
 });

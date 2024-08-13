@@ -7,7 +7,7 @@ import {
 } from "../../src/testData.js";
 import Thread from "../../src/structures/Thread.js";
 import Member from "../../src/structures/Member.js";
-import cacheChannel from "../../src/util/gluon/cacheChannel.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Thread", function () {
   context("check import", function () {
@@ -115,6 +115,51 @@ describe("Thread", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON()).to.deep.equal({
+        id: TEST_DATA.THREAD.id,
+        messages: [],
+        name: TEST_DATA.THREAD.name,
+        owner_id: TEST_DATA.THREAD.owner_id,
+        parent_id: TEST_DATA.THREAD.parent_id,
+        rate_limit_per_user: TEST_DATA.THREAD.rate_limit_per_user,
+        topic: TEST_DATA.THREAD.topic,
+        type: TEST_DATA.THREAD.type,
+        nsfw: TEST_DATA.THREAD.nsfw,
+        permission_overwrites: [],
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const thread = new Thread(client, TEST_DATA.THREAD, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 0,
+        _cacheOptions: 1023,
+        id: TEST_DATA.THREAD.id,
+        messages: [],
+        name: TEST_DATA.THREAD.name,
+        owner_id: TEST_DATA.THREAD.owner_id,
+        parent_id: TEST_DATA.THREAD.parent_id,
+        rate_limit_per_user: TEST_DATA.THREAD.rate_limit_per_user,
+        topic: TEST_DATA.THREAD.topic,
+        type: TEST_DATA.THREAD.type,
+        permission_overwrites: [],
+      });
+      expect(thread.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 0,
+        _cacheOptions: 1023,
+        id: TEST_DATA.THREAD.id,
+        messages: [],
+        name: TEST_DATA.THREAD.name,
+        owner_id: TEST_DATA.THREAD.owner_id,
+        parent_id: TEST_DATA.THREAD.parent_id,
+        rate_limit_per_user: TEST_DATA.THREAD.rate_limit_per_user,
+        topic: TEST_DATA.THREAD.topic,
+        type: TEST_DATA.THREAD.type,
+        permission_overwrites: [],
+      });
+      expect(thread.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.THREAD.id,
         messages: [],
         name: TEST_DATA.THREAD.name,

@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import User from "../../src/structures/User.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("User", function () {
   context("check import", function () {
@@ -205,6 +206,36 @@ describe("User", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const user = new User(client, TEST_DATA.USER);
       expect(user.toJSON()).to.deep.equal({
+        avatar: TEST_DATA.USER.avatar,
+        bot: TEST_DATA.USER.bot,
+        discriminator: TEST_DATA.USER.discriminator,
+        id: TEST_DATA.USER.id,
+        global_name: TEST_DATA.USER.global_name,
+        username: TEST_DATA.USER.username,
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, TEST_DATA.USER);
+      expect(user.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _cached: user._cached,
+        avatar: TEST_DATA.USER.avatar,
+        bot: TEST_DATA.USER.bot,
+        discriminator: TEST_DATA.USER.discriminator,
+        id: TEST_DATA.USER.id,
+        global_name: TEST_DATA.USER.global_name,
+        username: TEST_DATA.USER.username,
+      });
+      expect(user.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        avatar: TEST_DATA.USER.avatar,
+        bot: TEST_DATA.USER.bot,
+        discriminator: TEST_DATA.USER.discriminator,
+        id: TEST_DATA.USER.id,
+        global_name: TEST_DATA.USER.global_name,
+        username: TEST_DATA.USER.username,
+      });
+      expect(user.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
         discriminator: TEST_DATA.USER.discriminator,

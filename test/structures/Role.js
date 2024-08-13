@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Role from "../../src/structures/Role.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Role", function () {
   context("check import", function () {
@@ -221,6 +222,57 @@ describe("Role", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(role.toJSON()).to.deep.equal({
+        hoist: TEST_DATA.ROLE_ADMIN.hoist,
+        managed: TEST_DATA.ROLE_ADMIN.managed,
+        mentionable: TEST_DATA.ROLE_ADMIN.mentionable,
+        icon: TEST_DATA.ROLE_ADMIN.icon,
+        id: TEST_DATA.ROLE_ID,
+        name: TEST_DATA.ROLE_ADMIN.name,
+        color: TEST_DATA.ROLE_ADMIN.color,
+        position: TEST_DATA.ROLE_ADMIN.position,
+        permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
+        tags: {
+          bot_id: "123456789012345678",
+          integration_id: null,
+          premium_subscriber: null,
+        },
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 7,
+        icon: TEST_DATA.ROLE_ADMIN.icon,
+        id: TEST_DATA.ROLE_ID,
+        name: TEST_DATA.ROLE_ADMIN.name,
+        color: TEST_DATA.ROLE_ADMIN.color,
+        position: TEST_DATA.ROLE_ADMIN.position,
+        permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
+        tags: {
+          bot_id: "123456789012345678",
+          integration_id: null,
+          premium_subscriber: null,
+        },
+      });
+      expect(role.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 7,
+        icon: TEST_DATA.ROLE_ADMIN.icon,
+        id: TEST_DATA.ROLE_ID,
+        name: TEST_DATA.ROLE_ADMIN.name,
+        color: TEST_DATA.ROLE_ADMIN.color,
+        position: TEST_DATA.ROLE_ADMIN.position,
+        permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
+        tags: {
+          bot_id: "123456789012345678",
+          integration_id: null,
+          premium_subscriber: null,
+        },
+      });
+      expect(role.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         hoist: TEST_DATA.ROLE_ADMIN.hoist,
         managed: TEST_DATA.ROLE_ADMIN.managed,
         mentionable: TEST_DATA.ROLE_ADMIN.mentionable,

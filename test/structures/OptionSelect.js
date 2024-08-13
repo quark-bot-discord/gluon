@@ -6,7 +6,7 @@ import {
   TEST_GUILDS,
 } from "../../src/testData.js";
 import OptionSelect from "../../src/structures/OptionSelect.js";
-import cacheChannel from "../../src/util/gluon/cacheChannel.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("OptionSelect", function () {
   context("check import", function () {
@@ -132,6 +132,186 @@ describe("OptionSelect", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.toJSON()).to.deep.equal({
+        id: TEST_DATA.OPTION_SELECT.id,
+        type: TEST_DATA.OPTION_SELECT.type,
+        guild_id: TEST_DATA.OPTION_SELECT.guild_id,
+        channel_id: TEST_DATA.OPTION_SELECT.channel_id,
+        member: {
+          avatar: TEST_DATA.OPTION_SELECT.member.avatar,
+          communication_disabled_until:
+            TEST_DATA.OPTION_SELECT.member.communication_disabled_until,
+          flags: TEST_DATA.OPTION_SELECT.member.flags,
+          joined_at: new Date(
+            TEST_DATA.OPTION_SELECT.member.joined_at,
+          ).toISOString(),
+          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          pending: TEST_DATA.OPTION_SELECT.member.pending,
+          permissions: TEST_DATA.OPTION_SELECT.member.permissions,
+          roles: [],
+          user: {
+            avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
+            bot: TEST_DATA.OPTION_SELECT.member.user.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            id: TEST_DATA.OPTION_SELECT.member.user.id,
+            username: TEST_DATA.OPTION_SELECT.member.user.username,
+            global_name: TEST_DATA.OPTION_SELECT.member.user.global_name,
+          },
+        },
+        message: {
+          attachments: TEST_DATA.OPTION_SELECT.message.attachments,
+          author: {
+            avatar: TEST_DATA.OPTION_SELECT.message.author.avatar,
+            bot: TEST_DATA.OPTION_SELECT.message.author.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            id: TEST_DATA.OPTION_SELECT.message.author.id,
+            username: TEST_DATA.OPTION_SELECT.message.author.username,
+            global_name: TEST_DATA.OPTION_SELECT.message.author.global_name,
+          },
+          channel_id: TEST_DATA.OPTION_SELECT.message.channel_id,
+          content: TEST_DATA.OPTION_SELECT.message.content,
+          edited_timestamp: TEST_DATA.OPTION_SELECT.message.edited_timestamp,
+          embeds: TEST_DATA.OPTION_SELECT.message.embeds,
+          id: TEST_DATA.OPTION_SELECT.message.id,
+          member: undefined,
+          mention_everyone: false,
+          mention_roles: [],
+          mentions: [],
+          pinned: false,
+          message_snapshots: undefined,
+          pinned: false,
+          poll: undefined,
+          reactions: [],
+          referenced_message: undefined,
+          sticker_items: [],
+          type: 0,
+        },
+        data: {
+          custom_id: TEST_DATA.OPTION_SELECT.data.custom_id,
+          values: TEST_DATA.OPTION_SELECT.data.values,
+        },
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(
+        optionSelect.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      ).to.deep.equal({
+        id: TEST_DATA.OPTION_SELECT.id,
+        type: TEST_DATA.OPTION_SELECT.type,
+        guild_id: TEST_DATA.OPTION_SELECT.guild_id,
+        channel_id: TEST_DATA.OPTION_SELECT.channel_id,
+        custom_id: TEST_DATA.OPTION_SELECT.data.custom_id,
+        member: {
+          _attributes: 0,
+          avatar: TEST_DATA.OPTION_SELECT.member.avatar,
+          communication_disabled_until:
+            TEST_DATA.OPTION_SELECT.member.communication_disabled_until,
+          flags: TEST_DATA.OPTION_SELECT.member.flags,
+          joined_at: new Date(
+            TEST_DATA.OPTION_SELECT.member.joined_at,
+          ).getTime(),
+          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          permissions: TEST_DATA.OPTION_SELECT.member.permissions,
+          roles: [],
+          user: {
+            _cached: optionSelect.member.user._cached,
+            avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
+            bot: TEST_DATA.OPTION_SELECT.member.user.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            id: TEST_DATA.OPTION_SELECT.member.user.id,
+            username: TEST_DATA.OPTION_SELECT.member.user.username,
+            global_name: TEST_DATA.OPTION_SELECT.member.user.global_name,
+          },
+        },
+        message: {
+          _attributes: 0,
+          attachments: TEST_DATA.OPTION_SELECT.message.attachments,
+          author: {
+            _cached: optionSelect.message.author._cached,
+            avatar: TEST_DATA.OPTION_SELECT.message.author.avatar,
+            bot: TEST_DATA.OPTION_SELECT.message.author.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            id: TEST_DATA.OPTION_SELECT.message.author.id,
+            username: TEST_DATA.OPTION_SELECT.message.author.username,
+            global_name: TEST_DATA.OPTION_SELECT.message.author.global_name,
+          },
+          content: TEST_DATA.OPTION_SELECT.message.content,
+          edited_timestamp: TEST_DATA.OPTION_SELECT.message.edited_timestamp,
+          embeds: TEST_DATA.OPTION_SELECT.message.embeds,
+          id: TEST_DATA.OPTION_SELECT.message.id,
+          member: undefined,
+          message_snapshots: undefined,
+          poll: undefined,
+          referenced_message: undefined,
+          sticker_items: [],
+          type: 0,
+          messageReactions: {},
+        },
+        values: TEST_DATA.OPTION_SELECT.data.values,
+      });
+      expect(
+        optionSelect.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      ).to.deep.equal({
+        id: TEST_DATA.OPTION_SELECT.id,
+        type: TEST_DATA.OPTION_SELECT.type,
+        guild_id: TEST_DATA.OPTION_SELECT.guild_id,
+        channel_id: TEST_DATA.OPTION_SELECT.channel_id,
+        custom_id: TEST_DATA.OPTION_SELECT.data.custom_id,
+        member: {
+          _attributes: 0,
+          avatar: TEST_DATA.OPTION_SELECT.member.avatar,
+          communication_disabled_until:
+            TEST_DATA.OPTION_SELECT.member.communication_disabled_until,
+          flags: TEST_DATA.OPTION_SELECT.member.flags,
+          joined_at: new Date(
+            TEST_DATA.OPTION_SELECT.member.joined_at,
+          ).getTime(),
+          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          permissions: TEST_DATA.OPTION_SELECT.member.permissions,
+          roles: [],
+          user: {
+            avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
+            bot: TEST_DATA.OPTION_SELECT.member.user.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            id: TEST_DATA.OPTION_SELECT.member.user.id,
+            username: TEST_DATA.OPTION_SELECT.member.user.username,
+            global_name: TEST_DATA.OPTION_SELECT.member.user.global_name,
+          },
+        },
+        message: {
+          _attributes: 0,
+          attachments: TEST_DATA.OPTION_SELECT.message.attachments,
+          author: {
+            avatar: TEST_DATA.OPTION_SELECT.message.author.avatar,
+            bot: TEST_DATA.OPTION_SELECT.message.author.bot,
+            discriminator: TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            id: TEST_DATA.OPTION_SELECT.message.author.id,
+            username: TEST_DATA.OPTION_SELECT.message.author.username,
+            global_name: TEST_DATA.OPTION_SELECT.message.author.global_name,
+          },
+          content: TEST_DATA.OPTION_SELECT.message.content,
+          edited_timestamp: TEST_DATA.OPTION_SELECT.message.edited_timestamp,
+          embeds: TEST_DATA.OPTION_SELECT.message.embeds,
+          id: TEST_DATA.OPTION_SELECT.message.id,
+          member: undefined,
+          message_snapshots: undefined,
+          poll: undefined,
+          referenced_message: undefined,
+          sticker_items: [],
+          type: 0,
+          messageReactions: {},
+        },
+        values: TEST_DATA.OPTION_SELECT.data.values,
+      });
+      expect(
+        optionSelect.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      ).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
         type: TEST_DATA.OPTION_SELECT.type,
         guild_id: TEST_DATA.OPTION_SELECT.guild_id,

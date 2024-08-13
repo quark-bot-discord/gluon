@@ -3,6 +3,7 @@ import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import ScheduledEvent from "../../src/structures/ScheduledEvent.js";
 import Guild from "../../src/structures/Guild.js";
 import User from "../../src/structures/User.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("ScheduledEvent", function () {
   context("check import", function () {
@@ -313,6 +314,118 @@ describe("ScheduledEvent", function () {
         { guild_id: TEST_DATA.GUILD_ID },
       );
       expect(scheduledEvent.toJSON()).to.deep.equal({
+        id: TEST_DATA.SCHEDULED_EVENT.id,
+        creator: {
+          id: TEST_DATA.SCHEDULED_EVENT.creator.id,
+          username: TEST_DATA.SCHEDULED_EVENT.creator.username,
+          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
+          bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
+          global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
+        },
+        creator_id: TEST_DATA.SCHEDULED_EVENT.creator_id,
+        description: TEST_DATA.SCHEDULED_EVENT.description,
+        entity_type: 2,
+        guild_id: TEST_DATA.GUILD_ID,
+        image: TEST_DATA.SCHEDULED_EVENT.image,
+        user_count: TEST_DATA.SCHEDULED_EVENT.user_count,
+        status: 1,
+        scheduled_start_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        scheduled_end_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        name: TEST_DATA.SCHEDULED_EVENT.name,
+        entity_metadata: {
+          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+        },
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const scheduledEvent = new ScheduledEvent(
+        client,
+        TEST_DATA.SCHEDULED_EVENT,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      expect(
+        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      ).to.deep.equal({
+        id: TEST_DATA.SCHEDULED_EVENT.id,
+        creator: {
+          _cached: scheduledEvent.creator._cached,
+          id: TEST_DATA.SCHEDULED_EVENT.creator.id,
+          username: TEST_DATA.SCHEDULED_EVENT.creator.username,
+          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
+          bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
+          global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
+        },
+        creator_id: TEST_DATA.SCHEDULED_EVENT.creator_id,
+        description: TEST_DATA.SCHEDULED_EVENT.description,
+        entity_type: 2,
+        guild_id: TEST_DATA.GUILD_ID,
+        image: TEST_DATA.SCHEDULED_EVENT.image,
+        user_count: TEST_DATA.SCHEDULED_EVENT.user_count,
+        status: 1,
+        scheduled_start_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        scheduled_end_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        name: TEST_DATA.SCHEDULED_EVENT.name,
+        entity_metadata: {
+          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+        },
+      });
+      expect(
+        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      ).to.deep.equal({
+        id: TEST_DATA.SCHEDULED_EVENT.id,
+        creator: {
+          id: TEST_DATA.SCHEDULED_EVENT.creator.id,
+          username: TEST_DATA.SCHEDULED_EVENT.creator.username,
+          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
+          bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
+          global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
+        },
+        creator_id: TEST_DATA.SCHEDULED_EVENT.creator_id,
+        description: TEST_DATA.SCHEDULED_EVENT.description,
+        entity_type: 2,
+        guild_id: TEST_DATA.GUILD_ID,
+        image: TEST_DATA.SCHEDULED_EVENT.image,
+        user_count: TEST_DATA.SCHEDULED_EVENT.user_count,
+        status: 1,
+        scheduled_start_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        scheduled_end_time:
+          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time).getTime() /
+            1000) |
+            0) *
+          1000,
+        name: TEST_DATA.SCHEDULED_EVENT.name,
+        entity_metadata: {
+          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+        },
+      });
+      expect(
+        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      ).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
           id: TEST_DATA.SCHEDULED_EVENT.creator.id,

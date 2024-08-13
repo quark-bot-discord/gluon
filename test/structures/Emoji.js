@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import Emoji from "../../src/structures/Emoji.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Emoji", function () {
   context("check import", function () {
@@ -179,6 +180,31 @@ describe("Emoji", function () {
         require_colons: true,
       });
     });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const emoji = new Emoji(client, TEST_DATA.EMOJI, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 13,
+        id: "844240546246950922",
+        name: "bitcoin",
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 13,
+        id: "844240546246950922",
+        name: "bitcoin",
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+        animated: true,
+        available: true,
+        id: "844240546246950922",
+        name: "bitcoin",
+        managed: false,
+        require_colons: true,
+      });
+    });
     it("should return the correct object for a standard emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -186,6 +212,31 @@ describe("Emoji", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.deep.equal({
+        name: TEST_DATA.STANDARD_EMOJI.name,
+        id: null,
+        animated: false,
+        available: true,
+        require_colons: true,
+        managed: false,
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _attributes: 9,
+        name: TEST_DATA.STANDARD_EMOJI.name,
+        id: null,
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 9,
+        name: TEST_DATA.STANDARD_EMOJI.name,
+        id: null,
+      });
+      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
         animated: false,

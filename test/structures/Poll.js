@@ -3,6 +3,7 @@ import Poll from "../../src/structures/Poll.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import MessagePollManager from "../../src/managers/MessagePollManager.js";
 import Guild from "../../src/structures/Guild.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Poll", function () {
   context("check import", function () {
@@ -153,6 +154,69 @@ describe("Poll", function () {
           TEST_DATA.POLL.answers[0].answer_id,
         );
         expect(poll.toJSON()).to.deep.equal({
+          question: TEST_DATA.POLL.question,
+          answers: [
+            {
+              answer: `<:${TEST_DATA.POLL.answers[0].poll_media.emoji.name}:${TEST_DATA.POLL.answers[0].poll_media.emoji.id}> ${TEST_DATA.POLL.answers[0].poll_media.text}`,
+              answerId: TEST_DATA.POLL.answers[0].answer_id,
+            },
+          ],
+          expiry: new Date(
+            ((new Date(TEST_DATA.POLL.expiry).getTime() / 1000) | 0) * 1000,
+          ).toISOString(),
+          allow_multiselect: TEST_DATA.POLL.allow_multiselect,
+          layout_type: TEST_DATA.POLL.layout_type,
+          results: {
+            answer_counts: [
+              {
+                count: 1,
+                id: 1,
+                me_voted: true,
+              },
+            ],
+          },
+        });
+      });
+      it("should return a valid JSON with a custom toJSON", function () {
+        const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+        const poll = new Poll(client, TEST_DATA.POLL, {
+          guild_id: TEST_DATA.GUILD_ID,
+        });
+        poll._results._addVote(
+          TEST_DATA.CLIENT_USER.id,
+          TEST_DATA.POLL.answers[0].answer_id,
+        );
+        expect(poll.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+          question: TEST_DATA.POLL.question,
+          answers: [
+            {
+              answer: `<:${TEST_DATA.POLL.answers[0].poll_media.emoji.name}:${TEST_DATA.POLL.answers[0].poll_media.emoji.id}> ${TEST_DATA.POLL.answers[0].poll_media.text}`,
+              answerId: TEST_DATA.POLL.answers[0].answer_id,
+            },
+          ],
+          expiry: new Date(TEST_DATA.POLL.expiry).getTime(),
+          allow_multiselect: TEST_DATA.POLL.allow_multiselect,
+          layout_type: TEST_DATA.POLL.layout_type,
+          _results: {
+            1: [TEST_DATA.CLIENT_USER.id],
+          },
+        });
+        expect(poll.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+          question: TEST_DATA.POLL.question,
+          answers: [
+            {
+              answer: `<:${TEST_DATA.POLL.answers[0].poll_media.emoji.name}:${TEST_DATA.POLL.answers[0].poll_media.emoji.id}> ${TEST_DATA.POLL.answers[0].poll_media.text}`,
+              answerId: TEST_DATA.POLL.answers[0].answer_id,
+            },
+          ],
+          expiry: new Date(TEST_DATA.POLL.expiry).getTime(),
+          allow_multiselect: TEST_DATA.POLL.allow_multiselect,
+          layout_type: TEST_DATA.POLL.layout_type,
+          _results: {
+            1: [TEST_DATA.CLIENT_USER.id],
+          },
+        });
+        expect(poll.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
           question: TEST_DATA.POLL.question,
           answers: [
             {

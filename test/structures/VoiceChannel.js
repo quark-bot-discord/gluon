@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import VoiceChannel from "../../src/structures/VoiceChannel.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("VoiceChannel", function () {
   context("check import", function () {
@@ -29,8 +30,6 @@ describe("VoiceChannel", function () {
       expect(voiceChannel).to.have.property("topic");
       expect(voiceChannel).to.have.property("_cacheOptions");
       expect(voiceChannel).to.have.property("messages");
-      expect(voiceChannel).to.have.property("toString");
-      expect(voiceChannel).to.have.property("toJSON");
       expect(voiceChannel).to.have.property("send");
       expect(voiceChannel).to.have.property("bitrate");
       expect(voiceChannel).to.have.property("userLimit");
@@ -116,6 +115,63 @@ describe("VoiceChannel", function () {
         guild_id: TEST_DATA.GUILD_ID,
       });
       expect(voiceChannel.toJSON()).to.deep.equal({
+        bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
+        id: TEST_DATA.VOICE_CHANNEL.id,
+        messages: [],
+        name: TEST_DATA.VOICE_CHANNEL.name,
+        parent_id: TEST_DATA.VOICE_CHANNEL.parent_id,
+        rate_limit_per_user: TEST_DATA.VOICE_CHANNEL.rate_limit_per_user,
+        rtc_region: TEST_DATA.VOICE_CHANNEL.rtc_region,
+        topic: TEST_DATA.VOICE_CHANNEL.topic,
+        type: TEST_DATA.VOICE_CHANNEL.type,
+        user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
+        nsfw: TEST_DATA.VOICE_CHANNEL.nsfw,
+        permission_overwrites: [],
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      ).to.deep.equal({
+        _attributes: 0,
+        _cacheOptions: 1023,
+        bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
+        id: TEST_DATA.VOICE_CHANNEL.id,
+        messages: [],
+        name: TEST_DATA.VOICE_CHANNEL.name,
+        parent_id: TEST_DATA.VOICE_CHANNEL.parent_id,
+        rate_limit_per_user: TEST_DATA.VOICE_CHANNEL.rate_limit_per_user,
+        rtc_region: TEST_DATA.VOICE_CHANNEL.rtc_region,
+        topic: TEST_DATA.VOICE_CHANNEL.topic,
+        type: TEST_DATA.VOICE_CHANNEL.type,
+        user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
+        permission_overwrites: [],
+      });
+      expect(
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      ).to.deep.equal({
+        _attributes: 0,
+        _cacheOptions: 1023,
+        bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
+        id: TEST_DATA.VOICE_CHANNEL.id,
+        messages: [],
+        name: TEST_DATA.VOICE_CHANNEL.name,
+        parent_id: TEST_DATA.VOICE_CHANNEL.parent_id,
+        rate_limit_per_user: TEST_DATA.VOICE_CHANNEL.rate_limit_per_user,
+        rtc_region: TEST_DATA.VOICE_CHANNEL.rtc_region,
+        topic: TEST_DATA.VOICE_CHANNEL.topic,
+        type: TEST_DATA.VOICE_CHANNEL.type,
+        user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
+        permission_overwrites: [],
+      });
+      expect(
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      ).to.deep.equal({
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
         messages: [],

@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import CategoryChannel from "../../src/structures/CategoryChannel.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("CategoryChannel", function () {
   context("check import", function () {
@@ -139,6 +140,69 @@ describe("CategoryChannel", function () {
         ],
         parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
       });
+    });
+  });
+  it("should return a valid JSON with a custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const categoryChannel = new CategoryChannel(
+      client,
+      TEST_DATA.CATEGORY_CHANNEL,
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    expect(
+      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+    ).to.deep.equal({
+      id: TEST_DATA.CATEGORY_CHANNEL.id,
+      name: TEST_DATA.CATEGORY_CHANNEL.name,
+      type: TEST_DATA.CATEGORY_CHANNEL.type,
+      nsfw: TEST_DATA.CATEGORY_CHANNEL.nsfw,
+      guild_id: TEST_DATA.GUILD_ID,
+      permission_overwrites: [
+        {
+          allow: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].allow,
+          deny: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].deny,
+          id: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].id,
+          type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
+        },
+      ],
+      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
+    });
+    expect(
+      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+    ).to.deep.equal({
+      id: TEST_DATA.CATEGORY_CHANNEL.id,
+      name: TEST_DATA.CATEGORY_CHANNEL.name,
+      type: TEST_DATA.CATEGORY_CHANNEL.type,
+      nsfw: TEST_DATA.CATEGORY_CHANNEL.nsfw,
+      guild_id: TEST_DATA.GUILD_ID,
+      permission_overwrites: [
+        {
+          allow: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].allow,
+          deny: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].deny,
+          id: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].id,
+          type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
+        },
+      ],
+      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
+    });
+    expect(
+      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+    ).to.deep.equal({
+      id: TEST_DATA.CATEGORY_CHANNEL.id,
+      name: TEST_DATA.CATEGORY_CHANNEL.name,
+      type: TEST_DATA.CATEGORY_CHANNEL.type,
+      nsfw: TEST_DATA.CATEGORY_CHANNEL.nsfw,
+      guild_id: TEST_DATA.GUILD_ID,
+      permission_overwrites: [
+        {
+          allow: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].allow,
+          deny: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].deny,
+          id: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].id,
+          type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
+        },
+      ],
+      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
     });
   });
 });

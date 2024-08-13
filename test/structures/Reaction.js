@@ -221,6 +221,43 @@ describe("Reaction", function () {
         },
       });
     });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const reaction = new Reaction(client, TEST_DATA.REACTION, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
+      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        _reacted: [TEST_DATA.MEMBER_ID],
+        emoji: {
+          _attributes: 9,
+          id: null,
+          name: TEST_DATA.REACTION.emoji.name,
+        },
+        initial_reactor: TEST_DATA.MEMBER_ID,
+      });
+      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        _reacted: [TEST_DATA.MEMBER_ID],
+        emoji: {
+          _attributes: 9,
+          id: null,
+          name: TEST_DATA.REACTION.emoji.name,
+        },
+        initial_reactor: TEST_DATA.MEMBER_ID,
+      });
+      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+        count: 1,
+        emoji: {
+          animated: false,
+          available: true,
+          id: null,
+          name: TEST_DATA.REACTION.emoji.name,
+          require_colons: true,
+          managed: false,
+        },
+      });
+    });
   });
 
   context("check bundling", function () {

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { CDN_BASE_URL } from "../../src/constants.js";
+import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import Sticker from "../../src/structures/Sticker.js";
 
@@ -60,6 +60,48 @@ describe("Sticker", function () {
       expect(sticker.previewImageURL).to.equal(
         `${CDN_BASE_URL}/stickers/${TEST_DATA.STICKER.id}.png`,
       );
+    });
+  });
+
+  context("check toString", function () {
+    it("should return the correct string", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      expect(sticker.toString()).to.equal(`<Sticker: ${TEST_DATA.STICKER.id}>`);
+    });
+  });
+
+  context("check toJSON", function () {
+    it("should return the correct JSON object", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      expect(sticker.toJSON()).to.deep.equal({
+        id: TEST_DATA.STICKER.id,
+        name: TEST_DATA.STICKER.name,
+        format_type: TEST_DATA.STICKER.format_type,
+      });
+    });
+    it("should return a valid JSON with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+        id: TEST_DATA.STICKER.id,
+        name: TEST_DATA.STICKER.name,
+        format_type: TEST_DATA.STICKER.format_type,
+      });
+      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+        id: TEST_DATA.STICKER.id,
+        name: TEST_DATA.STICKER.name,
+        format_type: TEST_DATA.STICKER.format_type,
+      });
+      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+        id: TEST_DATA.STICKER.id,
+        name: TEST_DATA.STICKER.name,
+        format_type: TEST_DATA.STICKER.format_type,
+      });
     });
   });
 });
