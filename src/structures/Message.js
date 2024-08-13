@@ -342,11 +342,8 @@ class Message {
           this.channel._cacheOptions.stickerCaching === true) ||
         (this.#message_snapshots &&
           this.channel._cacheOptions.referenceCaching === true))
-    ) {
+    )
       this.channel?.messages.set(data.id, this);
-      if (!this.channel)
-        this.#_client.emit("debug", `${this.guildId} NO CHANNEL`);
-    }
   }
 
   /**
