@@ -195,7 +195,7 @@ class BetterRequestHandler {
           return reject(error);
         }
 
-      return reject(new Error("Request ran out of retries"));
+      return reject(new Error("GLUON: Request ran out of retries"));
     });
   }
 
@@ -334,7 +334,7 @@ class BetterRequestHandler {
       else
         reject(
           new Error(
-            `${res.status}: ${actualRequest.method} ${actualRequest.path(
+            `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
               ...(params ?? []),
             )} FAILED`,
           ),
@@ -356,7 +356,9 @@ class BetterRequestHandler {
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
 
       setTimeout(() => {
-        reject(new Error(`429: Hit ratelimit, retry in ${retryNextIn}`));
+        reject(
+          new Error(`GLUON: 429 - Hit ratelimit, retry in ${retryNextIn}`),
+        );
       }, 1500);
 
       this.#_client._emitDebug(

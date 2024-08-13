@@ -59,7 +59,7 @@ class EventHandler {
 
     this.#initialGuilds = data.guilds.map((g) => g.id);
 
-    console.log(`
+    console.info(`
       
                                      (((((((                                    
                           (((((((((((((((((((((((((((((                         
@@ -98,7 +98,7 @@ class EventHandler {
 
       `);
 
-    console.log(`
+    console.info(`
  ██████  ██      ██    ██  ██████  ███    ██ 
 ██       ██      ██    ██ ██    ██ ████   ██ 
 ██   ███ ██      ██    ██ ██    ██ ██ ██  ██ 
