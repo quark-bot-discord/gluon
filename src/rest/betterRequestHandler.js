@@ -68,16 +68,18 @@ class BetterRequestHandler {
             reject,
           );
         else {
-          this.#_client.emit(
-            "debug",
-            `RATELIMITED ${data.hash} (bucket reset):${
-              bucket.reset
-            } (latency):${this.#latency}  (time until retry):${
-              (bucket.reset + this.#latency) * 1000 - new Date().getTime()
-            } (current time):${(new Date().getTime() / 1000) | 0}`,
-          );
+          if (process.env.NODE_ENV == "development")
+            this.#_client.emit(
+              "debug",
+              `RATELIMITED ${data.hash} (bucket reset):${
+                bucket.reset
+              } (latency):${this.#latency}  (time until retry):${
+                (bucket.reset + this.#latency) * 1000 - new Date().getTime()
+              } (current time):${(new Date().getTime() / 1000) | 0}`,
+            );
           if (this.#queues[data.hash].length() > this.#maxQueueSize) {
-            this.#_client.emit("debug", `KILL QUEUE ${data.hash}`);
+            if (process.env.NODE_ENV == "development")
+              this.#_client.emit("debug", `KILL QUEUE ${data.hash}`);
             this.#queues[data.hash].kill();
             delete this.#queues[data.hash];
           }
@@ -166,7 +168,8 @@ class BetterRequestHandler {
         );
       const hash = hashjs.sha256().update(toHash).digest("hex");
 
-      this.#_client.emit("debug", `ADD ${hash} to request queue`);
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit("debug", `ADD ${hash} to request queue`);
 
       if (!this.#queues[hash])
         this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
@@ -339,7 +342,8 @@ class BetterRequestHandler {
         hash,
       });
 
-      this.#_client.emit("debug", `REMOVE ${hash} from request queue`);
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit("debug", `REMOVE ${hash} from request queue`);
     } else {
       const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
@@ -348,7 +352,8 @@ class BetterRequestHandler {
         reject(new Error(`429: Hit ratelimit, retry in ${retryNextIn}`));
       }, 1500);
 
-      this.#_client.emit("debug", `READD ${hash} to request queue`);
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit("debug", `READD ${hash} to request queue`);
     }
   }
 }

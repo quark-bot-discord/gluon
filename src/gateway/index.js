@@ -5,7 +5,8 @@ import ZlibSync from "zlib-sync";
 import _heartbeat from "./structures/_heartbeat.js";
 import _identify from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
-import chalk from "chalk";
+const chalk =
+  process.env.NODE_ENV == "development" ? await import("chalk") : null;
 import { NAME, GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
@@ -59,10 +60,12 @@ class WS {
 
     this.#monitorOpened = null;
 
-    this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
-    this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
-    this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
-    this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
+    if (process.env.NODE_ENV == "development") {
+      this.libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
+      this.shardNorminal = chalk.green(`[Shard: ${this.shard[0]}]`);
+      this.shardWarning = chalk.yellow(`[Shard: ${this.shard[0]}]`);
+      this.shardCatastrophic = chalk.red(`[Shard: ${this.shard[0]}]`);
+    }
 
     this.#ws = new WebSocket(url);
 
@@ -82,7 +85,7 @@ class WS {
 
     if (data.s) this.#_s = data.s;
 
-    this.#_client.emit("raw", data);
+    if (process.env.NODE_ENV == "development") this.#_client.emit("raw", data);
 
     switch (data.op) {
       // Dispatch
@@ -90,12 +93,13 @@ class WS {
         try {
           this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
         } catch (error) {
-          this.#_client.emit(
-            "debug",
-            `${this.libName} ${
-              this.shardCatastrophic
-            } @ ${this.time} => ERROR at ${data.t}: ${error}`,
-          );
+          if (process.env.NODE_ENV == "development")
+            this.#_client.emit(
+              "debug",
+              `${this.libName} ${
+                this.shardCatastrophic
+              } @ ${this.time} => ERROR at ${data.t}: ${error}`,
+            );
           console.error(error);
         }
         break;
@@ -103,12 +107,13 @@ class WS {
 
       // Heartbeat
       case 1: {
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${
-            this.shardNorminal
-          } @ ${this.time} => Gateway requested heartbeat`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardNorminal
+            } @ ${this.time} => Gateway requested heartbeat`,
+          );
 
         this.#heartbeat(true);
 
@@ -117,12 +122,13 @@ class WS {
 
       // Reconnect
       case 7: {
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${
-            this.shardWarning
-          } @ ${this.time} => Received reconnect`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardWarning
+            } @ ${this.time} => Received reconnect`,
+          );
 
         // reconnect to websocket with session id
         this.#reconnect();
@@ -132,12 +138,13 @@ class WS {
 
       // Invalid Session
       case 9: {
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${
-            this.shardWarning
-          } @ ${this.time} => INVALID SESSION`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardWarning
+            } @ ${this.time} => INVALID SESSION`,
+          );
 
         if (data.d != false) this.#resume();
         else
@@ -155,10 +162,11 @@ class WS {
       case 10: {
         this.#heartbeatInterval = data.d.heartbeat_interval;
 
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${this.shardNorminal} @ ${this.time} => HELLO`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${this.shardNorminal} @ ${this.time} => HELLO`,
+          );
 
         if (this.#resuming != true) {
           this.heartbeatInit();
@@ -172,23 +180,25 @@ class WS {
       case 11: {
         this.#waitingForHeartbeatACK = false;
 
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${
-            this.shardNorminal
-          } @ ${this.time} => Heartbeat acknowledged`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardNorminal
+            } @ ${this.time} => Heartbeat acknowledged`,
+          );
 
         break;
       }
 
       default: {
-        this.#_client.emit(
-          "debug",
-          `${this.libName} ${
-            this.shardCatastrophic
-          } @ ${this.time} => ERROR Unknown opcode: ${data.op}`,
-        );
+        if (process.env.NODE_ENV == "development")
+          this.#_client.emit(
+            "debug",
+            `${this.libName} ${
+              this.shardCatastrophic
+            } @ ${this.time} => ERROR Unknown opcode: ${data.op}`,
+          );
 
         break;
       }
@@ -212,12 +222,13 @@ class WS {
   #heartbeat(response = false) {
     if (this.#resuming == true && response != true) return;
 
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardNorminal
-      } @ ${this.time} => Sending heartbeat...`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardNorminal
+        } @ ${this.time} => Sending heartbeat...`,
+      );
 
     if (response != true) this.#waitingForHeartbeatACK = true;
 
@@ -227,48 +238,52 @@ class WS {
     if (response != true)
       setTimeout(() => {
         if (this.#waitingForHeartbeatACK == true && this.#resuming != true) {
-          this.#_client.emit(
-            "debug",
-            `${this.libName} ${
-              this.shardCatastrophic
-            } @ ${this.time} => Heartbeat ACK not received`,
-          );
+          if (process.env.NODE_ENV == "development")
+            this.#_client.emit(
+              "debug",
+              `${this.libName} ${
+                this.shardCatastrophic
+              } @ ${this.time} => Heartbeat ACK not received`,
+            );
           this.#shutDownWebsocket(4000);
         }
       }, 10000);
   }
 
   #identify() {
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardNorminal
-      } @ ${this.time} => IDENTIFY with TOKEN: "${this.#token}", SHARD: "${
-        this.shard
-      }" and INTENTS: "${this.#intents}"`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardNorminal
+        } @ ${this.time} => IDENTIFY with TOKEN: "${this.#token}", SHARD: "${
+          this.shard
+        }" and INTENTS: "${this.#intents}"`,
+      );
 
     this.#ws.send(_identify(this.#token, this.shard, this.#intents));
   }
 
   #reconnect() {
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardWarning
-      } @ ${this.time} => Attempting reconnect...`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardWarning
+        } @ ${this.time} => Attempting reconnect...`,
+      );
 
     this.#resuming = true;
 
     this.#shutDownWebsocket(4901);
 
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardWarning
-      } @ ${this.time} => Shard reconnecting`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardWarning
+        } @ ${this.time} => Shard reconnecting`,
+      );
   }
 
   #resume() {
@@ -276,14 +291,15 @@ class WS {
 
     this.#waitingForHeartbeatACK = false;
 
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardWarning
-      } @ ${this.time} => RESUMING with token ${this.#token}, session id ${
-        this.#_sessionId
-      } and sequence ${this.#_s}`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardWarning
+        } @ ${this.time} => RESUMING with token ${this.#token}, session id ${
+          this.#_sessionId
+        } and sequence ${this.#_s}`,
+      );
 
     this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
 
@@ -295,35 +311,38 @@ class WS {
   }
 
   #addListeners() {
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardWarning
-      } @ ${this.time} => Adding websocket listeners`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardWarning
+        } @ ${this.time} => Adding websocket listeners`,
+      );
 
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
     });
 
     this.#ws.once("open", () => {
-      this.#_client.emit(
-        "debug",
-        `${this.libName} ${
-          this.shardNorminal
-        } @ ${this.time} => Websocket opened`,
-      );
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardNorminal
+          } @ ${this.time} => Websocket opened`,
+        );
 
       clearTimeout(this.#monitorOpened);
     });
 
     this.#ws.once("close", (data) => {
-      this.#_client.emit(
-        "debug",
-        `${this.libName} ${
-          data < 2000 ? this.shardNorminal : this.shardCatastrophic
-        } @ ${this.time} => Websocket closed with code ${data}`,
-      );
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            data < 2000 ? this.shardNorminal : this.shardCatastrophic
+          } @ ${this.time} => Websocket closed with code ${data}`,
+        );
 
       this.#ws.removeAllListeners();
 
@@ -343,12 +362,13 @@ class WS {
 
       if (this.#retries <= 5)
         setTimeout(() => {
-          this.#_client.emit(
-            "debug",
-            `${this.libName} ${this.shardWarning} @ ${this.time} => Attempt ${
-              this.#retries
-            } at re-opening websocket`,
-          );
+          if (process.env.NODE_ENV == "development")
+            this.#_client.emit(
+              "debug",
+              `${this.libName} ${this.shardWarning} @ ${this.time} => Attempt ${
+                this.#retries
+              } at re-opening websocket`,
+            );
 
           this.#retries++;
 
@@ -357,12 +377,13 @@ class WS {
           );
 
           this.#monitorOpened = setTimeout(() => {
-            this.#_client.emit(
-              "debug",
-              `${this.libName} ${this.shardWarning} @ ${this.time} => Attempt ${
-                this.#retries
-              } failed to re-open websocket, shutting down websocket with code ${data}`,
-            );
+            if (process.env.NODE_ENV == "development")
+              this.#_client.emit(
+                "debug",
+                `${this.libName} ${this.shardWarning} @ ${this.time} => Attempt ${
+                  this.#retries
+                } failed to re-open websocket, shutting down websocket with code ${data}`,
+              );
 
             this.#shutDownWebsocket(data);
           }, 10000);
@@ -388,34 +409,37 @@ class WS {
     });
 
     this.#ws.on("error", (data) => {
-      this.#_client.emit(
-        "debug",
-        `${this.libName} ${
-          this.shardCatastrophic
-        } @ ${this.time} => ${data?.stack?.toString()}`,
-      );
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardCatastrophic
+          } @ ${this.time} => ${data?.stack?.toString()}`,
+        );
 
       this.#shutDownWebsocket();
     });
   }
 
   async #shutDownWebsocket(code = 1000) {
-    this.#_client.emit(
-      "debug",
-      `${this.libName} ${
-        this.shardWarning
-      } @ ${this.time} => Closing websocket...`,
-    );
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(
+        "debug",
+        `${this.libName} ${
+          this.shardWarning
+        } @ ${this.time} => Closing websocket...`,
+      );
 
     this.#ws.close(code);
 
     this.terminateSocketTimeout = setTimeout(() => {
-      this.#_client.emit(
-        "debug",
-        `${this.libName} ${
-          this.shardCatastrophic
-        } @ ${this.time} => Terminating websocket`,
-      );
+      if (process.env.NODE_ENV == "development")
+        this.#_client.emit(
+          "debug",
+          `${this.libName} ${
+            this.shardCatastrophic
+          } @ ${this.time} => Terminating websocket`,
+        );
       this.#ws.terminate();
       setTimeout(() => {
         this.softRestartFunction();
