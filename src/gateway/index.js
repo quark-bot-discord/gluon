@@ -71,10 +71,14 @@ class WS {
       ? softRestartFunction
       : () => process.exit(1);
 
+    this.halted = false;
+
     this.#addListeners();
   }
 
   #handleIncoming(data) {
+    if (this.halted === true) return;
+
     if (!data) return;
 
     if (data.s) this.#_s = data.s;
@@ -172,6 +176,11 @@ class WS {
         break;
       }
     }
+  }
+
+  halt() {
+    this.halted = true;
+    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.DANGER, "Halting websocket");
   }
 
   updatePresence(name, type, status, afk, since) {

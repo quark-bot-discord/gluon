@@ -141,6 +141,10 @@ class Client extends EventsEmitter {
     this.softRestartFunction = softRestartFunction;
   }
 
+  halt() {
+    for (let i = 0; i < this.shards.length; i++) this.shards[i].halt();
+  }
+
   _emitDebug(status, message) {
     if (process.env.NODE_ENV !== "development") return;
     const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
