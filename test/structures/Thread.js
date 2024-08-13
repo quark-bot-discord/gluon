@@ -201,4 +201,91 @@ describe("Thread", function () {
       expect(rebundled.parent.id).to.equal(thread.parent.id);
     });
   });
+  it("should bundle with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+    new Member(client, TEST_DATA.CLIENT_MEMBER, {
+      user_id: TEST_DATA.THREAD.owner_id,
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const thread = new Thread(client, TEST_DATA.THREAD, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Thread(
+      client,
+      thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      {
+        guild_id: TEST_DATA.GUILD_ID,
+      },
+    );
+    expect(rebundled.id).to.equal(thread.id);
+    expect(rebundled.name).to.equal(thread.name);
+    expect(rebundled.ownerId).to.equal(thread.ownerId);
+    expect(rebundled.parentId).to.equal(thread.parentId);
+    expect(rebundled.rateLimitPerUser).to.equal(thread.rateLimitPerUser);
+    expect(rebundled.topic).to.equal(thread.topic);
+    expect(rebundled.type).to.equal(thread.type);
+    expect(rebundled.guild.id).to.equal(thread.guild.id);
+    expect(rebundled.owner.id).to.equal(thread.owner.id);
+    expect(rebundled.parent.id).to.equal(thread.parent.id);
+  });
+  it("should bundle with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+    new Member(client, TEST_DATA.CLIENT_MEMBER, {
+      user_id: TEST_DATA.THREAD.owner_id,
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const thread = new Thread(client, TEST_DATA.THREAD, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Thread(
+      client,
+      thread.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      {
+        guild_id: TEST_DATA.GUILD_ID,
+      },
+    );
+    expect(rebundled.id).to.equal(thread.id);
+    expect(rebundled.name).to.equal(thread.name);
+    expect(rebundled.ownerId).to.equal(thread.ownerId);
+    expect(rebundled.parentId).to.equal(thread.parentId);
+    expect(rebundled.rateLimitPerUser).to.equal(thread.rateLimitPerUser);
+    expect(rebundled.topic).to.equal(thread.topic);
+    expect(rebundled.type).to.equal(thread.type);
+    expect(rebundled.guild.id).to.equal(thread.guild.id);
+    expect(rebundled.owner.id).to.equal(thread.owner.id);
+    expect(rebundled.parent.id).to.equal(thread.parent.id);
+  });
+  it("should bundle with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+    new Member(client, TEST_DATA.CLIENT_MEMBER, {
+      user_id: TEST_DATA.THREAD.owner_id,
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const thread = new Thread(client, TEST_DATA.THREAD, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Thread(
+      client,
+      thread.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      {
+        guild_id: TEST_DATA.GUILD_ID,
+      },
+    );
+    expect(rebundled.id).to.equal(thread.id);
+    expect(rebundled.name).to.equal(thread.name);
+    expect(rebundled.ownerId).to.equal(thread.ownerId);
+    expect(rebundled.parentId).to.equal(thread.parentId);
+    expect(rebundled.rateLimitPerUser).to.equal(thread.rateLimitPerUser);
+    expect(rebundled.topic).to.equal(thread.topic);
+    expect(rebundled.type).to.equal(thread.type);
+    expect(rebundled.guild.id).to.equal(thread.guild.id);
+    expect(rebundled.owner.id).to.equal(thread.owner.id);
+    expect(rebundled.parent.id).to.equal(thread.parent.id);
+  });
 });

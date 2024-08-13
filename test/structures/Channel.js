@@ -518,5 +518,89 @@ describe("Channel", function () {
       expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
       expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
     });
+    it("should bundle correctly with custom toJSON", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      const rebundled = new Channel(
+        client,
+        channel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(channel.id);
+      expect(rebundled.name).to.equal(channel.name);
+      expect(rebundled.type).to.equal(channel.type);
+      expect(rebundled.guildId).to.equal(channel.guildId);
+      expect(rebundled.mention).to.equal(channel.mention);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.parentId).to.equal(channel.parentId);
+      expect(rebundled.parent.id).to.equal(TEST_DATA.CATEGORY_CHANNEL.id);
+      expect(rebundled.rateLimitPerUser).to.equal(channel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(channel.nsfw);
+      expect(rebundled.topic).to.equal(channel.topic);
+      expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
+      expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
+    });
+    it("should bundle correctly with custom toJSON", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      const rebundled = new Channel(
+        client,
+        channel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(channel.id);
+      expect(rebundled.name).to.equal(channel.name);
+      expect(rebundled.type).to.equal(channel.type);
+      expect(rebundled.guildId).to.equal(channel.guildId);
+      expect(rebundled.mention).to.equal(channel.mention);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.parentId).to.equal(channel.parentId);
+      expect(rebundled.parent.id).to.equal(TEST_DATA.CATEGORY_CHANNEL.id);
+      expect(rebundled.rateLimitPerUser).to.equal(channel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(channel.nsfw);
+      expect(rebundled.topic).to.equal(channel.topic);
+      expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
+      expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
+    });
+    it("should bundle correctly with custom toJSON", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      const rebundled = new Channel(
+        client,
+        channel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(channel.id);
+      expect(rebundled.name).to.equal(channel.name);
+      expect(rebundled.type).to.equal(channel.type);
+      expect(rebundled.guildId).to.equal(channel.guildId);
+      expect(rebundled.mention).to.equal(channel.mention);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.parentId).to.equal(channel.parentId);
+      expect(rebundled.parent.id).to.equal(TEST_DATA.CATEGORY_CHANNEL.id);
+      expect(rebundled.rateLimitPerUser).to.equal(channel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(channel.nsfw);
+      expect(rebundled.topic).to.equal(channel.topic);
+      expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
+      expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
+    });
   });
 });

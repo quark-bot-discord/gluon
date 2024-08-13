@@ -104,4 +104,64 @@ describe("Sticker", function () {
       });
     });
   });
+
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      const rebundled = new Sticker(client, sticker.toJSON());
+      expect(sticker.format).to.equal(rebundled.format);
+      expect(sticker.formatType).to.equal(rebundled.formatType);
+      expect(sticker.id).to.equal(rebundled.id);
+      expect(sticker.name).to.equal(rebundled.name);
+      expect(sticker.previewImageURL).to.equal(rebundled.previewImageURL);
+      expect(sticker.toString()).to.equal(rebundled.toString());
+    });
+    it("should bundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      const rebundled = new Sticker(
+        client,
+        sticker.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      );
+      expect(sticker.format).to.equal(rebundled.format);
+      expect(sticker.formatType).to.equal(rebundled.formatType);
+      expect(sticker.id).to.equal(rebundled.id);
+      expect(sticker.name).to.equal(rebundled.name);
+      expect(sticker.previewImageURL).to.equal(rebundled.previewImageURL);
+      expect(sticker.toString()).to.equal(rebundled.toString());
+    });
+    it("should bundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      const rebundled = new Sticker(
+        client,
+        sticker.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      );
+      expect(sticker.format).to.equal(rebundled.format);
+      expect(sticker.formatType).to.equal(rebundled.formatType);
+      expect(sticker.id).to.equal(rebundled.id);
+      expect(sticker.name).to.equal(rebundled.name);
+      expect(sticker.previewImageURL).to.equal(rebundled.previewImageURL);
+      expect(sticker.toString()).to.equal(rebundled.toString());
+    });
+    it("should bundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const sticker = new Sticker(client, TEST_DATA.STICKER);
+      const rebundled = new Sticker(
+        client,
+        sticker.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      );
+      expect(sticker.format).to.equal(rebundled.format);
+      expect(sticker.formatType).to.equal(rebundled.formatType);
+      expect(sticker.id).to.equal(rebundled.id);
+      expect(sticker.name).to.equal(rebundled.name);
+      expect(sticker.previewImageURL).to.equal(rebundled.previewImageURL);
+      expect(sticker.toString()).to.equal(rebundled.toString());
+    });
+  });
 });

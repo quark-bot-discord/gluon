@@ -187,4 +187,87 @@ describe("VoiceChannel", function () {
       });
     });
   });
+
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceChannel(client, voiceChannel.toJSON(), {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.id).to.equal(voiceChannel.id);
+      expect(rebundled.name).to.equal(voiceChannel.name);
+      expect(rebundled.bitrate).to.equal(voiceChannel.bitrate);
+      expect(rebundled.userLimit).to.equal(voiceChannel.userLimit);
+      expect(rebundled.rtcRegion).to.equal(voiceChannel.rtcRegion);
+      expect(rebundled.topic).to.equal(voiceChannel.topic);
+      expect(rebundled.toJSON()).to.deep.equal(voiceChannel.toJSON());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceChannel(
+        client,
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(voiceChannel.id);
+      expect(rebundled.name).to.equal(voiceChannel.name);
+      expect(rebundled.bitrate).to.equal(voiceChannel.bitrate);
+      expect(rebundled.userLimit).to.equal(voiceChannel.userLimit);
+      expect(rebundled.rtcRegion).to.equal(voiceChannel.rtcRegion);
+      expect(rebundled.topic).to.equal(voiceChannel.topic);
+      expect(rebundled.toJSON()).to.deep.equal(voiceChannel.toJSON());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceChannel(
+        client,
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(voiceChannel.id);
+      expect(rebundled.name).to.equal(voiceChannel.name);
+      expect(rebundled.bitrate).to.equal(voiceChannel.bitrate);
+      expect(rebundled.userLimit).to.equal(voiceChannel.userLimit);
+      expect(rebundled.rtcRegion).to.equal(voiceChannel.rtcRegion);
+      expect(rebundled.topic).to.equal(voiceChannel.topic);
+      expect(rebundled.toJSON()).to.deep.equal(voiceChannel.toJSON());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceChannel(
+        client,
+        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(voiceChannel.id);
+      expect(rebundled.name).to.equal(voiceChannel.name);
+      expect(rebundled.bitrate).to.equal(voiceChannel.bitrate);
+      expect(rebundled.userLimit).to.equal(voiceChannel.userLimit);
+      expect(rebundled.rtcRegion).to.equal(voiceChannel.rtcRegion);
+      expect(rebundled.topic).to.equal(voiceChannel.topic);
+      expect(rebundled.toJSON()).to.deep.equal(voiceChannel.toJSON());
+    });
+  });
 });

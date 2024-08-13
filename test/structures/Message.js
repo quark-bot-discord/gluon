@@ -920,7 +920,7 @@ describe("Message", function () {
       });
       const encrypted = message.encrypt();
       expect(encrypted).to.equal(
-        "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",
+        "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",
       );
     });
   });
@@ -1089,7 +1089,7 @@ describe("Message", function () {
         },
         poll: {
           allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
-          answers: [],
+          answers: TEST_DATA.MESSAGE.poll.answers,
           expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).toISOString(),
           layout_type: undefined,
           question: TEST_DATA.MESSAGE.poll.question,
@@ -1190,7 +1190,7 @@ describe("Message", function () {
         },
         poll: {
           allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
-          answers: [],
+          answers: TEST_DATA.MESSAGE.poll.answers,
           expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).getTime(),
           layout_type: undefined,
           question: TEST_DATA.MESSAGE.poll.question,
@@ -1272,7 +1272,7 @@ describe("Message", function () {
         },
         poll: {
           allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
-          answers: [],
+          answers: TEST_DATA.MESSAGE.poll.answers,
           expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).getTime(),
           layout_type: undefined,
           question: TEST_DATA.MESSAGE.poll.question,
@@ -1353,7 +1353,7 @@ describe("Message", function () {
         },
         poll: {
           allow_multiselect: TEST_DATA.MESSAGE.poll.allow_multiselect,
-          answers: [],
+          answers: TEST_DATA.MESSAGE.poll.answers,
           expiry: new Date(TEST_DATA.MESSAGE.poll.expiry).toISOString(),
           layout_type: undefined,
           question: TEST_DATA.MESSAGE.poll.question,
@@ -1406,6 +1406,171 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
         guild_id: TEST_DATA.GUILD_ID,
       });
+      expect(rebundled.id).to.equal(message.id);
+      expect(rebundled.type).to.equal(message.type);
+      expect(rebundled.content).to.equal(message.content);
+      expect(rebundled.authorId).to.equal(message.authorId);
+      expect(rebundled.author.toJSON()).to.deep.equal(message.author.toJSON());
+      expect(rebundled.timestamp).to.equal(message.timestamp);
+      expect(rebundled.editedTimestamp).to.equal(message.editedTimestamp);
+      expect(rebundled.channelId).to.equal(message.channelId);
+      expect(rebundled.channel.toJSON()).to.deep.equal(
+        message.channel.toJSON(),
+      );
+      expect(rebundled.guildId).to.equal(message.guildId);
+      expect(rebundled.guild.toJSON()).to.deep.equal(message.guild.toJSON());
+      expect(rebundled.member.toJSON()).to.deep.equal(message.member.toJSON());
+      expect(rebundled.reference.messageId).to.equal(
+        message.reference.messageId,
+      );
+      expect(rebundled.attachments).to.deep.equal(message.attachments);
+      expect(rebundled.embeds).to.deep.equal(message.embeds);
+      expect(rebundled.mentions).to.equal(message.mentions);
+      expect(rebundled.mentionEveryone).to.equal(message.mentionEveryone);
+      expect(rebundled.mentionRoles).to.deep.equal(message.mentionRoles);
+      expect(rebundled.poll).to.deep.equal(message.poll);
+      expect(rebundled.pinned).to.equal(message.pinned);
+      expect(rebundled.mirrored).to.equal(message.mirrored);
+      expect(rebundled.webhookId).to.equal(message.webhookId);
+      expect(rebundled.stickerItems).to.deep.equal(message.stickerItems);
+      expect(rebundled.reactions.toJSON()).to.deep.equal(
+        message.reactions.toJSON(),
+      );
+      expect(rebundled.messageSnapshots).to.deep.equal(
+        message.messageSnapshots,
+      );
+      expect(rebundled.url).to.equal(message.url);
+    });
+    it("should rebundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Message(
+        client,
+        message.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(message.id);
+      expect(rebundled.type).to.equal(message.type);
+      expect(rebundled.content).to.equal(message.content);
+      expect(rebundled.authorId).to.equal(message.authorId);
+      expect(rebundled.author.toJSON()).to.deep.equal(message.author.toJSON());
+      expect(rebundled.timestamp).to.equal(message.timestamp);
+      expect(rebundled.editedTimestamp).to.equal(message.editedTimestamp);
+      expect(rebundled.channelId).to.equal(message.channelId);
+      expect(rebundled.channel.toJSON()).to.deep.equal(
+        message.channel.toJSON(),
+      );
+      expect(rebundled.guildId).to.equal(message.guildId);
+      expect(rebundled.guild.toJSON()).to.deep.equal(message.guild.toJSON());
+      expect(rebundled.member.toJSON()).to.deep.equal(message.member.toJSON());
+      expect(rebundled.reference.messageId).to.equal(
+        message.reference.messageId,
+      );
+      expect(rebundled.attachments).to.deep.equal(message.attachments);
+      expect(rebundled.embeds).to.deep.equal(message.embeds);
+      expect(rebundled.mentions).to.equal(message.mentions);
+      expect(rebundled.mentionEveryone).to.equal(message.mentionEveryone);
+      expect(rebundled.mentionRoles).to.deep.equal(message.mentionRoles);
+      expect(rebundled.poll).to.deep.equal(message.poll);
+      expect(rebundled.pinned).to.equal(message.pinned);
+      expect(rebundled.mirrored).to.equal(message.mirrored);
+      expect(rebundled.webhookId).to.equal(message.webhookId);
+      expect(rebundled.stickerItems).to.deep.equal(message.stickerItems);
+      expect(rebundled.reactions.toJSON()).to.deep.equal(
+        message.reactions.toJSON(),
+      );
+      expect(rebundled.messageSnapshots).to.deep.equal(
+        message.messageSnapshots,
+      );
+      expect(rebundled.url).to.equal(message.url);
+    });
+    it("should rebundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Message(
+        client,
+        message.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(message.id);
+      expect(rebundled.type).to.equal(message.type);
+      expect(rebundled.content).to.equal(message.content);
+      expect(rebundled.authorId).to.equal(message.authorId);
+      expect(rebundled.author.toJSON()).to.deep.equal(message.author.toJSON());
+      expect(rebundled.timestamp).to.equal(message.timestamp);
+      expect(rebundled.editedTimestamp).to.equal(message.editedTimestamp);
+      expect(rebundled.channelId).to.equal(message.channelId);
+      expect(rebundled.channel.toJSON()).to.deep.equal(
+        message.channel.toJSON(),
+      );
+      expect(rebundled.guildId).to.equal(message.guildId);
+      expect(rebundled.guild.toJSON()).to.deep.equal(message.guild.toJSON());
+      expect(rebundled.member.toJSON()).to.deep.equal(message.member.toJSON());
+      expect(rebundled.reference.messageId).to.equal(
+        message.reference.messageId,
+      );
+      expect(rebundled.attachments).to.deep.equal(message.attachments);
+      expect(rebundled.embeds).to.deep.equal(message.embeds);
+      expect(rebundled.mentions).to.equal(message.mentions);
+      expect(rebundled.mentionEveryone).to.equal(message.mentionEveryone);
+      expect(rebundled.mentionRoles).to.deep.equal(message.mentionRoles);
+      expect(rebundled.poll).to.deep.equal(message.poll);
+      expect(rebundled.pinned).to.equal(message.pinned);
+      expect(rebundled.mirrored).to.equal(message.mirrored);
+      expect(rebundled.webhookId).to.equal(message.webhookId);
+      expect(rebundled.stickerItems).to.deep.equal(message.stickerItems);
+      expect(rebundled.reactions.toJSON()).to.deep.equal(
+        message.reactions.toJSON(),
+      );
+      expect(rebundled.messageSnapshots).to.deep.equal(
+        message.messageSnapshots,
+      );
+      expect(rebundled.url).to.equal(message.url);
+    });
+    it("should rebundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        guild_id: TEST_DATA.GUILD_ID,
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Message(
+        client,
+        message.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
       expect(rebundled.id).to.equal(message.id);
       expect(rebundled.type).to.equal(message.type);
       expect(rebundled.content).to.equal(message.content);

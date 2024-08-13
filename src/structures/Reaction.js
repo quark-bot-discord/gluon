@@ -11,6 +11,7 @@ class Reaction {
   #emoji;
   #_reacted;
   #initial_reactor;
+  #count;
   /**
    *
    * @param {Client} client The client instance.
@@ -49,6 +50,7 @@ class Reaction {
      * @private
      */
     this.#_reacted = data._reacted?.map((r) => BigInt(r)) || [];
+    if (!Array.isArray(data._reacted) && data.count) this.#count = data.count;
 
     /**
      * The user who added the first reaction.
@@ -66,7 +68,7 @@ class Reaction {
    * @public
    */
   get count() {
-    return this.#_reacted.length;
+    return this.#count ?? this.#_reacted.length;
   }
 
   /**
@@ -149,6 +151,8 @@ class Reaction {
       this.#initial_reactor = BigInt(userId);
 
     this.#_reacted.push(BigInt(userId));
+
+    if (this.#count) this.#count++;
   }
 
   /**
@@ -163,6 +167,8 @@ class Reaction {
       throw new TypeError("GLUON: User ID must be a string.");
 
     this.#_reacted = this.#_reacted.filter((r) => r !== BigInt(userId));
+
+    if (this.#count) this.#count--;
   }
 
   /**

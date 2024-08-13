@@ -125,4 +125,74 @@ describe("PermissionOverwrite", function () {
       ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
     });
   });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const permissionOverwrite = new PermissionOverwrite(
+        client,
+        TEST_DATA.PERMISSION_OVERWRITE,
+      );
+      const rebundled = new PermissionOverwrite(
+        client,
+        permissionOverwrite.toJSON(),
+      );
+      expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
+      expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
+      expect(rebundled.id).to.equal(permissionOverwrite.id);
+      expect(rebundled.type).to.equal(permissionOverwrite.type);
+      expect(rebundled.toString()).to.equal(permissionOverwrite.toString());
+      expect(rebundled.toJSON()).to.deep.equal(permissionOverwrite.toJSON());
+    });
+    it("should bundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const permissionOverwrite = new PermissionOverwrite(
+        client,
+        TEST_DATA.PERMISSION_OVERWRITE,
+      );
+      const rebundled = new PermissionOverwrite(
+        client,
+        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      );
+      expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
+      expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
+      expect(rebundled.id).to.equal(permissionOverwrite.id);
+      expect(rebundled.type).to.equal(permissionOverwrite.type);
+      expect(rebundled.toString()).to.equal(permissionOverwrite.toString());
+      expect(rebundled.toJSON()).to.deep.equal(permissionOverwrite.toJSON());
+    });
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    const permissionOverwrite = new PermissionOverwrite(
+      client,
+      TEST_DATA.PERMISSION_OVERWRITE,
+    );
+    const rebundled = new PermissionOverwrite(
+      client,
+      permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+    );
+    expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
+    expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
+    expect(rebundled.id).to.equal(permissionOverwrite.id);
+    expect(rebundled.type).to.equal(permissionOverwrite.type);
+    expect(rebundled.toString()).to.equal(permissionOverwrite.toString());
+    expect(rebundled.toJSON()).to.deep.equal(permissionOverwrite.toJSON());
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    const permissionOverwrite = new PermissionOverwrite(
+      client,
+      TEST_DATA.PERMISSION_OVERWRITE,
+    );
+    const rebundled = new PermissionOverwrite(
+      client,
+      permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+    );
+    expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
+    expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
+    expect(rebundled.id).to.equal(permissionOverwrite.id);
+    expect(rebundled.type).to.equal(permissionOverwrite.type);
+    expect(rebundled.toString()).to.equal(permissionOverwrite.toString());
+    expect(rebundled.toJSON()).to.deep.equal(permissionOverwrite.toJSON());
+  });
 });

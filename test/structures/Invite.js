@@ -352,5 +352,89 @@ describe("Invite", function () {
       expect(rebundled.id).to.equal(invite.id);
       expect(rebundled.maxUses).to.equal(invite.maxUses);
     });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const invite = new Invite(client, TEST_DATA.INVITE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new Invite(
+        client,
+        invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.code).to.equal(invite.code);
+      expect(rebundled.channelId).to.equal(invite.channelId);
+      expect(rebundled.channel.id).to.equal(invite.channel.id);
+      expect(rebundled.guildId).to.equal(invite.guildId);
+      expect(rebundled.guild.id).to.equal(invite.guild.id);
+      expect(rebundled.uses).to.equal(invite.uses);
+      expect(rebundled.expires).to.equal(invite.expires);
+      expect(rebundled.inviter.id).to.equal(invite.inviter.id);
+      expect(rebundled.url).to.equal(invite.url);
+      expect(rebundled.id).to.equal(invite.id);
+      expect(rebundled.maxUses).to.equal(invite.maxUses);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const invite = new Invite(client, TEST_DATA.INVITE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new Invite(
+        client,
+        invite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.code).to.equal(invite.code);
+      expect(rebundled.channelId).to.equal(invite.channelId);
+      expect(rebundled.channel.id).to.equal(invite.channel.id);
+      expect(rebundled.guildId).to.equal(invite.guildId);
+      expect(rebundled.guild.id).to.equal(invite.guild.id);
+      expect(rebundled.uses).to.equal(invite.uses);
+      expect(rebundled.expires).to.equal(invite.expires);
+      expect(rebundled.inviter.id).to.equal(invite.inviter.id);
+      expect(rebundled.url).to.equal(invite.url);
+      expect(rebundled.id).to.equal(invite.id);
+      expect(rebundled.maxUses).to.equal(invite.maxUses);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const invite = new Invite(client, TEST_DATA.INVITE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new Invite(
+        client,
+        invite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.code).to.equal(invite.code);
+      expect(rebundled.channelId).to.equal(invite.channelId);
+      expect(rebundled.channel.id).to.equal(invite.channel.id);
+      expect(rebundled.guildId).to.equal(invite.guildId);
+      expect(rebundled.guild.id).to.equal(invite.guild.id);
+      expect(rebundled.uses).to.equal(invite.uses);
+      expect(rebundled.expires).to.equal(invite.expires);
+      expect(rebundled.inviter.id).to.equal(invite.inviter.id);
+      expect(rebundled.url).to.equal(invite.url);
+      expect(rebundled.id).to.equal(invite.id);
+      expect(rebundled.maxUses).to.equal(invite.maxUses);
+    });
   });
 });

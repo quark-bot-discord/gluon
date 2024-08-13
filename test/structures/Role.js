@@ -315,5 +315,86 @@ describe("Role", function () {
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);
     });
+    it("should return the correct bundle with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Role(
+        client,
+        role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(role.id);
+      expect(rebundled.name).to.equal(role.name);
+      expect(rebundled.color).to.equal(role.color);
+      expect(rebundled.position).to.equal(role.position);
+      expect(rebundled.permissions).to.equal(role.permissions);
+      expect(rebundled.tags).to.deep.equal(role.tags);
+      expect(rebundled.hoist).to.equal(role.hoist);
+      expect(rebundled.managed).to.equal(role.managed);
+      expect(rebundled.mentionable).to.equal(role.mentionable);
+      expect(rebundled.mention).to.equal(role.mention);
+      expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
+      expect(rebundled.guild.id).to.equal(role.guild.id);
+      expect(rebundled.guildId).to.equal(role.guildId);
+    });
+    it("should return the correct bundle with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Role(
+        client,
+        role.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(role.id);
+      expect(rebundled.name).to.equal(role.name);
+      expect(rebundled.color).to.equal(role.color);
+      expect(rebundled.position).to.equal(role.position);
+      expect(rebundled.permissions).to.equal(role.permissions);
+      expect(rebundled.tags).to.deep.equal(role.tags);
+      expect(rebundled.hoist).to.equal(role.hoist);
+      expect(rebundled.managed).to.equal(role.managed);
+      expect(rebundled.mentionable).to.equal(role.mentionable);
+      expect(rebundled.mention).to.equal(role.mention);
+      expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
+      expect(rebundled.guild.id).to.equal(role.guild.id);
+      expect(rebundled.guildId).to.equal(role.guildId);
+    });
+    it("should return the correct bundle with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Role(
+        client,
+        role.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(role.id);
+      expect(rebundled.name).to.equal(role.name);
+      expect(rebundled.color).to.equal(role.color);
+      expect(rebundled.position).to.equal(role.position);
+      expect(rebundled.permissions).to.equal(role.permissions);
+      expect(rebundled.tags).to.deep.equal(role.tags);
+      expect(rebundled.hoist).to.equal(role.hoist);
+      expect(rebundled.managed).to.equal(role.managed);
+      expect(rebundled.mentionable).to.equal(role.mentionable);
+      expect(rebundled.mention).to.equal(role.mention);
+      expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
+      expect(rebundled.guild.id).to.equal(role.guild.id);
+      expect(rebundled.guildId).to.equal(role.guildId);
+    });
   });
 });

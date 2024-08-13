@@ -61,7 +61,7 @@ class VoiceState {
      * @type {Number}
      * @private
      */
-    this.#_attributes = 0;
+    this.#_attributes = data._attributes ?? 0;
 
     if (data.deaf == true) this.#_attributes |= 0b1 << 0;
 

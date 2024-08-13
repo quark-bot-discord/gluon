@@ -25,6 +25,7 @@ describe("CategoryChannel", function () {
       expect(categoryChannel).to.have.property("nsfw");
       expect(categoryChannel).to.have.property("mention");
       expect(categoryChannel).to.have.property("toString");
+      expect(categoryChannel).to.have.property("toJSON");
     });
   });
 
@@ -203,6 +204,96 @@ describe("CategoryChannel", function () {
         },
       ],
       parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
+    });
+  });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const categoryChannel = new CategoryChannel(
+        client,
+        TEST_DATA.CATEGORY_CHANNEL,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new CategoryChannel(client, categoryChannel.toJSON(), {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.id).to.equal(categoryChannel.id);
+      expect(rebundled.name).to.equal(categoryChannel.name);
+      expect(rebundled.type).to.equal(categoryChannel.type);
+      expect(rebundled.nsfw).to.equal(categoryChannel.nsfw);
+      expect(rebundled.guildId).to.equal(categoryChannel.guildId);
+      expect(rebundled.mention).to.equal(categoryChannel.mention);
+      expect(rebundled.toString()).to.equal(categoryChannel.toString());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const categoryChannel = new CategoryChannel(
+        client,
+        TEST_DATA.CATEGORY_CHANNEL,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new CategoryChannel(
+        client,
+        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(categoryChannel.id);
+      expect(rebundled.name).to.equal(categoryChannel.name);
+      expect(rebundled.type).to.equal(categoryChannel.type);
+      expect(rebundled.nsfw).to.equal(categoryChannel.nsfw);
+      expect(rebundled.guildId).to.equal(categoryChannel.guildId);
+      expect(rebundled.mention).to.equal(categoryChannel.mention);
+      expect(rebundled.toString()).to.equal(categoryChannel.toString());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const categoryChannel = new CategoryChannel(
+        client,
+        TEST_DATA.CATEGORY_CHANNEL,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new CategoryChannel(
+        client,
+        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(categoryChannel.id);
+      expect(rebundled.name).to.equal(categoryChannel.name);
+      expect(rebundled.type).to.equal(categoryChannel.type);
+      expect(rebundled.nsfw).to.equal(categoryChannel.nsfw);
+      expect(rebundled.guildId).to.equal(categoryChannel.guildId);
+      expect(rebundled.mention).to.equal(categoryChannel.mention);
+      expect(rebundled.toString()).to.equal(categoryChannel.toString());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const categoryChannel = new CategoryChannel(
+        client,
+        TEST_DATA.CATEGORY_CHANNEL,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new CategoryChannel(
+        client,
+        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(categoryChannel.id);
+      expect(rebundled.name).to.equal(categoryChannel.name);
+      expect(rebundled.type).to.equal(categoryChannel.type);
+      expect(rebundled.nsfw).to.equal(categoryChannel.nsfw);
+      expect(rebundled.guildId).to.equal(categoryChannel.guildId);
+      expect(rebundled.mention).to.equal(categoryChannel.mention);
+      expect(rebundled.toString()).to.equal(categoryChannel.toString());
     });
   });
 });

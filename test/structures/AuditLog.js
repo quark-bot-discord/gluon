@@ -94,7 +94,7 @@ describe("AuditLog", function () {
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guild_id: TEST_DATA.GUILD_ID,
       });
-      expect(auditLog.executorId).to.equal(TEST_DATA.AUDIT_LOG.executor_id);
+      expect(auditLog.executorId).to.equal(TEST_DATA.AUDIT_LOG.user_id);
     });
   });
 
@@ -196,7 +196,7 @@ describe("AuditLog", function () {
         action_type: TEST_DATA.AUDIT_LOG.action_type,
         reason: TEST_DATA.AUDIT_LOG.reason,
         target_id: TEST_DATA.AUDIT_LOG.target_id,
-        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        user_id: TEST_DATA.AUDIT_LOG.user_id,
         options: {
           channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
           count: TEST_DATA.AUDIT_LOG.count,
@@ -220,7 +220,7 @@ describe("AuditLog", function () {
         action_type: TEST_DATA.AUDIT_LOG.action_type,
         reason: TEST_DATA.AUDIT_LOG.reason,
         target_id: TEST_DATA.AUDIT_LOG.target_id,
-        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        user_id: TEST_DATA.AUDIT_LOG.user_id,
         options: {
           channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
           count: TEST_DATA.AUDIT_LOG.count,
@@ -238,7 +238,7 @@ describe("AuditLog", function () {
         action_type: TEST_DATA.AUDIT_LOG.action_type,
         reason: TEST_DATA.AUDIT_LOG.reason,
         target_id: TEST_DATA.AUDIT_LOG.target_id,
-        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        user_id: TEST_DATA.AUDIT_LOG.user_id,
         options: {
           channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
           count: TEST_DATA.AUDIT_LOG.count,
@@ -256,7 +256,7 @@ describe("AuditLog", function () {
         action_type: TEST_DATA.AUDIT_LOG.action_type,
         reason: TEST_DATA.AUDIT_LOG.reason,
         target_id: TEST_DATA.AUDIT_LOG.target_id,
-        executor_id: TEST_DATA.AUDIT_LOG.executor_id,
+        user_id: TEST_DATA.AUDIT_LOG.user_id,
         options: {
           channel_id: TEST_DATA.AUDIT_LOG.options.channel_id,
           count: TEST_DATA.AUDIT_LOG.count,
@@ -268,6 +268,31 @@ describe("AuditLog", function () {
         },
         changes: TEST_DATA.AUDIT_LOG.changes,
       });
+    });
+  });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new AuditLog(client, auditLog.toJSON(), {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.id).to.equal(auditLog.id);
+      expect(rebundled.actionType).to.equal(auditLog.actionType);
+      expect(rebundled.reason).to.equal(auditLog.reason);
+      expect(rebundled.targetId).to.equal(auditLog.targetId);
+      expect(rebundled.channelId).to.equal(auditLog.channelId);
+      expect(rebundled.executorId).to.equal(auditLog.executorId);
+      expect(rebundled.count).to.equal(auditLog.count);
+      expect(rebundled.deleteMemberDays).to.equal(auditLog.deleteMemberDays);
+      expect(rebundled.membersRemoved).to.equal(auditLog.membersRemoved);
+      expect(rebundled.specialId).to.equal(auditLog.specialId);
+      expect(rebundled.specialType).to.equal(auditLog.specialType);
+      expect(rebundled.status).to.equal(auditLog.status);
+      expect(rebundled.changes).to.equal(auditLog.changes);
+      expect(rebundled.toJSON()).to.deep.equal(auditLog.toJSON());
     });
   });
 });

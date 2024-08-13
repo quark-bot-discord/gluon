@@ -2,6 +2,7 @@ import { expect } from "chai";
 import Emoji from "../../src/structures/Emoji.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import Guild from "../../src/structures/Guild.js";
 
 describe("Emoji", function () {
   context("check import", function () {
@@ -245,5 +246,101 @@ describe("Emoji", function () {
         managed: false,
       });
     });
+  });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Emoji(client, emoji.toJSON(), {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.animated).to.equal(emoji.animated);
+      expect(rebundled.available).to.equal(emoji.available);
+      expect(rebundled.id).to.equal(emoji.id);
+      expect(rebundled.name).to.equal(emoji.name);
+      expect(rebundled.managed).to.equal(emoji.managed);
+      expect(rebundled.requireColons).to.equal(emoji.requireColons);
+      expect(rebundled.guildId).to.equal(emoji.guildId);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
+      expect(rebundled.url).to.equal(emoji.url);
+      expect(rebundled.mention).to.equal(emoji.mention);
+      expect(rebundled.toString()).to.equal(emoji.toString());
+    });
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Emoji(
+      client,
+      emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    expect(rebundled.animated).to.equal(emoji.animated);
+    expect(rebundled.available).to.equal(emoji.available);
+    expect(rebundled.id).to.equal(emoji.id);
+    expect(rebundled.name).to.equal(emoji.name);
+    expect(rebundled.managed).to.equal(emoji.managed);
+    expect(rebundled.requireColons).to.equal(emoji.requireColons);
+    expect(rebundled.guildId).to.equal(emoji.guildId);
+    expect(rebundled.guild).to.be.an.instanceOf(Guild);
+    expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
+    expect(rebundled.url).to.equal(emoji.url);
+    expect(rebundled.mention).to.equal(emoji.mention);
+    expect(rebundled.toString()).to.equal(emoji.toString());
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Emoji(
+      client,
+      emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    expect(rebundled.animated).to.equal(emoji.animated);
+    expect(rebundled.available).to.equal(emoji.available);
+    expect(rebundled.id).to.equal(emoji.id);
+    expect(rebundled.name).to.equal(emoji.name);
+    expect(rebundled.managed).to.equal(emoji.managed);
+    expect(rebundled.requireColons).to.equal(emoji.requireColons);
+    expect(rebundled.guildId).to.equal(emoji.guildId);
+    expect(rebundled.guild).to.be.an.instanceOf(Guild);
+    expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
+    expect(rebundled.url).to.equal(emoji.url);
+    expect(rebundled.mention).to.equal(emoji.mention);
+    expect(rebundled.toString()).to.equal(emoji.toString());
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+      guild_id: TEST_DATA.GUILD_ID,
+    });
+    const rebundled = new Emoji(
+      client,
+      emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    expect(rebundled.animated).to.equal(emoji.animated);
+    expect(rebundled.available).to.equal(emoji.available);
+    expect(rebundled.id).to.equal(emoji.id);
+    expect(rebundled.name).to.equal(emoji.name);
+    expect(rebundled.managed).to.equal(emoji.managed);
+    expect(rebundled.requireColons).to.equal(emoji.requireColons);
+    expect(rebundled.guildId).to.equal(emoji.guildId);
+    expect(rebundled.guild).to.be.an.instanceOf(Guild);
+    expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
+    expect(rebundled.url).to.equal(emoji.url);
+    expect(rebundled.mention).to.equal(emoji.mention);
+    expect(rebundled.toString()).to.equal(emoji.toString());
   });
 });

@@ -413,5 +413,122 @@ describe("VoiceState", function () {
       expect(rebundled.member).to.deep.equal(voiceState.member);
       expect(rebundled.member.id).to.equal(voiceState.member.id);
     });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        guild_id: TEST_DATA.GUILD_ID,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+      });
+      TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
+      const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceState(
+        client,
+        voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.guildId).to.equal(voiceState.guildId);
+      expect(rebundled.channelId).to.equal(voiceState.channelId);
+      expect(rebundled.memberId).to.equal(voiceState.memberId);
+      expect(rebundled.deaf).to.equal(voiceState.deaf);
+      expect(rebundled.mute).to.equal(voiceState.mute);
+      expect(rebundled.selfDeaf).to.equal(voiceState.selfDeaf);
+      expect(rebundled.selfMute).to.equal(voiceState.selfMute);
+      expect(rebundled.selfStream).to.equal(voiceState.selfStream);
+      expect(rebundled.selfVideo).to.equal(voiceState.selfVideo);
+      expect(rebundled.suppress).to.equal(voiceState.suppress);
+      expect(rebundled.joined).to.equal(voiceState.joined);
+      expect(rebundled.requestToSpeakTimestamp).to.equal(
+        voiceState.requestToSpeakTimestamp,
+      );
+      expect(rebundled.guild).to.deep.equal(voiceState.guild);
+      expect(rebundled.guild.id).to.equal(voiceState.guild.id);
+      expect(rebundled.channel).to.deep.equal(voiceState.channel);
+      expect(rebundled.channel.id).to.equal(voiceState.channel.id);
+      expect(rebundled.member).to.deep.equal(voiceState.member);
+      expect(rebundled.member.id).to.equal(voiceState.member.id);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        guild_id: TEST_DATA.GUILD_ID,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+      });
+      TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
+      const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceState(
+        client,
+        voiceState.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.guildId).to.equal(voiceState.guildId);
+      expect(rebundled.channelId).to.equal(voiceState.channelId);
+      expect(rebundled.memberId).to.equal(voiceState.memberId);
+      expect(rebundled.deaf).to.equal(voiceState.deaf);
+      expect(rebundled.mute).to.equal(voiceState.mute);
+      expect(rebundled.selfDeaf).to.equal(voiceState.selfDeaf);
+      expect(rebundled.selfMute).to.equal(voiceState.selfMute);
+      expect(rebundled.selfStream).to.equal(voiceState.selfStream);
+      expect(rebundled.selfVideo).to.equal(voiceState.selfVideo);
+      expect(rebundled.suppress).to.equal(voiceState.suppress);
+      expect(rebundled.joined).to.equal(voiceState.joined);
+      expect(rebundled.requestToSpeakTimestamp).to.equal(
+        voiceState.requestToSpeakTimestamp,
+      );
+      expect(rebundled.guild).to.deep.equal(voiceState.guild);
+      expect(rebundled.guild.id).to.equal(voiceState.guild.id);
+      expect(rebundled.channel).to.deep.equal(voiceState.channel);
+      expect(rebundled.channel.id).to.equal(voiceState.channel.id);
+      expect(rebundled.member).to.deep.equal(voiceState.member);
+      expect(rebundled.member.id).to.equal(voiceState.member.id);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Member(client, TEST_DATA.MEMBER, {
+        guild_id: TEST_DATA.GUILD_ID,
+        user_id: TEST_DATA.VOICE_STATE.user_id,
+      });
+      TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
+      const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new VoiceState(
+        client,
+        voiceState.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.guildId).to.equal(voiceState.guildId);
+      expect(rebundled.channelId).to.equal(voiceState.channelId);
+      expect(rebundled.memberId).to.equal(voiceState.memberId);
+      expect(rebundled.deaf).to.equal(voiceState.deaf);
+      expect(rebundled.mute).to.equal(voiceState.mute);
+      expect(rebundled.selfDeaf).to.equal(voiceState.selfDeaf);
+      expect(rebundled.selfMute).to.equal(voiceState.selfMute);
+      expect(rebundled.selfStream).to.equal(voiceState.selfStream);
+      expect(rebundled.selfVideo).to.equal(voiceState.selfVideo);
+      expect(rebundled.suppress).to.equal(voiceState.suppress);
+      expect(rebundled.joined).to.equal(voiceState.joined);
+      expect(rebundled.requestToSpeakTimestamp).to.equal(
+        voiceState.requestToSpeakTimestamp,
+      );
+      expect(rebundled.guild).to.deep.equal(voiceState.guild);
+      expect(rebundled.guild.id).to.equal(voiceState.guild.id);
+      expect(rebundled.channel).to.deep.equal(voiceState.channel);
+      expect(rebundled.channel.id).to.equal(voiceState.channel.id);
+      expect(rebundled.member).to.deep.equal(voiceState.member);
+      expect(rebundled.member.id).to.equal(voiceState.member.id);
+    });
   });
 });

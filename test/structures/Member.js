@@ -1094,5 +1094,107 @@ describe("Member", function () {
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
     });
+    it("should rebundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Member(
+        client,
+        member.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          user_id: TEST_DATA.MEMBER_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(member.id);
+      expect(rebundled.user.id).to.equal(member.user.id);
+      expect(rebundled.guild.id).to.equal(member.guild.id);
+      expect(rebundled.guildId).to.equal(member.guildId);
+      expect(rebundled.nick).to.equal(member.nick);
+      expect(rebundled.joinedAt).to.equal(member.joinedAt);
+      expect(rebundled.timeoutUntil).to.equal(member.timeoutUntil);
+      expect(rebundled.flags).to.equal(member.flags);
+      expect(rebundled.roles).to.deep.equal(member.roles);
+      expect(rebundled.highestRolePosition).to.deep.equal(
+        member.highestRolePosition,
+      );
+      expect(rebundled.rejoined).to.equal(member.rejoined);
+      expect(rebundled.permissions).to.equal(member.permissions);
+      expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.pending).to.equal(member.pending);
+      expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
+      expect(rebundled.mention).to.equal(member.mention);
+    });
+    it("should rebundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Member(
+        client,
+        member.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          user_id: TEST_DATA.MEMBER_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(member.id);
+      expect(rebundled.user.id).to.equal(member.user.id);
+      expect(rebundled.guild.id).to.equal(member.guild.id);
+      expect(rebundled.guildId).to.equal(member.guildId);
+      expect(rebundled.nick).to.equal(member.nick);
+      expect(rebundled.joinedAt).to.equal(member.joinedAt);
+      expect(rebundled.timeoutUntil).to.equal(member.timeoutUntil);
+      expect(rebundled.flags).to.equal(member.flags);
+      expect(rebundled.roles).to.deep.equal(member.roles);
+      expect(rebundled.highestRolePosition).to.deep.equal(
+        member.highestRolePosition,
+      );
+      expect(rebundled.rejoined).to.equal(member.rejoined);
+      expect(rebundled.permissions).to.equal(member.permissions);
+      expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.pending).to.equal(member.pending);
+      expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
+      expect(rebundled.mention).to.equal(member.mention);
+    });
+    it("should rebundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = new Member(client, TEST_DATA.MEMBER, {
+        user_id: TEST_DATA.MEMBER_ID,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      const rebundled = new Member(
+        client,
+        member.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          user_id: TEST_DATA.MEMBER_ID,
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(member.id);
+      expect(rebundled.user.id).to.equal(member.user.id);
+      expect(rebundled.guild.id).to.equal(member.guild.id);
+      expect(rebundled.guildId).to.equal(member.guildId);
+      expect(rebundled.nick).to.equal(member.nick);
+      expect(rebundled.joinedAt).to.equal(member.joinedAt);
+      expect(rebundled.timeoutUntil).to.equal(member.timeoutUntil);
+      expect(rebundled.flags).to.equal(member.flags);
+      expect(rebundled.roles).to.deep.equal(member.roles);
+      expect(rebundled.highestRolePosition).to.deep.equal(
+        member.highestRolePosition,
+      );
+      expect(rebundled.rejoined).to.equal(member.rejoined);
+      expect(rebundled.permissions).to.equal(member.permissions);
+      expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.pending).to.equal(member.pending);
+      expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
+      expect(rebundled.mention).to.equal(member.mention);
+    });
   });
 });

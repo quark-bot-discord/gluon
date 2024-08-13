@@ -196,7 +196,7 @@ class Poll {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {
           question: this.question,
-          answers: this.answers,
+          answers: this.#answers,
           expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
           layout_type: this.rawLayoutType,
@@ -207,7 +207,7 @@ class Poll {
       default: {
         return {
           question: this.question,
-          answers: this.answers,
+          answers: this.#answers,
           expiry: this.expiry
             ? new Date(this.expiry * 1000).toISOString()
             : null,

@@ -365,7 +365,6 @@ export const TEST_DATA = {
     guild_id: "619434557472505857",
     user_id: "123456789012345678",
     target_id: "123456789012345678",
-    executor_id: "123456789012345678",
     action_type: 1,
     changes: [],
     options: {

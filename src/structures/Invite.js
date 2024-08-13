@@ -80,7 +80,8 @@ class Invite {
        * @private
        */
       this.#expires = (new Date(data.expires_at).getTime() / 1000) | 0;
-    else if (typeof data.expires == "number") this.#expires = data.expires;
+    else if (typeof data.expires == "number")
+      this.#expires = data.expires / 1000;
     else if (
       typeof data.max_age == "number" &&
       data.max_age != 0 &&
@@ -288,7 +289,7 @@ class Invite {
           channel: this.channel.toJSON(format),
           inviter: this.inviter.toJSON(format),
           uses: this.uses,
-          expires: this.expires * 1000,
+          expires: this.expires ? this.expires * 1000 : undefined,
           max_uses: this.maxUses,
         };
       }

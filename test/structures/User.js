@@ -245,4 +245,88 @@ describe("User", function () {
       });
     });
   });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, TEST_DATA.USER);
+      const rebundled = new User(client, user.toJSON());
+      expect(rebundled.id).to.equal(user.id);
+      expect(rebundled.username).to.equal(user.username);
+      expect(rebundled.discriminator).to.equal(user.discriminator);
+      expect(rebundled.globalName).to.equal(user.globalName);
+      expect(rebundled.bot).to.equal(user.bot);
+      expect(rebundled._cached).to.equal(user._cached);
+      expect(rebundled.mention).to.equal(user.mention);
+      expect(rebundled.displayAvatarURL).to.equal(user.displayAvatarURL);
+      expect(rebundled.tag).to.equal(user.tag);
+      expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
+      expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled.toString()).to.equal(user.toString());
+      expect(rebundled.toJSON()).to.deep.equal(user.toJSON());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, TEST_DATA.USER);
+      const rebundled = new User(
+        client,
+        user.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      );
+      expect(rebundled.id).to.equal(user.id);
+      expect(rebundled.username).to.equal(user.username);
+      expect(rebundled.discriminator).to.equal(user.discriminator);
+      expect(rebundled.globalName).to.equal(user.globalName);
+      expect(rebundled.bot).to.equal(user.bot);
+      expect(rebundled._cached).to.equal(user._cached);
+      expect(rebundled.mention).to.equal(user.mention);
+      expect(rebundled.displayAvatarURL).to.equal(user.displayAvatarURL);
+      expect(rebundled.tag).to.equal(user.tag);
+      expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
+      expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled.toString()).to.equal(user.toString());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, TEST_DATA.USER);
+      const rebundled = new User(
+        client,
+        user.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      );
+      expect(rebundled.id).to.equal(user.id);
+      expect(rebundled.username).to.equal(user.username);
+      expect(rebundled.discriminator).to.equal(user.discriminator);
+      expect(rebundled.globalName).to.equal(user.globalName);
+      expect(rebundled.bot).to.equal(user.bot);
+      expect(rebundled._cached).to.equal(user._cached);
+      expect(rebundled.mention).to.equal(user.mention);
+      expect(rebundled.displayAvatarURL).to.equal(user.displayAvatarURL);
+      expect(rebundled.tag).to.equal(user.tag);
+      expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
+      expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled.toString()).to.equal(user.toString());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, TEST_DATA.USER);
+      const rebundled = new User(
+        client,
+        user.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      );
+      expect(rebundled.id).to.equal(user.id);
+      expect(rebundled.username).to.equal(user.username);
+      expect(rebundled.discriminator).to.equal(user.discriminator);
+      expect(rebundled.globalName).to.equal(user.globalName);
+      expect(rebundled.bot).to.equal(user.bot);
+      expect(rebundled._cached).to.equal(user._cached);
+      expect(rebundled.mention).to.equal(user.mention);
+      expect(rebundled.displayAvatarURL).to.equal(user.displayAvatarURL);
+      expect(rebundled.tag).to.equal(user.tag);
+      expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
+      expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled.toString()).to.equal(user.toString());
+    });
+  });
 });

@@ -459,4 +459,144 @@ describe("ScheduledEvent", function () {
       });
     });
   });
+  context("check bundling", function () {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const scheduledEvent = new ScheduledEvent(
+        client,
+        TEST_DATA.SCHEDULED_EVENT,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new ScheduledEvent(client, scheduledEvent.toJSON(), {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.creator).to.be.an.instanceOf(User);
+      expect(scheduledEvent.creator.toJSON()).to.deep.equal(
+        rebundled.creator.toJSON(),
+      );
+      expect(scheduledEvent.id).to.equal(rebundled.id);
+      expect(scheduledEvent.description).to.equal(rebundled.description);
+      expect(scheduledEvent.entityType).to.equal(rebundled.entityType);
+      expect(scheduledEvent.guildId).to.equal(rebundled.guildId);
+      expect(scheduledEvent.displayImageURL).to.equal(
+        rebundled.displayImageURL,
+      );
+      expect(scheduledEvent.userCount).to.equal(rebundled.userCount);
+      expect(scheduledEvent.status).to.equal(rebundled.status);
+      expect(scheduledEvent.scheduledStartTime).to.equal(
+        rebundled.scheduledStartTime,
+      );
+      expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
+      expect(scheduledEvent.name).to.equal(rebundled.name);
+      expect(scheduledEvent.location).to.equal(rebundled.location);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.guild.toJSON()).to.deep.equal(
+        scheduledEvent.guild.toJSON(),
+      );
+      expect(scheduledEvent.toString()).to.equal(rebundled.toString());
+    });
+    it("should bundle correctly with custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const scheduledEvent = new ScheduledEvent(
+        client,
+        TEST_DATA.SCHEDULED_EVENT,
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      const rebundled = new ScheduledEvent(
+        client,
+        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        { guild_id: TEST_DATA.GUILD_ID },
+      );
+      expect(rebundled.creator).to.be.an.instanceOf(User);
+      expect(scheduledEvent.creator.toJSON()).to.deep.equal(
+        rebundled.creator.toJSON(),
+      );
+      expect(scheduledEvent.id).to.equal(rebundled.id);
+      expect(scheduledEvent.description).to.equal(rebundled.description);
+      expect(scheduledEvent.entityType).to.equal(rebundled.entityType);
+      expect(scheduledEvent.guildId).to.equal(rebundled.guildId);
+      expect(scheduledEvent.displayImageURL).to.equal(
+        rebundled.displayImageURL,
+      );
+      expect(scheduledEvent.userCount).to.equal(rebundled.userCount);
+      expect(scheduledEvent.status).to.equal(rebundled.status);
+      expect(scheduledEvent.scheduledStartTime).to.equal(
+        rebundled.scheduledStartTime,
+      );
+      expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
+      expect(scheduledEvent.name).to.equal(rebundled.name);
+      expect(scheduledEvent.location).to.equal(rebundled.location);
+      expect(rebundled.guild).to.be.an.instanceOf(Guild);
+      expect(rebundled.guild.toJSON()).to.deep.equal(
+        scheduledEvent.guild.toJSON(),
+      );
+      expect(scheduledEvent.toString()).to.equal(rebundled.toString());
+    });
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const scheduledEvent = new ScheduledEvent(
+      client,
+      TEST_DATA.SCHEDULED_EVENT,
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    const rebundled = new ScheduledEvent(
+      client,
+      scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      { guild_id: TEST_DATA.GUILD_ID },
+    );
+    expect(rebundled.creator).to.be.an.instanceOf(User);
+    expect(scheduledEvent.creator.toJSON()).to.deep.equal(
+      rebundled.creator.toJSON(),
+    );
+    expect(scheduledEvent.id).to.equal(rebundled.id);
+    expect(scheduledEvent.description).to.equal(rebundled.description);
+    expect(scheduledEvent.entityType).to.equal(rebundled.entityType);
+    expect(scheduledEvent.guildId).to.equal(rebundled.guildId);
+    expect(scheduledEvent.displayImageURL).to.equal(rebundled.displayImageURL);
+    expect(scheduledEvent.userCount).to.equal(rebundled.userCount);
+    expect(scheduledEvent.status).to.equal(rebundled.status);
+    expect(scheduledEvent.scheduledStartTime).to.equal(
+      rebundled.scheduledStartTime,
+    );
+    expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
+    expect(scheduledEvent.name).to.equal(rebundled.name);
+    expect(scheduledEvent.location).to.equal(rebundled.location);
+    expect(rebundled.guild).to.be.an.instanceOf(Guild);
+    expect(rebundled.guild.toJSON()).to.deep.equal(
+      scheduledEvent.guild.toJSON(),
+    );
+    expect(scheduledEvent.toString()).to.equal(rebundled.toString());
+  });
+  const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+  TEST_GUILDS.ALL_CACHES_ENABLED(client);
+  const scheduledEvent = new ScheduledEvent(client, TEST_DATA.SCHEDULED_EVENT, {
+    guild_id: TEST_DATA.GUILD_ID,
+  });
+  const rebundled = new ScheduledEvent(
+    client,
+    scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+    { guild_id: TEST_DATA.GUILD_ID },
+  );
+  expect(rebundled.creator).to.be.an.instanceOf(User);
+  expect(scheduledEvent.creator.toJSON()).to.deep.equal(
+    rebundled.creator.toJSON(),
+  );
+  expect(scheduledEvent.id).to.equal(rebundled.id);
+  expect(scheduledEvent.description).to.equal(rebundled.description);
+  expect(scheduledEvent.entityType).to.equal(rebundled.entityType);
+  expect(scheduledEvent.guildId).to.equal(rebundled.guildId);
+  expect(scheduledEvent.displayImageURL).to.equal(rebundled.displayImageURL);
+  expect(scheduledEvent.userCount).to.equal(rebundled.userCount);
+  expect(scheduledEvent.status).to.equal(rebundled.status);
+  expect(scheduledEvent.scheduledStartTime).to.equal(
+    rebundled.scheduledStartTime,
+  );
+  expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
+  expect(scheduledEvent.name).to.equal(rebundled.name);
+  expect(scheduledEvent.location).to.equal(rebundled.location);
+  expect(rebundled.guild).to.be.an.instanceOf(Guild);
+  expect(rebundled.guild.toJSON()).to.deep.equal(scheduledEvent.guild.toJSON());
+  expect(scheduledEvent.toString()).to.equal(rebundled.toString());
 });

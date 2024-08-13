@@ -257,5 +257,119 @@ describe("TextChannel", function () {
       expect(rebundled._cacheOptions).to.deep.equal(textChannel._cacheOptions);
       expect(rebundled.messages).to.deep.equal(textChannel.messages);
     });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+      new Member(client, TEST_DATA.CLIENT_MEMBER, {
+        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+
+      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new TextChannel(
+        client,
+        textChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.id).to.equal(textChannel.id);
+      expect(rebundled.name).to.equal(textChannel.name);
+      expect(rebundled.type).to.equal(textChannel.type);
+      expect(rebundled.guildId).to.equal(textChannel.guildId);
+      expect(rebundled.mention).to.equal(textChannel.mention);
+      expect(rebundled.guild.id).to.equal(textChannel.guild.id);
+      expect(rebundled.parentId).to.equal(textChannel.parentId);
+      expect(rebundled.parent.id).to.equal(textChannel.parent.id);
+      expect(rebundled.rateLimitPerUser).to.equal(textChannel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(textChannel.nsfw);
+      expect(rebundled.topic).to.equal(textChannel.topic);
+      expect(rebundled._cacheOptions).to.deep.equal(textChannel._cacheOptions);
+      expect(rebundled.messages).to.deep.equal(textChannel.messages);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+      new Member(client, TEST_DATA.CLIENT_MEMBER, {
+        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+
+      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new TextChannel(
+        client,
+        textChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.id).to.equal(textChannel.id);
+      expect(rebundled.name).to.equal(textChannel.name);
+      expect(rebundled.type).to.equal(textChannel.type);
+      expect(rebundled.guildId).to.equal(textChannel.guildId);
+      expect(rebundled.mention).to.equal(textChannel.mention);
+      expect(rebundled.guild.id).to.equal(textChannel.guild.id);
+      expect(rebundled.parentId).to.equal(textChannel.parentId);
+      expect(rebundled.parent.id).to.equal(textChannel.parent.id);
+      expect(rebundled.rateLimitPerUser).to.equal(textChannel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(textChannel.nsfw);
+      expect(rebundled.topic).to.equal(textChannel.topic);
+      expect(rebundled._cacheOptions).to.deep.equal(textChannel._cacheOptions);
+      expect(rebundled.messages).to.deep.equal(textChannel.messages);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+      new Member(client, TEST_DATA.CLIENT_MEMBER, {
+        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
+
+      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guild_id: TEST_DATA.GUILD_ID,
+      });
+
+      const rebundled = new TextChannel(
+        client,
+        textChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          guild_id: TEST_DATA.GUILD_ID,
+        },
+      );
+
+      expect(rebundled.id).to.equal(textChannel.id);
+      expect(rebundled.name).to.equal(textChannel.name);
+      expect(rebundled.type).to.equal(textChannel.type);
+      expect(rebundled.guildId).to.equal(textChannel.guildId);
+      expect(rebundled.mention).to.equal(textChannel.mention);
+      expect(rebundled.guild.id).to.equal(textChannel.guild.id);
+      expect(rebundled.parentId).to.equal(textChannel.parentId);
+      expect(rebundled.parent.id).to.equal(textChannel.parent.id);
+      expect(rebundled.rateLimitPerUser).to.equal(textChannel.rateLimitPerUser);
+      expect(rebundled.nsfw).to.equal(textChannel.nsfw);
+      expect(rebundled.topic).to.equal(textChannel.topic);
+      expect(rebundled._cacheOptions).to.deep.equal(textChannel._cacheOptions);
+      expect(rebundled.messages).to.deep.equal(textChannel.messages);
+    });
   });
 });

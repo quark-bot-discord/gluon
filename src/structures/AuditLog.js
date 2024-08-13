@@ -385,7 +385,7 @@ class AuditLog {
           guild_id: this.guildId,
           action_type: this.actionType,
           target_id: this.targetId ?? undefined,
-          executor_id: this.executorId ?? undefined,
+          user_id: this.executorId ?? undefined,
           reason: this.reason,
           options: {
             channel_id: this.channelId ?? undefined,

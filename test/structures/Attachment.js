@@ -130,5 +130,60 @@ describe("Attachment", function () {
       expect(rebundled.url).to.equal(attachment.url);
       expect(rebundled.toJSON()).to.deep.equal(attachment.toJSON());
     });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Attachment(
+        client,
+        attachment.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(attachment.id);
+      expect(rebundled.name).to.equal(attachment.name);
+      expect(rebundled.size).to.equal(attachment.size);
+      expect(rebundled.url).to.equal(attachment.url);
+      expect(rebundled.toJSON()).to.deep.equal(attachment.toJSON());
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Attachment(
+        client,
+        attachment.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(attachment.id);
+      expect(rebundled.name).to.equal(attachment.name);
+      expect(rebundled.size).to.equal(attachment.size);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
+        channel_id: TEST_DATA.CHANNEL_ID,
+      });
+      const rebundled = new Attachment(
+        client,
+        attachment.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        {
+          channel_id: TEST_DATA.CHANNEL_ID,
+        },
+      );
+      expect(rebundled.id).to.equal(attachment.id);
+      expect(rebundled.name).to.equal(attachment.name);
+      expect(rebundled.size).to.equal(attachment.size);
+      expect(rebundled.url).to.equal(attachment.url);
+      expect(rebundled.toJSON()).to.deep.equal(attachment.toJSON());
+    });
   });
 });
