@@ -449,8 +449,8 @@ class Channel {
       overallPermissions &= ~BigInt(everyoneRole.deny);
       overallPermissions |= BigInt(everyoneRole.allow);
     }
-    let overallRoleDenyPermissions = 0n;
-    let overallRoleAllowPermissions = 0n;
+    let overallRoleDenyPermissions = BigInt(0);
+    let overallRoleAllowPermissions = BigInt(0);
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
         (p) =>
