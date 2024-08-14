@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>managers/ChannelCacheOptions.js - Documentation</title>
+    <title>rest/betterRequestHandler.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,7 +35,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">managers/ChannelCacheOptions.js</h1>
+    <h1 class="page-title">rest/betterRequestHandler.js</h1>
     
 
     
@@ -45,377 +45,387 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import {
-  GLUON_CHANNEL_CACHING_OPTIONS,
-  TO_JSON_TYPES_ENUM,
+            <pre class="prettyprint source linenums"><code>import fetch from "node-fetch";
+import FormData from "form-data";
+import { createReadStream } from "fs";
+import hashjs from "hash.js";
+import NodeCache from "node-cache";
+import FastQ from "fastq";
+import getBucket from "./getBucket.js";
+import {
+  GLUON_VERSION,
+  API_BASE_URL,
+  VERSION,
+  NAME,
+  GLUON_REPOSITORY_URL,
+  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
+import endpoints from "./endpoints.js";
+const AbortController = globalThis.AbortController;
 
-/**
- * Represents the cache options for a channel.
- * All options are enabled by default.
- */
-class ChannelCacheOptions {
-  #_cache_options;
+class BetterRequestHandler {
+  #token;
+  #authorization;
+  #_client;
+  #requestURL;
+  #latency;
+  #maxRetries;
+  #maxQueueSize;
+  #fuzz;
+  #endpoints;
+  #queueWorker;
+  #queues;
+  #localRatelimitCache;
+  #latencyMs;
+  constructor(client, token) {
+    this.#_client = client;
 
-  constructor(cache_options) {
-    /**
-     * The cache options for this channel.
-     * @type {Number}
-     * @private
-     */
-    this.#_cache_options =
-      cache_options ??
-      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES |
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES |
-        GLUON_CHANNEL_CACHING_OPTIONS.CONTENT |
-        GLUON_CHANNEL_CACHING_OPTIONS.POLL |
-        GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS |
-        GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS |
-        GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES |
-        GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE |
-        GLUON_CHANNEL_CACHING_OPTIONS.STICKER |
-        GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
+    this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
+
+    this.#localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
+
+    this.#token = token;
+    this.#authorization = `Bot ${this.#token}`;
+
+    this.#latency = 1;
+    this.#maxRetries = 3;
+    this.#maxQueueSize = 100;
+    this.#fuzz = 500;
+
+    this.#endpoints = endpoints;
+
+    this.#queueWorker = (data) => {
+      return new Promise(async (resolve, reject) => {
+        const bucket = await getBucket(
+          this.#_client,
+          this.#localRatelimitCache,
+          data.hash,
+        );
+        if (
+          !bucket ||
+          bucket.remaining != 0 ||
+          (bucket.remaining === 0 &amp;&amp;
+            new Date().getTime() / 1000 > bucket.reset + this.#latency)
+        )
+          this.#http(
+            data.hash,
+            data.request,
+            data.params,
+            data.body,
+            resolve,
+            reject,
+          );
+        else {
+          this.#_client._emitDebug(
+            GLUON_DEBUG_LEVELS.WARN,
+            `RATELIMITED ${data.hash} (bucket reset):${
+              bucket.reset
+            } (latency):${this.#latency}  (time until retry):${
+              (bucket.reset + this.#latency) * 1000 - new Date().getTime()
+            } (current time):${(new Date().getTime() / 1000) | 0}`,
+          );
+          if (this.#queues[data.hash].length() > this.#maxQueueSize) {
+            this.#_client._emitDebug(
+              GLUON_DEBUG_LEVELS.DANGER,
+              `KILL QUEUE ${data.hash}`,
+            );
+            this.#queues[data.hash].kill();
+            delete this.#queues[data.hash];
+          }
+          setTimeout(
+            () => {
+              this.#http(
+                data.hash,
+                data.request,
+                data.params,
+                data.body,
+                resolve,
+                reject,
+              );
+            },
+            (bucket.reset + this.#latency) * 1000 -
+              new Date().getTime() +
+              this.#fuzz,
+          );
+        }
+      });
+    };
+
+    this.#queues = {};
   }
 
   /**
-   * Sets whether to cache messages or not.
-   * @param {Boolean} option Whether to cache messages or not.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setMessageCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setFileCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.FILES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.FILES;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setContentCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.CONTENT;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.CONTENT;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setPollCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.POLL;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.POLL;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setReactionCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setEmbedCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setAttributeCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setReferenceCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setStickerCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.STICKER;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.STICKER;
-  }
-
-  /**
-   * Sets whether to cache messages or not
-   * @param {Boolean} option The option to set.
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
-  setWebhookCaching(option) {
-    if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
-
-    if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
-    else if (option === false)
-      this.#_cache_options &amp;= ~GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
-  }
-
-  /**
-   * Disables all caching options.
-   * @public
-   * @method
-   * @returns {void}
-   */
-  setDisableAll() {
-    this.#_cache_options =
-      this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
-  }
-
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
+   * The latency of the request handler.
+   * @type {Number}
    * @readonly
-   * @public
    */
-  get messageCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES
+  get latency() {
+    return this.#latencyMs;
+  }
+
+  async #handleBucket(
+    ratelimitBucket,
+    ratelimitRemaining,
+    ratelimitReset,
+    hash,
+    retryAfter = 0,
+  ) {
+    if (!ratelimitBucket) return;
+
+    const bucket = {
+      remaining: retryAfter != 0 ? 0 : parseInt(ratelimitRemaining),
+      reset:
+        retryAfter != 0
+          ? new Date().getTime() / 1000 + retryAfter
+          : Math.ceil(parseFloat(ratelimitReset)),
+    };
+
+    let expireFromCache =
+      Math.ceil(bucket.reset - new Date().getTime() / 1000) + 60;
+
+    if (expireFromCache &lt; 0) expireFromCache = 60;
+    else if (expireFromCache > 2592000) expireFromCache = 2592000;
+
+    try {
+      if (this.#_client.redis)
+        await this.#_client.redis.set(
+          `${NAME.toLowerCase()}.paths.${hash}`,
+          JSON.stringify(bucket),
+          "EX",
+          expireFromCache,
+        );
+
+      this.#localRatelimitCache.set(
+        `${NAME.toLowerCase()}.paths.${hash}`,
+        bucket,
+        expireFromCache,
+      );
+    } catch (error) {
+      this.#localRatelimitCache.set(
+        `${NAME.toLowerCase()}.paths.${hash}`,
+        bucket,
+        expireFromCache,
+      );
+
+      throw error;
+    }
+  }
+
+  async makeRequest(request, params, body) {
+    return new Promise(async (resolve, reject) => {
+      const actualRequest = this.#endpoints[request];
+
+      const toHash =
+        actualRequest.method +
+        actualRequest.path(
+          params
+            ? params.map((v, i) =>
+                actualRequest.majorParams.includes(i) ? v : null,
+              )
+            : [],
+        );
+      const hash = hashjs.sha256().update(toHash).digest("hex");
+
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `ADD ${hash} to request queue`,
+      );
+
+      if (!this.#queues[hash])
+        this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
+
+      let retries = 5;
+
+      while (retries--)
+        try {
+          const result = await this.#queues[hash].push({
+            hash,
+            request,
+            params,
+            body,
+          });
+          if (this.#queues[hash].idle()) delete this.#queues[hash];
+          return resolve(result);
+        } catch (error) {
+          return reject(error);
+        }
+
+      return reject(new Error("GLUON: Request ran out of retries"));
+    });
+  }
+
+  async #http(hash, request, params, body, resolve, reject) {
+    const actualRequest = this.#endpoints[request];
+
+    const path = actualRequest.path(...(params ?? []));
+
+    const bucket = await getBucket(
+      this.#_client,
+      this.#localRatelimitCache,
+      hash,
     );
-  }
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get fileCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.FILES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.FILES
-    );
-  }
+    if (
+      !bucket ||
+      bucket.remaining != 0 ||
+      (bucket.remaining === 0 &amp;&amp;
+        new Date().getTime() / 1000 > bucket.reset + this.#latency)
+    ) {
+      const serialize = (obj) => {
+        const str = [];
+        for (let p in obj)
+          if (Object.prototype.hasOwnProperty.call(obj, p))
+            str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
+        return str.join("&amp;");
+      };
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get contentCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.CONTENT) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.CONTENT
-    );
-  }
+      const headers = {
+        Authorization: this.#authorization,
+        "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
+        Accept: "application/json",
+      };
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get pollCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.POLL) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.POLL
-    );
-  }
+      let form;
+      if (body?.files) {
+        form = new FormData();
+        for (let i = 0; i &lt; body.files.length; i++)
+          form.append(
+            `${i}_${body.files[i].name}`,
+            body.files[i].stream
+              ? body.files[i].stream
+              : createReadStream(body.files[i].attachment),
+            body.files[i].name,
+          );
+        delete body.files;
+        form.append("payload_json", JSON.stringify(body));
+        Object.assign(headers, form.getHeaders());
+      } else if (
+        actualRequest.method != "GET" &amp;&amp;
+        actualRequest.method != "DELETE"
+      )
+        headers["Content-Type"] = "application/json";
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get reactionCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS
-    );
-  }
+      if (
+        body &amp;&amp;
+        actualRequest.useHeaders &amp;&amp;
+        actualRequest.useHeaders.length != 0
+      )
+        for (const [key, value] of Object.entries(body))
+          if (actualRequest.useHeaders.includes(key)) {
+            headers[key] = encodeURIComponent(value);
+            delete body[key];
+          }
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get embedCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS
-    );
-  }
+      let res;
+      let e;
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get attributeCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES
-    );
-  }
+      const requestTime = Date.now();
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get referenceCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE
-    );
-  }
+      const controller = new AbortController();
+      const timeout = setTimeout(() => {
+        controller.abort();
+      }, 30000);
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get stickerCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.STICKER) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.STICKER
-    );
-  }
+      for (let i = 0; i &lt;= this.#maxRetries; i++)
+        try {
+          /* actually make the request */
+          res = await fetch(
+            `${this.#requestURL}${path}${
+              body &amp;&amp;
+              (actualRequest.method === "GET" ||
+                actualRequest.method === "DELETE")
+                ? `?${serialize(body)}`
+                : ""
+            }`,
+            {
+              method: actualRequest.method,
+              headers,
+              body: form
+                ? form
+                : body &amp;&amp;
+                    actualRequest.method != "GET" &amp;&amp;
+                    actualRequest.method != "DELETE"
+                  ? JSON.stringify(body)
+                  : undefined,
+              compress: true,
+              signal: controller.signal,
+            },
+          );
 
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get webhookCaching() {
-    return (
-      (this.#_cache_options &amp; GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK
-    );
-  }
+          this.#latencyMs = Date.now() - requestTime;
+          this.#latency = Math.ceil((Date.now() - requestTime) / 1000);
 
-  /**
-   * @method
-   * @public
-   */
-  toString() {
-    return `ChannelCacheOptions { fileCaching: ${this.fileCaching}, messageCaching: ${this.messageCaching} }`;
-  }
+          break;
+        } catch (error) {
+          console.error(error);
 
-  /**
-   * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
-   */
-  toJSON(format) {
-    switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      default: {
-        return this.#_cache_options;
+          e = error;
+        } finally {
+          clearTimeout(timeout);
+        }
+
+      if (!res) return reject(e);
+
+      let json;
+
+      try {
+        json = await res.json();
+      } catch (error) {
+        json = null;
       }
+
+      try {
+        await this.#handleBucket(
+          res.headers.get("x-ratelimit-bucket"),
+          res.headers.get("x-ratelimit-remaining"),
+          res.headers.get("x-ratelimit-reset"),
+          hash,
+          res.status === 429 ? json.retry_after : 0,
+        );
+      } catch (error) {
+        console.error(error);
+      }
+
+      if (res.ok) resolve(json);
+      else
+        reject(
+          new Error(
+            `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
+              ...(params ?? []),
+            )} FAILED`,
+          ),
+        );
+
+      this.#_client.emit("requestCompleted", {
+        status: res.status,
+        method: actualRequest.method,
+        endpoint: actualRequest.path(...(params ?? [])),
+        hash,
+      });
+
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
+      );
+    } else {
+      const retryNextIn =
+        Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
+
+      setTimeout(() => {
+        reject(
+          new Error(`GLUON: 429 - Hit ratelimit, retry in ${retryNextIn}`),
+        );
+      }, 1500);
+
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.WARN,
+        `READD ${hash} to request queue`,
+      );
     }
   }
 }
 
-export default ChannelCacheOptions;
+export default BetterRequestHandler;
 </code></pre>
         </article>
     </section>
