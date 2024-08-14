@@ -31,6 +31,9 @@ class Shard {
   #retries;
   #halted;
   #lastReconnect;
+  #latencyMs;
+  #lastHeartbeatTimestamp;
+  #eventHandler;
   constructor(
     client,
     token,
@@ -51,7 +54,7 @@ class Shard {
 
     this.#_client = client;
 
-    this.eventHandler = new EventHandler(this.#_client, this);
+    this.#eventHandler = new EventHandler(this.#_client, this);
 
     this.#_sessionId = sessionId;
     this.#_s = sequence;
@@ -78,6 +81,9 @@ class Shard {
 
     this.#lastReconnect = null;
 
+    this.#lastHeartbeatTimestamp = null;
+    this.#latencyMs = null;
+
     this.#addListeners();
   }
 
@@ -94,13 +100,15 @@ class Shard {
       // Dispatch
       case 0: {
         try {
-          this.eventHandler[data.t] ? this.eventHandler[data.t](data.d) : null;
+          this.#eventHandler[data.t]
+            ? this.#eventHandler[data.t](data.d)
+            : null;
         } catch (error) {
           this.#_client._emitDebug(
             GLUON_DEBUG_LEVELS.ERROR,
             `ERROR at ${data.t}: ${error}`,
           );
-          console.error(error);
+          throw error;
         }
         break;
       }
@@ -166,6 +174,8 @@ class Shard {
       case 11: {
         this.#waitingForHeartbeatACK = false;
 
+        this.#latencyMs = Date.now() - this.#lastHeartbeatTimestamp;
+
         this.#_client._emitDebug(
           GLUON_DEBUG_LEVELS.INFO,
           "Heartbeat acknowledged",
@@ -194,8 +204,8 @@ class Shard {
     return {
       shard: this.shard,
       websocketState: this.#ws.readyState,
-      sessionId: this.#_sessionId,
       lastReconnect: this.#lastReconnect,
+      latency: this.#latencyMs / 2,
     };
   }
 
@@ -224,7 +234,10 @@ class Shard {
 
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Sending heartbeat");
 
-    if (response != true) this.#waitingForHeartbeatACK = true;
+    if (response != true) {
+      this.#waitingForHeartbeatACK = true;
+      this.#lastHeartbeatTimestamp = Date.now();
+    }
 
     this.#ws.send(_heartbeat(this.#_s));
     // we'll close the websocket if a heartbeat ACK is not received

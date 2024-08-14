@@ -4,7 +4,6 @@ import {
   EVENTS,
   INTERACTION_TYPES,
   COMPONENT_TYPES,
-  GLUON_VERSION,
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";

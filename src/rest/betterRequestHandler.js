@@ -29,7 +29,7 @@ class BetterRequestHandler {
   #queueWorker;
   #queues;
   #localRatelimitCache;
-
+  #latencyMs;
   constructor(client, token) {
     this.#_client = client;
 
@@ -57,7 +57,7 @@ class BetterRequestHandler {
         if (
           !bucket ||
           bucket.remaining != 0 ||
-          (bucket.remaining == 0 &&
+          (bucket.remaining === 0 &&
             new Date().getTime() / 1000 > bucket.reset + this.#latency)
         )
           this.#http(
@@ -78,11 +78,10 @@ class BetterRequestHandler {
             } (current time):${(new Date().getTime() / 1000) | 0}`,
           );
           if (this.#queues[data.hash].length() > this.#maxQueueSize) {
-            if (process.env.NODE_ENV == "development")
-              this.#_client._emitDebug(
-                GLUON_DEBUG_LEVELS.DANGER,
-                `KILL QUEUE ${data.hash}`,
-              );
+            this.#_client._emitDebug(
+              GLUON_DEBUG_LEVELS.DANGER,
+              `KILL QUEUE ${data.hash}`,
+            );
             this.#queues[data.hash].kill();
             delete this.#queues[data.hash];
           }
@@ -106,6 +105,15 @@ class BetterRequestHandler {
     };
 
     this.#queues = {};
+  }
+
+  /**
+   * The latency of the request handler.
+   * @type {Number}
+   * @readonly
+   */
+  get latency() {
+    return this.#latencyMs;
   }
 
   async #handleBucket(
@@ -213,7 +221,7 @@ class BetterRequestHandler {
     if (
       !bucket ||
       bucket.remaining != 0 ||
-      (bucket.remaining == 0 &&
+      (bucket.remaining === 0 &&
         new Date().getTime() / 1000 > bucket.reset + this.#latency)
     ) {
       const serialize = (obj) => {
@@ -277,8 +285,8 @@ class BetterRequestHandler {
           res = await fetch(
             `${this.#requestURL}${path}${
               body &&
-              (actualRequest.method == "GET" ||
-                actualRequest.method == "DELETE")
+              (actualRequest.method === "GET" ||
+                actualRequest.method === "DELETE")
                 ? `?${serialize(body)}`
                 : ""
             }`,
@@ -297,6 +305,7 @@ class BetterRequestHandler {
             },
           );
 
+          this.#latencyMs = Date.now() - requestTime;
           this.#latency = Math.ceil((Date.now() - requestTime) / 1000);
 
           break;
@@ -324,7 +333,7 @@ class BetterRequestHandler {
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),
           hash,
-          res.status == 429 ? json.retry_after : 0,
+          res.status === 429 ? json.retry_after : 0,
         );
       } catch (error) {
         console.error(error);
@@ -349,7 +358,7 @@ class BetterRequestHandler {
 
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `REMOVE ${hash} from request queue`,
+        `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
       );
     } else {
       const retryNextIn =

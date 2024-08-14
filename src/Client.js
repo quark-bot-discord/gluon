@@ -147,11 +147,12 @@ class Client extends EventsEmitter {
     for (let i = 0; i < this.shards.length; i++) this.shards[i].halt();
   }
 
-  checkShards() {
+  checkProcess() {
     let guildIds = [];
     this.guilds.forEach((guild) => guildIds.push(guild.id));
     const processInformation = {
       totalShards: this.totalShards,
+      shardsManaged: this.shardIds,
       shards: [],
       guildCount: this.guilds.size,
       memberCount: this.getMemberCount(),
@@ -161,6 +162,7 @@ class Client extends EventsEmitter {
         .sha256()
         .update(`${this.shardIds.join("_")}-${this.totalShards}`)
         .digest("hex"),
+      restLatency: this.request.latency / 2,
     };
     for (let i = 0; i < this.shards.length; i++)
       processInformation.shards.push(this.shards[i].check());
@@ -743,7 +745,11 @@ class Client extends EventsEmitter {
       .then((gatewayInfo) => {
         let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
-        if (!this.shardIds || this.shardIds.length == 0)
+        if (
+          !this.shardIds ||
+          !Array.isArray(this.shardIds) ||
+          this.shardIds.length == 0
+        )
           this.shardIds = [...Array(gatewayInfo.shards).keys()];
 
         if (!this.totalShards) this.totalShards = gatewayInfo.shards;
@@ -794,8 +800,8 @@ class Client extends EventsEmitter {
         }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
       })
       .catch((error) => {
-        this.emit(
-          "debug",
+        this._emitDebug(
+          GLUON_DEBUG_LEVELS.ERROR,
           "Get gateway bot request failed, terminating process",
         );
 
