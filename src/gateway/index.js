@@ -156,7 +156,7 @@ class Shard {
 
         this.#heartbeatInit();
 
-        if (this.#resuming != true) this.#identify();
+        if (this.#resuming !== true) this.#identify();
         else this.#resume();
 
         break;

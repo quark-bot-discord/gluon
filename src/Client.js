@@ -195,7 +195,7 @@ class Client extends EventsEmitter {
         break;
       }
     }
-    const time = chalk.magenta(new Date().toGMTString());
+    const time = chalk.magenta(new Date().toTimeString().split(" ")[0]);
     const emitString = `${libName} ${shardStatus} @ ${time} => ${message}`;
     console.info(emitString);
   }
