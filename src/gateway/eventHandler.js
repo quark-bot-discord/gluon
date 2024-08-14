@@ -66,9 +66,9 @@ class EventHandler {
     if (this.#asciiArtSent === false) {
       this.#asciiArtSent = true;
       console.info("\n");
-      console.log(quark());
+      console.info(quark());
       console.info("\n\n\n");
-      console.log(gluon());
+      console.info(gluon());
     }
 
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "READY");
