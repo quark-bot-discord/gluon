@@ -23,7 +23,6 @@ client._defaultGuildCacheOptions.setRoleCaching(true);
 client.on("ready", () => {
   console.log("ready");
   console.log(client.user);
-  client.increasedCache.set("721401585300930562", true);
   client.guilds.forEach((guild) => {
     guild._cacheOptions.setChannelCaching(true);
     guild._cacheOptions.setEmojiCaching(true);
