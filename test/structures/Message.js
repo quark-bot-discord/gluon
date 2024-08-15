@@ -16,6 +16,7 @@ import File from "../../src/util/builder/file.js";
 import MessageComponents from "../../src/util/builder/messageComponents.js";
 import path from "path";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import Embed from "../../src/util/builder/embedBuilder.js";
 
 describe("Message", function () {
   context("check import", function () {
@@ -603,7 +604,7 @@ describe("Message", function () {
       });
       await expect(message.reply("test")).to.not.be.rejected;
     });
-    it("should not throw an error if embeds is provided as an array", async function () {
+    it("should not throw an error if embeds is provided as an array of embeds", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
@@ -617,7 +618,8 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { embeds: [{}] })).to.not.be.rejected;
+      await expect(message.reply("test", { embeds: [new Embed()] })).to.not.be
+        .rejected;
     });
     it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -817,7 +819,7 @@ describe("Message", function () {
       });
       await expect(message.edit("test")).to.not.be.rejected;
     });
-    it("should not throw an error if embeds is provided as an array", async function () {
+    it("should not throw an error if embeds is provided as an array of embeds", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
@@ -831,7 +833,8 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test", { embeds: [{}] })).to.not.be.rejected;
+      await expect(message.edit("test", { embeds: [new Embed()] })).to.not.be
+        .rejected;
     });
     it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

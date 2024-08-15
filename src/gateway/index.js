@@ -39,18 +39,12 @@ class Shard {
     token,
     url,
     shardId,
-    totalShards,
-    intents,
     sessionId = null,
     sequence = null,
     resumeGatewayUrl = null,
-    softRestartFunction = null,
   ) {
     this.#token = token;
     this.shard = shardId;
-    this.totalShards = totalShards;
-
-    this.#intents = intents;
 
     this.#_client = client;
 
@@ -72,10 +66,6 @@ class Shard {
     this.#resumeGatewayUrl = resumeGatewayUrl;
 
     this.#retries = 1;
-
-    this.softRestartFunction = softRestartFunction
-      ? softRestartFunction
-      : () => process.exit(1);
 
     this.#halted = false;
 
@@ -257,11 +247,15 @@ class Shard {
   #identify() {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
-      `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.totalShards}) and intents ${this.#intents}`,
+      `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.#_client.totalShards}) and intents ${this.#_client.intents}`,
     );
 
     this.#ws.send(
-      _identify(this.#token, [this.shard, this.totalShards], this.#intents),
+      _identify(
+        this.#token,
+        [this.shard, this.#_client.totalShards],
+        this.#_client.intents,
+      ),
     );
   }
 
@@ -398,7 +392,7 @@ class Shard {
       );
       this.#ws.terminate();
       setTimeout(() => {
-        this.softRestartFunction();
+        this.#_client.softRestartFunction();
       }, 1000);
     }, 5000);
   }

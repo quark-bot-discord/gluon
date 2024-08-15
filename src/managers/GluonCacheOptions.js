@@ -41,7 +41,6 @@ class GluonCacheOptions {
     if (cacheScheduledEvents)
       this.setCacheScheduledEvents(cacheScheduledEvents);
   }
-  //   increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
 
   /**
    * Set whether gluon should cache messages by default.

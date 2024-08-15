@@ -56,7 +56,7 @@ class BetterRequestHandler {
         );
         if (
           !bucket ||
-          bucket.remaining != 0 ||
+          bucket.remaining !== 0 ||
           (bucket.remaining === 0 &&
             new Date().getTime() / 1000 > bucket.reset + this.#latency)
         )
@@ -126,9 +126,9 @@ class BetterRequestHandler {
     if (!ratelimitBucket) return;
 
     const bucket = {
-      remaining: retryAfter != 0 ? 0 : parseInt(ratelimitRemaining),
+      remaining: retryAfter !== 0 ? 0 : parseInt(ratelimitRemaining),
       reset:
-        retryAfter != 0
+        retryAfter !== 0
           ? new Date().getTime() / 1000 + retryAfter
           : Math.ceil(parseFloat(ratelimitReset)),
     };
@@ -165,46 +165,44 @@ class BetterRequestHandler {
   }
 
   async makeRequest(request, params, body) {
-    return new Promise(async (resolve, reject) => {
-      const actualRequest = this.#endpoints[request];
+    const actualRequest = this.#endpoints[request];
 
-      const toHash =
-        actualRequest.method +
-        actualRequest.path(
-          params
-            ? params.map((v, i) =>
-                actualRequest.majorParams.includes(i) ? v : null,
-              )
-            : [],
-        );
-      const hash = hashjs.sha256().update(toHash).digest("hex");
-
-      this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
-        `ADD ${hash} to request queue`,
+    const toHash =
+      actualRequest.method +
+      actualRequest.path(
+        params
+          ? params.map((v, i) =>
+              actualRequest.majorParams.includes(i) ? v : null,
+            )
+          : [],
       );
+    const hash = hashjs.sha256().update(toHash).digest("hex");
 
-      if (!this.#queues[hash])
-        this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
+    this.#_client._emitDebug(
+      GLUON_DEBUG_LEVELS.INFO,
+      `ADD ${hash} to request queue`,
+    );
 
-      let retries = 5;
+    if (!this.#queues[hash])
+      this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
 
-      while (retries--)
-        try {
-          const result = await this.#queues[hash].push({
-            hash,
-            request,
-            params,
-            body,
-          });
-          if (this.#queues[hash].idle()) delete this.#queues[hash];
-          return resolve(result);
-        } catch (error) {
-          return reject(error);
-        }
+    let retries = 5;
 
-      return reject(new Error("GLUON: Request ran out of retries"));
-    });
+    while (retries--)
+      try {
+        const result = await this.#queues[hash].push({
+          hash,
+          request,
+          params,
+          body,
+        });
+        if (this.#queues[hash].idle()) delete this.#queues[hash];
+        return result;
+      } catch (error) {
+        throw error;
+      }
+
+    throw new Error("GLUON: Request ran out of retries");
   }
 
   async #http(hash, request, params, body, resolve, reject) {
@@ -220,7 +218,7 @@ class BetterRequestHandler {
 
     if (
       !bucket ||
-      bucket.remaining != 0 ||
+      bucket.remaining !== 0 ||
       (bucket.remaining === 0 &&
         new Date().getTime() / 1000 > bucket.reset + this.#latency)
     ) {
@@ -253,15 +251,15 @@ class BetterRequestHandler {
         form.append("payload_json", JSON.stringify(body));
         Object.assign(headers, form.getHeaders());
       } else if (
-        actualRequest.method != "GET" &&
-        actualRequest.method != "DELETE"
+        actualRequest.method !== "GET" &&
+        actualRequest.method !== "DELETE"
       )
         headers["Content-Type"] = "application/json";
 
       if (
         body &&
         actualRequest.useHeaders &&
-        actualRequest.useHeaders.length != 0
+        actualRequest.useHeaders.length !== 0
       )
         for (const [key, value] of Object.entries(body))
           if (actualRequest.useHeaders.includes(key)) {
@@ -296,8 +294,8 @@ class BetterRequestHandler {
               body: form
                 ? form
                 : body &&
-                    actualRequest.method != "GET" &&
-                    actualRequest.method != "DELETE"
+                    actualRequest.method !== "GET" &&
+                    actualRequest.method !== "DELETE"
                   ? JSON.stringify(body)
                   : undefined,
               compress: true,

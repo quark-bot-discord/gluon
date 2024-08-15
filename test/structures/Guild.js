@@ -94,7 +94,6 @@ describe("Guild", function () {
   context("check displayIconURL", function () {
     it("should have the correct displayIconURL", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.displayIconURL).to.equal(TEST_DATA.GUILD.icon);
     });
@@ -1370,7 +1369,6 @@ describe("Guild", function () {
     });
     it("should return the correct number", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.calculateMemberCacheCount()).to.equal(249);
     });
@@ -1378,7 +1376,6 @@ describe("Guild", function () {
   context("check bundling", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
@@ -1418,7 +1415,6 @@ describe("Guild", function () {
     });
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
@@ -1461,7 +1457,6 @@ describe("Guild", function () {
     });
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,
@@ -1504,7 +1499,6 @@ describe("Guild", function () {
     });
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      client.guilds = new GuildManager(client);
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.MEMBER, {
         user_id: TEST_DATA.GUILD.owner_id,

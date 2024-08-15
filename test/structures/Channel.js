@@ -369,7 +369,7 @@ describe("Channel", function () {
       });
       await expect(channel.send()).to.be.rejectedWith(
         Error,
-        "GLUON: No content, embeds, components or files provided.",
+        "GLUON: Must provide content, embeds, components or files",
       );
     });
     it("should throw an error if content is not a string", async function () {
@@ -460,7 +460,7 @@ describe("Channel", function () {
         channel.send("test", { components: 123 }),
       ).to.be.rejectedWith(
         TypeError,
-        "GLUON: Components must be an array of action rows.",
+        "GLUON: Components must be an array of components.",
       );
     });
     it("should throw an error if components is not an array of components", async function () {
@@ -479,7 +479,7 @@ describe("Channel", function () {
         channel.send("test", { components: ["test"] }),
       ).to.be.rejectedWith(
         TypeError,
-        "GLUON: Components must be an array of action rows.",
+        "GLUON: Components must be an array of components.",
       );
     });
     it("should throw an error if files is not an array", async function () {

@@ -455,7 +455,9 @@ class Embed {
           title: this.title,
           description: this.description,
           url: this.url,
-          timestamp: new Date(this.timestamp).toISOString(),
+          timestamp: this.timestamp
+            ? new Date(this.timestamp).toISOString()
+            : undefined,
           color: this.color,
           footer: this.footer,
           author: this.author,

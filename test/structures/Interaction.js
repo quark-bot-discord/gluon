@@ -317,7 +317,7 @@ describe("Interaction", function () {
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       await expect(interaction.edit()).to.be.rejectedWith(
         Error,
-        "GLUON: No content, files, embed, or components provided.",
+        "GLUON: Must provide content, embeds, components or files",
       );
     });
     it("should not throw an error if content is provided", async function () {

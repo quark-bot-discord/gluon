@@ -6,6 +6,7 @@ import {
   DEFAULT_POLLING_TIME,
   GLUON_DEBUG_LEVELS,
   NAME,
+  TO_JSON_TYPES_ENUM,
 } from "./constants.js";
 
 import EventsEmitter from "events";
@@ -29,6 +30,7 @@ import cacheChannel from "./util/gluon/cacheChannel.js";
 import Role from "./structures/Role.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
+import Command from "./util/builder/commandBuilder.js";
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -39,11 +41,37 @@ class Client extends EventsEmitter {
   #_cacheOptions;
   #_defaultGuildCacheOptions;
   #_sessionData;
-
+  #shards;
+  #shardIds;
+  #totalShards;
+  #users;
+  #guilds;
+  #softRestartFunction;
   /**
    * Creates the client and sets the default options.
    * @constructor
    * @param {Object?} options The options to pass to the client.
+   * @param {Boolean?} options.cacheMessages Whether to cache messages.
+   * @param {Boolean?} options.cacheUsers Whether to cache users.
+   * @param {Boolean?} options.cacheMembers Whether to cache members.
+   * @param {Boolean?} options.cacheChannels Whether to cache channels.
+   * @param {Boolean?} options.cacheGuilds Whether to cache guilds.
+   * @param {Boolean?} options.cacheVoiceStates Whether to cache voice states.
+   * @param {Boolean?} options.cacheRoles Whether to cache roles.
+   * @param {Boolean?} options.cacheScheduledEvents Whether to cache scheduled events.
+   * @param {Boolean?} options.cacheEmojis Whether to cache emojis.
+   * @param {Boolean?} options.cacheInvites Whether to cache invites.
+   * @param {Number?} options.defaultMessageExpiry The default expiry time for messages.
+   * @param {Number?} options.defaultUserExpiry The default expiry time for users.
+   * @param {Number} options.intents The intents to use when connecting.
+   * @param {Number?} options.totalShards The total number of shards to manage.
+   * @param {Array<Number>?} options.shardIds The ids of the shards to manage.
+   * @param {Object?} options.sessionData The session data for the client.
+   * @param {Object?} options.initCache The initial cache data for the client.
+   * @param {Function?} options.softRestartFunction The function to call when a soft restart is needed.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   constructor({
     cacheMessages = false,
@@ -65,13 +93,22 @@ class Client extends EventsEmitter {
     initCache,
     softRestartFunction,
   } = {}) {
+    if (typeof intents !== "number")
+      throw new TypeError("GLUON: Intents is not a number.");
+
     super();
 
-    this.shards = [];
+    /**
+     * The shards that this client is managing.
+     * @type {Array<Shard>}
+     * @private
+     */
+    this.#shards = [];
 
     /**
      * The intents to use when connecting with this client.
-     * @type {Number?}
+     * @type {Number}
+     * @private
      */
     this.#intents = intents;
 
@@ -97,20 +134,32 @@ class Client extends EventsEmitter {
       messageTTL: defaultMessageExpiry,
     });
 
+    /**
+     * The default guild cache options for this client.
+     * @type {GuildCacheOptions}
+     * @private
+     */
     this.#_defaultGuildCacheOptions = new GuildCacheOptions();
 
     /**
      * An array of the shard ids that this client is handling.
      * @type {Number[]?}
+     * @private
      */
-    this.shardIds = shardIds;
+    this.#shardIds = shardIds;
 
     /**
      * The total shards the bot is using.
      * @type {Number?}
+     * @private
      */
-    this.totalShards = totalShards;
+    this.#totalShards = totalShards;
 
+    /**
+     * The session data for this client.
+     * @type {Object?}
+     * @private
+     */
     this.#_sessionData = sessionData;
 
     /**
@@ -125,28 +174,97 @@ class Client extends EventsEmitter {
      * The user manager for this client.
      * @type {UserManager}
      */
-    this.users = new UserManager(this);
+    this.#users = new UserManager(this);
 
     /**
      * The guild manager for this client.
      * @type {GuildManager}
      */
-    this.guilds = new GuildManager(this);
+    this.#guilds = new GuildManager(this);
 
     if (initCache?.guilds)
       for (let i = 0; i < initCache.guilds.length; i++)
         new Guild(this, initCache.guilds[i]);
 
-    this.increasedCache = new Map();
-    this.increasedCacheMultipliers = new Map();
-
-    this.softRestartFunction = softRestartFunction;
+    this.#softRestartFunction = softRestartFunction;
   }
 
+  /**
+   * The ids of the shards that this client is managing.
+   * @type {Array<Number>}
+   * @readonly
+   * @public
+   */
+  get shardIds() {
+    return this.#shardIds;
+  }
+
+  /**
+   * The total number of shards that this client is managing.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get totalShards() {
+    return this.#totalShards;
+  }
+
+  /**
+   * The intents that this client is using.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get intents() {
+    return this.#intents;
+  }
+
+  /**
+   * The user manager for this client.
+   * @type {UserManager}
+   * @readonly
+   * @public
+   */
+  get users() {
+    return this.#users;
+  }
+
+  /**
+   * The guild manager for this client.
+   * @type {GuildManager}
+   * @readonly
+   * @public
+   */
+  get guilds() {
+    return this.#guilds;
+  }
+
+  /**
+   * The function to call when a soft restart is needed.
+   * @public
+   * @method
+   * @returns {void}
+   */
+  softRestartFunction() {
+    this.#softRestartFunction ? this.#softRestartFunction() : process.exit(1);
+  }
+
+  /**
+   * Stops all shards.
+   * @public
+   * @method
+   * @returns {void}
+   */
   halt() {
-    for (let i = 0; i < this.shards.length; i++) this.shards[i].halt();
+    for (let i = 0; i < this.#shards.length; i++) this.#shards[i].halt();
   }
 
+  /**
+   * Monitors the current process.
+   * @public
+   * @method
+   * @returns {Object}
+   */
   checkProcess() {
     let guildIds = [];
     this.guilds.forEach((guild) => guildIds.push(guild.id));
@@ -164,11 +282,17 @@ class Client extends EventsEmitter {
         .digest("hex"),
       restLatency: this.request.latency / 2,
     };
-    for (let i = 0; i < this.shards.length; i++)
-      processInformation.shards.push(this.shards[i].check());
+    for (let i = 0; i < this.#shards.length; i++)
+      processInformation.shards.push(this.#shards[i].check());
     return processInformation;
   }
 
+  /**
+   * Outputs a debug message if NODE_ENV=development.
+   * @param {Number} status The debug status level.
+   * @param {String} message The message to emit.
+   * @returns {void}
+   */
   _emitDebug(status, message) {
     if (process.env.NODE_ENV !== "development") return;
     const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
@@ -205,6 +329,8 @@ class Client extends EventsEmitter {
   /**
    * Counts how many items are in each cache.
    * @returns {Object}
+   * @public
+   * @method
    */
   getCacheCounts() {
     let totalMessages = 0;
@@ -269,6 +395,8 @@ class Client extends EventsEmitter {
   /**
    * Counts how many members are in all of Quark's servers.
    * @returns {Number}
+   * @public
+   * @method
    */
   getMemberCount() {
     let memberCount = 0;
@@ -285,25 +413,36 @@ class Client extends EventsEmitter {
    * @returns {Array<Object>}
    */
   bundleCache() {
-    return this.guilds;
+    return this.guilds.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT);
   }
 
   /**
    * Fetches a message from a specific channel.
-   * @param {BigInt} guild_id The ID of the guild that the message belongs to.
-   * @param {BigInt} channel_id The ID of the channel that the message belongs to.
-   * @param {BigInt} message_id The ID of the message to return.
+   * @param {String} guild_id The ID of the guild that the message belongs to.
+   * @param {String} channel_id The ID of the channel that the message belongs to.
+   * @param {String} message_id The ID of the message to return.
    * @returns {Promise<Message>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async fetchMessage(guild_id, channel_id, message_id) {
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof message_id !== "string")
+      throw new TypeError("GLUON: Message ID is not a string.");
+
     const data = await this.request.makeRequest("getChannelMessage", [
       channel_id,
       message_id,
     ]);
 
     return new Message(this, data, {
-      channel_id: channel_id.toString(),
-      guild_id: guild_id.toString(),
+      channel_id,
+      guild_id,
     });
   }
 
@@ -312,12 +451,24 @@ class Client extends EventsEmitter {
    * @param {Object} referenceData An object with the webhook id and token.
    * @param {String?} content The message to send with the webhook.
    * @param {Object?} options Embeds, components and files to attach to the webhook.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async postWebhook(
     { id, token },
     content,
     { embeds, components, files } = {},
   ) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (typeof token !== "string")
+      throw new TypeError("GLUON: Webhook token is not a string.");
+
+    Message.sendValidation(content, { embeds, components, files });
+
     const body = {};
 
     if (content) body.content = content;
@@ -331,27 +482,40 @@ class Client extends EventsEmitter {
 
   /**
    * Posts a message to the specified channel.
-   * @param {BigInt} channel_id The id of the channel to send the message to.
-   * @param {BigInt} guild_id The id of the guild which the channel belongs to.
+   * @param {String} channel_id The id of the channel to send the message to.
+   * @param {String} guild_id The id of the guild which the channel belongs to.
    * @param {String?} content The message content.
    * @param {Object?} options Embeds, components and files to attach to the message.
    * @returns {Promise<Message>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async sendMessage(
     channel_id,
     guild_id,
     content,
-    { embed, embeds, components, files, suppressMentions = false } = {},
+    { embeds, components, files, suppressMentions = false } = {},
   ) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+
+    Message.sendValidation(content, { embeds, components, files });
+
+    if (typeof suppressMentions !== "boolean")
+      throw new TypeError("GLUON: Suppress mentions is not a boolean.");
+
     const body = {};
 
     if (content) body.content = content;
 
-    if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0) body.embeds = embeds;
+    if (embeds && embeds.length !== 0) body.embeds = embeds;
     if (components) body.components = components;
     if (files) body.files = files;
-    if (suppressMentions == true) {
+    if (suppressMentions === true) {
       body.allowed_mentions = {};
       body.allowed_mentions.parse = [];
     }
@@ -363,20 +527,24 @@ class Client extends EventsEmitter {
     );
 
     return new Message(this, data, {
-      channel_id: channel_id.toString(),
-      guild_id: guild_id.toString(),
+      channel_id: channel_id,
+      guild_id: guild_id,
       nocache: false,
     });
   }
 
   /**
    * Edits a specified message.
-   * @param {BigInt} channel_id The id of the channel that the message belongs to.
-   * @param {BigInt} guild_id The id of the guild that the channel belongs to.
-   * @param {BigInt} message_id The id of the message to edit.
+   * @param {String} channel_id The id of the channel that the message belongs to.
+   * @param {String} guild_id The id of the guild that the channel belongs to.
+   * @param {String} message_id The id of the message to edit.
    * @param {String?} content The message content.
    * @param {Object?} options Embeds, components and files to attach to the message.
    * @returns {Promise<Message>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async editMessage(
     channel_id,
@@ -385,6 +553,15 @@ class Client extends EventsEmitter {
     content,
     { embed, components } = {},
   ) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof message_id !== "string")
+      throw new TypeError("GLUON: Message ID is not a string.");
+
+    Message.sendValidation(content, { embed, components });
+
     const body = {};
 
     if (content) body.content = content;
@@ -393,9 +570,9 @@ class Client extends EventsEmitter {
 
     if (this.referenced_message)
       body.message_reference = {
-        message_id: message_id.toString(),
-        channel_id: channel_id.toString(),
-        guild_id: guild_id.toString(),
+        message_id: message_id,
+        channel_id: channel_id,
+        guild_id: guild_id,
       };
 
     const data = await this.request.makeRequest(
@@ -409,47 +586,80 @@ class Client extends EventsEmitter {
 
   /**
    * Adds a specified channel as a follower to Quark's status channel.
-   * @param {BigInt} channel_id The id of the channel to add as a follower.
+   * @param {String} channel_id The id of the channel to add as a follower.
+   * @param {String} follow_channel_id The id of the channel to follow.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async followStatusChannel(channel_id) {
+  async followChannel(channel_id, follow_channel_id) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof follow_channel_id !== "string")
+      throw new TypeError("GLUON: Follow channel ID is not a string.");
+
     const body = {};
 
     body.webhook_channel_id = channel_id;
 
     await this.request.makeRequest(
       "postFollowNewsChannel",
-      ["822906135048487023"],
+      [follow_channel_id],
       body,
     );
   }
 
   /**
    * Fetches the webhooks for a specified channel.
-   * @param {BigInt} channel_id The id of the channel to fetch the webhooks from.
+   * @param {String} channel_id The id of the channel to fetch the webhooks from.
    * @returns {Promise<Array<Object>>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   fetchChannelWebhooks(channel_id) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
     return this.request.makeRequest("getChannelWebhooks", [channel_id]);
   }
 
   /**
    * Deletes a webhook.
-   * @param {BigInt} webhook_id The id of the webhook to delete.
+   * @param {String} webhook_id The id of the webhook to delete.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async deleteWebhook(webhook_id) {
+    if (typeof webhook_id !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
     await this.request.makeRequest("deleteWebhook", [webhook_id]);
   }
 
   /**
    * Fetches a member, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the member belongs to.
-   * @param {String | BigInt} user_id The id of the member to fetch.
+   * @param {String} guild_id The id of the guild the member belongs to.
+   * @param {String} user_id The id of the member to fetch.
    * @returns {Promise<Member>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async fetchMember(guild_id, user_id) {
-    const guild = this.guilds.get(guild_id.toString());
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof user_id !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
 
-    const cached = guild.members.get(user_id.toString());
+    const guild = this.guilds.get(guild_id);
+
+    const cached = guild.members.get(user_id);
     if (cached) return cached;
 
     const data = await this.request.makeRequest("getGuildMember", [
@@ -458,41 +668,59 @@ class Client extends EventsEmitter {
     ]);
 
     return new Member(this, data, {
-      user_id: user_id.toString(),
-      guild_id: guild_id.toString(),
+      user_id,
+      guild_id,
       user: data.user,
     });
   }
 
   /**
    * Fetches a channel, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the channel belongs to.
-   * @param {String | BigInt} channel_id The id of the channel to fetch.
+   * @param {String} guild_id The id of the guild the channel belongs to.
+   * @param {String} channel_id The id of the channel to fetch.
    * @returns {Promise<TextChannel | VoiceChannel>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async fetchChannel(guild_id, channel_id) {
-    const guild = this.guilds.get(guild_id.toString());
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
 
-    const cached = guild.channels.get(channel_id.toString());
+    const guild = this.guilds.get(guild_id);
+
+    const cached = guild.channels.get(channel_id);
 
     if (cached) return cached;
 
     const data = await this.request.makeRequest("getChannel", [channel_id]);
 
-    return cacheChannel(this, data, guild_id.toString());
+    return cacheChannel(this, data, guild_id);
   }
 
   /**
    * Fetches a role, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the role belongs to.
-   * @param {String | BigInt | null} user_id The id of the role to fetch, or null to return all roles.
+   * @param {String} guild_id The id of the guild the role belongs to.
+   * @param {String?} role_id The id of the role to fetch, or null to return all roles.
    * @returns {Promise<Role | Array<Role>>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async fetchRole(guild_id, role_id) {
-    const guild = this.guilds.get(guild_id.toString());
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof role_id !== "undefined" && typeof role_id !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
+
+    const guild = this.guilds.get(guild_id);
 
     const cached = role_id
-      ? guild.roles.get(role_id.toString())
+      ? guild.roles.get(role_id)
       : Array.from(guild.roles.cache, ([key, value]) => value);
 
     if (cached) return cached;
@@ -504,7 +732,7 @@ class Client extends EventsEmitter {
     let matchedRole;
     for (let i = 0; i < data.length; i++) {
       const role = new Role(this, data[i], { guild_id });
-      if (role.id == role_id) matchedRole = role;
+      if (role.id === role_id) matchedRole = role;
     }
 
     return matchedRole;
@@ -512,11 +740,28 @@ class Client extends EventsEmitter {
 
   /**
    * Bulk deletes channel messages.
-   * @param {BigInt} channel_id The id of the channel to purge messages in.
+   * @param {String} channel_id The id of the channel to purge messages in.
    * @param {Array<String>} messages An array of message ids to delete.
    * @param {Object} options
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async purgeChannelMessages(channel_id, messages, { reason }) {
+  async purgeChannelMessages(channel_id, messages, { reason } = {}) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (
+      !Array.isArray(messages) ||
+      !messages.every((m) => typeof m === "string")
+    )
+      throw new TypeError(
+        "GLUON: Messages is not an array of message id strings.",
+      );
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
     const body = {};
 
     body.messages = messages;
@@ -532,11 +777,23 @@ class Client extends EventsEmitter {
 
   /**
    * Deletes one message.
-   * @param {BigInt} channel_id The id of the channel that the message belongs to.
-   * @param {BigInt} message_id The id of the message to delete.
+   * @param {String} channel_id The id of the channel that the message belongs to.
+   * @param {String} message_id The id of the message to delete.
    * @param {Object} options
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async deleteChannelMessage(channel_id, message_id, { reason }) {
+  async deleteChannelMessage(channel_id, message_id, { reason } = {}) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof message_id !== "string")
+      throw new TypeError("GLUON: Message ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
     const body = {};
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
@@ -550,16 +807,33 @@ class Client extends EventsEmitter {
 
   /**
    * Fetches messages from a specified channel.
-   * @param {BigInt} guild_id The id of the guild that the channel belongs to.
-   * @param {BigInt} channel_id The id of the channel to fetch messages from.
+   * @param {String} guild_id The id of the guild that the channel belongs to.
+   * @param {String} channel_id The id of the channel to fetch messages from.
    * @param {Object} options The filter options to determine which messages should be returned.
    * @returns {Promise<Array<Message>>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async fetchChannelMessages(
     guild_id,
     channel_id,
-    { around, before, after, limit },
+    { around, before, after, limit } = {},
   ) {
+    if (typeof guild_id !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof around !== "undefined" && typeof around !== "string")
+      throw new TypeError("GLUON: Around is not a string.");
+    if (typeof before !== "undefined" && typeof before !== "string")
+      throw new TypeError("GLUON: Before is not a string.");
+    if (typeof after !== "undefined" && typeof after !== "string")
+      throw new TypeError("GLUON: After is not a string.");
+    if (typeof limit !== "undefined" && typeof limit !== "number")
+      throw new TypeError("GLUON: Limit is not a number.");
+
     const body = {};
 
     if (around) body.around = around;
@@ -589,53 +863,61 @@ class Client extends EventsEmitter {
   }
 
   /**
-   * Creates a webhook in the given channel with the name "Quark"
-   * @param {BigInt} channel_id The id of the channel to create the webhook in.
+   * Creates a webhook in the given channel with the name "Gluon".
+   * @param {String} channel_id The id of the channel to create the webhook in.
    * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async createWebhook(channel_id) {
+  createWebhook(channel_id, { name = NAME } = { name: NAME }) {
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+
     const body = {};
 
-    body.name = "Quark";
+    body.name = name;
 
-    const data = await this.request.makeRequest(
-      "postCreateWebhook",
-      [channel_id],
-      body,
-    );
-
-    return data;
+    return this.request.makeRequest("postCreateWebhook", [channel_id], body);
   }
 
   /**
    * Modified a webhook with the given webhook id.
-   * @param {BigInt} webhook_id The id of the webhook to modify.
+   * @param {String} webhook_id The id of the webhook to modify.
    * @param {Object} options The options to modify the webhook with.
    * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async modifyWebhook(webhook_id, { channel_id }) {
+  modifyWebhook(webhook_id, { channel_id } = {}) {
+    if (typeof webhook_id !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (typeof channel_id !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+
     const body = {};
 
-    body.channel_id = channel_id.toString();
+    body.channel_id = channel_id;
 
-    const data = await this.request.makeRequest(
-      "patchModifyWebhook",
-      [webhook_id],
-      body,
-    );
-
-    return data;
+    return this.request.makeRequest("patchModifyWebhook", [webhook_id], body);
   }
 
   /**
    * Fetches a webhook by the webhook's id.
-   * @param {BigInt | String} webhook_id The id of the webhook to fetch.
+   * @param {String} webhook_id The id of the webhook to fetch.
    * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async fetchWebhook(webhook_id) {
-    const data = await this.request.makeRequest("getWebhook", [webhook_id]);
-
-    return data;
+  fetchWebhook(webhook_id) {
+    if (typeof webhook_id !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    return this.request.makeRequest("getWebhook", [webhook_id]);
   }
 
   /**
@@ -644,28 +926,47 @@ class Client extends EventsEmitter {
    * @returns {Array<Object>}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#registering-a-command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async registerCommands(commands) {
+  registerCommands(commands) {
+    if (
+      !Array.isArray(commands) ||
+      !commands.every((c) => c instanceof Command)
+    )
+      throw new TypeError("GLUON: Commands is not an array.");
+
     const body = [];
 
     for (let i = 0; i < commands.length; i++) body.push(commands[i]);
 
-    const data = await this.request.makeRequest(
+    return this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
       body,
     );
-
-    return data;
   }
 
   /**
    * Adds a role to a member.
-   * @param {String | BigInt} guildId The guild id the member belongs to.
-   * @param {String | BigInt} userId The id of the member who the action is occuring on.
-   * @param {String | BigInt} roleId The id of the role to add.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to add.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async addMemberRole(guildId, userId, roleId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
     await this.request.makeRequest("putAddGuildMemberRole", [
       guildId,
       userId,
@@ -675,11 +976,22 @@ class Client extends EventsEmitter {
 
   /**
    * Removes a role from a member.
-   * @param {String | BigInt} guildId The guild id the member belongs to.
-   * @param {String | BigInt} userId The id of the member who the action is occuring on.
-   * @param {String | BigInt} roleId The id of the role to remove.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to remove.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async removeMemberRole(guildId, userId, roleId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
     await this.request.makeRequest("deleteRemoveMemberRole", [
       guildId,
       userId,
@@ -689,11 +1001,20 @@ class Client extends EventsEmitter {
 
   /**
    * Searches for members via a search query.
-   * @param {String | BigInt} guildId The id of the guild to search.
+   * @param {String} guildId The id of the guild to search.
    * @param {String} query The search query.
    * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
   async search(guildId, query) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof query !== "string")
+      throw new TypeError("GLUON: Query is not a string.");
+
     const body = {};
 
     body.query = query;
@@ -705,7 +1026,7 @@ class Client extends EventsEmitter {
       [guildId],
       body,
     );
-    if (data.length != 0) {
+    if (data.length !== 0) {
       const members = [];
 
       for (let i = 0; i < data.length; i++)
@@ -724,17 +1045,42 @@ class Client extends EventsEmitter {
   /**
    * Sets the bot's status across all shards.
    * @param {Object} status Status options.
+   * @param {String} status.name The bot's new status.
+   * @param {Number} status.type The type of status.
+   * @param {String} status.status The bot's status.
+   * @param {Boolean} status.afk Whether the bot is afk.
+   * @param {Number} status.since The time since the bot has been afk.
+   * @returns {void}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   setStatus({ name, type, status, afk, since } = {}) {
-    for (let i = 0; i < this.shards.length; i++)
-      this.shards[i].updatePresence(name, type, status, afk, since);
+    if (typeof name !== "string")
+      throw new TypeError("GLUON: Name is not a string.");
+    if (typeof type !== "undefined" && typeof type !== "number")
+      throw new TypeError("GLUON: Type is not a number.");
+    if (typeof status !== "undefined" && typeof status !== "string")
+      throw new TypeError("GLUON: Status is not a string.");
+    if (typeof afk !== "undefined" && typeof afk !== "boolean")
+      throw new TypeError("GLUON: AFK is not a boolean.");
+    if (typeof since !== "undefined" && typeof since !== "number")
+      throw new TypeError("GLUON: Since is not a number.");
+    for (let i = 0; i < this.#shards.length; i++)
+      this.#shards[i].updatePresence(name, type, status, afk, since);
   }
 
   /**
    * Initiates the login sequence
    * @param {String} token The authorization token
+   * @returns {void}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   login(token) {
+    if (typeof token !== "string")
+      throw new TypeError("GLUON: Token is not a string.");
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
     this.#token = token;
 
@@ -748,15 +1094,15 @@ class Client extends EventsEmitter {
         if (
           !this.shardIds ||
           !Array.isArray(this.shardIds) ||
-          this.shardIds.length == 0
+          this.shardIds.length === 0
         )
-          this.shardIds = [...Array(gatewayInfo.shards).keys()];
+          this.#shardIds = [...Array(gatewayInfo.shards).keys()];
 
-        if (!this.totalShards) this.totalShards = gatewayInfo.shards;
+        if (!this.totalShards) this.#totalShards = gatewayInfo.shards;
 
         for (
           let i = 0;
-          i < this.shardIds.length && remainingSessionStarts != 0;
+          i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
         )
           setTimeout(() => {
@@ -765,7 +1111,7 @@ class Client extends EventsEmitter {
               n < gatewayInfo.session_start_limit.max_concurrency;
               n++
             )
-              this.shards.push(
+              this.#shards.push(
                 new Shard(
                   this,
                   this.#token,
@@ -775,8 +1121,6 @@ class Client extends EventsEmitter {
                       : gatewayInfo.url,
                   ),
                   this.shardIds[i],
-                  this.totalShards,
-                  this.#intents,
                   this.#_sessionData
                     ? this.#_sessionData[i].sessionId
                     : undefined,
@@ -786,7 +1130,6 @@ class Client extends EventsEmitter {
                   this.#_sessionData
                     ? this.#_sessionData[i].resumeGatewayUrl
                     : undefined,
-                  this.softRestartFunction,
                 ),
               );
           }, 6000 * i);

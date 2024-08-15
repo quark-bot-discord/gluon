@@ -199,34 +199,10 @@ class Channel {
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
-    if (!content && !embeds && !components && !files)
-      throw new Error(
-        "GLUON: No content, embeds, components or files provided.",
-      );
-
-    if (typeof content !== "undefined" && typeof content !== "string")
-      throw new TypeError("GLUON: Content must be a string.");
+    Message.sendValidation(content, { embeds, components, files });
 
     if (typeof suppressMentions !== "boolean")
       throw new TypeError("GLUON: Suppress mentions must be a boolean.");
-
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
-      throw new TypeError("GLUON: Components must be an array of action rows.");
-
-    if (
-      typeof files !== "undefined" &&
-      (!Array.isArray(files) || !files.every((f) => f instanceof File))
-    )
-      throw new TypeError("GLUON: Files must be an array of files.");
-
-    if (
-      typeof embeds !== "undefined" &&
-      (!Array.isArray(embeds) || !embeds.every((e) => e instanceof Embed))
-    )
-      throw new TypeError("GLUON: Embeds must be an array of embeds.");
 
     const body = {};
 

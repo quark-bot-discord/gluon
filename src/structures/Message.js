@@ -1,7 +1,12 @@
 import User from "./User.js";
 import Member from "./Member.js";
 import Attachment from "./Attachment.js";
-import { PERMISSIONS, BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  PERMISSIONS,
+  BASE_URL,
+  TO_JSON_TYPES_ENUM,
+  LIMITS,
+} from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
@@ -17,6 +22,7 @@ import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import Client from "../Client.js";
+import File from "../util/builder/file.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -663,25 +669,7 @@ class Message {
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
-    if (!content && !embeds && !components && !files)
-      throw new Error(
-        "GLUON: Must provide content, embeds, components or files",
-      );
-
-    if (typeof content !== "undefined" && typeof content !== "string")
-      throw new TypeError("GLUON: Content must be a string.");
-
-    if (typeof embeds !== "undefined" && !Array.isArray(embeds))
-      throw new TypeError("GLUON: Embeds must be an array of embeds.");
-
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
-      throw new TypeError("GLUON: Components must be an array of components.");
-
-    if (typeof files !== "undefined" && !Array.isArray(files))
-      throw new TypeError("GLUON: Files must be an array of files.");
+    Message.sendValidation(content, { embeds, components, files });
 
     const body = {};
 
@@ -731,25 +719,7 @@ class Message {
     )
       throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
 
-    if (!content && !embeds && !components && !files)
-      throw new Error(
-        "GLUON: Must provide content, embeds, components or files",
-      );
-
-    if (typeof content !== "undefined" && typeof content !== "string")
-      throw new TypeError("GLUON: Content must be a string.");
-
-    if (typeof embeds !== "undefined" && !Array.isArray(embeds))
-      throw new TypeError("GLUON: Embeds must be an array of embeds.");
-
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
-      throw new TypeError("GLUON: Components must be an array of components.");
-
-    if (typeof files !== "undefined" && !Array.isArray(files))
-      throw new TypeError("GLUON: Files must be an array of files.");
+    Message.sendValidation(content, { embeds, components, files });
 
     const body = {};
 
@@ -852,6 +822,47 @@ class Message {
       decryptStructure(data, messageId, channelId, guildId),
       { channel_id: channelId, guild_id: guildId },
     );
+  }
+
+  static sendValidation(content, { embeds, components, files } = {}) {
+    if (!content && !embeds && !components && !files)
+      throw new Error(
+        "GLUON: Must provide content, embeds, components or files",
+      );
+
+    if (typeof content !== "undefined" && typeof content !== "string")
+      throw new TypeError("GLUON: Content must be a string.");
+
+    if (content && content.length > LIMITS.MAX_MESSAGE_CONTENT)
+      throw new RangeError(
+        `GLUON: Content exceeds ${LIMITS.MAX_MESSAGE_CONTENT} characters.`,
+      );
+
+    if (
+      typeof embeds !== "undefined" &&
+      (!Array.isArray(embeds) || !embeds.every((e) => e instanceof Embed))
+    )
+      throw new TypeError("GLUON: Embeds must be an array of embeds.");
+
+    if (embeds && embeds.length > LIMITS.MAX_MESSAGE_EMBEDS)
+      throw new RangeError(
+        `GLUON: Embeds exceeds ${LIMITS.MAX_MESSAGE_EMBEDS}.`,
+      );
+
+    if (
+      typeof components !== "undefined" &&
+      !(components instanceof MessageComponents)
+    )
+      throw new TypeError("GLUON: Components must be an array of components.");
+
+    if (
+      typeof files !== "undefined" &&
+      (!Array.isArray(files) || !files.every((f) => f instanceof File))
+    )
+      throw new TypeError("GLUON: Files must be an array of files.");
+
+    if (files && files.length > LIMITS.MAX_MESSAGE_FILES)
+      throw new RangeError(`GLUON: Files exceeds ${LIMITS.MAX_MESSAGE_FILES}.`);
   }
 
   /**

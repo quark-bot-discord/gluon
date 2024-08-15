@@ -6,6 +6,7 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
 import Embed from "../util/builder/embedBuilder.js";
+import Message from "./Message.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -233,27 +234,7 @@ class Interaction {
         "GLUON: No content, files, embed, or components provided.",
       );
 
-    if (typeof content !== "undefined" && typeof content !== "string")
-      throw new TypeError("GLUON: Content must be a string.");
-
-    if (
-      typeof files !== "undefined" &&
-      (!Array.isArray(files) || !files.every((file) => file instanceof File))
-    )
-      throw new TypeError("GLUON: Files must be an array of files.");
-
-    if (
-      typeof embeds !== "undefined" &&
-      (!Array.isArray(embeds) ||
-        !embeds.every((embed) => embed instanceof Embed))
-    )
-      throw new TypeError("GLUON: Embeds must be an array of embeds.");
-
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
-      throw new TypeError("GLUON: Components must be an array of components.");
+    Message.sendValidation(content, { embeds, components, files });
 
     if (typeof quiet !== "undefined" && typeof quiet !== "boolean")
       throw new TypeError("GLUON: Quiet must be a boolean.");
@@ -291,33 +272,7 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   async edit(content, { files, embeds, components } = {}) {
-    if (!content && !files && !embeds && !components)
-      throw new Error(
-        "GLUON: No content, files, embed, or components provided.",
-      );
-
-    if (typeof content !== "undefined" && typeof content !== "string")
-      throw new TypeError("GLUON: Content must be a string.");
-
-    if (
-      typeof files !== "undefined" &&
-      !Array.isArray(files) &&
-      !files.every((file) => file instanceof File)
-    )
-      throw new TypeError("GLUON: Files must be an array of files.");
-
-    if (
-      typeof embeds !== "undefined" &&
-      !Array.isArray(embeds) &&
-      !embeds.every((embed) => embed instanceof Embed)
-    )
-      throw new TypeError("GLUON: Embeds must be an array of embeds.");
-
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
-      throw new TypeError("GLUON: Components must be an array of components.");
+    Message.sendValidation(content, { embeds, components, files });
 
     const body = {};
 

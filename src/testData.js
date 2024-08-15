@@ -1,5 +1,5 @@
 import Client from "./Client.js";
-import { PERMISSIONS } from "./constants.js";
+import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
@@ -951,6 +951,7 @@ export const TEST_CLIENTS = {
       cacheVoiceStates: true,
       cacheScheduledEvents: true,
       cacheInvites: true,
+      intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.GUILD_MEMBERS,
     });
     client.user = new User(client, TEST_DATA.CLIENT_USER);
     client.request = new BetterRequestHandler(client, "TOKEN");
@@ -968,6 +969,7 @@ export const TEST_CLIENTS = {
       cacheVoiceStates: false,
       cacheScheduledEvents: false,
       cacheInvites: false,
+      intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.GUILD_MEMBERS,
     });
     client.user = new User(client, TEST_DATA.CLIENT_USER);
     client.request = new BetterRequestHandler(client, "TOKEN");
