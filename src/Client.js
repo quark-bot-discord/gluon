@@ -292,6 +292,8 @@ class Client extends EventsEmitter {
    * @param {Number} status The debug status level.
    * @param {String} message The message to emit.
    * @returns {void}
+   * @method
+   * @public
    */
   _emitDebug(status, message) {
     if (process.env.NODE_ENV !== "development") return;
@@ -478,110 +480,6 @@ class Client extends EventsEmitter {
     if (files) body.files = files;
 
     await this.request.makeRequest("postExecuteWebhook", [id, token], body);
-  }
-
-  /**
-   * Posts a message to the specified channel.
-   * @param {String} channel_id The id of the channel to send the message to.
-   * @param {String} guild_id The id of the guild which the channel belongs to.
-   * @param {String?} content The message content.
-   * @param {Object?} options Embeds, components and files to attach to the message.
-   * @returns {Promise<Message>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async sendMessage(
-    channel_id,
-    guild_id,
-    content,
-    { embeds, components, files, suppressMentions = false } = {},
-  ) {
-    if (typeof channel_id !== "string")
-      throw new TypeError("GLUON: Channel ID is not a string.");
-    if (typeof guild_id !== "string")
-      throw new TypeError("GLUON: Guild ID is not a string.");
-
-    Message.sendValidation(content, { embeds, components, files });
-
-    if (typeof suppressMentions !== "boolean")
-      throw new TypeError("GLUON: Suppress mentions is not a boolean.");
-
-    const body = {};
-
-    if (content) body.content = content;
-
-    if (embeds && embeds.length !== 0) body.embeds = embeds;
-    if (components) body.components = components;
-    if (files) body.files = files;
-    if (suppressMentions === true) {
-      body.allowed_mentions = {};
-      body.allowed_mentions.parse = [];
-    }
-
-    const data = await this.request.makeRequest(
-      "postCreateMessage",
-      [channel_id],
-      body,
-    );
-
-    return new Message(this, data, {
-      channel_id: channel_id,
-      guild_id: guild_id,
-      nocache: false,
-    });
-  }
-
-  /**
-   * Edits a specified message.
-   * @param {String} channel_id The id of the channel that the message belongs to.
-   * @param {String} guild_id The id of the guild that the channel belongs to.
-   * @param {String} message_id The id of the message to edit.
-   * @param {String?} content The message content.
-   * @param {Object?} options Embeds, components and files to attach to the message.
-   * @returns {Promise<Message>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async editMessage(
-    channel_id,
-    guild_id,
-    message_id,
-    content,
-    { embed, components } = {},
-  ) {
-    if (typeof channel_id !== "string")
-      throw new TypeError("GLUON: Channel ID is not a string.");
-    if (typeof guild_id !== "string")
-      throw new TypeError("GLUON: Guild ID is not a string.");
-    if (typeof message_id !== "string")
-      throw new TypeError("GLUON: Message ID is not a string.");
-
-    Message.sendValidation(content, { embed, components });
-
-    const body = {};
-
-    if (content) body.content = content;
-    if (embed) body.embeds = [embed];
-    if (components) body.components = components;
-
-    if (this.referenced_message)
-      body.message_reference = {
-        message_id: message_id,
-        channel_id: channel_id,
-        guild_id: guild_id,
-      };
-
-    const data = await this.request.makeRequest(
-      "patchEditMessage",
-      [channel_id, message_id],
-      body,
-    );
-
-    return new Message(this, data, { channel_id, guild_id });
   }
 
   /**

@@ -1,9 +1,12 @@
+import Client from "../Client.js";
 import CategoryChannel from "../structures/CategoryChannel.js";
+import Channel from "../structures/Channel.js";
 import TextChannel from "../structures/TextChannel.js";
 import Thread from "../structures/Thread.js";
 import VoiceChannel from "../structures/VoiceChannel.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import GuildManager from "./GuildManager.js";
 
 /**
  * Manages all channels within a guild.
@@ -60,8 +63,8 @@ class GuildChannelsManager extends BaseCacheManager {
   /**
    * Adds a channel to the cache.
    * @param {String} id The ID of the channel to cache.
-   * @param {VoiceChannel | TextChannel | Thread} channel The channel to cache.
-   * @returns {VoiceChannel | TextChannel | Thread}
+   * @param {VoiceChannel | TextChannel | Thread | Channel | CategoryChannel} channel The channel to cache.
+   * @returns {VoiceChannel | TextChannel | Thread | Channel | CategoryChannel}
    * @public
    * @method
    * @throws {TypeError}
@@ -73,13 +76,31 @@ class GuildChannelsManager extends BaseCacheManager {
         channel instanceof VoiceChannel ||
         channel instanceof TextChannel ||
         channel instanceof Thread ||
-        channel instanceof CategoryChannel
+        channel instanceof CategoryChannel ||
+        channel instanceof Channel
       )
     )
       throw new TypeError(
-        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel or Thread instance.",
+        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel, Channel or Thread instance.",
       );
     return super.set(id, channel);
+  }
+
+  /**
+   * Returns the channel for a guild.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild to get the channel from.
+   * @param {String} channelId The ID of the channel to get.
+   * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel}
+   */
+  static getChannel(client, guildId, channelId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string.");
+    return GuildManager.getGuild(client, guildId).channels.get(channelId);
   }
 }
 

@@ -234,7 +234,7 @@ class Interaction {
         "GLUON: No content, files, embed, or components provided.",
       );
 
-    Message.sendValidation(content, { embeds, components, files });
+    Message.sendValidation({ content, embeds, components, files });
 
     if (typeof quiet !== "undefined" && typeof quiet !== "boolean")
       throw new TypeError("GLUON: Quiet must be a boolean.");
@@ -272,7 +272,7 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   async edit(content, { files, embeds, components } = {}) {
-    Message.sendValidation(content, { embeds, components, files });
+    Message.sendValidation({ content, embeds, components, files });
 
     const body = {};
 

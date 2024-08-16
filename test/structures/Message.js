@@ -489,7 +489,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test")).to.be.rejectedWith(
+      await expect(message.reply({ content: "test" })).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: SEND_MESSAGES",
       );
@@ -527,7 +527,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply({})).to.be.rejectedWith(
+      await expect(message.reply({ content: {} })).to.be.rejectedWith(
         TypeError,
         "GLUON: Content must be a string",
       );
@@ -546,10 +546,9 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { embeds: 123 })).to.be.rejectedWith(
-        TypeError,
-        "GLUON: Embeds must be an array",
-      );
+      await expect(
+        message.reply({ content: "test", embeds: 123 }),
+      ).to.be.rejectedWith(TypeError, "GLUON: Embeds must be an array");
     });
     it("should throw an error if components is provided but not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -566,7 +565,7 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       await expect(
-        message.reply("test", { components: 123 }),
+        message.reply({ content: "test", components: 123 }),
       ).to.be.rejectedWith(TypeError, "GLUON: Components must be an array");
     });
     it("should throw an error if files is provided but not an array", async function () {
@@ -583,10 +582,9 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { files: 123 })).to.be.rejectedWith(
-        TypeError,
-        "GLUON: Files must be an array",
-      );
+      await expect(
+        message.reply({ content: "test", files: 123 }),
+      ).to.be.rejectedWith(TypeError, "GLUON: Files must be an array");
     });
     it("should not throw an error if content is provided as a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -602,7 +600,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test")).to.not.be.rejected;
+      await expect(message.reply({ content: "test" })).to.not.be.rejected;
     });
     it("should not throw an error if embeds is provided as an array of embeds", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -618,8 +616,8 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.reply("test", { embeds: [new Embed()] })).to.not.be
-        .rejected;
+      await expect(message.reply({ content: "test", embeds: [new Embed()] })).to
+        .not.be.rejected;
     });
     it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -636,7 +634,8 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       const components = new MessageComponents();
-      await expect(message.reply("test", { components })).to.not.be.rejected;
+      await expect(message.reply({ content: "test", components })).to.not.be
+        .rejected;
     });
     it("should not throw an error if files is provided as an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -655,7 +654,8 @@ describe("Message", function () {
       const file = new File()
         .setName("test.txt")
         .setPath(path.join(process.cwd(), "media", "quark.png"));
-      await expect(message.reply("test", { files: [file] })).to.not.be.rejected;
+      await expect(message.reply({ content: "test", files: [file] })).to.not.be
+        .rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -672,7 +672,7 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       const request = spy(client.request, "makeRequest");
-      await message.reply("test");
+      await message.reply({ content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("postCreateMessage", [
         TEST_DATA.CHANNEL_ID,
@@ -704,7 +704,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test")).to.be.rejectedWith(
+      await expect(message.edit({ content: "test" })).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: SEND_MESSAGES",
       );
@@ -742,7 +742,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit({})).to.be.rejectedWith(
+      await expect(message.edit({ content: {} })).to.be.rejectedWith(
         TypeError,
         "GLUON: Content must be a string",
       );
@@ -761,7 +761,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test", { embeds: 123 })).to.be.rejectedWith(
+      await expect(message.edit({ embeds: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Embeds must be an array",
       );
@@ -780,9 +780,10 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(
-        message.edit("test", { components: 123 }),
-      ).to.be.rejectedWith(TypeError, "GLUON: Components must be an array");
+      await expect(message.edit({ components: 123 })).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Components must be an array",
+      );
     });
     it("should throw an error if files is provided but not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -798,7 +799,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test", { files: 123 })).to.be.rejectedWith(
+      await expect(message.edit({ files: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Files must be an array",
       );
@@ -817,7 +818,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test")).to.not.be.rejected;
+      await expect(message.edit({ content: "test" })).to.not.be.rejected;
     });
     it("should not throw an error if embeds is provided as an array of embeds", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -833,8 +834,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      await expect(message.edit("test", { embeds: [new Embed()] })).to.not.be
-        .rejected;
+      await expect(message.edit({ embeds: [new Embed()] })).to.not.be.rejected;
     });
     it("should not throw an error if components is provided as a message components class", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -851,7 +851,7 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       const components = new MessageComponents();
-      await expect(message.edit("test", { components })).to.not.be.rejected;
+      await expect(message.edit({ components })).to.not.be.rejected;
     });
     it("should not throw an error if files is provided as an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -870,7 +870,7 @@ describe("Message", function () {
       const file = new File()
         .setName("test.txt")
         .setPath(path.join(process.cwd(), "media", "quark.png"));
-      await expect(message.edit("test", { files: [file] })).to.not.be.rejected;
+      await expect(message.edit({ files: [file] })).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -887,7 +887,7 @@ describe("Message", function () {
         channel_id: TEST_DATA.CHANNEL_ID,
       });
       const request = spy(client.request, "makeRequest");
-      await message.edit("test");
+      await message.edit({ content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("patchEditMessage", [
         TEST_DATA.CHANNEL_ID,

@@ -176,8 +176,12 @@ class Channel {
 
   /**
    * Sends a message to this channel.
-   * @param {String} content The message content.
-   * @param {Object} param1 Embeds, components and files to include with the message.
+   * @param {Object} data Embeds, components and files to include with the message.
+   * @param {String?} data.content The content of the message.
+   * @param {Array<Embed>?} data.embeds The embeds to include with the message.
+   * @param {Array<MessageComponents>?} data.components The components to include with the message.
+   * @param {Array<File>?} data.files The files to include with the message.
+   * @param {Boolean} data.suppressMentions Whether to suppress mentions in the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
    * @method
@@ -185,47 +189,17 @@ class Channel {
    * @async
    * @throws {Error | TypeError}
    */
-  async send(
-    content,
-    { components, files, embeds, suppressMentions = false } = {
+  send(
+    { content, components, files, embeds, suppressMentions = false } = {
       suppressMentions: false,
     },
   ) {
-    if (
-      !checkPermission(
-        this.checkPermission(await this.guild.me()),
-        PERMISSIONS.SEND_MESSAGES,
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
-
-    Message.sendValidation(content, { embeds, components, files });
-
-    if (typeof suppressMentions !== "boolean")
-      throw new TypeError("GLUON: Suppress mentions must be a boolean.");
-
-    const body = {};
-
-    if (content) body.content = content;
-
-    if (embeds) body.embeds = embeds;
-    if (components) body.components = components;
-    if (files) body.files = files;
-    if (suppressMentions == true) {
-      body.allowed_mentions = {};
-      body.allowed_mentions.parse = [];
-    }
-
-    const data = await this.#_client.request.makeRequest(
-      "postCreateMessage",
-      [this.id],
-      JSON.parse(JSON.stringify(body)),
-    );
-
-    return new Message(this.#_client, data, {
-      channel_id: this.id,
-      guild_id: this.guildId,
-      nocache: false,
+    return Message.send(this.#_client, this.id, this.guildId, {
+      content,
+      components,
+      files,
+      embeds,
+      suppressMentions,
     });
   }
 

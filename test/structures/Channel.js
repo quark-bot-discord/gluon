@@ -342,7 +342,7 @@ describe("Channel", function () {
     });
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Member(client, TEST_DATA.CLIENT_MEMBER, {
         user_id: TEST_DATA.CLIENT_MEMBER.user.id,
         guild_id: TEST_DATA.GUILD_ID,
@@ -350,7 +350,8 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(channel.send()).to.be.rejectedWith(
+      guild.channels.set(TEST_DATA.TEXT_CHANNEL.id, channel);
+      await expect(channel.send({ content: "test" })).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: SEND_MESSAGES",
       );
@@ -384,7 +385,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(channel.send(123)).to.be.rejectedWith(
+      await expect(channel.send({ content: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Content must be a string.",
       );
@@ -402,10 +403,10 @@ describe("Channel", function () {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(
-        channel.send("test", { suppressMentions: 123 }),
+        channel.send({ content: "test", suppressMentions: 123 }),
       ).to.be.rejectedWith(
         TypeError,
-        "GLUON: Suppress mentions must be a boolean.",
+        "GLUON: Suppress mentions is not a boolean.",
       );
     });
     it("should throw an error if embeds is not an array", async function () {
@@ -420,7 +421,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(channel.send("test", { embeds: 123 })).to.be.rejectedWith(
+      await expect(channel.send({ embeds: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Embeds must be an array of embeds.",
       );
@@ -437,9 +438,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(
-        channel.send("test", { embeds: ["test"] }),
-      ).to.be.rejectedWith(
+      await expect(channel.send({ embeds: ["test"] })).to.be.rejectedWith(
         TypeError,
         "GLUON: Embeds must be an array of embeds.",
       );
@@ -456,9 +455,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(
-        channel.send("test", { components: 123 }),
-      ).to.be.rejectedWith(
+      await expect(channel.send({ components: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Components must be an array of components.",
       );
@@ -475,9 +472,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(
-        channel.send("test", { components: ["test"] }),
-      ).to.be.rejectedWith(
+      await expect(channel.send({ components: ["test"] })).to.be.rejectedWith(
         TypeError,
         "GLUON: Components must be an array of components.",
       );
@@ -494,7 +489,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(channel.send("test", { files: 123 })).to.be.rejectedWith(
+      await expect(channel.send({ files: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Files must be an array of files.",
       );
@@ -511,9 +506,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await expect(
-        channel.send("test", { files: ["test"] }),
-      ).to.be.rejectedWith(
+      await expect(channel.send({ files: ["test"] })).to.be.rejectedWith(
         TypeError,
         "GLUON: Files must be an array of files.",
       );
@@ -532,7 +525,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      await channel.send("test");
+      await channel.send({ content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("postCreateMessage", [
         TEST_DATA.TEXT_CHANNEL.id,

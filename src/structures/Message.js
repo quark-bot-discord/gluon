@@ -6,6 +6,7 @@ import {
   BASE_URL,
   TO_JSON_TYPES_ENUM,
   LIMITS,
+  MESSAGE_FLAGS,
 } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
@@ -23,6 +24,8 @@ import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import Client from "../Client.js";
 import File from "../util/builder/file.js";
+import GuildChannelsManager from "../managers/GuildChannelsManager.js";
+import GuildManager from "../managers/GuildManager.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -46,6 +49,7 @@ class Message {
   #sticker_items;
   #message_snapshots;
   #edited_timestamp;
+  #flags;
   /**
    * Creates the structure for a message.
    * @param {Client} client The client instance.
@@ -271,6 +275,13 @@ class Message {
       else if (existing && existing.reference?.messageId)
         this.#reference.message_id = existing.reference.messageId;
     }
+
+    /**
+     * The flags of the message.
+     * @type {Number}
+     * @private
+     */
+    this.#flags = data.flags;
 
     /**
      * The type of message.
@@ -567,6 +578,68 @@ class Message {
   }
 
   /**
+   * The flags of the message.
+   * @type {String[]}
+   * @readonly
+   * @public
+   * @see {@link https://discord.com/developers/docs/resources/message#message-object-message-flags}
+   */
+  get flags() {
+    const flags = [];
+    if ((this.#flags & MESSAGE_FLAGS.CROSSPOSTED) === MESSAGE_FLAGS.CROSSPOSTED)
+      flags.push("CROSSPOSTED");
+    if (
+      (this.#flags & MESSAGE_FLAGS.IS_CROSSPOST) ===
+      MESSAGE_FLAGS.IS_CROSSPOST
+    )
+      flags.push("IS_CROSSPOST");
+    if (
+      (this.#flags & MESSAGE_FLAGS.SUPPRESS_EMBEDS) ===
+      MESSAGE_FLAGS.SUPPRESS_EMBEDS
+    )
+      flags.push("SUPPRESS_EMBEDS");
+    if (
+      (this.#flags & MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED) ===
+      MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED
+    )
+      flags.push("SOURCE_MESSAGE_DELETED");
+    if ((this.#flags & MESSAGE_FLAGS.URGENT) === MESSAGE_FLAGS.URGENT)
+      flags.push("URGENT");
+    if ((this.#flags & MESSAGE_FLAGS.HAS_THREAD) === MESSAGE_FLAGS.HAS_THREAD)
+      flags.push("HAS_THREAD");
+    if ((this.#flags & MESSAGE_FLAGS.EPHEMERAL) === MESSAGE_FLAGS.EPHEMERAL)
+      flags.push("EPHEMERAL");
+    if ((this.#flags & MESSAGE_FLAGS.LOADING) === MESSAGE_FLAGS.LOADING)
+      flags.push("LOADING");
+    if (
+      (this.#flags & MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD) ===
+      MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD
+    )
+      flags.push("FAILED_TO_MENTION_SOME_ROLES_IN_THREAD");
+    if (
+      (this.#flags & MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS) ===
+      MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS
+    )
+      flags.push("SUPPRESS_NOTIFICATIONS");
+    if (
+      (this.#flags & MESSAGE_FLAGS.IS_VOICE_MESSAGE) ===
+      MESSAGE_FLAGS.IS_VOICE_MESSAGE
+    )
+      flags.push("IS_VOICE_MESSAGE");
+    return flags;
+  }
+
+  /**
+   * The raw flags of the message.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get flagsRaw() {
+    return this.#flags;
+  }
+
+  /**
    * The type of message.
    * @type {Number}
    * @readonly
@@ -648,8 +721,8 @@ class Message {
 
   /**
    * Replies to the message.
-   * @param {String} content The message content.
    * @param {Object?} options Embeds, components and files to attach to the message.
+   * @param {String?} options.content The message content.
    * @param {Embed?} options.embed Embed to send with the message.
    * @param {MessageComponents?} options.components Message components to send with the message.
    * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
@@ -660,49 +733,34 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  async reply(content, { embeds, components, files } = {}) {
-    if (
-      !checkPermission(
-        this.channel.checkPermission(await this.guild.me()),
-        PERMISSIONS.SEND_MESSAGES,
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
-
-    Message.sendValidation(content, { embeds, components, files });
-
-    const body = {};
-
-    if (content) body.content = content;
-    if (embeds) body.embeds = embeds;
-    if (components) body.components = components;
-    if (files) body.files = files;
-
-    body.message_reference = {
-      message_id: this.id,
-      channel_id: this.channelId,
-      guild_id: this.guildId,
-    };
-
-    const data = await this.#_client.request.makeRequest(
-      "postCreateMessage",
-      [this.channelId],
-      body,
-    );
-
-    return new Message(this.#_client, data, {
-      channel_id: this.channelId,
-      guild_id: this.guildId,
+  reply({ content, embeds, components, files, suppressMentions = false } = {}) {
+    return Message.send(this.#_client, this.channelId, this.guildId, {
+      content,
+      reference: {
+        message_id: this.id,
+        channel_id: this.channelId,
+        guild_id: this.guildId,
+      },
+      embeds,
+      components,
+      files,
+      suppressMentions,
     });
   }
 
   /**
    * Edits the message, assuming it is sent by the client user.
-   * @param {String} content The message content.
-   * @param {Object?} options Embeds and components to attach to the message.
+   * @param {Object?} options Content, embeds and components to attach to the message.
+   * @param {String?} options.content The message content.
    * @param {Embed?} options.embed Embed to send with the message.
    * @param {MessageComponents?} options.components Message components to send with the message.
-   * @param {Array<Object>?} options.files Array of file objects for files to send with the message.
+   * @param {Array<Attachment>?} options.attachments Array of attachment objects for files to send with the message.
+   * @param {Number?} options.flags The message flags.
+   * @param {Object?} options.reference The message reference.
+   * @param {String?} options.reference.message_id The id of the message to reference.
+   * @param {String?} options.reference.channel_id The id of the channel to reference.
+   * @param {String?} options.reference.guild_id The id of the guild to reference.
+   * @param {File[]?} options.files Array of file objects for files to send with the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
    * @method
@@ -710,40 +768,37 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  async edit(content, { embeds, components, files } = {}) {
-    if (
-      !checkPermission(
-        this.channel.checkPermission(await this.guild.me()),
-        PERMISSIONS.SEND_MESSAGES,
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
-
-    Message.sendValidation(content, { embeds, components, files });
-
-    const body = {};
-
-    if (content) body.content = content;
-    if (embeds && embeds.length != 0) body.embeds = embeds;
-    if (components) body.components = components;
-    if (files) body.files = files;
-
-    if (this.referenced_message)
-      body.message_reference = {
-        message_id: this.id,
+  edit(
+    {
+      components,
+      files,
+      content = this.content,
+      embeds = this.embeds,
+      attachments = this.attachments,
+      flags = this.flagsRaw,
+      reference = {
+        message_id: this.reference.messageId,
         channel_id: this.channelId,
         guild_id: this.guildId,
-      };
-
-    const data = await this.#_client.request.makeRequest(
-      "patchEditMessage",
-      [this.channelId, this.id],
-      body,
-    );
-
-    return new Message(this.#_client, data, {
-      channel_id: this.channelId,
-      guild_id: this.guildId,
+      },
+    } = {
+      components: null,
+      files: null,
+      content: null,
+      embeds: null,
+      attachments: null,
+      flags: null,
+      reference: null,
+    },
+  ) {
+    return Message.edit(this.#_client, this.channelId, this.id, this.guildId, {
+      content,
+      components,
+      files,
+      embeds,
+      attachments,
+      flags,
+      reference,
     });
   }
 
@@ -781,11 +836,159 @@ class Message {
   }
 
   /**
+   * Posts a message to the specified channel.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The id of the channel to send the message to.
+   * @param {String} guildId The id of the guild which the channel belongs to.
+   * @param {Object?} options Content, embeds, components and files to attach to the message.
+   * @param {String?} options.content The message content.
+   * @param {Embed[]} options.embeds Array of embeds to send with the message.
+   * @param {MessageComponents?} options.components Message components to send with the message.
+   * @param {Array<File>?} options.files Array of file objects for files to send with the message.
+   * @param {Boolean?} options.suppressMentions Whether to suppress mentions in the message.
+   * @returns {Promise<Message>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async send(
+    client,
+    channelId,
+    guildId,
+    {
+      content,
+      embeds,
+      components,
+      files,
+      reference,
+      suppressMentions = false,
+    } = {
+      suppressMentions: false,
+    },
+  ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+
+    Message.sendValidation({ content, embeds, components, files, reference });
+
+    if (typeof suppressMentions !== "boolean")
+      throw new TypeError("GLUON: Suppress mentions is not a boolean.");
+
+    if (
+      !checkPermission(
+        GuildChannelsManager.getChannel(
+          client,
+          guildId,
+          channelId,
+        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        PERMISSIONS.SEND_MESSAGES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+
+    const body = {};
+
+    if (content) body.content = content;
+
+    if (embeds && embeds.length !== 0) body.embeds = embeds;
+    if (components) body.components = components;
+    if (files) body.files = files;
+    if (suppressMentions === true) {
+      body.allowed_mentions = {};
+      body.allowed_mentions.parse = [];
+    }
+    if (reference) body.message_reference = reference;
+
+    const data = await client.request.makeRequest(
+      "postCreateMessage",
+      [channelId],
+      body,
+    );
+
+    return new Message(client, data, {
+      channel_id: channelId,
+      guild_id: guildId,
+    });
+  }
+
+  /**
+   * Edits a message.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The id of the channel the message belongs to.
+   * @param {String} messageId The id of the message.
+   * @param {String} guildId The id of the guild the message belongs to.
+   * @param {Object?} options The message options.
+   * @param {String?} options.content The message content.
+   * @param {Embed[]?} options.embeds Array of embeds to send with the message.
+   * @param {MessageComponents?} options.components Message components to send with the message.
+   * @param {Array<Attachment>?} options.files Array of file objects for files to send with the message.
+   * @returns {Promise<Message>}
+   */
+  static async edit(
+    client,
+    channelId,
+    messageId,
+    guildId,
+    { content, embeds, components, attachments, files } = {},
+  ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof messageId !== "string")
+      throw new TypeError("GLUON: Message ID is not a string.");
+
+    Message.sendValidation({ content, embeds, components, attachments, files });
+
+    if (
+      !checkPermission(
+        GuildChannelsManager.getChannel(
+          client,
+          guildId,
+          channelId,
+        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        PERMISSIONS.SEND_MESSAGES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+
+    const body = {};
+
+    body.content = content;
+    body.embeds = embeds;
+    body.components = components;
+    body.attachments = attachments;
+    body.files = files;
+
+    const data = await client.request.makeRequest(
+      "patchEditMessage",
+      [channelId, messageId],
+      body,
+    );
+
+    return new Message(client, data, {
+      channel_id: channelId,
+      guild_id: guildId,
+    });
+  }
+
+  /**
    * Returns the hash name for the message.
    * @param {String} guildId The id of the guild that the message belongs to.
    * @param {String} channelId The id of the channel that the message belongs to.
    * @param {String} messageId The id of the message.
    * @returns {String}
+   * @public
+   * @static
+   * @method
+   * @throws {TypeError}
    */
   static getHashName(guildId, channelId, messageId) {
     if (typeof guildId !== "string")
@@ -805,6 +1008,10 @@ class Message {
    * @param {String} channelId The id of the channel that the message belongs to.
    * @param {String} messageId The id of the message.
    * @returns {Message}
+   * @public
+   * @static
+   * @method
+   * @throws {TypeError}
    */
   static decrypt(client, data, guildId, channelId, messageId) {
     if (!(client instanceof Client))
@@ -824,7 +1031,27 @@ class Message {
     );
   }
 
-  static sendValidation(content, { embeds, components, files } = {}) {
+  /**
+   * Validates the message content, embeds, components and files.
+   * @param {String} content The message content.
+   * @param {Object} options The message options.
+   * @param {Embed[]} options.embeds Array of embeds to send with the message.
+   * @param {MessageComponents} options.components Message components to send with the message.
+   * @param {Array<File>} options.files Array of file objects for files to send with the message.
+   * @throws {Error | TypeError | RangeError}
+   * @public
+   * @static
+   * @method
+   */
+  static sendValidation({
+    content,
+    embeds,
+    components,
+    files,
+    attachments,
+    flags,
+    reference,
+  } = {}) {
     if (!content && !embeds && !components && !files)
       throw new Error(
         "GLUON: Must provide content, embeds, components or files",
@@ -863,6 +1090,32 @@ class Message {
 
     if (files && files.length > LIMITS.MAX_MESSAGE_FILES)
       throw new RangeError(`GLUON: Files exceeds ${LIMITS.MAX_MESSAGE_FILES}.`);
+
+    if (
+      typeof attachments !== "undefined" &&
+      (!Array.isArray(attachments) ||
+        !attachments.every((a) => a instanceof Attachment))
+    )
+      throw new TypeError(
+        "GLUON: Attachments must be an array of attachments.",
+      );
+
+    if (attachments && attachments.length > LIMITS.MAX_MESSAGE_FILES)
+      throw new RangeError(
+        `GLUON: Attachments exceeds ${LIMITS.MAX_MESSAGE_FILES}.`,
+      );
+
+    if (typeof flags !== "undefined" && typeof flags !== "number")
+      throw new TypeError("GLUON: Flags must be a number.");
+
+    if (typeof reference !== "undefined" && typeof reference !== "object")
+      throw new TypeError("GLUON: Reference must be an object.");
+    if (reference && typeof reference.message_id !== "string")
+      throw new TypeError("GLUON: Reference message id must be a string.");
+    if (reference && typeof reference.channel_id !== "string")
+      throw new TypeError("GLUON: Reference channel id must be a string.");
+    if (reference && typeof reference.guild_id !== "string")
+      throw new TypeError("GLUON: Reference guild id must be a string.");
   }
 
   /**
