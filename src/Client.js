@@ -483,48 +483,6 @@ class Client extends EventsEmitter {
   }
 
   /**
-   * Adds a specified channel as a follower to Quark's status channel.
-   * @param {String} channel_id The id of the channel to add as a follower.
-   * @param {String} follow_channel_id The id of the channel to follow.
-   * @returns {Promise<void>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async followChannel(channel_id, follow_channel_id) {
-    if (typeof channel_id !== "string")
-      throw new TypeError("GLUON: Channel ID is not a string.");
-    if (typeof follow_channel_id !== "string")
-      throw new TypeError("GLUON: Follow channel ID is not a string.");
-
-    const body = {};
-
-    body.webhook_channel_id = channel_id;
-
-    await this.request.makeRequest(
-      "postFollowNewsChannel",
-      [follow_channel_id],
-      body,
-    );
-  }
-
-  /**
-   * Fetches the webhooks for a specified channel.
-   * @param {String} channel_id The id of the channel to fetch the webhooks from.
-   * @returns {Promise<Array<Object>>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  fetchChannelWebhooks(channel_id) {
-    if (typeof channel_id !== "string")
-      throw new TypeError("GLUON: Channel ID is not a string.");
-    return this.request.makeRequest("getChannelWebhooks", [channel_id]);
-  }
-
-  /**
    * Deletes a webhook.
    * @param {String} webhook_id The id of the webhook to delete.
    * @returns {Promise<void>}
@@ -845,56 +803,6 @@ class Client extends EventsEmitter {
       [this.user.id],
       body,
     );
-  }
-
-  /**
-   * Adds a role to a member.
-   * @param {String} guildId The guild id the member belongs to.
-   * @param {String} userId The id of the member who the action is occuring on.
-   * @param {String} roleId The id of the role to add.
-   * @returns {Promise<void>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async addMemberRole(guildId, userId, roleId) {
-    if (typeof guildId !== "string")
-      throw new TypeError("GLUON: Guild ID is not a string.");
-    if (typeof userId !== "string")
-      throw new TypeError("GLUON: User ID is not a string.");
-    if (typeof roleId !== "string")
-      throw new TypeError("GLUON: Role ID is not a string.");
-    await this.request.makeRequest("putAddGuildMemberRole", [
-      guildId,
-      userId,
-      roleId,
-    ]);
-  }
-
-  /**
-   * Removes a role from a member.
-   * @param {String} guildId The guild id the member belongs to.
-   * @param {String} userId The id of the member who the action is occuring on.
-   * @param {String} roleId The id of the role to remove.
-   * @returns {Promise<void>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async removeMemberRole(guildId, userId, roleId) {
-    if (typeof guildId !== "string")
-      throw new TypeError("GLUON: Guild ID is not a string.");
-    if (typeof userId !== "string")
-      throw new TypeError("GLUON: User ID is not a string.");
-    if (typeof roleId !== "string")
-      throw new TypeError("GLUON: Role ID is not a string.");
-    await this.request.makeRequest("deleteRemoveMemberRole", [
-      guildId,
-      userId,
-      roleId,
-    ]);
   }
 
   /**

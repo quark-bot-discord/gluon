@@ -144,7 +144,7 @@ describe("Member", function () {
       });
       await expect(member.addRole(123)).to.be.rejectedWith(
         TypeError,
-        "GLUON: Role id must be a string.",
+        "GLUON: Role ID is not a string.",
       );
     });
     it("should throw an error if a reason is provided and it is not a string", async function () {
@@ -162,7 +162,7 @@ describe("Member", function () {
       });
       await expect(
         member.addRole(TEST_DATA.ROLE_ID, { reason: 123 }),
-      ).to.be.rejectedWith(TypeError, "GLUON: Reason must be a string.");
+      ).to.be.rejectedWith(TypeError, "GLUON: Reason is not a string.");
     });
     it("should not throw an error if the input is correct", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -261,7 +261,7 @@ describe("Member", function () {
       });
       await expect(member.removeRole(123)).to.be.rejectedWith(
         TypeError,
-        "GLUON: Role ID must be a string.",
+        "GLUON: Role ID is not a string.",
       );
     });
     it("should throw an error if a reason is provided and it is not a string", async function () {
@@ -279,7 +279,7 @@ describe("Member", function () {
       });
       await expect(
         member.removeRole(TEST_DATA.ROLE_ID, { reason: 123 }),
-      ).to.be.rejectedWith(TypeError, "GLUON: Reason must be a string.");
+      ).to.be.rejectedWith(TypeError, "GLUON: Reason is not a string.");
     });
     it("should not throw an error if the input is correct", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

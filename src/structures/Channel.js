@@ -15,6 +15,7 @@ import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
 import File from "../util/builder/file.js";
 import Member from "./Member.js";
+import Client from "../Client.js";
 
 /**
  * Represents a channel within Discord.
@@ -379,6 +380,56 @@ class Channel {
     if (gluonCacheOptions.cacheChannels === false) return false;
     if (guildCacheOptions.channelCaching === false) return false;
     return true;
+  }
+
+  /**
+   * Follows a news channel.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The ID of the channel.
+   * @param {String} followChannelId THe ID of the channel to follow.
+   * @returns {Promise<void>}
+   * @public
+   * @static
+   * @async
+   * @method
+   * @throws {TypeError}
+   */
+  static async follow(client, channelId, followChannelId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof followChannelId !== "string")
+      throw new TypeError("GLUON: Follow channel ID is not a string.");
+
+    const body = {};
+
+    body.webhook_channel_id = channelId;
+
+    await client.request.makeRequest(
+      "postFollowNewsChannel",
+      [followChannelId],
+      body,
+    );
+  }
+
+  /**
+   * Returns an array of webhooks for the specified channel.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The ID of the channel.
+   * @returns {Promise<Array<Object>>}
+   * @public
+   * @static
+   * @async
+   * @method
+   */
+  static fetchWebhooks(client, channelId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+
+    return client.request.makeRequest("getChannelWebhooks", [channelId]);
   }
 
   /**

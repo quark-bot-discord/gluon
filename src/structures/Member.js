@@ -15,6 +15,7 @@ import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import Client from "../Client.js";
+import GuildManager from "../managers/GuildManager.js";
 
 /**
  * Represents a guild member.
@@ -460,29 +461,9 @@ class Member {
    * @throws {TypeError | Error}
    */
   async addRole(role_id, { reason } = {}) {
-    if (
-      !checkPermission(
-        (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
-
-    if (typeof role_id !== "string")
-      throw new TypeError("GLUON: Role id must be a string.");
-
-    if (typeof reason !== "undefined" && typeof reason !== "string")
-      throw new TypeError("GLUON: Reason must be a string.");
-
-    const body = {};
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this.#_client.request.makeRequest(
-      "putAddGuildMemberRole",
-      [this.guildId, this.id, role_id],
-      body,
-    );
+    await Member.addRole(this.#_client, this.guildId, this.id, role_id, {
+      reason,
+    });
   }
 
   /**
@@ -497,29 +478,9 @@ class Member {
    * @throws {TypeError | Error}
    */
   async removeRole(role_id, { reason } = {}) {
-    if (
-      !checkPermission(
-        (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
-
-    if (typeof role_id !== "string")
-      throw new TypeError("GLUON: Role ID must be a string.");
-
-    if (typeof reason !== "undefined" && typeof reason !== "string")
-      throw new TypeError("GLUON: Reason must be a string.");
-
-    const body = {};
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this.#_client.request.makeRequest(
-      "deleteRemoveMemberRole",
-      [this.guildId, this.id, role_id],
-      body,
-    );
+    await Member.removeRole(this.#_client, this.guildId, this.id, role_id, {
+      reason,
+    });
   }
 
   /**
@@ -695,6 +656,92 @@ class Member {
       user_id: userId,
       guild_id: guildId,
     });
+  }
+
+  /**
+   * Adds a role to a member.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to add.
+   * @param {Object} options The options for adding the role.
+   * @param {String} options.reason The reason for adding the role.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async addRole(client, guildId, userId, roleId, { reason } = {}) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        PERMISSIONS.MANAGE_ROLES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    const body = {};
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    await client.request.makeRequest(
+      "putAddGuildMemberRole",
+      [guildId, userId, roleId],
+      body,
+    );
+  }
+
+  /**
+   * Removes a role from a member.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to remove.
+   * @param {Object} options The options for removing the role.
+   * @param {String} options.reason The reason for removing the role.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async removeRole(client, guildId, userId, roleId, { reason } = {}) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        PERMISSIONS.MANAGE_ROLES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    const body = {};
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    await client.request.makeRequest(
+      "deleteRemoveMemberRole",
+      [guildId, userId, roleId],
+      body,
+    );
   }
 
   /**
