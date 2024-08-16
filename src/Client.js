@@ -413,6 +413,8 @@ class Client extends EventsEmitter {
   /**
    * Bundles all guilds.
    * @returns {Array<Object>}
+   * @public
+   * @method
    */
   bundleCache() {
     return this.guilds.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT);
