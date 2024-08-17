@@ -1,5 +1,4 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";

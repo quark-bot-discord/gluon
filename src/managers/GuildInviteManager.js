@@ -1,5 +1,4 @@
 import { PERMISSIONS } from "../constants.js";
-import Guild from "../structures/Guild.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";

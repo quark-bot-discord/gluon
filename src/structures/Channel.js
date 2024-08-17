@@ -5,13 +5,10 @@ import {
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import Message from "./Message.js";
-import Embed from "../util/builder/embedBuilder.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import MessageComponents from "../util/builder/messageComponents.js";
-import FileUpload from "../util/builder/fileUpload.js";
 import Member from "./Member.js";
 import Client from "../Client.js";
 

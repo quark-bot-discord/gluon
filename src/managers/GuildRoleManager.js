@@ -1,4 +1,3 @@
-import Guild from "../structures/Guild.js";
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 

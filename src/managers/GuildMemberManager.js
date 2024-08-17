@@ -1,5 +1,4 @@
 import Client from "../Client.js";
-import Guild from "../structures/Guild.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 

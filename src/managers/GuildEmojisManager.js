@@ -1,5 +1,4 @@
 import Emoji from "../structures/Emoji.js";
-import Guild from "../structures/Guild.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
