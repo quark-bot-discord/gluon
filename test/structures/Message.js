@@ -6,7 +6,7 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import File from "../../src/util/builder/file.js";
+import FileUpload from "../../src/util/builder/fileUpload.js";
 import MessageComponents from "../../src/util/builder/messageComponents.js";
 import path from "path";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
@@ -653,7 +653,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      const file = new File()
+      const file = new FileUpload()
         .setName("test.txt")
         .setPath(path.join(process.cwd(), "media", "quark.png"));
       await expect(message.reply({ content: "test", files: [file] })).to.not.be
@@ -869,7 +869,7 @@ describe("Message", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.CHANNEL_ID,
       });
-      const file = new File()
+      const file = new FileUpload()
         .setName("test.txt")
         .setPath(path.join(process.cwd(), "media", "quark.png"));
       await expect(message.edit({ files: [file] })).to.not.be.rejected;

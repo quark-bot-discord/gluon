@@ -1,11 +1,9 @@
 import {
   PERMISSION_OVERWRITE_TYPES,
-  PERMISSIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
-import checkPermission from "../util/discord/checkPermission.js";
 import Message from "./Message.js";
 import Embed from "../util/builder/embedBuilder.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
@@ -13,7 +11,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
-import File from "../util/builder/file.js";
+import FileUpload from "../util/builder/fileUpload.js";
 import Member from "./Member.js";
 import Client from "../Client.js";
 
@@ -181,7 +179,7 @@ class Channel {
    * @param {String?} data.content The content of the message.
    * @param {Array<Embed>?} data.embeds The embeds to include with the message.
    * @param {Array<MessageComponents>?} data.components The components to include with the message.
-   * @param {Array<File>?} data.files The files to include with the message.
+   * @param {Array<FileUpload>?} data.files The files to include with the message.
    * @param {Boolean} data.suppressMentions Whether to suppress mentions in the message.
    * @returns {Promise<Message>}
    * @see {@link https://discord.com/developers/docs/resources/channel#create-message}

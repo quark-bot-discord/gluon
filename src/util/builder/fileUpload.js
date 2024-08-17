@@ -1,13 +1,13 @@
 import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
-class File {
+class FileUpload {
   #name;
   #stream;
   #path;
   /**
    * The name of the file.
    * @param {String} name The name of the file.
-   * @returns {File}
+   * @returns {FileUpload}
    */
   setName(name) {
     if (!name) throw new TypeError("GLUON: File name must be provided.");
@@ -24,7 +24,7 @@ class File {
   /**
    * The stream of the file.
    * @param {Stream} stream The stream of the file.
-   * @returns {File}
+   * @returns {FileUpload}
    */
   setStream(stream) {
     if (!stream) throw new TypeError("GLUON: File stream must be provided.");
@@ -35,7 +35,7 @@ class File {
   /**
    * The path of the file.
    * @param {String} path The path of the file.
-   * @returns {File}
+   * @returns {FileUpload}
    */
   setPath(path) {
     if (!path) throw new TypeError("GLUON: File path must be provided.");
@@ -102,4 +102,4 @@ class File {
   }
 }
 
-export default File;
+export default FileUpload;
