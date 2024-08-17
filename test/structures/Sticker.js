@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import Sticker from "../../src/structures/Sticker.js";
+import { Sticker } from "../../src/structures.js";
 
 describe("Sticker", function () {
   context("check import", function () {

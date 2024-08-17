@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { spy } from "sinon";
-import Interaction from "../../src/structures/Interaction.js";
 import {
   TEST_CHANNELS,
   TEST_CLIENTS,
@@ -8,7 +7,7 @@ import {
   TEST_GUILDS,
 } from "../../src/testData.js";
 import TextInput from "../../src/util/builder/textInputBuilder.js";
-import TextChannel from "../../src/structures/TextChannel.js";
+import { Interaction, TextChannel } from "../../src/structures.js";
 
 describe("Interaction", function () {
   context("check import", function () {

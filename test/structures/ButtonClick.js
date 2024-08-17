@@ -5,7 +5,7 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import ButtonClick from "../../src/structures/ButtonClick.js";
+import { ButtonClick } from "../../src/structures.js";
 
 describe("ButtonClick", function () {
   context("check import", function () {

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import CategoryChannel from "../../src/structures/CategoryChannel.js";
+import { CategoryChannel } from "../../src/structures.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 

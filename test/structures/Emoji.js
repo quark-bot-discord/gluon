@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import Emoji from "../../src/structures/Emoji.js";
+import { Emoji } from "../../src/structures.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import Guild from "../../src/structures/Guild.js";

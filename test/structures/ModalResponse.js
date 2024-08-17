@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import ModalResponse from "../../src/structures/ModalResponse.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { ModalResponse } from "../../src/structures.js";
 
 describe("ModalResponse", function () {
   context("check import", function () {

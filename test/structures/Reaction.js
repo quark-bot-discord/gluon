@@ -1,10 +1,7 @@
 import { expect } from "chai";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import Reaction from "../../src/structures/Reaction.js";
-import Guild from "../../src/structures/Guild.js";
-import Member from "../../src/structures/Member.js";
-import Emoji from "../../src/structures/Emoji.js";
+import { Reaction, Guild, Member, Emoji } from "../../src/structures.js";
 
 describe("Reaction", function () {
   context("check import", function () {

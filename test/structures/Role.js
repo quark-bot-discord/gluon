@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import Role from "../../src/structures/Role.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { Role } from "../../src/structures.js";
 
 describe("Role", function () {
   context("check import", function () {

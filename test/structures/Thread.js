@@ -5,9 +5,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import Thread from "../../src/structures/Thread.js";
-import Member from "../../src/structures/Member.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { Thread, Member } from "../../src/structures.js";
 
 describe("Thread", function () {
   context("check import", function () {

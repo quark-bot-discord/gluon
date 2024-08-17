@@ -6,7 +6,7 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import Invite from "../../src/structures/Invite.js";
+import { Invite } from "../../src/structures.js";
 
 describe("Invite", function () {
   context("check import", function () {

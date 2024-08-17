@@ -1,9 +1,7 @@
 import { expect } from "chai";
-import Poll from "../../src/structures/Poll.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import MessagePollManager from "../../src/managers/MessagePollManager.js";
-import Guild from "../../src/structures/Guild.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { Poll, MessagePollManager, Guild } from "../../src/structures.js";
 
 describe("Poll", function () {
   context("check import", function () {

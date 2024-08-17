@@ -5,10 +5,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import VoiceState from "../../src/structures/VoiceState.js";
-import VoiceChannel from "../../src/structures/VoiceChannel.js";
-import Member from "../../src/structures/Member.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { VoiceState, VoiceChannel, Member } from "../../src/structures.js";
 
 describe("VoiceState", function () {
   context("check import", function () {

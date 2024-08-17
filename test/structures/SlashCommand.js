@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import SlashCommand from "../../src/structures/SlashCommand.js";
+import { SlashCommand } from "../../src/structures.js";
 
 describe("SlashCommand", function () {
   context("check import", function () {

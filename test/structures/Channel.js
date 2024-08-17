@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { spy } from "sinon";
-import Channel from "../../src/structures/Channel.js";
+import { Channel } from "../../src/structures.js";
 import {
   TEST_CHANNELS,
   TEST_CLIENTS,

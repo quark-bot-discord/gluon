@@ -6,17 +6,19 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import Message from "../../src/structures/Message.js";
-import MessageReactionManager from "../../src/managers/MessageReactionManager.js";
-import Member from "../../src/structures/Member.js";
-import Role from "../../src/structures/Role.js";
-import Poll from "../../src/structures/Poll.js";
-import Guild from "../../src/structures/Guild.js";
 import File from "../../src/util/builder/file.js";
 import MessageComponents from "../../src/util/builder/messageComponents.js";
 import path from "path";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import Embed from "../../src/util/builder/embedBuilder.js";
+import {
+  Message,
+  MessageReactionManager,
+  Member,
+  Role,
+  Poll,
+  Guild,
+} from "../../src/structures.js";
 
 describe("Message", function () {
   context("check import", function () {

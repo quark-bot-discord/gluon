@@ -1,22 +1,22 @@
 import { expect } from "chai";
 import { spy } from "sinon";
-import Guild from "../../src/structures/Guild.js";
-import GuildManager from "../../src/managers/GuildManager.js";
 import {
   TEST_CHANNELS,
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import Member from "../../src/structures/Member.js";
-import cacheChannel from "../../src/util/gluon/cacheChannel.js";
-import GuildEmojisManager from "../../src/managers/GuildEmojisManager.js";
-import GuildInviteManager from "../../src/managers/GuildInviteManager.js";
-import GuildVoiceStatesManager from "../../src/managers/GuildVoiceStatesManager.js";
-import GuildMemberManager from "../../src/managers/GuildMemberManager.js";
-import GuildChannelsManager from "../../src/managers/GuildChannelsManager.js";
-import GuildCacheOptions from "../../src/managers/GuildCacheOptions.js";
-import Role from "../../src/structures/Role.js";
+import {
+  Member,
+  Guild,
+  GuildEmojisManager,
+  GuildInviteManager,
+  GuildVoiceStatesManager,
+  GuildMemberManager,
+  GuildChannelsManager,
+  GuildCacheOptions,
+  Role,
+} from "../../src/structures.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Guild", function () {

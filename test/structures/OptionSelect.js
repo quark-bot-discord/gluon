@@ -5,8 +5,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import OptionSelect from "../../src/structures/OptionSelect.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { OptionSelect } from "../../src/structures.js";
 
 describe("OptionSelect", function () {
   context("check import", function () {

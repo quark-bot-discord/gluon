@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import VoiceChannel from "../../src/structures/VoiceChannel.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { VoiceChannel } from "../../src/structures.js";
 
 describe("VoiceChannel", function () {
   context("check import", function () {

@@ -6,10 +6,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import TextChannel from "../../src/structures/TextChannel.js";
-import Member from "../../src/structures/Member.js";
-import Role from "../../src/structures/Role.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { TextChannel, Member, Role } from "../../src/structures.js";
 
 describe("TextChannel", function () {
   context("check import", function () {

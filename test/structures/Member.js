@@ -1,8 +1,7 @@
 import { expect } from "chai";
 import { spy } from "sinon";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import Member from "../../src/structures/Member.js";
-import Role from "../../src/structures/Role.js";
+import { Member, Role } from "../../src/structures.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
 describe("Member", function () {
