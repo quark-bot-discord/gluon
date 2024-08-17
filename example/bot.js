@@ -81,7 +81,7 @@ client.on("messageCreate", (message) => {
     });
   }
   if (message.content == "file") {
-    const file = new File().setName("file.txt").setStream("hello world!");
+    const file = new FileUpload().setName("file.txt").setStream("hello world!");
     message.channel.send("", {
       files: [file],
     });
