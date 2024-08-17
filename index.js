@@ -1,1 +1,1 @@
-module.exports = require("./src/Client");
+export default await import("./src/Client");
