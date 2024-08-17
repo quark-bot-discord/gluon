@@ -48,12 +48,12 @@ jobs:
           for file in $(find ./src/structures -name '*.js');
           do
             echo "Adding file to export $file"
-            output="$output export \* as $(basename $file .js) from './structures/$(basename $file)';\n"
+            output="$output export * as $(basename $file .js) from './structures/$(basename $file)';\n"
           done
           for file in $(find ./src/managers -name '*.js');
           do
             echo "Adding file to export $file"
-            output="$output export \* as $(basename $file .js) from './managers/$(basename $file)';\n"
+            output="$output export * as $(basename $file .js) from './managers/$(basename $file)';\n"
           done
           set -f
           echo -e $output > ./src/structures.js
