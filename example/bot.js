@@ -3,7 +3,7 @@ import { BUTTON_STYLES, INTENTS } from "../src/constants.js";
 import ActionRow from "../src/util/builder/actionRowBuilder.js";
 import Button from "../src/util/builder/buttonBuilder.js";
 import Embed from "../src/util/builder/embedBuilder.js";
-import File from "../src/util/builder/file.js";
+import FileUpload from "../src/util/builder/fileUpload.js";
 import MessageComponents from "../src/util/builder/messageComponents.js";
 const client = new Client({
   cacheGuilds: true,
