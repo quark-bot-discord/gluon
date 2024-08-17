@@ -421,36 +421,6 @@ class Client extends EventsEmitter {
   }
 
   /**
-   * Fetches a message from a specific channel.
-   * @param {String} guild_id The ID of the guild that the message belongs to.
-   * @param {String} channel_id The ID of the channel that the message belongs to.
-   * @param {String} message_id The ID of the message to return.
-   * @returns {Promise<Message>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async fetchMessage(guild_id, channel_id, message_id) {
-    if (typeof guild_id !== "string")
-      throw new TypeError("GLUON: Guild ID is not a string.");
-    if (typeof channel_id !== "string")
-      throw new TypeError("GLUON: Channel ID is not a string.");
-    if (typeof message_id !== "string")
-      throw new TypeError("GLUON: Message ID is not a string.");
-
-    const data = await this.request.makeRequest("getChannelMessage", [
-      channel_id,
-      message_id,
-    ]);
-
-    return new Message(this, data, {
-      channel_id,
-      guild_id,
-    });
-  }
-
-  /**
    * Posts a webhook with the provided webhook id and token.
    * @param {Object} referenceData An object with the webhook id and token.
    * @param {String?} content The message to send with the webhook.

@@ -434,6 +434,8 @@ export const LIMITS = {
   MAX_NITRO_MESSAGE_CONTENT: 4000,
   MAX_MESSAGE_EMBEDS: 10,
   MAX_MESSAGE_FILES: 10,
+  MIN_MESSAGES_FETCH_LIMIT: 1,
+  MAX_MESSAGES_FETCH_LIMIT: 100,
 };
 export const COMMAND_NAME_REGEX =
   /^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u;
