@@ -31,15 +31,8 @@ jobs:
           for file in $(find ./src/structures/compiled -name '*.json');
           do
             echo "Adding file to export $file"
-            output="$output import $(basename $file .js.json) from './structures/compiled/$(basename $file)' assert { type: 'json' };\n"
+            output="$output export { default as $(basename $file .js.json) } from './structures/compiled/$(basename $file)' with { type: 'json' };\n"
           done
-          output="$output export default {\n"
-          for file in $(find ./src/structures/compiled -name '*.json');
-          do
-            echo "Adding file to export $file"
-            output="$output $(basename $file .js.json),\n"
-          done
-          output="$output };"
           echo -e $output > ./src/compiledStructures.js
 
       - name: Export structures
@@ -55,7 +48,6 @@ jobs:
             echo "Adding file to export $file"
             output="$output export { default as $(basename $file .js) } from './managers/$(basename $file)';\n"
           done
-          set -f
           echo -e $output > ./src/structures.js
 
       - name: Import bot's GPG key for signing commits
