@@ -2660,7 +2660,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1016">line 1016</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1017">line 1017</a>
     </li></ul></dd>
     
 
@@ -2926,7 +2926,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line932">line 932</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line933">line 933</a>
     </li></ul></dd>
     
 
@@ -3291,7 +3291,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></span>
+<span class="param-type">Array.&lt;<a href="FileUpload.html">FileUpload</a>></span>
 
 
 
@@ -3313,6 +3313,40 @@
             
 
             <td class="description last"><p>Array of file objects for files to send with the message.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attachments</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Array of attachment objects for existing attachments sent with the message.</p></td>
         </tr>
 
     
@@ -3384,7 +3418,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line993">line 993</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line994">line 994</a>
     </li></ul></dd>
     
 
@@ -4135,7 +4169,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="File.html">File</a>></span>
+<span class="param-type">Array.&lt;<a href="FileUpload.html">FileUpload</a>></span>
 
 
 
@@ -4262,7 +4296,7 @@
 
     
 
-    <h4 class="name" id=".sendValidation"><span class="type-signature type-signature-static">(static) </span>sendValidation<span class="signature">(content, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".sendValidation"><span class="type-signature type-signature-static">(static) </span>sendValidation<span class="signature">(options)</span><span class="type-signature"> &rarr; {void}</span></h4>
 
     
 
@@ -4278,7 +4312,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1046">line 1046</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1054">line 1054</a>
     </li></ul></dd>
     
 
@@ -4350,30 +4384,6 @@
 
         <tr>
             
-                <td class="name"><code>content</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The message content.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>options</code></td>
             
 
@@ -4413,6 +4423,30 @@
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message content.</p></td>
+        </tr>
+
     
 
         <tr>
@@ -4471,7 +4505,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="File.html">File</a>></span>
+<span class="param-type">Array.&lt;<a href="FileUpload.html">FileUpload</a>></span>
 
 
 
@@ -4483,6 +4517,176 @@
             
 
             <td class="description last"><p>Array of file objects for files to send with the message.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>attachments</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Attachment.html">Attachment</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of attachment objects for existing attachments sent with the message.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message flags.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reference</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The message reference.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>message_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The id of the message to reference.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>channel_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The id of the channel to reference.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>guild_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The id of the guild to reference.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -4533,6 +4737,25 @@
     
 
 
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -5235,7 +5458,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="File.html">File</a>></span>
+<span class="param-type">Array.&lt;<a href="FileUpload.html">FileUpload</a>></span>
 
 
 
@@ -5347,7 +5570,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1127">line 1127</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1135">line 1135</a>
     </li></ul></dd>
     
 
@@ -5695,7 +5918,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">Array.&lt;<a href="FileUpload.html">FileUpload</a>></span>
 
 
 
@@ -5807,7 +6030,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1154">line 1154</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1162">line 1162</a>
     </li></ul></dd>
     
 
@@ -5958,7 +6181,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1135">line 1135</a>
+        <a href="structures_Message.js.html">structures/Message.js</a>, <a href="structures_Message.js.html#line1143">line 1143</a>
     </li></ul></dd>
     
 
@@ -6042,7 +6265,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sat Aug 17 2024 09:21:36 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Sat Aug 17 2024 09:49:03 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
