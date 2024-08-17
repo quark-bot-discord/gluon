@@ -55,6 +55,7 @@ jobs:
             echo "Adding file to export $file"
             output="$output export \* as $(basename $file .js) from './managers/$(basename $file)';\n"
           done
+          set -f
           echo -e $output > ./src/structures.js
 
       - name: Import bot's GPG key for signing commits
