@@ -165,6 +165,51 @@ class GuildMemberManager extends BaseCacheManager {
       user: data.user,
     });
   }
+
+  /**
+   * Searches for members via a search query.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The id of the guild to search.
+   * @param {String} query The search query.
+   * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async search(client, guildId, query) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof query !== "string")
+      throw new TypeError("GLUON: Query is not a string.");
+
+    const body = {};
+
+    body.query = query;
+
+    body.limit = 1000;
+
+    const data = await client.request.makeRequest(
+      "getSearchGuildMembers",
+      [guildId],
+      body,
+    );
+    if (data.length !== 0) {
+      const members = [];
+
+      for (let i = 0; i < data.length; i++)
+        members.push(
+          new Member(client, data[i], {
+            user_id: data[i].user.id,
+            guild_id: guildId.toString(),
+            user: data[i].user,
+          }),
+        );
+
+      return members;
+    } else return null;
+  }
 }
 
 export default GuildMemberManager;

@@ -351,6 +351,48 @@ class ChannelMessageManager extends BaseCacheManager {
       );
     return messages;
   }
+
+  /**
+   * Bulk deletes channel messages.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The id of the channel to purge messages in.
+   * @param {Array<String>} messages An array of message ids to delete.
+   * @param {Object} options
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async purgeChannelMessages(
+    client,
+    channelId,
+    messages,
+    { reason } = {},
+  ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (
+      !Array.isArray(messages) ||
+      !messages.every((m) => typeof m === "string")
+    )
+      throw new TypeError(
+        "GLUON: Messages is not an array of message id strings.",
+      );
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    const body = {};
+
+    body.messages = messages;
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    await this.request.makeRequest("postBulkDeleteMessages", [channelId], body);
+  }
 }
 
 export default ChannelMessageManager;

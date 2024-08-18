@@ -1,6 +1,7 @@
 import {
   AUDIT_LOG_TYPES,
   CDN_BASE_URL,
+  NAME,
   PERMISSIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
@@ -24,6 +25,8 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
+import Client from "../Client.js";
+import Message from "./Message.js";
 
 /**
  * Represents a Discord guild.
@@ -1373,6 +1376,139 @@ class Guild {
     const shouldCacheCount = Math.floor(0.5 * Math.exp((-x + 1) / 500000) * x);
 
     return shouldCacheCount;
+  }
+
+  /**
+   * Deletes a webhook.
+   * @param {Client} client The client instance.
+   * @param {String} webhookId The id of the webhook to delete.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async deleteWebhook(client, webhookId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof webhookId !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    await client.request.makeRequest("deleteWebhook", [webhookId]);
+  }
+
+  /**
+   * Creates a webhook in the given channel with the name "Gluon".
+   * @param {Client} client The client instance.
+   * @param {String} channelId The id of the channel to create the webhook in.
+   * @param {Object} options The options for creating the webhook.
+   * @param {String} options.name The name of the webhook.
+   * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static createWebhook(client, channelId, { name = NAME } = { name: NAME }) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof name !== "string")
+      throw new TypeError("GLUON: Name must be a string.");
+
+    const body = {};
+
+    body.name = name;
+
+    return client.request.makeRequest("postCreateWebhook", [channelId], body);
+  }
+
+  /**
+   * Modified a webhook with the given webhook id.
+   * @param {Client} client The client instance.
+   * @param {String} webhookId The id of the webhook to modify.
+   * @param {Object} options The options to modify the webhook with.
+   * @param {String} options.channelId The id of the channel the webhook belongs to.
+   * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static modifyWebhook(client, webhookId, { channelId } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof webhookId !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+
+    const body = {};
+
+    body.channel_id = channelId;
+
+    return client.request.makeRequest("patchModifyWebhook", [webhookId], body);
+  }
+
+  /**
+   * Fetches a webhook by the webhook's id.
+   * @param {Client} client The client instance.
+   * @param {String} webhookId The id of the webhook to fetch.
+   * @returns {Promise<Object>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static fetchWebhook(client, webhookId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof webhookId !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    return client.request.makeRequest("getWebhook", [webhookId]);
+  }
+
+  /**
+   * Posts a webhook with the provided webhook id and token.
+   * @param {Client} client The client instance.
+   * @param {Object} referenceData An object with the webhook id and token.
+   * @param {String?} content The message to send with the webhook.
+   * @param {Object?} options Embeds, components and files to attach to the webhook.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async postWebhook(
+    client,
+    { id, token },
+    content,
+    { embeds, components, files } = {},
+  ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (typeof token !== "string")
+      throw new TypeError("GLUON: Webhook token is not a string.");
+
+    Message.sendValidation(content, { embeds, components, files });
+
+    const body = {};
+
+    if (content) body.content = content;
+
+    if (embeds) body.embeds = embeds;
+    if (components) body.components;
+    if (files) body.files = files;
+
+    await client.request.makeRequest("postExecuteWebhook", [id, token], body);
   }
 
   /**
