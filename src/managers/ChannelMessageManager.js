@@ -208,14 +208,26 @@ class ChannelMessageManager extends BaseCacheManager {
 
     if (
       !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        (
+          await ChannelMessageManager.getCacheManager(
+            client,
+            guildId,
+            channelId,
+          ).guild.me()
+        ).permissions,
         PERMISSIONS.VIEW_CHANNEL,
       )
     )
       throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
     if (
       !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        (
+          await ChannelMessageManager.getCacheManager(
+            client,
+            guildId,
+            channelId,
+          ).guild.me()
+        ).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
     )

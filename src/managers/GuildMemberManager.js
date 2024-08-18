@@ -32,6 +32,16 @@ class GuildMemberManager extends BaseCacheManager {
   }
 
   /**
+   * The guild that this member manager belongs to.
+   * @type {Guild}
+   * @readonly
+   * @public
+   */
+  get guild() {
+    return this.#guild;
+  }
+
+  /**
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.
    * @returns {Promise<Member>} The fetched member.
@@ -40,23 +50,12 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(user_id) {
-    if (typeof user_id !== "string")
-      throw new TypeError("GLUON: User ID must be a string.");
-
-    const cached = await this.get(user_id);
-    if (cached) return cached;
-
-    const data = await this.#_client.request.makeRequest("getGuildMember", [
+  fetch(user_id) {
+    return GuildMemberManager.fetchMember(
+      this.#_client,
       this.#guild.id,
       user_id,
-    ]);
-
-    return new Member(this.#_client, data, {
-      user_id,
-      guild_id: this.#guild.id,
-      user: data.user,
-    });
+    );
   }
 
   /**
@@ -127,6 +126,44 @@ class GuildMemberManager extends BaseCacheManager {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     return client.guilds.get(guildId).members;
+  }
+
+  /**
+   * Fetches a member, checking the cache first.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The id of the guild the member belongs to.
+   * @param {String} userId The id of the member to fetch.
+   * @returns {Promise<Member>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async fetchMember(client, guildId, userId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+
+    const cached = GuildMemberManager.getCacheManager(
+      client,
+      guildId,
+    ).guild.members.get(userId);
+    if (cached) return cached;
+
+    const data = await client.request.makeRequest("getGuildMember", [
+      guildId,
+      userId,
+    ]);
+
+    return new Member(client, data, {
+      userId,
+      guildId,
+      user: data.user,
+    });
   }
 }
 

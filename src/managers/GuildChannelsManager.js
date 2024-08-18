@@ -102,6 +102,51 @@ class GuildChannelsManager extends BaseCacheManager {
       throw new TypeError("GLUON: Channel ID must be a string.");
     return GuildManager.getGuild(client, guildId).channels.get(channelId);
   }
+
+  /**
+   * Returns the cache manager for a guild.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild the cache manager belongs to.
+   * @returns {GuildChannelsManager}
+   * @throws {TypeError}
+   * @public
+   * @static
+   * @method
+   */
+  static getCacheManager(client, guildId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    return GuildManager.getGuild(client, guildId).channels;
+  }
+
+  /**
+   * Fetches a channel, checking the cache first.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The id of the guild the channel belongs to.
+   * @param {String} channelId The id of the channel to fetch.
+   * @returns {Promise<TextChannel | VoiceChannel>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async fetchChannel(client, guildId, channelId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+
+    const cached = GuildChannelsManager.getChannel(channelId);
+    if (cached) return cached;
+
+    const data = await client.request.makeRequest("getChannel", [channelId]);
+
+    return cacheChannel(client, data, guildId);
+  }
 }
 
 export default GuildChannelsManager;

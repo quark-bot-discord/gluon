@@ -803,6 +803,19 @@ class Message {
   }
 
   /**
+   * Deletes the message.
+   * @param {Object?} options The options for deleting the message.
+   * @param {String?} options.reason The reason for deleting the message
+   * @returns {Promise<void>}
+   * @method
+   * @public
+   * @async
+   */
+  delete({ reason } = {}) {
+    return Message.delete(this.#_client, this.channelId, this.id, { reason });
+  }
+
+  /**
    * Determines whether the message should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
    * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
@@ -1124,6 +1137,40 @@ class Message {
       throw new TypeError("GLUON: Reference channel id must be a string.");
     if (reference && typeof reference.guild_id !== "string")
       throw new TypeError("GLUON: Reference guild id must be a string.");
+  }
+
+  /**
+   * Deletes one message.
+   * @param {Client} client The client instance.
+   * @param {String} channelId The id of the channel that the message belongs to.
+   * @param {String} messageId The id of the message to delete.
+   * @param {Object?} options
+   * @param {String?} options.reason The reason for deleting the message.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async delete(client, channelId, messageId, { reason } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID is not a string.");
+    if (typeof messageId !== "string")
+      throw new TypeError("GLUON: Message ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    const body = {};
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    await client.request.makeRequest(
+      "deleteChannelMessage",
+      [channelId, messageId],
+      body,
+    );
   }
 
   /**
