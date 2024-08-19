@@ -54,7 +54,7 @@ class GuildRoleManager extends BaseCacheManager {
     let matchedRole;
     for (let i = 0; i < data.length; i++) {
       const role = new Role(this.#_client, data[i], {
-        guild_id: this.#guild.id,
+        guildId: this.#guild.id,
       });
       if (role.id == role_id) matchedRole = role;
     }
@@ -136,8 +136,6 @@ class GuildRoleManager extends BaseCacheManager {
     if (typeof roleId !== "undefined" && typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID is not a string.");
 
-    const guild = client.guilds.get(guildId);
-
     if (roleId) {
       const cachedRole = GuildRoleManager.getRole(client, guildId, roleId);
       if (cachedRole) return cachedRole;
@@ -151,12 +149,11 @@ class GuildRoleManager extends BaseCacheManager {
 
     const data = await client.request.makeRequest("getRoles", [guildId]);
 
-    if (!roleId)
-      return data.map((role) => new Role(client, role, { guild_id: guildId }));
+    if (!roleId) return data.map((role) => new Role(client, role, { guildId }));
 
     let matchedRole;
     for (let i = 0; i < data.length; i++) {
-      const role = new Role(client, data[i], { guild_id: guildId });
+      const role = new Role(client, data[i], { guildId });
       if (role.id === roleId) matchedRole = role;
     }
 

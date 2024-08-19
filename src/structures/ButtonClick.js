@@ -17,7 +17,7 @@ class ButtonClick extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client, data, { guild_id, channel_id } = {}) {
+  constructor(client, data, { guildId, channelId } = {}) {
     super(client, data);
 
     this.#_client = client;
@@ -35,8 +35,8 @@ class ButtonClick extends Interaction {
      * @private
      */
     this.#message = new Message(this.#_client, data.message, {
-      channel_id: channel_id,
-      guild_id: guild_id,
+      channelId,
+      guildId,
     });
   }
 

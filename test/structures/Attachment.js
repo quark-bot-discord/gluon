@@ -15,7 +15,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment).to.have.property("id");
       expect(attachment).to.have.property("name");
@@ -31,7 +31,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.id).to.equal(TEST_DATA.ATTACHMENT.id);
     });
@@ -42,7 +42,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.name).to.equal(TEST_DATA.ATTACHMENT.filename);
     });
@@ -53,7 +53,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.size).to.equal(TEST_DATA.ATTACHMENT.size);
     });
@@ -64,7 +64,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(`${attachment.url}&`).to.equal(TEST_DATA.ATTACHMENT.url);
     });
@@ -75,7 +75,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.toJSON()).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
@@ -88,7 +88,7 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(attachment.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
@@ -119,10 +119,10 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       const rebundled = new Attachment(client, attachment.toJSON(), {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(rebundled.id).to.equal(attachment.id);
       expect(rebundled.name).to.equal(attachment.name);
@@ -134,13 +134,13 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       const rebundled = new Attachment(
         client,
         attachment.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          channel_id: TEST_DATA.CHANNEL_ID,
+          channelId: TEST_DATA.CHANNEL_ID,
         },
       );
       expect(rebundled.id).to.equal(attachment.id);
@@ -153,13 +153,13 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       const rebundled = new Attachment(
         client,
         attachment.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          channel_id: TEST_DATA.CHANNEL_ID,
+          channelId: TEST_DATA.CHANNEL_ID,
         },
       );
       expect(rebundled.id).to.equal(attachment.id);
@@ -170,13 +170,13 @@ describe("Attachment", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       const rebundled = new Attachment(
         client,
         attachment.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          channel_id: TEST_DATA.CHANNEL_ID,
+          channelId: TEST_DATA.CHANNEL_ID,
         },
       );
       expect(rebundled.id).to.equal(attachment.id);

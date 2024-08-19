@@ -23,11 +23,7 @@ class VoiceState {
    * @param {String} guild_id The id of the guild that the voice state belongs to.
    * @param {Boolean?} nocache Whether this voice state should be cached.
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
@@ -40,7 +36,7 @@ class VoiceState {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     if (this.guild)
       nocache =
@@ -84,8 +80,8 @@ class VoiceState {
        * @private
        */
       this.#member = new Member(this.#_client, data.member, {
-        user_id: data.user_id,
-        guild_id: data.guild_id,
+        userId: data.user_id,
+        guildId: data.guild_id,
         user: data.member.user,
         nocache,
       });

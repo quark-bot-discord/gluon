@@ -5,6 +5,8 @@ import {
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
+  TEST_MEMBERS,
+  TEST_ROLES,
 } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { TextChannel, Member, Role } from "../../src/structures.js";
@@ -20,9 +22,7 @@ describe("TextChannel", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel).to.have.property("id");
       expect(textChannel).to.have.property("name");
       expect(textChannel).to.have.property("type");
@@ -47,21 +47,14 @@ describe("TextChannel", function () {
     it("should be a function", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.bulkDelete).to.be.a("function");
     });
     it("should return an error if the bot has insufficient permissions", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       await expect(textChannel.bulkDelete()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: MANAGE_MESSAGES",
@@ -70,15 +63,10 @@ describe("TextChannel", function () {
     it("should return an error if messages is not an array of strings", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       await expect(textChannel.bulkDelete(["1", 2])).to.be.rejectedWith(
         TypeError,
         "GLUON: Messages is not an array of strings.",
@@ -87,15 +75,10 @@ describe("TextChannel", function () {
     it("should return an error if reason is provided and not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       await expect(
         textChannel.bulkDelete(["1"], { reason: 1 }),
       ).to.be.rejectedWith(TypeError, "GLUON: Reason is not a string.");
@@ -103,15 +86,10 @@ describe("TextChannel", function () {
     it("should call makeRequest with the correct parameters", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const request = spy(client.request, "makeRequest");
       await textChannel.bulkDelete(["1", "2"]);
       expect(request).to.be.calledOnce;
@@ -126,17 +104,13 @@ describe("TextChannel", function () {
     it("should return a string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.toString()).to.equal(
         `<TextChannel: ${TEST_DATA.TEXT_CHANNEL.id}>`,
       );
@@ -147,17 +121,13 @@ describe("TextChannel", function () {
     it("should return a JSON object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.toJSON()).to.be.a("object");
     });
     it("should return the correct JSON object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.toJSON()).to.deep.equal({
         id: TEST_DATA.TEXT_CHANNEL.id,
         messages: [],
@@ -173,9 +143,7 @@ describe("TextChannel", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(textChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal(
         {
           _attributes: 0,
@@ -224,21 +192,16 @@ describe("TextChannel", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
 
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
 
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
 
       const rebundled = new TextChannel(client, textChannel.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       expect(rebundled.id).to.equal(textChannel.id);
@@ -258,24 +221,19 @@ describe("TextChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
 
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
 
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
 
       const rebundled = new TextChannel(
         client,
         textChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 
@@ -296,24 +254,19 @@ describe("TextChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
 
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
 
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
 
       const rebundled = new TextChannel(
         client,
         textChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 
@@ -334,24 +287,19 @@ describe("TextChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
 
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
 
-      const textChannel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
 
       const rebundled = new TextChannel(
         client,
         textChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 

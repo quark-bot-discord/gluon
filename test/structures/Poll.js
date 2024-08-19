@@ -15,7 +15,7 @@ describe("Poll", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll).to.have.property("guildId");
       expect(poll).to.have.property("guild");
@@ -35,7 +35,7 @@ describe("Poll", function () {
     it("should have the correct question", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.question).to.equal(TEST_DATA.POLL.question);
     });
@@ -45,7 +45,7 @@ describe("Poll", function () {
     it("should have the correct guildId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.guildId).to.equal(TEST_DATA.GUILD_ID);
     });
@@ -56,7 +56,7 @@ describe("Poll", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.guild.id).to.equal(TEST_DATA.GUILD_ID);
       expect(poll.guild).to.be.an.instanceOf(Guild);
@@ -67,7 +67,7 @@ describe("Poll", function () {
     it("should have the correct answers", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.answers).to.deep.equal([
         {
@@ -82,7 +82,7 @@ describe("Poll", function () {
     it("should have the correct expiry", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.expiry).to.equal(
         (new Date(TEST_DATA.POLL.expiry).getTime() / 1000) | 0,
@@ -94,7 +94,7 @@ describe("Poll", function () {
     it("should have the correct allowMultiselect", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.allowMultiselect).to.equal(TEST_DATA.POLL.allow_multiselect);
     });
@@ -104,7 +104,7 @@ describe("Poll", function () {
     it("should have the correct layoutType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.layoutType).to.equal("DEFAULT");
     });
@@ -114,7 +114,7 @@ describe("Poll", function () {
     it("should have the correct rawLayoutType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.rawLayoutType).to.equal(TEST_DATA.POLL.layout_type);
     });
@@ -124,7 +124,7 @@ describe("Poll", function () {
     it("should have the correct results", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll._results).to.be.an.instanceOf(MessagePollManager);
     });
@@ -134,7 +134,7 @@ describe("Poll", function () {
     it("should return a string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(poll.toString()).to.be.a("string");
     });
@@ -144,7 +144,7 @@ describe("Poll", function () {
     it("should return the correct JSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
@@ -183,7 +183,7 @@ describe("Poll", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
@@ -266,14 +266,14 @@ describe("Poll", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
         TEST_DATA.POLL.answers[0].answer_id,
       );
       const rebundled = new Poll(client, poll.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
       expect(rebundled.layoutType).to.equal(poll.layoutType);
@@ -287,7 +287,7 @@ describe("Poll", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
@@ -297,7 +297,7 @@ describe("Poll", function () {
         client,
         poll.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
@@ -313,7 +313,7 @@ describe("Poll", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
@@ -323,7 +323,7 @@ describe("Poll", function () {
         client,
         poll.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
@@ -339,7 +339,7 @@ describe("Poll", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const poll = new Poll(client, TEST_DATA.POLL, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       poll._results._addVote(
         TEST_DATA.CLIENT_USER.id,
@@ -349,7 +349,7 @@ describe("Poll", function () {
         client,
         poll.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);

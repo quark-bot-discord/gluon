@@ -145,7 +145,7 @@ class EventHandler {
     );
 
     const role = new Role(this.#_client, data.role, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.GUILD_ROLE_CREATE, role);
@@ -161,7 +161,7 @@ class EventHandler {
       .get(data.guild_id)
       ?.roles.get(data.role.id);
     const newRole = new Role(this.#_client, data.role, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
@@ -235,7 +235,7 @@ class EventHandler {
       `THREAD_CREATE ${data.guild_id}`,
     );
 
-    const thread = new Thread(this.#_client, data, { guild_id: data.guild_id });
+    const thread = new Thread(this.#_client, data, { guildId: data.guild_id });
 
     this.#_client.emit(EVENTS.THREAD_CREATE, thread);
   }
@@ -250,7 +250,7 @@ class EventHandler {
       .get(data.guild_id)
       ?.channels.get(data.id);
     const newThread = new Thread(this.#_client, data, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
@@ -279,7 +279,7 @@ class EventHandler {
     const threads = [];
     for (let i = 0; i < data.threads.length; i++)
       threads.push(
-        new Thread(this.#_client, data.threads[i], { guild_id: data.guild_id }),
+        new Thread(this.#_client, data.threads[i], { guildId: data.guild_id }),
       );
 
     this.#_client.emit(EVENTS.THREAD_LIST_SYNC, threads);
@@ -292,8 +292,8 @@ class EventHandler {
     );
 
     const member = new Member(this.#_client, data, {
-      user_id: data.user.id,
-      guild_id: data.guild_id,
+      userId: data.user.id,
+      guildId: data.guild_id,
       user: data.user,
     });
 
@@ -338,8 +338,8 @@ class EventHandler {
       .get(data.user.id, { useRules: true })
       .then((oldMember) => {
         const newMember = new Member(this.#_client, data, {
-          user_id: data.user.id,
-          guild_id: data.guild_id,
+          userId: data.user.id,
+          guildId: data.guild_id,
           user: data.user,
         });
 
@@ -355,8 +355,8 @@ class EventHandler {
 
     for (let i = 0; i < data.members.length; i++)
       new Member(this.#_client, data.members[i], {
-        user_id: data.members[i].user.id,
-        guild_id: data.guild_id,
+        userId: data.members[i].user.id,
+        guildId: data.guild_id,
         user: data.members[i].user,
       });
   }
@@ -393,7 +393,7 @@ class EventHandler {
       `INVITE_CREATE ${data.guild_id}`,
     );
 
-    const invite = new Invite(this.#_client, data, { guild_id: data.guild_id });
+    const invite = new Invite(this.#_client, data, { guildId: data.guild_id });
 
     this.#_client.emit(EVENTS.INVITE_CREATE, invite);
   }
@@ -425,7 +425,7 @@ class EventHandler {
     let newVoiceState;
     if (data.channel_id)
       newVoiceState = new VoiceState(this.#_client, data, {
-        guild_id: data.guild_id,
+        guildId: data.guild_id,
       });
     else {
       newVoiceState = null;
@@ -453,8 +453,8 @@ class EventHandler {
     );
 
     const message = new Message(this.#_client, data, {
-      channel_id: data.channel_id,
-      guild_id: data.guild_id,
+      channelId: data.channel_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.MESSAGE_CREATE, message);
@@ -474,8 +474,8 @@ class EventHandler {
       .get(data.id, { useRules: true })
       .then((oldMessage) => {
         const newMessage = new Message(this.#_client, data, {
-          channel_id: data.channel_id,
-          guild_id: data.guild_id,
+          channelId: data.channel_id,
+          guildId: data.guild_id,
         });
 
         this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
@@ -536,8 +536,8 @@ class EventHandler {
         switch (data.data.component_type) {
           case COMPONENT_TYPES.BUTTON: {
             const componentInteraction = new ButtonClick(this.#_client, data, {
-              guild_id: data.guild_id,
-              channel_id: data.channel_id,
+              guildId: data.guild_id,
+              channelId: data.channel_id,
             });
 
             this.#_client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
@@ -551,8 +551,8 @@ class EventHandler {
           case COMPONENT_TYPES.MENTIONABLE_SELECT_MENU:
           case COMPONENT_TYPES.CHANNEL_SELECT_MENU: {
             const componentInteraction = new OptionSelect(this.#_client, data, {
-              guild_id: data.guild_id,
-              channel_id: data.channel_id,
+              guildId: data.guild_id,
+              channelId: data.channel_id,
             });
 
             this.#_client.emit(EVENTS.MENU_SELECT, componentInteraction);
@@ -606,7 +606,7 @@ class EventHandler {
     );
 
     const auditLogEntry = new AuditLog(this.#_client, data, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
@@ -646,7 +646,7 @@ class EventHandler {
     );
 
     const scheduledEvent = new ScheduledEvent(this.#_client, data, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
@@ -662,7 +662,7 @@ class EventHandler {
       this.#_client.guilds.get(data.guild_id)?.scheduled_events.get(data.id) ||
       null;
     const newScheduledEvent = new ScheduledEvent(this.#_client, data, {
-      guild_id: data.guild_id,
+      guildId: data.guild_id,
     });
 
     this.#_client.emit(
@@ -799,7 +799,7 @@ class EventHandler {
       }
 
       const addedEmoji = new Emoji(this.#_client, addedEmojiRaw, {
-        guild_id: data.guild_id,
+        guildId: data.guild_id,
       });
 
       this.#_client.emit(EVENTS.GUILD_EMOJI_CREATE, addedEmoji);
@@ -842,7 +842,7 @@ class EventHandler {
         const correspondingNewEmoji = new Emoji(
           this.#_client,
           correspondingNewEmojiRaw,
-          { guild_id: data.guild_id },
+          { guildId: data.guild_id },
         );
 
         const differences = deepCompare(
@@ -933,7 +933,7 @@ class EventHandler {
         const finalData = data;
 
         finalData.emoji = new Emoji(this.#_client, data.emoji, {
-          guild_id: data.guild_id,
+          guildId: data.guild_id,
         });
 
         this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
@@ -962,7 +962,7 @@ class EventHandler {
         const finalData = data;
 
         finalData.emoji = new Emoji(this.#_client, data.emoji, {
-          guild_id: data.guild_id,
+          guildId: data.guild_id,
         });
 
         this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);

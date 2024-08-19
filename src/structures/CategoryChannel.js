@@ -13,11 +13,7 @@ class CategoryChannel {
   #_attributes;
   #permission_overwrites;
   #_cacheOptions;
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
@@ -37,7 +33,7 @@ class CategoryChannel {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The type of channel.

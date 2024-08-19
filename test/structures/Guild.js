@@ -5,6 +5,8 @@ import {
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
+  TEST_MEMBERS,
+  TEST_ROLES,
 } from "../../src/testData.js";
 import {
   Member,
@@ -109,10 +111,7 @@ describe("Guild", function () {
     it("should have the correct owner", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       expect(guild.owner.id).to.equal(TEST_DATA.GUILD.owner_id);
     });
   });
@@ -481,10 +480,7 @@ describe("Guild", function () {
     it("should return a promise", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       expect(guild.me()).to.be.a("promise");
     });
   });
@@ -502,10 +498,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: BAN_MEMBERS",
@@ -514,12 +507,9 @@ describe("Guild", function () {
     it("should throw an error if no user id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban()).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -528,12 +518,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.ban(TEST_DATA.MEMBER_ID, { reason: 123 }),
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
@@ -541,12 +528,9 @@ describe("Guild", function () {
     it("should throw an error if seconds is provided but it is not a number", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.ban(TEST_DATA.MEMBER_ID, { seconds: "123" }),
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: seconds");
@@ -554,12 +538,9 @@ describe("Guild", function () {
     it("should throw an error if seconds is provided but it is less than 0", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.ban(TEST_DATA.MEMBER_ID, { seconds: -1 }),
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: seconds");
@@ -567,12 +548,9 @@ describe("Guild", function () {
     it("should throw an error if seconds is provided but it is too large", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.ban(TEST_DATA.MEMBER_ID, { seconds: 8 * 24 * 60 * 60 }),
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: seconds");
@@ -580,12 +558,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is too long", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.ban(TEST_DATA.MEMBER_ID, { reason: "a".repeat(513) }),
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
@@ -593,35 +568,26 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban(TEST_DATA.MEMBER_ID, { reason: "test" })).to.not.be
         .rejected;
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban(TEST_DATA.MEMBER_ID, { seconds: 1 })).to.not.be
         .rejected;
     });
@@ -629,12 +595,9 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.ban(TEST_DATA.MEMBER_ID);
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("putCreateGuildBan", [
@@ -660,10 +623,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.unban()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: BAN_MEMBERS",
@@ -672,12 +632,9 @@ describe("Guild", function () {
     it("should throw an error if no user id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.unban()).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -686,12 +643,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.unban(TEST_DATA.MEMBER_ID, { reason: 123 }),
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
@@ -699,12 +653,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is too long", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.unban(TEST_DATA.MEMBER_ID, { reason: "a".repeat(513) }),
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
@@ -712,23 +663,17 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.unban(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.unban(TEST_DATA.MEMBER_ID, { reason: "test" })).to.not
         .be.rejected;
     });
@@ -736,12 +681,9 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.unban(TEST_DATA.MEMBER_ID);
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("deleteRemoveGuildBan", [
@@ -767,10 +709,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.kick()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: KICK_MEMBERS",
@@ -779,12 +718,9 @@ describe("Guild", function () {
     it("should throw an error if no user id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.kick()).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -793,12 +729,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.kick(TEST_DATA.MEMBER_ID, { reason: 123 }),
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: reason");
@@ -806,12 +739,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is too long", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.kick(TEST_DATA.MEMBER_ID, { reason: "a".repeat(513) }),
       ).to.be.rejectedWith(RangeError, "GLUON: VALUE_OUT_OF_RANGE: reason");
@@ -819,23 +749,17 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.kick(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.kick(TEST_DATA.MEMBER_ID, { reason: "test" })).to.not
         .be.rejected;
     });
@@ -843,12 +767,9 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.kick(TEST_DATA.MEMBER_ID);
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("deleteGuildMember", [
@@ -874,10 +795,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.removeMemberRole()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: MANAGE_ROLES",
@@ -886,12 +804,9 @@ describe("Guild", function () {
     it("should throw an error if no user id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.removeMemberRole()).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -900,12 +815,9 @@ describe("Guild", function () {
     it("should throw an error if no role id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.removeMemberRole(TEST_DATA.MEMBER_ID),
       ).to.be.rejectedWith(TypeError, "GLUON: INVALID_TYPE: role_id");
@@ -913,12 +825,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.removeMemberRole(TEST_DATA.MEMBER_ID, TEST_DATA.ROLE_ADMIN.id, {
           reason: 123,
@@ -928,12 +837,9 @@ describe("Guild", function () {
     it("should throw an error if a reason is provided but it is too long", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.removeMemberRole(TEST_DATA.MEMBER_ID, TEST_DATA.ROLE_ADMIN.id, {
           reason: "a".repeat(513),
@@ -943,12 +849,9 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.removeMemberRole(TEST_DATA.MEMBER_ID, TEST_DATA.ROLE_ADMIN.id),
       ).to.not.be.rejected;
@@ -956,12 +859,9 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.removeMemberRole(TEST_DATA.MEMBER_ID, TEST_DATA.ROLE_ADMIN.id, {
           reason: "test",
@@ -972,12 +872,9 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.removeMemberRole(
         TEST_DATA.MEMBER_ID,
         TEST_DATA.ROLE_ADMIN.id,
@@ -1007,10 +904,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: VIEW_AUDIT_LOG",
@@ -1019,12 +913,9 @@ describe("Guild", function () {
     it("should throw an error if limit is provided but it is not a number", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ limit: "123" })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: limit",
@@ -1033,12 +924,9 @@ describe("Guild", function () {
     it("should throw an error if limit is provided but it is less than 1", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ limit: 0 })).to.be.rejectedWith(
         RangeError,
         "GLUON: VALUE_OUT_OF_RANGE: limit",
@@ -1047,12 +935,9 @@ describe("Guild", function () {
     it("should throw an error if limit is provided but it is greater than 100", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ limit: 101 })).to.be.rejectedWith(
         RangeError,
         "GLUON: VALUE_OUT_OF_RANGE: limit",
@@ -1061,12 +946,9 @@ describe("Guild", function () {
     it("should throw an error if type is provided but it is not a number", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ type: "123" })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: type",
@@ -1075,12 +957,9 @@ describe("Guild", function () {
     it("should throw an error if user id is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ user_id: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -1089,12 +968,9 @@ describe("Guild", function () {
     it("should throw an error if before is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ user_id: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -1103,12 +979,9 @@ describe("Guild", function () {
     it("should throw an error if after is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs({ user_id: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -1117,23 +990,17 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs()).to.not.be.rejected;
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(
         guild.fetchAuditLogs({
           limit: 1,
@@ -1148,12 +1015,9 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.fetchAuditLogs();
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("getGuildAuditLog", [
@@ -1178,10 +1042,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchInvites()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: MANAGE_GUILD",
@@ -1190,24 +1051,18 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchInvites()).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.fetchInvites();
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("getGuildInvites", [
@@ -1229,10 +1084,7 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchChannels()).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
@@ -1260,10 +1112,7 @@ describe("Guild", function () {
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchBan()).to.be.rejectedWith(
         Error,
         "MISSING PERMISSIONS: BAN_MEMBERS",
@@ -1272,12 +1121,9 @@ describe("Guild", function () {
     it("should throw an error if no user id is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchBan()).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: user_id",
@@ -1286,24 +1132,18 @@ describe("Guild", function () {
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchBan(TEST_DATA.MEMBER_ID)).to.not.be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       await guild.fetchBan(TEST_DATA.MEMBER_ID);
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("getGuildBan", [
@@ -1377,10 +1217,7 @@ describe("Guild", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(client, guild.toJSON());
       expect(rebundled.id).to.deep.equal(guild.id);
       expect(rebundled.name).to.deep.equal(guild.name);
@@ -1416,10 +1253,7 @@ describe("Guild", function () {
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(
         client,
         guild.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
@@ -1458,10 +1292,7 @@ describe("Guild", function () {
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(
         client,
         guild.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
@@ -1500,10 +1331,7 @@ describe("Guild", function () {
     it("should rebundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.GUILD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(
         client,
         guild.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),

@@ -25,11 +25,7 @@ class Role {
    * @param {Boolean?} nocache Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
@@ -42,7 +38,7 @@ class Role {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The id of the role.

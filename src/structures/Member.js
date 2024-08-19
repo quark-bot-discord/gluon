@@ -45,7 +45,7 @@ class Member {
   constructor(
     client,
     data,
-    { user_id, guild_id, user, nocache = false } = {
+    { userId, guildId, user, nocache = false } = {
       nocache: false,
     },
   ) {
@@ -61,16 +61,16 @@ class Member {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
-    const existing = this.guild?.members.get(user_id) || null;
+    const existing = this.guild?.members.get(userId) || null;
 
     /**
      * The id of the member.
      * @type {BigInt}
      * @private
      */
-    this.#_id = BigInt(user_id);
+    this.#_id = BigInt(userId);
 
     if (data.user)
       /**
@@ -81,7 +81,7 @@ class Member {
       this.#user = new User(this.#_client, data.user, { nocache });
     else if (existing?.user) this.#user = existing.user;
     else if (user) this.#user = user;
-    else this.#user = this.#_client.users.get(user_id) || null;
+    else this.#user = this.#_client.users.get(userId) || null;
 
     if (data.nick !== undefined)
       /**
@@ -162,7 +162,7 @@ class Member {
     ) {
       this.#_roles = [];
       for (let i = 0; i < data.roles.length; i++)
-        if (data.roles[i] != guild_id) this.#_roles.push(BigInt(data.roles[i]));
+        if (data.roles[i] != guildId) this.#_roles.push(BigInt(data.roles[i]));
     }
 
     if (
@@ -173,7 +173,7 @@ class Member {
           this.guild._cacheOptions,
         ))
     ) {
-      this.guild.members.set(user_id, this);
+      this.guild.members.set(userId, this);
     }
   }
 
@@ -435,15 +435,15 @@ class Member {
    * @static
    * @method
    */
-  static getAvatarUrl(id, guild_id, hash) {
+  static getAvatarUrl(id, guildId, hash) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Member id must be a string.");
-    if (typeof guild_id !== "string")
+    if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild id must be a string.");
     if (hash && typeof hash !== "string")
       throw new TypeError("GLUON: Member avatar hash must be a string.");
     return hash
-      ? `${CDN_BASE_URL}/guilds/${guild_id}/users/${id}/avatars/${hash}.${
+      ? `${CDN_BASE_URL}/guilds/${guildId}/users/${id}/avatars/${hash}.${
           hash.startsWith("a_") ? "gif" : "png"
         }`
       : null;
@@ -653,8 +653,8 @@ class Member {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
     return new Member(client, decryptStructure(data, userId, guildId), {
-      user_id: userId,
-      guild_id: guildId,
+      userId: userId,
+      guildId: guildId,
     });
   }
 

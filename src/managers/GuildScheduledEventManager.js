@@ -41,7 +41,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
     for (let i = 0; i < data.length; i++)
       eventsList.push(
         new ScheduledEvent(this.#_client, data[i], {
-          guild_id: this.#guild.id,
+          guildId: this.#guild.id,
         }),
       );
 
@@ -70,7 +70,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
     );
 
     return new ScheduledEvent(this.#_client, data, {
-      guild_id: this.#guild.id,
+      guildId: this.#guild.id,
     });
   }
 

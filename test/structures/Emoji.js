@@ -16,7 +16,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji).to.have.property("id");
       expect(emoji).to.have.property("requireColons");
@@ -38,7 +38,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.id).to.equal(TEST_DATA.EMOJI.id);
     });
@@ -46,7 +46,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.id).to.equal(null);
     });
@@ -57,7 +57,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.name).to.equal("bitcoin");
     });
@@ -65,7 +65,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.name).to.equal(TEST_DATA.STANDARD_EMOJI.name);
     });
@@ -76,7 +76,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.animated).to.equal(true);
     });
@@ -84,7 +84,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.animated).to.equal(false);
     });
@@ -133,7 +133,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toString()).to.be.a("string");
     });
@@ -141,7 +141,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toString()).to.equal("<Emoji: 844240546246950922>");
     });
@@ -149,7 +149,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toString()).to.equal(
         `<Emoji: ${TEST_DATA.STANDARD_EMOJI.name}>`,
@@ -162,7 +162,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.be.an("object");
     });
@@ -170,7 +170,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.deep.equal({
         animated: true,
@@ -185,7 +185,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 13,
@@ -210,7 +210,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON()).to.deep.equal({
         name: TEST_DATA.STANDARD_EMOJI.name,
@@ -225,7 +225,7 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 9,
@@ -252,10 +252,10 @@ describe("Emoji", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new Emoji(client, emoji.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.animated).to.equal(emoji.animated);
       expect(rebundled.available).to.equal(emoji.available);
@@ -275,12 +275,12 @@ describe("Emoji", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Emoji(
       client,
       emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      { guild_id: TEST_DATA.GUILD_ID },
+      { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.animated).to.equal(emoji.animated);
     expect(rebundled.available).to.equal(emoji.available);
@@ -299,12 +299,12 @@ describe("Emoji", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Emoji(
       client,
       emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      { guild_id: TEST_DATA.GUILD_ID },
+      { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.animated).to.equal(emoji.animated);
     expect(rebundled.available).to.equal(emoji.available);
@@ -323,12 +323,12 @@ describe("Emoji", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Emoji(
       client,
       emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      { guild_id: TEST_DATA.GUILD_ID },
+      { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.animated).to.equal(emoji.animated);
     expect(rebundled.available).to.equal(emoji.available);

@@ -62,7 +62,7 @@ class Message {
   constructor(
     client,
     data,
-    { channel_id, guild_id, nocache = false, ignoreExisting = false } = {
+    { channelId, guildId, nocache = false, ignoreExisting = false } = {
       nocache: false,
       ignoreExisting: false,
     },
@@ -79,14 +79,14 @@ class Message {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
      * @private
      */
-    this.#_channel_id = BigInt(channel_id);
+    this.#_channel_id = BigInt(channelId);
 
     const existing =
       ignoreExisting != true
@@ -132,8 +132,8 @@ class Message {
        * @private
        */
       this.#member = new Member(this.#_client, data.member, {
-        user_id: data.author.id,
-        guild_id,
+        userId: data.author.id,
+        guildId,
         user: new User(this.#_client, data.author),
       });
     else if (data.author)
@@ -151,7 +151,7 @@ class Message {
       for (let i = 0; i < data.attachments.length; i++)
         this.#attachments.push(
           new Attachment(this.#_client, data.attachments[i], {
-            channel_id: this.channelId,
+            channelId: this.channelId,
           }),
         );
     else if (existing?.attachments) this.#attachments = existing.attachments;
@@ -175,7 +175,7 @@ class Message {
        * @private
        */
       if (data.poll)
-        this.#poll = new Poll(this.#_client, data.poll, { guild_id });
+        this.#poll = new Poll(this.#_client, data.poll, { guildId });
       else if (
         this.#poll == undefined &&
         existing &&
@@ -924,8 +924,8 @@ class Message {
     );
 
     return new Message(client, data, {
-      channel_id: channelId,
-      guild_id: guildId,
+      channelId,
+      guildId,
     });
   }
 
@@ -988,8 +988,8 @@ class Message {
     );
 
     return new Message(client, data, {
-      channel_id: channelId,
-      guild_id: guildId,
+      channelId,
+      guildId,
     });
   }
 
@@ -1041,7 +1041,7 @@ class Message {
     return new Message(
       client,
       decryptStructure(data, messageId, channelId, guildId),
-      { channel_id: channelId, guild_id: guildId },
+      { channelId, guildId },
     );
   }
 

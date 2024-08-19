@@ -17,7 +17,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel).to.have.property("id");
       expect(categoryChannel).to.have.property("name");
@@ -36,7 +36,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.name).to.equal(TEST_DATA.CATEGORY_CHANNEL.name);
     });
@@ -49,7 +49,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.type).to.equal(TEST_DATA.CATEGORY_CHANNEL.type);
     });
@@ -62,7 +62,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.nsfw).to.equal(TEST_DATA.CATEGORY_CHANNEL.nsfw);
     });
@@ -75,7 +75,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.mention).to.equal(
         `<#${TEST_DATA.CATEGORY_CHANNEL.id}>`,
@@ -90,7 +90,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.permissionOverwrites[0].toJSON()).to.deep.equal({
         id: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].id,
@@ -108,7 +108,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.toString()).to.equal(
         `<CategoryChannel: ${TEST_DATA.CATEGORY_CHANNEL.id}>`,
@@ -123,7 +123,7 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(categoryChannel.toJSON()).to.deep.equal({
         id: TEST_DATA.CATEGORY_CHANNEL.id,
@@ -149,7 +149,7 @@ describe("CategoryChannel", function () {
     const categoryChannel = new CategoryChannel(
       client,
       TEST_DATA.CATEGORY_CHANNEL,
-      { guild_id: TEST_DATA.GUILD_ID },
+      { guildId: TEST_DATA.GUILD_ID },
     );
     expect(
       categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
@@ -213,10 +213,10 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       const rebundled = new CategoryChannel(client, categoryChannel.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.id).to.equal(categoryChannel.id);
       expect(rebundled.name).to.equal(categoryChannel.name);
@@ -232,13 +232,13 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       const rebundled = new CategoryChannel(
         client,
         categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(categoryChannel.id);
@@ -255,13 +255,13 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       const rebundled = new CategoryChannel(
         client,
         categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(categoryChannel.id);
@@ -278,13 +278,13 @@ describe("CategoryChannel", function () {
       const categoryChannel = new CategoryChannel(
         client,
         TEST_DATA.CATEGORY_CHANNEL,
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       const rebundled = new CategoryChannel(
         client,
         categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(categoryChannel.id);

@@ -56,7 +56,7 @@ class GuildInviteManager extends BaseCacheManager {
     this.clear();
 
     return data.map(
-      (raw) => new Invite(this.#_client, raw, { guild_id: this.#guild.id }),
+      (raw) => new Invite(this.#_client, raw, { guildId: this.#guild.id }),
     );
   }
 

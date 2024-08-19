@@ -40,7 +40,7 @@ class MessageReactionManager {
       this.#cache[messageReaction] = new Reaction(
         this.#_client,
         messageReactionValue,
-        { guild_id: this.#guild.id },
+        { guildId: this.#guild.id },
       );
   }
 
@@ -65,7 +65,7 @@ class MessageReactionManager {
 
     if (!this.#cache[emoji])
       this.#cache[emoji] = new Reaction(this.#_client, data, {
-        guild_id: this.#guild.id,
+        guildId: this.#guild.id,
       });
 
     this.#cache[emoji]._addReactor(user_id);

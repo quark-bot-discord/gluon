@@ -24,11 +24,7 @@ class Invite {
    * @param {Boolean?} nocache Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
@@ -41,7 +37,7 @@ class Invite {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The code for the invite.

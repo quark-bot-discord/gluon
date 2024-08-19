@@ -51,7 +51,7 @@ class GuildEmojisManager extends BaseCacheManager {
       emoji_id,
     ]);
 
-    return new Emoji(this.#_client, data, { guild_id: this.#guild.id });
+    return new Emoji(this.#_client, data, { guildId: this.#guild.id });
   }
 
   /**

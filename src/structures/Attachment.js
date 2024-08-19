@@ -18,7 +18,7 @@ class Attachment {
    * @param {Client} client The client instance.
    * @param {Object} data Attachment data from Discord.
    */
-  constructor(client, data, { channel_id } = {}) {
+  constructor(client, data, { channelId } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -66,7 +66,7 @@ class Attachment {
      * @type {BigInt?}
      * @private
      */
-    if (channel_id) this.#_channel_id = BigInt(channel_id);
+    if (channelId) this.#_channel_id = BigInt(channelId);
   }
 
   /**

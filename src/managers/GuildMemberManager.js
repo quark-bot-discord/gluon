@@ -88,8 +88,8 @@ class GuildMemberManager extends BaseCacheManager {
       for (let i = 0; i < data.length; i++)
         members.push(
           new Member(this.#_client, data[i], {
-            user_id: data[i].user.id,
-            guild_id: this.#guild.id,
+            userId: data[i].user.id,
+            guildId: this.#guild.id,
             user: data[i].user,
           }),
         );
@@ -179,6 +179,8 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    */
   static async search(client, guildId, query) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof query !== "string")
@@ -201,8 +203,8 @@ class GuildMemberManager extends BaseCacheManager {
       for (let i = 0; i < data.length; i++)
         members.push(
           new Member(client, data[i], {
-            user_id: data[i].user.id,
-            guild_id: guildId.toString(),
+            userId: data[i].user.id,
+            guildId,
             user: data[i].user,
           }),
         );

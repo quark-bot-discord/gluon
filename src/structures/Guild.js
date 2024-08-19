@@ -461,8 +461,8 @@ class Guild {
     )
       for (let i = 0; i < data.members.length; i++)
         new Member(this.#_client, data.members[i], {
-          user_id: data.members[i].user.id,
-          guild_id: data.id,
+          userId: data.members[i].user.id,
+          guildId: data.id,
           user: data.members[i].user,
           nocache,
         });
@@ -482,7 +482,7 @@ class Guild {
     )
       for (let i = 0; i < data.threads.length; i++)
         new Thread(this.#_client, data.threads[i], {
-          guild_id: data.id,
+          guildId: data.id,
           nocache,
         });
 
@@ -495,7 +495,7 @@ class Guild {
     )
       for (let i = 0; i < data.voice_states.length; i++)
         new VoiceState(this.#_client, data.voice_states[i], {
-          guild_id: data.id,
+          guildId: data.id,
           nocache,
         });
 
@@ -504,7 +504,7 @@ class Guild {
       Role.shouldCache(this.#_client._cacheOptions, this._cacheOptions) === true
     )
       for (let i = 0; i < data.roles.length; i++)
-        new Role(this.#_client, data.roles[i], { guild_id: data.id, nocache });
+        new Role(this.#_client, data.roles[i], { guildId: data.id, nocache });
 
     if (
       data.emojis &&
@@ -513,7 +513,7 @@ class Guild {
     )
       for (let i = 0; i < data.emojis.length; i++)
         new Emoji(this.#_client, data.emojis[i], {
-          guild_id: data.id,
+          guildId: data.id,
           nocache,
         });
 
@@ -524,7 +524,7 @@ class Guild {
     )
       for (let i = 0; i < data.invites.length; i++)
         new Invite(this.#_client, data.invites[i], {
-          guild_id: data.id,
+          guildId: data.id,
           nocache,
         });
   }
@@ -1269,7 +1269,7 @@ class Guild {
       (e) =>
         new AuditLog(this.#_client, e, {
           users: data.users,
-          guild_id: this.id,
+          guildId: this.id,
         }),
     );
   }

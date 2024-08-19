@@ -42,8 +42,8 @@ describe("EncryptStructure", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const message = new Message(client, TEST_DATA.MESSAGE, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
         nocache: true,
         ignoreExisting: true,
       });
@@ -61,8 +61,8 @@ describe("EncryptStructure", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const message = new Message(client, TEST_DATA.MESSAGE, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
         nocache: true,
         ignoreExisting: true,
       });

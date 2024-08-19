@@ -19,12 +19,8 @@ class TextChannel extends Channel {
    * @param {Boolean?} nocache Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
-    super(client, data, { guild_id });
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+    super(client, data, { guildId });
 
     /**
      * The client instance.
@@ -42,8 +38,8 @@ class TextChannel extends Channel {
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
         new Message(this.#_client, data.messages[i], {
-          channel_id: this.id,
-          guild_id,
+          channelId: this.id,
+          guildId,
         });
   }
 

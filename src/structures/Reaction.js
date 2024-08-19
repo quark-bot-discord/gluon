@@ -19,7 +19,7 @@ class Reaction {
    * @param {String} guild_id The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
-  constructor(client, data, { guild_id } = {}) {
+  constructor(client, data, { guildId } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -32,7 +32,7 @@ class Reaction {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     if (data.emoji.mention)
       /**
@@ -42,7 +42,7 @@ class Reaction {
        */
       this.#emoji = data.emoji;
     else
-      this.#emoji = new Emoji(client, data.emoji, { guild_id, nocache: true });
+      this.#emoji = new Emoji(client, data.emoji, { guildId, nocache: true });
 
     /**
      * Users who reacted with this emoji.

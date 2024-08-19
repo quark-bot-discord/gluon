@@ -111,8 +111,8 @@ class ChannelMessageManager extends BaseCacheManager {
     for (let i = 0; i < data.length; i++)
       messages.push(
         new Message(this.#_client, data[i], {
-          channel_id: data[i].channel_id,
-          guild_id: this.#channel.guild.id,
+          channelId: data[i].channel_id,
+          guildId: this.#channel.guild.id,
         }),
       );
     return messages;
@@ -248,7 +248,7 @@ class ChannelMessageManager extends BaseCacheManager {
 
     return new Message(client, data, {
       channelId,
-      guild_id: guildId,
+      guildId,
     });
   }
 
@@ -345,8 +345,8 @@ class ChannelMessageManager extends BaseCacheManager {
     for (let i = 0; i < data.length; i++)
       messages.push(
         new Message(client, data[i], {
-          channel_id: data[i].channel_id,
-          guild_id: guildId,
+          channelId: data[i].channel_id,
+          guildId,
         }),
       );
     return messages;

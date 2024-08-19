@@ -4,6 +4,7 @@ import {
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
+  TEST_MEMBERS,
 } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { VoiceState, VoiceChannel, Member } from "../../src/structures.js";
@@ -20,7 +21,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState).to.have.property("deaf");
       expect(voiceState).to.have.property("mute");
@@ -47,7 +48,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.deaf).to.equal(TEST_DATA.VOICE_STATE.deaf);
     });
@@ -58,7 +59,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.mute).to.equal(TEST_DATA.VOICE_STATE.mute);
     });
@@ -69,7 +70,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.selfDeaf).to.equal(TEST_DATA.VOICE_STATE.self_deaf);
     });
@@ -80,7 +81,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.selfMute).to.equal(TEST_DATA.VOICE_STATE.self_mute);
     });
@@ -91,7 +92,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.selfStream).to.equal(TEST_DATA.VOICE_STATE.self_stream);
     });
@@ -102,7 +103,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.selfVideo).to.equal(TEST_DATA.VOICE_STATE.self_video);
     });
@@ -113,7 +114,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.suppress).to.equal(TEST_DATA.VOICE_STATE.suppress);
     });
@@ -124,7 +125,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.guild).to.deep.equal(guild);
     });
@@ -135,7 +136,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.guildId).to.equal(TEST_DATA.GUILD_ID);
     });
@@ -147,7 +148,7 @@ describe("VoiceState", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.channel).to.be.an.instanceOf(VoiceChannel);
     });
@@ -158,7 +159,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.channelId).to.equal(TEST_DATA.VOICE_STATE.channel_id);
     });
@@ -168,12 +169,9 @@ describe("VoiceState", function () {
     it("should have the correct member value", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.member).to.be.an.instanceOf(Member);
     });
@@ -184,7 +182,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.memberId).to.equal(TEST_DATA.VOICE_STATE.user_id);
     });
@@ -195,7 +193,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.joined).to.be.a("number");
       expect(voiceState.joined).to.equal(TEST_DATA.VOICE_STATE.joined);
@@ -207,7 +205,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.requestToSpeakTimestamp).to.be.a("number");
       expect(voiceState.requestToSpeakTimestamp).to.equal(
@@ -223,7 +221,7 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toString()).to.be.a("string");
     });
@@ -234,19 +232,16 @@ describe("VoiceState", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toJSON()).to.be.a("object");
     });
     it("should return the correct json", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toJSON()).to.deep.equal({
         deaf: TEST_DATA.VOICE_STATE.deaf,
@@ -273,12 +268,9 @@ describe("VoiceState", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 56,
@@ -379,16 +371,13 @@ describe("VoiceState", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new VoiceState(client, voiceState.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.guildId).to.equal(voiceState.guildId);
       expect(rebundled.channelId).to.equal(voiceState.channelId);
@@ -414,19 +403,16 @@ describe("VoiceState", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new VoiceState(
         client,
         voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.guildId).to.equal(voiceState.guildId);
@@ -453,19 +439,16 @@ describe("VoiceState", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new VoiceState(
         client,
         voiceState.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.guildId).to.equal(voiceState.guildId);
@@ -492,19 +475,16 @@ describe("VoiceState", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.VOICE_STATE.user_id,
-      });
+      TEST_MEMBERS.VOICE_STATE_MEMBER(client);
       TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new VoiceState(
         client,
         voiceState.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.guildId).to.equal(voiceState.guildId);

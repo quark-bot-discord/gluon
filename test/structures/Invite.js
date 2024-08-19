@@ -20,7 +20,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite).to.have.property("code");
       expect(invite).to.have.property("guildId");
@@ -43,7 +43,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.code).to.equal(TEST_DATA.INVITE.code);
     });
@@ -55,7 +55,7 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.guildId).to.equal(TEST_DATA.INVITE.guild_id);
     });
@@ -66,7 +66,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.channelId).to.equal(TEST_DATA.INVITE.channel.id);
     });
@@ -77,7 +77,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.uses).to.equal(TEST_DATA.INVITE.uses);
     });
@@ -88,7 +88,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.expires).to.equal(
         (new Date(TEST_DATA.INVITE.expires_at).getTime() / 1000) | 0,
@@ -101,7 +101,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.inviter.id).to.equal(TEST_DATA.INVITE.inviter.id);
     });
@@ -112,7 +112,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.id).to.equal(TEST_DATA.INVITE.code);
     });
@@ -123,7 +123,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.url).to.equal(
         `${INVITE_BASE_URL}/${TEST_DATA.INVITE.code}`,
@@ -136,7 +136,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.maxUses).to.equal(TEST_DATA.INVITE.max_uses);
     });
@@ -147,7 +147,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.guildId).to.equal(TEST_DATA.INVITE.guild_id);
     });
@@ -158,7 +158,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.guild.id).to.equal(TEST_DATA.GUILD_ID);
     });
@@ -183,7 +183,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.toString()).to.be.a("string");
     });
@@ -191,7 +191,7 @@ describe("Invite", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.toString()).to.equal(`<Invite: ${TEST_DATA.INVITE.code}>`);
     });
@@ -203,7 +203,7 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.toJSON()).to.deep.equal({
         code: TEST_DATA.INVITE.code,
@@ -239,7 +239,7 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         code: TEST_DATA.INVITE.code,
@@ -333,11 +333,11 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       const rebundled = new Invite(client, invite.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       expect(rebundled.code).to.equal(invite.code);
@@ -357,14 +357,14 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       const rebundled = new Invite(
         client,
         invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 
@@ -385,14 +385,14 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       const rebundled = new Invite(
         client,
         invite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 
@@ -413,14 +413,14 @@ describe("Invite", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
 
       const rebundled = new Invite(
         client,
         invite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
 

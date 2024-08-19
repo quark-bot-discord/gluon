@@ -47,7 +47,7 @@ describe("CheckMemberPermissions", function () {
               PERMISSIONS.BAN_MEMBERS,
             ),
           },
-          { guild_id: TEST_DATA.GUILD_ID },
+          { guildId: TEST_DATA.GUILD_ID },
         ),
         new Role(
           client,
@@ -59,7 +59,7 @@ describe("CheckMemberPermissions", function () {
               PERMISSIONS.ADD_REACTIONS,
             ),
           },
-          { guild_id: TEST_DATA.GUILD_ID },
+          { guildId: TEST_DATA.GUILD_ID },
         ),
         new Role(
           client,
@@ -67,7 +67,7 @@ describe("CheckMemberPermissions", function () {
             id: TEST_DATA.ROLE_ID,
             permissions: combinePermissions(PERMISSIONS.BAN_MEMBERS),
           },
-          { guild_id: TEST_DATA.GUILD_ID },
+          { guildId: TEST_DATA.GUILD_ID },
         ),
       ];
       const calculatedPermissions = checkMemberPermissions(roles);

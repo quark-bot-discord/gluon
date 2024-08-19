@@ -27,9 +27,8 @@ class User {
   constructor(
     client,
     data,
-    { nocache = false, noDbStore = false } = {
+    { nocache = false } = {
       nocache: false,
-      noDbStore: false,
     },
   ) {
     /**

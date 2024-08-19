@@ -21,12 +21,8 @@ class Thread extends Channel {
    * @param {Boolean?} nocache Whether this thread should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
-    super(client, data, { guild_id });
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+    super(client, data, { guildId });
 
     /**
      * The client instance.

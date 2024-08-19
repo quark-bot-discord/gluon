@@ -36,7 +36,7 @@ class Channel {
    * @param {String} guild_id The ID of the guild that this channel belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
-  constructor(client, data, { guild_id } = {}) {
+  constructor(client, data, { guildId } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -56,7 +56,7 @@ class Channel {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The type of channel.

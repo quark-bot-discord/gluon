@@ -12,7 +12,7 @@ class Poll {
   #allow_multiselect;
   #layout_type;
   #results;
-  constructor(client, data, { guild_id } = {}) {
+  constructor(client, data, { guildId } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -25,7 +25,7 @@ class Poll {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The question of the poll.

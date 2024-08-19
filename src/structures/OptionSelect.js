@@ -18,7 +18,7 @@ class OptionSelect extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client, data, { channel_id, guild_id }) {
+  constructor(client, data, { channelId, guildId }) {
     super(client, data);
 
     this.#_client = client;
@@ -36,8 +36,8 @@ class OptionSelect extends Interaction {
      * @private
      */
     this.#message = new Message(this.#_client, data.message, {
-      channel_id,
-      guild_id,
+      channelId,
+      guildId,
     });
 
     /**

@@ -6,6 +6,8 @@ import {
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
+  TEST_MEMBERS,
+  TEST_ROLES,
 } from "../../src/testData.js";
 import Guild from "../../src/structures/Guild.js";
 import ChannelMessageManager from "../../src/managers/ChannelMessageManager.js";
@@ -26,7 +28,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel).to.have.property("id");
       expect(channel).to.have.property("name");
@@ -53,7 +55,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.id).to.equal(TEST_DATA.TEXT_CHANNEL.id);
     });
@@ -64,7 +66,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.name).to.equal(TEST_DATA.TEXT_CHANNEL.name);
     });
@@ -75,7 +77,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.type).to.equal(TEST_DATA.TEXT_CHANNEL.type);
     });
@@ -86,7 +88,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.guildId).to.equal(TEST_DATA.TEXT_CHANNEL.guild_id);
     });
@@ -97,7 +99,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.mention).to.equal(`<#${TEST_DATA.TEXT_CHANNEL.id}>`);
     });
@@ -108,7 +110,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.guild).to.be.an.instanceOf(Guild);
     });
@@ -119,7 +121,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.parentId).to.equal(TEST_DATA.TEXT_CHANNEL.parent_id);
     });
@@ -140,7 +142,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.rateLimitPerUser).to.equal(
         TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
@@ -153,7 +155,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.nsfw).to.equal(TEST_DATA.TEXT_CHANNEL.nsfw);
     });
@@ -164,7 +166,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.topic).to.equal(TEST_DATA.TEXT_CHANNEL.topic);
     });
@@ -175,7 +177,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
     });
@@ -186,7 +188,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.messages).to.be.an.instanceOf(ChannelMessageManager);
     });
@@ -197,7 +199,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(() => channel.checkPermission()).to.throw(
         TypeError,
@@ -208,7 +210,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(() => channel.checkPermission(123)).to.throw(
         TypeError,
@@ -219,15 +221,12 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       new Role(client, TEST_DATA.ROLE_OVERRIDES, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_OVERRIDES.id];
-      const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const member = TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL_2, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.checkPermission(member)).to.equal(
         String(
@@ -260,7 +259,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.toString()).to.equal(
         `<Channel: ${TEST_DATA.TEXT_CHANNEL.id}>`,
@@ -273,7 +272,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.toJSON()).to.deep.equal({
         id: TEST_DATA.TEXT_CHANNEL.id,
@@ -291,7 +290,7 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
@@ -336,19 +335,16 @@ describe("Channel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       expect(channel.send).to.be.a("function");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       guild.channels.set(TEST_DATA.TEXT_CHANNEL.id, channel);
       await expect(channel.send({ content: "test" })).to.be.rejectedWith(
@@ -359,14 +355,11 @@ describe("Channel", function () {
     it("should throw an error if no parameters are passed", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send()).to.be.rejectedWith(
         Error,
@@ -376,14 +369,11 @@ describe("Channel", function () {
     it("should throw an error if content is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ content: 123 })).to.be.rejectedWith(
         TypeError,
@@ -393,14 +383,11 @@ describe("Channel", function () {
     it("should throw an error if suppressMentions is not a boolean", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(
         channel.send({ content: "test", suppressMentions: 123 }),
@@ -412,14 +399,11 @@ describe("Channel", function () {
     it("should throw an error if embeds is not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ embeds: 123 })).to.be.rejectedWith(
         TypeError,
@@ -429,14 +413,11 @@ describe("Channel", function () {
     it("should throw an error if embeds is not an array of embeds", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ embeds: ["test"] })).to.be.rejectedWith(
         TypeError,
@@ -446,14 +427,11 @@ describe("Channel", function () {
     it("should throw an error if components is not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ components: 123 })).to.be.rejectedWith(
         TypeError,
@@ -463,14 +441,11 @@ describe("Channel", function () {
     it("should throw an error if components is not an array of components", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ components: ["test"] })).to.be.rejectedWith(
         TypeError,
@@ -480,14 +455,11 @@ describe("Channel", function () {
     it("should throw an error if files is not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ files: 123 })).to.be.rejectedWith(
         TypeError,
@@ -497,14 +469,11 @@ describe("Channel", function () {
     it("should throw an error if files is not an array of files", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await expect(channel.send({ files: ["test"] })).to.be.rejectedWith(
         TypeError,
@@ -516,14 +485,11 @@ describe("Channel", function () {
       const request = spy(client.request, "makeRequest");
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      new Role(client, TEST_DATA.ROLE_ADMIN, { guild_id: TEST_DATA.GUILD_ID });
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.CLIENT_MEMBER.user.id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       await channel.send({ content: "test" });
       expect(request).to.be.calledOnce;
@@ -539,10 +505,10 @@ describe("Channel", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       const rebundled = new Channel(client, channel.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.id).to.equal(channel.id);
       expect(rebundled.name).to.equal(channel.name);
@@ -563,13 +529,13 @@ describe("Channel", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       const rebundled = new Channel(
         client,
         channel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(channel.id);
@@ -591,13 +557,13 @@ describe("Channel", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       const rebundled = new Channel(
         client,
         channel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(channel.id);
@@ -619,13 +585,13 @@ describe("Channel", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client);
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
-        guild_id: TEST_DATA.TEXT_CHANNEL.guild_id,
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
       const rebundled = new Channel(
         client,
         channel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(channel.id);

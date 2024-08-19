@@ -1,6 +1,7 @@
 import Client from "./Client.js";
 import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
+import { Member, Message, Role, ScheduledEvent } from "./structures.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1009,26 +1010,102 @@ export const TEST_GUILDS = {
 export const TEST_CHANNELS = {
   TEXT_CHANNEL_ALL_CACHES_ENABLED: (client) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
   TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL_2, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
   VOICE_CHANNEL_ALL_CACHES_ENABLED: (client) => {
     const channel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
   CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client) => {
     const channel = new CategoryChannel(client, TEST_DATA.CATEGORY_CHANNEL, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
+  },
+};
+
+export const TEST_MEMBERS = {
+  CLIENT_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
+      userId: TEST_DATA.CLIENT_MEMBER.user.id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  THREAD_OWNER_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
+      userId: TEST_DATA.THREAD.owner_id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  GUILD_OWNER_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.MEMBER, {
+      userId: TEST_DATA.GUILD.owner_id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  GENERIC_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.MEMBER, {
+      userId: TEST_DATA.MEMBER_ID,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  VOICE_STATE_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.MEMBER, {
+      guildId: TEST_DATA.GUILD_ID,
+      userId: TEST_DATA.VOICE_STATE.user_id,
+    });
+    return member;
+  },
+};
+
+export const TEST_MESSAGES = {
+  GENERIC_MESSAGE: (client) => {
+    const message = new Message(client, TEST_DATA.MESSAGE, {
+      guildId: TEST_DATA.GUILD_ID,
+      channelId: TEST_DATA.CHANNEL_ID,
+    });
+    return message;
+  },
+};
+
+export const TEST_ROLES = {
+  GENERIC_ADMIN_ROLE: (client) => {
+    const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return role;
+  },
+};
+
+export const TEST_SCHEDULED_EVENTS = {
+  GENERIC_SCHEDULED_EVENT: (client) => {
+    const scheduledEvent = new ScheduledEvent(
+      client,
+      TEST_DATA.SCHEDULED_EVENT,
+      { guildId: TEST_DATA.GUILD_ID },
+    );
+    return scheduledEvent;
+  },
+  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client) => {
+    const scheduledEvent = new ScheduledEvent(
+      client,
+      TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
+      { guildId: TEST_DATA.GUILD_ID },
+    );
+    return scheduledEvent;
   },
 };

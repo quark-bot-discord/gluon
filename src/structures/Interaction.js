@@ -67,8 +67,8 @@ class Interaction {
        * @private
        */
       this.#member = new Member(this.#_client, data.member, {
-        user_id: data.member.user.id,
-        guild_id: data.guild_id,
+        userId: data.member.user.id,
+        guildId: data.guild_id,
       });
 
     /**

@@ -31,7 +31,7 @@ class AuditLog {
    * @param {Object} data Audit log data from Discord.
    * @param {Array<Object>} users Resolved users who are involved with the audit log entries.
    */
-  constructor(client, data, { users, guild_id } = {}) {
+  constructor(client, data, { users, guildId } = {}) {
     /**
      * The client instance.
      * @type {Client}
@@ -51,7 +51,7 @@ class AuditLog {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     /**
      * The type of action that occurred.

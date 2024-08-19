@@ -4,6 +4,7 @@ import {
   TEST_CLIENTS,
   TEST_DATA,
   TEST_GUILDS,
+  TEST_MEMBERS,
 } from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { Thread, Member } from "../../src/structures.js";
@@ -20,7 +21,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread).to.have.property("id");
       expect(thread).to.have.property("ownerId");
@@ -37,7 +38,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.ownerId).to.equal(TEST_DATA.THREAD.owner_id);
     });
@@ -47,12 +48,9 @@ describe("Thread", function () {
     it("should have the correct owner", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        guild_id: TEST_DATA.GUILD_ID,
-        user_id: TEST_DATA.THREAD.owner_id,
-      });
+      TEST_MEMBERS.THREAD_OWNER_MEMBER(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.owner.id).to.equal(TEST_DATA.THREAD.owner_id);
     });
@@ -63,7 +61,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.parentId).to.equal(TEST_DATA.THREAD.parent_id);
     });
@@ -74,7 +72,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
     });
   });
@@ -84,7 +82,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.toString()).to.be.a("string");
     });
@@ -92,7 +90,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.toString()).to.equal(`<Thread: ${TEST_DATA.THREAD.id}>`);
     });
@@ -103,7 +101,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON()).to.be.an("object");
     });
@@ -111,7 +109,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON()).to.deep.equal({
         id: TEST_DATA.THREAD.id,
@@ -130,7 +128,7 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
@@ -178,15 +176,12 @@ describe("Thread", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.CLIENT_MEMBER, {
-        user_id: TEST_DATA.THREAD.owner_id,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.THREAD_OWNER_MEMBER(client);
       const thread = new Thread(client, TEST_DATA.THREAD, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       const rebundled = new Thread(client, thread.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.id).to.equal(thread.id);
       expect(rebundled.name).to.equal(thread.name);
@@ -204,18 +199,15 @@ describe("Thread", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.CLIENT_MEMBER, {
-      user_id: TEST_DATA.THREAD.owner_id,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.THREAD_OWNER_MEMBER(client);
     const thread = new Thread(client, TEST_DATA.THREAD, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Thread(
       client,
       thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(rebundled.id).to.equal(thread.id);
@@ -233,18 +225,15 @@ describe("Thread", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.CLIENT_MEMBER, {
-      user_id: TEST_DATA.THREAD.owner_id,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.THREAD_OWNER_MEMBER(client);
     const thread = new Thread(client, TEST_DATA.THREAD, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Thread(
       client,
       thread.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(rebundled.id).to.equal(thread.id);
@@ -262,18 +251,15 @@ describe("Thread", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
     TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.CLIENT_MEMBER, {
-      user_id: TEST_DATA.THREAD.owner_id,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.THREAD_OWNER_MEMBER(client);
     const thread = new Thread(client, TEST_DATA.THREAD, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     const rebundled = new Thread(
       client,
       thread.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(rebundled.id).to.equal(thread.id);

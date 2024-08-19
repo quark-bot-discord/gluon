@@ -1,5 +1,10 @@
 import { expect } from "chai";
-import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import {
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+  TEST_SCHEDULED_EVENTS,
+} from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { ScheduledEvent, Guild, User } from "../../src/structures.js";
 
@@ -14,11 +19,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent).to.have.property("id");
       expect(scheduledEvent).to.have.property("guildId");
       expect(scheduledEvent).to.have.property("scheduledStartTime");
@@ -33,11 +35,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct id", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.id).to.equal(TEST_DATA.SCHEDULED_EVENT.id);
     });
   });
@@ -46,11 +45,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct guildId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.guildId).to.equal(TEST_DATA.GUILD_ID);
     });
   });
@@ -59,11 +55,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.guild).to.be.an.instanceOf(Guild);
     });
   });
@@ -72,11 +65,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct name", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.name).to.equal(TEST_DATA.SCHEDULED_EVENT.name);
     });
   });
@@ -85,11 +75,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct creatorId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.creatorId).to.equal(
         TEST_DATA.SCHEDULED_EVENT.creator_id,
       );
@@ -100,11 +87,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct creator", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.creator).to.be.an.instanceOf(User);
       expect(scheduledEvent.creator.id).to.be.equal(
         TEST_DATA.SCHEDULED_EVENT.creator.id,
@@ -116,11 +100,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct displayImageURL", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.displayImageURL).to.equal(
         `https://cdn.discordapp.com/guild-events/123409989012345678/${TEST_DATA.SCHEDULED_EVENT.image}.png`,
       );
@@ -131,11 +112,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct description", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.description).to.equal(
         TEST_DATA.SCHEDULED_EVENT.description,
       );
@@ -146,21 +124,15 @@ describe("ScheduledEvent", function () {
     it("should have the correct entityType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.entityType).to.equal("VOICE");
     });
     it("should have the correct entityType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.EXTERNAL_GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.entityType).to.equal("EXTERNAL");
     });
   });
@@ -169,11 +141,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct status", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.status).to.equal("SCHEDULED");
     });
   });
@@ -182,11 +151,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct scheduledStartTime", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.scheduledStartTime).to.equal(
         (new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
           1000) |
@@ -199,11 +165,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct scheduledEndTime", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.scheduledEndTime).to.equal(
         (new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time) / 1000) | 0,
       );
@@ -214,11 +177,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct userCount", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.userCount).to.equal(
         TEST_DATA.SCHEDULED_EVENT.user_count,
       );
@@ -229,11 +189,8 @@ describe("ScheduledEvent", function () {
     it("should have the correct location", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.EXTERNAL_GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.location).to.equal(
         TEST_DATA.SCHEDULED_EVENT_EXTERNAL.entity_metadata.location,
       );
@@ -271,21 +228,15 @@ describe("ScheduledEvent", function () {
     it("should return a string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.toString()).to.equal(
         `<ScheduledEvent: ${TEST_DATA.SCHEDULED_EVENT.id}>`,
       );
@@ -296,21 +247,15 @@ describe("ScheduledEvent", function () {
     it("should return an object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.toJSON()).to.be.a("object");
     });
     it("should return the correct object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.toJSON()).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
@@ -347,11 +292,8 @@ describe("ScheduledEvent", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(
         scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
       ).to.deep.equal({
@@ -461,13 +403,10 @@ describe("ScheduledEvent", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       const rebundled = new ScheduledEvent(client, scheduledEvent.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.creator).to.be.an.instanceOf(User);
       expect(scheduledEvent.creator.toJSON()).to.deep.equal(
@@ -497,15 +436,12 @@ describe("ScheduledEvent", function () {
     it("should bundle correctly with custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const scheduledEvent = new ScheduledEvent(
-        client,
-        TEST_DATA.SCHEDULED_EVENT,
-        { guild_id: TEST_DATA.GUILD_ID },
-      );
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       const rebundled = new ScheduledEvent(
         client,
         scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-        { guild_id: TEST_DATA.GUILD_ID },
+        { guildId: TEST_DATA.GUILD_ID },
       );
       expect(rebundled.creator).to.be.an.instanceOf(User);
       expect(scheduledEvent.creator.toJSON()).to.deep.equal(
@@ -534,15 +470,12 @@ describe("ScheduledEvent", function () {
     });
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    const scheduledEvent = new ScheduledEvent(
-      client,
-      TEST_DATA.SCHEDULED_EVENT,
-      { guild_id: TEST_DATA.GUILD_ID },
-    );
+    const scheduledEvent =
+      TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
     const rebundled = new ScheduledEvent(
       client,
       scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      { guild_id: TEST_DATA.GUILD_ID },
+      { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.creator).to.be.an.instanceOf(User);
     expect(scheduledEvent.creator.toJSON()).to.deep.equal(
@@ -569,13 +502,11 @@ describe("ScheduledEvent", function () {
   });
   const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
   TEST_GUILDS.ALL_CACHES_ENABLED(client);
-  const scheduledEvent = new ScheduledEvent(client, TEST_DATA.SCHEDULED_EVENT, {
-    guild_id: TEST_DATA.GUILD_ID,
-  });
+  const scheduledEvent = TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
   const rebundled = new ScheduledEvent(
     client,
     scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-    { guild_id: TEST_DATA.GUILD_ID },
+    { guildId: TEST_DATA.GUILD_ID },
   );
   expect(rebundled.creator).to.be.an.instanceOf(User);
   expect(scheduledEvent.creator.toJSON()).to.deep.equal(

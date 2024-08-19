@@ -20,11 +20,7 @@ class Emoji {
    * @param {String} guild_id The id of the guild that the emoji belongs to.
    * @param {Boolean?} nocache Whether this emoji should be cached or not.
    */
-  constructor(
-    client,
-    data,
-    { guild_id, nocache = false } = { nocache: false },
-  ) {
+  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.
      * @type {Client}
@@ -72,7 +68,7 @@ class Emoji {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
     if (
       nocache === false &&
@@ -82,7 +78,7 @@ class Emoji {
       ) &&
       this.id
     )
-      this.#_client.guilds.get(guild_id)?.emojis.set(data.id, this);
+      this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
   }
 
   /**

@@ -1,5 +1,10 @@
 import { expect } from "chai";
-import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { VoiceChannel } from "../../src/structures.js";
 
@@ -14,9 +19,8 @@ describe("VoiceChannel", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel).to.have.property("id");
       expect(voiceChannel).to.have.property("name");
       expect(voiceChannel).to.have.property("type");
@@ -43,9 +47,8 @@ describe("VoiceChannel", function () {
     it("should have the correct bitrate", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.bitrate).to.equal(TEST_DATA.VOICE_CHANNEL.bitrate);
     });
   });
@@ -54,9 +57,8 @@ describe("VoiceChannel", function () {
     it("should have the correct userLimit", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.userLimit).to.equal(
         TEST_DATA.VOICE_CHANNEL.user_limit,
       );
@@ -67,9 +69,8 @@ describe("VoiceChannel", function () {
     it("should have the correct rtcRegion", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.rtcRegion).to.equal(
         TEST_DATA.VOICE_CHANNEL.rtcRegion,
       );
@@ -80,18 +81,16 @@ describe("VoiceChannel", function () {
     it("should return a string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.toString()).to.be.a("string");
     });
 
     it("should return the correct string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.toString()).to.equal(
         `<VoiceChannel: ${TEST_DATA.VOICE_CHANNEL.id}>`,
       );
@@ -102,18 +101,16 @@ describe("VoiceChannel", function () {
     it("should return an object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.toJSON()).to.be.a("object");
     });
 
     it("should return the correct object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.toJSON()).to.deep.equal({
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
@@ -132,9 +129,8 @@ describe("VoiceChannel", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(
         voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
       ).to.deep.equal({
@@ -192,11 +188,10 @@ describe("VoiceChannel", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(client, voiceChannel.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.id).to.equal(voiceChannel.id);
       expect(rebundled.name).to.equal(voiceChannel.name);
@@ -209,14 +204,13 @@ describe("VoiceChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
         voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(voiceChannel.id);
@@ -230,14 +224,13 @@ describe("VoiceChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
         voiceChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(voiceChannel.id);
@@ -251,14 +244,13 @@ describe("VoiceChannel", function () {
     it("should bundle correctly with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const voiceChannel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const voiceChannel =
+        TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
         voiceChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(voiceChannel.id);

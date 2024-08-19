@@ -20,8 +20,8 @@ describe("ButtonClick", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
-        guild_id: TEST_DATA.GUILD_ID,
-        channel_id: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(buttonClick).to.have.property("id");
       expect(buttonClick).to.have.property("type");
@@ -46,8 +46,8 @@ describe("ButtonClick", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
-        guild_id: TEST_DATA.GUILD_ID,
-        channel_id: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(buttonClick.customId).to.equal(TEST_DATA.BUTTON_CLICK.custom_id);
     });
@@ -59,8 +59,8 @@ describe("ButtonClick", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const buttonClick = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
-        guild_id: TEST_DATA.GUILD_ID,
-        channel_id: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
       });
       expect(buttonClick.message.id).to.equal(
         TEST_DATA.BUTTON_CLICK.message.id,

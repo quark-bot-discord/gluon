@@ -21,8 +21,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect).to.have.property("id");
       expect(optionSelect).to.have.property("type");
@@ -48,8 +48,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.customId).to.equal(
         TEST_DATA.OPTION_SELECT.data.custom_id,
@@ -63,8 +63,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.message.id).to.equal(
         TEST_DATA.OPTION_SELECT.message.id,
@@ -78,8 +78,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.values).to.deep.equal(
         TEST_DATA.OPTION_SELECT.data.values,
@@ -93,8 +93,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.toString).to.be.a("function");
     });
@@ -103,8 +103,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.toString()).to.equal(
         `<OptionSelect: ${TEST_DATA.OPTION_SELECT.id}>`,
@@ -118,8 +118,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.toJSON).to.be.a("function");
     });
@@ -128,8 +128,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(optionSelect.toJSON()).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
@@ -196,8 +196,8 @@ describe("OptionSelect", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const optionSelect = new OptionSelect(client, TEST_DATA.OPTION_SELECT, {
-        channel_id: TEST_DATA.CHANNEL_ID,
-        guild_id: TEST_DATA.GUILD_ID,
+        channelId: TEST_DATA.CHANNEL_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(
         optionSelect.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),

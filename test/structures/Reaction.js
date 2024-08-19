@@ -1,6 +1,11 @@
 import { expect } from "chai";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
-import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import {
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+  TEST_MEMBERS,
+} from "../../src/testData.js";
 import { Reaction, Guild, Member, Emoji } from "../../src/structures.js";
 
 describe("Reaction", function () {
@@ -15,7 +20,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction).to.have.property("count");
       expect(reaction).to.have.property("reacted");
@@ -36,7 +41,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor("123456");
       reaction._addReactor("654321");
@@ -48,12 +53,9 @@ describe("Reaction", function () {
     it("should have the correct reacted", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.MEMBER_ID,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GENERIC_MEMBER(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
@@ -66,12 +68,9 @@ describe("Reaction", function () {
     it("should have the correct reactedIds", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.MEMBER_ID,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GENERIC_MEMBER(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reactedIds.length).to.equal(1);
@@ -84,7 +83,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.guildId).to.equal(TEST_DATA.GUILD_ID);
     });
@@ -95,7 +94,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.guild).to.be.an.instanceOf(Guild);
       expect(reaction.guild.id).to.equal(TEST_DATA.GUILD_ID);
@@ -107,7 +106,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.emoji).to.be.an.instanceOf(Emoji);
     });
@@ -117,12 +116,9 @@ describe("Reaction", function () {
     it("should have the correct initialReactor", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.MEMBER_ID,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GENERIC_MEMBER(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.initialReactor).to.be.a("string");
@@ -134,12 +130,9 @@ describe("Reaction", function () {
     it("should add a reactor to the reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.MEMBER_ID,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GENERIC_MEMBER(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
@@ -153,12 +146,9 @@ describe("Reaction", function () {
     it("should remove a reactor from the reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      new Member(client, TEST_DATA.MEMBER, {
-        user_id: TEST_DATA.MEMBER_ID,
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      TEST_MEMBERS.GENERIC_MEMBER(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.reacted.length).to.equal(1);
@@ -174,7 +164,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.toString).to.be.a("function");
     });
@@ -182,7 +172,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.toString()).to.equal(
         `<Reaction: <Emoji: ${TEST_DATA.REACTION.emoji.name}>>`,
@@ -195,7 +185,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(reaction.toJSON).to.be.a("function");
     });
@@ -203,7 +193,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.toJSON()).to.deep.equal({
@@ -222,7 +212,7 @@ describe("Reaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const reaction = new Reaction(client, TEST_DATA.REACTION, {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
       expect(reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
@@ -260,16 +250,13 @@ describe("Reaction", function () {
   context("check bundling", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.MEMBER, {
-      user_id: TEST_DATA.MEMBER_ID,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.GENERIC_MEMBER(client);
     const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(client, reaction.toJSON(), {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     expect(reaction.count).to.equal(rebundled.count);
     expect(reaction.guildId).to.equal(rebundled.guildId);
@@ -281,19 +268,16 @@ describe("Reaction", function () {
   it("should bundle correctly with a custom toJSON", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.MEMBER, {
-      user_id: TEST_DATA.MEMBER_ID,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.GENERIC_MEMBER(client);
     const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
       reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(reaction.count).to.equal(rebundled.count);
@@ -308,19 +292,16 @@ describe("Reaction", function () {
   it("should bundle correctly with a custom toJSON", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.MEMBER, {
-      user_id: TEST_DATA.MEMBER_ID,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.GENERIC_MEMBER(client);
     const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
       reaction.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(reaction.count).to.equal(rebundled.count);
@@ -335,19 +316,16 @@ describe("Reaction", function () {
   it("should bundle correctly with a custom toJSON", function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    new Member(client, TEST_DATA.MEMBER, {
-      user_id: TEST_DATA.MEMBER_ID,
-      guild_id: TEST_DATA.GUILD_ID,
-    });
+    TEST_MEMBERS.GENERIC_MEMBER(client);
     const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guild_id: TEST_DATA.GUILD_ID,
+      guildId: TEST_DATA.GUILD_ID,
     });
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
       reaction.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
       {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       },
     );
     expect(reaction.count).to.equal(rebundled.count);

@@ -1,5 +1,10 @@
 import { expect } from "chai";
-import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
+import {
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+  TEST_ROLES,
+} from "../../src/testData.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { Role } from "../../src/structures.js";
 
@@ -14,9 +19,7 @@ describe("Role", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role).to.have.property("id");
       expect(role).to.have.property("hoist");
       expect(role).to.have.property("name");
@@ -39,9 +42,7 @@ describe("Role", function () {
     it("should have the correct name", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.name).to.equal(TEST_DATA.ROLE_ADMIN.name);
     });
   });
@@ -50,9 +51,7 @@ describe("Role", function () {
     it("should have the correct color", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.color).to.equal(TEST_DATA.ROLE_ADMIN.color);
     });
   });
@@ -61,9 +60,7 @@ describe("Role", function () {
     it("should have the correct position", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.position).to.equal(TEST_DATA.ROLE_ADMIN.position);
     });
   });
@@ -72,9 +69,7 @@ describe("Role", function () {
     it("should have the correct mention", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.mention).to.equal(`<@&${TEST_DATA.ROLE_ID}>`);
     });
   });
@@ -83,9 +78,7 @@ describe("Role", function () {
     it("should have the correct permissions", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.permissions).to.equal(
         String(TEST_DATA.ROLE_ADMIN.permissions),
       );
@@ -96,9 +89,7 @@ describe("Role", function () {
     it("should have the correct guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.guild.id).to.equal(guild.id);
     });
   });
@@ -107,9 +98,7 @@ describe("Role", function () {
     it("should have the correct guildId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.guildId).to.equal(TEST_DATA.GUILD_ID);
     });
   });
@@ -118,9 +107,7 @@ describe("Role", function () {
     it("should have the correct displayIconURL", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.displayIconURL).to.equal(
         `https://cdn.discordapp.com/role-icons/${TEST_DATA.ROLE_ID}/${TEST_DATA.ROLE_ADMIN.icon}.png`,
       );
@@ -131,9 +118,7 @@ describe("Role", function () {
     it("should have the correct tags", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.tags).to.deep.equal({
         bot_id: "123456789012345678",
         integration_id: null,
@@ -191,17 +176,13 @@ describe("Role", function () {
     it("should return a string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.toString()).to.be.a("string");
     });
     it("should return the correct string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.toString()).to.equal(`<Role: ${TEST_DATA.ROLE_ID}>`);
     });
   });
@@ -210,17 +191,13 @@ describe("Role", function () {
     it("should return a JSON object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.toJSON()).to.be.a("object");
     });
     it("should return the correct JSON object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.toJSON()).to.deep.equal({
         hoist: TEST_DATA.ROLE_ADMIN.hoist,
         managed: TEST_DATA.ROLE_ADMIN.managed,
@@ -241,9 +218,7 @@ describe("Role", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
         _attributes: 7,
         icon: TEST_DATA.ROLE_ADMIN.icon,
@@ -295,11 +270,9 @@ describe("Role", function () {
     it("should return the correct bundle", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(client, role.toJSON(), {
-        guild_id: TEST_DATA.GUILD_ID,
+        guildId: TEST_DATA.GUILD_ID,
       });
       expect(rebundled.id).to.equal(role.id);
       expect(rebundled.name).to.equal(role.name);
@@ -318,14 +291,12 @@ describe("Role", function () {
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(
         client,
         role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(role.id);
@@ -345,14 +316,12 @@ describe("Role", function () {
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(
         client,
         role.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(role.id);
@@ -372,14 +341,12 @@ describe("Role", function () {
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
-        guild_id: TEST_DATA.GUILD_ID,
-      });
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(
         client,
         role.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
         {
-          guild_id: TEST_DATA.GUILD_ID,
+          guildId: TEST_DATA.GUILD_ID,
         },
       );
       expect(rebundled.id).to.equal(role.id);

@@ -12,25 +12,25 @@ import VoiceChannel from "../../structures/VoiceChannel.js";
  * @param {Boolean?} nocache Whether the channel should be cached.
  * @returns {VoiceChannel | Thread | TextChannel}
  */
-function cacheChannel(client, data, guild_id, nocache = false) {
+function cacheChannel(client, data, guildId, nocache = false) {
   switch (data.type) {
     case CHANNEL_TYPES.GUILD_VOICE:
     case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
-      return new VoiceChannel(client, data, { guild_id, nocache });
+      return new VoiceChannel(client, data, { guildId, nocache });
     }
 
     case CHANNEL_TYPES.GUILD_NEWS_THREAD:
     case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
     case CHANNEL_TYPES.GUILD_PRIVATE_THREAD: {
-      return new Thread(client, data, { guild_id, nocache });
+      return new Thread(client, data, { guildId, nocache });
     }
 
     case CHANNEL_TYPES.GUILD_CATEGORY: {
-      return new CategoryChannel(client, data, { guild_id, nocache });
+      return new CategoryChannel(client, data, { guildId, nocache });
     }
 
     default: {
-      return new TextChannel(client, data, { guild_id, nocache });
+      return new TextChannel(client, data, { guildId, nocache });
     }
   }
 }
