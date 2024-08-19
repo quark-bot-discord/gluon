@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 169,
-                4826
+                4823
             ],
             "filename": "Reaction.js",
             "lineno": 8,
@@ -183,7 +183,7 @@
         "meta": {
             "range": [
                 582,
-                1588
+                1585
             ],
             "filename": "Reaction.js",
             "lineno": 22,
@@ -246,7 +246,7 @@
         "meta": {
             "range": [
                 169,
-                4826
+                4823
             ],
             "filename": "Reaction.js",
             "lineno": 8,
@@ -306,7 +306,7 @@
         "meta": {
             "range": [
                 610,
-                618
+                617
             ],
             "filename": "Reaction.js",
             "lineno": 22,
@@ -314,14 +314,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000030",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -329,8 +329,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                715,
-                737
+                714,
+                736
             ],
             "filename": "Reaction.js",
             "lineno": 28,
@@ -361,8 +361,8 @@
         "comment": "/**\n     * The id of the guild that this reaction belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                856,
-                890
+                855,
+                888
             ],
             "filename": "Reaction.js",
             "lineno": 35,
@@ -393,8 +393,8 @@
         "comment": "/**\n       * The emoji used for the reaction.\n       * @type {Emoji}\n       * @private\n       */",
         "meta": {
             "range": [
-                1030,
-                1054
+                1028,
+                1052
             ],
             "filename": "Reaction.js",
             "lineno": 43,
@@ -425,8 +425,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1071,
-                1143
+                1069,
+                1140
             ],
             "filename": "Reaction.js",
             "lineno": 45,
@@ -451,8 +451,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1117,
-                1125
+                1115,
+                1122
             ],
             "filename": "Reaction.js",
             "lineno": 45,
@@ -460,14 +460,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000078",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -475,12 +475,12 @@
         "comment": "",
         "meta": {
             "range": [
-                1127,
-                1140
+                1124,
+                1137
             ],
             "filename": "Reaction.js",
             "lineno": 45,
-            "columnno": 62,
+            "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000080",
@@ -499,8 +499,8 @@
         "comment": "/**\n     * Users who reacted with this emoji.\n     * @type {Array<BigInt>}\n     * @private\n     */",
         "meta": {
             "range": [
-                1253,
-                1312
+                1250,
+                1309
             ],
             "filename": "Reaction.js",
             "lineno": 52,
@@ -531,8 +531,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1367,
-                1391
+                1364,
+                1388
             ],
             "filename": "Reaction.js",
             "lineno": 53,
@@ -557,8 +557,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1531,
-                1583
+                1528,
+                1580
             ],
             "filename": "Reaction.js",
             "lineno": 61,
@@ -583,8 +583,8 @@
         "comment": "/**\n   * The number of reactions to this message.\n   * @readonly\n   * @type {Number}\n   * @public\n   */",
         "meta": {
             "range": [
-                1698,
-                1764
+                1695,
+                1761
             ],
             "filename": "Reaction.js",
             "lineno": 70,
@@ -619,8 +619,8 @@
         "comment": "/**\n   * The member objects of the members who reacted. Returns the user id of the member cannot be found.\n   * @readonly\n   * @type {Array<Member | String>}\n   * @public\n   */",
         "meta": {
             "range": [
-                1947,
-                2147
+                1944,
+                2144
             ],
             "filename": "Reaction.js",
             "lineno": 80,
@@ -655,8 +655,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2019,
-                2066
+                2016,
+                2063
             ],
             "filename": "Reaction.js",
             "lineno": 82,
@@ -681,8 +681,8 @@
         "comment": "/**\n   * The user ids of the users who reacted.\n   * @readonly\n   * @type {Array<String>}\n   * @public\n   */",
         "meta": {
             "range": [
-                2262,
-                2333
+                2259,
+                2330
             ],
             "filename": "Reaction.js",
             "lineno": 95,
@@ -717,8 +717,8 @@
         "comment": "/**\n   * The id of the guild that this reaction belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2453,
-                2508
+                2450,
+                2505
             ],
             "filename": "Reaction.js",
             "lineno": 105,
@@ -753,8 +753,8 @@
         "comment": "/**\n   * The guild that this reaction belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2618,
-                2694
+                2615,
+                2691
             ],
             "filename": "Reaction.js",
             "lineno": 115,
@@ -790,8 +790,8 @@
         "comment": "/**\n   * The emoji used for the reaction.\n   * @type {Emoji}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2795,
-                2836
+                2792,
+                2833
             ],
             "filename": "Reaction.js",
             "lineno": 125,
@@ -826,8 +826,8 @@
         "comment": "/**\n   * The user who added the first reaction.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2945,
-                3044
+                2942,
+                3041
             ],
             "filename": "Reaction.js",
             "lineno": 135,
@@ -863,8 +863,8 @@
         "comment": "/**\n   * Adds a user to the list of reactors.\n   * @param {String} userId The id of the user to add as a reactor.\n   * @throws {TypeError}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                3221,
-                3534
+                3218,
+                3531
             ],
             "filename": "Reaction.js",
             "lineno": 146,
@@ -914,8 +914,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3412,
-                3450
+                3409,
+                3447
             ],
             "filename": "Reaction.js",
             "lineno": 151,
@@ -940,8 +940,8 @@
         "comment": "/**\n   * Removes a user from the list of reactors.\n   * @param {String} userId The id of the user to add as a reactor.\n   * @throws {TypeError}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                3716,
-                3954
+                3713,
+                3951
             ],
             "filename": "Reaction.js",
             "lineno": 165,
@@ -991,8 +991,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3845,
-                3912
+                3842,
+                3909
             ],
             "filename": "Reaction.js",
             "lineno": 169,
@@ -1017,8 +1017,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3996,
-                4052
+                3993,
+                4049
             ],
             "filename": "Reaction.js",
             "lineno": 178,
@@ -1046,8 +1046,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4094,
-                4151
+                4091,
+                4148
             ],
             "filename": "Reaction.js",
             "lineno": 186,
@@ -1075,8 +1075,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                4334,
-                4824
+                4331,
+                4821
             ],
             "filename": "Reaction.js",
             "lineno": 197,
@@ -1126,8 +1126,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4492,
-                4524
+                4489,
+                4521
             ],
             "filename": "Reaction.js",
             "lineno": 202,
@@ -1150,8 +1150,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4536,
-                4561
+                4533,
+                4558
             ],
             "filename": "Reaction.js",
             "lineno": 203,
@@ -1174,8 +1174,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4573,
-                4622
+                4570,
+                4619
             ],
             "filename": "Reaction.js",
             "lineno": 204,
@@ -1198,8 +1198,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4733,
-                4765
+                4730,
+                4762
             ],
             "filename": "Reaction.js",
             "lineno": 210,
@@ -1222,8 +1222,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4777,
-                4794
+                4774,
+                4791
             ],
             "filename": "Reaction.js",
             "lineno": 211,
@@ -1246,8 +1246,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4828,
-                4852
+                4825,
+                4849
             ],
             "filename": "Reaction.js",
             "lineno": 218,

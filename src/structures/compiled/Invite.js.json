@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 297,
-                6990
+                6971
             ],
             "filename": "Invite.js",
             "lineno": 10,
@@ -233,7 +233,7 @@
         "meta": {
             "range": [
                 794,
-                2853
+                2834
             ],
             "filename": "Invite.js",
             "lineno": 27,
@@ -306,7 +306,7 @@
         "meta": {
             "range": [
                 297,
-                6990
+                6971
             ],
             "filename": "Invite.js",
             "lineno": 10,
@@ -375,23 +375,23 @@
         "comment": "",
         "meta": {
             "range": [
-                835,
-                843
+                822,
+                829
             ],
             "filename": "Invite.js",
-            "lineno": 30,
-            "columnno": 6,
+            "lineno": 27,
+            "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000042",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -399,12 +399,12 @@
         "comment": "",
         "meta": {
             "range": [
-                845,
-                860
+                831,
+                846
             ],
             "filename": "Invite.js",
-            "lineno": 30,
-            "columnno": 16,
+            "lineno": 27,
+            "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000044",
@@ -423,12 +423,12 @@
         "comment": "",
         "meta": {
             "range": [
-                867,
-                881
+                853,
+                867
             ],
             "filename": "Invite.js",
-            "lineno": 30,
-            "columnno": 38,
+            "lineno": 27,
+            "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000049",
@@ -447,11 +447,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                977,
-                999
+                959,
+                981
             ],
             "filename": "Invite.js",
-            "lineno": 37,
+            "lineno": 33,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -479,11 +479,11 @@
         "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1114,
-                1148
+                1096,
+                1129
             ],
             "filename": "Invite.js",
-            "lineno": 44,
+            "lineno": 40,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -511,11 +511,11 @@
         "comment": "/**\n     * The code for the invite.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1241,
-                1264
+                1222,
+                1245
             ],
             "filename": "Invite.js",
-            "lineno": 51,
+            "lineno": 47,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -543,11 +543,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1403,
-                1446
+                1384,
+                1427
             ],
             "filename": "Invite.js",
-            "lineno": 58,
+            "lineno": 54,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -569,11 +569,11 @@
         "comment": "/**\n       * The user who created the invite.\n       * @type {User?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1580,
-                1646
+                1561,
+                1627
             ],
             "filename": "Invite.js",
-            "lineno": 66,
+            "lineno": 62,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -602,11 +602,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1636,
-                1643
+                1617,
+                1624
             ],
             "filename": "Invite.js",
-            "lineno": 66,
+            "lineno": 62,
             "columnno": 62,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -626,11 +626,11 @@
         "comment": "/**\n       * The number of times the invite has been used.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1811,
-                1833
+                1792,
+                1814
             ],
             "filename": "Invite.js",
-            "lineno": 74,
+            "lineno": 70,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -659,11 +659,11 @@
         "comment": "/**\n       * The UNIX timestamp of when the invite expires.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1986,
-                2050
+                1967,
+                2031
             ],
             "filename": "Invite.js",
-            "lineno": 82,
+            "lineno": 78,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -692,11 +692,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2104,
-                2139
+                2085,
+                2120
             ],
             "filename": "Invite.js",
-            "lineno": 84,
+            "lineno": 80,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -718,11 +718,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2257,
-                2346
+                2238,
+                2327
             ],
             "filename": "Invite.js",
-            "lineno": 90,
+            "lineno": 86,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -744,11 +744,11 @@
         "comment": "/**\n       * The maximum number of uses allowed for the invite.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2520,
-                2550
+                2501,
+                2531
             ],
             "filename": "Invite.js",
-            "lineno": 99,
+            "lineno": 95,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -777,11 +777,11 @@
         "comment": "/**\n   * The id of the channel the invite is directed to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2971,
-                3030
+                2952,
+                3011
             ],
             "filename": "Invite.js",
-            "lineno": 119,
+            "lineno": 115,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -813,11 +813,11 @@
         "comment": "/**\n   * The channel the invite is directed to.\n   * @type {(TextChannel | VoiceChannel)?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3161,
-                3240
+                3142,
+                3221
             ],
             "filename": "Invite.js",
-            "lineno": 129,
+            "lineno": 125,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -851,11 +851,11 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3333,
-                3369
+                3314,
+                3350
             ],
             "filename": "Invite.js",
-            "lineno": 139,
+            "lineno": 135,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -887,11 +887,11 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3462,
-                3502
+                3443,
+                3483
             ],
             "filename": "Invite.js",
-            "lineno": 149,
+            "lineno": 145,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -923,11 +923,11 @@
         "comment": "/**\n   * The id of the guild that this invite belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3620,
-                3675
+                3601,
+                3656
             ],
             "filename": "Invite.js",
-            "lineno": 159,
+            "lineno": 155,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -959,11 +959,11 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3781,
-                3857
+                3762,
+                3838
             ],
             "filename": "Invite.js",
-            "lineno": 169,
+            "lineno": 165,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -996,11 +996,11 @@
         "comment": "/**\n   * The number of times the invite has been used.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3973,
-                4012
+                3954,
+                3993
             ],
             "filename": "Invite.js",
-            "lineno": 179,
+            "lineno": 175,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1033,11 +1033,11 @@
         "comment": "/**\n   * The UNIX timestamp of when the invite expires.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4129,
-                4174
+                4110,
+                4155
             ],
             "filename": "Invite.js",
-            "lineno": 189,
+            "lineno": 185,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1070,11 +1070,11 @@
         "comment": "/**\n   * The user who created the invite.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4275,
-                4320
+                4256,
+                4301
             ],
             "filename": "Invite.js",
-            "lineno": 199,
+            "lineno": 195,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1107,11 +1107,11 @@
         "comment": "/**\n   * The URL of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4412,
-                4464
+                4393,
+                4445
             ],
             "filename": "Invite.js",
-            "lineno": 209,
+            "lineno": 205,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1143,11 +1143,11 @@
         "comment": "/**\n   * The maximum number of uses allowed for the invite.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4585,
-                4631
+                4566,
+                4612
             ],
             "filename": "Invite.js",
-            "lineno": 219,
+            "lineno": 215,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1180,11 +1180,11 @@
         "comment": "/**\n   * Returns the URL of the invite.\n   * @param {String} code The code of the invite.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                4795,
-                4952
+                4776,
+                4933
             ],
             "filename": "Invite.js",
-            "lineno": 231,
+            "lineno": 227,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1231,11 +1231,11 @@
         "comment": "/**\n   * Determines whether the invite should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5251,
-                5783
+                5232,
+                5764
             ],
             "filename": "Invite.js",
-            "lineno": 246,
+            "lineno": 242,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1292,11 +1292,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                5825,
-                5878
+                5806,
+                5859
             ],
             "filename": "Invite.js",
-            "lineno": 264,
+            "lineno": 260,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1321,11 +1321,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                5920,
-                5977
+                5901,
+                5958
             ],
             "filename": "Invite.js",
-            "lineno": 272,
+            "lineno": 268,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1350,11 +1350,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                6160,
-                6988
+                6141,
+                6969
             ],
             "filename": "Invite.js",
-            "lineno": 283,
+            "lineno": 279,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1401,11 +1401,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6318,
-                6333
+                6299,
+                6314
             ],
             "filename": "Invite.js",
-            "lineno": 288,
+            "lineno": 284,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1425,11 +1425,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6345,
-                6381
+                6326,
+                6362
             ],
             "filename": "Invite.js",
-            "lineno": 289,
+            "lineno": 285,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1449,11 +1449,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6393,
-                6429
+                6374,
+                6410
             ],
             "filename": "Invite.js",
-            "lineno": 290,
+            "lineno": 286,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1473,11 +1473,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6441,
-                6456
+                6422,
+                6437
             ],
             "filename": "Invite.js",
-            "lineno": 291,
+            "lineno": 287,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1497,11 +1497,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6468,
-                6523
+                6449,
+                6504
             ],
             "filename": "Invite.js",
-            "lineno": 292,
+            "lineno": 288,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1521,11 +1521,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6535,
-                6557
+                6516,
+                6538
             ],
             "filename": "Invite.js",
-            "lineno": 293,
+            "lineno": 289,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1545,11 +1545,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6668,
-                6683
+                6649,
+                6664
             ],
             "filename": "Invite.js",
-            "lineno": 299,
+            "lineno": 295,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1569,11 +1569,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6695,
-                6731
+                6676,
+                6712
             ],
             "filename": "Invite.js",
-            "lineno": 300,
+            "lineno": 296,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1593,11 +1593,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6743,
-                6779
+                6724,
+                6760
             ],
             "filename": "Invite.js",
-            "lineno": 301,
+            "lineno": 297,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1617,11 +1617,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6791,
-                6806
+                6772,
+                6787
             ],
             "filename": "Invite.js",
-            "lineno": 302,
+            "lineno": 298,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1641,11 +1641,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6818,
-                6924
+                6799,
+                6905
             ],
             "filename": "Invite.js",
-            "lineno": 303,
+            "lineno": 299,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1665,11 +1665,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6936,
-                6958
+                6917,
+                6939
             ],
             "filename": "Invite.js",
-            "lineno": 306,
+            "lineno": 302,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1689,11 +1689,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6992,
-                7014
+                6973,
+                6995
             ],
             "filename": "Invite.js",
-            "lineno": 313,
+            "lineno": 309,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 180,
-                4493
+                4491
             ],
             "filename": "Poll.js",
             "lineno": 6,
@@ -232,7 +232,7 @@
         "meta": {
             "range": [
                 307,
-                1502
+                1500
             ],
             "filename": "Poll.js",
             "lineno": 15,
@@ -264,7 +264,7 @@
         "meta": {
             "range": [
                 335,
-                343
+                342
             ],
             "filename": "Poll.js",
             "lineno": 15,
@@ -272,14 +272,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000036",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -287,8 +287,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                440,
-                462
+                439,
+                461
             ],
             "filename": "Poll.js",
             "lineno": 21,
@@ -319,8 +319,8 @@
         "comment": "/**\n     * The ID of the guild that this poll belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                577,
-                611
+                576,
+                609
             ],
             "filename": "Poll.js",
             "lineno": 28,
@@ -351,8 +351,8 @@
         "comment": "/**\n     * The question of the poll.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                705,
-                735
+                703,
+                733
             ],
             "filename": "Poll.js",
             "lineno": 35,
@@ -383,8 +383,8 @@
         "comment": "/**\n     * The answers of the poll.\n     * @type {Array<Object>}\n     * @private\n     */",
         "meta": {
             "range": [
-                835,
-                863
+                833,
+                861
             ],
             "filename": "Poll.js",
             "lineno": 42,
@@ -415,8 +415,8 @@
         "comment": "/**\n     * The UNIX timestamp of the expiry time for the poll.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                983,
-                1042
+                981,
+                1040
             ],
             "filename": "Poll.js",
             "lineno": 49,
@@ -447,8 +447,8 @@
         "comment": "/**\n     * Whether the poll allows multiselect.\n     * @type {Boolean}\n     * @private\n     */",
         "meta": {
             "range": [
-                1148,
-                1196
+                1146,
+                1194
             ],
             "filename": "Poll.js",
             "lineno": 56,
@@ -479,8 +479,8 @@
         "comment": "/**\n     * The layout type of the poll.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1293,
-                1329
+                1291,
+                1327
             ],
             "filename": "Poll.js",
             "lineno": 63,
@@ -511,8 +511,8 @@
         "comment": "/**\n     * The poll responses.\n     * @type {MessagePollManager}\n     * @private\n     */",
         "meta": {
             "range": [
-                1429,
-                1497
+                1427,
+                1495
             ],
             "filename": "Poll.js",
             "lineno": 70,
@@ -543,8 +543,8 @@
         "comment": "/**\n   * The ID of the guild that this poll belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1618,
-                1673
+                1616,
+                1671
             ],
             "filename": "Poll.js",
             "lineno": 79,
@@ -579,8 +579,8 @@
         "comment": "/**\n   * The guild that this poll belongs to.\n   * @type {Guild}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1778,
-                1846
+                1776,
+                1844
             ],
             "filename": "Poll.js",
             "lineno": 89,
@@ -615,8 +615,8 @@
         "comment": "/**\n   * The question of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1941,
-                1988
+                1939,
+                1986
             ],
             "filename": "Poll.js",
             "lineno": 99,
@@ -651,8 +651,8 @@
         "comment": "/**\n   * The answers of the poll.\n   * @type {Array<Object>}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2089,
-                2412
+                2087,
+                2410
             ],
             "filename": "Poll.js",
             "lineno": 109,
@@ -687,8 +687,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2201,
-                2222
+                2199,
+                2220
             ],
             "filename": "Poll.js",
             "lineno": 113,
@@ -711,8 +711,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2232,
-                2390
+                2230,
+                2388
             ],
             "filename": "Poll.js",
             "lineno": 114,
@@ -735,8 +735,8 @@
         "comment": "/**\n   * The UNIX timestamp of the expiry time for the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2533,
-                2576
+                2531,
+                2574
             ],
             "filename": "Poll.js",
             "lineno": 125,
@@ -771,8 +771,8 @@
         "comment": "/**\n   * Whether the poll allows multiselect.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2683,
-                2747
+                2681,
+                2745
             ],
             "filename": "Poll.js",
             "lineno": 135,
@@ -807,8 +807,8 @@
         "comment": "/**\n   * The layout type of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2845,
-                2940
+                2843,
+                2938
             ],
             "filename": "Poll.js",
             "lineno": 145,
@@ -843,8 +843,8 @@
         "comment": "/**\n   * The raw layout type of the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3042,
-                3097
+                3040,
+                3095
             ],
             "filename": "Poll.js",
             "lineno": 156,
@@ -879,8 +879,8 @@
         "comment": "/**\n   * The poll responses.\n   * @type {MessagePollManager}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3198,
-                3244
+                3196,
+                3242
             ],
             "filename": "Poll.js",
             "lineno": 166,
@@ -915,8 +915,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3286,
-                3341
+                3284,
+                3339
             ],
             "filename": "Poll.js",
             "lineno": 174,
@@ -944,8 +944,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3383,
-                3440
+                3381,
+                3438
             ],
             "filename": "Poll.js",
             "lineno": 182,
@@ -973,8 +973,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                3623,
-                4491
+                3621,
+                4489
             ],
             "filename": "Poll.js",
             "lineno": 193,
@@ -1024,8 +1024,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3781,
-                3804
+                3779,
+                3802
             ],
             "filename": "Poll.js",
             "lineno": 198,
@@ -1048,8 +1048,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3816,
-                3838
+                3814,
+                3836
             ],
             "filename": "Poll.js",
             "lineno": 199,
@@ -1072,8 +1072,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3850,
-                3897
+                3848,
+                3895
             ],
             "filename": "Poll.js",
             "lineno": 200,
@@ -1096,8 +1096,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3909,
-                3949
+                3907,
+                3947
             ],
             "filename": "Poll.js",
             "lineno": 201,
@@ -1120,8 +1120,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3961,
-                3992
+                3959,
+                3990
             ],
             "filename": "Poll.js",
             "lineno": 202,
@@ -1144,8 +1144,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4004,
-                4042
+                4002,
+                4040
             ],
             "filename": "Poll.js",
             "lineno": 203,
@@ -1168,8 +1168,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4153,
-                4176
+                4151,
+                4174
             ],
             "filename": "Poll.js",
             "lineno": 209,
@@ -1192,8 +1192,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4188,
-                4210
+                4186,
+                4208
             ],
             "filename": "Poll.js",
             "lineno": 210,
@@ -1216,8 +1216,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4222,
-                4317
+                4220,
+                4315
             ],
             "filename": "Poll.js",
             "lineno": 211,
@@ -1240,8 +1240,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4329,
-                4369
+                4327,
+                4367
             ],
             "filename": "Poll.js",
             "lineno": 214,
@@ -1264,8 +1264,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4381,
-                4412
+                4379,
+                4410
             ],
             "filename": "Poll.js",
             "lineno": 215,
@@ -1288,8 +1288,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4424,
-                4461
+                4422,
+                4459
             ],
             "filename": "Poll.js",
             "lineno": 216,
@@ -1312,8 +1312,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4495,
-                4515
+                4493,
+                4513
             ],
             "filename": "Poll.js",
             "lineno": 223,

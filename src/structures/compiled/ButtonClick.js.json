@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 376,
-                2209
+                2183
             ],
             "filename": "ButtonClick.js",
             "lineno": 11,
@@ -114,7 +114,7 @@
         "meta": {
             "range": [
                 629,
-                1110
+                1084
             ],
             "filename": "ButtonClick.js",
             "lineno": 20,
@@ -166,7 +166,7 @@
         "meta": {
             "range": [
                 376,
-                2209
+                2183
             ],
             "filename": "ButtonClick.js",
             "lineno": 11,
@@ -221,7 +221,7 @@
         "meta": {
             "range": [
                 657,
-                665
+                664
             ],
             "filename": "ButtonClick.js",
             "lineno": 20,
@@ -229,14 +229,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000032",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -244,23 +244,23 @@
         "comment": "",
         "meta": {
             "range": [
-                667,
-                677
+                666,
+                675
             ],
             "filename": "ButtonClick.js",
             "lineno": 20,
-            "columnno": 40,
+            "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000034",
-                "name": "channel_id",
+                "name": "channelId",
                 "type": "Identifier",
-                "value": "channel_id"
+                "value": "channelId"
             }
         },
         "undocumented": true,
-        "name": "channel_id",
-        "longname": "channel_id",
+        "name": "channelId",
+        "longname": "channelId",
         "kind": "member",
         "scope": "global"
     },
@@ -268,8 +268,8 @@
         "comment": "",
         "meta": {
             "range": [
-                718,
-                740
+                716,
+                738
             ],
             "filename": "ButtonClick.js",
             "lineno": 23,
@@ -294,8 +294,8 @@
         "comment": "/**\n     * The custom id of the button.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                837,
-                874
+                835,
+                872
             ],
             "filename": "ButtonClick.js",
             "lineno": 30,
@@ -326,8 +326,8 @@
         "comment": "/**\n     * The message which the button belongs to.\n     * @type {Message}\n     * @private\n     */",
         "meta": {
             "range": [
-                984,
-                1105
+                982,
+                1079
             ],
             "filename": "ButtonClick.js",
             "lineno": 37,
@@ -358,8 +358,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1049,
-                1071
+                1047,
+                1056
             ],
             "filename": "ButtonClick.js",
             "lineno": 38,
@@ -367,14 +367,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000077",
-                "name": "channel_id",
+                "name": "channelId",
                 "type": "Identifier",
-                "value": "channel_id"
+                "value": "channelId"
             }
         },
         "undocumented": true,
-        "name": "channel_id",
-        "longname": "channel_id",
+        "name": "channelId",
+        "longname": "channelId",
         "kind": "member",
         "scope": "global"
     },
@@ -382,8 +382,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1079,
-                1097
+                1064,
+                1071
             ],
             "filename": "ButtonClick.js",
             "lineno": 39,
@@ -391,14 +391,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000079",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -406,8 +406,8 @@
         "comment": "/**\n   * The custom id of the button.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1208,
-                1256
+                1182,
+                1230
             ],
             "filename": "ButtonClick.js",
             "lineno": 49,
@@ -442,8 +442,8 @@
         "comment": "/**\n   * The message which the button belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   * @see {@link Message}\n   */",
         "meta": {
             "range": [
-                1393,
-                1438
+                1367,
+                1412
             ],
             "filename": "ButtonClick.js",
             "lineno": 60,
@@ -481,8 +481,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1480,
-                1536
+                1454,
+                1510
             ],
             "filename": "ButtonClick.js",
             "lineno": 68,
@@ -510,8 +510,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1578,
-                1635
+                1552,
+                1609
             ],
             "filename": "ButtonClick.js",
             "lineno": 76,
@@ -539,8 +539,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                1833,
-                2207
+                1807,
+                2181
             ],
             "filename": "ButtonClick.js",
             "lineno": 88,
@@ -591,8 +591,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2087,
-                2144
+                2061,
+                2118
             ],
             "filename": "ButtonClick.js",
             "lineno": 96,
@@ -615,8 +615,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2107,
-                2131
+                2081,
+                2105
             ],
             "filename": "ButtonClick.js",
             "lineno": 97,
@@ -640,8 +640,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2156,
-                2177
+                2130,
+                2151
             ],
             "filename": "ButtonClick.js",
             "lineno": 99,
@@ -664,8 +664,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2211,
-                2238
+                2185,
+                2212
             ],
             "filename": "ButtonClick.js",
             "lineno": 106,

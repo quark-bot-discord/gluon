@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 378,
-                2990
+                2986
             ],
             "filename": "OptionSelect.js",
             "lineno": 11,
@@ -139,7 +139,7 @@
         "meta": {
             "range": [
                 647,
-                1385
+                1381
             ],
             "filename": "OptionSelect.js",
             "lineno": 21,
@@ -191,7 +191,7 @@
         "meta": {
             "range": [
                 378,
-                2990
+                2986
             ],
             "filename": "OptionSelect.js",
             "lineno": 11,
@@ -246,7 +246,7 @@
         "meta": {
             "range": [
                 675,
-                685
+                684
             ],
             "filename": "OptionSelect.js",
             "lineno": 21,
@@ -254,14 +254,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000032",
-                "name": "channel_id",
+                "name": "channelId",
                 "type": "Identifier",
-                "value": "channel_id"
+                "value": "channelId"
             }
         },
         "undocumented": true,
-        "name": "channel_id",
-        "longname": "channel_id",
+        "name": "channelId",
+        "longname": "channelId",
         "kind": "member",
         "scope": "global"
     },
@@ -269,23 +269,23 @@
         "comment": "",
         "meta": {
             "range": [
-                687,
-                695
+                686,
+                693
             ],
             "filename": "OptionSelect.js",
             "lineno": 21,
-            "columnno": 42,
+            "columnno": 41,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000034",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -293,8 +293,8 @@
         "comment": "",
         "meta": {
             "range": [
-                731,
-                753
+                729,
+                751
             ],
             "filename": "OptionSelect.js",
             "lineno": 24,
@@ -319,8 +319,8 @@
         "comment": "/**\n     * The custom id of the select menu.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                855,
-                892
+                853,
+                890
             ],
             "filename": "OptionSelect.js",
             "lineno": 31,
@@ -351,8 +351,8 @@
         "comment": "/**\n     * The message which the option belongs to.\n     * @type {Message}\n     * @private\n     */",
         "meta": {
             "range": [
-                1002,
-                1101
+                1000,
+                1097
             ],
             "filename": "OptionSelect.js",
             "lineno": 38,
@@ -383,8 +383,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1067,
-                1077
+                1065,
+                1074
             ],
             "filename": "OptionSelect.js",
             "lineno": 39,
@@ -392,14 +392,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000076",
-                "name": "channel_id",
+                "name": "channelId",
                 "type": "Identifier",
-                "value": "channel_id"
+                "value": "channelId"
             }
         },
         "undocumented": true,
-        "name": "channel_id",
-        "longname": "channel_id",
+        "name": "channelId",
+        "longname": "channelId",
         "kind": "member",
         "scope": "global"
     },
@@ -407,8 +407,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1085,
-                1093
+                1082,
+                1089
             ],
             "filename": "OptionSelect.js",
             "lineno": 40,
@@ -416,14 +416,14 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000078",
-                "name": "guild_id",
+                "name": "guildId",
                 "type": "Identifier",
-                "value": "guild_id"
+                "value": "guildId"
             }
         },
         "undocumented": true,
-        "name": "guild_id",
-        "longname": "guild_id",
+        "name": "guildId",
+        "longname": "guildId",
         "kind": "member",
         "scope": "global"
     },
@@ -431,8 +431,8 @@
         "comment": "/**\n     * The values selected from the select menu.\n     * @type {Array<Object>}\n     * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}\n     * @private\n     */",
         "meta": {
             "range": [
-                1349,
-                1380
+                1345,
+                1376
             ],
             "filename": "OptionSelect.js",
             "lineno": 49,
@@ -466,8 +466,8 @@
         "comment": "/**\n   * The custom id of the select menu.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1488,
-                1536
+                1484,
+                1532
             ],
             "filename": "OptionSelect.js",
             "lineno": 58,
@@ -502,8 +502,8 @@
         "comment": "/**\n   * The message which the option belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1647,
-                1692
+                1643,
+                1688
             ],
             "filename": "OptionSelect.js",
             "lineno": 68,
@@ -538,8 +538,8 @@
         "comment": "/**\n   * The values selected from the select menu.\n   * @type {Array<Object>}\n   * @readonly\n   * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}\n   * @public\n   */",
         "meta": {
             "range": [
-                1939,
-                1982
+                1935,
+                1978
             ],
             "filename": "OptionSelect.js",
             "lineno": 79,
@@ -577,8 +577,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2024,
-                2081
+                2020,
+                2077
             ],
             "filename": "OptionSelect.js",
             "lineno": 87,
@@ -606,8 +606,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2123,
-                2180
+                2119,
+                2176
             ],
             "filename": "OptionSelect.js",
             "lineno": 95,
@@ -635,8 +635,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2378,
-                2988
+                2374,
+                2984
             ],
             "filename": "OptionSelect.js",
             "lineno": 107,
@@ -687,8 +687,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2571,
-                2595
+                2567,
+                2591
             ],
             "filename": "OptionSelect.js",
             "lineno": 113,
@@ -711,8 +711,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2607,
-                2643
+                2603,
+                2639
             ],
             "filename": "OptionSelect.js",
             "lineno": 114,
@@ -735,8 +735,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2655,
-                2674
+                2651,
+                2670
             ],
             "filename": "OptionSelect.js",
             "lineno": 115,
@@ -759,8 +759,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2820,
-                2910
+                2816,
+                2906
             ],
             "filename": "OptionSelect.js",
             "lineno": 122,
@@ -783,8 +783,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2840,
-                2864
+                2836,
+                2860
             ],
             "filename": "OptionSelect.js",
             "lineno": 123,
@@ -808,8 +808,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2878,
-                2897
+                2874,
+                2893
             ],
             "filename": "OptionSelect.js",
             "lineno": 124,
@@ -833,8 +833,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2922,
-                2958
+                2918,
+                2954
             ],
             "filename": "OptionSelect.js",
             "lineno": 126,
@@ -857,8 +857,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2992,
-                3020
+                2988,
+                3016
             ],
             "filename": "OptionSelect.js",
             "lineno": 133,
