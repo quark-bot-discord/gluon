@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 277,
-                8114
+                8231
             ],
             "filename": "Role.js",
             "lineno": 9,
@@ -279,14 +279,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {String} guild_id The id of the guild that the role belongs to.\n   * @param {Boolean?} nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
+        "comment": "/**\n   * Creates the structure for a role.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw role data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the role belongs to.\n   * @param {Boolean?} options.nocache Whether this role should be cached or not.\n   * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}\n   */",
         "meta": {
             "range": [
-                783,
-                2406
+                900,
+                2523
             ],
             "filename": "Role.js",
-            "lineno": 28,
+            "lineno": 29,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -303,6 +303,7 @@
                 "": null
             }
         },
+        "description": "Creates the structure for a role.",
         "params": [
             {
                 "type": {
@@ -325,11 +326,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the role belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -339,7 +349,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this role should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ],
         "see": [
@@ -356,7 +366,7 @@
         "meta": {
             "range": [
                 277,
-                8114
+                8231
             ],
             "filename": "Role.js",
             "lineno": 9,
@@ -378,6 +388,7 @@
         "kind": "class",
         "classdesc": "Represents a role belonging to a guild.",
         "scope": "global",
+        "description": "Creates the structure for a role.",
         "see": [
             "{@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}"
         ],
@@ -403,11 +414,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the role belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -417,7 +437,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this role should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ]
     },
@@ -425,11 +445,11 @@
         "comment": "",
         "meta": {
             "range": [
-                811,
-                818
+                928,
+                935
             ],
             "filename": "Role.js",
-            "lineno": 28,
+            "lineno": 29,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -449,11 +469,11 @@
         "comment": "",
         "meta": {
             "range": [
-                820,
-                835
+                937,
+                952
             ],
             "filename": "Role.js",
-            "lineno": 28,
+            "lineno": 29,
             "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -473,11 +493,11 @@
         "comment": "",
         "meta": {
             "range": [
-                842,
-                856
+                959,
+                973
             ],
             "filename": "Role.js",
-            "lineno": 28,
+            "lineno": 29,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -497,11 +517,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                948,
-                970
+                1065,
+                1087
             ],
             "filename": "Role.js",
-            "lineno": 34,
+            "lineno": 35,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -529,11 +549,11 @@
         "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1085,
-                1118
+                1202,
+                1235
             ],
             "filename": "Role.js",
-            "lineno": 41,
+            "lineno": 42,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -561,11 +581,11 @@
         "comment": "/**\n     * The id of the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1206,
-                1233
+                1323,
+                1350
             ],
             "filename": "Role.js",
-            "lineno": 48,
+            "lineno": 49,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -593,11 +613,11 @@
         "comment": "/**\n     * The name of the role.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1323,
-                1345
+                1440,
+                1462
             ],
             "filename": "Role.js",
-            "lineno": 55,
+            "lineno": 56,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -625,11 +645,11 @@
         "comment": "/**\n     * The color of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1436,
-                1460
+                1553,
+                1577
             ],
             "filename": "Role.js",
-            "lineno": 62,
+            "lineno": 63,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -657,11 +677,11 @@
         "comment": "/**\n     * The position of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1554,
-                1584
+                1671,
+                1701
             ],
             "filename": "Role.js",
-            "lineno": 69,
+            "lineno": 70,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -689,11 +709,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1688,
-                1726
+                1805,
+                1843
             ],
             "filename": "Role.js",
-            "lineno": 76,
+            "lineno": 77,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -715,11 +735,11 @@
         "comment": "/**\n     * The permissions for the role.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1824,
-                1868
+                1941,
+                1985
             ],
             "filename": "Role.js",
-            "lineno": 83,
+            "lineno": 84,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -747,11 +767,11 @@
         "comment": "/**\n     * The attributes of the role.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1964,
-                2005
+                2081,
+                2122
             ],
             "filename": "Role.js",
-            "lineno": 90,
+            "lineno": 91,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -779,11 +799,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2036,
-                2065
+                2153,
+                2182
             ],
             "filename": "Role.js",
-            "lineno": 92,
+            "lineno": 93,
             "columnno": 28,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -805,11 +825,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2098,
-                2127
+                2215,
+                2244
             ],
             "filename": "Role.js",
-            "lineno": 94,
+            "lineno": 95,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -831,11 +851,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2164,
-                2193
+                2281,
+                2310
             ],
             "filename": "Role.js",
-            "lineno": 96,
+            "lineno": 97,
             "columnno": 34,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -857,11 +877,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2215,
-                2237
+                2332,
+                2354
             ],
             "filename": "Role.js",
-            "lineno": 98,
+            "lineno": 99,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -883,11 +903,11 @@
         "comment": "/**\n   * The ID of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2495,
-                2539
+                2612,
+                2656
             ],
             "filename": "Role.js",
-            "lineno": 113,
+            "lineno": 114,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -919,11 +939,11 @@
         "comment": "/**\n   * Whether the role is hoisted.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2641,
-                2715
+                2758,
+                2832
             ],
             "filename": "Role.js",
-            "lineno": 123,
+            "lineno": 124,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -959,11 +979,11 @@
         "comment": "/**\n   * Whether the role is managed (by an application).\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2837,
-                2913
+                2954,
+                3030
             ],
             "filename": "Role.js",
-            "lineno": 133,
+            "lineno": 134,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -999,11 +1019,11 @@
         "comment": "/**\n   * Whether the role is mentionable.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3019,
-                3099
+                3136,
+                3216
             ],
             "filename": "Role.js",
-            "lineno": 143,
+            "lineno": 144,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1039,11 +1059,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3563,
-                3603
+                3680,
+                3720
             ],
             "filename": "Role.js",
-            "lineno": 169,
+            "lineno": 170,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1065,11 +1085,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3692,
-                3727
+                3809,
+                3844
             ],
             "filename": "Role.js",
-            "lineno": 173,
+            "lineno": 174,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1092,11 +1112,11 @@
         "comment": "/**\n   * The icon URL of the role.\n   * @readonly\n   * @type {String?}\n   * @public\n   */",
         "meta": {
             "range": [
-                3855,
-                3943
+                3972,
+                4060
             ],
             "filename": "Role.js",
-            "lineno": 184,
+            "lineno": 185,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1129,11 +1149,11 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4049,
-                4125
+                4166,
+                4242
             ],
             "filename": "Role.js",
-            "lineno": 194,
+            "lineno": 195,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1166,11 +1186,11 @@
         "comment": "/**\n   * The ID of the guild that this role belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4241,
-                4296
+                4358,
+                4413
             ],
             "filename": "Role.js",
-            "lineno": 204,
+            "lineno": 205,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1202,11 +1222,11 @@
         "comment": "/**\n   * The name of the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4387,
-                4426
+                4504,
+                4543
             ],
             "filename": "Role.js",
-            "lineno": 214,
+            "lineno": 215,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1238,11 +1258,11 @@
         "comment": "/**\n   * The color of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4518,
-                4559
+                4635,
+                4676
             ],
             "filename": "Role.js",
-            "lineno": 224,
+            "lineno": 225,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1274,11 +1294,11 @@
         "comment": "/**\n   * The position of the role.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4654,
-                4701
+                4771,
+                4818
             ],
             "filename": "Role.js",
-            "lineno": 234,
+            "lineno": 235,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1310,11 +1330,11 @@
         "comment": "/**\n   * The permissions for the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4800,
-                4861
+                4917,
+                4978
             ],
             "filename": "Role.js",
-            "lineno": 244,
+            "lineno": 245,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1346,11 +1366,11 @@
         "comment": "/**\n   * The attributes of the role.\n   * @type {Object}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4958,
-                4997
+                5075,
+                5114
             ],
             "filename": "Role.js",
-            "lineno": 254,
+            "lineno": 255,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1382,11 +1402,11 @@
         "comment": "/**\n   * Returns a mention for the role.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5098,
-                5154
+                5215,
+                5271
             ],
             "filename": "Role.js",
-            "lineno": 264,
+            "lineno": 265,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1418,11 +1438,11 @@
         "comment": "/**\n   * Returns a mention for the role.\n   * @param {String} roleId The ID of the role to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5328,
-                5486
+                5445,
+                5603
             ],
             "filename": "Role.js",
-            "lineno": 276,
+            "lineno": 277,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1469,11 +1489,11 @@
         "comment": "/**\n   * Returns the URL of the role's icon.\n   * @param {String} id The ID of the role.\n   * @param {String?} hash The hash of the role's icon.\n   * @returns {String}\n   */",
         "meta": {
             "range": [
-                5666,
-                6048
+                5783,
+                6165
             ],
             "filename": "Role.js",
-            "lineno": 288,
+            "lineno": 289,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1530,11 +1550,11 @@
         "comment": "/**\n   * Determines whether the role should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6345,
-                6873
+                6462,
+                6990
             ],
             "filename": "Role.js",
-            "lineno": 309,
+            "lineno": 310,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1591,11 +1611,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                6915,
-                6964
+                7032,
+                7081
             ],
             "filename": "Role.js",
-            "lineno": 327,
+            "lineno": 328,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1620,11 +1640,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7006,
-                7063
+                7123,
+                7180
             ],
             "filename": "Role.js",
-            "lineno": 335,
+            "lineno": 336,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1649,11 +1669,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7246,
-                8112
+                7363,
+                8229
             ],
             "filename": "Role.js",
-            "lineno": 346,
+            "lineno": 347,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1700,11 +1720,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7404,
-                7415
+                7521,
+                7532
             ],
             "filename": "Role.js",
-            "lineno": 351,
+            "lineno": 352,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1724,11 +1744,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7427,
-                7442
+                7544,
+                7559
             ],
             "filename": "Role.js",
-            "lineno": 352,
+            "lineno": 353,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1748,11 +1768,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7454,
-                7471
+                7571,
+                7588
             ],
             "filename": "Role.js",
-            "lineno": 353,
+            "lineno": 354,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1772,11 +1792,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7483,
-                7506
+                7600,
+                7623
             ],
             "filename": "Role.js",
-            "lineno": 354,
+            "lineno": 355,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1796,11 +1816,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7518,
-                7547
+                7635,
+                7664
             ],
             "filename": "Role.js",
-            "lineno": 355,
+            "lineno": 356,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1820,11 +1840,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7559,
-                7588
+                7676,
+                7705
             ],
             "filename": "Role.js",
-            "lineno": 356,
+            "lineno": 357,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1844,11 +1864,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7600,
-                7630
+                7717,
+                7747
             ],
             "filename": "Role.js",
-            "lineno": 357,
+            "lineno": 358,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1868,11 +1888,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7642,
-                7657
+                7759,
+                7774
             ],
             "filename": "Role.js",
-            "lineno": 358,
+            "lineno": 359,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1892,11 +1912,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7768,
-                7779
+                7885,
+                7896
             ],
             "filename": "Role.js",
-            "lineno": 364,
+            "lineno": 365,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1916,11 +1936,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7791,
-                7806
+                7908,
+                7923
             ],
             "filename": "Role.js",
-            "lineno": 365,
+            "lineno": 366,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1940,11 +1960,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7818,
-                7835
+                7935,
+                7952
             ],
             "filename": "Role.js",
-            "lineno": 366,
+            "lineno": 367,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1964,11 +1984,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7847,
-                7870
+                7964,
+                7987
             ],
             "filename": "Role.js",
-            "lineno": 367,
+            "lineno": 368,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1988,11 +2008,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7882,
-                7911
+                7999,
+                8028
             ],
             "filename": "Role.js",
-            "lineno": 368,
+            "lineno": 369,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2012,11 +2032,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7923,
-                7952
+                8040,
+                8069
             ],
             "filename": "Role.js",
-            "lineno": 369,
+            "lineno": 370,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2036,11 +2056,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7964,
-                7979
+                8081,
+                8096
             ],
             "filename": "Role.js",
-            "lineno": 370,
+            "lineno": 371,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2060,11 +2080,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7991,
-                8008
+                8108,
+                8125
             ],
             "filename": "Role.js",
-            "lineno": 371,
+            "lineno": 372,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2084,11 +2104,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8020,
-                8041
+                8137,
+                8158
             ],
             "filename": "Role.js",
-            "lineno": 372,
+            "lineno": 373,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2108,11 +2128,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8053,
-                8082
+                8170,
+                8199
             ],
             "filename": "Role.js",
-            "lineno": 373,
+            "lineno": 374,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2132,11 +2152,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8116,
-                8136
+                8233,
+                8253
             ],
             "filename": "Role.js",
-            "lineno": 380,
+            "lineno": 381,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

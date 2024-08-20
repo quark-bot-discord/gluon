@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 378,
-                2986
+                3240
             ],
             "filename": "OptionSelect.js",
             "lineno": 11,
@@ -135,14 +135,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates an option selected interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
+        "comment": "/**\n   * Creates an option selected interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this interaction belongs to.\n   * @param {String} options.channelId The ID of the channel that this interaction belongs to.\n   */",
         "meta": {
             "range": [
-                647,
-                1381
+                901,
+                1635
             ],
             "filename": "OptionSelect.js",
-            "lineno": 21,
+            "lineno": 24,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -178,6 +178,33 @@
                 },
                 "description": "The interaction data from Discord.",
                 "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the guild that this interaction belongs to.",
+                "name": "options.guildId"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the channel that this interaction belongs to.",
+                "name": "options.channelId"
             }
         ],
         "name": "OptionSelect",
@@ -191,7 +218,7 @@
         "meta": {
             "range": [
                 378,
-                2986
+                3240
             ],
             "filename": "OptionSelect.js",
             "lineno": 11,
@@ -238,6 +265,33 @@
                 },
                 "description": "The interaction data from Discord.",
                 "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the guild that this interaction belongs to.",
+                "name": "options.guildId"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the channel that this interaction belongs to.",
+                "name": "options.channelId"
             }
         ]
     },
@@ -245,11 +299,11 @@
         "comment": "",
         "meta": {
             "range": [
-                675,
-                684
+                929,
+                938
             ],
             "filename": "OptionSelect.js",
-            "lineno": 21,
+            "lineno": 24,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -269,11 +323,11 @@
         "comment": "",
         "meta": {
             "range": [
-                686,
-                693
+                940,
+                947
             ],
             "filename": "OptionSelect.js",
-            "lineno": 21,
+            "lineno": 24,
             "columnno": 41,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -293,11 +347,11 @@
         "comment": "",
         "meta": {
             "range": [
-                729,
-                751
+                983,
+                1005
             ],
             "filename": "OptionSelect.js",
-            "lineno": 24,
+            "lineno": 27,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -319,11 +373,11 @@
         "comment": "/**\n     * The custom id of the select menu.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                853,
-                890
+                1107,
+                1144
             ],
             "filename": "OptionSelect.js",
-            "lineno": 31,
+            "lineno": 34,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -351,11 +405,11 @@
         "comment": "/**\n     * The message which the option belongs to.\n     * @type {Message}\n     * @private\n     */",
         "meta": {
             "range": [
-                1000,
-                1097
+                1254,
+                1351
             ],
             "filename": "OptionSelect.js",
-            "lineno": 38,
+            "lineno": 41,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -383,11 +437,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1065,
-                1074
+                1319,
+                1328
             ],
             "filename": "OptionSelect.js",
-            "lineno": 39,
+            "lineno": 42,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -407,11 +461,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1082,
-                1089
+                1336,
+                1343
             ],
             "filename": "OptionSelect.js",
-            "lineno": 40,
+            "lineno": 43,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -431,11 +485,11 @@
         "comment": "/**\n     * The values selected from the select menu.\n     * @type {Array<Object>}\n     * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}\n     * @private\n     */",
         "meta": {
             "range": [
-                1345,
-                1376
+                1599,
+                1630
             ],
             "filename": "OptionSelect.js",
-            "lineno": 49,
+            "lineno": 52,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -466,11 +520,11 @@
         "comment": "/**\n   * The custom id of the select menu.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1484,
-                1532
+                1738,
+                1786
             ],
             "filename": "OptionSelect.js",
-            "lineno": 58,
+            "lineno": 61,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -502,11 +556,11 @@
         "comment": "/**\n   * The message which the option belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1643,
-                1688
+                1897,
+                1942
             ],
             "filename": "OptionSelect.js",
-            "lineno": 68,
+            "lineno": 71,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -538,11 +592,11 @@
         "comment": "/**\n   * The values selected from the select menu.\n   * @type {Array<Object>}\n   * @readonly\n   * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}\n   * @public\n   */",
         "meta": {
             "range": [
-                1935,
-                1978
+                2189,
+                2232
             ],
             "filename": "OptionSelect.js",
-            "lineno": 79,
+            "lineno": 82,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -577,11 +631,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2020,
-                2077
+                2274,
+                2331
             ],
             "filename": "OptionSelect.js",
-            "lineno": 87,
+            "lineno": 90,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -606,11 +660,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2119,
-                2176
+                2373,
+                2430
             ],
             "filename": "OptionSelect.js",
-            "lineno": 95,
+            "lineno": 98,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -635,11 +689,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2374,
-                2984
+                2628,
+                3238
             ],
             "filename": "OptionSelect.js",
-            "lineno": 107,
+            "lineno": 110,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -687,11 +741,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2567,
-                2591
+                2821,
+                2845
             ],
             "filename": "OptionSelect.js",
-            "lineno": 113,
+            "lineno": 116,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -711,11 +765,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2603,
-                2639
+                2857,
+                2893
             ],
             "filename": "OptionSelect.js",
-            "lineno": 114,
+            "lineno": 117,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -735,11 +789,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2651,
-                2670
+                2905,
+                2924
             ],
             "filename": "OptionSelect.js",
-            "lineno": 115,
+            "lineno": 118,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -759,11 +813,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2816,
-                2906
+                3070,
+                3160
             ],
             "filename": "OptionSelect.js",
-            "lineno": 122,
+            "lineno": 125,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -783,11 +837,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2836,
-                2860
+                3090,
+                3114
             ],
             "filename": "OptionSelect.js",
-            "lineno": 123,
+            "lineno": 126,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -808,11 +862,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2874,
-                2893
+                3128,
+                3147
             ],
             "filename": "OptionSelect.js",
-            "lineno": 124,
+            "lineno": 127,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -833,11 +887,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2918,
-                2954
+                3172,
+                3208
             ],
             "filename": "OptionSelect.js",
-            "lineno": 126,
+            "lineno": 129,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -857,11 +911,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2988,
-                3016
+                3242,
+                3270
             ],
             "filename": "OptionSelect.js",
-            "lineno": 133,
+            "lineno": 136,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 247,
-                8930
+                9095
             ],
             "filename": "AuditLog.js",
             "lineno": 9,
@@ -457,14 +457,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Array<Object>} users Resolved users who are involved with the audit log entries.\n   */",
+        "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {Array<Object>} options.users Resolved users who are involved with the audit log entries.\n   * @param {String} options.guildId The ID of the guild that this audit log belongs to.\n   */",
         "meta": {
             "range": [
-                767,
-                4226
+                932,
+                4391
             ],
             "filename": "AuditLog.js",
-            "lineno": 34,
+            "lineno": 36,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -504,11 +504,29 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "Array.<Object>"
                     ]
                 },
                 "description": "Resolved users who are involved with the audit log entries.",
-                "name": "users"
+                "name": "options.users"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the guild that this audit log belongs to.",
+                "name": "options.guildId"
             }
         ],
         "name": "AuditLog",
@@ -522,7 +540,7 @@
         "meta": {
             "range": [
                 247,
-                8930
+                9095
             ],
             "filename": "AuditLog.js",
             "lineno": 9,
@@ -570,11 +588,29 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "Array.<Object>"
                     ]
                 },
                 "description": "Resolved users who are involved with the audit log entries.",
-                "name": "users"
+                "name": "options.users"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the guild that this audit log belongs to.",
+                "name": "options.guildId"
             }
         ]
     },
@@ -582,11 +618,11 @@
         "comment": "",
         "meta": {
             "range": [
-                795,
-                800
+                960,
+                965
             ],
             "filename": "AuditLog.js",
-            "lineno": 34,
+            "lineno": 36,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -606,11 +642,11 @@
         "comment": "",
         "meta": {
             "range": [
-                802,
-                809
+                967,
+                974
             ],
             "filename": "AuditLog.js",
-            "lineno": 34,
+            "lineno": 36,
             "columnno": 37,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -630,11 +666,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                906,
-                928
+                1071,
+                1093
             ],
             "filename": "AuditLog.js",
-            "lineno": 40,
+            "lineno": 42,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -662,11 +698,11 @@
         "comment": "/**\n     * The id of the audit log entry.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1027,
-                1054
+                1192,
+                1219
             ],
             "filename": "AuditLog.js",
-            "lineno": 47,
+            "lineno": 49,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -694,11 +730,11 @@
         "comment": "/**\n     * The ID of the guild that this audit log belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1174,
-                1207
+                1339,
+                1372
             ],
             "filename": "AuditLog.js",
-            "lineno": 54,
+            "lineno": 56,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -726,11 +762,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1332,
-                1368
+                1497,
+                1533
             ],
             "filename": "AuditLog.js",
-            "lineno": 61,
+            "lineno": 63,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -752,11 +788,11 @@
         "comment": "/**\n     * The id of the target user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1464,
-                1529
+                1629,
+                1694
             ],
             "filename": "AuditLog.js",
-            "lineno": 68,
+            "lineno": 70,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -785,11 +821,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1602,
-                1652
+                1767,
+                1817
             ],
             "filename": "AuditLog.js",
-            "lineno": 71,
+            "lineno": 73,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -811,11 +847,11 @@
         "comment": "/**\n         * The resolved target user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                1784,
-                1828
+                1949,
+                1993
             ],
             "filename": "AuditLog.js",
-            "lineno": 78,
+            "lineno": 80,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -844,11 +880,11 @@
         "comment": "/**\n     * The id of the executor user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1932,
-                1995
+                2097,
+                2160
             ],
             "filename": "AuditLog.js",
-            "lineno": 86,
+            "lineno": 88,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -877,11 +913,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2070,
-                2122
+                2235,
+                2287
             ],
             "filename": "AuditLog.js",
-            "lineno": 89,
+            "lineno": 91,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -903,11 +939,11 @@
         "comment": "/**\n         * The resolved executor user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2256,
-                2302
+                2421,
+                2467
             ],
             "filename": "AuditLog.js",
-            "lineno": 96,
+            "lineno": 98,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -936,11 +972,11 @@
         "comment": "/**\n     * The reason for this audit log entry.\n     * @type {String?}\n     * @private\n     */",
         "meta": {
             "range": [
-                2414,
-                2448
+                2579,
+                2613
             ],
             "filename": "AuditLog.js",
-            "lineno": 104,
+            "lineno": 106,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -969,11 +1005,11 @@
         "comment": "/**\n         * The channel id involved with this audit log entry.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2653,
-                2704
+                2818,
+                2869
             ],
             "filename": "AuditLog.js",
-            "lineno": 113,
+            "lineno": 115,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1002,11 +1038,11 @@
         "comment": "/**\n         * The count of this type of audit log entry.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2878,
-                2920
+                3043,
+                3085
             ],
             "filename": "AuditLog.js",
-            "lineno": 122,
+            "lineno": 124,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1035,11 +1071,11 @@
         "comment": "/**\n         * The inactivity period for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3107,
-                3175
+                3272,
+                3340
             ],
             "filename": "AuditLog.js",
-            "lineno": 130,
+            "lineno": 132,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1068,11 +1104,11 @@
         "comment": "/**\n         * The number of members removed for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3367,
-                3429
+                3532,
+                3594
             ],
             "filename": "AuditLog.js",
-            "lineno": 138,
+            "lineno": 140,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1101,11 +1137,11 @@
         "comment": "/**\n         * The id of the overwritten entity.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3583,
-                3625
+                3748,
+                3790
             ],
             "filename": "AuditLog.js",
-            "lineno": 146,
+            "lineno": 148,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1134,11 +1170,11 @@
         "comment": "/**\n         * The type of the overwritten entity - role (\"0\") or member (\"1\")\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3811,
-                3859
+                3976,
+                4024
             ],
             "filename": "AuditLog.js",
-            "lineno": 154,
+            "lineno": 156,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1167,11 +1203,11 @@
         "comment": "/**\n         * The new voice channel status.\n         * @type {String?}\n         * @private\n         */",
         "meta": {
             "range": [
-                4013,
-                4047
+                4178,
+                4212
             ],
             "filename": "AuditLog.js",
-            "lineno": 162,
+            "lineno": 164,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1200,11 +1236,11 @@
         "comment": "/**\n       * The changes in this audit log entry.\n       * @type {Object?}\n       * @private\n       */",
         "meta": {
             "range": [
-                4193,
-                4221
+                4358,
+                4386
             ],
             "filename": "AuditLog.js",
-            "lineno": 171,
+            "lineno": 173,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1233,11 +1269,11 @@
         "comment": "/**\n   * The id of the audit log entry.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4326,
-                4370
+                4491,
+                4535
             ],
             "filename": "AuditLog.js",
-            "lineno": 180,
+            "lineno": 182,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1269,11 +1305,11 @@
         "comment": "/**\n   * The ID of the guild that this audit log belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4491,
-                4546
+                4656,
+                4711
             ],
             "filename": "AuditLog.js",
-            "lineno": 190,
+            "lineno": 192,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1305,11 +1341,11 @@
         "comment": "/**\n   * The type of action that occurred.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4649,
-                4701
+                4814,
+                4866
             ],
             "filename": "AuditLog.js",
-            "lineno": 200,
+            "lineno": 202,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1341,11 +1377,11 @@
         "comment": "/**\n   * The id of the target user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4798,
-                4881
+                4963,
+                5046
             ],
             "filename": "AuditLog.js",
-            "lineno": 210,
+            "lineno": 212,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1378,11 +1414,11 @@
         "comment": "/**\n   * The channel id involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5002,
-                5088
+                5167,
+                5253
             ],
             "filename": "AuditLog.js",
-            "lineno": 220,
+            "lineno": 222,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1415,11 +1451,11 @@
         "comment": "/**\n   * The guild that this audit log belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5199,
-                5275
+                5364,
+                5440
             ],
             "filename": "AuditLog.js",
-            "lineno": 230,
+            "lineno": 232,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1452,11 +1488,11 @@
         "comment": "/**\n   * The channel involved with this audit log entry.\n   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5463,
-                5543
+                5628,
+                5708
             ],
             "filename": "AuditLog.js",
-            "lineno": 240,
+            "lineno": 242,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1490,11 +1526,11 @@
         "comment": "/**\n   * The target user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5663,
-                5706
+                5828,
+                5871
             ],
             "filename": "AuditLog.js",
-            "lineno": 250,
+            "lineno": 252,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1527,11 +1563,11 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5830,
-                5919
+                5995,
+                6084
             ],
             "filename": "AuditLog.js",
-            "lineno": 260,
+            "lineno": 262,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1564,11 +1600,11 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6041,
-                6088
+                6206,
+                6253
             ],
             "filename": "AuditLog.js",
-            "lineno": 270,
+            "lineno": 272,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1601,11 +1637,11 @@
         "comment": "/**\n   * The reason for this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6195,
-                6238
+                6360,
+                6403
             ],
             "filename": "AuditLog.js",
-            "lineno": 280,
+            "lineno": 282,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1638,11 +1674,11 @@
         "comment": "/**\n   * The count of this type of audit log entry.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6351,
-                6392
+                6516,
+                6557
             ],
             "filename": "AuditLog.js",
-            "lineno": 290,
+            "lineno": 292,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1675,11 +1711,11 @@
         "comment": "/**\n   * The inactivity period for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6513,
-                6578
+                6678,
+                6743
             ],
             "filename": "AuditLog.js",
-            "lineno": 300,
+            "lineno": 302,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1712,11 +1748,11 @@
         "comment": "/**\n   * The number of members removed for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6707,
-                6767
+                6872,
+                6932
             ],
             "filename": "AuditLog.js",
-            "lineno": 310,
+            "lineno": 312,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1749,11 +1785,11 @@
         "comment": "/**\n   * The id of the overwritten entity.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6871,
-                6955
+                7036,
+                7120
             ],
             "filename": "AuditLog.js",
-            "lineno": 320,
+            "lineno": 322,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1786,11 +1822,11 @@
         "comment": "/**\n   * The type of the overwritten entity - role (\"0\") or member (\"1\")\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7089,
-                7143
+                7254,
+                7308
             ],
             "filename": "AuditLog.js",
-            "lineno": 330,
+            "lineno": 332,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1823,11 +1859,11 @@
         "comment": "/**\n   * The new voice channel status.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7243,
-                7286
+                7408,
+                7451
             ],
             "filename": "AuditLog.js",
-            "lineno": 340,
+            "lineno": 342,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1860,11 +1896,11 @@
         "comment": "/**\n   * The changes in this audit log entry.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7393,
-                7438
+                7558,
+                7603
             ],
             "filename": "AuditLog.js",
-            "lineno": 350,
+            "lineno": 352,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1897,11 +1933,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7480,
-                7540
+                7645,
+                7705
             ],
             "filename": "AuditLog.js",
-            "lineno": 358,
+            "lineno": 360,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1926,11 +1962,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7582,
-                7639
+                7747,
+                7804
             ],
             "filename": "AuditLog.js",
-            "lineno": 366,
+            "lineno": 368,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1955,11 +1991,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7822,
-                8928
+                7987,
+                9093
             ],
             "filename": "AuditLog.js",
-            "lineno": 377,
+            "lineno": 379,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2006,11 +2042,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8041,
-                8052
+                8206,
+                8217
             ],
             "filename": "AuditLog.js",
-            "lineno": 384,
+            "lineno": 386,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2030,11 +2066,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8064,
-                8086
+                8229,
+                8251
             ],
             "filename": "AuditLog.js",
-            "lineno": 385,
+            "lineno": 387,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2054,11 +2090,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8098,
-                8126
+                8263,
+                8291
             ],
             "filename": "AuditLog.js",
-            "lineno": 386,
+            "lineno": 388,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2078,11 +2114,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8138,
-                8175
+                8303,
+                8340
             ],
             "filename": "AuditLog.js",
-            "lineno": 387,
+            "lineno": 389,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2102,11 +2138,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8187,
-                8224
+                8352,
+                8389
             ],
             "filename": "AuditLog.js",
-            "lineno": 388,
+            "lineno": 390,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2126,11 +2162,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8236,
-                8255
+                8401,
+                8420
             ],
             "filename": "AuditLog.js",
-            "lineno": 389,
+            "lineno": 391,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2150,11 +2186,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8267,
-                8865
+                8432,
+                9030
             ],
             "filename": "AuditLog.js",
-            "lineno": 390,
+            "lineno": 392,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2174,11 +2210,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8290,
-                8329
+                8455,
+                8494
             ],
             "filename": "AuditLog.js",
-            "lineno": 391,
+            "lineno": 393,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2199,11 +2235,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8343,
-                8405
+                8508,
+                8570
             ],
             "filename": "AuditLog.js",
-            "lineno": 392,
+            "lineno": 394,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2224,11 +2260,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8419,
-                8562
+                8584,
+                8727
             ],
             "filename": "AuditLog.js",
-            "lineno": 393,
+            "lineno": 395,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2249,11 +2285,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8576,
-                8712
+                8741,
+                8877
             ],
             "filename": "AuditLog.js",
-            "lineno": 397,
+            "lineno": 399,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2274,11 +2310,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8726,
-                8757
+                8891,
+                8922
             ],
             "filename": "AuditLog.js",
-            "lineno": 401,
+            "lineno": 403,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2299,11 +2335,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8771,
-                8806
+                8936,
+                8971
             ],
             "filename": "AuditLog.js",
-            "lineno": 402,
+            "lineno": 404,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2324,11 +2360,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8820,
-                8852
+                8985,
+                9017
             ],
             "filename": "AuditLog.js",
-            "lineno": 403,
+            "lineno": 405,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2349,11 +2385,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8877,
-                8898
+                9042,
+                9063
             ],
             "filename": "AuditLog.js",
-            "lineno": 405,
+            "lineno": 407,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2373,11 +2409,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8932,
-                8956
+                9097,
+                9121
             ],
             "filename": "AuditLog.js",
-            "lineno": 412,
+            "lineno": 414,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

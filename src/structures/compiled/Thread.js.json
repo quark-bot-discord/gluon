@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 425,
-                3971
+                4054
             ],
             "filename": "Thread.js",
             "lineno": 12,
@@ -110,14 +110,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {String} guild_id The ID of the guild that this thread belongs to.\n   * @param {Boolean?} nocache Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
+        "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this thread belongs to.\n   * @param {Boolean?} options.nocache Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
         "meta": {
             "range": [
-                910,
-                1658
+                993,
+                1741
             ],
             "filename": "Thread.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -157,11 +157,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The ID of the guild that this thread belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -171,7 +180,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this thread should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ],
         "see": [
@@ -188,7 +197,7 @@
         "meta": {
             "range": [
                 425,
-                3971
+                4054
             ],
             "filename": "Thread.js",
             "lineno": 12,
@@ -239,11 +248,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The ID of the guild that this thread belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -253,7 +271,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this thread should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ]
     },
@@ -261,11 +279,11 @@
         "comment": "",
         "meta": {
             "range": [
-                938,
-                945
+                1021,
+                1028
             ],
             "filename": "Thread.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -285,11 +303,11 @@
         "comment": "",
         "meta": {
             "range": [
-                947,
-                962
+                1030,
+                1045
             ],
             "filename": "Thread.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -309,11 +327,11 @@
         "comment": "",
         "meta": {
             "range": [
-                969,
-                983
+                1052,
+                1066
             ],
             "filename": "Thread.js",
-            "lineno": 24,
+            "lineno": 25,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -333,11 +351,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1015,
-                1022
+                1098,
+                1105
             ],
             "filename": "Thread.js",
-            "lineno": 25,
+            "lineno": 26,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -357,11 +375,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1114,
-                1136
+                1197,
+                1219
             ],
             "filename": "Thread.js",
-            "lineno": 32,
+            "lineno": 33,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -389,11 +407,11 @@
         "comment": "/**\n     * The ID of the user who created this thread.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1248,
-                1287
+                1331,
+                1370
             ],
             "filename": "Thread.js",
-            "lineno": 39,
+            "lineno": 40,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -421,11 +439,11 @@
         "comment": "/**\n     * The ID of the text channel that this thread belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1411,
-                1452
+                1494,
+                1535
             ],
             "filename": "Thread.js",
-            "lineno": 46,
+            "lineno": 47,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -453,11 +471,11 @@
         "comment": "/**\n   * The ID of the member who created this thread.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1773,
-                1828
+                1856,
+                1911
             ],
             "filename": "Thread.js",
-            "lineno": 62,
+            "lineno": 63,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -489,11 +507,11 @@
         "comment": "/**\n   * The member who created this thread.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1934,
-                2009
+                2017,
+                2092
             ],
             "filename": "Thread.js",
-            "lineno": 72,
+            "lineno": 73,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -526,11 +544,11 @@
         "comment": "/**\n   * The ID of the text channel that this thread belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2134,
-                2191
+                2217,
+                2274
             ],
             "filename": "Thread.js",
-            "lineno": 82,
+            "lineno": 83,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -562,11 +580,11 @@
         "comment": "/**\n   * The text channel that this thread belongs to.\n   * @type {TextChannel?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2312,
-                2390
+                2395,
+                2473
             ],
             "filename": "Thread.js",
-            "lineno": 92,
+            "lineno": 93,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -599,11 +617,11 @@
         "comment": "/**\n   * Determines whether the thread should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2704,
-                3237
+                2787,
+                3320
             ],
             "filename": "Thread.js",
-            "lineno": 106,
+            "lineno": 107,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -661,11 +679,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3279,
-                3330
+                3362,
+                3413
             ],
             "filename": "Thread.js",
-            "lineno": 124,
+            "lineno": 125,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -690,11 +708,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3372,
-                3429
+                3455,
+                3512
             ],
             "filename": "Thread.js",
-            "lineno": 132,
+            "lineno": 133,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -719,11 +737,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3627,
-                3969
+                3710,
+                4052
             ],
             "filename": "Thread.js",
-            "lineno": 144,
+            "lineno": 145,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -771,11 +789,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3881,
-                3903
+                3964,
+                3986
             ],
             "filename": "Thread.js",
-            "lineno": 152,
+            "lineno": 153,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -795,11 +813,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3915,
-                3939
+                3998,
+                4022
             ],
             "filename": "Thread.js",
-            "lineno": 153,
+            "lineno": 154,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -819,11 +837,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3973,
-                3995
+                4056,
+                4078
             ],
             "filename": "Thread.js",
-            "lineno": 160,
+            "lineno": 161,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 269,
-                1647
+                1694
             ],
             "filename": "SlashCommand.js",
             "lineno": 10,
@@ -59,11 +59,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw interaction data from Discord.\n   */",
+        "comment": "/**\n   * Creates a slash command interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw interaction data from Discord.\n   */",
         "meta": {
             "range": [
-                452,
-                776
+                499,
+                823
             ],
             "filename": "SlashCommand.js",
             "lineno": 17,
@@ -82,6 +82,7 @@
                 "": null
             }
         },
+        "description": "Creates a slash command interaction structure.",
         "params": [
             {
                 "type": {
@@ -113,7 +114,7 @@
         "meta": {
             "range": [
                 269,
-                1647
+                1694
             ],
             "filename": "SlashCommand.js",
             "lineno": 10,
@@ -140,6 +141,7 @@
             "Interaction"
         ],
         "scope": "global",
+        "description": "Creates a slash command interaction structure.",
         "params": [
             {
                 "type": {
@@ -165,8 +167,8 @@
         "comment": "/**\n     * Raw slash command data from discord.\n     * @type {Object?}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}\n     * @private\n     */",
         "meta": {
             "range": [
-                749,
-                771
+                796,
+                818
             ],
             "filename": "SlashCommand.js",
             "lineno": 26,
@@ -201,8 +203,8 @@
         "comment": "/**\n   * The raw slash command data from Discord.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                887,
-                926
+                934,
+                973
             ],
             "filename": "SlashCommand.js",
             "lineno": 35,
@@ -238,8 +240,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                968,
-                1025
+                1015,
+                1072
             ],
             "filename": "SlashCommand.js",
             "lineno": 43,
@@ -267,8 +269,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1067,
-                1124
+                1114,
+                1171
             ],
             "filename": "SlashCommand.js",
             "lineno": 51,
@@ -296,8 +298,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                1322,
-                1645
+                1369,
+                1692
             ],
             "filename": "SlashCommand.js",
             "lineno": 63,
@@ -348,8 +350,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1576,
-                1587
+                1623,
+                1634
             ],
             "filename": "SlashCommand.js",
             "lineno": 71,
@@ -372,8 +374,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1599,
-                1615
+                1646,
+                1662
             ],
             "filename": "SlashCommand.js",
             "lineno": 72,
@@ -396,8 +398,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1649,
-                1677
+                1696,
+                1724
             ],
             "filename": "SlashCommand.js",
             "lineno": 79,

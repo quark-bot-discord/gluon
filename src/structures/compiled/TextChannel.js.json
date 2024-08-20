@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 418,
-                3165
+                3248
             ],
             "filename": "TextChannel.js",
             "lineno": 12,
@@ -60,14 +60,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a text channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {String} guild_id The ID of the guild that this channel belongs to.\n   * @param {Boolean?} nocache Whether this channel should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n   */",
+        "comment": "/**\n   * Creates the structure for a text channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this channel belongs to.\n   * @param {Boolean?} options.nocache Whether this channel should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n   */",
         "meta": {
             "range": [
-                891,
-                1485
+                974,
+                1568
             ],
             "filename": "TextChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -107,11 +107,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The ID of the guild that this channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -121,7 +130,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this channel should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ],
         "see": [
@@ -138,7 +147,7 @@
         "meta": {
             "range": [
                 418,
-                3165
+                3248
             ],
             "filename": "TextChannel.js",
             "lineno": 12,
@@ -189,11 +198,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The ID of the guild that this channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -203,7 +221,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this channel should be cached or not.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ]
     },
@@ -211,11 +229,11 @@
         "comment": "",
         "meta": {
             "range": [
-                919,
-                926
+                1002,
+                1009
             ],
             "filename": "TextChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -235,11 +253,11 @@
         "comment": "",
         "meta": {
             "range": [
-                928,
-                943
+                1011,
+                1026
             ],
             "filename": "TextChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -259,11 +277,11 @@
         "comment": "",
         "meta": {
             "range": [
-                950,
-                964
+                1033,
+                1047
             ],
             "filename": "TextChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -283,11 +301,11 @@
         "comment": "",
         "meta": {
             "range": [
-                996,
-                1003
+                1079,
+                1086
             ],
             "filename": "TextChannel.js",
-            "lineno": 23,
+            "lineno": 24,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -307,11 +325,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1095,
-                1117
+                1178,
+                1200
             ],
             "filename": "TextChannel.js",
-            "lineno": 30,
+            "lineno": 31,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -339,11 +357,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1328,
-                1333
+                1411,
+                1416
             ],
             "filename": "TextChannel.js",
-            "lineno": 39,
+            "lineno": 40,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -365,11 +383,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1431,
-                1449
+                1514,
+                1532
             ],
             "filename": "TextChannel.js",
-            "lineno": 41,
+            "lineno": 42,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -389,11 +407,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1461,
-                1468
+                1544,
+                1551
             ],
             "filename": "TextChannel.js",
-            "lineno": 42,
+            "lineno": 43,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -413,11 +431,11 @@
         "comment": "/**\n   * Bulk deletes all the message IDs provided.\n   * @param {String[]} messages An array of message IDs, as strings.\n   * @returns {Promise<void>}\n   * @method\n   * @async\n   * @public\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                1719,
-                2496
+                1802,
+                2579
             ],
             "filename": "TextChannel.js",
-            "lineno": 55,
+            "lineno": 56,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -476,11 +494,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1748,
-                1754
+                1831,
+                1837
             ],
             "filename": "TextChannel.js",
-            "lineno": 55,
+            "lineno": 56,
             "columnno": 31,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -500,11 +518,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2283,
-                2292
+                2366,
+                2375
             ],
             "filename": "TextChannel.js",
-            "lineno": 73,
+            "lineno": 74,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -526,11 +544,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2299,
-                2323
+                2382,
+                2406
             ],
             "filename": "TextChannel.js",
-            "lineno": 75,
+            "lineno": 76,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -553,11 +571,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2342,
-                2377
+                2425,
+                2460
             ],
             "filename": "TextChannel.js",
-            "lineno": 77,
+            "lineno": 78,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -580,11 +598,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2538,
-                2594
+                2621,
+                2677
             ],
             "filename": "TextChannel.js",
-            "lineno": 90,
+            "lineno": 91,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -609,11 +627,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2636,
-                2693
+                2719,
+                2776
             ],
             "filename": "TextChannel.js",
-            "lineno": 98,
+            "lineno": 99,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -638,11 +656,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2891,
-                3163
+                2974,
+                3246
             ],
             "filename": "TextChannel.js",
-            "lineno": 110,
+            "lineno": 111,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -690,11 +708,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3167,
-                3194
+                3250,
+                3277
             ],
             "filename": "TextChannel.js",
-            "lineno": 124,
+            "lineno": 125,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

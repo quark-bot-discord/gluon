@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 213,
-                3383
+                3466
             ],
             "filename": "VoiceChannel.js",
             "lineno": 10,
@@ -132,14 +132,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {String} guild_id The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} nocache Whether the voice channel should be cached.\n   */",
+        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} options.nocache Whether the voice channel should be cached.\n   */",
         "meta": {
             "range": [
-                636,
-                2160
+                719,
+                2243
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -179,11 +179,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -193,7 +202,7 @@
                 },
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ],
         "name": "VoiceChannel",
@@ -207,7 +216,7 @@
         "meta": {
             "range": [
                 213,
-                3383
+                3466
             ],
             "filename": "VoiceChannel.js",
             "lineno": 10,
@@ -255,11 +264,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -269,7 +287,7 @@
                 },
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ]
     },
@@ -277,11 +295,11 @@
         "comment": "",
         "meta": {
             "range": [
-                664,
-                671
+                747,
+                754
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -301,11 +319,11 @@
         "comment": "",
         "meta": {
             "range": [
-                673,
-                688
+                756,
+                771
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -325,11 +343,11 @@
         "comment": "",
         "meta": {
             "range": [
-                695,
-                709
+                778,
+                792
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 22,
+            "lineno": 23,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -349,11 +367,11 @@
         "comment": "",
         "meta": {
             "range": [
-                741,
-                748
+                824,
+                831
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 23,
+            "lineno": 24,
             "columnno": 26,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -373,11 +391,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                840,
-                862
+                923,
+                945
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 30,
+            "lineno": 31,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -405,11 +423,11 @@
         "comment": "",
         "meta": {
             "range": [
-                875,
-                927
+                958,
+                1010
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 32,
+            "lineno": 33,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -431,11 +449,11 @@
         "comment": "/**\n       * The bitrate of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                1076,
-                1104
+                1159,
+                1187
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 40,
+            "lineno": 41,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -463,11 +481,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1162,
-                1194
+                1245,
+                1277
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 42,
+            "lineno": 43,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -489,11 +507,11 @@
         "comment": "/**\n       * The user limit of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                1349,
-                1383
+                1432,
+                1466
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 50,
+            "lineno": 51,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -521,11 +539,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1455,
-                1492
+                1538,
+                1575
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 52,
+            "lineno": 53,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -547,11 +565,11 @@
         "comment": "/**\n       * The region of the voice channel.\n       * @type {String}\n       * @private\n       */",
         "meta": {
             "range": [
-                1649,
-                1683
+                1732,
+                1766
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 60,
+            "lineno": 61,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -579,11 +597,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1755,
-                1792
+                1838,
+                1875
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 62,
+            "lineno": 63,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -605,11 +623,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2003,
-                2008
+                2086,
+                2091
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 71,
+            "lineno": 72,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -631,11 +649,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2106,
-                2124
+                2189,
+                2207
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 73,
+            "lineno": 74,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -655,11 +673,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2136,
-                2143
+                2219,
+                2226
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 74,
+            "lineno": 75,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -679,11 +697,11 @@
         "comment": "/**\n   * The bitrate of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2257,
-                2302
+                2340,
+                2385
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 84,
+            "lineno": 85,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -715,11 +733,11 @@
         "comment": "/**\n   * The user limit of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2402,
-                2452
+                2485,
+                2535
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 94,
+            "lineno": 95,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -751,11 +769,11 @@
         "comment": "/**\n   * The region of the voice channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2554,
-                2604
+                2637,
+                2687
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 104,
+            "lineno": 105,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -787,11 +805,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2646,
-                2703
+                2729,
+                2786
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 112,
+            "lineno": 113,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -816,11 +834,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2745,
-                2802
+                2828,
+                2885
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 120,
+            "lineno": 121,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -845,11 +863,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3000,
-                3381
+                3083,
+                3464
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 132,
+            "lineno": 133,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -897,11 +915,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3254,
-                3275
+                3337,
+                3358
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 140,
+            "lineno": 141,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -921,11 +939,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3287,
-                3313
+                3370,
+                3396
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 141,
+            "lineno": 142,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -945,11 +963,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3325,
-                3351
+                3408,
+                3434
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 142,
+            "lineno": 143,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -969,11 +987,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3385,
-                3413
+                3468,
+                3496
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 149,
+            "lineno": 150,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

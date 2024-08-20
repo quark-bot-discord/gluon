@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 910,
-                22254
+                22348
             ],
             "filename": "Member.js",
             "lineno": 24,
@@ -307,14 +307,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a guild member.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw member data from Discord.\n   * @param {String} user_id The id of the member.\n   * @param {String} guild_id The id of the guild that the member belongs to.\n   * @param {User?} user A user object for this member.\n   * @param {Boolean?} nocache Whether this member should be cached.\n   */",
+        "comment": "/**\n   * Creates the structure for a guild member.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw member data from Discord.\n   * @param {Object} options Additional options for the member.\n   * @param {String} options.userId The id of the member.\n   * @param {String} options.guildId The id of the guild that the member belongs to.\n   * @param {User?} options.user A user object for this member.\n   * @param {Boolean?} options.nocache Whether this member should be cached.\n   */",
         "meta": {
             "range": [
-                1497,
-                5135
+                1591,
+                5229
             ],
             "filename": "Member.js",
-            "lineno": 45,
+            "lineno": 46,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -354,11 +354,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for the member.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the member.",
-                "name": "user_id"
+                "name": "options.userId"
             },
             {
                 "type": {
@@ -367,7 +376,7 @@
                     ]
                 },
                 "description": "The id of the guild that the member belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -377,7 +386,7 @@
                 },
                 "nullable": true,
                 "description": "A user object for this member.",
-                "name": "user"
+                "name": "options.user"
             },
             {
                 "type": {
@@ -387,7 +396,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this member should be cached.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ],
         "name": "Member",
@@ -401,7 +410,7 @@
         "meta": {
             "range": [
                 910,
-                22254
+                22348
             ],
             "filename": "Member.js",
             "lineno": 24,
@@ -449,11 +458,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for the member.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the member.",
-                "name": "user_id"
+                "name": "options.userId"
             },
             {
                 "type": {
@@ -462,7 +480,7 @@
                     ]
                 },
                 "description": "The id of the guild that the member belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -472,7 +490,7 @@
                 },
                 "nullable": true,
                 "description": "A user object for this member.",
-                "name": "user"
+                "name": "options.user"
             },
             {
                 "type": {
@@ -482,7 +500,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this member should be cached.",
-                "name": "nocache"
+                "name": "options.nocache"
             }
         ]
     },
@@ -490,11 +508,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1538,
-                1544
+                1632,
+                1638
             ],
             "filename": "Member.js",
-            "lineno": 48,
+            "lineno": 49,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -514,11 +532,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1546,
-                1553
+                1640,
+                1647
             ],
             "filename": "Member.js",
-            "lineno": 48,
+            "lineno": 49,
             "columnno": 14,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -538,11 +556,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1555,
-                1559
+                1649,
+                1653
             ],
             "filename": "Member.js",
-            "lineno": 48,
+            "lineno": 49,
             "columnno": 23,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -562,11 +580,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1561,
-                1576
+                1655,
+                1670
             ],
             "filename": "Member.js",
-            "lineno": 48,
+            "lineno": 49,
             "columnno": 29,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -586,11 +604,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1589,
-                1603
+                1683,
+                1697
             ],
             "filename": "Member.js",
-            "lineno": 49,
+            "lineno": 50,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -610,11 +628,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1704,
-                1726
+                1798,
+                1820
             ],
             "filename": "Member.js",
-            "lineno": 57,
+            "lineno": 58,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -642,11 +660,11 @@
         "comment": "/**\n     * The id of the guild that this member belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1843,
-                1876
+                1937,
+                1970
             ],
             "filename": "Member.js",
-            "lineno": 64,
+            "lineno": 65,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -674,11 +692,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1889,
-                1939
+                1983,
+                2033
             ],
             "filename": "Member.js",
-            "lineno": 66,
+            "lineno": 67,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -700,11 +718,11 @@
         "comment": "/**\n     * The id of the member.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                2029,
-                2055
+                2123,
+                2149
             ],
             "filename": "Member.js",
-            "lineno": 73,
+            "lineno": 74,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -732,11 +750,11 @@
         "comment": "/**\n       * The user object for this member.\n       * @type {User?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2186,
-                2246
+                2280,
+                2340
             ],
             "filename": "Member.js",
-            "lineno": 81,
+            "lineno": 82,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -765,11 +783,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2236,
-                2243
+                2330,
+                2337
             ],
             "filename": "Member.js",
-            "lineno": 81,
+            "lineno": 82,
             "columnno": 56,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -789,11 +807,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2277,
-                2303
+                2371,
+                2397
             ],
             "filename": "Member.js",
-            "lineno": 82,
+            "lineno": 83,
             "columnno": 29,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -815,11 +833,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2324,
-                2341
+                2418,
+                2435
             ],
             "filename": "Member.js",
-            "lineno": 83,
+            "lineno": 84,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -841,11 +859,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2352,
-                2404
+                2446,
+                2498
             ],
             "filename": "Member.js",
-            "lineno": 84,
+            "lineno": 85,
             "columnno": 9,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -867,11 +885,11 @@
         "comment": "/**\n       * The nickname of this member.\n       * @type {String?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2547,
-                2569
+                2641,
+                2663
             ],
             "filename": "Member.js",
-            "lineno": 92,
+            "lineno": 93,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -900,11 +918,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2652,
-                2678
+                2746,
+                2772
             ],
             "filename": "Member.js",
-            "lineno": 94,
+            "lineno": 95,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -926,11 +944,11 @@
         "comment": "/**\n       * The UNIX timestamp for when this member joined the guild.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2841,
-                2906
+                2935,
+                3000
             ],
             "filename": "Member.js",
-            "lineno": 102,
+            "lineno": 103,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -959,11 +977,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2941,
-                2976
+                3035,
+                3070
             ],
             "filename": "Member.js",
-            "lineno": 103,
+            "lineno": 104,
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -985,11 +1003,11 @@
         "comment": "/**\n     * The UNIX timestamp for when this member's timeout expires, if applicable.\n     * @type {Number?}\n     * @private\n     */",
         "meta": {
             "range": [
-                3119,
-                3277
+                3213,
+                3371
             ],
             "filename": "Member.js",
-            "lineno": 110,
+            "lineno": 111,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1018,11 +1036,11 @@
         "comment": "/**\n       * The flags for this user.\n       * @type {Number}\n       * @private\n       * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}\n       */",
         "meta": {
             "range": [
-                3534,
-                3558
+                3628,
+                3652
             ],
             "filename": "Member.js",
-            "lineno": 121,
+            "lineno": 122,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1053,11 +1071,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3626,
-                3654
+                3720,
+                3748
             ],
             "filename": "Member.js",
-            "lineno": 123,
+            "lineno": 124,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1079,11 +1097,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3665,
-                3680
+                3759,
+                3774
             ],
             "filename": "Member.js",
-            "lineno": 124,
+            "lineno": 125,
             "columnno": 9,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1105,11 +1123,11 @@
         "comment": "/**\n     * The attributes for this member.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                3780,
-                3821
+                3874,
+                3915
             ],
             "filename": "Member.js",
-            "lineno": 131,
+            "lineno": 132,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1137,11 +1155,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3890,
-                3919
+                3984,
+                4013
             ],
             "filename": "Member.js",
-            "lineno": 134,
+            "lineno": 135,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1163,11 +1181,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4008,
-                4037
+                4102,
+                4131
             ],
             "filename": "Member.js",
-            "lineno": 136,
+            "lineno": 137,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1189,11 +1207,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4107,
-                4136
+                4201,
+                4230
             ],
             "filename": "Member.js",
-            "lineno": 139,
+            "lineno": 140,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1215,11 +1233,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4275,
-                4372
+                4369,
+                4466
             ],
             "filename": "Member.js",
-            "lineno": 147,
+            "lineno": 148,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1241,11 +1259,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4452,
-                4484
+                4546,
+                4578
             ],
             "filename": "Member.js",
-            "lineno": 151,
+            "lineno": 152,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1267,11 +1285,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4724,
-                4741
+                4818,
+                4835
             ],
             "filename": "Member.js",
-            "lineno": 163,
+            "lineno": 164,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1293,11 +1311,11 @@
         "comment": "",
         "meta": {
             "range": [
-                4758,
-                4763
+                4852,
+                4857
             ],
             "filename": "Member.js",
-            "lineno": 164,
+            "lineno": 165,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1319,11 +1337,11 @@
         "comment": "/**\n   * The id of the member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5226,
-                5270
+                5320,
+                5364
             ],
             "filename": "Member.js",
-            "lineno": 186,
+            "lineno": 187,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1355,11 +1373,11 @@
         "comment": "/**\n   * The id of the guild that this member belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5388,
-                5443
+                5482,
+                5537
             ],
             "filename": "Member.js",
-            "lineno": 196,
+            "lineno": 197,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1391,11 +1409,11 @@
         "comment": "/**\n   * The guild that this member belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5551,
-                5627
+                5645,
+                5721
             ],
             "filename": "Member.js",
-            "lineno": 206,
+            "lineno": 207,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1428,11 +1446,11 @@
         "comment": "/**\n   * The nickname of the member.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5725,
-                5764
+                5819,
+                5858
             ],
             "filename": "Member.js",
-            "lineno": 216,
+            "lineno": 217,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1465,11 +1483,11 @@
         "comment": "/**\n   * The UNIX timestamp for when this member joined the guild.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5892,
-                5940
+                5986,
+                6034
             ],
             "filename": "Member.js",
-            "lineno": 226,
+            "lineno": 227,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1502,11 +1520,11 @@
         "comment": "/**\n   * The UNIX timestamp for when this member's timeout expires, if applicable.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6084,
-                6155
+                6178,
+                6249
             ],
             "filename": "Member.js",
-            "lineno": 236,
+            "lineno": 237,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1539,11 +1557,11 @@
         "comment": "/**\n   * The flags for this user.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6249,
-                6290
+                6343,
+                6384
             ],
             "filename": "Member.js",
-            "lineno": 246,
+            "lineno": 247,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1575,11 +1593,11 @@
         "comment": "/**\n   * The member's roles.\n   * @readonly\n   * @type {Array<Role>}\n   * @public\n   */",
         "meta": {
             "range": [
-                6384,
-                6900
+                6478,
+                6994
             ],
             "filename": "Member.js",
-            "lineno": 256,
+            "lineno": 257,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1611,11 +1629,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6556,
-                6566
+                6650,
+                6660
             ],
             "filename": "Member.js",
-            "lineno": 265,
+            "lineno": 266,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1637,11 +1655,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6579,
-                6628
+                6673,
+                6722
             ],
             "filename": "Member.js",
-            "lineno": 267,
+            "lineno": 268,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1663,11 +1681,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6730,
-                6735
+                6824,
+                6829
             ],
             "filename": "Member.js",
-            "lineno": 272,
+            "lineno": 273,
             "columnno": 13,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1689,11 +1707,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6781,
-                6836
+                6875,
+                6930
             ],
             "filename": "Member.js",
-            "lineno": 273,
+            "lineno": 274,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1715,11 +1733,11 @@
         "comment": "/**\n   * The position of the member's highest role.\n   * @readonly\n   * @type {Number}\n   * @public\n   */",
         "meta": {
             "range": [
-                7012,
-                7268
+                7106,
+                7362
             ],
             "filename": "Member.js",
-            "lineno": 286,
+            "lineno": 287,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1751,11 +1769,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7048,
-                7067
+                7142,
+                7161
             ],
             "filename": "Member.js",
-            "lineno": 287,
+            "lineno": 288,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1777,11 +1795,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7080,
-                7098
+                7174,
+                7192
             ],
             "filename": "Member.js",
-            "lineno": 289,
+            "lineno": 290,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1803,11 +1821,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7114,
-                7119
+                7208,
+                7213
             ],
             "filename": "Member.js",
-            "lineno": 291,
+            "lineno": 292,
             "columnno": 13,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1829,11 +1847,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7199,
-                7234
+                7293,
+                7328
             ],
             "filename": "Member.js",
-            "lineno": 293,
+            "lineno": 294,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1856,11 +1874,11 @@
         "comment": "/**\n   * The overall calculated permissions for this member.\n   * @readonly\n   * @type {BigInt}\n   * @public\n   */",
         "meta": {
             "range": [
-                7389,
-                7533
+                7483,
+                7627
             ],
             "filename": "Member.js",
-            "lineno": 304,
+            "lineno": 305,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1892,11 +1910,11 @@
         "comment": "/**\n   * Whether the member has joined the guild before.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                7651,
-                7750
+                7745,
+                7844
             ],
             "filename": "Member.js",
-            "lineno": 316,
+            "lineno": 317,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1928,11 +1946,11 @@
         "comment": "/**\n   * The user object for this member.\n   * @type {User}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7850,
-                7889
+                7944,
+                7983
             ],
             "filename": "Member.js",
-            "lineno": 326,
+            "lineno": 327,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1964,11 +1982,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8407,
-                8449
+                8501,
+                8543
             ],
             "filename": "Member.js",
-            "lineno": 352,
+            "lineno": 353,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1990,11 +2008,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8538,
-                8573
+                8632,
+                8667
             ],
             "filename": "Member.js",
-            "lineno": 356,
+            "lineno": 357,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2017,11 +2035,11 @@
         "comment": "/**\n   * The url of the member's avatar.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                8706,
-                8866
+                8800,
+                8960
             ],
             "filename": "Member.js",
-            "lineno": 367,
+            "lineno": 368,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2053,11 +2071,11 @@
         "comment": "/**\n   * Whether the user has not yet passed the guild's membership screening requirements.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                9019,
-                9095
+                9113,
+                9189
             ],
             "filename": "Member.js",
-            "lineno": 380,
+            "lineno": 381,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2089,11 +2107,11 @@
         "comment": "/**\n   * Whether the user has an animated avatar or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                9213,
-                9298
+                9307,
+                9392
             ],
             "filename": "Member.js",
-            "lineno": 390,
+            "lineno": 391,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2125,11 +2143,11 @@
         "comment": "/**\n   * The mention string for the member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                9402,
-                9460
+                9496,
+                9554
             ],
             "filename": "Member.js",
-            "lineno": 400,
+            "lineno": 401,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2161,11 +2179,11 @@
         "comment": "/**\n   * The hash name for the member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                9559,
-                9633
+                9653,
+                9727
             ],
             "filename": "Member.js",
-            "lineno": 410,
+            "lineno": 411,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2197,11 +2215,11 @@
         "comment": "/**\n   * Returns the mention string for the member.\n   * @param {String} userId The id of the user to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                9818,
-                9975
+                9912,
+                10069
             ],
             "filename": "Member.js",
-            "lineno": 422,
+            "lineno": 423,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2248,11 +2266,11 @@
         "comment": "/**\n   * Returns the avatar url for the member.\n   * @param {String} id The id of the user.\n   * @param {String} guild_id The id of the guild the user belongs to.\n   * @param {String?} hash The avatar hash of the user.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                10268,
-                10789
+                10362,
+                10883
             ],
             "filename": "Member.js",
-            "lineno": 438,
+            "lineno": 439,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2320,11 +2338,11 @@
         "comment": "/**\n   * Adds a role to the member.\n   * @param {String} role_id The id of the role to add to the member.\n   * @param {Object?} options The options for adding the role to the member.\n   * @param {String?} options.reason The reason for adding the role to the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                11168,
-                11309
+                11262,
+                11403
             ],
             "filename": "Member.js",
-            "lineno": 463,
+            "lineno": 464,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2403,11 +2421,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11193,
-                11199
+                11287,
+                11293
             ],
             "filename": "Member.js",
-            "lineno": 463,
+            "lineno": 464,
             "columnno": 27,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2427,11 +2445,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11290,
-                11296
+                11384,
+                11390
             ],
             "filename": "Member.js",
-            "lineno": 465,
+            "lineno": 466,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2451,11 +2469,11 @@
         "comment": "/**\n   * Removes a role from the member.\n   * @param {String} role_id The id of the role to remove from the member.\n   * @param {Object?} options The options for removing the role from the member.\n   * @param {String?} options.reason The reason for removing the role from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                11706,
-                11853
+                11800,
+                11947
             ],
             "filename": "Member.js",
-            "lineno": 480,
+            "lineno": 481,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2534,11 +2552,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11734,
-                11740
+                11828,
+                11834
             ],
             "filename": "Member.js",
-            "lineno": 480,
+            "lineno": 481,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2558,11 +2576,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11834,
-                11840
+                11928,
+                11934
             ],
             "filename": "Member.js",
-            "lineno": 482,
+            "lineno": 483,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2582,11 +2600,11 @@
         "comment": "/**\n   * Adds a timeout to the member.\n   * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.\n   * @param {Object?} options The options for timing out the member.\n   * @param {String?} options.reason The reason for timing out the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                12245,
-                13000
+                12339,
+                13094
             ],
             "filename": "Member.js",
-            "lineno": 497,
+            "lineno": 498,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2665,11 +2683,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12279,
-                12285
+                12373,
+                12379
             ],
             "filename": "Member.js",
-            "lineno": 497,
+            "lineno": 498,
             "columnno": 36,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2689,11 +2707,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12754,
-                12763
+                12848,
+                12857
             ],
             "filename": "Member.js",
-            "lineno": 512,
+            "lineno": 513,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2715,11 +2733,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12782,
-                12817
+                12876,
+                12911
             ],
             "filename": "Member.js",
-            "lineno": 514,
+            "lineno": 515,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2742,11 +2760,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12824,
-                12873
+                12918,
+                12967
             ],
             "filename": "Member.js",
-            "lineno": 516,
+            "lineno": 517,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2769,11 +2787,11 @@
         "comment": "/**\n   * Removes a timeout from the member.\n   * @param {Object?} options The options for untiming out the member.\n   * @param {String?} options.reason The reason for removing the time out from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                13319,
-                13932
+                13413,
+                14026
             ],
             "filename": "Member.js",
-            "lineno": 535,
+            "lineno": 536,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2842,11 +2860,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13341,
-                13347
+                13435,
+                13441
             ],
             "filename": "Member.js",
-            "lineno": 535,
+            "lineno": 536,
             "columnno": 24,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2866,11 +2884,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13695,
-                13704
+                13789,
+                13798
             ],
             "filename": "Member.js",
-            "lineno": 547,
+            "lineno": 548,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2892,11 +2910,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13723,
-                13758
+                13817,
+                13852
             ],
             "filename": "Member.js",
-            "lineno": 549,
+            "lineno": 550,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2919,11 +2937,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13765,
-                13805
+                13859,
+                13899
             ],
             "filename": "Member.js",
-            "lineno": 551,
+            "lineno": 552,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -2946,11 +2964,11 @@
         "comment": "/**\n   * Updates the member's roles.\n   * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.\n   * @param {Object?} options The options for updating the member's roles.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                14261,
-                15059
+                14355,
+                15153
             ],
             "filename": "Member.js",
-            "lineno": 570,
+            "lineno": 571,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3019,11 +3037,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14292,
-                14298
+                14386,
+                14392
             ],
             "filename": "Member.js",
-            "lineno": 570,
+            "lineno": 571,
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3043,11 +3061,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14813,
-                14822
+                14907,
+                14916
             ],
             "filename": "Member.js",
-            "lineno": 588,
+            "lineno": 589,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3069,11 +3087,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14841,
-                14876
+                14935,
+                14970
             ],
             "filename": "Member.js",
-            "lineno": 590,
+            "lineno": 591,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3096,11 +3114,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14883,
-                14932
+                14977,
+                15026
             ],
             "filename": "Member.js",
-            "lineno": 592,
+            "lineno": 593,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3123,11 +3141,11 @@
         "comment": "/**\n   * Determines whether the member should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                15358,
-                15890
+                15452,
+                15984
             ],
             "filename": "Member.js",
-            "lineno": 610,
+            "lineno": 611,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3184,11 +3202,11 @@
         "comment": "/**\n   * Returns the hash name for the message.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} memberId The id of the member.\n   * @returns {String}\n   */",
         "meta": {
             "range": [
-                16103,
-                16399
+                16197,
+                16493
             ],
             "filename": "Member.js",
-            "lineno": 630,
+            "lineno": 631,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3244,11 +3262,11 @@
         "comment": "/**\n   * Decrypts a member.\n   * @param {Client} client The client instance.\n   * @param {String} data The encrypted message data.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} userId The id of the member.\n   * @returns {Member}\n   */",
         "meta": {
             "range": [
-                16693,
-                17273
+                16787,
+                17367
             ],
             "filename": "Member.js",
-            "lineno": 646,
+            "lineno": 647,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3324,11 +3342,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17222,
-                17236
+                17316,
+                17330
             ],
             "filename": "Member.js",
-            "lineno": 656,
+            "lineno": 657,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3348,11 +3366,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17244,
-                17260
+                17338,
+                17354
             ],
             "filename": "Member.js",
-            "lineno": 657,
+            "lineno": 658,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3372,11 +3390,11 @@
         "comment": "/**\n   * Adds a role to a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to add.\n   * @param {Object} options The options for adding the role.\n   * @param {String} options.reason The reason for adding the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                17791,
-                18706
+                17885,
+                18800
             ],
             "filename": "Member.js",
-            "lineno": 675,
+            "lineno": 676,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3482,11 +3500,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17847,
-                17853
+                17941,
+                17947
             ],
             "filename": "Member.js",
-            "lineno": 675,
+            "lineno": 676,
             "columnno": 58,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3506,11 +3524,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18516,
-                18525
+                18610,
+                18619
             ],
             "filename": "Member.js",
-            "lineno": 693,
+            "lineno": 694,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3532,11 +3550,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18544,
-                18579
+                18638,
+                18673
             ],
             "filename": "Member.js",
-            "lineno": 695,
+            "lineno": 696,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3559,11 +3577,11 @@
         "comment": "/**\n   * Removes a role from a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to remove.\n   * @param {Object} options The options for removing the role.\n   * @param {String} options.reason The reason for removing the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                19236,
-                20155
+                19330,
+                20249
             ],
             "filename": "Member.js",
-            "lineno": 718,
+            "lineno": 719,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3669,11 +3687,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19295,
-                19301
+                19389,
+                19395
             ],
             "filename": "Member.js",
-            "lineno": 718,
+            "lineno": 719,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3693,11 +3711,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19964,
-                19973
+                20058,
+                20067
             ],
             "filename": "Member.js",
-            "lineno": 736,
+            "lineno": 737,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3719,11 +3737,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19992,
-                20027
+                20086,
+                20121
             ],
             "filename": "Member.js",
-            "lineno": 738,
+            "lineno": 739,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3746,11 +3764,11 @@
         "comment": "/**\n   * Encrypts the member.\n   * @returns {String}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                20246,
-                20319
+                20340,
+                20413
             ],
             "filename": "Member.js",
-            "lineno": 753,
+            "lineno": 754,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3785,11 +3803,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                20361,
-                20412
+                20455,
+                20506
             ],
             "filename": "Member.js",
-            "lineno": 761,
+            "lineno": 762,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3814,11 +3832,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                20454,
-                20511
+                20548,
+                20605
             ],
             "filename": "Member.js",
-            "lineno": 769,
+            "lineno": 770,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3843,11 +3861,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                20694,
-                22252
+                20788,
+                22346
             ],
             "filename": "Member.js",
-            "lineno": 780,
+            "lineno": 781,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3894,11 +3912,11 @@
         "comment": "",
         "meta": {
             "range": [
-                20852,
-                20882
+                20946,
+                20976
             ],
             "filename": "Member.js",
-            "lineno": 785,
+            "lineno": 786,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3918,11 +3936,11 @@
         "comment": "",
         "meta": {
             "range": [
-                20894,
-                20909
+                20988,
+                21003
             ],
             "filename": "Member.js",
-            "lineno": 786,
+            "lineno": 787,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3942,11 +3960,11 @@
         "comment": "",
         "meta": {
             "range": [
-                20921,
-                20980
+                21015,
+                21074
             ],
             "filename": "Member.js",
-            "lineno": 787,
+            "lineno": 788,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3966,11 +3984,11 @@
         "comment": "",
         "meta": {
             "range": [
-                20992,
-                21025
+                21086,
+                21119
             ],
             "filename": "Member.js",
-            "lineno": 788,
+            "lineno": 789,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3990,11 +4008,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21037,
-                21074
+                21131,
+                21168
             ],
             "filename": "Member.js",
-            "lineno": 789,
+            "lineno": 790,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4014,11 +4032,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21086,
-                21269
+                21180,
+                21363
             ],
             "filename": "Member.js",
-            "lineno": 790,
+            "lineno": 791,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4038,11 +4056,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21281,
-                21391
+                21375,
+                21485
             ],
             "filename": "Member.js",
-            "lineno": 795,
+            "lineno": 796,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4062,11 +4080,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21403,
-                21420
+                21497,
+                21514
             ],
             "filename": "Member.js",
-            "lineno": 798,
+            "lineno": 799,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4086,11 +4104,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21432,
-                21462
+                21526,
+                21556
             ],
             "filename": "Member.js",
-            "lineno": 799,
+            "lineno": 800,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4110,11 +4128,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21573,
-                21603
+                21667,
+                21697
             ],
             "filename": "Member.js",
-            "lineno": 805,
+            "lineno": 806,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4134,11 +4152,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21615,
-                21630
+                21709,
+                21724
             ],
             "filename": "Member.js",
-            "lineno": 806,
+            "lineno": 807,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4158,11 +4176,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21642,
-                21749
+                21736,
+                21843
             ],
             "filename": "Member.js",
-            "lineno": 807,
+            "lineno": 808,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4182,11 +4200,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21761,
-                21794
+                21855,
+                21888
             ],
             "filename": "Member.js",
-            "lineno": 810,
+            "lineno": 811,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4206,11 +4224,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21806,
-                21843
+                21900,
+                21937
             ],
             "filename": "Member.js",
-            "lineno": 811,
+            "lineno": 812,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4230,11 +4248,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21855,
-                22038
+                21949,
+                22132
             ],
             "filename": "Member.js",
-            "lineno": 812,
+            "lineno": 813,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4254,11 +4272,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22050,
-                22160
+                22144,
+                22254
             ],
             "filename": "Member.js",
-            "lineno": 817,
+            "lineno": 818,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4278,11 +4296,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22172,
-                22189
+                22266,
+                22283
             ],
             "filename": "Member.js",
-            "lineno": 820,
+            "lineno": 821,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4302,11 +4320,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22201,
-                22222
+                22295,
+                22316
             ],
             "filename": "Member.js",
-            "lineno": 821,
+            "lineno": 822,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4326,11 +4344,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22256,
-                22278
+                22350,
+                22372
             ],
             "filename": "Member.js",
-            "lineno": 828,
+            "lineno": 829,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

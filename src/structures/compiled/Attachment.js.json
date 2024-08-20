@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 240,
-                3485
+                3647
             ],
             "filename": "Attachment.js",
             "lineno": 8,
@@ -182,14 +182,14 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates a structure for an attachment.\n   * @param {Client} client The client instance.\n   * @param {Object} data Attachment data from Discord.\n   */",
+        "comment": "/**\n   * Creates a structure for an attachment.\n   * @param {Client} client The client instance.\n   * @param {Object} data Attachment data from Discord.\n   * @param {Object} options Additional options for the attachment.\n   * @param {String} options.channelId The ID of the channel that this attachment belongs to.\n   */",
         "meta": {
             "range": [
-                490,
-                1560
+                652,
+                1722
             ],
             "filename": "Attachment.js",
-            "lineno": 21,
+            "lineno": 23,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -225,6 +225,24 @@
                 },
                 "description": "Attachment data from Discord.",
                 "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for the attachment.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the channel that this attachment belongs to.",
+                "name": "options.channelId"
             }
         ],
         "name": "Attachment",
@@ -238,7 +256,7 @@
         "meta": {
             "range": [
                 240,
-                3485
+                3647
             ],
             "filename": "Attachment.js",
             "lineno": 8,
@@ -282,6 +300,24 @@
                 },
                 "description": "Attachment data from Discord.",
                 "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for the attachment.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "description": "The ID of the channel that this attachment belongs to.",
+                "name": "options.channelId"
             }
         ]
     },
@@ -289,11 +325,11 @@
         "comment": "",
         "meta": {
             "range": [
-                518,
-                527
+                680,
+                689
             ],
             "filename": "Attachment.js",
-            "lineno": 21,
+            "lineno": 23,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -313,11 +349,11 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                624,
-                646
+                786,
+                808
             ],
             "filename": "Attachment.js",
-            "lineno": 27,
+            "lineno": 29,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -345,11 +381,11 @@
         "comment": "/**\n     * The id of the attachment.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                740,
-                767
+                902,
+                929
             ],
             "filename": "Attachment.js",
-            "lineno": 34,
+            "lineno": 36,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -377,11 +413,11 @@
         "comment": "/**\n     * The name of the file.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                857,
-                883
+                1019,
+                1045
             ],
             "filename": "Attachment.js",
-            "lineno": 41,
+            "lineno": 43,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -409,11 +445,11 @@
         "comment": "/**\n     * The size of the file.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                973,
-                995
+                1135,
+                1157
             ],
             "filename": "Attachment.js",
-            "lineno": 48,
+            "lineno": 50,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -441,11 +477,11 @@
         "comment": "/**\n       * Data about the file url.\n       * @type {Object?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1121,
-                1140
+                1283,
+                1302
             ],
             "filename": "Attachment.js",
-            "lineno": 56,
+            "lineno": 58,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -474,11 +510,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1155,
-                1197
+                1317,
+                1359
             ],
             "filename": "Attachment.js",
-            "lineno": 58,
+            "lineno": 60,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -500,11 +536,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1205,
-                1259
+                1367,
+                1421
             ],
             "filename": "Attachment.js",
-            "lineno": 59,
+            "lineno": 61,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -526,11 +562,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1267,
-                1321
+                1429,
+                1483
             ],
             "filename": "Attachment.js",
-            "lineno": 60,
+            "lineno": 62,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -552,11 +588,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1329,
-                1383
+                1491,
+                1545
             ],
             "filename": "Attachment.js",
-            "lineno": 61,
+            "lineno": 63,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -578,11 +614,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1518,
-                1555
+                1680,
+                1717
             ],
             "filename": "Attachment.js",
-            "lineno": 69,
+            "lineno": 71,
             "columnno": 19,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -604,11 +640,11 @@
         "comment": "/**\n   * The id of the attachment.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1655,
-                1699
+                1817,
+                1861
             ],
             "filename": "Attachment.js",
-            "lineno": 78,
+            "lineno": 80,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -640,11 +676,11 @@
         "comment": "/**\n   * The name of the file.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1790,
-                1829
+                1952,
+                1991
             ],
             "filename": "Attachment.js",
-            "lineno": 88,
+            "lineno": 90,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -676,11 +712,11 @@
         "comment": "/**\n   * The size of the file.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1920,
-                1959
+                2082,
+                2121
             ],
             "filename": "Attachment.js",
-            "lineno": 98,
+            "lineno": 100,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -712,11 +748,11 @@
         "comment": "/**\n   * The url to the file.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2049,
-                2437
+                2211,
+                2599
             ],
             "filename": "Attachment.js",
-            "lineno": 108,
+            "lineno": 110,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -748,11 +784,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2110,
-                2209
+                2272,
+                2371
             ],
             "filename": "Attachment.js",
-            "lineno": 111,
+            "lineno": 113,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -774,11 +810,11 @@
         "comment": "/**\n   * The channel that this attachment belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2551,
-                2642
+                2713,
+                2804
             ],
             "filename": "Attachment.js",
-            "lineno": 127,
+            "lineno": 129,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -810,11 +846,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2684,
-                2739
+                2846,
+                2901
             ],
             "filename": "Attachment.js",
-            "lineno": 135,
+            "lineno": 137,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -839,11 +875,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2781,
-                2838
+                2943,
+                3000
             ],
             "filename": "Attachment.js",
-            "lineno": 143,
+            "lineno": 145,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -868,11 +904,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                3021,
-                3483
+                3183,
+                3645
             ],
             "filename": "Attachment.js",
-            "lineno": 154,
+            "lineno": 156,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -919,11 +955,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3135,
-                3146
+                3297,
+                3308
             ],
             "filename": "Attachment.js",
-            "lineno": 158,
+            "lineno": 160,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -943,11 +979,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3158,
-                3177
+                3320,
+                3339
             ],
             "filename": "Attachment.js",
-            "lineno": 159,
+            "lineno": 161,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -967,11 +1003,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3189,
-                3204
+                3351,
+                3366
             ],
             "filename": "Attachment.js",
-            "lineno": 160,
+            "lineno": 162,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -991,11 +1027,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3359,
-                3370
+                3521,
+                3532
             ],
             "filename": "Attachment.js",
-            "lineno": 167,
+            "lineno": 169,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1015,11 +1051,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3382,
-                3401
+                3544,
+                3563
             ],
             "filename": "Attachment.js",
-            "lineno": 168,
+            "lineno": 170,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1039,11 +1075,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3413,
-                3428
+                3575,
+                3590
             ],
             "filename": "Attachment.js",
-            "lineno": 169,
+            "lineno": 171,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1063,11 +1099,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3440,
-                3453
+                3602,
+                3615
             ],
             "filename": "Attachment.js",
-            "lineno": 170,
+            "lineno": 172,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -1087,11 +1123,11 @@
         "comment": "",
         "meta": {
             "range": [
-                3487,
-                3513
+                3649,
+                3675
             ],
             "filename": "Attachment.js",
-            "lineno": 177,
+            "lineno": 179,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {

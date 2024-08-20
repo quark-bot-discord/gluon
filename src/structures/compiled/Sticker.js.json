@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 176,
-                2676
+                2712
             ],
             "filename": "Sticker.js",
             "lineno": 12,
@@ -128,11 +128,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   *\n   * @param {Client} client The client instance.\n   * @param {Object} data Sticker data from Discord.\n   */",
+        "comment": "/**\n   * Creates the structure for a sticker\n   * @param {Client} client The client instance.\n   * @param {Object} data Sticker data from Discord.\n   */",
         "meta": {
             "range": [
-                358,
-                868
+                394,
+                904
             ],
             "filename": "Sticker.js",
             "lineno": 22,
@@ -151,6 +151,7 @@
                 "": null
             }
         },
+        "description": "Creates the structure for a sticker",
         "params": [
             {
                 "type": {
@@ -182,7 +183,7 @@
         "meta": {
             "range": [
                 176,
-                2676
+                2712
             ],
             "filename": "Sticker.js",
             "lineno": 12,
@@ -203,6 +204,7 @@
         "kind": "class",
         "classdesc": "Represents an sticker.",
         "scope": "global",
+        "description": "Creates the structure for a sticker",
         "params": [
             {
                 "type": {
@@ -228,8 +230,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                472,
-                494
+                508,
+                530
             ],
             "filename": "Sticker.js",
             "lineno": 28,
@@ -260,8 +262,8 @@
         "comment": "/**\n     * The id of the sticker.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                585,
-                612
+                621,
+                648
             ],
             "filename": "Sticker.js",
             "lineno": 35,
@@ -292,8 +294,8 @@
         "comment": "/**\n     * The name of the sticker.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                705,
-                727
+                741,
+                763
             ],
             "filename": "Sticker.js",
             "lineno": 42,
@@ -324,8 +326,8 @@
         "comment": "/**\n     * The format type of the sticker.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                827,
-                863
+                863,
+                899
             ],
             "filename": "Sticker.js",
             "lineno": 49,
@@ -356,8 +358,8 @@
         "comment": "/**\n   * The ID of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                960,
-                1004
+                996,
+                1040
             ],
             "filename": "Sticker.js",
             "lineno": 58,
@@ -392,8 +394,8 @@
         "comment": "/**\n   * The name of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1098,
-                1137
+                1134,
+                1173
             ],
             "filename": "Sticker.js",
             "lineno": 68,
@@ -428,8 +430,8 @@
         "comment": "/**\n   * The format of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1233,
-                1296
+                1269,
+                1332
             ],
             "filename": "Sticker.js",
             "lineno": 78,
@@ -464,8 +466,8 @@
         "comment": "/**\n   * The format type of the sticker.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1397,
-                1449
+                1433,
+                1485
             ],
             "filename": "Sticker.js",
             "lineno": 88,
@@ -500,8 +502,8 @@
         "comment": "/**\n   * The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1595,
-                1971
+                1631,
+                2007
             ],
             "filename": "Sticker.js",
             "lineno": 98,
@@ -537,8 +539,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1627,
-                1641
+                1663,
+                1677
             ],
             "filename": "Sticker.js",
             "lineno": 99,
@@ -561,8 +563,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1846,
-                1868
+                1882,
+                1904
             ],
             "filename": "Sticker.js",
             "lineno": 108,
@@ -588,8 +590,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2013,
-                2065
+                2049,
+                2101
             ],
             "filename": "Sticker.js",
             "lineno": 120,
@@ -617,8 +619,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2107,
-                2164
+                2143,
+                2200
             ],
             "filename": "Sticker.js",
             "lineno": 128,
@@ -646,8 +648,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                2347,
-                2674
+                2383,
+                2710
             ],
             "filename": "Sticker.js",
             "lineno": 139,
@@ -697,8 +699,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2566,
-                2577
+                2602,
+                2613
             ],
             "filename": "Sticker.js",
             "lineno": 146,
@@ -721,8 +723,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2589,
-                2604
+                2625,
+                2640
             ],
             "filename": "Sticker.js",
             "lineno": 147,
@@ -745,8 +747,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2616,
-                2644
+                2652,
+                2680
             ],
             "filename": "Sticker.js",
             "lineno": 148,
@@ -769,8 +771,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2678,
-                2701
+                2714,
+                2737
             ],
             "filename": "Sticker.js",
             "lineno": 155,
