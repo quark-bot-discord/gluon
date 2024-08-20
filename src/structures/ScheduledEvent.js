@@ -23,9 +23,12 @@ class ScheduledEvent {
   #location;
   #description;
   /**
-   *
+   * Creates the structure for a scheduled event.
    * @param {Client} client The client instance.
    * @param {Object} data Scheduled event data from Discord.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this event belongs to.
+   * @param {Boolean?} options.nocache Whether this event should be cached or not.
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
@@ -48,8 +51,6 @@ class ScheduledEvent {
      * @private
      */
     this.#_guild_id = BigInt(guildId);
-
-    // const existing = this.guild?.scheduledEvents.get(data.id) || null;
 
     /**
      * The name of the scheduled event.

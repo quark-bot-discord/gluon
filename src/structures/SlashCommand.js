@@ -10,7 +10,7 @@ import util from "util";
 class SlashCommand extends Interaction {
   #data;
   /**
-   *
+   * Creates a slash command interaction structure.
    * @param {Client} client The client instance.
    * @param {Object} data The raw interaction data from Discord.
    */

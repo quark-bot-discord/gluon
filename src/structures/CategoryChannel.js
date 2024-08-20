@@ -13,6 +13,14 @@ class CategoryChannel {
   #_attributes;
   #permission_overwrites;
   #_cacheOptions;
+  /**
+   * Creates the structure for a category channel.
+   * @param {Client} client The client instance.
+   * @param {Object} data The raw channel data.
+   * @param {Object} options The additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this channel belongs to.
+   * @param {Boolean} options.nocache Whether this channel should be cached or not.
+   */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**
      * The client instance.

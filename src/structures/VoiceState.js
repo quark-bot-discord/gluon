@@ -20,8 +20,9 @@ class VoiceState {
    * Creates the structure for a voice state.
    * @param {Client} client The client instance.
    * @param {Object} data The raw voice state data from Discord.
-   * @param {String} guild_id The id of the guild that the voice state belongs to.
-   * @param {Boolean?} nocache Whether this voice state should be cached.
+   * @param {Object} options The additional options for this structure.
+   * @param {String} options.guildId The id of the guild that the voice state belongs to.
+   * @param {Boolean?} options.nocache Whether this voice state should be cached.
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**

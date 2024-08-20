@@ -15,8 +15,9 @@ class TextChannel extends Channel {
    * Creates the structure for a text channel.
    * @param {Client} client The client instance.
    * @param {Object} data Raw channel data.
-   * @param {String} guild_id The ID of the guild that this channel belongs to.
-   * @param {Boolean?} nocache Whether this channel should be cached or not.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this channel belongs to.
+   * @param {Boolean?} options.nocache Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {

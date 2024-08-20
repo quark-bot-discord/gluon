@@ -16,6 +16,9 @@ class ButtonClick extends Interaction {
    * Creates a button click interaction structure.
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this interaction belongs to.
+   * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
   constructor(client, data, { guildId, channelId } = {}) {
     super(client, data);

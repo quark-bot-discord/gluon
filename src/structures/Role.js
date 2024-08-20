@@ -18,11 +18,12 @@ class Role {
   #_attributes;
   #tags;
   /**
-   *
+   * Creates the structure for a role.
    * @param {Client} client The client instance.
    * @param {Object} data The raw role data from Discord.
-   * @param {String} guild_id The id of the guild that the role belongs to.
-   * @param {Boolean?} nocache Whether this role should be cached or not.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The id of the guild that the role belongs to.
+   * @param {Boolean?} options.nocache Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {

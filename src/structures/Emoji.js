@@ -17,8 +17,9 @@ class Emoji {
    * Creates the structure for an emoji.
    * @param {Client} client The client instance.
    * @param {Object} data The raw emoji data from Discord.
-   * @param {String} guild_id The id of the guild that the emoji belongs to.
-   * @param {Boolean?} nocache Whether this emoji should be cached or not.
+   * @param {Object} options The options for this emoji.
+   * @param {String} options.guildId The id of the guild that the emoji belongs to.
+   * @param {Boolean?} options.nocache Whether this emoji should be cached or not.
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     /**

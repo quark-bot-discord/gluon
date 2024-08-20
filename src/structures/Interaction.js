@@ -17,7 +17,6 @@ class Interaction {
   #_channel_id;
   #token;
   #member;
-
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.

@@ -33,7 +33,8 @@ class Channel {
    * Creates the base structure for a channel.
    * @param {Client} client The client instance.
    * @param {Object} data Raw channel data.
-   * @param {String} guild_id The ID of the guild that this channel belongs to.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
   constructor(client, data, { guildId } = {}) {

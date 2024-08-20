@@ -21,7 +21,8 @@ class User {
    * Creates a structure for a user.
    * @param {Client} client The client instance.
    * @param {Object} data The raw user data.
-   * @param {Boolean?} nocache Whether the user should be cached or not.
+   * @param {Object?} options Additional options for this structure.
+   * @param {Boolean?} options.nocache Whether the user should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/user#user-object}
    */
   constructor(

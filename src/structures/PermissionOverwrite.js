@@ -7,6 +7,11 @@ class PermissionOverwrite {
   #type;
   #allow;
   #deny;
+  /**
+   * Creates the structure for a permission overwrite.
+   * @param {Client} client The client instance.
+   * @param {Object} data The raw permission overwrite data.
+   */
   constructor(client, data) {
     /**
      * The client instance.

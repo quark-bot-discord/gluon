@@ -29,7 +29,9 @@ class AuditLog {
    * Creates a structure for an audit log entry.
    * @param {Client} client The client instance.
    * @param {Object} data Audit log data from Discord.
-   * @param {Array<Object>} users Resolved users who are involved with the audit log entries.
+   * @param {Object} options Additional options for this structure.
+   * @param {Array<Object>} options.users Resolved users who are involved with the audit log entries.
+   * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
   constructor(client, data, { users, guildId } = {}) {
     /**

@@ -13,10 +13,11 @@ class Reaction {
   #initial_reactor;
   #count;
   /**
-   *
+   * Creates the structure for a reaction.
    * @param {Client} client The client instance.
    * @param {Object} data The raw reaction data from Discord.
-   * @param {String} guild_id The id of the guild that the reaction belongs to.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.guildId The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
   constructor(client, data, { guildId } = {}) {

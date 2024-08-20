@@ -15,7 +15,7 @@ class Sticker {
   #name;
   #format_type;
   /**
-   *
+   * Creates the structure for a sticker
    * @param {Client} client The client instance.
    * @param {Object} data Sticker data from Discord.
    */

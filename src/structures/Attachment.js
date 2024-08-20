@@ -17,6 +17,8 @@ class Attachment {
    * Creates a structure for an attachment.
    * @param {Client} client The client instance.
    * @param {Object} data Attachment data from Discord.
+   * @param {Object} options Additional options for the attachment.
+   * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
   constructor(client, data, { channelId } = {}) {
     /**

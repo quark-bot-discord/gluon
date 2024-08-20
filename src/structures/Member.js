@@ -37,10 +37,11 @@ class Member {
    * Creates the structure for a guild member.
    * @param {Client} client The client instance.
    * @param {Object} data The raw member data from Discord.
-   * @param {String} user_id The id of the member.
-   * @param {String} guild_id The id of the guild that the member belongs to.
-   * @param {User?} user A user object for this member.
-   * @param {Boolean?} nocache Whether this member should be cached.
+   * @param {Object} options Additional options for the member.
+   * @param {String} options.userId The id of the member.
+   * @param {String} options.guildId The id of the guild that the member belongs to.
+   * @param {User?} options.user A user object for this member.
+   * @param {Boolean?} options.nocache Whether this member should be cached.
    */
   constructor(
     client,

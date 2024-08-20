@@ -12,6 +12,13 @@ class Poll {
   #allow_multiselect;
   #layout_type;
   #results;
+  /**
+   * Creates the structure for a poll.
+   * @param {Client} client The client instance.
+   * @param {Object} data The raw poll data from Discord.
+   * @param {Object} options The additional options for this structure.
+   * @param {String} options.guildId The ID of the guild that this poll belongs to.
+   */
   constructor(client, data, { guildId } = {}) {
     /**
      * The client instance.

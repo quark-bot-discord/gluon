@@ -54,9 +54,11 @@ class Message {
    * Creates the structure for a message.
    * @param {Client} client The client instance.
    * @param {Object} data Message data returned from Discord.
-   * @param {String} channel_id The id of the channel that the message belongs to.
-   * @param {String} guild_id The id of the guild that the channel belongs to.
-   * @param {Boolean?} nocache Whether this message should be cached or not.
+   * @param {Object} options Additional options for this structure.
+   * @param {String} options.channelId The id of the channel that the message belongs to.
+   * @param {String} options.guildId The id of the guild that the channel belongs to.
+   * @param {Boolean?} options.nocache Whether this message should be cached or not.
+   * @param {Boolean?} options.ignoreExisting Whether to ignore existing messages in the cache.
    * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
    */
   constructor(
