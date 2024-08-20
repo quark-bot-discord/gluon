@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>structures/Interaction.js - Documentation</title>
+    <title>PermissionOverwrite - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -35,372 +35,771 @@
 
 <div id="main">
     
-    <h1 class="page-title">structures/Interaction.js</h1>
+    <h1 class="page-title">PermissionOverwrite</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import ActionRow from "../util/builder/actionRowBuilder.js";
-import Member from "./Member.js";
-import TextInput from "../util/builder/textInputBuilder.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import util from "util";
-import Message from "./Message.js";
+        <h2>
+        
+            PermissionOverwrite
+        
+        </h2>
+        
+    
+</header>
 
-/**
- * Represents an interaction received over the gateway.
- * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
- */
-class Interaction {
-  #_client;
-  #_id;
-  #type;
-  #_guild_id;
-  #_channel_id;
-  #token;
-  #member;
-  /**
-   * Creates the structure for an interaction.
-   * @param {Client} client The client instance.
-   * @param {Object} data The interaction data from Discord.
-   */
-  constructor(client, data) {
-    /**
-     * The client instance.
-     * @type {Client}
-     * @private
-     */
-    this.#_client = client;
+<article>
+    
+        <div class="container-overview">
+        
+            
 
-    /**
-     * The id of the message.
-     * @type {BigInt}
-     * @private
-     */
-    this.#_id = BigInt(data.id);
+    
 
-    /**
-     * The type of interaction.
-     * @type {Number}
-     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-type}
-     * @private
-     */
-    this.#type = data.type;
+    <h4 class="name" id="PermissionOverwrite"><span class="type-signature"></span>new PermissionOverwrite<span class="signature">(client, data)</span><span class="type-signature"></span></h4>
 
-    /**
-     * The id of the guild that this interaction belongs to.
-     * @type {BigInt}
-     * @private
-     */
-    this.#_guild_id = BigInt(data.guild_id);
+    
 
-    /**
-     * The id of the channel that this interaction belongs to.
-     * @type {BigInt}
-     * @private
-     */
-    this.#_channel_id = BigInt(data.channel_id);
 
-    if (data.member)
-      /**
-       * The member that triggered the interaction, if it was run in a guild.
-       * @type {Member?}
-       * @private
-       */
-      this.#member = new Member(this.#_client, data.member, {
-        userId: data.member.user.id,
-        guildId: data.guild_id,
-      });
 
-    /**
-     * The interaction token, needed to respond to it.
-     * @type {String}
-     * @private
-     */
-    this.#token = data.token;
-  }
 
-  /**
-   * The id of the interaction.
-   * @type {String}
-   * @readonly
-   * @public
-   */
-  get id() {
-    return String(this.#_id);
-  }
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Creates the structure for a permission overwrite.</p></li></ul></dd>
+    
 
-  /**
-   * The type of interaction.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get type() {
-    return this.#type;
-  }
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
 
-  /**
-   * The id of the guild that this interaction belongs to.
-   * @type {String}
-   * @readonly
-   * @public
-   */
-  get guildId() {
-    return String(this.#_guild_id);
-  }
+    
 
-  /**
-   * The guild that this interaction belongs to.
-   * @type {Guild?}
-   * @readonly
-   * @public
-   */
-  get guild() {
-    return this.#_client.guilds.get(this.guildId) || null;
-  }
+    
 
-  /**
-   * The id of the channel that this interaction belongs to.
-   * @type {String}
-   * @readonly
-   * @public
-   */
-  get channelId() {
-    return String(this.#_channel_id);
-  }
+    
 
-  /**
-   * The channel that this interaction belongs to.
-   * @type {(TextChannel | VoiceChannel | Thread)?}
-   * @readonly
-   * @public
-   */
-  get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
-  }
+    
 
-  /**
-   * The member that triggered the interaction, if it was run in a guild.
-   * @type {Member?}
-   * @readonly
-   * @public
-   */
-  get member() {
-    return this.#member;
-  }
+    
 
-  /**
-   * Prompts a user to enter text using a modal.
-   * @param {Object} options Modal options.
-   * @returns {Promise&lt;void>}
-   * @public
-   * @async
-   * @method
-   * @throws {Error | TypeError}
-   */
-  async textPrompt({ title, customId, textInputModal } = {}) {
-    if (typeof title !== "string")
-      throw new TypeError("GLUON: No title provided.");
+    
 
-    if (typeof customId !== "string")
-      throw new TypeError("GLUON: No custom id provided.");
+    
 
-    if (!(textInputModal instanceof TextInput))
-      throw new TypeError("GLUON: Text input modal must be provided.");
+    
 
-    const body = {};
+    
 
-    body.type = 9;
-    body.data = {};
+    
 
-    body.data.title = title;
+    
 
-    body.data.custom_id = customId;
+    
 
-    const components = new ActionRow().addComponent(textInputModal);
+    
 
-    body.data.components =
-      Array.isArray(components) != true ? [components] : [];
+    
 
-    await this.#_client.request.makeRequest(
-      "postInteractionResponse",
-      [this.id, this.#token],
-      body,
-    );
-  }
+    
+</dl>
 
-  /**
-   * Responds to autocomplete interactions.
-   * @param {Object} options Autocompletion options.
-   * @returns {Promise&lt;Interaction>}
-   * @public
-   * @async
-   * @method
-   * @throws {Error}
-   */
-  async autocompleteResponse({ choices } = {}) {
-    if (!choices || !Array.isArray(choices))
-      throw new Error("GLUON: No choices provided.");
 
-    const body = {};
 
-    body.type = 8;
-    body.data = {};
 
-    body.data.choices = choices;
 
-    await this.#_client.request.makeRequest(
-      "postInteractionResponse",
-      [this.id, this.#token],
-      body,
-    );
-  }
 
-  /**
-   * Replies to an interaction.
-   * @param {String?} content The message content to send in the response to the interaction.
-   * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message.
-   * @returns {Promise&lt;Interaction>}
-   * @public
-   * @async
-   * @method
-   */
-  async reply(content, { files, embeds, components, quiet } = {}) {
-    if (!content &amp;&amp; !files &amp;&amp; !embeds &amp;&amp; !components)
-      throw new Error(
-        "GLUON: No content, files, embed, or components provided.",
-      );
 
-    Message.sendValidation({ content, embeds, components, files });
 
-    if (typeof quiet !== "undefined" &amp;&amp; typeof quiet !== "boolean")
-      throw new TypeError("GLUON: Quiet must be a boolean.");
 
-    const body = {};
 
-    body.type = 4;
-    body.data = {};
 
-    if (content) body.data.content = content;
-    if (files) body.files = files;
-    if (embeds) body.data.embeds = embeds;
-    if (components)
-      body.data.components =
-        Array.isArray(components) != true ? components : [];
-    if (quiet == true) body.data.flags = 64;
 
-    await this.#_client.request.makeRequest(
-      "postInteractionResponse",
-      [this.id, this.#token],
-      body,
-    );
 
-    return this;
-  }
+    <h5 class="h5-parameters">Parameters:</h5>
+    
 
-  /**
-   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
-   * @param {String?} content The new interaction response content.
-   * @param {Object?} options The new interaction response options.
-   * @returns {Promise&lt;Interaction>}
-   * @public
-   * @async
-   * @method
-   * @throws {Error | TypeError}
-   */
-  async edit(content, { files, embeds, components } = {}) {
-    Message.sendValidation({ content, embeds, components, files });
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-    const body = {};
+        <th>Type</th>
 
-    if (content) body.content = content;
-    if (files) body.files = files;
-    if (embeds) body.embeds = embeds;
-    if (components)
-      body.components = Array.isArray(components) != true ? components : [];
+        
 
-    await this.#_client.request.makeRequest(
-      "patchOriginalInteractionResponse",
-      [this.#_client.user.id, this.#token],
-      body,
-    );
+        
 
-    return this;
-  }
+        <th class="last">Description</th>
+    </tr>
+    </thead>
 
-  /**
-   * Silently acknowledges an interaction.
-   * @returns {Promise&lt;Interaction>}
-   * @public
-   * @async
-   * @method
-   */
-  async acknowledge() {
-    const body = {};
+    <tbody>
+    
 
-    body.type = 6;
+        <tr>
+            
+                <td class="name"><code>client</code></td>
+            
 
-    await this.#_client.request.makeRequest(
-      "postInteractionResponse",
-      [this.id, this.#token],
-      body,
-    );
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Client.html">Client</a></span>
 
-    return this;
-  }
 
-  /**
-   * @method
-   * @public
-   */
-  toString() {
-    return `&lt;Interaction: ${this.id}>`;
-  }
 
-  /**
-   * @method
-   * @public
-   */
-  [util.inspect.custom]() {
-    return this.toString();
-  }
+            
+            </td>
 
-  /**
-   * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
-   */
-  toJSON(format) {
-    switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      default: {
-        return {
-          id: this.id,
-          type: this.type,
-          guild_id: this.guildId,
-          channel_id: this.channelId,
-          member: this.member.toJSON(format),
-          type: this.type,
-        };
-      }
-    }
-  }
-}
+            
 
-export default Interaction;
-</code></pre>
-        </article>
-    </section>
+            
+
+            <td class="description last"><p>The client instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The raw permission overwrite data.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="allow"><span class="type-signature type-signature-readonly">(readonly) </span>allow<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The permissions for the overwrite.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The permissions for the overwrite.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="deny"><span class="type-signature type-signature-readonly">(readonly) </span>deny<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The denied permissions for the overwrite.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line84">line 84</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The denied permissions for the overwrite.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature type-signature-readonly">(readonly) </span>id<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The ID of the overwrite.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The ID of the overwrite.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="type"><span class="type-signature type-signature-readonly">(readonly) </span>type<span class="type-signature"> :String</span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The type of the overwrite. 0 for role, 1 for member.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line64">line 64</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The type of the overwrite. 0 for role, 1 for member.</p>
+</div>
+
+
+
+    <h5 class="h5-types">Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">String</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="toJSON"><span class="type-signature"></span>toJSON<span class="signature">(format)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Returns the JSON representation of this structure.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line111">line 111</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The format to return the data in.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="structures_PermissionOverwrite.js.html">structures/PermissionOverwrite.js</a>, <a href="structures_PermissionOverwrite.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
