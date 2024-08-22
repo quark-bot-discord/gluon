@@ -1,5 +1,6 @@
 import Client from "../Client.js";
 import { LIMITS, PERMISSIONS } from "../constants.js";
+import { Guild } from "../structures.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
@@ -15,7 +16,11 @@ class ChannelMessageManager extends BaseCacheManager {
   /**
    * Creates a channel message manager.
    * @param {Client} client The client instance.
+   * @param {Guild} guild The guild that this message manager belongs to.
    * @param {Channel} channel The channel that is being managed.
+   * @throws {TypeError}
+   * @constructor
+   * @public
    */
   constructor(client, guild, channel) {
     super(client, { structureType: ChannelMessageManager });
