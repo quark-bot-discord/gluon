@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
@@ -30,10 +31,22 @@ class AuditLog {
    * @param {Client} client The client instance.
    * @param {Object} data Audit log data from Discord.
    * @param {Object} options Additional options for this structure.
-   * @param {Array<Object>} options.users Resolved users who are involved with the audit log entries.
+   * @param {Array<Object>?} options.users Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
   constructor(client, data, { users, guildId } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (
+      users &&
+      (!Array.isArray(users) || !users.every((u) => u instanceof Object))
+    )
+      throw new TypeError("GLUON: Users must be an array of objects");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+
     /**
      * The client instance.
      * @type {Client}

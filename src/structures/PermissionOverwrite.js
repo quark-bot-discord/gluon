@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 
@@ -13,6 +14,11 @@ class PermissionOverwrite {
    * @param {Object} data The raw permission overwrite data.
    */
   constructor(client, data) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+
     /**
      * The client instance.
      * @type {Client}

@@ -38,6 +38,13 @@ class Channel {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
   constructor(client, data, { guildId } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+
     /**
      * The client instance.
      * @type {Client}

@@ -69,6 +69,19 @@ class Message {
       ignoreExisting: false,
     },
   ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
+    if (typeof ignoreExisting !== "boolean")
+      throw new TypeError("GLUON: Ignore existing must be a boolean");
+
     /**
      * The client instance.
      * @type {Client}

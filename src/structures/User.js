@@ -2,6 +2,7 @@ import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
+import Client from "../Client.js";
 
 /**
  * Represents a Discord user.
@@ -32,6 +33,13 @@ class User {
       nocache: false,
     },
   ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
+
     /**
      * The client instance.
      * @type {Client}

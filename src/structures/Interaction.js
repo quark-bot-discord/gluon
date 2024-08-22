@@ -4,6 +4,7 @@ import TextInput from "../util/builder/textInputBuilder.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
+import Client from "../Client.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -23,6 +24,11 @@ class Interaction {
    * @param {Object} data The interaction data from Discord.
    */
   constructor(client, data) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+
     /**
      * The client instance.
      * @type {Client}

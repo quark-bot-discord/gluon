@@ -64,6 +64,13 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
    */
   constructor(client, data, { nocache = false } = { nocache: false }) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
+
     /**
      * The client instance.
      * @type {Client}

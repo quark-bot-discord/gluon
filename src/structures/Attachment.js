@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 
@@ -21,6 +22,13 @@ class Attachment {
    * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
   constructor(client, data, { channelId } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof channelId !== "string")
+      throw new TypeError("GLUON: Channel ID must be a string");
+
     /**
      * The client instance.
      * @type {Client}
@@ -65,10 +73,10 @@ class Attachment {
 
     /**
      * The channel that this attachment belongs to.
-     * @type {BigInt?}
+     * @type {BigInt}
      * @private
      */
-    if (channelId) this.#_channel_id = BigInt(channelId);
+    this.#_channel_id = BigInt(channelId);
   }
 
   /**

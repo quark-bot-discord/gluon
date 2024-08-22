@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
@@ -22,6 +23,15 @@ class VoiceChannel extends Channel {
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     super(client, data, { guildId });
+
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
 
     /**
      * The client instance.

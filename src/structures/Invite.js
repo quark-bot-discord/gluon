@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
@@ -26,6 +27,15 @@ class Invite {
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
+
     /**
      * The client instance.
      * @type {Client}
