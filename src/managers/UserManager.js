@@ -12,7 +12,7 @@ class UserManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    */
   constructor(client) {
-    super(client, { useRedis: true, structureType: UserManager });
+    super(client, { structureType: UserManager });
     /**
      * The client instance.
      * @type {Client}

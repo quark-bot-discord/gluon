@@ -16,7 +16,7 @@ class GuildInviteManager extends BaseCacheManager {
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
   constructor(client, guild) {
-    super(client, { useRedis: true, structureType: GuildInviteManager });
+    super(client, { structureType: GuildInviteManager });
     /**
      * The client instance.
      * @type {Client}
