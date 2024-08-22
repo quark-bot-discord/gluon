@@ -7,10 +7,25 @@ class BaseCacheManager {
   #structureType;
   static rules = {};
   constructor(client, { structureType } = {}) {
+    /**
+     * The cache for this manager.
+     * @type {Map<String, Object>}
+     * @private
+     */
     this.#cache = new Map();
 
+    /**
+     * The expiry bucket for this manager.
+     * @type {Map<String, Set<String>>}
+     * @private
+     */
     this.#expiryBucket = new Map();
 
+    /**
+     * The structure type for this manager.
+     * @type {Object}
+     * @private
+     */
     this.#structureType = structureType;
   }
 
@@ -18,6 +33,7 @@ class BaseCacheManager {
    * The key prefix for the cache.
    * @type {String}
    * @readonly
+   * @private
    */
   get #keyPrefix() {
     return `${NAME.toLowerCase()}.caches.${this.#structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
@@ -27,7 +43,7 @@ class BaseCacheManager {
    * Creates a hash of the key.
    * @param {String} key The key to hash.
    * @returns {String} The hashed key.
-   * @public
+   * @private
    * @method
    */
   #getHash(key) {
@@ -38,6 +54,8 @@ class BaseCacheManager {
    * Wraps the key with the key prefix and hashes it.
    * @param {String} key The key.
    * @returns {String}
+   * @private
+   * @method
    */
   #getKey(key) {
     return `${this.#keyPrefix}${this.#getHash(key)}`;
@@ -46,6 +64,12 @@ class BaseCacheManager {
   /**
    * Gets a value from the cache.
    * @param {String} key The key to get.
+   * @param {Object} options The options for the get method.
+   * @param {Boolean} options.useRules Whether to use rules or not.
+   * @returns {Object?} The value from the cache.
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   get(key, { useRules = false } = { useRules: false }) {
     if (typeof key !== "string")
@@ -61,6 +85,10 @@ class BaseCacheManager {
    * @param {String} key The key to set.
    * @param {Object} value The value to set.
    * @param {Number} expiry The expiry time in seconds.
+   * @returns {Object} The value that was set.
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   set(key, value, expiry = 0) {
     if (typeof key !== "string")
@@ -80,6 +108,8 @@ class BaseCacheManager {
    * @param {String} key The key to add to the expiry bucket.
    * @param {Number} expiry The expiry time in seconds.
    * @returns {void}
+   * @public
+   * @method
    */
   addToExpiryBucket(key, expiry) {
     if (expiry === 0) return;
@@ -94,6 +124,8 @@ class BaseCacheManager {
    * Expires a bucket.
    * @param {String} bucket The bucket to expire.
    * @returns {void}
+   * @public
+   * @method
    */
   expireBucket(bucket) {
     if (!this.#expiryBucket.has(bucket)) return;
@@ -112,6 +144,8 @@ class BaseCacheManager {
   /**
    * Clears stale buckets.
    * @returns {void}
+   * @public
+   * @method
    */
   clearStaleBuckets() {
     const now = new Date();
@@ -138,6 +172,9 @@ class BaseCacheManager {
   /**
    * Deletes a key from the cache.
    * @param {String} key The key to delete.
+   * @returns {Boolean} Whether the key was deleted or not.
+   * @public
+   * @method
    */
   delete(key) {
     if (typeof key !== "string")
@@ -148,6 +185,8 @@ class BaseCacheManager {
   /**
    * Clears the cache.
    * @returns {void}
+   * @public
+   * @method
    */
   clear() {
     return this.#cache.clear();
@@ -156,6 +195,8 @@ class BaseCacheManager {
   /**
    * The callback for expiring buckets.
    * @returns {void}
+   * @public
+   * @method
    */
   _intervalCallback() {
     const now = new Date();
@@ -167,12 +208,27 @@ class BaseCacheManager {
     };
   }
 
+  /**
+   * Calls the rules on a value.
+   * @param {Object} value The value to call the rules on.
+   * @returns {void}
+   * @public
+   * @method
+   */
   _callRules(value) {
     const rules = Object.values(BaseCacheManager.rules);
     for (const rule of rules)
       if (rule.structure === this.#structureType) rule.handlerFunction(value);
   }
 
+  /**
+   * Calls all the custom fetches.
+   * @param {String} id The ID to fetch.
+   * @returns {Object}
+   * @public
+   * @method
+   * @async
+   */
   async _callFetches(id) {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
@@ -197,6 +253,9 @@ class BaseCacheManager {
   /**
    * Calls a function on each item in the cache.
    * @param {Function} callback Callback function to run on each item in the cache.
+   * @returns {void}
+   * @public
+   * @method
    */
   forEach(callback) {
     return this.#cache.forEach(callback);
