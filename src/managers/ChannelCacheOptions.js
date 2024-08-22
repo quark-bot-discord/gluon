@@ -10,6 +10,12 @@ import {
 class ChannelCacheOptions {
   #_cache_options;
 
+  /**
+   * Creates the cache options for a channel.
+   * @param {Number} cache_options The preset cache options for this channel.
+   * @public
+   * @constructor
+   */
   constructor(cache_options) {
     /**
      * The cache options for this channel.
