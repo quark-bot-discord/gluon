@@ -1,11 +1,24 @@
 import hashjs from "hash.js";
 import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 
+/**
+ * The base cache manager for all cache managers.
+ */
 class BaseCacheManager {
   #cache;
   #expiryBucket;
   #structureType;
   static rules = {};
+
+  /**
+   * Creates a cache manager.
+   * @param {Client} client The client instance.
+   * @param {Object} options The options for the cache manager.
+   * @param {Object} options.structureType The structure type for the cache manager.
+   * @throws {TypeError}
+   * @public
+   * @constructor
+   */
   constructor(client, { structureType } = {}) {
     /**
      * The cache for this manager.
