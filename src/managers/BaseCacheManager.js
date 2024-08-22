@@ -2,10 +2,9 @@ import hashjs from "hash.js";
 import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 class BaseCacheManager {
-  #redisCache;
   #cache;
   static rules = {};
-  constructor(client, { useRedis = false, structureType } = {}) {
+  constructor(client, { structureType } = {}) {
     this.#cache = new Map();
 
     this.expiryBucket = new Map();
