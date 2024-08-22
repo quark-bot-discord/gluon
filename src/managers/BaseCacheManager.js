@@ -3,13 +3,15 @@ import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 
 class BaseCacheManager {
   #cache;
+  #expiryBucket;
+  #structureType;
   static rules = {};
   constructor(client, { structureType } = {}) {
     this.#cache = new Map();
 
-    this.expiryBucket = new Map();
+    this.#expiryBucket = new Map();
 
-    this.structureType = structureType;
+    this.#structureType = structureType;
   }
 
   /**
@@ -18,7 +20,7 @@ class BaseCacheManager {
    * @readonly
    */
   get #keyPrefix() {
-    return `${NAME.toLowerCase()}.caches.${this.structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
+    return `${NAME.toLowerCase()}.caches.${this.#structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
   }
 
   /**
@@ -83,9 +85,9 @@ class BaseCacheManager {
     if (expiry === 0) return;
     const expiryDate = new Date(Date.now() + expiry * 1000);
     const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
-    if (!this.expiryBucket.has(bucket))
-      this.expiryBucket.set(bucket, new Set());
-    this.expiryBucket.get(bucket).add(key);
+    if (!this.#expiryBucket.has(bucket))
+      this.#expiryBucket.set(bucket, new Set());
+    this.#expiryBucket.get(bucket).add(key);
   }
 
   /**
@@ -94,8 +96,8 @@ class BaseCacheManager {
    * @returns {void}
    */
   expireBucket(bucket) {
-    if (!this.expiryBucket.has(bucket)) return;
-    for (const key of this.expiryBucket.get(bucket)) {
+    if (!this.#expiryBucket.has(bucket)) return;
+    for (const key of this.#expiryBucket.get(bucket)) {
       try {
         const value = this.get(key);
         if (value) this._callRules(value);
@@ -104,7 +106,7 @@ class BaseCacheManager {
       }
       this.delete(key);
     }
-    this.expiryBucket.delete(bucket);
+    this.#expiryBucket.delete(bucket);
   }
 
   /**
@@ -113,7 +115,7 @@ class BaseCacheManager {
    */
   clearStaleBuckets() {
     const now = new Date();
-    const buckets = [...this.expiryBucket.keys()];
+    const buckets = [...this.#expiryBucket.keys()];
     for (const bucket of buckets) {
       const [date, hour, minute] = bucket.split("_").map(Number);
       if (now.getUTCDate() > date) {
@@ -161,21 +163,21 @@ class BaseCacheManager {
     this.expireBucket(bucket);
     if (now.getUTCMinutes() === 0) this.clearStaleBuckets();
     return {
-      i: this.structureType.identifier,
+      i: this.#structureType.identifier,
     };
   }
 
   _callRules(value) {
     const rules = Object.values(BaseCacheManager.rules);
     for (const rule of rules)
-      if (rule.structure === this.structureType) rule.handlerFunction(value);
+      if (rule.structure === this.#structureType) rule.handlerFunction(value);
   }
 
   async _callFetches(id) {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
-      if (rule.structure === this.structureType)
+      if (rule.structure === this.#structureType)
         fetchValue = await rule.retrieveFunction(id, this);
       if (fetchValue) return fetchValue;
     }
