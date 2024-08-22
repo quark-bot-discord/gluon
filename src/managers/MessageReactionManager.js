@@ -16,6 +16,9 @@ class MessageReactionManager {
   constructor(client, guild, existingReactions = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (!guild) throw new TypeError("GLUON: Guild must be provided.");
+    if (typeof existingReactions !== "object")
+      throw new TypeError("GLUON: Existing reactions must be an object.");
 
     /**
      * The client instance.

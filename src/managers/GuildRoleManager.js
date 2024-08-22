@@ -20,6 +20,8 @@ class GuildRoleManager extends BaseCacheManager {
 
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
+    if (!guild)
+      throw new TypeError("GLUON: Guild must be a valid guild instance.");
 
     /**
      * The client instance.

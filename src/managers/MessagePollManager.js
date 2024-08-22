@@ -14,6 +14,8 @@ class MessagePollManager {
   constructor(client, existingResponses = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (typeof existingResponses !== "object")
+      throw new TypeError("GLUON: Existing responses must be an object.");
 
     /**
      * The client instance.
