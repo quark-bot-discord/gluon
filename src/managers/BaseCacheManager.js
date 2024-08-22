@@ -6,8 +6,7 @@ class BaseCacheManager {
   #cache;
   static rules = {};
   constructor(client, { useRedis = false, structureType } = {}) {
-    if (client.redis && useRedis === true) this.#redisCache = client.redis;
-    else this.#cache = new Map();
+    this.#cache = new Map();
 
     this.expiryBucket = new Map();
 
@@ -50,11 +49,9 @@ class BaseCacheManager {
   get(key, { useRules = false } = { useRules: false }) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    let value;
-    if (this.#redisCache) value = this.#redisCache.get(this.#getKey(key));
-    else value = this.#cache.get(key);
+    const value = this.#cache.get(key);
     if (value) return value;
-    else if (useRules) return this._callFetches(value);
+    else if (useRules) return this._callFetches(key);
     else return null;
   }
 
@@ -73,17 +70,8 @@ class BaseCacheManager {
       throw new TypeError("GLUON: Value must have a toJSON method.");
     if (typeof expiry !== "number")
       throw new TypeError("GLUON: Expiry must be a number.");
-    if (this.#redisCache)
-      return this.#redisCache.set(
-        this.#getKey(key),
-        value.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-        "EX",
-        expiry,
-      );
-    else {
-      this.addToExpiryBucket(key, expiry);
-      return this.#cache.set(key, value);
-    }
+    this.addToExpiryBucket(key, expiry);
+    return this.#cache.set(key, value);
   }
 
   /**
@@ -153,8 +141,7 @@ class BaseCacheManager {
   delete(key) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    if (this.#redisCache) return this.#redisCache.del(this.#getKey(key));
-    else return this.#cache.delete(key);
+    return this.#cache.delete(key);
   }
 
   /**
@@ -222,7 +209,6 @@ class BaseCacheManager {
    * @method
    */
   toJSON(format) {
-    if (this.#redisCache) return [];
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
