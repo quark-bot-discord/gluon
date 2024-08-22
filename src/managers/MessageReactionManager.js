@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
 
@@ -13,6 +14,9 @@ class MessageReactionManager {
    * @param {Object} existingReactions Existing reactions for a message.
    */
   constructor(client, guild, existingReactions = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client.");
+
     /**
      * The client instance.
      * @type {Client}

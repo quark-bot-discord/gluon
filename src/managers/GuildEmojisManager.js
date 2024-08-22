@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -15,6 +16,10 @@ class GuildEmojisManager extends BaseCacheManager {
    */
   constructor(client, guild) {
     super(client, { structureType: GuildEmojisManager });
+
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+
     /**
      * The client instance.
      * @type {Client}

@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 
 /**
@@ -11,6 +12,9 @@ class MessagePollManager {
    * @param {Object} existingResponses Existing responses for a poll.
    */
   constructor(client, existingResponses = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client.");
+
     /**
      * The client instance.
      * @type {Client}

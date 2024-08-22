@@ -16,6 +16,10 @@ class GuildMemberManager extends BaseCacheManager {
    */
   constructor(client, guild) {
     super(client, { structureType: GuildMemberManager });
+
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+
     /**
      * The client instance.
      * @type {Client}

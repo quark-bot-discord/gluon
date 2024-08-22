@@ -1,3 +1,4 @@
+import Client from "../Client.js";
 import VoiceState from "../structures/VoiceState.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -8,6 +9,9 @@ class GuildVoiceStatesManager extends BaseCacheManager {
   static identifier = "voicestates";
   constructor(client) {
     super(client, { structureType: GuildVoiceStatesManager });
+
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
   }
   /**
    * Adds a voice state to the cache.

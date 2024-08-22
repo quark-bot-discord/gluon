@@ -23,6 +23,10 @@ class ChannelMessageManager extends BaseCacheManager {
    */
   constructor(client, guild, channel) {
     super(client, { structureType: ChannelMessageManager });
+
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+
     /**
      * The client instance.
      * @type {Client}

@@ -1,5 +1,6 @@
 import hashjs from "hash.js";
 import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
+import Client from "../Client.js";
 
 /**
  * The base cache manager for all cache managers.
@@ -20,6 +21,11 @@ class BaseCacheManager {
    * @constructor
    */
   constructor(client, { structureType } = {}) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (!structureType)
+      throw new TypeError("GLUON: Structure type must be provided.");
+
     /**
      * The cache for this manager.
      * @type {Map<String, Object>}
