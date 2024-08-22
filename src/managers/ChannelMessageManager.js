@@ -1,6 +1,5 @@
 import Client from "../Client.js";
 import { LIMITS, PERMISSIONS } from "../constants.js";
-import { Guild } from "../structures.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
