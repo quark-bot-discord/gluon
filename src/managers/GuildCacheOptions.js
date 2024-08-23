@@ -24,7 +24,7 @@ class GuildCacheOptions {
    */
   setMessageCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Message caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.MESSAGES;
@@ -42,7 +42,7 @@ class GuildCacheOptions {
    */
   setFileCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: File caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.FILES;
@@ -59,7 +59,7 @@ class GuildCacheOptions {
    */
   setVoiceStateCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Voice state caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES;
@@ -76,7 +76,7 @@ class GuildCacheOptions {
    */
   setMemberCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Member caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
@@ -93,7 +93,7 @@ class GuildCacheOptions {
    */
   setRoleCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Role caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.ROLES;
@@ -110,7 +110,7 @@ class GuildCacheOptions {
    */
   setChannelCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Channel caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
@@ -127,7 +127,7 @@ class GuildCacheOptions {
    */
   setEmojiCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Emoji caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
@@ -144,7 +144,7 @@ class GuildCacheOptions {
    */
   setThreadCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Thread caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.THREADS;
@@ -161,7 +161,7 @@ class GuildCacheOptions {
    */
   setInviteCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Invite caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.INVITES;
@@ -178,7 +178,7 @@ class GuildCacheOptions {
    */
   setScheduledEventCaching(option) {
     if (typeof option !== "boolean")
-      throw new TypeError("GLUON: Setting must be a boolean");
+      throw new TypeError("GLUON: Scheduled event caching must be a boolean");
 
     if (option === true)
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS;
@@ -334,7 +334,11 @@ class GuildCacheOptions {
    * @public
    */
   toString() {
-    return `GuildCacheOptions { fileCaching: ${this.fileCaching}, messageCaching: ${this.messageCaching}, voiceStateCaching: ${this.voiceStateCaching}, memberCaching: ${this.memberCaching}, roleCaching: ${this.roleCaching}, channelCaching: ${this.channelCaching}, emojiCaching: ${this.emojiCaching}, threadCaching: ${this.threadCaching}, inviteCaching: ${this.inviteCaching} }`;
+    return `GuildCacheOptions { ${Object.entries(GLUON_GUILD_CACHING_OPTIONS)
+      .map(
+        ([key, value]) => `${key}: ${(this.#_cache_options & value) === value}`,
+      )
+      .join(", ")} }`;
   }
 
   /**
