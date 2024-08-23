@@ -190,7 +190,7 @@ export const TEST_DATA = {
     id: "123456339012345678",
     type: 0,
     content: "test message @everyone",
-    channel_id: "123456789012345678",
+    channel_id: "123456789112345678",
     author: {
       id: "301655085954367490",
       username: "test",

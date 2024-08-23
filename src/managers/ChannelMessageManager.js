@@ -87,7 +87,7 @@ class ChannelMessageManager extends BaseCacheManager {
     )
       throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
     if (typeof options === "object") {
-      ChannelMessageManager.fetchMessages(
+      return ChannelMessageManager.fetchMessages(
         this.#_client,
         this.#guild.id,
         this.#channel.id,
@@ -112,7 +112,6 @@ class ChannelMessageManager extends BaseCacheManager {
    * @public
    * @async
    * @method
-   * @throws {Error}
    */
   async fetchPinned() {
     const data = await this.#_client.request.makeRequest("getPinned", [
@@ -285,7 +284,7 @@ class ChannelMessageManager extends BaseCacheManager {
     client,
     guildId,
     channelId,
-    { around, before, after, limit },
+    { around, before, after, limit } = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
@@ -337,13 +336,21 @@ class ChannelMessageManager extends BaseCacheManager {
     )
       throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
 
+    let providedFilters = 0;
+    if (around) providedFilters++;
+    if (before) providedFilters++;
+    if (after) providedFilters++;
+
+    if (providedFilters > 1)
+      throw new Error(
+        "GLUON: Only one of around, before, or after may be provided.",
+      );
+
     const body = {};
 
     if (around) body.around = around;
-
-    if (before) body.before = before;
-
-    if (after) body.after = after;
+    else if (before) body.before = before;
+    else if (after) body.after = after;
 
     if (limit) body.limit = limit;
 
@@ -352,15 +359,15 @@ class ChannelMessageManager extends BaseCacheManager {
       [channelId],
       body,
     );
-
     const messages = [];
-    for (let i = 0; i < data.length; i++)
+    for (let i = 0; i < data.length; i++) {
       messages.push(
         new Message(client, data[i], {
           channelId: data[i].channel_id,
           guildId,
         }),
       );
+    }
     return messages;
   }
 
@@ -403,7 +410,11 @@ class ChannelMessageManager extends BaseCacheManager {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    await this.request.makeRequest("postBulkDeleteMessages", [channelId], body);
+    await client.request.makeRequest(
+      "postBulkDeleteMessages",
+      [channelId],
+      body,
+    );
   }
 }
 

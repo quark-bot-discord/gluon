@@ -70,16 +70,6 @@ export default {
       return HttpResponse.json({ audit_log_entries: [TEST_DATA.AUDIT_LOG] });
     },
   },
-  getChannel: {
-    path: (channel_id) => {
-      return `/channels/${channel_id}`;
-    },
-    method: "GET",
-    majorParams: [0],
-    mockResponse: ({ params } = {}) => {
-      return HttpResponse.json(TEST_DATA.TEXT_CHANNEL);
-    },
-  },
   getChannelMessages: {
     path: (channel_id) => {
       return `/channels/${channel_id}/messages`;
@@ -398,6 +388,16 @@ export default {
     majorParams: [0],
     mockResponse: ({ params } = {}) => {
       return HttpResponse.json([TEST_DATA.MESSAGE]);
+    },
+  },
+  getChannel: {
+    path: (channel_id) => {
+      return `/channels/${channel_id}`;
+    },
+    method: "GET",
+    majorParams: [0],
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.TEXT_CHANNEL);
     },
   },
 };
