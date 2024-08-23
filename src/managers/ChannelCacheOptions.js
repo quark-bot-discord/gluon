@@ -352,7 +352,13 @@ class ChannelCacheOptions {
    * @public
    */
   toString() {
-    return `ChannelCacheOptions { fileCaching: ${this.fileCaching}, messageCaching: ${this.messageCaching} }`;
+    return `ChannelCacheOptions { ${Object.entries(
+      GLUON_CHANNEL_CACHING_OPTIONS,
+    )
+      .map(
+        ([key, value]) => `${key}: ${(this.#_cache_options & value) === value}`,
+      )
+      .join(", ")} }`;
   }
 
   /**
