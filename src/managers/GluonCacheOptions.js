@@ -21,7 +21,7 @@ class GluonCacheOptions {
     cacheEmojis,
     cacheInvites,
     cacheScheduledEvents,
-  }) {
+  } = {}) {
     this.#_cache_options = 0;
 
     this.#userTTL = DEFAULT_USER_EXPIRY_SECONDS;
@@ -409,8 +409,6 @@ class GluonCacheOptions {
   get messageTTL() {
     return this.#messageTTL;
   }
-
-  addCacheRule(gluonCacheRule) {}
 }
 
 export default GluonCacheOptions;
