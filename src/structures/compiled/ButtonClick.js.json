@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 411,
-                2882
+                2964
             ],
             "filename": "ButtonClick.js",
             "lineno": 12,
@@ -114,7 +114,7 @@
         "meta": {
             "range": [
                 918,
-                1783
+                1865
             ],
             "filename": "ButtonClick.js",
             "lineno": 24,
@@ -193,7 +193,7 @@
         "meta": {
             "range": [
                 411,
-                2882
+                2964
             ],
             "filename": "ButtonClick.js",
             "lineno": 12,
@@ -319,14 +319,14 @@
         "scope": "global"
     },
     {
-        "comment": "",
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1415,
-                1437
+                1497,
+                1519
             ],
             "filename": "ButtonClick.js",
-            "lineno": 36,
+            "lineno": 41,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -337,7 +337,13 @@
                 "paramnames": []
             }
         },
-        "undocumented": true,
+        "description": "The client instance.",
+        "type": {
+            "names": [
+                "Client"
+            ]
+        },
+        "access": "private",
         "name": "ButtonClick",
         "longname": "ButtonClick.ButtonClick",
         "kind": "member",
@@ -348,11 +354,11 @@
         "comment": "/**\n     * The custom id of the button.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1534,
-                1571
+                1616,
+                1653
             ],
             "filename": "ButtonClick.js",
-            "lineno": 43,
+            "lineno": 48,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -380,11 +386,11 @@
         "comment": "/**\n     * The message which the button belongs to.\n     * @type {Message}\n     * @private\n     */",
         "meta": {
             "range": [
-                1681,
-                1778
+                1763,
+                1860
             ],
             "filename": "ButtonClick.js",
-            "lineno": 50,
+            "lineno": 55,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -412,11 +418,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1746,
-                1755
+                1828,
+                1837
             ],
             "filename": "ButtonClick.js",
-            "lineno": 51,
+            "lineno": 56,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -436,11 +442,11 @@
         "comment": "",
         "meta": {
             "range": [
-                1763,
-                1770
+                1845,
+                1852
             ],
             "filename": "ButtonClick.js",
-            "lineno": 52,
+            "lineno": 57,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -460,11 +466,11 @@
         "comment": "/**\n   * The custom id of the button.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                1881,
-                1929
+                1963,
+                2011
             ],
             "filename": "ButtonClick.js",
-            "lineno": 62,
+            "lineno": 67,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -496,11 +502,11 @@
         "comment": "/**\n   * The message which the button belongs to.\n   * @type {Message}\n   * @readonly\n   * @public\n   * @see {@link Message}\n   */",
         "meta": {
             "range": [
-                2066,
-                2111
+                2148,
+                2193
             ],
             "filename": "ButtonClick.js",
-            "lineno": 73,
+            "lineno": 78,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -535,11 +541,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2153,
-                2209
+                2235,
+                2291
             ],
             "filename": "ButtonClick.js",
-            "lineno": 81,
+            "lineno": 86,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -564,11 +570,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                2251,
-                2308
+                2333,
+                2390
             ],
             "filename": "ButtonClick.js",
-            "lineno": 89,
+            "lineno": 94,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -593,11 +599,11 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2506,
-                2880
+                2588,
+                2962
             ],
             "filename": "ButtonClick.js",
-            "lineno": 101,
+            "lineno": 106,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -645,11 +651,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2760,
-                2817
+                2842,
+                2899
             ],
             "filename": "ButtonClick.js",
-            "lineno": 109,
+            "lineno": 114,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -669,11 +675,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2780,
-                2804
+                2862,
+                2886
             ],
             "filename": "ButtonClick.js",
-            "lineno": 110,
+            "lineno": 115,
             "columnno": 12,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -694,11 +700,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2829,
-                2850
+                2911,
+                2932
             ],
             "filename": "ButtonClick.js",
-            "lineno": 112,
+            "lineno": 117,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -718,11 +724,11 @@
         "comment": "",
         "meta": {
             "range": [
-                2884,
-                2911
+                2966,
+                2993
             ],
             "filename": "ButtonClick.js",
-            "lineno": 119,
+            "lineno": 124,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
