@@ -33,6 +33,11 @@ class ButtonClick extends Interaction {
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID must be a string");
 
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
     this.#_client = client;
 
     /**
