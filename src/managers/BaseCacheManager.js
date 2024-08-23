@@ -95,7 +95,7 @@ class BaseCacheManager {
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.#cache.get(key);
     if (value) return value;
-    else if (useRules) return this._callFetches(key);
+    else if (useRules) return this.#_callFetches(key);
     else return null;
   }
 
@@ -112,13 +112,9 @@ class BaseCacheManager {
   set(key, value, expiry = 0) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    if (typeof value !== "object")
-      throw new TypeError("GLUON: Value must be an object.");
-    if (value && typeof value.toJSON !== "function")
-      throw new TypeError("GLUON: Value must have a toJSON method.");
     if (typeof expiry !== "number")
       throw new TypeError("GLUON: Expiry must be a number.");
-    this.addToExpiryBucket(key, expiry);
+    this.#addToExpiryBucket(key, expiry);
     return this.#cache.set(key, value);
   }
 
@@ -130,7 +126,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  addToExpiryBucket(key, expiry) {
+  #addToExpiryBucket(key, expiry) {
     if (expiry === 0) return;
     const expiryDate = new Date(Date.now() + expiry * 1000);
     const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
@@ -151,7 +147,7 @@ class BaseCacheManager {
     for (const key of this.#expiryBucket.get(bucket)) {
       try {
         const value = this.get(key);
-        if (value) this._callRules(value);
+        if (value) this.#_callRules(value);
       } catch (e) {
         console.error(e);
       }
@@ -166,7 +162,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  clearStaleBuckets() {
+  #clearStaleBuckets() {
     const now = new Date();
     const buckets = [...this.#expiryBucket.keys()];
     for (const bucket of buckets) {
@@ -221,7 +217,7 @@ class BaseCacheManager {
     const now = new Date();
     const bucket = `${now.getUTCDate()}_${now.getUTCHours()}_${now.getUTCMinutes()}`;
     this.expireBucket(bucket);
-    if (now.getUTCMinutes() === 0) this.clearStaleBuckets();
+    if (now.getUTCMinutes() === 0) this.#clearStaleBuckets();
     return {
       i: this.#structureType.identifier,
     };
@@ -234,10 +230,10 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  _callRules(value) {
+  #_callRules(value) {
     const rules = Object.values(BaseCacheManager.rules);
     for (const rule of rules)
-      if (rule.structure === this.#structureType) rule.handlerFunction(value);
+      if (rule.structure === this.#structureType) rule.store(value);
   }
 
   /**
@@ -248,12 +244,12 @@ class BaseCacheManager {
    * @method
    * @async
    */
-  async _callFetches(id) {
+  async #_callFetches(id) {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
       if (rule.structure === this.#structureType)
-        fetchValue = await rule.retrieveFunction(id, this);
+        fetchValue = await rule.retrieve(id, this);
       if (fetchValue) return fetchValue;
     }
     return null;
