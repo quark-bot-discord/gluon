@@ -61,6 +61,7 @@ describe("GluonCacheOptions", function () {
       expect(cacheOptions.cacheEmojis).to.be.true;
       expect(cacheOptions.cacheInvites).to.be.true;
       expect(cacheOptions.cacheScheduledEvents).to.be.true;
+      expect(cacheOptions).to.have.property("toString");
     });
   });
 
@@ -210,6 +211,29 @@ describe("GluonCacheOptions", function () {
       expect(() => cacheOptions.setCacheScheduledEvents("true")).to.throw(
         TypeError,
         "GLUON: Cache scheduled events must be a boolean",
+      );
+    });
+  });
+
+  context("check toString", function () {
+    it("should return the correct string", function () {
+      const cacheOptions = new GluonCacheOptions({
+        userTTL: 30,
+        messageTTL: 30,
+        cacheMessages: true,
+        cacheUsers: true,
+        cacheMembers: true,
+        cacheChannels: true,
+        cacheGuilds: true,
+        cacheRoles: true,
+        cacheVoiceStates: true,
+        cacheEmojis: true,
+        cacheInvites: true,
+        cacheScheduledEvents: true,
+      });
+      const cacheOptionsString = cacheOptions.toString();
+      expect(cacheOptionsString).to.equal(
+        "GluonCacheOptions { GUILDS: true, USERS: true, CHANNELS: true, MESSAGES: true, ROLES: true, EMOJIS: true, INVITES: true, VOICE_STATES: true, MEMBERS: true, SCHEDULED_EVENTS: true, USER_TTL: 30, MESSAGE_TTL: 30 }",
       );
     });
   });

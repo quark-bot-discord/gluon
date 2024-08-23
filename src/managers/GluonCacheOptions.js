@@ -409,6 +409,20 @@ class GluonCacheOptions {
   get messageTTL() {
     return this.#messageTTL;
   }
+
+  /**
+   * @method
+   * @public
+   */
+  toString() {
+    return `GluonCacheOptions { ${Object.entries(GLUON_GLOBAL_CACHE_ENUM)
+      .map(
+        ([key, value]) => `${key}: ${(this.#_cache_options & value) === value}`,
+      )
+      .join(
+        ", ",
+      )}, USER_TTL: ${this.#userTTL}, MESSAGE_TTL: ${this.#messageTTL} }`;
+  }
 }
 
 export default GluonCacheOptions;
