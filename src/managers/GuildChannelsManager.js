@@ -146,7 +146,7 @@ class GuildChannelsManager extends BaseCacheManager {
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
 
-    const cached = GuildChannelsManager.getChannel(channelId);
+    const cached = GuildChannelsManager.getChannel(client, guildId, channelId);
     if (cached) return cached;
 
     const data = await client.request.makeRequest("getChannel", [channelId]);
