@@ -8,7 +8,7 @@ import VoiceChannel from "../../structures/VoiceChannel.js";
  * Automatically determines the channel type and caches the channel appropriately.
  * @param {Client} client The client instance.
  * @param {Object} data The raw channel data from Discord.
- * @param {String} guild_id The id of the guild that the channel belongs to.
+ * @param {String} guildId The id of the guild that the channel belongs to.
  * @param {Boolean?} nocache Whether the channel should be cached.
  * @returns {VoiceChannel | Thread | TextChannel}
  */
