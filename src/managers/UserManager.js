@@ -28,21 +28,21 @@ class UserManager extends BaseCacheManager {
 
   /**
    * Fetches a particular user.
-   * @param {String} user_id The id of the user to fetch.
+   * @param {String} userId The id of the user to fetch.
    * @returns {Promise<User>} The fetched user.
    * @public
    * @async
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(user_id) {
-    if (typeof user_id !== "string")
+  async fetch(userId) {
+    if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    const cached = await this.get(user_id);
+    const cached = await this.get(userId);
     if (cached) return cached;
 
-    const data = await this.#_client.request.makeRequest("getUser", [user_id]);
+    const data = await this.#_client.request.makeRequest("getUser", [userId]);
 
     return new User(this.#_client, data);
   }

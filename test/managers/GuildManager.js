@@ -29,6 +29,14 @@ describe("GuildManager", function () {
       guildManager.set("123456", guild);
       expect(guildManager.get("123456")).to.deep.equal(guild);
     });
+    it("should throw an error if guild is not a Guild instance", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guildManager = new GuildManager(client);
+      expect(() => guildManager.set("123456", {})).to.throw(
+        TypeError,
+        "GLUON: Guild must be an instance of Guild.",
+      );
+    });
   });
 
   context("check getCacheManager method", function () {

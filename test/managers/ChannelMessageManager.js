@@ -31,6 +31,8 @@ describe("ChannelMessageManager", function () {
       expect(channelMessageManager).to.have.property("guild");
       expect(channelMessageManager).to.have.property("fetch");
       expect(channelMessageManager).to.have.property("fetchPinned");
+      expect(channelMessageManager).to.have.property("set");
+      expect(channelMessageManager).to.have.property("guild");
       expect(ChannelMessageManager).to.have.property("getCacheManager");
       expect(ChannelMessageManager).to.have.property("fetchMessage");
       expect(ChannelMessageManager).to.have.property("getMessage");
@@ -50,6 +52,40 @@ describe("ChannelMessageManager", function () {
         channel,
       );
       expect(channelMessageManager.guild).to.deep.equal(guild);
+    });
+  });
+
+  context("check set", function () {
+    it("should set the correct value", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channelMessageManager = new ChannelMessageManager(
+        client,
+        guild,
+        channel,
+      );
+      const message = new Message(client, TEST_DATA.MESSAGE, {
+        channelId: channel.id,
+        guildId: guild.id,
+      });
+      channelMessageManager.set(TEST_DATA.MESSAGE_ID, message);
+      expect(channelMessageManager.get(TEST_DATA.MESSAGE_ID)).to.deep.equal(
+        message,
+      );
+    });
+    it("should throw an error when the message is not a Message instance", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channelMessageManager = new ChannelMessageManager(
+        client,
+        guild,
+        channel,
+      );
+      expect(() =>
+        channelMessageManager.set(TEST_DATA.MESSAGE_ID, {}),
+      ).to.throw(TypeError, "GLUON: Message must be a Message instance.");
     });
   });
 
