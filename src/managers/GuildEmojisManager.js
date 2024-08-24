@@ -39,23 +39,23 @@ class GuildEmojisManager extends BaseCacheManager {
 
   /**
    * Fetches a particular emoji that belongs to this guild.
-   * @param {String} emoji_id The id of the emoji to fetch.
+   * @param {String} emojiId The id of the emoji to fetch.
    * @returns {Promise<Emoji>} The fetched emoji.
    * @public
    * @async
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(emoji_id) {
-    if (typeof emoji_id !== "string")
+  async fetch(emojiId) {
+    if (typeof emojiId !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
-    const cached = await this.get(emoji_id);
+    const cached = await this.get(emojiId);
     if (cached) return cached;
 
     const data = await this.#_client.request.makeRequest("getEmoji", [
       this.#guild.id,
-      emoji_id,
+      emojiId,
     ]);
 
     return new Emoji(this.#_client, data, { guildId: this.#guild.id });
