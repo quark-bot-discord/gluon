@@ -166,6 +166,16 @@ export default {
       return HttpResponse.json(TEST_DATA.FOLLOWED_CHANNEL);
     },
   },
+  getSearchGuildMembers: {
+    path: (guild_id) => {
+      return `/guilds/${guild_id}/members/search`;
+    },
+    method: "GET",
+    majorParams: [0],
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.MEMBER]);
+    },
+  },
   getGuildMember: {
     path: (guild_id, user_id) => {
       return `/guilds/${guild_id}/members/${user_id}`;
@@ -290,16 +300,6 @@ export default {
     majorParams: [0],
     mockResponse: ({ params } = {}) => {
       return new HttpResponse(undefined, { status: 204 });
-    },
-  },
-  getSearchGuildMembers: {
-    path: (guild_id) => {
-      return `/guilds/${guild_id}/members/search`;
-    },
-    method: "GET",
-    majorParams: [0],
-    mockResponse: ({ params } = {}) => {
-      return HttpResponse.json([TEST_DATA.MEMBER]);
     },
   },
   postCreateWebhook: {
