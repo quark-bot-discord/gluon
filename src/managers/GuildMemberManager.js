@@ -73,35 +73,11 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  async search(query) {
+  search(query) {
     if (typeof query !== "string")
       throw new TypeError("GLUON: Query must be a string.");
 
-    const body = {};
-
-    body.query = query;
-
-    body.limit = 1000;
-
-    const data = await this.#_client.request.makeRequest(
-      "getSearchGuildMembers",
-      [this.#guild.id],
-      body,
-    );
-    if (data.length != 0) {
-      const members = [];
-
-      for (let i = 0; i < data.length; i++)
-        members.push(
-          new Member(this.#_client, data[i], {
-            userId: data[i].user.id,
-            guildId: this.#guild.id,
-            user: data[i].user,
-          }),
-        );
-
-      return members;
-    } else return null;
+    return GuildMemberManager.search(this.#_client, this.#guild.id, query);
   }
 
   /**
@@ -203,20 +179,18 @@ class GuildMemberManager extends BaseCacheManager {
       [guildId],
       body,
     );
-    if (data.length !== 0) {
-      const members = [];
+    const members = [];
 
-      for (let i = 0; i < data.length; i++)
-        members.push(
-          new Member(client, data[i], {
-            userId: data[i].user.id,
-            guildId,
-            user: data[i].user,
-          }),
-        );
+    for (let i = 0; i < data.length; i++)
+      members.push(
+        new Member(client, data[i], {
+          userId: data[i].user.id,
+          guildId,
+          user: data[i].user,
+        }),
+      );
 
-      return members;
-    } else return null;
+    return members;
   }
 }
 
