@@ -21,13 +21,9 @@ const chalk =
 
 import UserManager from "./managers/UserManager.js";
 import GuildManager from "./managers/GuildManager.js";
-import Message from "./structures/Message.js";
 import Guild from "./structures/Guild.js";
 import User from "./structures/User.js";
 import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
-import Member from "./structures/Member.js";
-import cacheChannel from "./util/gluon/cacheChannel.js";
-import Role from "./structures/Role.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
