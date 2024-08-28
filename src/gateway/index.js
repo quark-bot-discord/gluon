@@ -17,7 +17,6 @@ import _resume from "./structures/_resume.js";
 
 class Shard {
   #token;
-  #intents;
   #_client;
   #_sessionId;
   #_s;
