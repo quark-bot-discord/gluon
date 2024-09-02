@@ -358,7 +358,9 @@ export default {
     },
     method: "PUT",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {},
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.SLASH_COMMAND]);
+    },
   },
   getRoles: {
     path: (guild_id) => {
