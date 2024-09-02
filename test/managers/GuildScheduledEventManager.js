@@ -2,7 +2,6 @@ import { expect } from "chai";
 import { spy } from "sinon";
 import GuildScheduledEventManager from "../../src/managers/GuildScheduledEventManager.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { ScheduledEvent } from "../../src/structures.js";
 
 describe("GuildScheduledEventManager", function () {
