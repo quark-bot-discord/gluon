@@ -218,7 +218,7 @@ describe("ChannelMessageManager", function () {
       const request = spy(client.request, "makeRequest");
       await channelMessageManager.fetchPinned();
       expect(request).to.be.calledOnce;
-      expect(request).to.be.calledOnceWith("getPinned", [
+      expect(request).to.be.calledOnceWith("getChannelPins", [
         TEST_DATA.TEXT_CHANNEL.id,
       ]);
       expect(request.firstCall.args[2]).to.be.undefined;

@@ -114,7 +114,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    */
   async fetchPinned() {
-    const data = await this.#_client.request.makeRequest("getPinned", [
+    const data = await this.#_client.request.makeRequest("getChannelPins", [
       this.#channel.id,
     ]);
 

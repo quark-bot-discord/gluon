@@ -380,7 +380,7 @@ export default {
       return HttpResponse.json(TEST_DATA.EMOJI);
     },
   },
-  getPinned: {
+  getChannelPins: {
     path: (channel_id) => {
       return `/channels/${channel_id}/pins`;
     },
