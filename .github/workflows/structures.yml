@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: "20.x"
 
+      - name: Install all packages
+        run: npm ci
+
       - name: Install JSDoc
         run: npm install -g jsdoc
 
@@ -49,6 +52,12 @@ jobs:
             output="$output export { default as $(basename $file .js) } from './managers/$(basename $file)';\n"
           done
           echo -e $output > ./src/structures.js
+
+      - name: Install TypeScript
+        run: npm install -g typescript
+
+      - name: Compile types
+        run: npx tsc
 
       - name: Import bot's GPG key for signing commits
         id: import-gpg
