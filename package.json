@@ -54,7 +54,8 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
     "ws": "^8.18.0",
-    "zlib-sync": "^0.1.9"
+    "zlib-sync": "^0.1.9",
+    "tiny-typed-emitter": "^2.1.0"
   },
   "devDependencies": {
     "chai": "^5.1.1",
@@ -69,8 +70,7 @@
     "msw": "^2.3.4",
     "prettier": "3.3.3",
     "sinon": "^18.0.0",
-    "sinon-chai": "^4.0.0",
-    "tiny-typed-emitter": "^2.1.0"
+    "sinon-chai": "^4.0.0"
   },
   "script": {
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
