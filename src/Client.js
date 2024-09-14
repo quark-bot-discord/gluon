@@ -144,10 +144,54 @@ class Client extends EventsEmitter {
     initCache,
     softRestartFunction,
   } = {}) {
+    super();
+
+    if (typeof cacheMessages !== "boolean")
+      throw new TypeError("GLUON: Cache messages is not a boolean.");
+    if (typeof cacheUsers !== "boolean")
+      throw new TypeError("GLUON: Cache users is not a boolean.");
+    if (typeof cacheMembers !== "boolean")
+      throw new TypeError("GLUON: Cache members is not a boolean.");
+    if (typeof cacheChannels !== "boolean")
+      throw new TypeError("GLUON: Cache channels is not a boolean.");
+    if (typeof cacheGuilds !== "boolean")
+      throw new TypeError("GLUON: Cache guilds is not a boolean.");
+    if (typeof cacheVoiceStates !== "boolean")
+      throw new TypeError("GLUON: Cache voice states is not a boolean.");
+    if (typeof cacheRoles !== "boolean")
+      throw new TypeError("GLUON: Cache roles is not a boolean.");
+    if (typeof cacheScheduledEvents !== "boolean")
+      throw new TypeError("GLUON: Cache scheduled events is not a boolean.");
+    if (typeof cacheEmojis !== "boolean")
+      throw new TypeError("GLUON: Cache emojis is not a boolean.");
+    if (typeof cacheInvites !== "boolean")
+      throw new TypeError("GLUON: Cache invites is not a boolean.");
+    if (typeof defaultMessageExpiry !== "number")
+      throw new TypeError("GLUON: Default message expiry is not a number.");
+    if (typeof defaultUserExpiry !== "number")
+      throw new TypeError("GLUON: Default user expiry is not a number.");
     if (typeof intents !== "number")
       throw new TypeError("GLUON: Intents is not a number.");
-
-    super();
+    if (typeof totalShards !== "undefined" && typeof totalShards !== "number")
+      throw new TypeError("GLUON: Total shards is not a number.");
+    if (
+      typeof shardIds !== "undefined" &&
+      (!Array.isArray(shardIds) ||
+        shardIds.length === 0 ||
+        !shardIds.every((id) => typeof id === "number"))
+    )
+      throw new TypeError(
+        "GLUON: Shard ids is not an array of shard ids (numbers).",
+      );
+    if (typeof sessionData !== "undefined" && typeof sessionData !== "object")
+      throw new TypeError("GLUON: Session data is not an object.");
+    if (typeof initCache !== "undefined" && typeof initCache !== "object")
+      throw new TypeError("GLUON: Init cache is not an object.");
+    if (
+      typeof softRestartFunction !== "undefined" &&
+      typeof softRestartFunction !== "function"
+    )
+      throw new TypeError("GLUON: Soft restart function is not a function.");
 
     /**
      * The shards that this client is managing.
