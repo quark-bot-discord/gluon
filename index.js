@@ -1,1 +1,1 @@
-export default await import("./src/Client");
+export { default as Client } from "./client/Client.js";
