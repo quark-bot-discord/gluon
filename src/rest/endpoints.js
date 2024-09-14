@@ -1,7 +1,11 @@
 /* of course, stick to this format of "methodPath1Path2" */
 /* the arguments passed to the path() function should simply become the parameters of the request */
 
-import { HttpResponse } from "msw";
+const HttpResponse =
+  process.env.NODE_ENV !== "development" &&
+  process.env.NODE_ENV !== "production"
+    ? (await import("msw")).HttpResponse
+    : {};
 import { TEST_DATA } from "../testData.js";
 
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
