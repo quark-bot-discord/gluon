@@ -304,7 +304,7 @@ class Embed {
           ? `**${this.fields[i].name}**:\n${this.fields[i].value}\n`
           : `${this.fields[i].value}\n`;
 
-    string += this.footer ? this.footer.text : "";
+    string += this.footer ? `-# ${this.footer.text}` : "";
 
     return string;
   }
