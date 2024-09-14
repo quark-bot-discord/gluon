@@ -179,6 +179,31 @@ describe("BaseCacheManager", function () {
     });
   });
 
+  context("check has", function () {
+    it("should return the correct value", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guildEmojisManager = new GuildEmojisManager(client, guild);
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: guildEmojisManager,
+      });
+      baseCacheManager.set("key", "value");
+      expect(baseCacheManager.has("key")).to.be.true;
+    });
+    it("should throw an error when the key is not a string", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guildEmojisManager = new GuildEmojisManager(client, guild);
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: guildEmojisManager,
+      });
+      expect(() => baseCacheManager.has(1)).to.throw(
+        TypeError,
+        "GLUON: Key must be a string.",
+      );
+    });
+  });
+
   context("check toJSON", function () {
     it("should return the correct JSON representation", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

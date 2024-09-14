@@ -277,6 +277,20 @@ class BaseCacheManager {
   }
 
   /**
+   * Checks if a key exists in the cache.
+   * @param {String} key The key to check.
+   * @returns {Boolean} Whether the key exists or not.
+   * @public
+   * @method
+   * @throws {TypeError}
+   */
+  has(key) {
+    if (typeof key !== "string")
+      throw new TypeError("GLUON: Key must be a string.");
+    return this.#cache.has(key);
+  }
+
+  /**
    * Returns the JSON representation of this structure.
    * @param {Number} format The format to return the data in.
    * @returns {Object}
