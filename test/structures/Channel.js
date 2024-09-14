@@ -12,7 +12,6 @@ import {
 import Guild from "../../src/structures/Guild.js";
 import ChannelMessageManager from "../../src/managers/ChannelMessageManager.js";
 import ChannelCacheOptions from "../../src/managers/ChannelCacheOptions.js";
-import Member from "../../src/structures/Member.js";
 import Role from "../../src/structures/Role.js";
 import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
