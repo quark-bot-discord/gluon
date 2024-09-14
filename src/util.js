@@ -5,13 +5,11 @@ import checkPermission from "./util/discord/checkPermission.js";
 import Command from "./util/builder/commandBuilder.js";
 import CommandChoice from "./util/builder/commandChoiceBuilder.js";
 import CommandOption from "./util/builder/commandOptionBuilder.js";
-import decryptMessage from "./util/gluon/decryptMessage.js";
 import decryptText from "./util/general/decryptText.js";
 import deepCompare from "./util/general/deepCompare.js";
 import Dropdown from "./util/builder/dropdownBuilder.js";
 import DropdownOption from "./util/builder/dropdownOption.js";
 import Embed from "./util/builder/embedBuilder.js";
-import encryptMessage from "./util/gluon/encryptMessage.js";
 import encryptText from "./util/general/encryptText.js";
 import getAvatarUrl from "./util/image/getAvatarUrl.js";
 import getEventImage from "./util/image/getEventImage.js";
@@ -35,13 +33,11 @@ export default {
   Command,
   CommandChoice,
   CommandOption,
-  decryptMessage,
   decryptText,
   deepCompare,
   Dropdown,
   DropdownOption,
   Embed,
-  encryptMessage,
   encryptText,
   getAvatarUrl,
   getEventImage,
