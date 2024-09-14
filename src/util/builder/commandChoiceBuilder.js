@@ -1,4 +1,4 @@
-const { LIMITS } = require("../../constants");
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Helps to create a choice for a command.
@@ -18,15 +18,21 @@ class CommandChoice {
    * @returns {CommandChoice}
    */
   setName(name) {
+    if (!name)
+      throw new TypeError("GLUON: Command choice name must be provided.");
 
-    if (!name) throw new TypeError("GLUON: Command choice name must be provided.");
-    
-    if (typeof name != "string" && typeof name != "object") throw new TypeError("GLUON: Command choice name must be a string or an object.");
+    if (typeof name != "string" && typeof name != "object")
+      throw new TypeError(
+        "GLUON: Command choice name must be a string or an object.",
+      );
 
     if (typeof name == "object") {
-
-      if (name[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
-        throw new RangeError(`GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`);
+      if (
+        name[this.defaultLocale].length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME
+      )
+        throw new RangeError(
+          `GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
 
       this.name = name[this.defaultLocale];
 
@@ -34,9 +40,10 @@ class CommandChoice {
 
       this.name_localizations = name;
     } else {
-
       if (name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
-        throw new RangeError(`GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`);
+        throw new RangeError(
+          `GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
 
       this.name = name;
     }
@@ -50,11 +57,13 @@ class CommandChoice {
    * @returns {CommandChoice}
    */
   setValue(value) {
-
-    if (!value) throw new TypeError("GLUON: Command choice value must be provided.");
+    if (!value)
+      throw new TypeError("GLUON: Command choice value must be provided.");
 
     if (value.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE)
-      throw new RangeError(`GLUON: Command choice value must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE} characters.`);
+      throw new RangeError(
+        `GLUON: Command choice value must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE} characters.`,
+      );
 
     this.value = value;
 
@@ -68,7 +77,6 @@ class CommandChoice {
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
   setDefaultLocale(locale) {
-
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -80,13 +88,69 @@ class CommandChoice {
    * Returns the correct Discord format for a command choice.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      name: this.name,
-      name_localizations: this.name_localizations,
-      value: this.value,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (!this.name)
+        throw new TypeError("GLUON: Command choice name must be provided.");
+      if (typeof this.name !== "string")
+        throw new TypeError("GLUON: Command choice name must be a string.");
+      if (
+        this.name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME ||
+        this.name.length < LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME
+      )
+        throw new RangeError(
+          `GLUON: Command choice name must be between ${LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME} and ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
+      if (!this.value)
+        throw new TypeError("GLUON: Command choice value must be provided.");
+      if (typeof this.value !== "string" && typeof this.value !== "number")
+        throw new TypeError(
+          "GLUON: Command choice value must be a string or a number.",
+        );
+      if (
+        typeof this.value === "string" &&
+        (this.value.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE ||
+          this.value.length < LIMITS.MIN_COMMAND_OPTION_CHOICE_VALUE)
+      )
+        throw new RangeError(
+          `GLUON: Command choice value must be between ${LIMITS.MIN_COMMAND_OPTION_CHOICE_VALUE} and ${LIMITS.MAX_COMMAND_OPTION_CHOICE_VALUE} characters.`,
+        );
+      if (
+        this.name_localizations &&
+        typeof this.name_localizations !== "object"
+      )
+        throw new TypeError(
+          "GLUON: Command choice name localizations must be an object.",
+        );
+      if (
+        this.name_localizations &&
+        !Object.values(this.name_localizations).every(
+          (v) =>
+            typeof v === "string" &&
+            v.length >= LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME &&
+            v.length <= LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME,
+        )
+      )
+        throw new RangeError(
+          `GLUON: Command choice name localizations must be a string between ${LIMITS.MIN_COMMAND_OPTION_CHOICE_NAME} and ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
+        );
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          name: this.name,
+          name_localizations: this.name_localizations,
+          value: this.value,
+        };
+      }
+    }
   }
 }
 
-module.exports = CommandChoice;
+export default CommandChoice;

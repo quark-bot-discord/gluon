@@ -1,5 +1,5 @@
 // credit: https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher
-const { createCipheriv } = require("crypto");
+import { createCipheriv } from "crypto";
 
 /**
  * Encrypts text and returns the plain text.
@@ -10,7 +10,6 @@ const { createCipheriv } = require("crypto");
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
 function encryptText(text, key, iv) {
-
   if (typeof text !== "string")
     throw new TypeError("GLUON: Text to encrypt must be a string.");
   if (typeof key !== "string")
@@ -25,8 +24,8 @@ function encryptText(text, key, iv) {
   const cipher = createCipheriv("aes-256-cbc", key, iv);
 
   return Buffer.concat([cipher.update(text), cipher.final()]).toString(
-    "base64"
+    "base64",
   );
 }
 
-module.exports = encryptText;
+export default encryptText;

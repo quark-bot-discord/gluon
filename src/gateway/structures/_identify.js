@@ -1,7 +1,20 @@
-const erlpack = require("erlpack");
-const { NAME, CALCULATED_INTENTS, GLUON_VERSION } = require("../../constants");
+import erlpack from "erlpack";
+import { NAME, GLUON_VERSION } from "../../constants.js";
 
-function _identify(token, shard, intents = CALCULATED_INTENTS) {
+/**
+ * Creates an identify payload for the gateway.
+ * @param {String} token The authorization token.
+ * @param {Array<Number>} shard An array of shard ids which this process is managing.
+ * @param {Number} intents The intents to use.
+ * @returns {Buffer}
+ */
+function _identify(token, shard, intents) {
+  if (typeof token !== "string")
+    throw new TypeError("GLUON: Token must be a string.");
+  if (!Array.isArray(shard))
+    throw new TypeError("GLUON: Shard must be an array.");
+  if (typeof intents !== "number")
+    throw new TypeError("GLUON: Intents must be a number.");
   return erlpack.pack({
     op: 2,
     d: {
@@ -29,4 +42,4 @@ function _identify(token, shard, intents = CALCULATED_INTENTS) {
   });
 }
 
-module.exports = _identify;
+export default _identify;

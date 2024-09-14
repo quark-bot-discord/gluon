@@ -1,154 +1,66 @@
-const Guild = require("../structures/Guild");
-const Member = require("../structures/Member");
-const User = require("../structures/User");
+import Client from "../Client.js";
+import Member from "../structures/Member.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
  * Manages all members belonging to this guild.
  */
-class GuildMemberManager {
+class GuildMemberManager extends BaseCacheManager {
+  #_client;
+  #guild;
+  static identifier = "members";
   /**
    * Creates a member manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this member manager belongs to.
    */
   constructor(client, guild) {
-    this._client = client;
+    super(client, { structureType: GuildMemberManager });
 
-    this.guild = guild;
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (!guild)
+      throw new TypeError("GLUON: Guild must be a valid guild instance.");
 
-    this.cache = new Map();
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
+
+    /**
+     * The guild that this member manager belongs to.
+     * @type {Guild}
+     * @private
+     */
+    this.#guild = guild;
   }
 
   /**
-   * Stores a member.
-   * @param {Member} member The member to store.
+   * The guild that this member manager belongs to.
+   * @type {Guild}
+   * @readonly
+   * @public
    */
-  store(member) {
-    // this._client.dataStorage.query("INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes) ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);",
-    //     { id: member.id, guild: this.guild.id, nick: member.nick, joined_at: member.joined_at, avatar: member.formattedAvatarHash, communication_disabled_until: member.communication_disabled_until, attributes: member._attributes })
-    //     .then(() => this._client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER STORAGE`));
-    // if (member.user)
-    //     this._client.users.store(member.user);
-    // if (Array.isArray(member._roles) && member._roles.length != 0) {
-    //     const valuesTemplate = member._roles.map(() => `(?, ?, ?)`).join(',');
-    //     const values = [];
-    //     for (let i = 0; i < member._roles.length; i++) {
-    //         values.push(member.id);
-    //         values.push(member._roles[i]);
-    //         values.push(this.guild.id);
-    //     }
-    //     this._client.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, values)
-    //         .then(() => this._client.emit("debug", `ADDED ${member.id} OF ${this.guild.id} TO MEMBER ROLES STORAGE`));
-    // }
-  }
-
-  /**
-   * Retrieve a member from the storage.
-   * @param {String | BigInt} user_id The id of the user to retrieve.
-   * @returns {Member} The retrieved member.
-   */
-  async retrieve(user_id) {
-    // const fetchedMemberRaw = await this._client.dataStorage.query(`
-    //     SELECT *
-    //     FROM Members
-    //     WHERE id = :id AND guild = :guild;
-    //     `, { id: user_id, guild: this.guild.id });
-    // if (!fetchedMemberRaw)
-    //     return null;
-    // const fetchedMember = fetchedMemberRaw[0][0];
-    // if (!fetchedMember)
-    //     return null;
-    // fetchedMember._attributes = fetchedMember.attributes;
-    // fetchedMember.joined_at = fetchedMember.joined_at * 1000;
-    // const fetchedMemberRolesRaw = await this._client.dataStorage.query(`
-    //     SELECT roleid
-    //     FROM MemberRoles
-    //     WHERE memberid = :memberid AND guild = :guild;
-    //     `, { memberid: user_id, guild: this.guild.id });
-    // if (fetchedMemberRolesRaw) {
-    //     const fetchedRoles = fetchedMemberRolesRaw[0].map(roles => roles.roleid);
-    //     fetchedMember.roles = fetchedRoles;
-    // }
-    // const user = await this._client.users.localFetch(user_id);
-    // return new Member(this._client, fetchedMember, user_id, this.guild.id.toString(), user, { noDbStore: true });
-  }
-
-  /**
-   * Cleans up the stored member data for this guild.
-   */
-  cleanup() {
-    // this._client.dataStorage.query(`
-    //     DELETE
-    //     FROM Members
-    //     WHERE guild = :guild;
-    //     `,
-    //     { guild: this.guild.id })
-    //     .then(() => this._client.emit("debug", `CLEANUP MEMBERS ${this.guild.id}`));
-    // this._client.dataStorage.query(`
-    //     DELETE
-    //     FROM MemberRoles
-    //     WHERE guild = :guild;
-    //     `,
-    //     { guild: this.guild.id })
-    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ROLES ${this.guild.id}`));
-  }
-
-  /**
-   * Removes the user from the storage.
-   * @param {BigInt | String} user_id The id of the user to remove from storage.
-   */
-  remove(user_id) {
-    // this._client.dataStorage.query(`
-    //     DELETE
-    //     FROM Members
-    //     WHERE guild = :guild AND id = :id;
-    //     `,
-    //     { guild: this.guild.id, id: user_id })
-    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ${user_id} FROM ${this.guild.id}`));
-
-    // this._client.dataStorage.query(`
-    //     DELETE
-    //     FROM MemberRoles
-    //     WHERE guild = :guild AND memberid = :memberid;
-    //     `,
-    //     { guild: this.guild.id, memberid: user_id })
-    //     .then(() => this._client.emit("debug", `CLEANUP MEMBER ROLES ${user_id} FROM ${this.guild.id}`));
-
-    // this.cache.delete(user_id.toString());
-  }
-
-  /**
-   * Gets a stored member without making an API request.
-   * @param {BigInt | String} user_id The id of the member to get.
-   * @returns {Member}
-   */
-  localFetch(user_id) {
-    const cached = this.cache.get(user_id.toString());
-    if (cached) return cached;
-
-    return this.retrieve(user_id);
+  get guild() {
+    return this.#guild;
   }
 
   /**
    * Fetches a member.
-   * @param {BigInt | String} user_id The id of the member to fetch.
+   * @param {String} user_id The id of the member to fetch.
    * @returns {Promise<Member>} The fetched member.
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
    */
-  async fetch(user_id) {
-    const localFetch = await this.localFetch(user_id);
-    if (localFetch) return localFetch;
-
-    const data = await this._client.request.makeRequest("getGuildMember", [
-      this.guild.id,
+  fetch(user_id) {
+    return GuildMemberManager.fetchMember(
+      this.#_client,
+      this.#guild.id,
       user_id,
-    ]);
-
-    return new Member(
-      this._client,
-      data,
-      user_id,
-      this.guild.id.toString(),
-      data.user,
     );
   }
 
@@ -156,64 +68,130 @@ class GuildMemberManager {
    * Searches for members via a search query.
    * @param {String} query The search query.
    * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
    */
-  async search(query) {
+  search(query) {
+    if (typeof query !== "string")
+      throw new TypeError("GLUON: Query must be a string.");
+
+    return GuildMemberManager.search(this.#_client, this.#guild.id, query);
+  }
+
+  /**
+   * Adds a member to the cache.
+   * @param {String} id The ID of the member
+   * @param {Member} member The member to cache.
+   * @returns {Member}
+   * @method
+   * @public
+   * @throws {TypeError}
+   * @override
+   */
+  set(id, member) {
+    if (!(member instanceof Member))
+      throw new TypeError("GLUON: Member must be a Member instance.");
+    return super.set(id, member);
+  }
+
+  /**
+   * Returns the cache manager.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild.
+   * @returns {GuildMemberManager}
+   */
+  static getCacheManager(client, guildId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    return client.guilds.get(guildId).members;
+  }
+
+  /**
+   * Fetches a member, checking the cache first.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The id of the guild the member belongs to.
+   * @param {String} userId The id of the member to fetch.
+   * @returns {Promise<Member>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async fetchMember(client, guildId, userId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+
+    const cached = GuildMemberManager.getCacheManager(
+      client,
+      guildId,
+    ).guild.members.get(userId);
+    if (cached) return cached;
+
+    const data = await client.request.makeRequest("getGuildMember", [
+      guildId,
+      userId,
+    ]);
+
+    return new Member(client, data, {
+      userId,
+      guildId,
+      user: data.user,
+    });
+  }
+
+  /**
+   * Searches for members via a search query.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The id of the guild to search.
+   * @param {String} query The search query.
+   * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   * @static
+   */
+  static async search(client, guildId, query) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof query !== "string")
+      throw new TypeError("GLUON: Query is not a string.");
+
     const body = {};
 
     body.query = query;
 
     body.limit = 1000;
 
-    const data = await this._client.request.makeRequest(
+    const data = await client.request.makeRequest(
       "getSearchGuildMembers",
-      [this.guild.id],
+      [guildId],
       body,
     );
-    if (data.length != 0) {
-      const members = [];
+    const members = [];
 
-      for (let i = 0; i < data.length; i++)
-        members.push(
-          new Member(
-            this._client,
-            data[i],
-            data[i].user.id,
-            this.guild.id.toString(),
-            data[i].user,
-          ),
-        );
+    for (let i = 0; i < data.length; i++)
+      members.push(
+        new Member(client, data[i], {
+          userId: data[i].user.id,
+          guildId,
+          user: data[i].user,
+        }),
+      );
 
-      return members;
-    } else return null;
-  }
-
-  /**
-   * Sweeps all members which have been flagged for deletion.
-   * @param {Number} cacheCount The maximum number of users which may be cached.
-   * @returns {Number} The remaining number of cached members.
-   */
-  sweepMembers(cacheCount) {
-    if (this.cache.size == 0) return;
-
-    const currentCacheSize = this.cache.size;
-    const currentCacheKeys = this.cache.keys();
-
-    for (
-      let cacheSize = currentCacheSize;
-      cacheCount < cacheSize;
-      cacheSize--
-    ) {
-      const current = currentCacheKeys.next().value;
-      if (current != this._client.user.id);
-      this.cache.delete(current);
-    }
-
-    return this.cache.size;
-  }
-
-  toJSON() {
-    return [...this.cache.values()];
+    return members;
   }
 }
 
-module.exports = GuildMemberManager;
+export default GuildMemberManager;

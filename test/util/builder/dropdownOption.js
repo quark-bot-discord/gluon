@@ -1,10 +1,6 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { LIMITS } = require("../../../src/constants");
-const DropdownOption = require("../../../src/util/builder/dropdownOption");
+import { expect } from "chai";
+import { LIMITS } from "../../../src/constants.js";
+import DropdownOption from "../../../src/util/builder/dropdownOption.js";
 
 describe("DropdownOption", function () {
   context("check import", function () {
@@ -30,7 +26,7 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setLabel()).to.throw(
         TypeError,
-        "GLUON: Dropdown option label must be provided."
+        "GLUON: Dropdown option label must be provided.",
       );
     });
 
@@ -38,7 +34,7 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       dropdownOption.setLabel("a".repeat(LIMITS.MAX_DROPDOWN_OPTION_LABEL + 1));
       expect(dropdownOption.label.length).to.equal(
-        LIMITS.MAX_DROPDOWN_OPTION_LABEL
+        LIMITS.MAX_DROPDOWN_OPTION_LABEL,
       );
     });
   });
@@ -59,7 +55,7 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setValue()).to.throw(
         TypeError,
-        "GLUON: Dropdown option value must be provided."
+        "GLUON: Dropdown option value must be provided.",
       );
     });
 
@@ -67,11 +63,11 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() =>
         dropdownOption.setValue(
-          "a".repeat(LIMITS.MAX_DROPDOWN_OPTION_VALUE + 1)
-        )
+          "a".repeat(LIMITS.MAX_DROPDOWN_OPTION_VALUE + 1),
+        ),
       ).to.throw(
         RangeError,
-        `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`
+        `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`,
       );
     });
   });
@@ -92,17 +88,17 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setDescription()).to.throw(
         TypeError,
-        "GLUON: Dropdown option description must be provided."
+        "GLUON: Dropdown option description must be provided.",
       );
     });
 
     it("should truncate the description if it exceeds the maximum length", function () {
       const dropdownOption = new DropdownOption();
       dropdownOption.setDescription(
-        "a".repeat(LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION + 1)
+        "a".repeat(LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION + 1),
       );
       expect(dropdownOption.description.length).to.equal(
-        LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION
+        LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION,
       );
     });
   });
@@ -123,7 +119,7 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setEmoji()).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
 
@@ -131,7 +127,7 @@ describe("DropdownOption", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setEmoji("test")).to.throw(
         TypeError,
-        "GLUON: Dropdown option emoji must be provided."
+        "GLUON: Dropdown option emoji must be provided.",
       );
     });
   });

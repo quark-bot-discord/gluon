@@ -1,5 +1,5 @@
-const { LIMITS } = require("../../constants");
-const resolveEmoji = require("../discord/resolveEmoji");
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import resolveEmoji from "../discord/resolveEmoji.js";
 
 /**
  * Helps to create a dropdown option.
@@ -12,10 +12,13 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setLabel(label) {
+    if (!label)
+      throw new TypeError("GLUON: Dropdown option label must be provided.");
 
-    if (!label) throw new TypeError("GLUON: Dropdown option label must be provided.");
-
-    this.label = (label && label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL) ? `${label.substring(0, LIMITS.MAX_DROPDOWN_OPTION_LABEL - 3)}...` : label;
+    this.label =
+      label && label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL
+        ? `${label.substring(0, LIMITS.MAX_DROPDOWN_OPTION_LABEL - 3)}...`
+        : label;
 
     return this;
   }
@@ -26,11 +29,13 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setValue(value) {
-
-    if (!value) throw new TypeError("GLUON: Dropdown option value must be provided.");
+    if (!value)
+      throw new TypeError("GLUON: Dropdown option value must be provided.");
 
     if (value.length > LIMITS.MAX_DROPDOWN_OPTION_VALUE)
-      throw new RangeError(`GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`);
+      throw new RangeError(
+        `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`,
+      );
 
     this.value = value;
 
@@ -43,10 +48,15 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setDescription(description) {
+    if (!description)
+      throw new TypeError(
+        "GLUON: Dropdown option description must be provided.",
+      );
 
-    if (!description) throw new TypeError("GLUON: Dropdown option description must be provided.");
-
-    this.description = (description && description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION) ? `${description.substring(0, LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION - 3)}...` : description;
+    this.description =
+      description && description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION
+        ? `${description.substring(0, LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION - 3)}...`
+        : description;
 
     return this;
   }
@@ -59,7 +69,8 @@ class DropdownOption {
   setEmoji(emoji) {
     this.emoji = resolveEmoji(emoji);
 
-    if (!this.emoji) throw new TypeError("GLUON: Dropdown option emoji must be provided.");
+    if (!this.emoji)
+      throw new TypeError("GLUON: Dropdown option emoji must be provided.");
 
     return this;
   }
@@ -79,15 +90,59 @@ class DropdownOption {
    * Returns the correct Discord format for a dropdown option.
    * @returns {Object}
    */
-  toJSON() {
-    return {
-      label: this.label,
-      value: this.value,
-      description: this.description,
-      emoji: this.emoji,
-      default: this.default,
-    };
+  toJSON(
+    format,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (suppressValidation !== true) {
+      if (typeof this.label !== "string")
+        throw new TypeError("GLUON: Dropdown option label must be a string.");
+      if (this.label.length > LIMITS.MAX_DROPDOWN_OPTION_LABEL)
+        throw new RangeError(
+          `GLUON: Dropdown option label must be less than ${LIMITS.MAX_DROPDOWN_OPTION_LABEL} characters.`,
+        );
+      if (typeof this.value !== "string")
+        throw new TypeError("GLUON: Dropdown option value must be a string.");
+      if (this.value.length > LIMITS.MAX_DROPDOWN_OPTION_VALUE)
+        throw new RangeError(
+          `GLUON: Dropdown option value must be less than ${LIMITS.MAX_DROPDOWN_OPTION_VALUE} characters.`,
+        );
+      if (this.description && typeof this.description !== "string")
+        throw new TypeError(
+          "GLUON: Dropdown option description must be a string.",
+        );
+      if (
+        this.description &&
+        this.description.length > LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION
+      )
+        throw new RangeError(
+          `GLUON: Dropdown option description must be less than ${LIMITS.MAX_DROPDOWN_OPTION_DESCRIPTION} characters.`,
+        );
+      if (this.emoji && typeof this.emoji !== "object")
+        throw new TypeError("GLUON: Dropdown option emoji must be an object.");
+      if (
+        typeof this.default !== "undefined" &&
+        typeof this.default !== "boolean"
+      )
+        throw new TypeError(
+          "GLUON: Dropdown option default must be a boolean.",
+        );
+    }
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return {
+          label: this.label,
+          value: this.value,
+          description: this.description,
+          emoji: this.emoji,
+          default: this.default,
+        };
+      }
+    }
   }
 }
 
-module.exports = DropdownOption;
+export default DropdownOption;

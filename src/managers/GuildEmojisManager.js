@@ -1,43 +1,81 @@
-const Emoji = require("../structures/Emoji");
-const Guild = require("../structures/Guild");
+import Client from "../Client.js";
+import Emoji from "../structures/Emoji.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
 /**
  * Manages all emojis within a guild.
  */
-class GuildEmojisManager {
+class GuildEmojisManager extends BaseCacheManager {
+  #_client;
+  #guild;
+  static identifier = "emojis";
   /**
    * Creates a guild emoji manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
   constructor(client, guild) {
-    this._client = client;
+    super(client, { structureType: GuildEmojisManager });
 
-    this.guild = guild;
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (!guild)
+      throw new TypeError("GLUON: Guild must be a valid guild instance.");
 
-    this.cache = new Map();
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
+
+    /**
+     * The guild that this emoji manager belongs to.
+     * @type {Guild}
+     * @private
+     */
+    this.#guild = guild;
   }
 
   /**
    * Fetches a particular emoji that belongs to this guild.
-   * @param {BigInt | String} emoji_id The id of the emoji to fetch.
+   * @param {String} emojiId The id of the emoji to fetch.
    * @returns {Promise<Emoji>} The fetched emoji.
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
-  async fetch(emoji_id) {
-    const cached = this.cache.get(emoji_id.toString());
+  async fetch(emojiId) {
+    if (typeof emojiId !== "string")
+      throw new TypeError("GLUON: Emoji ID must be a string.");
+
+    const cached = await this.get(emojiId);
     if (cached) return cached;
 
-    const data = await this._client.request.makeRequest("getEmoji", [
-      this.guild.id,
-      emoji_id,
+    const data = await this.#_client.request.makeRequest("getEmoji", [
+      this.#guild.id,
+      emojiId,
     ]);
 
-    return new Emoji(this._client, data, this.guild.id.toString(), data.user);
+    return new Emoji(this.#_client, data, { guildId: this.#guild.id });
   }
 
-  toJSON() {
-    return [...this.cache.values()];
+  /**
+   * Adds an emoji to the cache.
+   * @param {String} id The ID of the emoji to cache.
+   * @param {Emoji} emoji The emoji to cache.
+   * @returns {Emoji}
+   * @public
+   * @method
+   * @throws {TypeError}
+   * @override
+   */
+  set(id, emoji) {
+    if (!(emoji instanceof Emoji))
+      throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
+    return super.set(id, emoji);
   }
 }
 
-module.exports = GuildEmojisManager;
+export default GuildEmojisManager;

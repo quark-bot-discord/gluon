@@ -1,53 +1,30 @@
 [
     {
-        "comment": "",
+        "comment": "/**\n * Represents a voice channel.\n * @extends {Channel}\n */",
         "meta": {
             "range": [
-                6,
-                36
+                248,
+                3909
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 1,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000003",
-                "name": "Channel",
-                "type": "CallExpression",
-                "value": ""
-            }
-        },
-        "undocumented": true,
-        "name": "Channel",
-        "longname": "Channel",
-        "kind": "constant",
-        "scope": "global",
-        "params": []
-    },
-    {
-        "comment": "/**\n * Represents a voice channel.\n */",
-        "meta": {
-            "range": [
-                78,
-                1702
-            ],
-            "filename": "VoiceChannel.js",
-            "lineno": 6,
+            "lineno": 11,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000008",
+                "id": "astnode100000022",
                 "name": "VoiceChannel",
                 "type": "ClassDeclaration",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
         "classdesc": "Represents a voice channel.",
+        "augments": [
+            "Channel"
+        ],
         "name": "VoiceChannel",
         "longname": "VoiceChannel",
         "kind": "class",
@@ -55,25 +32,124 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {String} guild_id The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} nocache Whether the voice channel should be cached.\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                447,
-                1538
+                287,
+                296
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 12,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000026",
+                "name": "_client",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_client",
+        "longname": "VoiceChannel#_client",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                299,
+                308
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 13,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000027",
+                "name": "bitrate",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "bitrate",
+        "longname": "VoiceChannel#bitrate",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                311,
+                323
             ],
             "filename": "VoiceChannel.js",
             "lineno": 14,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000012",
+                "id": "astnode100000028",
+                "name": "user_limit",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "user_limit",
+        "longname": "VoiceChannel#user_limit",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                326,
+                338
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 15,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000029",
+                "name": "rtc_region",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "rtc_region",
+        "longname": "VoiceChannel#rtc_region",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} options.nocache Whether the voice channel should be cached.\n   */",
+        "meta": {
+            "range": [
+                754,
+                2686
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 24,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000030",
                 "name": "VoiceChannel",
                 "type": "MethodDefinition",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             },
             "vars": {
@@ -103,11 +179,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -117,8 +202,7 @@
                 },
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "options.nocache"
             }
         ],
         "name": "VoiceChannel",
@@ -128,25 +212,24 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n * Represents a voice channel.\n */",
+        "comment": "/**\n * Represents a voice channel.\n * @extends {Channel}\n */",
         "meta": {
             "range": [
-                78,
-                1702
+                248,
+                3909
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 6,
+            "lineno": 11,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000008",
+                "id": "astnode100000022",
                 "name": "VoiceChannel",
                 "type": "ClassDeclaration",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
@@ -154,6 +237,9 @@
         "longname": "VoiceChannel",
         "kind": "class",
         "classdesc": "Represents a voice channel.",
+        "augments": [
+            "Channel"
+        ],
         "scope": "global",
         "description": "Creates the structure for a voice channel.",
         "params": [
@@ -178,11 +264,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "Additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice channel belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -192,8 +287,7 @@
                 },
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "options.nocache"
             }
         ]
     },
@@ -201,15 +295,143 @@
         "comment": "",
         "meta": {
             "range": [
-                548,
-                606
+                782,
+                789
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 17,
+            "lineno": 24,
+            "columnno": 30,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000037",
+                "name": "guildId",
+                "type": "Identifier",
+                "value": "guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                791,
+                806
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 24,
+            "columnno": 39,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000039",
+                "name": "nocache",
+                "type": "AssignmentPattern",
+                "value": "nocache"
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                813,
+                827
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 24,
+            "columnno": 61,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000044",
+                "name": "nocache",
+                "type": "Literal",
+                "value": false
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                859,
+                866
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 25,
+            "columnno": 26,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000053",
+                "name": "guildId",
+                "type": "Identifier",
+                "value": "guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                1366,
+                1388
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 41,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000092",
+                "name": "this.",
+                "type": "Identifier",
+                "value": "client",
+                "paramnames": []
+            }
+        },
+        "description": "The client instance.",
+        "type": {
+            "names": [
+                "Client"
+            ]
+        },
+        "access": "private",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1401,
+                1453
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 43,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000029",
+                "id": "astnode100000099",
                 "name": "existing",
                 "type": "LogicalExpression",
                 "value": ""
@@ -224,19 +446,19 @@
         "params": []
     },
     {
-        "comment": "/**\n       * The bitrate of the channel.\n       * @type {Number}\n       */",
+        "comment": "/**\n       * The bitrate of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                737,
-                764
+                1602,
+                1630
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 24,
+            "lineno": 51,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000042",
-                "name": "this.bitrate",
+                "id": "astnode100000112",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.bitrate",
                 "paramnames": []
@@ -248,52 +470,53 @@
                 "Number"
             ]
         },
-        "name": "bitrate",
-        "longname": "VoiceChannel#bitrate",
+        "access": "private",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                822,
-                853
+                1688,
+                1720
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 26,
+            "lineno": 53,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000057",
-                "name": "this.bitrate",
+                "id": "astnode100000128",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "existing.bitrate",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "bitrate",
-        "longname": "VoiceChannel#bitrate",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n       * The user limit of the channel.\n       * @type {Number}\n       */",
+        "comment": "/**\n       * The user limit of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                990,
-                1023
+                1875,
+                1909
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 33,
+            "lineno": 61,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000072",
-                "name": "this.user_limit",
+                "id": "astnode100000144",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.user_limit",
                 "paramnames": []
@@ -305,52 +528,53 @@
                 "Number"
             ]
         },
-        "name": "user_limit",
-        "longname": "VoiceChannel#user_limit",
+        "access": "private",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1096,
-                1133
+                1981,
+                2018
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 35,
+            "lineno": 63,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000089",
-                "name": "this.user_limit",
+                "id": "astnode100000162",
+                "name": "this.",
                 "type": "MemberExpression",
-                "value": "existing.user_limit",
+                "value": "existing.userLimit",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "user_limit",
-        "longname": "VoiceChannel#user_limit",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n       * The region of the voice channel.\n       * @type {String}\n       */",
+        "comment": "/**\n       * The region of the voice channel.\n       * @type {String}\n       * @private\n       */",
         "meta": {
             "range": [
-                1272,
-                1305
+                2175,
+                2209
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 42,
+            "lineno": 71,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000104",
-                "name": "this.rtc_region",
+                "id": "astnode100000178",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.rtc_region",
                 "paramnames": []
@@ -362,52 +586,127 @@
                 "String"
             ]
         },
-        "name": "rtc_region",
-        "longname": "VoiceChannel#rtc_region",
+        "access": "private",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1378,
-                1415
+                2281,
+                2318
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 44,
+            "lineno": 73,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000121",
-                "name": "this.rtc_region",
+                "id": "astnode100000196",
+                "name": "this.",
                 "type": "MemberExpression",
-                "value": "existing.rtc_region",
+                "value": "existing.rtcRegion",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "rtc_region",
-        "longname": "VoiceChannel#rtc_region",
+        "name": "VoiceChannel",
+        "longname": "VoiceChannel.VoiceChannel",
         "kind": "member",
         "memberof": "VoiceChannel",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1542,
-                1700
+                2529,
+                2534
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 50,
+            "lineno": 82,
+            "columnno": 15,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000243",
+                "name": "i",
+                "type": "Literal",
+                "value": 0
+            }
+        },
+        "undocumented": true,
+        "name": "i",
+        "longname": "<anonymous>~i",
+        "kind": "member",
+        "memberof": "<anonymous>",
+        "scope": "inner",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2632,
+                2650
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 84,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000268",
+                "name": "channelId",
+                "type": "MemberExpression",
+                "value": "this.id"
+            }
+        },
+        "undocumented": true,
+        "name": "channelId",
+        "longname": "channelId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2662,
+                2669
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 85,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000272",
+                "name": "guildId",
+                "type": "Identifier",
+                "value": "guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\n   * The bitrate of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                2783,
+                2828
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 95,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000142",
-                "name": "VoiceChannel#toJSON",
+                "id": "astnode100000274",
+                "name": "VoiceChannel#bitrate",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -415,27 +714,216 @@
                 "": null
             }
         },
-        "undocumented": true,
-        "name": "toJSON",
-        "longname": "VoiceChannel#toJSON",
-        "kind": "function",
+        "description": "The bitrate of the channel.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "bitrate",
+        "longname": "VoiceChannel#bitrate",
+        "kind": "member",
         "memberof": "VoiceChannel",
         "scope": "instance",
         "params": []
     },
     {
+        "comment": "/**\n   * The user limit of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                2928,
+                2978
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 105,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000283",
+                "name": "VoiceChannel#userLimit",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The user limit of the channel.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "userLimit",
+        "longname": "VoiceChannel#userLimit",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The region of the voice channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                3080,
+                3130
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 115,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000292",
+                "name": "VoiceChannel#rtcRegion",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The region of the voice channel.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "rtcRegion",
+        "longname": "VoiceChannel#rtcRegion",
+        "kind": "member",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                3172,
+                3229
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 123,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000301",
+                "name": "VoiceChannel#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "VoiceChannel#toString",
+        "memberof": "VoiceChannel",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                3271,
+                3328
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 131,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000312",
+                "name": "VoiceChannel#util.inspect.custom",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "custom",
+        "longname": "VoiceChannel#util.inspect.custom",
+        "memberof": "VoiceChannel#util.inspect",
+        "scope": "static",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "meta": {
+            "range": [
+                3526,
+                3907
+            ],
+            "filename": "VoiceChannel.js",
+            "lineno": 143,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000325",
+                "name": "VoiceChannel#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "format"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Returns the JSON representation of this structure.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Number"
+                    ]
+                },
+                "description": "The format to return the data in.",
+                "name": "format"
+            }
+        ],
+        "returns": [
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                }
+            }
+        ],
+        "access": "public",
+        "kind": "function",
+        "override": true,
+        "name": "toJSON",
+        "longname": "VoiceChannel#toJSON",
+        "memberof": "VoiceChannel",
+        "scope": "instance"
+    },
+    {
         "comment": "",
         "meta": {
             "range": [
-                1597,
-                1618
+                3780,
+                3801
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 53,
-            "columnno": 6,
+            "lineno": 151,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000153",
+                "id": "astnode100000354",
                 "name": "bitrate",
                 "type": "MemberExpression",
                 "value": "this.bitrate"
@@ -451,18 +939,18 @@
         "comment": "",
         "meta": {
             "range": [
-                1626,
-                1653
+                3813,
+                3839
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 54,
-            "columnno": 6,
+            "lineno": 152,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000157",
+                "id": "astnode100000358",
                 "name": "user_limit",
                 "type": "MemberExpression",
-                "value": "this.user_limit"
+                "value": "this.userLimit"
             }
         },
         "undocumented": true,
@@ -475,18 +963,18 @@
         "comment": "",
         "meta": {
             "range": [
-                1661,
-                1688
+                3851,
+                3877
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 55,
-            "columnno": 6,
+            "lineno": 153,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000161",
+                "id": "astnode100000362",
                 "name": "rtc_region",
                 "type": "MemberExpression",
-                "value": "this.rtc_region"
+                "value": "this.rtcRegion"
             }
         },
         "undocumented": true,
@@ -499,19 +987,17 @@
         "comment": "",
         "meta": {
             "range": [
-                1704,
-                1733
+                3911,
+                3939
             ],
             "filename": "VoiceChannel.js",
-            "lineno": 60,
+            "lineno": 160,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000166",
+                "id": "astnode100000366",
                 "name": "module.exports",
-                "type": "Identifier",
-                "value": "VoiceChannel",
-                "paramnames": []
+                "type": "Identifier"
             }
         },
         "undocumented": true,

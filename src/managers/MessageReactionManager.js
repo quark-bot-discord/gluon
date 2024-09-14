@@ -1,72 +1,129 @@
-const Reaction = require("../structures/Reaction");
+import Client from "../Client.js";
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import Reaction from "../structures/Reaction.js";
 
 /**
  * Manages the reactions of a message.
  */
 class MessageReactionManager {
+  #_client;
+  #guild;
+  #cache;
   /**
    * Creates a message reaction manager.
    * @param {Object} existingReactions Existing reactions for a message.
    */
   constructor(client, guild, existingReactions = {}) {
-    this._client = client;
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (!guild) throw new TypeError("GLUON: Guild must be provided.");
+    if (typeof existingReactions !== "object")
+      throw new TypeError("GLUON: Existing reactions must be an object.");
 
-    this.guild = guild;
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
+
+    /**
+     * The guild that this reaction manager belongs to.
+     * @type {Guild}
+     * @private
+     */
+    this.#guild = guild;
 
     /**
      * Cache of message reactions.
      * @type {Object}
+     * @private
      */
-    this.cache = {};
+    this.#cache = {};
 
-    for (const [messageReaction, messageReactionValue] of Object.entries(existingReactions))
-      this.cache[messageReaction] = new Reaction(
-        this._client,
+    for (const [messageReaction, messageReactionValue] of Object.entries(
+      existingReactions,
+    ))
+      this.#cache[messageReaction] = new Reaction(
+        this.#_client,
         messageReactionValue,
-        this.guild.id.toString(),
+        { guildId: this.#guild.id },
       );
   }
 
   /**
    * Adds a reaction to a message.
-   * @param {String | BigInt} user_id The id of the user who reacted.
+   * @param {String} userId The id of the user who reacted.
    * @param {String} emoji The id or unicode emoji that was reacted with.
    * @param {Object} data The raw MESSAGE_REACTION_ADD data.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
-  addReaction(user_id, emoji, data) {
-    if (!this.cache[emoji]) {
-      data.initial_reactor = user_id;
-      this.cache[emoji] = new Reaction(
-        this._client,
-        data,
-        this.guild.id.toString(),
-      );
-    }
+  _addReaction(userId, emoji, data) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
 
-    this.cache[emoji]._reacted.push(BigInt(user_id));
+    if (typeof emoji !== "string")
+      throw new TypeError("GLUON: Emoji must be a string.");
+
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object.");
+
+    if (!this.#cache[emoji])
+      this.#cache[emoji] = new Reaction(this.#_client, data, {
+        guildId: this.#guild.id,
+      });
+
+    this.#cache[emoji]._addReactor(userId);
   }
 
   /**
    * Removes a reaction from a message.
-   * @param {String | BigInt} user_id The id of the user whose reaction was removed.
+   * @param {String} userId The id of the user whose reaction was removed.
    * @param {String} emoji The id or unicode emoji for which the reaction was removed.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
-  removeReaction(user_id, emoji) {
-    if (this.cache[emoji]) {
-      this.cache[emoji]._reacted = this.cache[emoji]._reacted.filter(
-        (userId) => userId != user_id,
-      );
+  _removeReaction(userId, emoji) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
 
-      if (this.cache[emoji]._reacted.length == 0) delete this.cache[emoji];
+    if (typeof emoji !== "string")
+      throw new TypeError("GLUON: Emoji must be a string.");
+
+    if (this.#cache[emoji]) {
+      this.#cache[emoji]._removeReactor(userId);
+
+      if (this.#cache[emoji].count == 0) delete this.#cache[emoji];
     }
   }
 
-  toJSON() {
-    const messageReactions = {};
-    for (const [reaction, reactionData] of Object.entries(this.cache))
-      messageReactions[reaction] = reactionData;
-    return messageReactions;
+  /**
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
+   * @public
+   * @method
+   */
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        const messageReactions = {};
+        for (const [reaction, reactionData] of Object.entries(this.#cache))
+          messageReactions[reaction] = reactionData.toJSON(format);
+        return messageReactions;
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return Array.from(Object.values(this.#cache)).map((o) =>
+          o.toJSON(format),
+        );
+      }
+    }
   }
 }
 
-module.exports = MessageReactionManager;
+export default MessageReactionManager;

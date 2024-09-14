@@ -1,10 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { APPLICATION_COMMAND_TYPES } = require("../../../src/constants");
-const Command = require("../../../src/util/builder/commandBuilder");
+import { expect } from "chai";
+import { APPLICATION_COMMAND_TYPES } from "../../../src/constants.js";
+import Command from "../../../src/util/builder/commandBuilder.js";
+import CommandOption from "../../../src/util/builder/commandOptionBuilder.js";
 
 describe("CommandBuilder", function () {
   context("check import", function () {
@@ -35,7 +32,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setName()).to.throw(
         TypeError,
-        "GLUON: Command name must be provided."
+        "GLUON: Command name must be provided.",
       );
     });
   });
@@ -54,7 +51,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDescription()).to.throw(
         TypeError,
-        "GLUON: Command description must be provided."
+        "GLUON: Command description must be provided.",
       );
     });
   });
@@ -66,14 +63,14 @@ describe("CommandBuilder", function () {
     });
     it("should set the default permission of the command", function () {
       const command = new Command();
-      command.setDefaultMemberPermissions(8);
-      expect(command.default_member_permissions).to.equal(8);
+      command.setDefaultMemberPermissions("8");
+      expect(command.default_member_permissions).to.equal("8");
     });
     it("should throw an error if no default permission is provided", function () {
       const command = new Command();
       expect(() => command.setDefaultMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Command default permission must be a number."
+        "GLUON: Command default permission must be a string.",
       );
     });
   });
@@ -92,7 +89,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setDefaultLocale()).to.throw(
         TypeError,
-        "GLUON: Default locale must be provided."
+        "GLUON: Default locale must be provided.",
       );
     });
   });
@@ -111,7 +108,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.setNsfw()).to.throw(
         TypeError,
-        "GLUON: Command nsfw must be a boolean."
+        "GLUON: Command nsfw must be a boolean.",
       );
     });
   });
@@ -123,7 +120,7 @@ describe("CommandBuilder", function () {
     });
     it("should add an option to the command", function () {
       const command = new Command();
-      const option = { name: "test" };
+      const option = new CommandOption();
       command.addOption(option);
       expect(command.options).to.include(option);
     });
@@ -131,7 +128,7 @@ describe("CommandBuilder", function () {
       const command = new Command();
       expect(() => command.addOption()).to.throw(
         TypeError,
-        "GLUON: Command option must be provided."
+        "GLUON: Command option must be provided.",
       );
     });
   });

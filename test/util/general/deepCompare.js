@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const deepCompare = require("../../../src/util/general/deepCompare");
+import { expect } from "chai";
+import deepCompare from "../../../src/util/general/deepCompare.js";
 
 describe("DeepCompare", function () {
   context("check import", function () {
@@ -16,25 +12,25 @@ describe("DeepCompare", function () {
     it("should throw an error if no object is provided", function () {
       expect(() => deepCompare(undefined, {})).to.throw(
         TypeError,
-        "GLUON: First argument must be an object."
+        "GLUON: First argument must be an object.",
       );
     });
     it("should throw an error if object is not an object", function () {
       expect(() => deepCompare(123456, {})).to.throw(
         TypeError,
-        "GLUON: First argument must be an object."
+        "GLUON: First argument must be an object.",
       );
     });
     it("should throw an error if no object to compare is provided", function () {
       expect(() => deepCompare({}, undefined)).to.throw(
         TypeError,
-        "GLUON: Second argument must be an object."
+        "GLUON: Second argument must be an object.",
       );
     });
     it("should throw an error if object to compare is not an object", function () {
       expect(() => deepCompare({}, 123456)).to.throw(
         TypeError,
-        "GLUON: Second argument must be an object."
+        "GLUON: Second argument must be an object.",
       );
     });
   });

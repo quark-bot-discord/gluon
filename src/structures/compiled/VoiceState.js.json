@@ -1,73 +1,23 @@
 [
     {
-        "comment": "",
-        "meta": {
-            "range": [
-                8,
-                29
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 1,
-            "columnno": 8,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000005",
-                "name": "GLUON_CACHING_OPTIONS",
-                "type": "Identifier",
-                "value": "GLUON_CACHING_OPTIONS"
-            }
-        },
-        "undocumented": true,
-        "name": "GLUON_CACHING_OPTIONS",
-        "longname": "GLUON_CACHING_OPTIONS",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                65,
-                93
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 2,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000011",
-                "name": "Member",
-                "type": "CallExpression",
-                "value": ""
-            }
-        },
-        "undocumented": true,
-        "name": "Member",
-        "longname": "Member",
-        "kind": "constant",
-        "scope": "global",
-        "params": []
-    },
-    {
         "comment": "/**\n * Represents a voice state.\n */",
         "meta": {
             "range": [
-                133,
-                4838
+                341,
+                8797
             ],
             "filename": "VoiceState.js",
-            "lineno": 7,
+            "lineno": 11,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000016",
+                "id": "astnode100000028",
                 "name": "VoiceState",
                 "type": "ClassDeclaration",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
@@ -79,25 +29,224 @@
         "undocumented": true
     },
     {
-        "comment": "/**\n   * Creates the structure for a voice state.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw voice state data from Discord.\n   * @param {String} guild_id The id of the guild that the voice state belongs to.\n   * @param {Boolean?} nocache Whether this voice state should be cached.\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                483,
-                2794
+                362,
+                371
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 12,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000031",
+                "name": "_client",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_client",
+        "longname": "VoiceState#_client",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                374,
+                385
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 13,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000032",
+                "name": "_guild_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_guild_id",
+        "longname": "VoiceState#_guild_id",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                388,
+                401
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 14,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000033",
+                "name": "_channel_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_channel_id",
+        "longname": "VoiceState#_channel_id",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                404,
+                417
             ],
             "filename": "VoiceState.js",
             "lineno": 15,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000019",
+                "id": "astnode100000034",
+                "name": "_attributes",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_attributes",
+        "longname": "VoiceState#_attributes",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                420,
+                428
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 16,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000035",
+                "name": "member",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "member",
+        "longname": "VoiceState#member",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                431,
+                441
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 17,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000036",
+                "name": "_user_id",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_user_id",
+        "longname": "VoiceState#_user_id",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                444,
+                452
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 18,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000037",
+                "name": "joined",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "joined",
+        "longname": "VoiceState#joined",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                455,
+                483
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 19,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000038",
+                "name": "request_to_speak_timestamp",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "request_to_speak_timestamp",
+        "longname": "VoiceState#request_to_speak_timestamp",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   * Creates the structure for a voice state.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw voice state data from Discord.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice state belongs to.\n   * @param {Boolean?} options.nocache Whether this voice state should be cached.\n   */",
+        "meta": {
+            "range": [
+                902,
+                3961
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 28,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000039",
                 "name": "VoiceState",
                 "type": "MethodDefinition",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             },
             "vars": {
@@ -127,11 +276,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "The additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice state belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -141,8 +299,7 @@
                 },
                 "nullable": true,
                 "description": "Whether this voice state should be cached.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "options.nocache"
             }
         ],
         "name": "VoiceState",
@@ -155,22 +312,21 @@
         "comment": "/**\n * Represents a voice state.\n */",
         "meta": {
             "range": [
-                133,
-                4838
+                341,
+                8797
             ],
             "filename": "VoiceState.js",
-            "lineno": 7,
+            "lineno": 11,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000016",
+                "id": "astnode100000028",
                 "name": "VoiceState",
                 "type": "ClassDeclaration",
                 "paramnames": [
                     "client",
                     "data",
-                    "guild_id",
-                    "nocache"
+                    ""
                 ]
             }
         },
@@ -202,11 +358,20 @@
             {
                 "type": {
                     "names": [
+                        "Object"
+                    ]
+                },
+                "description": "The additional options for this structure.",
+                "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
                         "String"
                     ]
                 },
                 "description": "The id of the guild that the voice state belongs to.",
-                "name": "guild_id"
+                "name": "options.guildId"
             },
             {
                 "type": {
@@ -216,25 +381,96 @@
                 },
                 "nullable": true,
                 "description": "Whether this voice state should be cached.",
-                "name": "nocache",
-                "defaultvalue": false
+                "name": "options.nocache"
             }
         ]
     },
     {
-        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     */",
+        "comment": "",
         "meta": {
             "range": [
-                608,
-                629
+                930,
+                937
             ],
             "filename": "VoiceState.js",
-            "lineno": 20,
+            "lineno": 28,
+            "columnno": 30,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000046",
+                "name": "guildId",
+                "type": "Identifier",
+                "value": "guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                939,
+                954
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 28,
+            "columnno": 39,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000048",
+                "name": "nocache",
+                "type": "AssignmentPattern",
+                "value": "nocache"
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                961,
+                975
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 28,
+            "columnno": 61,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000053",
+                "name": "nocache",
+                "type": "Literal",
+                "value": false
+            }
+        },
+        "undocumented": true,
+        "name": "nocache",
+        "longname": "nocache",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                1475,
+                1497
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 43,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000030",
-                "name": "this._client",
+                "id": "astnode100000093",
+                "name": "this.",
                 "type": "Identifier",
                 "value": "client",
                 "paramnames": []
@@ -246,26 +482,27 @@
                 "Client"
             ]
         },
-        "name": "_client",
-        "longname": "VoiceState#_client",
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The id of the guild that this voice state belongs to.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The id of the guild that this voice state belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                735,
-                768
+                1619,
+                1652
             ],
             "filename": "VoiceState.js",
-            "lineno": 26,
+            "lineno": 50,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000036",
-                "name": "this._guild_id",
+                "id": "astnode100000100",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -277,25 +514,26 @@
                 "BigInt"
             ]
         },
-        "name": "_guild_id",
-        "longname": "VoiceState#_guild_id",
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                797,
-                929
+                1681,
+                1813
             ],
             "filename": "VoiceState.js",
-            "lineno": 29,
+            "lineno": 53,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000048",
+                "id": "astnode100000113",
                 "name": "nocache",
                 "type": "BinaryExpression",
                 "funcscope": "<anonymous>",
@@ -314,15 +552,15 @@
         "comment": "",
         "meta": {
             "range": [
-                942,
-                1009
+                1826,
+                1886
             ],
             "filename": "VoiceState.js",
-            "lineno": 33,
+            "lineno": 57,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000064",
+                "id": "astnode100000129",
                 "name": "existing",
                 "type": "LogicalExpression",
                 "value": ""
@@ -337,19 +575,19 @@
         "params": []
     },
     {
-        "comment": "/**\n     * The id of the channel involved.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The id of the channel involved.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1093,
-                1135
+                1986,
+                2029
             ],
             "filename": "VoiceState.js",
-            "lineno": 39,
+            "lineno": 64,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000070",
-                "name": "this._channel_id",
+                "id": "astnode100000135",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -361,234 +599,241 @@
                 "BigInt"
             ]
         },
-        "name": "_channel_id",
-        "longname": "VoiceState#_channel_id",
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "",
+        "comment": "/**\n     * The attributes of the voice state.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1142,
-                1162
+                2132,
+                2173
             ],
             "filename": "VoiceState.js",
-            "lineno": 41,
+            "lineno": 71,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000080",
-                "name": "this._attributes",
-                "type": "Literal",
-                "value": 0,
+                "id": "astnode100000146",
+                "name": "this.",
+                "type": "LogicalExpression",
+                "value": "",
                 "paramnames": []
             }
         },
-        "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "description": "The attributes of the voice state.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1192,
-                1220
+                2203,
+                2232
             ],
             "filename": "VoiceState.js",
-            "lineno": 43,
+            "lineno": 73,
             "columnno": 27,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000092",
-                "name": "this._attributes",
+                "id": "astnode100000163",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1250,
-                1278
+                2262,
+                2291
             ],
             "filename": "VoiceState.js",
-            "lineno": 45,
+            "lineno": 75,
             "columnno": 27,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000106",
-                "name": "this._attributes",
+                "id": "astnode100000178",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1313,
-                1341
+                2326,
+                2355
             ],
             "filename": "VoiceState.js",
-            "lineno": 47,
+            "lineno": 77,
             "columnno": 32,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000120",
-                "name": "this._attributes",
+                "id": "astnode100000193",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1376,
-                1404
+                2390,
+                2419
             ],
             "filename": "VoiceState.js",
-            "lineno": 49,
+            "lineno": 79,
             "columnno": 32,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000134",
-                "name": "this._attributes",
+                "id": "astnode100000208",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1441,
-                1469
+                2456,
+                2485
             ],
             "filename": "VoiceState.js",
-            "lineno": 51,
+            "lineno": 81,
             "columnno": 34,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000148",
-                "name": "this._attributes",
+                "id": "astnode100000223",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1505,
-                1533
+                2521,
+                2550
             ],
             "filename": "VoiceState.js",
-            "lineno": 53,
+            "lineno": 83,
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000162",
-                "name": "this._attributes",
+                "id": "astnode100000238",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1567,
-                1595
+                2584,
+                2613
             ],
             "filename": "VoiceState.js",
-            "lineno": 55,
+            "lineno": 85,
             "columnno": 31,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000176",
-                "name": "this._attributes",
+                "id": "astnode100000253",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "_attributes",
-        "longname": "VoiceState#_attributes",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n       * The member the voice state is about.\n       * @type {Member?}\n       */",
+        "comment": "/**\n       * The member the voice state is about.\n       * @type {Member?}\n       * @private\n       */",
         "meta": {
             "range": [
-                1716,
-                1884
+                2752,
+                2927
             ],
             "filename": "VoiceState.js",
-            "lineno": 62,
+            "lineno": 93,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000188",
-                "name": "this.member",
+                "id": "astnode100000266",
+                "name": "this.",
                 "type": "NewExpression",
                 "value": "",
                 "paramnames": []
@@ -601,25 +846,98 @@
             ]
         },
         "nullable": true,
-        "name": "member",
-        "longname": "VoiceState#member",
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                1866,
-                1873
+                2816,
+                2836
             ],
             "filename": "VoiceState.js",
-            "lineno": 68,
-            "columnno": 10,
+            "lineno": 94,
+            "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000212",
+                "id": "astnode100000281",
+                "name": "userId",
+                "type": "MemberExpression",
+                "value": "data.user_id"
+            }
+        },
+        "undocumented": true,
+        "name": "userId",
+        "longname": "userId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2846,
+                2868
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 95,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000285",
+                "name": "guildId",
+                "type": "MemberExpression",
+                "value": "data.guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2878,
+                2900
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 96,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000289",
+                "name": "user",
+                "type": "MemberExpression",
+                "value": "data.member.user"
+            }
+        },
+        "undocumented": true,
+        "name": "user",
+        "longname": "user",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2910,
+                2917
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 97,
+            "columnno": 8,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000295",
                 "name": "nocache",
                 "type": "Identifier",
                 "value": "nocache"
@@ -635,42 +953,42 @@
         "comment": "",
         "meta": {
             "range": [
-                1895,
-                1960
+                2938,
+                2998
             ],
             "filename": "VoiceState.js",
-            "lineno": 70,
+            "lineno": 99,
             "columnno": 9,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000215",
-                "name": "this.member",
+                "id": "astnode100000298",
+                "name": "this.",
                 "type": "LogicalExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "member",
-        "longname": "VoiceState#member",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n     * The id of the user the voice state is about.\n     * @type {BigInt}\n     */",
+        "comment": "/**\n     * The id of the user the voice state is about.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                2057,
-                2093
+                3111,
+                3148
             ],
             "filename": "VoiceState.js",
-            "lineno": 76,
+            "lineno": 106,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000223",
-                "name": "this._user_id",
+                "id": "astnode100000307",
+                "name": "this.",
                 "type": "CallExpression",
                 "value": "",
                 "paramnames": []
@@ -682,129 +1000,130 @@
                 "BigInt"
             ]
         },
-        "name": "_user_id",
-        "longname": "VoiceState#_user_id",
+        "access": "private",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                2230,
-                2255
+                3301,
+                3327
             ],
             "filename": "VoiceState.js",
-            "lineno": 82,
+            "lineno": 113,
             "columnno": 40,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000240",
-                "name": "this.joined",
+                "id": "astnode100000325",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.joined",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "joined",
-        "longname": "VoiceState#joined",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                2324,
-                2353
+                3396,
+                3426
             ],
             "filename": "VoiceState.js",
-            "lineno": 84,
+            "lineno": 115,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000257",
-                "name": "this.joined",
+                "id": "astnode100000343",
+                "name": "this.",
                 "type": "MemberExpression",
                 "value": "existing.joined",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "joined",
-        "longname": "VoiceState#joined",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                2364,
-                2401
+                3437,
+                3475
             ],
             "filename": "VoiceState.js",
-            "lineno": 85,
+            "lineno": 116,
             "columnno": 9,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000265",
-                "name": "this.joined",
+                "id": "astnode100000352",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "joined",
-        "longname": "VoiceState#joined",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                2553,
-                2659
+                3643,
+                3750
             ],
             "filename": "VoiceState.js",
-            "lineno": 92,
+            "lineno": 124,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000282",
-                "name": "this.request_to_speak_timestamp",
+                "id": "astnode100000370",
+                "name": "this.",
                 "type": "BinaryExpression",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "request_to_speak_timestamp",
-        "longname": "VoiceState#request_to_speak_timestamp",
+        "name": "VoiceState",
+        "longname": "VoiceState.VoiceState",
         "kind": "member",
         "memberof": "VoiceState",
-        "scope": "instance"
+        "scope": "static"
     },
     {
-        "comment": "/**\n   * Is server deafened?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is server deafened?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                2871,
-                2943
+                4051,
+                4124
             ],
             "filename": "VoiceState.js",
-            "lineno": 104,
+            "lineno": 143,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000312",
+                "id": "astnode100000420",
                 "name": "VoiceState#deaf",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -820,6 +1139,7 @@
                 "Boolean"
             ]
         },
+        "access": "public",
         "name": "deaf",
         "longname": "VoiceState#deaf",
         "kind": "member",
@@ -828,18 +1148,18 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Is server muted?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is server muted?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3017,
-                3089
+                4211,
+                4284
             ],
             "filename": "VoiceState.js",
-            "lineno": 113,
+            "lineno": 153,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000328",
+                "id": "astnode100000437",
                 "name": "VoiceState#mute",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -855,6 +1175,7 @@
                 "Boolean"
             ]
         },
+        "access": "public",
         "name": "mute",
         "longname": "VoiceState#mute",
         "kind": "member",
@@ -863,19 +1184,19 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Is self defeaned?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is self defeaned?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3164,
-                3241
+                4372,
+                4449
             ],
             "filename": "VoiceState.js",
-            "lineno": 122,
+            "lineno": 163,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000344",
-                "name": "VoiceState#self_deaf",
+                "id": "astnode100000454",
+                "name": "VoiceState#selfDeaf",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -890,27 +1211,28 @@
                 "Boolean"
             ]
         },
-        "name": "self_deaf",
-        "longname": "VoiceState#self_deaf",
+        "access": "public",
+        "name": "selfDeaf",
+        "longname": "VoiceState#selfDeaf",
         "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
-        "comment": "/**\n   * Is self muted?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is self muted?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3313,
-                3390
+                4534,
+                4611
             ],
             "filename": "VoiceState.js",
-            "lineno": 131,
+            "lineno": 173,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000360",
-                "name": "VoiceState#self_mute",
+                "id": "astnode100000471",
+                "name": "VoiceState#selfMute",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -925,27 +1247,28 @@
                 "Boolean"
             ]
         },
-        "name": "self_mute",
-        "longname": "VoiceState#self_mute",
+        "access": "public",
+        "name": "selfMute",
+        "longname": "VoiceState#selfMute",
         "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
-        "comment": "/**\n   * Is streaming?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is streaming?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3461,
-                3540
+                4695,
+                4774
             ],
             "filename": "VoiceState.js",
-            "lineno": 140,
+            "lineno": 183,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000376",
-                "name": "VoiceState#self_stream",
+                "id": "astnode100000488",
+                "name": "VoiceState#selfStream",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -960,27 +1283,28 @@
                 "Boolean"
             ]
         },
-        "name": "self_stream",
-        "longname": "VoiceState#self_stream",
+        "access": "public",
+        "name": "selfStream",
+        "longname": "VoiceState#selfStream",
         "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
-        "comment": "/**\n   * Is sharing video?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is sharing video?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3615,
-                3693
+                4862,
+                4940
             ],
             "filename": "VoiceState.js",
-            "lineno": 149,
+            "lineno": 193,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000392",
-                "name": "VoiceState#self_video",
+                "id": "astnode100000505",
+                "name": "VoiceState#selfVideo",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -995,26 +1319,27 @@
                 "Boolean"
             ]
         },
-        "name": "self_video",
-        "longname": "VoiceState#self_video",
+        "access": "public",
+        "name": "selfVideo",
+        "longname": "VoiceState#selfVideo",
         "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
-        "comment": "/**\n   * Is suppressed (for stage channels)?\n   * @readonly\n   * @type {Boolean}\n   */",
+        "comment": "/**\n   * Is suppressed (for stage channels)?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                3786,
-                3862
+                5046,
+                5123
             ],
             "filename": "VoiceState.js",
-            "lineno": 158,
+            "lineno": 203,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000408",
+                "id": "astnode100000522",
                 "name": "VoiceState#suppress",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1030,6 +1355,7 @@
                 "Boolean"
             ]
         },
+        "access": "public",
         "name": "suppress",
         "longname": "VoiceState#suppress",
         "kind": "member",
@@ -1038,18 +1364,18 @@
         "params": []
     },
     {
-        "comment": "/**\n   * The guild that this voice state belongs to.\n   * @type {Guild?}\n   * @readonly\n   */",
+        "comment": "/**\n   * The guild that this voice state belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3962,
-                4053
+                5236,
+                5312
             ],
             "filename": "VoiceState.js",
-            "lineno": 167,
+            "lineno": 213,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000424",
+                "id": "astnode100000539",
                 "name": "VoiceState#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1066,6 +1392,7 @@
         },
         "nullable": true,
         "readonly": true,
+        "access": "public",
         "name": "guild",
         "longname": "VoiceState#guild",
         "kind": "member",
@@ -1074,18 +1401,54 @@
         "params": []
     },
     {
-        "comment": "/**\n   * The channel involved.\n   * @type {Channel?}\n   * @readonly\n   */",
+        "comment": "/**\n   * The id of the guild that this voice state belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4133,
-                4229
+                5435,
+                5490
             ],
             "filename": "VoiceState.js",
-            "lineno": 176,
+            "lineno": 223,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000446",
+                "id": "astnode100000558",
+                "name": "VoiceState#guildId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The id of the guild that this voice state belongs to.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "guildId",
+        "longname": "VoiceState#guildId",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The channel involved.\n   * @type {Channel?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                5583,
+                5663
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 233,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000569",
                 "name": "VoiceState#channel",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1102,6 +1465,7 @@
         },
         "nullable": true,
         "readonly": true,
+        "access": "public",
         "name": "channel",
         "longname": "VoiceState#channel",
         "kind": "member",
@@ -1110,19 +1474,19 @@
         "params": []
     },
     {
-        "comment": "/**\n   * The user the voice state is about.\n   * @type {User?}\n   * @readonly\n   */",
+        "comment": "/**\n   * The id of the channel involved.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4319,
-                4407
+                5764,
+                5823
             ],
             "filename": "VoiceState.js",
-            "lineno": 185,
+            "lineno": 243,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000454",
-                "name": "VoiceState#user",
+                "id": "astnode100000577",
+                "name": "VoiceState#channelId",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -1130,35 +1494,35 @@
                 "": null
             }
         },
-        "description": "The user the voice state is about.",
+        "description": "The id of the channel involved.",
         "type": {
             "names": [
-                "User"
+                "String"
             ]
         },
-        "nullable": true,
         "readonly": true,
-        "name": "user",
-        "longname": "VoiceState#user",
+        "access": "public",
+        "name": "channelId",
+        "longname": "VoiceState#channelId",
         "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
-        "comment": "",
+        "comment": "/**\n   * The member the voice state is about.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4411,
-                4836
+                5930,
+                5973
             ],
             "filename": "VoiceState.js",
-            "lineno": 189,
+            "lineno": 253,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000476",
-                "name": "VoiceState#toJSON",
+                "id": "astnode100000588",
+                "name": "VoiceState#member",
                 "type": "MethodDefinition",
                 "paramnames": []
             },
@@ -1166,30 +1530,317 @@
                 "": null
             }
         },
-        "undocumented": true,
-        "name": "toJSON",
-        "longname": "VoiceState#toJSON",
-        "kind": "function",
+        "description": "The member the voice state is about.",
+        "type": {
+            "names": [
+                "Member"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "member",
+        "longname": "VoiceState#member",
+        "kind": "member",
         "memberof": "VoiceState",
         "scope": "instance",
         "params": []
     },
     {
+        "comment": "/**\n   * The id of the user the voice state is about.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6087,
+                6142
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 263,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000597",
+                "name": "VoiceState#memberId",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The id of the user the voice state is about.",
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "memberId",
+        "longname": "VoiceState#memberId",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The UNIX time the user joined the voice channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6260,
+                6303
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 273,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000608",
+                "name": "VoiceState#joined",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The UNIX time the user joined the voice channel.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "readonly": true,
+        "access": "public",
+        "name": "joined",
+        "longname": "VoiceState#joined",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The UNIX timestamp of when the user requested to speak.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                6429,
+                6509
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 283,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000617",
+                "name": "VoiceState#requestToSpeakTimestamp",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The UNIX timestamp of when the user requested to speak.",
+        "type": {
+            "names": [
+                "Number"
+            ]
+        },
+        "nullable": true,
+        "readonly": true,
+        "access": "public",
+        "name": "requestToSpeakTimestamp",
+        "longname": "VoiceState#requestToSpeakTimestamp",
+        "kind": "member",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Determines whether the voice state should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
+        "meta": {
+            "range": [
+                6813,
+                7353
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 296,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000626",
+                "name": "VoiceState.shouldCache",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "gluonCacheOptions",
+                    "guildCacheOptions"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Determines whether the voice state should be cached.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "GluonCacheOptions"
+                    ]
+                },
+                "description": "The cache options for the client.",
+                "name": "gluonCacheOptions"
+            },
+            {
+                "type": {
+                    "names": [
+                        "GuildCacheOptions"
+                    ]
+                },
+                "description": "The cache options for the guild.",
+                "name": "guildCacheOptions"
+            }
+        ],
+        "returns": [
+            {
+                "type": {
+                    "names": [
+                        "Boolean"
+                    ]
+                }
+            }
+        ],
+        "access": "public",
+        "scope": "static",
+        "kind": "function",
+        "name": "shouldCache",
+        "longname": "VoiceState.shouldCache",
+        "memberof": "VoiceState"
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7395,
+                7456
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 314,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000668",
+                "name": "VoiceState#toString",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "toString",
+        "longname": "VoiceState#toString",
+        "memberof": "VoiceState",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * @method\n   * @public\n   */",
+        "meta": {
+            "range": [
+                7498,
+                7555
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 322,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000679",
+                "name": "VoiceState#util.inspect.custom",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "kind": "function",
+        "access": "public",
+        "name": "custom",
+        "longname": "VoiceState#util.inspect.custom",
+        "memberof": "VoiceState#util.inspect",
+        "scope": "static",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "meta": {
+            "range": [
+                7738,
+                8795
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 333,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000692",
+                "name": "VoiceState#toJSON",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "format"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Returns the JSON representation of this structure.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Number"
+                    ]
+                },
+                "description": "The format to return the data in.",
+                "name": "format"
+            }
+        ],
+        "returns": [
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                }
+            }
+        ],
+        "access": "public",
+        "kind": "function",
+        "name": "toJSON",
+        "longname": "VoiceState#toJSON",
+        "memberof": "VoiceState",
+        "scope": "instance"
+    },
+    {
         "comment": "",
         "meta": {
             "range": [
-                4441,
-                4473
+                7896,
+                7918
             ],
             "filename": "VoiceState.js",
-            "lineno": 191,
-            "columnno": 6,
+            "lineno": 338,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000482",
+                "id": "astnode100000710",
                 "name": "guild_id",
-                "type": "CallExpression",
-                "value": ""
+                "type": "MemberExpression",
+                "value": "this.guildId"
             }
         },
         "undocumented": true,
@@ -1202,18 +1853,18 @@
         "comment": "",
         "meta": {
             "range": [
-                4481,
-                4517
+                7930,
+                7956
             ],
             "filename": "VoiceState.js",
-            "lineno": 192,
-            "columnno": 6,
+            "lineno": 339,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000488",
+                "id": "astnode100000714",
                 "name": "channel_id",
-                "type": "CallExpression",
-                "value": ""
+                "type": "MemberExpression",
+                "value": "this.channelId"
             }
         },
         "undocumented": true,
@@ -1226,23 +1877,23 @@
         "comment": "",
         "meta": {
             "range": [
-                4525,
-                4540
+                7968,
+                7998
             ],
             "filename": "VoiceState.js",
-            "lineno": 193,
-            "columnno": 6,
+            "lineno": 340,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000494",
-                "name": "deaf",
+                "id": "astnode100000718",
+                "name": "_attributes",
                 "type": "MemberExpression",
-                "value": "this.deaf"
+                "value": "this."
             }
         },
         "undocumented": true,
-        "name": "deaf",
-        "longname": "deaf",
+        "name": "_attributes",
+        "longname": "_attributes",
         "kind": "member",
         "scope": "global"
     },
@@ -1250,162 +1901,18 @@
         "comment": "",
         "meta": {
             "range": [
-                4548,
-                4563
+                8010,
+                8044
             ],
             "filename": "VoiceState.js",
-            "lineno": 194,
-            "columnno": 6,
+            "lineno": 341,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000498",
-                "name": "mute",
-                "type": "MemberExpression",
-                "value": "this.mute"
-            }
-        },
-        "undocumented": true,
-        "name": "mute",
-        "longname": "mute",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4571,
-                4596
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 195,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000502",
-                "name": "self_deaf",
-                "type": "MemberExpression",
-                "value": "this.self_deaf"
-            }
-        },
-        "undocumented": true,
-        "name": "self_deaf",
-        "longname": "self_deaf",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4604,
-                4629
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 196,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000506",
-                "name": "self_mute",
-                "type": "MemberExpression",
-                "value": "this.self_mute"
-            }
-        },
-        "undocumented": true,
-        "name": "self_mute",
-        "longname": "self_mute",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4637,
-                4666
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 197,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000510",
-                "name": "self_stream",
-                "type": "MemberExpression",
-                "value": "this.self_stream"
-            }
-        },
-        "undocumented": true,
-        "name": "self_stream",
-        "longname": "self_stream",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4674,
-                4701
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 198,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000514",
-                "name": "self_video",
-                "type": "MemberExpression",
-                "value": "this.self_video"
-            }
-        },
-        "undocumented": true,
-        "name": "self_video",
-        "longname": "self_video",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4709,
-                4732
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 199,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000518",
-                "name": "suppress",
-                "type": "MemberExpression",
-                "value": "this.suppress"
-            }
-        },
-        "undocumented": true,
-        "name": "suppress",
-        "longname": "suppress",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                4740,
-                4759
-            ],
-            "filename": "VoiceState.js",
-            "lineno": 200,
-            "columnno": 6,
-            "path": "/home/runner/work/gluon/gluon/src/structures",
-            "code": {
-                "id": "astnode100000522",
+                "id": "astnode100000723",
                 "name": "member",
-                "type": "MemberExpression",
-                "value": "this.member"
+                "type": "CallExpression",
+                "value": ""
             }
         },
         "undocumented": true,
@@ -1418,18 +1925,18 @@
         "comment": "",
         "meta": {
             "range": [
-                4767,
-                4797
+                8056,
+                8078
             ],
             "filename": "VoiceState.js",
-            "lineno": 201,
-            "columnno": 6,
+            "lineno": 342,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000526",
+                "id": "astnode100000731",
                 "name": "user_id",
-                "type": "CallExpression",
-                "value": ""
+                "type": "MemberExpression",
+                "value": "this.memberId"
             }
         },
         "undocumented": true,
@@ -1442,15 +1949,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4805,
-                4824
+                8090,
+                8109
             ],
             "filename": "VoiceState.js",
-            "lineno": 202,
-            "columnno": 6,
+            "lineno": 343,
+            "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000532",
+                "id": "astnode100000735",
                 "name": "joined",
                 "type": "MemberExpression",
                 "value": "this.joined"
@@ -1466,19 +1973,353 @@
         "comment": "",
         "meta": {
             "range": [
-                4840,
-                4867
+                8121,
+                8184
             ],
             "filename": "VoiceState.js",
-            "lineno": 207,
+            "lineno": 344,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000739",
+                "name": "request_to_speak_timestamp",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "request_to_speak_timestamp",
+        "longname": "request_to_speak_timestamp",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8295,
+                8317
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 350,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000753",
+                "name": "guild_id",
+                "type": "MemberExpression",
+                "value": "this.guildId"
+            }
+        },
+        "undocumented": true,
+        "name": "guild_id",
+        "longname": "guild_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8329,
+                8355
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 351,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000757",
+                "name": "channel_id",
+                "type": "MemberExpression",
+                "value": "this.channelId"
+            }
+        },
+        "undocumented": true,
+        "name": "channel_id",
+        "longname": "channel_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8367,
+                8382
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 352,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000761",
+                "name": "deaf",
+                "type": "MemberExpression",
+                "value": "this.deaf"
+            }
+        },
+        "undocumented": true,
+        "name": "deaf",
+        "longname": "deaf",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8394,
+                8409
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 353,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000765",
+                "name": "mute",
+                "type": "MemberExpression",
+                "value": "this.mute"
+            }
+        },
+        "undocumented": true,
+        "name": "mute",
+        "longname": "mute",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8421,
+                8445
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 354,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000769",
+                "name": "self_deaf",
+                "type": "MemberExpression",
+                "value": "this.selfDeaf"
+            }
+        },
+        "undocumented": true,
+        "name": "self_deaf",
+        "longname": "self_deaf",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8457,
+                8481
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 355,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000773",
+                "name": "self_mute",
+                "type": "MemberExpression",
+                "value": "this.selfMute"
+            }
+        },
+        "undocumented": true,
+        "name": "self_mute",
+        "longname": "self_mute",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8493,
+                8521
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 356,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000777",
+                "name": "self_stream",
+                "type": "MemberExpression",
+                "value": "this.selfStream"
+            }
+        },
+        "undocumented": true,
+        "name": "self_stream",
+        "longname": "self_stream",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8533,
+                8559
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 357,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000781",
+                "name": "self_video",
+                "type": "MemberExpression",
+                "value": "this.selfVideo"
+            }
+        },
+        "undocumented": true,
+        "name": "self_video",
+        "longname": "self_video",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8571,
+                8594
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 358,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000785",
+                "name": "suppress",
+                "type": "MemberExpression",
+                "value": "this.suppress"
+            }
+        },
+        "undocumented": true,
+        "name": "suppress",
+        "longname": "suppress",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8606,
+                8625
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 359,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000789",
+                "name": "member",
+                "type": "MemberExpression",
+                "value": "this.member"
+            }
+        },
+        "undocumented": true,
+        "name": "member",
+        "longname": "member",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8637,
+                8659
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 360,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000793",
+                "name": "user_id",
+                "type": "MemberExpression",
+                "value": "this.memberId"
+            }
+        },
+        "undocumented": true,
+        "name": "user_id",
+        "longname": "user_id",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8671,
+                8690
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 361,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000797",
+                "name": "joined",
+                "type": "MemberExpression",
+                "value": "this.joined"
+            }
+        },
+        "undocumented": true,
+        "name": "joined",
+        "longname": "joined",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8702,
+                8765
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 362,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000801",
+                "name": "request_to_speak_timestamp",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "request_to_speak_timestamp",
+        "longname": "request_to_speak_timestamp",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8799,
+                8825
+            ],
+            "filename": "VoiceState.js",
+            "lineno": 369,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000537",
+                "id": "astnode100000807",
                 "name": "module.exports",
-                "type": "Identifier",
-                "value": "VoiceState",
-                "paramnames": []
+                "type": "Identifier"
             }
         },
         "undocumented": true,

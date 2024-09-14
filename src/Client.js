@@ -1,40 +1,128 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
-const {
-  BASE_URL,
-  VERSION,
-  NAME,
+import {
   CHANNEL_TYPES,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
-  DEFAULT_CACHE_CHECK_PERIOD,
-  DEFAULT_INCREASE_CACHE_BY,
-} = require("./constants");
+  DEFAULT_POLLING_TIME,
+  GLUON_DEBUG_LEVELS,
+  NAME,
+  TO_JSON_TYPES_ENUM,
+} from "./constants.js";
 
-const EventsEmitter = require("events");
-const mysql = require("mysql2/promise");
-const AWS = require("aws-sdk");
+import EventsEmitter from "events";
+import hash from "hash.js";
+import { TypedEmitter } from "tiny-typed-emitter";
 
-const BetterRequestHandler = require("./rest/betterRequestHandler");
-const WS = require("./gateway/index");
+import BetterRequestHandler from "./rest/betterRequestHandler.js";
+import Shard from "./gateway/index.js";
+const chalk =
+  process.env.NODE_ENV === "development"
+    ? (await import("chalk")).default
+    : null;
 
-const UserManager = require("./managers/UserManager");
-const GuildManager = require("./managers/GuildManager");
-const Message = require("./structures/Message");
-const Guild = require("./structures/Guild");
-const User = require("./structures/User");
-const generateWebsocketURL = require("./util/gluon/generateWebsocketURL");
-const Member = require("./structures/Member");
-const cacheChannel = require("./util/gluon/cacheChannel");
-const Role = require("./structures/Role");
+import UserManager from "./managers/UserManager.js";
+import GuildManager from "./managers/GuildManager.js";
+import Guild from "./structures/Guild.js";
+import User from "./structures/User.js";
+import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
+import GluonCacheOptions from "./managers/GluonCacheOptions.js";
+import GuildCacheOptions from "./managers/GuildCacheOptions.js";
+import Command from "./util/builder/commandBuilder.js";
 
 /**
  * A client user, which is able to handle multiple shards.
+ * @extends {TypedEmitter<{
+ *  "ready": (shardGuilds: String[]) => void
+ *  "resumed": () => void
+ *  "guildCreate": (guild: Guild) => void
+ *  "guildDelete": (guild: Guild) => void
+ *  "guildUpdate": (oldGuild: Guild, newGuild: Guild) => void
+ *  "messageCreate": (message: Message) => void
+ *  "messageUpdate": (oldMessage: Message, newMessage: Message) => void
+ *  "messageDelete": (message: Message) => void
+ *  "messageDeleteBulk": (messages: Message[]) => void
+ *  "guildAuditLogEntryCreate": (auditLog: AuditLog) => void
+ *  "guildBanAdd": (bannedUser: User) => void
+ *  "guildBanRemove": (unbannedUser: User) => void
+ *  "guildMemberAdd": (member: Member) => void
+ *  "guildMemberUpdate": (oldMember: Member, newMember: Member) => void
+ *  "guildMemberRemove": (member: Member) => void
+ *  "buttonClick": (interaction: ButtonClick) => void
+ *  "menuSelect": (interaction: OptionSelect) => void
+ *  "modalResponse": (interaction: ModalResponse) => void
+ *  "slashCommand": (interaction: SlashCommand) => void
+ *  "slashCommandAutocomplete": (interaction: SlashCommand) => void
+ *  "voiceStateUpdate": (oldVoiceState: VoiceState, newVoiceState: VoiceState) => void
+ *  "voiceChannelStatusUpdate": (data: Object) => void
+ *  "channelCreate": (channel: TextChannel | VoiceChannel | CategoryChannel) => void
+ *  "channelUpdate": (oldChannel: TextChannel | VoiceChannel | CategoryChannel, newChannel: TextChannel | VoiceChannel | CategoryChannel) => void
+ *  "channelDelete": (channel: TextChannel | VoiceChannel | CategoryChannel) => void
+ *  "channelPinsUpdate": (data: Object) => void
+ *  "threadCreate": (thread: Thread) => void
+ *  "threadUpdate": (oldThread: Thread, newThread: Thread)
+ *  "threadDelete": (thread: Thread) => void
+ *  "threadListSync": (threads: Thread[]) => void
+ *  "inviteCreate": (invite: Invite) => void
+ *  "inviteDelete": (data: Object, invite: Invite) => void
+ *  "roleCreate": (role: Role) => void
+ *  "roleUpdate": (oldRole: Role, newRole: Role) => void
+ *  "roleDelete": (role: Role) => void
+ *  "emojiCreate": (emoji: Emoji) => void
+ *  "emojiUpdate": (oldEmoji: Emoji, newEmoji: Emoji) => void
+ *  "emojiDelete": (emoji: Emoji) => void
+ *  "entitlementCreate": (entitlement: Object) => void
+ *  "entitlementUpdate": (entitlement: Object) => void
+ *  "entitlementDelete": (entitlement: Object) => void
+ *  "guildScheduledEventCreate": (scheduledEvent: ScheduledEvent) => void
+ *  "guildScheduledEventUpdate": (oldScheduledEvent: ScheduledEvent, newScheduledEvent: ScheduledEvent) => void
+ *  "guildScheduledEventDelete": (scheduledEvent: ScheduledEvent) => void
+ *  "guildScheduledEventUserAdd": (data: Object, user: User) => void
+ *  "guildScheduledEventUserRemove": (data: Object, user: User) => void
+ *  "initialised": () => void
+ *  "messagePollVoteAdd": (data: Object) => void
+ *  "messagePollVoteRemove": (data: Object) => void
+ *  "messageReactionAdd": (data: Object) => void
+ *  "messageReactionRemove": (data: Object) => void
+ *  "webhooksUpdate": (data: Object) => void
+ * }>}
  */
 class Client extends EventsEmitter {
+  #token;
+  #intents;
+  #_cacheOptions;
+  #_defaultGuildCacheOptions;
+  #_sessionData;
+  #shards;
+  #shardIds;
+  #totalShards;
+  #users;
+  #guilds;
+  #softRestartFunction;
   /**
    * Creates the client and sets the default options.
    * @constructor
    * @param {Object?} options The options to pass to the client.
+   * @param {Boolean?} options.cacheMessages Whether to cache messages.
+   * @param {Boolean?} options.cacheUsers Whether to cache users.
+   * @param {Boolean?} options.cacheMembers Whether to cache members.
+   * @param {Boolean?} options.cacheChannels Whether to cache channels.
+   * @param {Boolean?} options.cacheGuilds Whether to cache guilds.
+   * @param {Boolean?} options.cacheVoiceStates Whether to cache voice states.
+   * @param {Boolean?} options.cacheRoles Whether to cache roles.
+   * @param {Boolean?} options.cacheScheduledEvents Whether to cache scheduled events.
+   * @param {Boolean?} options.cacheEmojis Whether to cache emojis.
+   * @param {Boolean?} options.cacheInvites Whether to cache invites.
+   * @param {Number?} options.defaultMessageExpiry The default expiry time for messages.
+   * @param {Number?} options.defaultUserExpiry The default expiry time for users.
+   * @param {Number} options.intents The intents to use when connecting.
+   * @param {Number?} options.totalShards The total number of shards to manage.
+   * @param {Array<Number>?} options.shardIds The ids of the shards to manage.
+   * @param {Object?} options.sessionData The session data for the client.
+   * @param {Object?} options.initCache The initial cache data for the client.
+   * @param {Function?} options.softRestartFunction The function to call when a soft restart is needed.
+   * @throws {TypeError}
+   * @public
+   * @method
    */
   constructor({
     cacheMessages = false,
@@ -47,142 +135,83 @@ class Client extends EventsEmitter {
     cacheScheduledEvents = false,
     cacheEmojis = false,
     cacheInvites = false,
-    cacheAllMembers = false,
     defaultMessageExpiry = DEFAULT_MESSAGE_EXPIRY_SECONDS,
     defaultUserExpiry = DEFAULT_USER_EXPIRY_SECONDS,
-    increaseCacheBy = DEFAULT_INCREASE_CACHE_BY,
     intents,
     totalShards,
     shardIds,
     sessionData,
     initCache,
     softRestartFunction,
-    mySqlPassword,
-    s3Url,
-    s3MessageBucket,
-    s3AccessKeyId,
-    s3SecretAccessKey,
   } = {}) {
+    if (typeof intents !== "number")
+      throw new TypeError("GLUON: Intents is not a number.");
+
     super();
 
-    this.shards = [];
-
     /**
-     * The Discord API base URL.
-     * @type {String}
+     * The shards that this client is managing.
+     * @type {Array<Shard>}
+     * @private
      */
-    this.baseURL = BASE_URL;
-
-    /**
-     * The Discord API version to use.
-     * @type {String}
-     */
-    this.version = VERSION;
-
-    /**
-     * The name of this lib.
-     * @type {String}
-     */
-    this.name = NAME;
+    this.#shards = [];
 
     /**
      * The intents to use when connecting with this client.
-     * @type {Number?}
-     */
-    this.intents = intents;
-
-    /**
-     * Whether this client should cache messages.
-     * @type {Boolean}
-     */
-    this.cacheMessages = cacheMessages;
-
-    /**
-     * Whether this client should cache users.
-     * @type {Boolean}
-     */
-    this.cacheUsers = cacheUsers;
-
-    /**
-     * Whether this client should cache members.
-     * @type {Boolean}
-     */
-    this.cacheMembers = cacheMembers;
-
-    /**
-     * Whether this client should cache channels.
-     * @type {Boolean}
-     */
-    this.cacheChannels = cacheChannels;
-
-    /**
-     * Whether this client should cache guilds.
-     * @type {Boolean}
-     */
-    this.cacheGuilds = cacheGuilds;
-
-    /**
-     * Whether this client should cache voice states.
-     * @type {Boolean}
-     */
-    this.cacheVoiceStates = cacheVoiceStates;
-
-    /**
-     * Whether this client should cache roles.
-     * @type {Boolean}
-     */
-    this.cacheRoles = cacheRoles;
-
-    /**
-     * Whether this client should cache scheduled events.
-     * @type {Boolean}
-     */
-    this.cacheScheduledEvents = cacheScheduledEvents;
-
-    /**
-     * Whether this client should cache emojis.
-     * @type {Boolean}
-     */
-    this.cacheEmojis = cacheEmojis;
-
-    /**
-     * Whether this client should cache invites.
-     * @type {Boolean}
-     */
-    this.cacheInvites = cacheInvites;
-
-    /**
-     * Whether this client should fetch and subsequently cache all members.
-     * Overrides cacheMembers
-     * @type {Boolean}
-     */
-    this.cacheAllMembers = cacheAllMembers;
-
-    /**
-     * The base message expiry time, in seconds.
      * @type {Number}
+     * @private
      */
-    this.defaultMessageExpiry = defaultMessageExpiry;
+    this.#intents = intents;
 
     /**
-     * The base user expiry time, in seconds.
-     * @type {Number}
+     * The cache options for this client.
+     * @type {GluonCacheOptions}
+     * @private
+     * @readonly
+     * @see {@link GluonCacheOptions}
      */
-    this.defaultUserExpiry = defaultUserExpiry;
+    this.#_cacheOptions = new GluonCacheOptions({
+      cacheMessages,
+      cacheUsers,
+      cacheMembers,
+      cacheChannels,
+      cacheGuilds,
+      cacheVoiceStates,
+      cacheRoles,
+      cacheScheduledEvents,
+      cacheEmojis,
+      cacheInvites,
+      userTTL: defaultUserExpiry,
+      messageTTL: defaultMessageExpiry,
+    });
+
+    /**
+     * The default guild cache options for this client.
+     * @type {GuildCacheOptions}
+     * @private
+     */
+    this.#_defaultGuildCacheOptions = new GuildCacheOptions();
 
     /**
      * An array of the shard ids that this client is handling.
      * @type {Number[]?}
+     * @private
      */
-    this.shardIds = shardIds;
+    this.#shardIds = shardIds;
 
     /**
      * The total shards the bot is using.
      * @type {Number?}
+     * @private
      */
-    this.totalShards = totalShards;
+    this.#totalShards = totalShards;
 
-    this._sessionData = sessionData;
+    /**
+     * The session data for this client.
+     * @type {Object?}
+     * @private
+     */
+    this.#_sessionData = sessionData;
 
     /**
      * The client user.
@@ -196,81 +225,165 @@ class Client extends EventsEmitter {
      * The user manager for this client.
      * @type {UserManager}
      */
-    this.users = new UserManager(this);
+    this.#users = new UserManager(this);
 
     /**
      * The guild manager for this client.
      * @type {GuildManager}
      */
-    this.guilds = new GuildManager(this);
+    this.#guilds = new GuildManager(this);
 
     if (initCache?.guilds)
       for (let i = 0; i < initCache.guilds.length; i++)
         new Guild(this, initCache.guilds[i]);
 
-    this.increasedCache = new Map();
-    this.increasedCacheMultipliers = new Map();
-    this.increaseCacheBy = increaseCacheBy;
+    this.#softRestartFunction = softRestartFunction;
+  }
 
-    this.softRestartFunction = softRestartFunction;
+  /**
+   * The ids of the shards that this client is managing.
+   * @type {Array<Number>}
+   * @readonly
+   * @public
+   */
+  get shardIds() {
+    return this.#shardIds;
+  }
 
-    const connection = mysql.createPool({
-      host: "localhost",
-      user: "root",
-      password: mySqlPassword,
-      database: "dataStorage",
-      waitForConnections: true,
-      connectionLimit: 10,
-      maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-      idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
-      namedPlaceholders: true,
-      bigNumberStrings: true,
-      supportBigNumbers: true,
-    });
+  /**
+   * The total number of shards that this client is managing.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get totalShards() {
+    return this.#totalShards;
+  }
 
-    this.dataStorage = connection;
+  /**
+   * The intents that this client is using.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get intents() {
+    return this.#intents;
+  }
 
-    const s3Messages = new AWS.S3({
-      endpoint: `${s3Url}${s3MessageBucket}`,
-      accessKeyId: s3AccessKeyId,
-      secretAccessKey: s3SecretAccessKey,
-      s3BucketEndpoint: true,
-    });
+  /**
+   * The user manager for this client.
+   * @type {UserManager}
+   * @readonly
+   * @public
+   */
+  get users() {
+    return this.#users;
+  }
 
-    this.s3MessageBucket = s3MessageBucket;
+  /**
+   * The guild manager for this client.
+   * @type {GuildManager}
+   * @readonly
+   * @public
+   */
+  get guilds() {
+    return this.#guilds;
+  }
 
-    this.s3Messages = s3Messages;
+  /**
+   * The function to call when a soft restart is needed.
+   * @public
+   * @method
+   * @returns {void}
+   */
+  softRestartFunction() {
+    this.#softRestartFunction ? this.#softRestartFunction() : process.exit(1);
+  }
 
-    this.s3Messages.putBucketLifecycleConfiguration(
-      {
-        Bucket: s3MessageBucket,
-        LifecycleConfiguration: {
-          Rules: [
-            {
-              Expiration: {
-                Days: 30,
-              },
-              Status: "Enabled",
-              Filter: {
-                Prefix: "",
-              },
-              ID: "DeleteOldFiles",
-            },
-          ],
-        },
-      },
-      (err, data) => {
-        if (err) console.log(err);
-      },
-    );
+  /**
+   * Stops all shards.
+   * @public
+   * @method
+   * @returns {void}
+   */
+  halt() {
+    for (let i = 0; i < this.#shards.length; i++) this.#shards[i].halt();
+  }
+
+  /**
+   * Monitors the current process.
+   * @public
+   * @method
+   * @returns {Object}
+   */
+  checkProcess() {
+    let guildIds = [];
+    this.guilds.forEach((guild) => guildIds.push(guild.id));
+    const processInformation = {
+      totalShards: this.totalShards,
+      shardsManaged: this.shardIds,
+      shards: [],
+      guildCount: this.guilds.size,
+      memberCount: this.getMemberCount(),
+      cacheCounts: this.getCacheCounts(),
+      guilds: guildIds,
+      processId: hash
+        .sha256()
+        .update(`${this.shardIds.join("_")}-${this.totalShards}`)
+        .digest("hex"),
+      restLatency: this.request.latency / 2,
+    };
+    for (let i = 0; i < this.#shards.length; i++)
+      processInformation.shards.push(this.#shards[i].check());
+    return processInformation;
+  }
+
+  /**
+   * Outputs a debug message if NODE_ENV=development.
+   * @param {Number} status The debug status level.
+   * @param {String} message The message to emit.
+   * @returns {void}
+   * @method
+   * @public
+   */
+  _emitDebug(status, message) {
+    if (process.env.NODE_ENV !== "development") return;
+    const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
+    let shardStatus;
+    const shardString = `[Shard: ${this.shardIds ? this.shardIds.join(", ") : "???"}]`;
+    switch (status) {
+      case GLUON_DEBUG_LEVELS.INFO: {
+        shardStatus = chalk.blue(chalk.bgWhite("[Info]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.WARN: {
+        shardStatus = chalk.yellow(chalk.bgYellowBright("[Warn]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.DANGER: {
+        shardStatus = chalk.yellow(chalk.bgRed("[Danger]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.ERROR: {
+        shardStatus = chalk.red(chalk.bgRedBright("[Error]"), shardString);
+        break;
+      }
+      case GLUON_DEBUG_LEVELS.NONE:
+      default: {
+        shardStatus = chalk.gray(shardString);
+        break;
+      }
+    }
+    const time = chalk.magenta(new Date().toTimeString().split(" ")[0]);
+    const emitString = `${libName} ${shardStatus} @ ${time} => ${message}`;
+    console.info(emitString);
   }
 
   /**
    * Counts how many items are in each cache.
    * @returns {Object}
+   * @public
+   * @method
    */
   getCacheCounts() {
     let totalMessages = 0;
@@ -278,8 +391,8 @@ class Client extends EventsEmitter {
     let totalChannels = 0;
     let totalRoles = 0;
 
-    this.guilds.cache.forEach((guild) => {
-      guild.channels.cache.forEach((channel) => {
+    this.guilds.forEach((guild) => {
+      guild.channels.forEach((channel) => {
         switch (channel.type) {
           case CHANNEL_TYPES.GUILD_NEWS_THREAD:
           case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
@@ -287,7 +400,7 @@ class Client extends EventsEmitter {
           case CHANNEL_TYPES.GUILD_TEXT:
           case CHANNEL_TYPES.GUILD_NEWS:
           case CHANNEL_TYPES.GUILD_FORUM: {
-            totalMessages += channel.messages.cache.size;
+            totalMessages += channel.messages.size;
             break;
           }
           default:
@@ -297,14 +410,14 @@ class Client extends EventsEmitter {
         totalChannels++;
       });
 
-      totalMembers += guild.members.cache.size;
+      totalMembers += guild.members.size;
 
-      totalRoles += guild.roles.cache.size;
+      totalRoles += guild.roles.size;
     });
 
     return {
-      users: this.users.cache.size,
-      guilds: this.guilds.cache.size,
+      users: this.users.size,
+      guilds: this.guilds.size,
       messages: totalMessages,
       members: totalMembers,
       channels: totalChannels,
@@ -313,14 +426,36 @@ class Client extends EventsEmitter {
   }
 
   /**
+   * Returns the cache options for this client.
+   * @type {GluonCacheOptions}
+   * @readonly
+   * @public
+   */
+  get _cacheOptions() {
+    return this.#_cacheOptions;
+  }
+
+  /**
+   * Returns the global guild cache options for this client.
+   * @type {GuildCacheOptions}
+   * @readonly
+   * @public
+   */
+  get _defaultGuildCacheOptions() {
+    return this.#_defaultGuildCacheOptions;
+  }
+
+  /**
    * Counts how many members are in all of Quark's servers.
    * @returns {Number}
+   * @public
+   * @method
    */
   getMemberCount() {
     let memberCount = 0;
 
-    this.guilds.cache.forEach((guild) => {
-      memberCount += guild.member_count;
+    this.guilds.forEach((guild) => {
+      memberCount += guild.memberCount;
     });
 
     return memberCount;
@@ -329,359 +464,11 @@ class Client extends EventsEmitter {
   /**
    * Bundles all guilds.
    * @returns {Array<Object>}
+   * @public
+   * @method
    */
   bundleCache() {
-    return this.guilds;
-  }
-
-  /**
-   * Fetches a message from a specific channel.
-   * @param {BigInt} guild_id The ID of the guild that the message belongs to.
-   * @param {BigInt} channel_id The ID of the channel that the message belongs to.
-   * @param {BigInt} message_id The ID of the message to return.
-   * @returns {Promise<Message>}
-   */
-  async fetchMessage(guild_id, channel_id, message_id) {
-    const data = await this.request.makeRequest("getChannelMessage", [
-      channel_id,
-      message_id,
-    ]);
-
-    return new Message(this, data, channel_id.toString(), guild_id.toString());
-  }
-
-  /**
-   * Posts a webhook with the provided webhook id and token.
-   * @param {Object} referenceData An object with the webhook id and token.
-   * @param {String?} content The message to send with the webhook.
-   * @param {Object?} options Embeds, components and files to attach to the webhook.
-   */
-  async postWebhook(
-    { id, token },
-    content,
-    { embeds, components, files } = {},
-  ) {
-    const body = {};
-
-    if (content) body.content = content;
-
-    if (embeds) body.embeds = embeds;
-    if (components) body.components;
-    if (files) body.files = files;
-
-    await this.request.makeRequest("postExecuteWebhook", [id, token], body);
-  }
-
-  /**
-   * Posts a message to the specified channel.
-   * @param {BigInt} channel_id The id of the channel to send the message to.
-   * @param {BigInt} guild_id The id of the guild which the channel belongs to.
-   * @param {String?} content The message content.
-   * @param {Object?} options Embeds, components and files to attach to the message.
-   * @returns {Promise<Message>}
-   */
-  async sendMessage(
-    channel_id,
-    guild_id,
-    content,
-    { embed, embeds, components, files, suppressMentions = false } = {},
-  ) {
-    const body = {};
-
-    if (content) body.content = content;
-
-    if (embed) body.embeds = [embed];
-    else if (embeds && embeds.length != 0)
-      body.embeds = embeds;
-    if (components) body.components = components;
-    if (files) body.files = files;
-    if (suppressMentions == true) {
-      body.allowed_mentions = {};
-      body.allowed_mentions.parse = [];
-    }
-
-    const data = await this.request.makeRequest(
-      "postCreateMessage",
-      [channel_id],
-      body,
-    );
-
-    return new Message(
-      this,
-      data,
-      channel_id.toString(),
-      guild_id.toString(),
-      false,
-    );
-  }
-
-  /**
-   * Edits a specified message.
-   * @param {BigInt} channel_id The id of the channel that the message belongs to.
-   * @param {BigInt} guild_id The id of the guild that the channel belongs to.
-   * @param {BigInt} message_id The id of the message to edit.
-   * @param {String?} content The message content.
-   * @param {Object?} options Embeds, components and files to attach to the message.
-   * @returns {Promise<Message>}
-   */
-  async editMessage(
-    channel_id,
-    guild_id,
-    message_id,
-    content,
-    { embed, components } = {},
-  ) {
-    const body = {};
-
-    if (content) body.content = content;
-    if (embed) body.embeds = [embed];
-    if (components) body.components = components;
-
-    if (this.referenced_message)
-      body.message_reference = {
-        message_id: message_id.toString(),
-        channel_id: channel_id.toString(),
-        guild_id: guild_id.toString(),
-      };
-
-    const data = await this.request.makeRequest(
-      "patchEditMessage",
-      [channel_id, message_id],
-      body,
-    );
-
-    return new Message(this, data, channel_id, guild_id);
-  }
-
-  /**
-   * Adds a specified channel as a follower to Quark's status channel.
-   * @param {BigInt} channel_id The id of the channel to add as a follower.
-   */
-  async followStatusChannel(channel_id) {
-    const body = {};
-
-    body.webhook_channel_id = channel_id;
-
-    await this.request.makeRequest(
-      "postFollowNewsChannel",
-      ["822906135048487023"],
-      body,
-    );
-  }
-
-  /**
-   * Fetches the webhooks for a specified channel.
-   * @param {BigInt} channel_id The id of the channel to fetch the webhooks from.
-   * @returns {Promise<Array<Object>>}
-   */
-  fetchChannelWebhooks(channel_id) {
-    return this.request.makeRequest("getChannelWebhooks", [
-      channel_id,
-    ]);;
-  }
-
-  /**
-   * Deletes a webhook.
-   * @param {BigInt} webhook_id The id of the webhook to delete.
-   */
-  async deleteWebhook(webhook_id) {
-    await this.request.makeRequest("deleteWebhook", [webhook_id]);
-  }
-
-  /**
-   * Fetches a member, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the member belongs to.
-   * @param {String | BigInt} user_id The id of the member to fetch.
-   * @returns {Promise<Member>}
-   */
-  async fetchMember(guild_id, user_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
-
-    const cached = await guild.members.localFetch(user_id.toString());
-
-    if (cached) return cached;
-
-    const data = await this.request.makeRequest("getGuildMember", [
-      guild_id,
-      user_id,
-    ]);
-
-    return new Member(
-      this,
-      data,
-      user_id.toString(),
-      guild_id.toString(),
-      data.user,
-    );
-  }
-
-  /**
-   * Fetches a channel, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the channel belongs to.
-   * @param {String | BigInt} channel_id The id of the channel to fetch.
-   * @returns {Promise<TextChannel | VoiceChannel>}
-   */
-  async fetchChannel(guild_id, channel_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
-
-    const cached = guild.channels.cache.get(channel_id.toString());
-
-    if (cached) return cached;
-
-    const data = await this.request.makeRequest("getChannel", [channel_id]);
-
-    return cacheChannel(this, data, guild_id.toString());
-  }
-
-  /**
-   * Fetches a role, checking the cache first.
-   * @param {String | BigInt} guild_id The id of the guild the role belongs to.
-   * @param {String | BigInt | null} user_id The id of the role to fetch, or null to return all roles.
-   * @returns {Promise<Role | Array<Role>>}
-   */
-  async fetchRole(guild_id, role_id) {
-    const guild = this.guilds.cache.get(guild_id.toString());
-
-    const cached = role_id
-      ? guild.roles.cache.get(role_id.toString())
-      : Array.from(guild.roles.cache, ([key, value]) => value);
-
-    if (cached) return cached;
-
-    const data = await this.request.makeRequest("getRoles", [guild_id]);
-
-    if (!role_id) return data.map((role) => new Role(this, role, guild_id));
-
-    let matchedRole;
-    for (let i = 0; i < data.length; i++) {
-      const role = new Role(this, data[i], guild_id);
-      if (role.id == role_id) matchedRole = role;
-    }
-
-    return matchedRole;
-  }
-
-  /**
-   * Bulk deletes channel messages.
-   * @param {BigInt} channel_id The id of the channel to purge messages in.
-   * @param {Array<String>} messages An array of message ids to delete.
-   * @param {Object} options
-   */
-  async purgeChannelMessages(channel_id, messages, { reason }) {
-    const body = {};
-
-    body.messages = messages;
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this.request.makeRequest(
-      "postBulkDeleteMessages",
-      [channel_id],
-      body,
-    );
-  }
-
-  /**
-   * Deletes one message.
-   * @param {BigInt} channel_id The id of the channel that the message belongs to.
-   * @param {BigInt} message_id The id of the message to delete.
-   * @param {Object} options
-   */
-  async deleteChannelMessage(channel_id, message_id, { reason }) {
-    const body = {};
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this.request.makeRequest(
-      "deleteChannelMessage",
-      [channel_id, message_id],
-      body,
-    );
-  }
-
-  /**
-   * Fetches messages from a specified channel.
-   * @param {BigInt} guild_id The id of the guild that the channel belongs to.
-   * @param {BigInt} channel_id The id of the channel to fetch messages from.
-   * @param {Object} options The filter options to determine which messages should be returned.
-   * @returns {Promise<Array<Message>>}
-   */
-  async fetchChannelMessages(
-    guild_id,
-    channel_id,
-    { around, before, after, limit },
-  ) {
-    const body = {};
-
-    if (around) body.around = around;
-
-    if (before) body.before = before;
-
-    if (after) body.after = after;
-
-    if (limit) body.limit = limit;
-
-    const data = await this.request.makeRequest(
-      "getChannelMessages",
-      [channel_id],
-      body,
-    );
-
-    const messages = [];
-    for (let i = 0; i < data.length; i++)
-      messages.push(new Message(this, data[i], data[i].channel_id, guild_id));
-
-    return messages;
-  }
-
-  /**
-   * Creates a webhook in the given channel with the name "Quark"
-   * @param {BigInt} channel_id The id of the channel to create the webhook in.
-   * @returns {Promise<Object>}
-   */
-  async createWebhook(channel_id) {
-    const body = {};
-
-    body.name = "Quark";
-
-    const data = await this.request.makeRequest(
-      "postCreateWebhook",
-      [channel_id],
-      body,
-    );
-
-    return data;
-  }
-
-  /**
-   * Modified a webhook with the given webhook id.
-   * @param {BigInt} webhook_id The id of the webhook to modify.
-   * @param {Object} options The options to modify the webhook with.
-   * @returns {Promise<Object>}
-   */
-  async modifyWebhook(webhook_id, { channel_id }) {
-    const body = {};
-
-    body.channel_id = channel_id.toString();
-
-    const data = await this.request.makeRequest(
-      "patchModifyWebhook",
-      [webhook_id],
-      body,
-    );
-
-    return data;
-  }
-
-  /**
-   * Fetches a webhook by the webhook's id.
-   * @param {BigInt | String} webhook_id The id of the webhook to fetch.
-   * @returns {Promise<Object>}
-   */
-  async fetchWebhook(webhook_id) {
-    const data = await this.request.makeRequest("getWebhook", [webhook_id]);
-
-    return data;
+    return this.guilds.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT);
   }
 
   /**
@@ -690,123 +477,90 @@ class Client extends EventsEmitter {
    * @returns {Array<Object>}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#registering-a-command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
    */
-  async registerCommands(commands) {
+  registerCommands(commands) {
+    if (
+      !Array.isArray(commands) ||
+      !commands.every((c) => c instanceof Command)
+    )
+      throw new TypeError("GLUON: Commands is not an array.");
+
     const body = [];
 
     for (let i = 0; i < commands.length; i++) body.push(commands[i]);
 
-    const data = await this.request.makeRequest(
+    return this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
       body,
     );
-
-    return data;
-  }
-
-  /**
-   * Adds a role to a member.
-   * @param {String | BigInt} guildId The guild id the member belongs to.
-   * @param {String | BigInt} userId The id of the member who the action is occuring on.
-   * @param {String | BigInt} roleId The id of the role to add.
-   */
-  async addMemberRole(guildId, userId, roleId) {
-    await this.request.makeRequest("putAddGuildMemberRole", [
-      guildId,
-      userId,
-      roleId,
-    ]);
-  }
-
-  /**
-   * Removes a role from a member.
-   * @param {String | BigInt} guildId The guild id the member belongs to.
-   * @param {String | BigInt} userId The id of the member who the action is occuring on.
-   * @param {String | BigInt} roleId The id of the role to remove.
-   */
-  async removeMemberRole(guildId, userId, roleId) {
-    await this.request.makeRequest("deleteRemoveMemberRole", [
-      guildId,
-      userId,
-      roleId,
-    ]);
-  }
-
-  /**
-   * Searches for members via a search query.
-   * @param {String | BigInt} guildId The id of the guild to search.
-   * @param {String} query The search query.
-   * @returns {Promise<Array<Member>?>} The members which match the search query.
-   */
-  async search(guildId, query) {
-    const body = {};
-
-    body.query = query;
-
-    body.limit = 1000;
-
-    const data = await this.request.makeRequest(
-      "getSearchGuildMembers",
-      [guildId],
-      body,
-    );
-    if (data.length != 0) {
-      const members = [];
-
-      for (let i = 0; i < data.length; i++)
-        members.push(
-          new Member(
-            this,
-            data[i],
-            data[i].user.id,
-            guildId.toString(),
-            data[i].user,
-          ),
-        );
-
-      return members;
-    } else return null;
   }
 
   /**
    * Sets the bot's status across all shards.
    * @param {Object} status Status options.
+   * @param {String} status.name The bot's new status.
+   * @param {Number} status.type The type of status.
+   * @param {String} status.status The bot's status.
+   * @param {Boolean} status.afk Whether the bot is afk.
+   * @param {Number} status.since The time since the bot has been afk.
+   * @returns {void}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   setStatus({ name, type, status, afk, since } = {}) {
-    for (let i = 0; i < this.shards.length; i++)
-      this.shards[i].updatePresence(name, type, status, afk, since);
+    if (typeof name !== "string")
+      throw new TypeError("GLUON: Name is not a string.");
+    if (typeof type !== "undefined" && typeof type !== "number")
+      throw new TypeError("GLUON: Type is not a number.");
+    if (typeof status !== "undefined" && typeof status !== "string")
+      throw new TypeError("GLUON: Status is not a string.");
+    if (typeof afk !== "undefined" && typeof afk !== "boolean")
+      throw new TypeError("GLUON: AFK is not a boolean.");
+    if (typeof since !== "undefined" && typeof since !== "number")
+      throw new TypeError("GLUON: Since is not a number.");
+    for (let i = 0; i < this.#shards.length; i++)
+      this.#shards[i].updatePresence(name, type, status, afk, since);
   }
 
   /**
    * Initiates the login sequence
    * @param {String} token The authorization token
+   * @returns {void}
+   * @public
+   * @method
+   * @throws {TypeError}
    */
   login(token) {
+    if (typeof token !== "string")
+      throw new TypeError("GLUON: Token is not a string.");
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
-    this.token = token;
+    this.#token = token;
 
-    this.request = new BetterRequestHandler(
-      this,
-      this.baseURL,
-      this.name,
-      this.version,
-      this.token,
-    );
+    this.request = new BetterRequestHandler(this, this.#token);
 
     this.request
       .makeRequest("getGatewayBot")
       .then((gatewayInfo) => {
         let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
-        if (!this.shardIds || this.shardIds.length == 0)
-          this.shardIds = [...Array(gatewayInfo.shards).keys()];
+        if (
+          !this.shardIds ||
+          !Array.isArray(this.shardIds) ||
+          this.shardIds.length === 0
+        )
+          this.#shardIds = [...Array(gatewayInfo.shards).keys()];
 
-        if (!this.totalShards) this.totalShards = gatewayInfo.shards;
+        if (!this.totalShards) this.#totalShards = gatewayInfo.shards;
 
         for (
           let i = 0;
-          i < this.shardIds.length && remainingSessionStarts != 0;
+          i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
         )
           setTimeout(() => {
@@ -815,190 +569,48 @@ class Client extends EventsEmitter {
               n < gatewayInfo.session_start_limit.max_concurrency;
               n++
             )
-              this.shards.push(
-                new WS(
+              this.#shards.push(
+                new Shard(
                   this,
+                  this.#token,
                   generateWebsocketURL(
-                    this._sessionData
-                      ? this._sessionData[i].resumeGatewayUrl
+                    this.#_sessionData
+                      ? this.#_sessionData[i].resumeGatewayUrl
                       : gatewayInfo.url,
                   ),
-                  [this.shardIds[i], this.totalShards],
-                  this.intents,
-                  this._sessionData
-                    ? this._sessionData[i].sessionId
+                  this.shardIds[i],
+                  this.#_sessionData
+                    ? this.#_sessionData[i].sessionId
                     : undefined,
-                  this._sessionData ? this._sessionData[i].sequence : undefined,
-                  this._sessionData
-                    ? this._sessionData[i].resumeGatewayUrl
+                  this.#_sessionData
+                    ? this.#_sessionData[i].sequence
                     : undefined,
-                  this.softRestartFunction,
+                  this.#_sessionData
+                    ? this.#_sessionData[i].resumeGatewayUrl
+                    : undefined,
                 ),
               );
           }, 6000 * i);
 
-        if (
-          this.cacheMessages == true ||
-          (this.cacheMembers == true && this.cacheAllMembers != true) ||
-          this.cacheUsers == true
-        )
-          setInterval(async () => {
-            // store all members
+        setInterval(async () => {
+          this.guilds.forEach((guild) => {
+            guild._intervalCallback();
+          });
 
-            // if (this.cacheMembers == true) {
-            //     let fullMembersList = [];
-            //     this.guilds.cache.forEach(guild => {
-
-            //         Array.from(guild.members.cache, ([key, value]) => fullMembersList.push(value));
-
-            //     });
-
-            //     const valuesTemplate = fullMembersList.map(() => `(?, ?, ?, ?, ?, ?, ?)`).join(',');
-            //     let values = [];
-            //     let memberRolesValues = [];
-
-            //     for (let i = 0; i < fullMembersList.length; i++) {
-            //         // (:id, :guild, :nick, :joined_at, :avatar, :communication_disabled_until, :attributes)
-            //         values.push(fullMembersList[i].id);
-            //         values.push(fullMembersList[i].guild.id);
-            //         values.push(fullMembersList[i].nick);
-            //         values.push(fullMembersList[i].joined_at);
-            //         values.push(fullMembersList[i].formattedAvatarHash);
-            //         values.push(fullMembersList[i].communication_disabled_until);
-            //         values.push(fullMembersList[i]._attributes);
-            //         if (Array.isArray(fullMembersList[i]._roles) && fullMembersList[i]._roles.length > 0) {
-            //             for (let n = 0; n < fullMembersList[i]._roles.length; n++)
-            //                 memberRolesValues.push(fullMembersList[i].id, fullMembersList[i]._roles[n], fullMembersList[i].guild.id);
-            //         }
-            //     }
-
-            //     await this.dataStorage.query(`INSERT INTO Members (id, guild, nick, joined_at, avatar, communication_disabled_until, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE nick = VALUES(nick), avatar = VALUES(avatar), communication_disabled_until = VALUES(communication_disabled_until), attributes = VALUES(attributes);`, values)
-            //         .then(() => this.emit("debug", `ADDED ${fullMembersList.length} MEMBERS TO STORAGE`));
-
-            //     await this.dataStorage.query(`INSERT INTO MemberRoles (memberid, roleid, guild) VALUES ${Array(memberRolesValues.length / 3).fill("(?, ?, ?)").join(',')} ON DUPLICATE KEY UPDATE memberid = VALUES(memberid), roleid = VALUES(roleid), guild = VALUES(guild);`, memberRolesValues)
-            //         .then(() => this.emit("debug", `ADDED ${memberRolesValues.length} TO MEMBER ROLES STORAGE`));
-
-            // }
-
-            // if (this.cacheUsers == true) {
-            //     let fullUsersList = [];
-
-            //     Array.from(this.users.cache, ([key, value]) => fullUsersList.push(value));
-
-            //     const valuesTemplate = fullUsersList.map(() => `(?, ?, ?, ?, ?, ?)`).join(',');
-            //     const values = [];
-
-            //     for (let i = 0; i < fullUsersList.length; i++) {
-            //         // (:id, :avatar, :username, :global_name, :discriminator, :attributes)
-            //         values.push(fullUsersList[i].id);
-            //         values.push(fullUsersList[i].formattedAvatarHash);
-            //         values.push(fullUsersList[i].username);
-            //         values.push(fullUsersList[i].global_name);
-            //         values.push(fullUsersList[i].discriminator);
-            //         values.push(fullUsersList[i]._attributes);
-            //     }
-
-            //     await this.dataStorage.query(`INSERT INTO Users (id, avatar, username, global_name, discriminator, attributes) VALUES ${valuesTemplate} ON DUPLICATE KEY UPDATE avatar = VALUES(avatar), username = VALUES(username), global_name = VALUES(global_name), discriminator = VALUES(discriminator), attributes = VALUES(attributes);`, values)
-            //         .then(() => this.emit("debug", `ADDED ${fullUsersList.length} USERS TO STORAGE`));
-
-            // }
-
-            const currentTime = Math.floor(new Date().getTime() / 1000);
-
-            if (
-              this.cacheMessages == true ||
-              (this.cacheMembers == true && this.cacheAllMembers != true)
-            )
-              this.guilds.cache.forEach((guild) => {
-                if (this.cacheMessages == true) {
-                  this.emit(
-                    "debug",
-                    `Sweeping messages for GUILD ${guild.id}...`,
-                  );
-
-                  let cacheCount = guild.calculateMessageCacheCount() * 2;
-                  // if (this.increasedCache.get(guild.id.toString()))
-                  //     cacheCount = 0;
-
-                  this.emit(
-                    "debug",
-                    `Calculated limit of ${cacheCount} per channel for GUILD ${guild.id}...`,
-                  );
-
-                  guild.channels.cache.forEach(async (channel) => {
-                    this.emit(
-                      "debug",
-                      `Sweeping messages for CHANNEL ${channel.id}...`,
-                    );
-
-                    const nowCached = channel.messages.sweepMessages(
-                      cacheCount,
-                      currentTime,
-                    );
-
-                    this.emit(
-                      "debug",
-                      `New cache size of ${nowCached || 0} for CHANNEL ${
-                        guild.id
-                      }...`,
-                    );
-                  });
-                }
-
-                if (
-                  (this.cacheMembers == true && this.cacheAllMembers != true) ||
-                  this.cacheMessages == true
-                ) {
-                  this.emit(
-                    "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
-                  );
-
-                  let cacheCount = guild.calculateMemberCacheCount();
-                  // if (this.increasedCache.get(guild.id.toString()))
-                  //     cacheCount *= this.increaseCacheBy;
-
-                  this.emit(
-                    "debug",
-                    `Calculated limit of ${cacheCount} for GUILD ${guild.id}...`,
-                  );
-
-                  this.emit(
-                    "debug",
-                    `Sweeping members for GUILD ${guild.id}...`,
-                  );
-
-                  const nowCached = guild.members.sweepMembers(cacheCount);
-
-                  this.emit(
-                    "debug",
-                    `New cache size of ${nowCached || 0} for GUILD ${
-                      guild.id
-                    }...`,
-                  );
-                }
-              });
-
-            if (this.cacheUsers == true || this.cacheMessages == true) {
-              this.emit("debug", "Sweeping users...");
-
-              const nowCached = this.users.sweepUsers(currentTime);
-
-              this.emit("debug", `New user cache size is ${nowCached || 0}...`);
-            }
-          }, DEFAULT_CACHE_CHECK_PERIOD); // every 1 hour 1000 * 60 * 60
+          this.users._intervalCallback();
+        }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
       })
       .catch((error) => {
-        this.emit(
-          "debug",
+        this._emitDebug(
+          GLUON_DEBUG_LEVELS.ERROR,
           "Get gateway bot request failed, terminating process",
         );
 
-        console.log(error);
+        console.error(error);
 
         process.exit(0);
       });
   }
 }
 
-module.exports = Client;
+export default Client;

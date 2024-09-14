@@ -5,7 +5,6 @@
  * @returns {Object}
  */
 function resolveEmoji(text) {
-
   if (typeof text !== "string")
     throw new TypeError("GLUON: The emoji must be a string.");
 
@@ -26,4 +25,4 @@ function resolveEmoji(text) {
   };
 }
 
-module.exports = resolveEmoji;
+export default resolveEmoji;

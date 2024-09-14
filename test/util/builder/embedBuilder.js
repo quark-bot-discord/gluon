@@ -1,23 +1,13 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-const hexToInt = require("../../../src/util/general/hexToInt");
-const Embed = require("../../../src/util/builder/embedBuilder");
-const { LIMITS } = require("../../../src/constants");
+import { expect } from "chai";
+import hexToInt from "../../../src/util/general/hexToInt.js";
+import Embed from "../../../src/util/builder/embedBuilder.js";
+import { LIMITS } from "../../../src/constants.js";
 
 describe("Embed", function () {
   context("check import", function () {
     it("should be an object", function () {
       const embed = new Embed();
       expect(embed).to.be.an("object");
-    });
-  });
-
-  context("check type", function () {
-    it("should have the correct type", function () {
-      const embed = new Embed();
-      expect(embed.type).to.equal("rich");
     });
   });
 
@@ -104,7 +94,7 @@ describe("Embed", function () {
       const embed = new Embed();
       expect(() => {
         embed.setColor(undefined);
-      }).to.throw(TypeError, "GLUON: Embed colour must be provided.");
+      }).to.throw(TypeError, "GLUON: Embed color must be provided.");
     });
   });
 
@@ -116,7 +106,7 @@ describe("Embed", function () {
     it("should set the timestamp of the embed", function () {
       const embed = new Embed();
       embed.setTimestamp(123456);
-      expect(embed.timestamp).to.equal(new Date(123456 * 1000).toISOString());
+      expect(embed.timestamp).to.equal(new Date(123456 * 1000).getTime());
     });
   });
 
@@ -149,10 +139,34 @@ describe("Embed", function () {
       const embed = new Embed();
       expect(embed).to.respondTo("setImage");
     });
+    it("should throw an error if the url is empty", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.setImage(undefined);
+      }).to.throw(TypeError, "GLUON: Embed image url must be a string.");
+    });
     it("should set the image of the embed", function () {
       const embed = new Embed();
       embed.setImage("https://example.com");
       expect(embed.image.url).to.equal("https://example.com");
+    });
+  });
+
+  context("check setVideo", function () {
+    it("should have method setVideo", function () {
+      const embed = new Embed();
+      expect(embed).to.respondTo("setVideo");
+    });
+    it("should throw an error if the url is empty", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.setVideo(undefined);
+      }).to.throw(TypeError, "GLUON: Embed video url must be a string.");
+    });
+    it("should set the video of the embed", function () {
+      const embed = new Embed();
+      embed.setVideo("https://example.com");
+      expect(embed.video.url).to.equal("https://example.com");
     });
   });
 
@@ -211,10 +225,10 @@ describe("Embed", function () {
       const embed = new Embed();
       embed.addField("field", "fieldValue");
       expect(embed.fields.find((f) => f.name == "field").name).to.equal(
-        "field"
+        "field",
       );
       expect(embed.fields.find((f) => f.name == "field").value).to.equal(
-        "fieldValue"
+        "fieldValue",
       );
     });
     it("should not add a field if the field is empty", function () {
@@ -223,19 +237,19 @@ describe("Embed", function () {
         embed.addField(undefined, "fieldValue");
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
       expect(() => {
         embed.addField("field", undefined);
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
       expect(() => {
         embed.addField(undefined, undefined);
       }).to.throw(
         TypeError,
-        "GLUON: Embed field name and value must be provided."
+        "GLUON: Embed field name and value must be provided.",
       );
     });
     it("should throw an error if too many fields are added", function () {
@@ -247,21 +261,21 @@ describe("Embed", function () {
         embed.addField("field", "fieldValue");
       }).to.throw(
         RangeError,
-        `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`
+        `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
       );
     });
     it("should not exceed the value limit", function () {
       const embed = new Embed();
       embed.addField("field", "a".repeat(LIMITS.MAX_EMBED_FIELD_VALUE + 1));
       expect(embed.fields.find((f) => f.name == "field").value.length).to.equal(
-        LIMITS.MAX_EMBED_FIELD_VALUE
+        LIMITS.MAX_EMBED_FIELD_VALUE,
       );
     });
     it("should not exceed the name limit", function () {
       const embed = new Embed();
       embed.addField("a".repeat(256), "fieldValue");
       expect(
-        embed.fields.find((f) => f.value == "fieldValue").name.length
+        embed.fields.find((f) => f.value == "fieldValue").name.length,
       ).to.equal(LIMITS.MAX_EMBED_FIELD_NAME);
     });
   });
@@ -320,11 +334,11 @@ describe("Embed", function () {
       embed.setTimestamp(123456);
       embed.setFooter("footer");
       embed.setImage("https://example.com");
+      embed.setVideo("https://example.com");
       embed.setThumbnail("https://example.com");
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
       expect(embed.toJSON()).to.deep.equal({
-        type: "rich",
         title: "title",
         description: "description",
         url: "https://example.com",
@@ -334,6 +348,9 @@ describe("Embed", function () {
           text: "footer",
         },
         image: {
+          url: "https://example.com",
+        },
+        video: {
           url: "https://example.com",
         },
         thumbnail: {

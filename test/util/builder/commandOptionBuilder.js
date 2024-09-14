@@ -1,11 +1,7 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { LIMITS } = require("../../../src/constants");
-const CommandChoice = require("../../../src/util/builder/commandChoiceBuilder");
-const CommandOptionBuilder = require("../../../src/util/builder/commandOptionBuilder");
+import { expect } from "chai";
+import { LIMITS } from "../../../src/constants.js";
+import CommandChoice from "../../../src/util/builder/commandChoiceBuilder.js";
+import CommandOptionBuilder from "../../../src/util/builder/commandOptionBuilder.js";
 
 describe("CommandOptionBuilder", () => {
   context("check import", () => {
@@ -34,23 +30,23 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setName()).to.throw(
         TypeError,
-        "GLUON: Command option name must be provided."
+        "GLUON: Command option name must be provided.",
       );
     });
     it("should throw an error if the name is not a string or object", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setName(123)).to.throw(
         TypeError,
-        "GLUON: Command option name must be a string or an object."
+        "GLUON: Command option name must be a string or an object.",
       );
     });
     it("should throw an error if the name is too long", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() =>
-        commandOption.setName("a".repeat(LIMITS.MAX_COMMAND_OPTION_NAME + 1))
+        commandOption.setName("a".repeat(LIMITS.MAX_COMMAND_OPTION_NAME + 1)),
       ).to.throw(
         RangeError,
-        `GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`
+        `GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
       );
     });
   });
@@ -74,18 +70,18 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setDescription(123)).to.throw(
         TypeError,
-        "GLUON: Command option description must be a string or an object."
+        "GLUON: Command option description must be a string or an object.",
       );
     });
     it("should throw an error if the description is too long", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() =>
         commandOption.setDescription(
-          "a".repeat(LIMITS.MAX_COMMAND_OPTION_DESCRIPTION + 1)
-        )
+          "a".repeat(LIMITS.MAX_COMMAND_OPTION_DESCRIPTION + 1),
+        ),
       ).to.throw(
         RangeError,
-        `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`
+        `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
       );
     });
   });
@@ -104,14 +100,14 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setType()).to.throw(
         TypeError,
-        "GLUON: Command option type must be a number."
+        "GLUON: Command option type must be a number.",
       );
     });
     it("should throw an error if the type is not a number", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setType("test")).to.throw(
         TypeError,
-        "GLUON: Command option type must be a number."
+        "GLUON: Command option type must be a number.",
       );
     });
   });
@@ -130,7 +126,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setRequired(123)).to.throw(
         TypeError,
-        "GLUON: Command option required status must be a boolean."
+        "GLUON: Command option required status must be a boolean.",
       );
     });
   });
@@ -149,17 +145,17 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.addChoice()).to.throw(
         TypeError,
-        "GLUON: Command option choice must be provided."
+        "GLUON: Command option choice must be provided.",
       );
     });
     it("should throw an error if the choices limit is reached", () => {
       const commandOption = new CommandOptionBuilder();
       commandOption.choices = new Array(LIMITS.MAX_COMMAND_OPTION_CHOICES);
       expect(() =>
-        commandOption.addChoice({ name: "test", value: "testValue" })
+        commandOption.addChoice({ name: "test", value: "testValue" }),
       ).to.throw(
         RangeError,
-        `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`
+        `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`,
       );
     });
   });
@@ -179,7 +175,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.addOption()).to.throw(
         TypeError,
-        "GLUON: Command option must be provided."
+        "GLUON: Command option must be provided.",
       );
     });
     it("should throw an error if the options limit is reached", () => {
@@ -187,7 +183,7 @@ describe("CommandOptionBuilder", () => {
       commandOption.options = new Array(LIMITS.MAX_COMMAND_OPTIONS);
       expect(() => commandOption.addOption({ name: "test" })).to.throw(
         RangeError,
-        `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`
+        `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`,
       );
     });
   });
@@ -206,14 +202,14 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setChannelTypes()).to.throw(
         TypeError,
-        "GLUON: Command option channel types must be provided."
+        "GLUON: Command option channel types must be provided.",
       );
     });
     it("should throw an error if the channel types are not an array", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setChannelTypes(123)).to.throw(
         TypeError,
-        "GLUON: Command option channel types must be an array."
+        "GLUON: Command option channel types must be an array.",
       );
     });
   });
@@ -234,7 +230,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setMinValue()).to.throw(
         TypeError,
-        "GLUON: Command option min value must be a number."
+        "GLUON: Command option min value must be a number.",
       );
     });
   });
@@ -255,7 +251,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setMaxValue()).to.throw(
         TypeError,
-        "GLUON: Command option max value must be a number."
+        "GLUON: Command option max value must be a number.",
       );
     });
   });
@@ -276,7 +272,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setMinLength()).to.throw(
         TypeError,
-        "GLUON: Command option min length must be a number."
+        "GLUON: Command option min length must be a number.",
       );
     });
   });
@@ -297,7 +293,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setMaxLength()).to.throw(
         TypeError,
-        "GLUON: Command option max length must be a number."
+        "GLUON: Command option max length must be a number.",
       );
     });
   });
@@ -318,7 +314,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setAutocomplete(123)).to.throw(
         TypeError,
-        "GLUON: Command option autocomplete must be a boolean."
+        "GLUON: Command option autocomplete must be a boolean.",
       );
     });
   });
@@ -339,7 +335,7 @@ describe("CommandOptionBuilder", () => {
       const commandOption = new CommandOptionBuilder();
       expect(() => commandOption.setDefaultLocale()).to.throw(
         TypeError,
-        "GLUON: Default locale must be provided."
+        "GLUON: Default locale must be provided.",
       );
     });
   });

@@ -1,10 +1,9 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const { PERMISSIONS } = require("../../../src/constants");
-const checkMemberPermissions = require("../../../src/util/discord/checkMemberPermissions");
+import { expect } from "chai";
+import { PERMISSIONS } from "../../../src/constants.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../../src/testData.js";
+import checkMemberPermissions from "../../../src/util/discord/checkMemberPermissions.js";
+import Role from "../../../src/structures/Role.js";
+import combinePermissions from "../../../src/util/discord/combinePermissions.js";
 
 describe("CheckMemberPermissions", function () {
   context("check import", function () {
@@ -17,35 +16,68 @@ describe("CheckMemberPermissions", function () {
     it("should throw an error if no member roles are provided", function () {
       expect(() => checkMemberPermissions()).to.throw(
         TypeError,
-        "GLUON: Member roles must be provided."
+        "GLUON: Member roles must be provided.",
       );
     });
     it("should throw an error if an array is not provided", function () {
       expect(() => checkMemberPermissions("test")).to.throw(
         TypeError,
-        "GLUON: Member roles must be an array."
+        "GLUON: Member roles must be an array.",
+      );
+    });
+    it("should throw an error if an array of roles is not provided", function () {
+      expect(() => checkMemberPermissions(["test"])).to.throw(
+        TypeError,
+        "GLUON: Member roles must be an array of Role instances.",
       );
     });
   });
 
   context("check calculated permissions", function () {
     it("should return the correct calculated permissions", function () {
-      const permissions = [
-        { permissions: PERMISSIONS.ADD_REACTIONS | PERMISSIONS.BAN_MEMBERS },
-        {
-          permissions:
-            PERMISSIONS.ATTACH_FILES |
-            PERMISSIONS.CHANGE_NICKNAME |
-            PERMISSIONS.ADD_REACTIONS,
-        },
-        { permissions: PERMISSIONS.BAN_MEMBERS },
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const roles = [
+        new Role(
+          client,
+          {
+            id: TEST_DATA.ROLE_ID,
+            permissions: combinePermissions(
+              PERMISSIONS.ADD_REACTIONS,
+              PERMISSIONS.BAN_MEMBERS,
+            ),
+          },
+          { guildId: TEST_DATA.GUILD_ID },
+        ),
+        new Role(
+          client,
+          {
+            id: TEST_DATA.ROLE_ID,
+            permissions: combinePermissions(
+              PERMISSIONS.ATTACH_FILES,
+              PERMISSIONS.CHANGE_NICKNAME,
+              PERMISSIONS.ADD_REACTIONS,
+            ),
+          },
+          { guildId: TEST_DATA.GUILD_ID },
+        ),
+        new Role(
+          client,
+          {
+            id: TEST_DATA.ROLE_ID,
+            permissions: combinePermissions(PERMISSIONS.BAN_MEMBERS),
+          },
+          { guildId: TEST_DATA.GUILD_ID },
+        ),
       ];
-      const calculatedPermissions = checkMemberPermissions(permissions);
+      const calculatedPermissions = checkMemberPermissions(roles);
       expect(calculatedPermissions).to.equal(
-        PERMISSIONS.ADD_REACTIONS |
-          PERMISSIONS.BAN_MEMBERS |
-          PERMISSIONS.ATTACH_FILES |
-          PERMISSIONS.CHANGE_NICKNAME
+        combinePermissions(
+          PERMISSIONS.ADD_REACTIONS,
+          PERMISSIONS.BAN_MEMBERS,
+          PERMISSIONS.ATTACH_FILES,
+          PERMISSIONS.CHANGE_NICKNAME,
+        ),
       );
     });
   });

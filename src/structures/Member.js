@@ -1,84 +1,127 @@
-const { CDN_BASE_URL, PERMISSIONS, MEMBER_FLAGS } = require("../constants");
-const User = require("./User");
-const checkPermission = require("../util/discord/checkPermission");
-const checkMemberPermissions = require("../util/discord/checkMemberPermissions");
-const getMemberAvatar = require("../util/image/getMemberAvatar");
+import {
+  PERMISSIONS,
+  MEMBER_FLAGS,
+  TO_JSON_TYPES_ENUM,
+  CDN_BASE_URL,
+} from "../constants.js";
+import User from "./User.js";
+import checkPermission from "../util/discord/checkPermission.js";
+import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
+import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import Role from "./Role.js";
+import util from "util";
+import encryptStructure from "../util/gluon/encryptStructure.js";
+import decryptStructure from "../util/gluon/decryptStructure.js";
+import structureHashName from "../util/general/structureHashName.js";
+import Client from "../Client.js";
+import GuildManager from "../managers/GuildManager.js";
 
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
  */
 class Member {
+  #_client;
+  #_guild_id;
+  #_id;
+  #nick;
+  #joined_at;
+  #communication_disabled_until;
+  #flags;
+  #_attributes;
+  #_avatar;
+  #_roles;
+  #user;
   /**
    * Creates the structure for a guild member.
    * @param {Client} client The client instance.
    * @param {Object} data The raw member data from Discord.
-   * @param {String} user_id The id of the member.
-   * @param {String} guild_id The id of the guild that the member belongs to.
-   * @param {User?} user A user object for this member.
-   * @param {Boolean?} nocache Whether this member should be cached.
-   * @param {Boolean?} ignoreNoCache Whether the cache options should be overriden.
+   * @param {Object} options Additional options for the member.
+   * @param {String} options.userId The id of the member.
+   * @param {String} options.guildId The id of the guild that the member belongs to.
+   * @param {User?} options.user A user object for this member.
+   * @param {Boolean?} options.nocache Whether this member should be cached.
    */
   constructor(
     client,
     data,
-    user_id,
-    guild_id,
-    user,
-    { nocache = false, ignoreNoCache = false, noDbStore = false } = {}
+    { userId, guildId, user, nocache = false } = {
+      nocache: false,
+    },
   ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof data !== "object")
+      throw new TypeError("GLUON: Data must be an object");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string");
+    if (typeof user !== "undefined" && typeof user !== "object")
+      throw new TypeError("GLUON: User must be an object");
+    if (typeof nocache !== "boolean")
+      throw new TypeError("GLUON: No cache must be a boolean");
+
     /**
      * The client instance.
      * @type {Client}
+     * @private
      */
-    this._client = client;
+    this.#_client = client;
 
     /**
      * The id of the guild that this member belongs to.
      * @type {BigInt}
+     * @private
      */
-    this._guild_id = BigInt(guild_id);
+    this.#_guild_id = BigInt(guildId);
 
-    const existing = this.guild?.members.cache.get(user_id) || null;
+    const existing = this.guild?.members.get(userId) || null;
 
     /**
      * The id of the member.
      * @type {BigInt}
+     * @private
      */
-    this.id = BigInt(user_id);
+    this.#_id = BigInt(userId);
 
     if (data.user)
       /**
        * The user object for this member.
        * @type {User?}
+       * @private
        */
-      this.user = new User(this._client, data.user, { nocache });
-    else if (existing?.user) this.user = existing.user;
-    else if (user) this.user = user;
-    else this.user = this._client.users.cache.get(user_id) || null;
+      this.#user = new User(this.#_client, data.user, { nocache });
+    else if (existing?.user) this.#user = existing.user;
+    else if (user) this.#user = user;
+    else this.#user = this.#_client.users.get(userId) || null;
 
     if (data.nick !== undefined)
       /**
        * The nickname of this member.
        * @type {String?}
+       * @private
        */
-      this.nick = data.nick;
+      this.#nick = data.nick;
     else if (data.nick !== null && existing && existing.nick != undefined)
-      this.nick = existing.nick;
+      this.#nick = existing.nick;
 
     if (data.joined_at)
       /**
        * The UNIX timestamp for when this member joined the guild.
        * @type {Number?}
+       * @private
        */
-      this.joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
-    else if (existing?.joined_at) this.joined_at = existing.joined_at;
+      this.#joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
+    else if (existing?.joinedAt) this.#joined_at = existing.joinedAt;
 
     /**
      * The UNIX timestamp for when this member's timeout expires, if applicable.
      * @type {Number?}
+     * @private
      */
-    this.timeout_until = data.communication_disabled_until
+    this.#communication_disabled_until = data.communication_disabled_until
       ? (new Date(data.communication_disabled_until).getTime() / 1000) | 0
       : null;
 
@@ -86,74 +129,162 @@ class Member {
       /**
        * The flags for this user.
        * @type {Number}
+       * @private
        * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}
        */
-      this.flags = data.flags;
+      this.#flags = data.flags;
     else if (existing && typeof existing.flags == "number")
-      this.flags = existing.flags;
-    else this.flags = 0;
+      this.#flags = existing.flags;
+    else this.#flags = 0;
 
-    this._attributes = data._attributes ?? 0;
+    /**
+     * The attributes for this member.
+     * @type {Number}
+     * @private
+     */
+    this.#_attributes = data._attributes ?? 0;
 
     if (data.pending !== undefined && data.pending == true)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
     else if (data.pending === undefined && existing && existing.pending == true)
-      this._attributes |= 0b1 << 0;
+      this.#_attributes |= 0b1 << 0;
 
     if (data.avatar && data.avatar.startsWith("a_") == true)
-      this._attributes |= 0b1 << 1;
+      this.#_attributes |= 0b1 << 1;
 
+    /**
+     * The hash of the member's avatar.
+     * @type {BigInt?}
+     * @private
+     */
     if (data.avatar !== undefined)
-      this._avatar = data.avatar
+      this.#_avatar = data.avatar
         ? BigInt(`0x${data.avatar.replace("a_", "")}`)
         : null;
     else if (data.avatar === undefined && existing && existing._avatar)
-      this._avatar = existing._avatar;
+      this.#_avatar = existing._avatar;
 
-    if (data.roles && this.guild && this._client.cacheRoles == true) {
-      this._roles = [];
+    /**
+     * The roles for this member.
+     * @type {Array<BigInt>?}
+     * @private
+     */
+    if (
+      data.roles &&
+      this.guild &&
+      Role.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
+    ) {
+      this.#_roles = [];
       for (let i = 0; i < data.roles.length; i++)
-        if (data.roles[i] != guild_id) this._roles.push(BigInt(data.roles[i]));
+        if (data.roles[i] != guildId) this.#_roles.push(BigInt(data.roles[i]));
     }
 
     if (
-      this.id == this._client.user.id ||
-      (nocache == false &&
-        (this._client.cacheMembers == true ||
-          this._client.cacheAllMembers == true) &&
-        ignoreNoCache == false)
+      this.id === this.#_client.user.id ||
+      (nocache === false &&
+        Member.shouldCache(
+          this.#_client._cacheOptions,
+          this.guild._cacheOptions,
+        ))
     ) {
-      this._client.guilds.cache.get(guild_id)?.members.cache.set(user_id, this);
-      // if (noDbStore != true)
-      //     this.guild.members.store(this);
+      this.guild.members.set(userId, this);
     }
+  }
+
+  /**
+   * The id of the member.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get id() {
+    return String(this.#_id);
+  }
+
+  /**
+   * The id of the guild that this member belongs to.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get guildId() {
+    return String(this.#_guild_id);
   }
 
   /**
    * The guild that this member belongs to.
    * @type {Guild?}
    * @readonly
+   * @public
    */
   get guild() {
-    return this._client.guilds.cache.get(String(this._guild_id)) || null;
+    return this.#_client.guilds.get(this.guildId) || null;
+  }
+
+  /**
+   * The nickname of the member.
+   * @type {String?}
+   * @readonly
+   * @public
+   */
+  get nick() {
+    return this.#nick;
+  }
+
+  /**
+   * The UNIX timestamp for when this member joined the guild.
+   * @type {Number?}
+   * @readonly
+   * @public
+   */
+  get joinedAt() {
+    return this.#joined_at;
+  }
+
+  /**
+   * The UNIX timestamp for when this member's timeout expires, if applicable.
+   * @type {Number?}
+   * @readonly
+   * @public
+   */
+  get timeoutUntil() {
+    return this.#communication_disabled_until;
+  }
+
+  /**
+   * The flags for this user.
+   * @type {Number}
+   * @readonly
+   * @public
+   */
+  get flags() {
+    return this.#flags;
   }
 
   /**
    * The member's roles.
    * @readonly
    * @type {Array<Role>}
+   * @public
    */
   get roles() {
-    if (this._client.cacheRoles != true) return [];
+    if (
+      Role.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      ) === false
+    )
+      return null;
 
     const roles = [];
 
-    roles.push(this.guild.roles.cache.get(String(this._guild_id)));
+    const everyoneRole = this.guild.roles.get(this.guildId);
+    if (everyoneRole) roles.push(everyoneRole);
 
-    if (!this._roles) return roles;
+    if (!this.#_roles) return roles;
 
-    for (let i = 0; i < this._roles.length; i++) {
-      const role = this.guild.roles.cache.get(this._roles[i].toString());
+    for (let i = 0; i < this.#_roles.length; i++) {
+      const role = this.guild.roles.get(this.#_roles[i].toString());
       if (role) roles.push(role);
     }
 
@@ -164,6 +295,7 @@ class Member {
    * The position of the member's highest role.
    * @readonly
    * @type {Number}
+   * @public
    */
   get highestRolePosition() {
     let highestPosition = 0;
@@ -181,9 +313,10 @@ class Member {
    * The overall calculated permissions for this member.
    * @readonly
    * @type {BigInt}
+   * @public
    */
   get permissions() {
-    if (this.id == this.guild.owner_id) return PERMISSIONS.ADMINISTRATOR;
+    if (this.id == this.guild.ownerId) return PERMISSIONS.ADMINISTRATOR;
 
     return checkMemberPermissions(this.roles);
   }
@@ -192,20 +325,32 @@ class Member {
    * Whether the member has joined the guild before.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get rejoined() {
-    return (this.flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
+    return (this.#flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
+  }
+
+  /**
+   * The user object for this member.
+   * @type {User}
+   * @readonly
+   * @public
+   */
+  get user() {
+    return this.#user;
   }
 
   /**
    * The hash of the member's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
+   * @private
    */
-  get _originalAvatarHash() {
-    return this._avatar
+  get #_originalAvatarHash() {
+    return this.#_avatar
       ? // eslint-disable-next-line quotes
-        `${this.avatarIsAnimated ? "a_" : ""}${this._formattedAvatarHash}`
+        `${this.avatarIsAnimated ? "a_" : ""}${this.#_formattedAvatarHash}`
       : null;
   }
 
@@ -213,15 +358,16 @@ class Member {
    * The hash of the member's avatar as a string.
    * @readonly
    * @type {String}
+   * @private
    */
-  get _formattedAvatarHash() {
-    if (!this._avatar) return null;
+  get #_formattedAvatarHash() {
+    if (!this.#_avatar) return null;
 
-    let formattedHash = this._avatar.toString(16);
+    let formattedHash = this.#_avatar.toString(16);
 
     while (formattedHash.length != 32)
       // eslint-disable-next-line quotes
-      formattedHash = "0" + formattedHash;
+      formattedHash = `0${formattedHash}`;
 
     return formattedHash;
   }
@@ -230,10 +376,11 @@ class Member {
    * The url of the member's avatar.
    * @readonly
    * @type {String}
+   * @public
    */
   get displayAvatarURL() {
     return (
-      getMemberAvatar(this.id, this._guild_id, this._originalAvatarHash) ??
+      Member.getAvatarUrl(this.id, this.guildId, this.#_originalAvatarHash) ??
       this.user.displayAvatarURL
     );
   }
@@ -242,72 +389,112 @@ class Member {
    * Whether the user has not yet passed the guild's membership screening requirements.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get pending() {
-    return (this._attributes & (0b1 << 0)) == 0b1 << 0;
+    return (this.#_attributes & (0b1 << 0)) == 0b1 << 0;
   }
 
   /**
    * Whether the user has an animated avatar or not.
    * @readonly
    * @type {Boolean}
+   * @public
    */
   get avatarIsAnimated() {
-    return (this._attributes & (0b1 << 1)) == 0b1 << 1;
+    return (this.#_attributes & (0b1 << 1)) == 0b1 << 1;
+  }
+
+  /**
+   * The mention string for the member.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get mention() {
+    return Member.getMention(this.id);
+  }
+
+  /**
+   * The hash name for the member.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get hashName() {
+    return Member.getHashName(this.guildId, this.id);
+  }
+
+  /**
+   * Returns the mention string for the member.
+   * @param {String} userId The id of the user to mention.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getMention(userId) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+    return `<@${userId}>`;
+  }
+
+  /**
+   * Returns the avatar url for the member.
+   * @param {String} id The id of the user.
+   * @param {String} guild_id The id of the guild the user belongs to.
+   * @param {String?} hash The avatar hash of the user.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getAvatarUrl(id, guildId, hash) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Member id must be a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild id must be a string.");
+    if (hash && typeof hash !== "string")
+      throw new TypeError("GLUON: Member avatar hash must be a string.");
+    return hash
+      ? `${CDN_BASE_URL}/guilds/${guildId}/users/${id}/avatars/${hash}.${
+          hash.startsWith("a_") ? "gif" : "png"
+        }`
+      : null;
   }
 
   /**
    * Adds a role to the member.
-   * @param {BigInt | String} role_id The id of the role to add to the member.
+   * @param {String} role_id The id of the role to add to the member.
    * @param {Object?} options The options for adding the role to the member.
    * @param {String?} options.reason The reason for adding the role to the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async addRole(role_id, { reason } = {}) {
-    if (
-      !checkPermission(
-        (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
-
-    const body = {};
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this._client.request.makeRequest(
-      "putAddGuildMemberRole",
-      [this._guild_id, this.id, role_id],
-      body
-    );
+    await Member.addRole(this.#_client, this.guildId, this.id, role_id, {
+      reason,
+    });
   }
 
   /**
    * Removes a role from the member.
-   * @param {BigInt | String} role_id The id of the role to remove from the member.
+   * @param {String} role_id The id of the role to remove from the member.
    * @param {Object?} options The options for removing the role from the member.
    * @param {String?} options.reason The reason for removing the role from the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async removeRole(role_id, { reason } = {}) {
-    if (
-      !checkPermission(
-        (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
-      )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
-
-    const body = {};
-
-    if (reason) body["X-Audit-Log-Reason"] = reason;
-
-    await this._client.request.makeRequest(
-      "deleteRemoveMemberRole",
-      [this._guild_id, this.id, role_id],
-      body
-    );
+    await Member.removeRole(this.#_client, this.guildId, this.id, role_id, {
+      reason,
+    });
   }
 
   /**
@@ -316,15 +503,25 @@ class Member {
    * @param {Object?} options The options for timing out the member.
    * @param {String?} options.reason The reason for timing out the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MODERATE_MEMBERS
+        PERMISSIONS.MODERATE_MEMBERS,
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+
+    if (typeof timeout_until !== "number")
+      throw new TypeError("GLUON: Timeout until must be a UNIX timestamp.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -332,10 +529,10 @@ class Member {
 
     body.communication_disabled_until = timeout_until;
 
-    await this._client.request.makeRequest(
+    await this.#_client.request.makeRequest(
       "patchGuildMember",
-      [this._guild_id, this.id],
-      body
+      [this.guildId, this.id],
+      body,
     );
   }
 
@@ -344,15 +541,22 @@ class Member {
    * @param {Object?} options The options for untiming out the member.
    * @param {String?} options.reason The reason for removing the time out from the member.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async timeoutRemove({ reason } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MODERATE_MEMBERS
+        PERMISSIONS.MODERATE_MEMBERS,
       )
     )
       throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
 
     const body = {};
 
@@ -360,24 +564,142 @@ class Member {
 
     body.communication_disabled_until = null;
 
-    await this._client.request.makeRequest(
+    await this.#_client.request.makeRequest(
       "patchGuildMember",
-      [this._guild_id, this.id],
-      body
+      [this.guildId, this.id],
+      body,
     );
   }
 
   /**
    * Updates the member's roles.
-   * @param {Array<BigInt | String>} roles An array of role ids for the roles the member should be updated with.
+   * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.
    * @param {Object?} options The options for updating the member's roles.
    * @returns {Promise<void>}
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
    */
   async massUpdateRoles(roles, { reason } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
-        PERMISSIONS.MANAGE_ROLES
+        PERMISSIONS.MANAGE_ROLES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    if (
+      !Array.isArray(roles) ||
+      !roles.every((role) => typeof role === "string")
+    )
+      throw new TypeError("GLUON: Roles must be an array of role ids.");
+
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason must be a string.");
+
+    const body = {};
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    body.roles = roles.map((role) => role.toString());
+
+    await this.#_client.request.makeRequest(
+      "patchGuildMember",
+      [this.guildId, this.id],
+      body,
+    );
+  }
+
+  /**
+   * Determines whether the member should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (!(gluonCacheOptions instanceof GluonCacheOptions))
+      throw new TypeError(
+        "GLUON: Gluon cache options must be a GluonCacheOptions.",
+      );
+    if (!(guildCacheOptions instanceof GuildCacheOptions))
+      throw new TypeError(
+        "GLUON: Guild cache options must be a GuildCacheOptions.",
+      );
+    if (gluonCacheOptions.cacheMembers === false) return false;
+    if (guildCacheOptions.memberCaching === false) return false;
+    return true;
+  }
+
+  /**
+   * Returns the hash name for the message.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} memberId The id of the member.
+   * @returns {String}
+   */
+  static getHashName(guildId, memberId) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof memberId !== "string")
+      throw new TypeError("GLUON: Member ID must be a string.");
+    return structureHashName(guildId, memberId);
+  }
+
+  /**
+   * Decrypts a member.
+   * @param {Client} client The client instance.
+   * @param {String} data The encrypted message data.
+   * @param {String} guildId The id of the guild that the message belongs to.
+   * @param {String} userId The id of the member.
+   * @returns {Member}
+   */
+  static decrypt(client, data, guildId, userId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof data !== "string")
+      throw new TypeError("GLUON: Data must be a string.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+    return new Member(client, decryptStructure(data, userId, guildId), {
+      userId: userId,
+      guildId: guildId,
+    });
+  }
+
+  /**
+   * Adds a role to a member.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to add.
+   * @param {Object} options The options for adding the role.
+   * @param {String} options.reason The reason for adding the role.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async addRole(client, guildId, userId, roleId, { reason } = {}) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        PERMISSIONS.MANAGE_ROLES,
       )
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
@@ -386,31 +708,135 @@ class Member {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    body.roles = roles.map((role) => role.toString());
-
-    await this._client.request.makeRequest(
-      "patchGuildMember",
-      [this._guild_id, this.id],
-      body
+    await client.request.makeRequest(
+      "putAddGuildMemberRole",
+      [guildId, userId, roleId],
+      body,
     );
   }
 
-  toJSON() {
-    return {
-      user: this.user,
-      nick: this.nick,
-      joined_at: this.joined_at ? this.joined_at * 1000 : undefined,
-      avatar: this._originalAvatarHash,
-      permissions: String(this.permissions),
-      roles: Array.isArray(this._roles)
-        ? this._roles.map((r) => String(r))
-        : undefined,
-      communication_disabled_until: this.timeout_until
-        ? this.timeout_until * 1000
-        : undefined,
-      _attributes: this._attributes,
-    };
+  /**
+   * Removes a role from a member.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The guild id the member belongs to.
+   * @param {String} userId The id of the member who the action is occuring on.
+   * @param {String} roleId The id of the role to remove.
+   * @param {Object} options The options for removing the role.
+   * @param {String} options.reason The reason for removing the role.
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  static async removeRole(client, guildId, userId, roleId, { reason } = {}) {
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    if (typeof roleId !== "string")
+      throw new TypeError("GLUON: Role ID is not a string.");
+    if (typeof reason !== "undefined" && typeof reason !== "string")
+      throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        (await GuildManager.getGuild(client, guildId).me()).permissions,
+        PERMISSIONS.MANAGE_ROLES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+
+    const body = {};
+
+    if (reason) body["X-Audit-Log-Reason"] = reason;
+
+    await client.request.makeRequest(
+      "deleteRemoveMemberRole",
+      [guildId, userId, roleId],
+      body,
+    );
+  }
+
+  /**
+   * Encrypts the member.
+   * @returns {String}
+   * @public
+   * @method
+   */
+  encrypt() {
+    return encryptStructure(this, this.id, this.guildId);
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  toString() {
+    return `<Member: ${this.id}>`;
+  }
+
+  /**
+   * @method
+   * @public
+   */
+  [util.inspect.custom]() {
+    return this.toString();
+  }
+
+  /**
+   * Returns the JSON representation of this structure.
+   * @param {Number} format The format to return the data in.
+   * @returns {Object}
+   * @public
+   * @method
+   */
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+        return {
+          user: this.user.toJSON(format),
+          nick: this.nick,
+          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
+          avatar: this.#_originalAvatarHash,
+          permissions: String(this.permissions),
+          roles: Array.isArray(this.#_roles)
+            ? this.#_roles
+                .filter((r) => String(r) !== this.guildId)
+                .map((r) => String(r))
+            : undefined,
+          communication_disabled_until: this.timeoutUntil
+            ? this.timeoutUntil * 1000
+            : undefined,
+          flags: this.flags,
+          _attributes: this.#_attributes,
+        };
+      }
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      default: {
+        return {
+          user: this.user.toJSON(format),
+          nick: this.nick,
+          joined_at: this.joinedAt
+            ? new Date(this.joinedAt * 1000).toISOString()
+            : undefined,
+          avatar: this.#_originalAvatarHash,
+          permissions: String(this.permissions),
+          roles: Array.isArray(this.#_roles)
+            ? this.#_roles
+                .filter((r) => String(r) !== this.guildId)
+                .map((r) => String(r))
+            : undefined,
+          communication_disabled_until: this.timeoutUntil
+            ? this.timeoutUntil * 1000
+            : undefined,
+          flags: this.flags,
+          pending: this.pending,
+        };
+      }
+    }
   }
 }
 
-module.exports = Member;
+export default Member;

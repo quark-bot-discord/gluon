@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const resolveEmoji = require("../../../src/util/discord/resolveEmoji");
+import { expect } from "chai";
+import resolveEmoji from "../../../src/util/discord/resolveEmoji.js";
 
 describe("ResolveEmoji", function () {
   context("check import", function () {
@@ -16,13 +12,13 @@ describe("ResolveEmoji", function () {
     it("should throw an error if no emoji is provided", function () {
       expect(() => resolveEmoji()).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
     it("should throw an error if emoji is not a string", function () {
       expect(() => resolveEmoji(123456)).to.throw(
         TypeError,
-        "GLUON: The emoji must be a string."
+        "GLUON: The emoji must be a string.",
       );
     });
   });

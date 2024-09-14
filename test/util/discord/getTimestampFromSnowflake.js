@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const getTimestampFromSnowflake = require("../../../src/util/discord/getTimestampFromSnowflake");
+import { expect } from "chai";
+import getTimestampFromSnowflake from "../../../src/util/discord/getTimestampFromSnowflake.js";
 
 describe("GetTimestampFromSnowflake", function () {
   context("check import", function () {
@@ -16,13 +12,13 @@ describe("GetTimestampFromSnowflake", function () {
     it("should throw an error if no snowflake is provided", function () {
       expect(() => getTimestampFromSnowflake()).to.throw(
         TypeError,
-        "GLUON: Snowflake must be provided."
+        "GLUON: Snowflake must be provided.",
       );
     });
-    it("should throw an error if snowflake is not a bigint or string", function () {
+    it("should throw an error if snowflake is not a string", function () {
       expect(() => getTimestampFromSnowflake(123456)).to.throw(
         TypeError,
-        "GLUON: Snowflake must be a BigInt or string."
+        "GLUON: Snowflake must be a string.",
       );
     });
   });

@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const decryptText = require("../../../src/util/general/decryptText");
+import { expect } from "chai";
+import decryptText from "../../../src/util/general/decryptText.js";
 
 describe("DecryptText", function () {
   context("check import", function () {
@@ -15,52 +11,52 @@ describe("DecryptText", function () {
   context("check invalid input", function () {
     it("should throw an error if no text is provided", function () {
       expect(() =>
-        decryptText(undefined, "a".repeat(32), "a".repeat(16))
+        decryptText(undefined, "a".repeat(32), "a".repeat(16)),
       ).to.throw(TypeError, "GLUON: Text to decrypt must be a string.");
     });
     it("should throw an error if text is not a string", function () {
       expect(() =>
-        decryptText(123456, "a".repeat(32), "a".repeat(16))
+        decryptText(123456, "a".repeat(32), "a".repeat(16)),
       ).to.throw(TypeError, "GLUON: Text to decrypt must be a string.");
     });
     it("should throw an error if no key is provided", function () {
       expect(() => decryptText("test", undefined, "a".repeat(16))).to.throw(
         TypeError,
-        "GLUON: Decryption key must be a string."
+        "GLUON: Decryption key must be a string.",
       );
     });
     it("should throw an error if key is not a string", function () {
       expect(() => decryptText("test", 123456, "a".repeat(16))).to.throw(
         TypeError,
-        "GLUON: Decryption key must be a string."
+        "GLUON: Decryption key must be a string.",
       );
     });
     it("should throw an error if no iv is provided", function () {
       expect(() => decryptText("test", "a".repeat(32), undefined)).to.throw(
         TypeError,
-        "GLUON: Decryption IV must be a string."
+        "GLUON: Decryption IV must be a string.",
       );
     });
     it("should throw an error if iv is not a string", function () {
       expect(() => decryptText("test", "a".repeat(32), 123456)).to.throw(
         TypeError,
-        "GLUON: Decryption IV must be a string."
+        "GLUON: Decryption IV must be a string.",
       );
     });
     it("should throw an error if the key is not 32 characters long", function () {
       expect(() =>
-        decryptText("test", "a".repeat(31), "a".repeat(16))
+        decryptText("test", "a".repeat(31), "a".repeat(16)),
       ).to.throw(
         RangeError,
-        "GLUON: Decryption key must be 32 characters long."
+        "GLUON: Decryption key must be 32 characters long.",
       );
     });
     it("should throw an error if the iv is not 16 characters long", function () {
       expect(() =>
-        decryptText("test", "a".repeat(32), "a".repeat(15))
+        decryptText("test", "a".repeat(32), "a".repeat(15)),
       ).to.throw(
         RangeError,
-        "GLUON: Decryption IV must be 16 characters long."
+        "GLUON: Decryption IV must be 16 characters long.",
       );
     });
   });

@@ -1,9 +1,5 @@
-let expect;
-before(async () => {
-  expect = (await import("chai")).expect;
-});
-
-const hexToInt = require("../../../src/util/general/hexToInt");
+import { expect } from "chai";
+import hexToInt from "../../../src/util/general/hexToInt.js";
 
 describe("HexToInt", function () {
   context("check import", function () {
@@ -16,19 +12,19 @@ describe("HexToInt", function () {
     it("should throw an error if no hex is provided", function () {
       expect(() => hexToInt(undefined)).to.throw(
         TypeError,
-        "GLUON: Hex string must be a string."
+        "GLUON: Hex string must be a string.",
       );
     });
     it("should throw an error if hex is not a string", function () {
       expect(() => hexToInt(123456)).to.throw(
         TypeError,
-        "GLUON: Hex string must be a string."
+        "GLUON: Hex string must be a string.",
       );
     });
     it("should throw an error if hex is not a valid hex string", function () {
       expect(() => hexToInt("test")).to.throw(
         TypeError,
-        "GLUON: Hex string must be a valid hex string."
+        "GLUON: Hex string must be a valid hex string.",
       );
     });
   });

@@ -1,4 +1,4 @@
-const erlpack = require("erlpack");
+import erlpack from "erlpack";
 
 function _resume(token, session_id, seq) {
   return erlpack.pack({
@@ -11,4 +11,4 @@ function _resume(token, session_id, seq) {
   });
 }
 
-module.exports = _resume;
+export default _resume;

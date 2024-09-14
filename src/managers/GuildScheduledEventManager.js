@@ -1,45 +1,101 @@
-const ScheduledEvent = require("../structures/ScheduledEvent");
+import Client from "../Client.js";
+import ScheduledEvent from "../structures/ScheduledEvent.js";
+import BaseCacheManager from "./BaseCacheManager.js";
 
-class GuildScheduledEventManager {
+class GuildScheduledEventManager extends BaseCacheManager {
+  #_client;
+  #guild;
+  static identifier = "events";
   constructor(client, guild) {
-    this._client = client;
+    super(client, { structureType: GuildScheduledEventManager });
 
-    this.guild = guild;
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (!guild)
+      throw new TypeError("GLUON: Guild must be a valid guild instance.");
 
-    this.cache = new Map();
+    /**
+     * The client instance.
+     * @type {Client}
+     * @private
+     */
+    this.#_client = client;
 
-    // this.list().then(() => null);
+    /**
+     * The guild that this manager belongs to.
+     * @type {Guild}
+     * @private
+     */
+    this.#guild = guild;
   }
 
+  /**
+   * Retrieves all scheduled events for this guild.
+   * @returns {Promise<Array<ScheduledEvent>>}
+   * @async
+   * @method
+   * @public
+   * @throws {Error}
+   */
   async list() {
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "getListGuildScheduledEvents",
-      [this.guild.id],
+      [this.#guild.id],
     );
 
     const eventsList = [];
 
     for (let i = 0; i < data.length; i++)
-      eventsList.push(new ScheduledEvent(this._client, data[i]));
+      eventsList.push(
+        new ScheduledEvent(this.#_client, data[i], {
+          guildId: this.#guild.id,
+        }),
+      );
 
     return eventsList;
   }
 
+  /**
+   * Fetches a scheduled event from the API.
+   * @param {String} scheduled_event_id The ID of the event to fetch.
+   * @returns {Promise<ScheduledEvent>}
+   * @async
+   * @method
+   * @public
+   * @throws {TypeError | Error}
+   */
   async fetch(scheduled_event_id) {
-    const cachedEvent = this.cache.get(scheduled_event_id.toString());
+    if (typeof scheduled_event_id !== "string")
+      throw new TypeError("GLUON: Scheduled event ID must be a string.");
+
+    const cachedEvent = await this.get(scheduled_event_id);
     if (cachedEvent) return cachedEvent;
 
-    const data = await this._client.request.makeRequest(
+    const data = await this.#_client.request.makeRequest(
       "getGuildScheduledEvent",
-      [this.guild.id, scheduled_event_id],
+      [this.#guild.id, scheduled_event_id],
     );
 
-    return new ScheduledEvent(this._client, data);
+    return new ScheduledEvent(this.#_client, data, {
+      guildId: this.#guild.id,
+    });
   }
 
-  toJSON() {
-    return [...this.cache.values()];
+  /**
+   * Cache a scheduled event.
+   * @param {String} id The ID of the event to cache.
+   * @param {ScheduledEvent} event The event to cache.
+   * @returns {ScheduledEvent}
+   * @throws {TypeError}
+   * @public
+   * @method
+   * @override
+   */
+  set(id, event) {
+    if (!(event instanceof ScheduledEvent))
+      throw new TypeError("GLUON: Event must be a ScheduledEvent instance.");
+    return super.set(id, event);
   }
 }
 
-module.exports = GuildScheduledEventManager;
+export default GuildScheduledEventManager;

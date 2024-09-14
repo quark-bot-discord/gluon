@@ -1,4 +1,4 @@
-const { LIMITS } = require("../../constants");
+import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 /**
  * Structure for message components.
@@ -17,12 +17,12 @@ class MessageComponents {
    * @returns {MessageComponents}
    */
   addActionRow(actionRow) {
-
     if (this.actionRows.length >= LIMITS.MAX_ACTION_ROWS)
-      throw new RangeError(`GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`);
+      throw new RangeError(
+        `GLUON: Action rows must be less than ${LIMITS.MAX_ACTION_ROWS}.`,
+      );
 
-    if (!actionRow)
-      throw new TypeError("GLUON: Action row must be provided.");
+    if (!actionRow) throw new TypeError("GLUON: Action row must be provided.");
 
     this.actionRows.push(actionRow);
 
@@ -33,9 +33,16 @@ class MessageComponents {
    * Returns the correct Discord format for message components.
    * @returns {Object}
    */
-  toJSON() {
-    return this.actionRows;
+  toJSON(format) {
+    switch (format) {
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      default: {
+        return this.actionRows.map((a) => a.toJSON(format));
+      }
+    }
   }
 }
 
-module.exports = MessageComponents;
+export default MessageComponents;
