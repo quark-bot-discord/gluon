@@ -298,7 +298,7 @@ describe("Embed", function () {
       embed.setAuthor("author");
       embed.addField("field", "fieldValue");
       expect(embed.toString()).to.equal(
-        "## title\n\ndescription\n\n**field**:\nfieldValue\n-# footer"
+        "## title\n\ndescription\n\n**field**:\nfieldValue\n-# footer",
       );
     });
   });
