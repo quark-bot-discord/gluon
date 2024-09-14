@@ -434,6 +434,8 @@ class Client extends EventsEmitter {
     let totalMembers = 0;
     let totalChannels = 0;
     let totalRoles = 0;
+    let totalEmojis = 0;
+    let totalVoiceStates = 0;
 
     this.guilds.forEach((guild) => {
       guild.channels.forEach((channel) => {
@@ -457,6 +459,10 @@ class Client extends EventsEmitter {
       totalMembers += guild.members.size;
 
       totalRoles += guild.roles.size;
+
+      totalVoiceStates += guild.voiceStates.size;
+
+      totalEmojis += guild.emojis.size;
     });
 
     return {
@@ -466,6 +472,8 @@ class Client extends EventsEmitter {
       members: totalMembers,
       channels: totalChannels,
       roles: totalRoles,
+      emojis: totalEmojis,
+      voiceStates: totalVoiceStates,
     };
   }
 
@@ -531,16 +539,14 @@ class Client extends EventsEmitter {
       !Array.isArray(commands) ||
       !commands.every((c) => c instanceof Command)
     )
-      throw new TypeError("GLUON: Commands is not an array.");
-
-    const body = [];
-
-    for (let i = 0; i < commands.length; i++) body.push(commands[i]);
+      throw new TypeError(
+        "GLUON: Commands is not an array of Command objects.",
+      );
 
     return this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
-      body,
+      commands,
     );
   }
 
