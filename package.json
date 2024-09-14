@@ -8,22 +8,26 @@
     "library",
     "quark"
   ],
-  "types": "./index.d.ts",
   "exports": {
     ".": {
-      "default": "./index.js"
+      "default": "./index.js",
+      "types": "./index.d.ts"
     },
     "./constants": {
-      "default": "./src/constants.js"
+      "default": "./src/constants.js",
+      "types": "./dist/constants.d.ts"
     },
     "./util": {
-      "default": "./src/util.js"
+      "default": "./src/util.js",
+      "types": "./dist/util.d.ts"
     },
     "./structures": {
-      "default": "./src/structures.js"
+      "default": "./src/structures.js",
+      "types": "./dist/structures.d.ts"
     },
     "./structures/compiled": {
-      "default": "./src/compiledStructures.js"
+      "default": "./src/compiledStructures.js",
+      "types": "./dist/compiledStructures.d.ts"
     }
   },
   "engines": {
