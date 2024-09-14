@@ -164,7 +164,10 @@ class Command {
         throw new RangeError(
           `GLUON: Command name must be between ${LIMITS.MIN_COMMAND_NAME} and ${LIMITS.MAX_COMMAND_NAME} characters.`,
         );
-      if (!this.description)
+      if (
+        !this.description &&
+        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT
+      )
         throw new TypeError("GLUON: Command description must be provided.");
       if (typeof this.description !== "string")
         throw new TypeError("GLUON: Command description must be a string.");
