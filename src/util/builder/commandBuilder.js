@@ -169,11 +169,15 @@ class Command {
         this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT
       )
         throw new TypeError("GLUON: Command description must be provided.");
-      if (typeof this.description !== "string")
+      if (
+        typeof this.description !== "string" &&
+        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT
+      )
         throw new TypeError("GLUON: Command description must be a string.");
       if (
-        this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION ||
-        this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION
+        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT &&
+        (this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION ||
+          this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION)
       )
         throw new RangeError(
           `GLUON: Command description must be between ${LIMITS.MIN_COMMAND_DESCRIPTION} and ${LIMITS.MAX_COMMAND_DESCRIPTION} characters.`,
