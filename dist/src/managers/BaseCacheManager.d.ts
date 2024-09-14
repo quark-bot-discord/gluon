@@ -86,6 +86,15 @@ declare class BaseCacheManager {
      */
     public forEach(callback: Function): void;
     /**
+     * Checks if a key exists in the cache.
+     * @param {String} key The key to check.
+     * @returns {Boolean} Whether the key exists or not.
+     * @public
+     * @method
+     * @throws {TypeError}
+     */
+    public has(key: string): boolean;
+    /**
      * Returns the JSON representation of this structure.
      * @param {Number} format The format to return the data in.
      * @returns {Object}
