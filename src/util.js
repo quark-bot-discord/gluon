@@ -11,13 +11,6 @@ import Dropdown from "./util/builder/dropdownBuilder.js";
 import DropdownOption from "./util/builder/dropdownOption.js";
 import Embed from "./util/builder/embedBuilder.js";
 import encryptText from "./util/general/encryptText.js";
-import getAvatarUrl from "./util/image/getAvatarUrl.js";
-import getEventImage from "./util/image/getEventImage.js";
-import getGuildIcon from "./util/image/getGuildIcon.js";
-import getMember from "./util/gluon/getMember.js";
-import getMemberAvatar from "./util/image/getMemberAvatar.js";
-import getMessage from "./util/gluon/getMessage.js";
-import getRoleIcon from "./util/image/getRoleIcon.js";
 import getTimestamp from "./util/discord/getTimestampFromSnowflake.js";
 import hexToInt from "./util/general/hexToInt.js";
 import MessageComponents from "./util/builder/messageComponents.js";
@@ -39,13 +32,6 @@ export default {
   DropdownOption,
   Embed,
   encryptText,
-  getAvatarUrl,
-  getEventImage,
-  getGuildIcon,
-  getMember,
-  getMemberAvatar,
-  getMessage,
-  getRoleIcon,
   getTimestamp,
   hexToInt,
   MessageComponents,
