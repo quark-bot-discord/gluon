@@ -1,2 +1,2 @@
-import { default as Client } from "./client/Client.js";
+import { default as Client } from "./src/Client.js";
 export default Client;
