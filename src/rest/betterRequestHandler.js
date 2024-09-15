@@ -343,7 +343,7 @@ class BetterRequestHandler {
           new Error(
             `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
               ...(params ?? []),
-            )} FAILED`,
+            )} ${json ? JSON.stringify(json) : ""} FAILED`,
           ),
         );
 
