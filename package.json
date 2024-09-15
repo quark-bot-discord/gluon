@@ -10,24 +10,24 @@
   ],
   "exports": {
     "./constants": {
-      "default": "./src/constants.js",
-      "types": "./dist/constants.d.ts"
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.js"
     },
     "./util": {
-      "default": "./src/util.js",
-      "types": "./dist/util.d.ts"
+      "types": "./dist/util.d.ts",
+      "default": "./src/util.js"
     },
     "./structures": {
-      "default": "./src/structures.js",
-      "types": "./dist/structures.d.ts"
+      "types": "./dist/structures.d.ts",
+      "default": "./src/structures.js"
     },
     "./compiledStructures": {
-      "default": "./src/compiledStructures.js",
-      "types": "./dist/compiledStructures.d.ts"
+      "types": "./dist/compiledStructures.d.ts",
+      "default": "./src/compiledStructures.js"
     },
     ".": {
-      "default": "./index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./index.js"
     }
   },
   "engines": {
