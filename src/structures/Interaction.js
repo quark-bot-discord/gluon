@@ -223,14 +223,18 @@ class Interaction {
 
   /**
    * Replies to an interaction.
-   * @param {String?} content The message content to send in the response to the interaction.
    * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message.
+   * @param {String?} options.content The content of the interaction response.
+   * @param {Array<FileUpload>?} options.files The files to send with the interaction response.
+   * @param {Array<Embed>?} options.embeds The embeds to send with the interaction response.
+   * @param {Array<ActionRow>?} options.components The components to send with the interaction response.
+   * @param {Boolean?} options.quiet Whether the response should be an ephemeral message.
    * @returns {Promise<Interaction>}
    * @public
    * @async
    * @method
    */
-  async reply(content, { files, embeds, components, quiet } = {}) {
+  async reply({ content, files, embeds, components, quiet } = {}) {
     if (!content && !files && !embeds && !components)
       throw new Error(
         "GLUON: No content, files, embed, or components provided.",
@@ -265,15 +269,18 @@ class Interaction {
 
   /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
-   * @param {String?} content The new interaction response content.
    * @param {Object?} options The new interaction response options.
+   * @param {String?} options.content The new content of the interaction response.
+   * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
+   * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
+   * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
    * @returns {Promise<Interaction>}
    * @public
    * @async
    * @method
    * @throws {Error | TypeError}
    */
-  async edit(content, { files, embeds, components } = {}) {
+  async edit({ content, files, embeds, components } = {}) {
     Message.sendValidation({ content, embeds, components, files });
 
     const body = {};

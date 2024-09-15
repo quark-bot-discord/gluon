@@ -255,7 +255,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.reply(123)).to.be.rejectedWith(
+      await expect(interaction.reply({ content: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Content must be a string.",
       );
@@ -264,9 +264,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(
-        interaction.reply("test", { files: "test" }),
-      ).to.be.rejectedWith(
+      await expect(interaction.reply({ files: "test" })).to.be.rejectedWith(
         TypeError,
         "GLUON: Files must be an array of files.",
       );
@@ -275,9 +273,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(
-        interaction.reply("test", { embeds: "test" }),
-      ).to.be.rejectedWith(
+      await expect(interaction.reply({ embeds: "test" })).to.be.rejectedWith(
         TypeError,
         "GLUON: Embeds must be an array of embeds.",
       );
@@ -286,14 +282,14 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.reply("test")).to.not.be.rejected;
+      await expect(interaction.reply({ content: "test" })).to.not.be.rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await interaction.reply("test");
+      await interaction.reply({ content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("postInteractionResponse", [
         TEST_DATA.INTERACTION.id,
@@ -323,14 +319,14 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.edit("test")).to.not.be.rejected;
+      await expect(interaction.edit({ content: "test" })).to.not.be.rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await interaction.edit("test");
+      await interaction.edit({ content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("patchOriginalInteractionResponse", [
         TEST_DATA.CLIENT_USER.id,
