@@ -60,7 +60,7 @@ class Embed {
    * @public
    */
   setDescription(text) {
-    if (!text)
+    if (typeof text !== "string")
       throw new TypeError("GLUON: Embed description must be provided.");
 
     this.description =
