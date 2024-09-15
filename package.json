@@ -9,10 +9,6 @@
     "quark"
   ],
   "exports": {
-    ".": {
-      "default": "./index.js",
-      "types": "./dist/index.d.ts"
-    },
     "./constants": {
       "default": "./src/constants.js",
       "types": "./dist/constants.d.ts"
@@ -28,6 +24,10 @@
     "./compiledStructures": {
       "default": "./src/compiledStructures.js",
       "types": "./dist/compiledStructures.d.ts"
+    },
+    ".": {
+      "default": "./index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "engines": {
