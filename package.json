@@ -25,6 +25,10 @@
       "types": "./dist/compiledStructures.d.ts",
       "default": "./src/compiledStructures.js"
     },
+    "./testData": {
+      "types": "./dist/testData.d.ts",
+      "default": "./src/testData.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./index.js"
