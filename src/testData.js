@@ -482,7 +482,7 @@ export const TEST_DATA = {
     name: "admin",
     color: 0,
     hoist: true,
-    position: 0,
+    position: 3,
     permissions: "8",
     managed: true,
     mentionable: true,
