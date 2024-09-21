@@ -350,6 +350,7 @@ export namespace TEST_DATA {
         }
     }
     let MEMBER_ID: string;
+    let MEMBER_ID_2: string;
     namespace MEMBER {
         export namespace user {
             let id_10: string;
