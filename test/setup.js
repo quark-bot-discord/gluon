@@ -3,6 +3,7 @@ import { server } from "../src/mocks/node.js";
 import chaiAsPromised from "chai-as-promised";
 import { use } from "chai";
 import sinonChai from "sinon-chai";
+import { restore } from "sinon";
 
 before(() => {
   server.listen();
@@ -15,6 +16,7 @@ before(() => {
 
 afterEach(() => {
   server.resetHandlers();
+  restore();
 });
 
 after(() => {
