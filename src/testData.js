@@ -1109,3 +1109,10 @@ export const TEST_SCHEDULED_EVENTS = {
     return scheduledEvent;
   },
 };
+
+export const TEST_USERS = {
+  GENERIC_USER: (client) => {
+    const user = new User(client, TEST_DATA.USER);
+    return user;
+  },
+};
