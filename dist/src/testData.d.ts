@@ -1367,6 +1367,9 @@ export namespace TEST_SCHEDULED_EVENTS {
     function GENERIC_SCHEDULED_EVENT(client: any): ScheduledEvent;
     function EXTERNAL_GENERIC_SCHEDULED_EVENT(client: any): ScheduledEvent;
 }
+export namespace TEST_USERS {
+    function GENERIC_USER(client: any): User;
+}
 import Client from "./Client.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1376,4 +1379,5 @@ import { Member } from "./structures.js";
 import { Message } from "./structures.js";
 import { Role } from "./structures.js";
 import { ScheduledEvent } from "./structures.js";
+import User from "./structures/User.js";
 //# sourceMappingURL=testData.d.ts.map
