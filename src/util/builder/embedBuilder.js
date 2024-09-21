@@ -409,6 +409,18 @@ class Embed {
         throw new RangeError(
           `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
         );
+      if (
+        !this.fields.every(
+          (field) =>
+            typeof field === "object" &&
+            typeof field.name === "string" &&
+            typeof field.value === "string" &&
+            typeof field.inline === "boolean",
+        )
+      )
+        throw new TypeError(
+          "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+        );
       if (this.image && typeof this.image !== "object")
         throw new TypeError("GLUON: Embed image must be an object.");
       if (this.image && typeof this.image.url !== "string")

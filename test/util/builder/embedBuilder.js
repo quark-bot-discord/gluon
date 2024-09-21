@@ -278,6 +278,33 @@ describe("Embed", function () {
         embed.fields.find((f) => f.value == "fieldValue").name.length,
       ).to.equal(LIMITS.MAX_EMBED_FIELD_NAME);
     });
+    it("should throw an error if the provided field name is not a string", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.addField(1, "fieldValue").toJSON();
+      }).to.throw(
+        TypeError,
+        "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+      );
+    });
+    it("should throw an error if the provided field value is not a string", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.addField("field", 1).toJSON();
+      }).to.throw(
+        TypeError,
+        "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+      );
+    });
+    it("should throw an error if the provided field inline is not a boolean", function () {
+      const embed = new Embed();
+      expect(() => {
+        embed.addField("field", "fieldValue", 1).toJSON();
+      }).to.throw(
+        TypeError,
+        "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+      );
+    });
   });
 
   context("check toString", function () {
