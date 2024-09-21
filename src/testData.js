@@ -498,7 +498,7 @@ export const TEST_DATA = {
     name: "overrides",
     color: 0,
     hoist: false,
-    position: 0,
+    position: 2,
     permissions: "0",
     managed: false,
     mentionable: true,
@@ -1086,6 +1086,12 @@ export const TEST_MESSAGES = {
 export const TEST_ROLES = {
   GENERIC_ADMIN_ROLE: (client) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return role;
+  },
+  GENERIC_ROLE: (client) => {
+    const role = new Role(client, TEST_DATA.ROLE_OVERRIDES, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
