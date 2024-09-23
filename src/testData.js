@@ -544,7 +544,7 @@ export const TEST_DATA = {
       public_flags: 0,
     },
     nick: null,
-    roles: ["123453333333345678"],
+    roles: ["123352733012345678"],
     joined_at: "2021-01-01T00:00:00.000Z",
     premium_since: null,
     deaf: false,
@@ -559,6 +559,22 @@ export const TEST_DATA = {
     color: 0,
     hoist: true,
     position: 3,
+    permissions: "8",
+    managed: true,
+    mentionable: true,
+    tags: {
+      bot_id: "123456789012345678",
+      integration_id: null,
+      premium_subscriber: null,
+    },
+    icon: "000000000000000000000000deadbeef",
+  },
+  ROLE_ADMIN_2: {
+    id: "123352733012345678",
+    name: "admin",
+    color: 0,
+    hoist: true,
+    position: 2,
     permissions: "8",
     managed: true,
     mentionable: true,
@@ -1190,6 +1206,12 @@ export const TEST_MESSAGES = {
 export const TEST_ROLES = {
   GENERIC_ADMIN_ROLE: (client) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return role;
+  },
+  GENERIC_ADMIN_ROLE_2: (client) => {
+    const role = new Role(client, TEST_DATA.ROLE_ADMIN_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
