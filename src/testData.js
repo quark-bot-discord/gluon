@@ -1266,6 +1266,12 @@ export const TEST_ROLES = {
     });
     return role;
   },
+  GENERIC_ROLE_2: (client) => {
+    const role = new Role(client, TEST_DATA.ROLE_OVERRIDES_2, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return role;
+  },
 };
 
 export const TEST_SCHEDULED_EVENTS = {
