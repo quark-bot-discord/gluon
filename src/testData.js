@@ -553,6 +553,32 @@ export const TEST_DATA = {
     permissions: "0",
     flags: 0,
   },
+  ROLE_OVERRIDES_MEMBER_2: {
+    user: {
+      id: "301633085954337490",
+      username: "test",
+      discriminator: "0001",
+      avatar: null,
+      bot: false,
+      system: false,
+      mfa_enabled: false,
+      locale: "en-US",
+      verified: false,
+      email: null,
+      flags: 0,
+      premium_type: 0,
+      public_flags: 0,
+    },
+    nick: null,
+    roles: ["123453333333335678"],
+    joined_at: "2021-01-01T00:00:00.000Z",
+    premium_since: null,
+    deaf: false,
+    mute: false,
+    pending: false,
+    permissions: "0",
+    flags: 0,
+  },
   ROLE_ADMIN: {
     id: "123452789012345678",
     name: "admin",
@@ -592,6 +618,17 @@ export const TEST_DATA = {
     hoist: false,
     position: 2,
     permissions: "0",
+    managed: false,
+    mentionable: true,
+    icon: "000000000000000000000000deadbeef",
+  },
+  ROLE_OVERRIDES_2: {
+    id: "123453333333335678",
+    name: "overrides",
+    color: 0,
+    hoist: false,
+    position: 2,
+    permissions: "1099511627776",
     managed: false,
     mentionable: true,
     icon: "000000000000000000000000deadbeef",
@@ -1187,6 +1224,13 @@ export const TEST_MEMBERS = {
   ROLE_OVERRIDES_MEMBER: (client) => {
     const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER, {
       userId: TEST_DATA.ROLE_OVERRIDES_MEMBER.user.id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  ROLE_OVERRIDES_MEMBER_2: (client) => {
+    const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER_2, {
+      userId: TEST_DATA.ROLE_OVERRIDES_MEMBER_2.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
