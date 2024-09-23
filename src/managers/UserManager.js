@@ -35,16 +35,8 @@ class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(userId) {
-    if (typeof userId !== "string")
-      throw new TypeError("GLUON: User ID must be a string.");
-
-    const cached = await this.get(userId);
-    if (cached) return cached;
-
-    const data = await this.#_client.request.makeRequest("getUser", [userId]);
-
-    return new User(this.#_client, data);
+  fetch(userId) {
+    return UserManager.fetchUser(this.#_client, userId);
   }
 
   /**
@@ -61,6 +53,28 @@ class UserManager extends BaseCacheManager {
     if (!(user instanceof User))
       throw new TypeError("GLUON: User must be an instance of User.");
     return super.set(id, user);
+  }
+
+  /**
+   * Fetches a particular user.
+   * @param {Client} client The client instance.
+   * @param {String} userId The id of the user to fetch.
+   * @returns {Promise<User>} The fetched user.
+   * @public
+   * @async
+   * @method
+   * @throws {TypeError | Error}
+   */
+  static async fetchUser(client, userId) {
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID must be a string.");
+
+    const cached = await client.users.get(userId);
+    if (cached) return cached;
+
+    const data = await client.request.makeRequest("getUser", [userId]);
+
+    return new User(client, data);
   }
 }
 
