@@ -1614,6 +1614,7 @@ export namespace TEST_ROLES {
     function GENERIC_ADMIN_ROLE(client: any): Role;
     function GENERIC_ADMIN_ROLE_2(client: any): Role;
     function GENERIC_ROLE(client: any): Role;
+    function GENERIC_ROLE_2(client: any): Role;
 }
 export namespace TEST_SCHEDULED_EVENTS {
     function GENERIC_SCHEDULED_EVENT(client: any): ScheduledEvent;
