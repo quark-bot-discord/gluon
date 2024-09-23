@@ -5,6 +5,17 @@ export default UserManager;
 declare class UserManager extends BaseCacheManager {
     static identifier: string;
     /**
+     * Fetches a particular user.
+     * @param {Client} client The client instance.
+     * @param {String} userId The id of the user to fetch.
+     * @returns {Promise<User>} The fetched user.
+     * @public
+     * @async
+     * @method
+     * @throws {TypeError | Error}
+     */
+    public static fetchUser(client: Client, userId: string): Promise<User>;
+    /**
      * Creates a user manager.
      * @param {Client} client The client instance.
      */
