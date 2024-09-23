@@ -363,6 +363,32 @@ export const TEST_DATA = {
     permissions: "0",
     flags: 0,
   },
+  MEMBER_ADMIN: {
+    user: {
+      id: "301655085954367490",
+      username: "test",
+      discriminator: "0001",
+      avatar: null,
+      bot: false,
+      system: false,
+      mfa_enabled: false,
+      locale: "en-US",
+      verified: false,
+      email: null,
+      flags: 0,
+      premium_type: 0,
+      public_flags: 0,
+    },
+    nick: null,
+    roles: ["123452789012345678"],
+    joined_at: "2021-01-01T00:00:00.000Z",
+    premium_since: null,
+    deaf: false,
+    mute: false,
+    pending: false,
+    permissions: "0",
+    flags: 0,
+  },
   EVENT_ID: "123456789012345678",
   ROLE_ID: "123452789012345678",
   ATTACHMENT: {
@@ -471,6 +497,30 @@ export const TEST_DATA = {
     },
     nick: null,
     roles: [],
+    joined_at: "2021-01-01T00:00:00.000Z",
+    premium_since: null,
+    deaf: false,
+    mute: false,
+    pending: false,
+  },
+  CLIENT_MEMBER_ADMIN: {
+    user: {
+      id: "704802632660943089",
+      username: "quark",
+      discriminator: "0001",
+      avatar: null,
+      bot: false,
+      system: false,
+      mfa_enabled: false,
+      locale: "en-US",
+      verified: false,
+      email: null,
+      flags: 0,
+      premium_type: 0,
+      public_flags: 0,
+    },
+    nick: null,
+    roles: ["123452789012345678"],
     joined_at: "2021-01-01T00:00:00.000Z",
     premium_since: null,
     deaf: false,
@@ -1068,6 +1118,27 @@ export const TEST_MEMBERS = {
     const member = new Member(client, TEST_DATA.MEMBER, {
       guildId: TEST_DATA.GUILD_ID,
       userId: TEST_DATA.VOICE_STATE.user_id,
+    });
+    return member;
+  },
+  EXECUTOR_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.MEMBER_ADMIN, {
+      userId: TEST_DATA.MEMBER_ADMIN.user.id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  TARGET_MEMBER: (client) => {
+    const member = new Member(client, TEST_DATA.MEMBER, {
+      userId: TEST_DATA.MEMBER.user.id,
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return member;
+  },
+  CLIENT_MEMBER_1: (client) => {
+    const member = new Member(client, TEST_DATA.CLIENT_MEMBER_ADMIN, {
+      userId: TEST_DATA.CLIENT_MEMBER_ADMIN.user.id,
+      guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
