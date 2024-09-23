@@ -743,7 +743,7 @@ export namespace TEST_DATA {
         let icon_1: string;
         export { icon_1 as icon };
     }
-    namespace ROLE_OVERRIDES {
+    namespace ROLE_ADMIN_2 {
         let id_24: string;
         export { id_24 as id };
         let name_7: string;
@@ -760,32 +760,61 @@ export namespace TEST_DATA {
         export { managed_1 as managed };
         let mentionable_1: boolean;
         export { mentionable_1 as mentionable };
+        export namespace tags_1 {
+            let bot_id_1: string;
+            export { bot_id_1 as bot_id };
+            let integration_id_1: any;
+            export { integration_id_1 as integration_id };
+            let premium_subscriber_1: any;
+            export { premium_subscriber_1 as premium_subscriber };
+        }
+        export { tags_1 as tags };
         let icon_2: string;
         export { icon_2 as icon };
     }
-    namespace EMOJI {
+    namespace ROLE_OVERRIDES {
         let id_25: string;
         export { id_25 as id };
         let name_8: string;
         export { name_8 as name };
+        let color_2: number;
+        export { color_2 as color };
+        let hoist_2: boolean;
+        export { hoist_2 as hoist };
+        let position_7: number;
+        export { position_7 as position };
+        let permissions_6: string;
+        export { permissions_6 as permissions };
+        let managed_2: boolean;
+        export { managed_2 as managed };
+        let mentionable_2: boolean;
+        export { mentionable_2 as mentionable };
+        let icon_3: string;
+        export { icon_3 as icon };
+    }
+    namespace EMOJI {
+        let id_26: string;
+        export { id_26 as id };
+        let name_9: string;
+        export { name_9 as name };
         let guild_id_8: string;
         export { guild_id_8 as guild_id };
         export let animated: boolean;
     }
     namespace STANDARD_EMOJI {
-        let id_26: any;
-        export { id_26 as id };
-        let name_9: string;
-        export { name_9 as name };
+        let id_27: any;
+        export { id_27 as id };
+        let name_10: string;
+        export { name_10 as name };
     }
     namespace INTERACTION {
-        let id_27: string;
-        export { id_27 as id };
+        let id_28: string;
+        export { id_28 as id };
         let type_11: number;
         export { type_11 as type };
         export namespace data_1 {
-            let name_10: string;
-            export { name_10 as name };
+            let name_11: string;
+            export { name_11 as name };
             let options_2: any[];
             export { options_2 as options };
         }
@@ -796,8 +825,8 @@ export namespace TEST_DATA {
         export { channel_id_7 as channel_id };
         export namespace member_1 {
             export namespace user_6 {
-                let id_28: string;
-                export { id_28 as id };
+                let id_29: string;
+                export { id_29 as id };
                 let username_8: string;
                 export { username_8 as username };
                 let discriminator_8: string;
@@ -836,8 +865,8 @@ export namespace TEST_DATA {
             export { mute_6 as mute };
             let pending_6: boolean;
             export { pending_6 as pending };
-            let permissions_6: string;
-            export { permissions_6 as permissions };
+            let permissions_7: string;
+            export { permissions_7 as permissions };
         }
         export { member_1 as member };
         let token_1: string;
@@ -850,10 +879,10 @@ export namespace TEST_DATA {
         let guild_id_10: string;
         export { guild_id_10 as guild_id };
         export namespace channel {
-            let id_29: string;
-            export { id_29 as id };
-            let name_11: string;
-            export { name_11 as name };
+            let id_30: string;
+            export { id_30 as id };
+            let name_12: string;
+            export { name_12 as name };
             let type_12: number;
             export { type_12 as type };
             let nsfw_5: boolean;
@@ -864,8 +893,8 @@ export namespace TEST_DATA {
             export { topic_4 as topic };
         }
         export namespace inviter {
-            let id_30: string;
-            export { id_30 as id };
+            let id_31: string;
+            export { id_31 as id };
             let username_9: string;
             export { username_9 as username };
             let discriminator_9: string;
@@ -906,8 +935,8 @@ export namespace TEST_DATA {
         export { created_at_1 as created_at };
     }
     namespace MODAL_RESPONSE {
-        let id_31: string;
-        export { id_31 as id };
+        let id_32: string;
+        export { id_32 as id };
         let type_13: number;
         export { type_13 as type };
         export namespace data_2 {
@@ -931,8 +960,8 @@ export namespace TEST_DATA {
             let flags_13: number;
             export { flags_13 as flags };
             export namespace user_7 {
-                let id_32: string;
-                export { id_32 as id };
+                let id_33: string;
+                export { id_33 as id };
                 let username_10: string;
                 export { username_10 as username };
                 let discriminator_10: string;
@@ -955,8 +984,8 @@ export namespace TEST_DATA {
             export { mute_7 as mute };
             let pending_7: boolean;
             export { pending_7 as pending };
-            let permissions_7: string;
-            export { permissions_7 as permissions };
+            let permissions_8: string;
+            export { permissions_8 as permissions };
         }
         export { member_2 as member };
         let token_2: string;
@@ -967,8 +996,8 @@ export namespace TEST_DATA {
     namespace OPTION_SELECT {
         let application_id_1: string;
         export { application_id_1 as application_id };
-        let id_33: string;
-        export { id_33 as id };
+        let id_34: string;
+        export { id_34 as id };
         let type_14: number;
         export { type_14 as type };
         export namespace data_3 {
@@ -985,8 +1014,8 @@ export namespace TEST_DATA {
         export { channel_id_9 as channel_id };
         export namespace member_3 {
             export namespace user_8 {
-                let id_34: string;
-                export { id_34 as id };
+                let id_35: string;
+                export { id_35 as id };
                 let username_11: string;
                 export { username_11 as username };
                 let discriminator_11: string;
@@ -1010,8 +1039,8 @@ export namespace TEST_DATA {
             export { mute_8 as mute };
             let pending_8: boolean;
             export { pending_8 as pending };
-            let permissions_8: string;
-            export { permissions_8 as permissions };
+            let permissions_9: string;
+            export { permissions_9 as permissions };
             let avatar_13: any;
             export { avatar_13 as avatar };
             let flags_14: number;
@@ -1021,8 +1050,8 @@ export namespace TEST_DATA {
         export namespace message_1 {
             let application_id_2: string;
             export { application_id_2 as application_id };
-            let id_35: string;
-            export { id_35 as id };
+            let id_36: string;
+            export { id_36 as id };
             let type_15: number;
             export { type_15 as type };
             let content_3: string;
@@ -1030,8 +1059,8 @@ export namespace TEST_DATA {
             let channel_id_10: string;
             export { channel_id_10 as channel_id };
             export namespace author_1 {
-                let id_36: string;
-                export { id_36 as id };
+                let id_37: string;
+                export { id_37 as id };
                 let username_12: string;
                 export { username_12 as username };
                 let discriminator_12: string;
@@ -1077,10 +1106,10 @@ export namespace TEST_DATA {
         let message_id_1: string;
         export { message_id_1 as message_id };
         export namespace emoji {
-            let id_37: any;
-            export { id_37 as id };
-            let name_12: string;
-            export { name_12 as name };
+            let id_38: any;
+            export { id_38 as id };
+            let name_13: string;
+            export { name_13 as name };
         }
         let channel_id_11: string;
         export { channel_id_11 as channel_id };
@@ -1088,8 +1117,8 @@ export namespace TEST_DATA {
         export { guild_id_13 as guild_id };
         export namespace member_4 {
             export namespace user_9 {
-                let id_38: string;
-                export { id_38 as id };
+                let id_39: string;
+                export { id_39 as id };
                 let username_13: string;
                 export { username_13 as username };
                 let discriminator_13: string;
@@ -1128,8 +1157,8 @@ export namespace TEST_DATA {
             export { mute_9 as mute };
             let pending_9: boolean;
             export { pending_9 as pending };
-            let permissions_9: string;
-            export { permissions_9 as permissions };
+            let permissions_10: string;
+            export { permissions_10 as permissions };
         }
         export { member_4 as member };
         export let message_author_id: string;
@@ -1138,13 +1167,13 @@ export namespace TEST_DATA {
         export { type_16 as type };
     }
     namespace SLASH_COMMAND {
-        let id_39: string;
-        export { id_39 as id };
+        let id_40: string;
+        export { id_40 as id };
         let type_17: number;
         export { type_17 as type };
         export namespace data_4 {
-            let name_13: string;
-            export { name_13 as name };
+            let name_14: string;
+            export { name_14 as name };
             let description_1: string;
             export { description_1 as description };
             let options_3: any[];
@@ -1157,8 +1186,8 @@ export namespace TEST_DATA {
         export { channel_id_12 as channel_id };
         export namespace member_5 {
             export namespace user_10 {
-                let id_40: string;
-                export { id_40 as id };
+                let id_41: string;
+                export { id_41 as id };
                 let username_14: string;
                 export { username_14 as username };
                 let discriminator_14: string;
@@ -1197,8 +1226,8 @@ export namespace TEST_DATA {
             export { mute_10 as mute };
             let pending_10: boolean;
             export { pending_10 as pending };
-            let permissions_10: string;
-            export { permissions_10 as permissions };
+            let permissions_11: string;
+            export { permissions_11 as permissions };
         }
         export { member_5 as member };
         let token_4: string;
@@ -1207,12 +1236,12 @@ export namespace TEST_DATA {
         export { version_4 as version };
     }
     namespace STICKER {
-        let id_41: string;
-        export { id_41 as id };
-        let name_14: string;
-        export { name_14 as name };
-        let tags_1: string;
-        export { tags_1 as tags };
+        let id_42: string;
+        export { id_42 as id };
+        let name_15: string;
+        export { name_15 as name };
+        let tags_2: string;
+        export { tags_2 as tags };
         let type_18: number;
         export { type_18 as type };
         export let format_type: number;
@@ -1223,8 +1252,8 @@ export namespace TEST_DATA {
         export let sort_value: number;
     }
     namespace USER {
-        let id_42: string;
-        export { id_42 as id };
+        let id_43: string;
+        export { id_43 as id };
         let username_15: string;
         export { username_15 as username };
         let discriminator_15: string;
@@ -1271,15 +1300,15 @@ export namespace TEST_DATA {
         export let joined: number;
     }
     namespace SCHEDULED_EVENT {
-        let id_43: string;
-        export { id_43 as id };
+        let id_44: string;
+        export { id_44 as id };
         let guild_id_15: string;
         export { guild_id_15 as guild_id };
         let channel_id_14: string;
         export { channel_id_14 as channel_id };
         export let creator_id: string;
-        let name_15: string;
-        export { name_15 as name };
+        let name_16: string;
+        export { name_16 as name };
         let description_3: string;
         export { description_3 as description };
         export let scheduled_start_time: string;
@@ -1292,8 +1321,8 @@ export namespace TEST_DATA {
             let location: any;
         }
         export namespace creator {
-            let id_44: string;
-            export { id_44 as id };
+            let id_45: string;
+            export { id_45 as id };
             let username_16: string;
             export { username_16 as username };
             let discriminator_16: string;
@@ -1323,16 +1352,16 @@ export namespace TEST_DATA {
         export let image: string;
     }
     namespace SCHEDULED_EVENT_EXTERNAL {
-        let id_45: string;
-        export { id_45 as id };
+        let id_46: string;
+        export { id_46 as id };
         let guild_id_16: string;
         export { guild_id_16 as guild_id };
         let channel_id_15: string;
         export { channel_id_15 as channel_id };
         let creator_id_1: string;
         export { creator_id_1 as creator_id };
-        let name_16: string;
-        export { name_16 as name };
+        let name_17: string;
+        export { name_17 as name };
         let description_4: string;
         export { description_4 as description };
         let scheduled_start_time_1: string;
@@ -1353,8 +1382,8 @@ export namespace TEST_DATA {
         }
         export { entity_metadata_1 as entity_metadata };
         export namespace creator_1 {
-            let id_46: string;
-            export { id_46 as id };
+            let id_47: string;
+            export { id_47 as id };
             let username_17: string;
             export { username_17 as username };
             let discriminator_17: string;
@@ -1413,8 +1442,8 @@ export namespace TEST_DATA {
         }
     }
     namespace PERMISSION_OVERWRITE {
-        let id_47: string;
-        export { id_47 as id };
+        let id_48: string;
+        export { id_48 as id };
         let type_19: number;
         export { type_19 as type };
         export let allow: string;
@@ -1427,23 +1456,23 @@ export namespace TEST_DATA {
         export { webhook_id_1 as webhook_id };
     }
     namespace WEBHOOK {
-        let id_48: string;
-        export { id_48 as id };
+        let id_49: string;
+        export { id_49 as id };
         let type_20: number;
         export { type_20 as type };
         let guild_id_17: string;
         export { guild_id_17 as guild_id };
         let channel_id_17: string;
         export { channel_id_17 as channel_id };
-        let name_17: string;
-        export { name_17 as name };
+        let name_18: string;
+        export { name_18 as name };
         let avatar_20: any;
         export { avatar_20 as avatar };
         let application_id_3: any;
         export { application_id_3 as application_id };
         export namespace user_11 {
-            let id_49: string;
-            export { id_49 as id };
+            let id_50: string;
+            export { id_50 as id };
             let username_18: string;
             export { username_18 as username };
             let discriminator_18: string;
@@ -1461,8 +1490,8 @@ export namespace TEST_DATA {
         let reason_1: string;
         export { reason_1 as reason };
         export namespace user_12 {
-            let id_50: string;
-            export { id_50 as id };
+            let id_51: string;
+            export { id_51 as id };
             let username_19: string;
             export { username_19 as username };
             let discriminator_19: string;
@@ -1512,6 +1541,7 @@ export namespace TEST_MESSAGES {
 }
 export namespace TEST_ROLES {
     function GENERIC_ADMIN_ROLE(client: any): Role;
+    function GENERIC_ADMIN_ROLE_2(client: any): Role;
     function GENERIC_ROLE(client: any): Role;
 }
 export namespace TEST_SCHEDULED_EVENTS {
