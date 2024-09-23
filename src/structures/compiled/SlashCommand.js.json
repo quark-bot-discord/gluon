@@ -3,15 +3,15 @@
         "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                304,
-                1935
+                426,
+                2666
             ],
             "filename": "SlashCommand.js",
-            "lineno": 11,
+            "lineno": 14,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000018",
+                "id": "astnode100000030",
                 "name": "SlashCommand",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -37,15 +37,15 @@
         "comment": "",
         "meta": {
             "range": [
-                347,
-                353
+                469,
+                475
             ],
             "filename": "SlashCommand.js",
-            "lineno": 12,
+            "lineno": 15,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000022",
+                "id": "astnode100000034",
                 "name": "data",
                 "type": "ClassPrivateProperty"
             }
@@ -62,15 +62,15 @@
         "comment": "/**\n   * Creates a slash command interaction structure.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw interaction data from Discord.\n   */",
         "meta": {
             "range": [
-                534,
-                1064
+                656,
+                1795
             ],
             "filename": "SlashCommand.js",
-            "lineno": 18,
+            "lineno": 21,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000023",
+                "id": "astnode100000035",
                 "name": "SlashCommand",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -113,15 +113,15 @@
         "comment": "/**\n * Represents a slash command.\n * @see {@link https://discord.com/developers/docs/interactions/slash-commands}\n * @extends {Interaction}\n */",
         "meta": {
             "range": [
-                304,
-                1935
+                426,
+                2666
             ],
             "filename": "SlashCommand.js",
-            "lineno": 11,
+            "lineno": 14,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000018",
+                "id": "astnode100000030",
                 "name": "SlashCommand",
                 "type": "ClassDeclaration",
                 "paramnames": [
@@ -167,15 +167,15 @@
         "comment": "/**\n     * Raw slash command data from discord.\n     * @type {Object?}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-application-command-interaction-data}\n     * @private\n     */",
         "meta": {
             "range": [
-                1037,
-                1059
+                1159,
+                1181
             ],
             "filename": "SlashCommand.js",
-            "lineno": 32,
+            "lineno": 35,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000053",
+                "id": "astnode100000065",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.data",
@@ -200,18 +200,162 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * The raw slash command data from Discord.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                1175,
-                1214
+                1344,
+                1355
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 40,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000096",
+                "name": "userId",
+                "type": "Identifier",
+                "value": "key"
+            }
+        },
+        "undocumented": true,
+        "name": "userId",
+        "longname": "userId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1367,
+                1389
             ],
             "filename": "SlashCommand.js",
             "lineno": 41,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000098",
+                "name": "guildId",
+                "type": "MemberExpression",
+                "value": "data.guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1401,
+                1436
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 42,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000102",
+                "name": "user",
+                "type": "MemberExpression",
+                "value": "data.data.resolved.users[undefined]"
+            }
+        },
+        "undocumented": true,
+        "name": "user",
+        "longname": "user",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1502,
+                1507
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 45,
+            "columnno": 17,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000116",
+                "name": "value"
+            }
+        },
+        "undocumented": true,
+        "name": "value",
+        "longname": "<anonymous>~value",
+        "kind": "constant",
+        "memberof": "<anonymous>",
+        "scope": "inner",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1596,
+                1618
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 47,
+            "columnno": 10,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000135",
+                "name": "guildId",
+                "type": "MemberExpression",
+                "value": "data.guild_id"
+            }
+        },
+        "undocumented": true,
+        "name": "guildId",
+        "longname": "guildId",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1687,
+                1692
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 50,
+            "columnno": 17,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000143",
+                "name": "value"
+            }
+        },
+        "undocumented": true,
+        "name": "value",
+        "longname": "<anonymous>~value",
+        "kind": "constant",
+        "memberof": "<anonymous>",
+        "scope": "inner",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * The raw slash command data from Discord.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                1906,
+                1945
+            ],
+            "filename": "SlashCommand.js",
+            "lineno": 60,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000061",
+                "id": "astnode100000164",
                 "name": "SlashCommand#data",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -240,15 +384,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1256,
-                1313
+                1987,
+                2044
             ],
             "filename": "SlashCommand.js",
-            "lineno": 49,
+            "lineno": 68,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000070",
+                "id": "astnode100000173",
                 "name": "SlashCommand#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -269,15 +413,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                1355,
-                1412
+                2086,
+                2143
             ],
             "filename": "SlashCommand.js",
-            "lineno": 57,
+            "lineno": 76,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000081",
+                "id": "astnode100000184",
                 "name": "SlashCommand#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -298,15 +442,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                1610,
-                1933
+                2341,
+                2664
             ],
             "filename": "SlashCommand.js",
-            "lineno": 69,
+            "lineno": 88,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000094",
+                "id": "astnode100000197",
                 "name": "SlashCommand#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -350,15 +494,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1864,
-                1875
+                2595,
+                2606
             ],
             "filename": "SlashCommand.js",
-            "lineno": 77,
+            "lineno": 96,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000123",
+                "id": "astnode100000226",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -374,15 +518,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1887,
-                1903
+                2618,
+                2634
             ],
             "filename": "SlashCommand.js",
-            "lineno": 78,
+            "lineno": 97,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000127",
+                "id": "astnode100000230",
                 "name": "data",
                 "type": "MemberExpression",
                 "value": "this."
@@ -398,15 +542,15 @@
         "comment": "",
         "meta": {
             "range": [
-                1937,
-                1965
+                2668,
+                2696
             ],
             "filename": "SlashCommand.js",
-            "lineno": 85,
+            "lineno": 104,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000132",
+                "id": "astnode100000235",
                 "name": "module.exports",
                 "type": "Identifier"
             }
