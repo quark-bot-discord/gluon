@@ -673,17 +673,66 @@ export namespace TEST_DATA {
         let pending_4: boolean;
         export { pending_4 as pending };
     }
+    namespace ROLE_OVERRIDES_MEMBER {
+        export namespace user_5 {
+            let id_22: string;
+            export { id_22 as id };
+            let username_7: string;
+            export { username_7 as username };
+            let discriminator_7: string;
+            export { discriminator_7 as discriminator };
+            let avatar_7: any;
+            export { avatar_7 as avatar };
+            let bot_7: boolean;
+            export { bot_7 as bot };
+            let system_7: boolean;
+            export { system_7 as system };
+            let mfa_enabled_7: boolean;
+            export { mfa_enabled_7 as mfa_enabled };
+            let locale_7: string;
+            export { locale_7 as locale };
+            let verified_7: boolean;
+            export { verified_7 as verified };
+            let email_7: any;
+            export { email_7 as email };
+            let flags_9: number;
+            export { flags_9 as flags };
+            let premium_type_7: number;
+            export { premium_type_7 as premium_type };
+            let public_flags_7: number;
+            export { public_flags_7 as public_flags };
+        }
+        export { user_5 as user };
+        let nick_4: any;
+        export { nick_4 as nick };
+        let roles_6: string[];
+        export { roles_6 as roles };
+        let joined_at_6: string;
+        export { joined_at_6 as joined_at };
+        let premium_since_5: any;
+        export { premium_since_5 as premium_since };
+        let deaf_5: boolean;
+        export { deaf_5 as deaf };
+        let mute_5: boolean;
+        export { mute_5 as mute };
+        let pending_5: boolean;
+        export { pending_5 as pending };
+        let permissions_3: string;
+        export { permissions_3 as permissions };
+        let flags_10: number;
+        export { flags_10 as flags };
+    }
     namespace ROLE_ADMIN {
-        let id_22: string;
-        export { id_22 as id };
+        let id_23: string;
+        export { id_23 as id };
         let name_6: string;
         export { name_6 as name };
         export let color: number;
         export let hoist: boolean;
         let position_5: number;
         export { position_5 as position };
-        let permissions_3: string;
-        export { permissions_3 as permissions };
+        let permissions_4: string;
+        export { permissions_4 as permissions };
         export let managed: boolean;
         export let mentionable: boolean;
         export namespace tags {
@@ -695,8 +744,8 @@ export namespace TEST_DATA {
         export { icon_1 as icon };
     }
     namespace ROLE_OVERRIDES {
-        let id_23: string;
-        export { id_23 as id };
+        let id_24: string;
+        export { id_24 as id };
         let name_7: string;
         export { name_7 as name };
         let color_1: number;
@@ -705,8 +754,8 @@ export namespace TEST_DATA {
         export { hoist_1 as hoist };
         let position_6: number;
         export { position_6 as position };
-        let permissions_4: string;
-        export { permissions_4 as permissions };
+        let permissions_5: string;
+        export { permissions_5 as permissions };
         let managed_1: boolean;
         export { managed_1 as managed };
         let mentionable_1: boolean;
@@ -715,8 +764,8 @@ export namespace TEST_DATA {
         export { icon_2 as icon };
     }
     namespace EMOJI {
-        let id_24: string;
-        export { id_24 as id };
+        let id_25: string;
+        export { id_25 as id };
         let name_8: string;
         export { name_8 as name };
         let guild_id_8: string;
@@ -724,14 +773,14 @@ export namespace TEST_DATA {
         export let animated: boolean;
     }
     namespace STANDARD_EMOJI {
-        let id_25: any;
-        export { id_25 as id };
+        let id_26: any;
+        export { id_26 as id };
         let name_9: string;
         export { name_9 as name };
     }
     namespace INTERACTION {
-        let id_26: string;
-        export { id_26 as id };
+        let id_27: string;
+        export { id_27 as id };
         let type_11: number;
         export { type_11 as type };
         export namespace data_1 {
@@ -746,49 +795,49 @@ export namespace TEST_DATA {
         let channel_id_7: string;
         export { channel_id_7 as channel_id };
         export namespace member_1 {
-            export namespace user_5 {
-                let id_27: string;
-                export { id_27 as id };
-                let username_7: string;
-                export { username_7 as username };
-                let discriminator_7: string;
-                export { discriminator_7 as discriminator };
-                let avatar_7: any;
-                export { avatar_7 as avatar };
-                let bot_7: boolean;
-                export { bot_7 as bot };
-                let system_7: boolean;
-                export { system_7 as system };
-                let mfa_enabled_7: boolean;
-                export { mfa_enabled_7 as mfa_enabled };
-                let locale_7: string;
-                export { locale_7 as locale };
-                let verified_7: boolean;
-                export { verified_7 as verified };
-                let email_7: any;
-                export { email_7 as email };
-                let flags_9: number;
-                export { flags_9 as flags };
-                let premium_type_7: number;
-                export { premium_type_7 as premium_type };
-                let public_flags_7: number;
-                export { public_flags_7 as public_flags };
+            export namespace user_6 {
+                let id_28: string;
+                export { id_28 as id };
+                let username_8: string;
+                export { username_8 as username };
+                let discriminator_8: string;
+                export { discriminator_8 as discriminator };
+                let avatar_8: any;
+                export { avatar_8 as avatar };
+                let bot_8: boolean;
+                export { bot_8 as bot };
+                let system_8: boolean;
+                export { system_8 as system };
+                let mfa_enabled_8: boolean;
+                export { mfa_enabled_8 as mfa_enabled };
+                let locale_8: string;
+                export { locale_8 as locale };
+                let verified_8: boolean;
+                export { verified_8 as verified };
+                let email_8: any;
+                export { email_8 as email };
+                let flags_11: number;
+                export { flags_11 as flags };
+                let premium_type_8: number;
+                export { premium_type_8 as premium_type };
+                let public_flags_8: number;
+                export { public_flags_8 as public_flags };
             }
-            export { user_5 as user };
-            let roles_6: any[];
-            export { roles_6 as roles };
-            let joined_at_6: string;
-            export { joined_at_6 as joined_at };
-            let premium_since_5: any;
-            export { premium_since_5 as premium_since };
-            let deaf_5: boolean;
-            export { deaf_5 as deaf };
-            let mute_5: boolean;
-            export { mute_5 as mute };
-            let pending_5: boolean;
-            export { pending_5 as pending };
-            let permissions_5: string;
-            export { permissions_5 as permissions };
+            export { user_6 as user };
+            let roles_7: any[];
+            export { roles_7 as roles };
+            let joined_at_7: string;
+            export { joined_at_7 as joined_at };
+            let premium_since_6: any;
+            export { premium_since_6 as premium_since };
+            let deaf_6: boolean;
+            export { deaf_6 as deaf };
+            let mute_6: boolean;
+            export { mute_6 as mute };
+            let pending_6: boolean;
+            export { pending_6 as pending };
+            let permissions_6: string;
+            export { permissions_6 as permissions };
         }
         export { member_1 as member };
         let token_1: string;
@@ -801,8 +850,8 @@ export namespace TEST_DATA {
         let guild_id_10: string;
         export { guild_id_10 as guild_id };
         export namespace channel {
-            let id_28: string;
-            export { id_28 as id };
+            let id_29: string;
+            export { id_29 as id };
             let name_11: string;
             export { name_11 as name };
             let type_12: number;
@@ -815,32 +864,32 @@ export namespace TEST_DATA {
             export { topic_4 as topic };
         }
         export namespace inviter {
-            let id_29: string;
-            export { id_29 as id };
-            let username_8: string;
-            export { username_8 as username };
-            let discriminator_8: string;
-            export { discriminator_8 as discriminator };
-            let avatar_8: any;
-            export { avatar_8 as avatar };
-            let bot_8: boolean;
-            export { bot_8 as bot };
-            let system_8: boolean;
-            export { system_8 as system };
-            let mfa_enabled_8: boolean;
-            export { mfa_enabled_8 as mfa_enabled };
-            let locale_8: string;
-            export { locale_8 as locale };
-            let verified_8: boolean;
-            export { verified_8 as verified };
-            let email_8: any;
-            export { email_8 as email };
-            let flags_10: number;
-            export { flags_10 as flags };
-            let premium_type_8: number;
-            export { premium_type_8 as premium_type };
-            let public_flags_8: number;
-            export { public_flags_8 as public_flags };
+            let id_30: string;
+            export { id_30 as id };
+            let username_9: string;
+            export { username_9 as username };
+            let discriminator_9: string;
+            export { discriminator_9 as discriminator };
+            let avatar_9: any;
+            export { avatar_9 as avatar };
+            let bot_9: boolean;
+            export { bot_9 as bot };
+            let system_9: boolean;
+            export { system_9 as system };
+            let mfa_enabled_9: boolean;
+            export { mfa_enabled_9 as mfa_enabled };
+            let locale_9: string;
+            export { locale_9 as locale };
+            let verified_9: boolean;
+            export { verified_9 as verified };
+            let email_9: any;
+            export { email_9 as email };
+            let flags_12: number;
+            export { flags_12 as flags };
+            let premium_type_9: number;
+            export { premium_type_9 as premium_type };
+            let public_flags_9: number;
+            export { public_flags_9 as public_flags };
         }
         export let target_user_id: any;
         export let target_user_type: number;
@@ -857,8 +906,8 @@ export namespace TEST_DATA {
         export { created_at_1 as created_at };
     }
     namespace MODAL_RESPONSE {
-        let id_30: string;
-        export { id_30 as id };
+        let id_31: string;
+        export { id_31 as id };
         let type_13: number;
         export { type_13 as type };
         export namespace data_2 {
@@ -877,37 +926,37 @@ export namespace TEST_DATA {
         let channel_id_8: string;
         export { channel_id_8 as channel_id };
         export namespace member_2 {
-            let avatar_9: any;
-            export { avatar_9 as avatar };
-            let flags_11: number;
-            export { flags_11 as flags };
-            export namespace user_6 {
-                let id_31: string;
-                export { id_31 as id };
-                let username_9: string;
-                export { username_9 as username };
-                let discriminator_9: string;
-                export { discriminator_9 as discriminator };
-                let avatar_10: any;
-                export { avatar_10 as avatar };
-                let bot_9: boolean;
-                export { bot_9 as bot };
+            let avatar_10: any;
+            export { avatar_10 as avatar };
+            let flags_13: number;
+            export { flags_13 as flags };
+            export namespace user_7 {
+                let id_32: string;
+                export { id_32 as id };
+                let username_10: string;
+                export { username_10 as username };
+                let discriminator_10: string;
+                export { discriminator_10 as discriminator };
+                let avatar_11: any;
+                export { avatar_11 as avatar };
+                let bot_10: boolean;
+                export { bot_10 as bot };
             }
-            export { user_6 as user };
-            let roles_7: any;
-            export { roles_7 as roles };
-            let joined_at_7: string;
-            export { joined_at_7 as joined_at };
-            let premium_since_6: any;
-            export { premium_since_6 as premium_since };
-            let deaf_6: boolean;
-            export { deaf_6 as deaf };
-            let mute_6: boolean;
-            export { mute_6 as mute };
-            let pending_6: boolean;
-            export { pending_6 as pending };
-            let permissions_6: string;
-            export { permissions_6 as permissions };
+            export { user_7 as user };
+            let roles_8: any;
+            export { roles_8 as roles };
+            let joined_at_8: string;
+            export { joined_at_8 as joined_at };
+            let premium_since_7: any;
+            export { premium_since_7 as premium_since };
+            let deaf_7: boolean;
+            export { deaf_7 as deaf };
+            let mute_7: boolean;
+            export { mute_7 as mute };
+            let pending_7: boolean;
+            export { pending_7 as pending };
+            let permissions_7: string;
+            export { permissions_7 as permissions };
         }
         export { member_2 as member };
         let token_2: string;
@@ -918,8 +967,8 @@ export namespace TEST_DATA {
     namespace OPTION_SELECT {
         let application_id_1: string;
         export { application_id_1 as application_id };
-        let id_32: string;
-        export { id_32 as id };
+        let id_33: string;
+        export { id_33 as id };
         let type_14: number;
         export { type_14 as type };
         export namespace data_3 {
@@ -935,45 +984,45 @@ export namespace TEST_DATA {
         let channel_id_9: string;
         export { channel_id_9 as channel_id };
         export namespace member_3 {
-            export namespace user_7 {
-                let id_33: string;
-                export { id_33 as id };
-                let username_10: string;
-                export { username_10 as username };
-                let discriminator_10: string;
-                export { discriminator_10 as discriminator };
-                let avatar_11: any;
-                export { avatar_11 as avatar };
-                let bot_10: boolean;
-                export { bot_10 as bot };
+            export namespace user_8 {
+                let id_34: string;
+                export { id_34 as id };
+                let username_11: string;
+                export { username_11 as username };
+                let discriminator_11: string;
+                export { discriminator_11 as discriminator };
+                let avatar_12: any;
+                export { avatar_12 as avatar };
+                let bot_11: boolean;
+                export { bot_11 as bot };
                 export let global_name: string;
             }
-            export { user_7 as user };
-            let roles_8: any[];
-            export { roles_8 as roles };
-            let joined_at_8: string;
-            export { joined_at_8 as joined_at };
-            let premium_since_7: any;
-            export { premium_since_7 as premium_since };
-            let deaf_7: boolean;
-            export { deaf_7 as deaf };
-            let mute_7: boolean;
-            export { mute_7 as mute };
-            let pending_7: boolean;
-            export { pending_7 as pending };
-            let permissions_7: string;
-            export { permissions_7 as permissions };
-            let avatar_12: any;
-            export { avatar_12 as avatar };
-            let flags_12: number;
-            export { flags_12 as flags };
+            export { user_8 as user };
+            let roles_9: any[];
+            export { roles_9 as roles };
+            let joined_at_9: string;
+            export { joined_at_9 as joined_at };
+            let premium_since_8: any;
+            export { premium_since_8 as premium_since };
+            let deaf_8: boolean;
+            export { deaf_8 as deaf };
+            let mute_8: boolean;
+            export { mute_8 as mute };
+            let pending_8: boolean;
+            export { pending_8 as pending };
+            let permissions_8: string;
+            export { permissions_8 as permissions };
+            let avatar_13: any;
+            export { avatar_13 as avatar };
+            let flags_14: number;
+            export { flags_14 as flags };
         }
         export { member_3 as member };
         export namespace message_1 {
             let application_id_2: string;
             export { application_id_2 as application_id };
-            let id_34: string;
-            export { id_34 as id };
+            let id_35: string;
+            export { id_35 as id };
             let type_15: number;
             export { type_15 as type };
             let content_3: string;
@@ -981,16 +1030,16 @@ export namespace TEST_DATA {
             let channel_id_10: string;
             export { channel_id_10 as channel_id };
             export namespace author_1 {
-                let id_35: string;
-                export { id_35 as id };
-                let username_11: string;
-                export { username_11 as username };
-                let discriminator_11: string;
-                export { discriminator_11 as discriminator };
-                let avatar_13: any;
-                export { avatar_13 as avatar };
-                let bot_11: boolean;
-                export { bot_11 as bot };
+                let id_36: string;
+                export { id_36 as id };
+                let username_12: string;
+                export { username_12 as username };
+                let discriminator_12: string;
+                export { discriminator_12 as discriminator };
+                let avatar_14: any;
+                export { avatar_14 as avatar };
+                let bot_12: boolean;
+                export { bot_12 as bot };
                 let global_name_1: string;
                 export { global_name_1 as global_name };
             }
@@ -1013,8 +1062,8 @@ export namespace TEST_DATA {
             export let timestamp: string;
             let edited_timestamp_1: any;
             export { edited_timestamp_1 as edited_timestamp };
-            let flags_13: number;
-            export { flags_13 as flags };
+            let flags_15: number;
+            export { flags_15 as flags };
         }
         export { message_1 as message };
         let token_3: string;
@@ -1028,8 +1077,8 @@ export namespace TEST_DATA {
         let message_id_1: string;
         export { message_id_1 as message_id };
         export namespace emoji {
-            let id_36: any;
-            export { id_36 as id };
+            let id_37: any;
+            export { id_37 as id };
             let name_12: string;
             export { name_12 as name };
         }
@@ -1038,78 +1087,9 @@ export namespace TEST_DATA {
         let guild_id_13: string;
         export { guild_id_13 as guild_id };
         export namespace member_4 {
-            export namespace user_8 {
-                let id_37: string;
-                export { id_37 as id };
-                let username_12: string;
-                export { username_12 as username };
-                let discriminator_12: string;
-                export { discriminator_12 as discriminator };
-                let avatar_14: any;
-                export { avatar_14 as avatar };
-                let bot_12: boolean;
-                export { bot_12 as bot };
-                let system_9: boolean;
-                export { system_9 as system };
-                let mfa_enabled_9: boolean;
-                export { mfa_enabled_9 as mfa_enabled };
-                let locale_9: string;
-                export { locale_9 as locale };
-                let verified_9: boolean;
-                export { verified_9 as verified };
-                let email_9: any;
-                export { email_9 as email };
-                let flags_14: number;
-                export { flags_14 as flags };
-                let premium_type_9: number;
-                export { premium_type_9 as premium_type };
-                let public_flags_9: number;
-                export { public_flags_9 as public_flags };
-            }
-            export { user_8 as user };
-            let roles_9: any[];
-            export { roles_9 as roles };
-            let joined_at_9: string;
-            export { joined_at_9 as joined_at };
-            let premium_since_8: any;
-            export { premium_since_8 as premium_since };
-            let deaf_8: boolean;
-            export { deaf_8 as deaf };
-            let mute_8: boolean;
-            export { mute_8 as mute };
-            let pending_8: boolean;
-            export { pending_8 as pending };
-            let permissions_8: string;
-            export { permissions_8 as permissions };
-        }
-        export { member_4 as member };
-        export let message_author_id: string;
-        export let burst: boolean;
-        let type_16: number;
-        export { type_16 as type };
-    }
-    namespace SLASH_COMMAND {
-        let id_38: string;
-        export { id_38 as id };
-        let type_17: number;
-        export { type_17 as type };
-        export namespace data_4 {
-            let name_13: string;
-            export { name_13 as name };
-            let description_1: string;
-            export { description_1 as description };
-            let options_3: any[];
-            export { options_3 as options };
-        }
-        export { data_4 as data };
-        let guild_id_14: string;
-        export { guild_id_14 as guild_id };
-        let channel_id_12: string;
-        export { channel_id_12 as channel_id };
-        export namespace member_5 {
             export namespace user_9 {
-                let id_39: string;
-                export { id_39 as id };
+                let id_38: string;
+                export { id_38 as id };
                 let username_13: string;
                 export { username_13 as username };
                 let discriminator_13: string;
@@ -1128,8 +1108,8 @@ export namespace TEST_DATA {
                 export { verified_10 as verified };
                 let email_10: any;
                 export { email_10 as email };
-                let flags_15: number;
-                export { flags_15 as flags };
+                let flags_16: number;
+                export { flags_16 as flags };
                 let premium_type_10: number;
                 export { premium_type_10 as premium_type };
                 let public_flags_10: number;
@@ -1151,6 +1131,75 @@ export namespace TEST_DATA {
             let permissions_9: string;
             export { permissions_9 as permissions };
         }
+        export { member_4 as member };
+        export let message_author_id: string;
+        export let burst: boolean;
+        let type_16: number;
+        export { type_16 as type };
+    }
+    namespace SLASH_COMMAND {
+        let id_39: string;
+        export { id_39 as id };
+        let type_17: number;
+        export { type_17 as type };
+        export namespace data_4 {
+            let name_13: string;
+            export { name_13 as name };
+            let description_1: string;
+            export { description_1 as description };
+            let options_3: any[];
+            export { options_3 as options };
+        }
+        export { data_4 as data };
+        let guild_id_14: string;
+        export { guild_id_14 as guild_id };
+        let channel_id_12: string;
+        export { channel_id_12 as channel_id };
+        export namespace member_5 {
+            export namespace user_10 {
+                let id_40: string;
+                export { id_40 as id };
+                let username_14: string;
+                export { username_14 as username };
+                let discriminator_14: string;
+                export { discriminator_14 as discriminator };
+                let avatar_16: any;
+                export { avatar_16 as avatar };
+                let bot_14: boolean;
+                export { bot_14 as bot };
+                let system_11: boolean;
+                export { system_11 as system };
+                let mfa_enabled_11: boolean;
+                export { mfa_enabled_11 as mfa_enabled };
+                let locale_11: string;
+                export { locale_11 as locale };
+                let verified_11: boolean;
+                export { verified_11 as verified };
+                let email_11: any;
+                export { email_11 as email };
+                let flags_17: number;
+                export { flags_17 as flags };
+                let premium_type_11: number;
+                export { premium_type_11 as premium_type };
+                let public_flags_11: number;
+                export { public_flags_11 as public_flags };
+            }
+            export { user_10 as user };
+            let roles_11: any[];
+            export { roles_11 as roles };
+            let joined_at_11: string;
+            export { joined_at_11 as joined_at };
+            let premium_since_10: any;
+            export { premium_since_10 as premium_since };
+            let deaf_10: boolean;
+            export { deaf_10 as deaf };
+            let mute_10: boolean;
+            export { mute_10 as mute };
+            let pending_10: boolean;
+            export { pending_10 as pending };
+            let permissions_10: string;
+            export { permissions_10 as permissions };
+        }
         export { member_5 as member };
         let token_4: string;
         export { token_4 as token };
@@ -1158,8 +1207,8 @@ export namespace TEST_DATA {
         export { version_4 as version };
     }
     namespace STICKER {
-        let id_40: string;
-        export { id_40 as id };
+        let id_41: string;
+        export { id_41 as id };
         let name_14: string;
         export { name_14 as name };
         let tags_1: string;
@@ -1174,32 +1223,32 @@ export namespace TEST_DATA {
         export let sort_value: number;
     }
     namespace USER {
-        let id_41: string;
-        export { id_41 as id };
-        let username_14: string;
-        export { username_14 as username };
-        let discriminator_14: string;
-        export { discriminator_14 as discriminator };
-        let avatar_16: string;
-        export { avatar_16 as avatar };
-        let bot_14: boolean;
-        export { bot_14 as bot };
-        let system_11: boolean;
-        export { system_11 as system };
-        let mfa_enabled_11: boolean;
-        export { mfa_enabled_11 as mfa_enabled };
-        let locale_11: string;
-        export { locale_11 as locale };
-        let verified_11: boolean;
-        export { verified_11 as verified };
-        let email_11: any;
-        export { email_11 as email };
-        let flags_16: number;
-        export { flags_16 as flags };
-        let premium_type_11: number;
-        export { premium_type_11 as premium_type };
-        let public_flags_11: number;
-        export { public_flags_11 as public_flags };
+        let id_42: string;
+        export { id_42 as id };
+        let username_15: string;
+        export { username_15 as username };
+        let discriminator_15: string;
+        export { discriminator_15 as discriminator };
+        let avatar_17: string;
+        export { avatar_17 as avatar };
+        let bot_15: boolean;
+        export { bot_15 as bot };
+        let system_12: boolean;
+        export { system_12 as system };
+        let mfa_enabled_12: boolean;
+        export { mfa_enabled_12 as mfa_enabled };
+        let locale_12: string;
+        export { locale_12 as locale };
+        let verified_12: boolean;
+        export { verified_12 as verified };
+        let email_12: any;
+        export { email_12 as email };
+        let flags_18: number;
+        export { flags_18 as flags };
+        let premium_type_12: number;
+        export { premium_type_12 as premium_type };
+        let public_flags_12: number;
+        export { public_flags_12 as public_flags };
         let global_name_2: string;
         export { global_name_2 as global_name };
     }
@@ -1209,10 +1258,10 @@ export namespace TEST_DATA {
         let user_id_2: string;
         export { user_id_2 as user_id };
         export let session_id: string;
-        let deaf_10: boolean;
-        export { deaf_10 as deaf };
-        let mute_10: boolean;
-        export { mute_10 as mute };
+        let deaf_11: boolean;
+        export { deaf_11 as deaf };
+        let mute_11: boolean;
+        export { mute_11 as mute };
         export let self_deaf: boolean;
         export let self_mute: boolean;
         export let suppress: boolean;
@@ -1222,8 +1271,8 @@ export namespace TEST_DATA {
         export let joined: number;
     }
     namespace SCHEDULED_EVENT {
-        let id_42: string;
-        export { id_42 as id };
+        let id_43: string;
+        export { id_43 as id };
         let guild_id_15: string;
         export { guild_id_15 as guild_id };
         let channel_id_14: string;
@@ -1243,39 +1292,39 @@ export namespace TEST_DATA {
             let location: any;
         }
         export namespace creator {
-            let id_43: string;
-            export { id_43 as id };
-            let username_15: string;
-            export { username_15 as username };
-            let discriminator_15: string;
-            export { discriminator_15 as discriminator };
-            let avatar_17: any;
-            export { avatar_17 as avatar };
-            let bot_15: boolean;
-            export { bot_15 as bot };
-            let system_12: boolean;
-            export { system_12 as system };
-            let mfa_enabled_12: boolean;
-            export { mfa_enabled_12 as mfa_enabled };
-            let locale_12: string;
-            export { locale_12 as locale };
-            let verified_12: boolean;
-            export { verified_12 as verified };
-            let email_12: any;
-            export { email_12 as email };
-            let flags_17: number;
-            export { flags_17 as flags };
-            let premium_type_12: number;
-            export { premium_type_12 as premium_type };
-            let public_flags_12: number;
-            export { public_flags_12 as public_flags };
+            let id_44: string;
+            export { id_44 as id };
+            let username_16: string;
+            export { username_16 as username };
+            let discriminator_16: string;
+            export { discriminator_16 as discriminator };
+            let avatar_18: any;
+            export { avatar_18 as avatar };
+            let bot_16: boolean;
+            export { bot_16 as bot };
+            let system_13: boolean;
+            export { system_13 as system };
+            let mfa_enabled_13: boolean;
+            export { mfa_enabled_13 as mfa_enabled };
+            let locale_13: string;
+            export { locale_13 as locale };
+            let verified_13: boolean;
+            export { verified_13 as verified };
+            let email_13: any;
+            export { email_13 as email };
+            let flags_19: number;
+            export { flags_19 as flags };
+            let premium_type_13: number;
+            export { premium_type_13 as premium_type };
+            let public_flags_13: number;
+            export { public_flags_13 as public_flags };
         }
         export let user_count: number;
         export let image: string;
     }
     namespace SCHEDULED_EVENT_EXTERNAL {
-        let id_44: string;
-        export { id_44 as id };
+        let id_45: string;
+        export { id_45 as id };
         let guild_id_16: string;
         export { guild_id_16 as guild_id };
         let channel_id_15: string;
@@ -1304,32 +1353,32 @@ export namespace TEST_DATA {
         }
         export { entity_metadata_1 as entity_metadata };
         export namespace creator_1 {
-            let id_45: string;
-            export { id_45 as id };
-            let username_16: string;
-            export { username_16 as username };
-            let discriminator_16: string;
-            export { discriminator_16 as discriminator };
-            let avatar_18: any;
-            export { avatar_18 as avatar };
-            let bot_16: boolean;
-            export { bot_16 as bot };
-            let system_13: boolean;
-            export { system_13 as system };
-            let mfa_enabled_13: boolean;
-            export { mfa_enabled_13 as mfa_enabled };
-            let locale_13: string;
-            export { locale_13 as locale };
-            let verified_13: boolean;
-            export { verified_13 as verified };
-            let email_13: any;
-            export { email_13 as email };
-            let flags_18: number;
-            export { flags_18 as flags };
-            let premium_type_13: number;
-            export { premium_type_13 as premium_type };
-            let public_flags_13: number;
-            export { public_flags_13 as public_flags };
+            let id_46: string;
+            export { id_46 as id };
+            let username_17: string;
+            export { username_17 as username };
+            let discriminator_17: string;
+            export { discriminator_17 as discriminator };
+            let avatar_19: any;
+            export { avatar_19 as avatar };
+            let bot_17: boolean;
+            export { bot_17 as bot };
+            let system_14: boolean;
+            export { system_14 as system };
+            let mfa_enabled_14: boolean;
+            export { mfa_enabled_14 as mfa_enabled };
+            let locale_14: string;
+            export { locale_14 as locale };
+            let verified_14: boolean;
+            export { verified_14 as verified };
+            let email_14: any;
+            export { email_14 as email };
+            let flags_20: number;
+            export { flags_20 as flags };
+            let premium_type_14: number;
+            export { premium_type_14 as premium_type };
+            let public_flags_14: number;
+            export { public_flags_14 as public_flags };
         }
         export { creator_1 as creator };
         let user_count_1: number;
@@ -1364,8 +1413,8 @@ export namespace TEST_DATA {
         }
     }
     namespace PERMISSION_OVERWRITE {
-        let id_46: string;
-        export { id_46 as id };
+        let id_47: string;
+        export { id_47 as id };
         let type_19: number;
         export { type_19 as type };
         export let allow: string;
@@ -1378,8 +1427,8 @@ export namespace TEST_DATA {
         export { webhook_id_1 as webhook_id };
     }
     namespace WEBHOOK {
-        let id_47: string;
-        export { id_47 as id };
+        let id_48: string;
+        export { id_48 as id };
         let type_20: number;
         export { type_20 as type };
         let guild_id_17: string;
@@ -1388,29 +1437,10 @@ export namespace TEST_DATA {
         export { channel_id_17 as channel_id };
         let name_17: string;
         export { name_17 as name };
-        let avatar_19: any;
-        export { avatar_19 as avatar };
+        let avatar_20: any;
+        export { avatar_20 as avatar };
         let application_id_3: any;
         export { application_id_3 as application_id };
-        export namespace user_10 {
-            let id_48: string;
-            export { id_48 as id };
-            let username_17: string;
-            export { username_17 as username };
-            let discriminator_17: string;
-            export { discriminator_17 as discriminator };
-            let avatar_20: any;
-            export { avatar_20 as avatar };
-            let bot_17: boolean;
-            export { bot_17 as bot };
-            let global_name_3: string;
-            export { global_name_3 as global_name };
-        }
-        export { user_10 as user };
-    }
-    namespace BAN {
-        let reason_1: string;
-        export { reason_1 as reason };
         export namespace user_11 {
             let id_49: string;
             export { id_49 as id };
@@ -1420,12 +1450,31 @@ export namespace TEST_DATA {
             export { discriminator_18 as discriminator };
             let avatar_21: any;
             export { avatar_21 as avatar };
-            let global_name_4: string;
-            export { global_name_4 as global_name };
             let bot_18: boolean;
             export { bot_18 as bot };
+            let global_name_3: string;
+            export { global_name_3 as global_name };
         }
         export { user_11 as user };
+    }
+    namespace BAN {
+        let reason_1: string;
+        export { reason_1 as reason };
+        export namespace user_12 {
+            let id_50: string;
+            export { id_50 as id };
+            let username_19: string;
+            export { username_19 as username };
+            let discriminator_19: string;
+            export { discriminator_19 as discriminator };
+            let avatar_22: any;
+            export { avatar_22 as avatar };
+            let global_name_4: string;
+            export { global_name_4 as global_name };
+            let bot_19: boolean;
+            export { bot_19 as bot };
+        }
+        export { user_12 as user };
     }
 }
 export namespace TEST_CLIENTS {
@@ -1455,6 +1504,8 @@ export namespace TEST_MEMBERS {
     export function TARGET_MEMBER(client: any): Member;
     export function CLIENT_MEMBER_1_1(client: any): Member;
     export { CLIENT_MEMBER_1_1 as CLIENT_MEMBER_1 };
+    export function ROLE_OVERRIDES_MEMBER_1(client: any): Member;
+    export { ROLE_OVERRIDES_MEMBER_1 as ROLE_OVERRIDES_MEMBER };
 }
 export namespace TEST_MESSAGES {
     function GENERIC_MESSAGE(client: any): Message;
