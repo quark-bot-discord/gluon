@@ -496,7 +496,7 @@ export const TEST_DATA = {
       public_flags: 0,
     },
     nick: null,
-    roles: [],
+    roles: ["123453333333345678"],
     joined_at: "2021-01-01T00:00:00.000Z",
     premium_since: null,
     deaf: false,
