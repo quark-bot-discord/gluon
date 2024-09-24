@@ -64,6 +64,7 @@ describe("Message", function () {
       expect(message).to.have.property("url");
       expect(message).to.have.property("reply");
       expect(message).to.have.property("edit");
+      expect(message).to.have.property("delete");
       expect(message).to.have.property("hashName");
       expect(message).to.have.property("encrypt");
       expect(message).to.have.property("toString");
@@ -73,6 +74,8 @@ describe("Message", function () {
       expect(Message).to.have.property("getHashName");
       expect(Message).to.have.property("decrypt");
       expect(Message).to.have.property("shouldCache");
+      expect(Message).to.have.property("getUrl");
+      expect(Message).to.have.property("delete");
     });
   });
 
@@ -721,6 +724,98 @@ describe("Message", function () {
         TEST_DATA.MESSAGE_ID,
       );
       expect(decrypted.id).to.equal(TEST_DATA.MESSAGE_ID);
+    });
+  });
+
+  context("check getUrl", function () {
+    it("should throw an error if no guildId is provided", function () {
+      expect(() =>
+        Message.getUrl(null, TEST_DATA.CHANNEL_ID, TEST_DATA.MESSAGE_ID),
+      ).to.throw(TypeError, "GLUON: Guild ID must be a string.");
+    });
+    it("should throw an error if no channelId is provided", function () {
+      expect(() =>
+        Message.getUrl(TEST_DATA.GUILD_ID, null, TEST_DATA.MESSAGE_ID),
+      ).to.throw(TypeError, "GLUON: Channel ID must be a string.");
+    });
+    it("should throw an error if no messageId is provided", function () {
+      expect(() =>
+        Message.getUrl(TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, null),
+      ).to.throw(TypeError, "GLUON: Message ID must be a string.");
+    });
+  });
+
+  context("check delete", function () {
+    it("should throw an error if client is not an instance of Client", async function () {
+      await expect(Message.delete()).to.be.rejectedWith(
+        Error,
+        "GLUON: Client must be a Client instance.",
+      );
+    });
+    it("should throw an error if guildId is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      await expect(Message.delete(client, 123)).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Guild ID is not a string.",
+      );
+    });
+    it("should throw an error if channelId is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      await expect(
+        Message.delete(client, TEST_DATA.GUILD_ID, 123),
+      ).to.be.rejectedWith(TypeError, "GLUON: Channel ID is not a string.");
+    });
+    it("should throw an error if messageId is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      await expect(
+        Message.delete(client, TEST_DATA.GUILD_ID, TEST_DATA.CHANNEL_ID, 123),
+      ).to.be.rejectedWith(TypeError, "GLUON: Message ID is not a string.");
+    });
+    it("should throw an error if reason is provided but not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      await expect(
+        Message.delete(
+          client,
+          TEST_DATA.GUILD_ID,
+          TEST_DATA.CHANNEL_ID,
+          TEST_DATA.MESSAGE_ID,
+          { reason: 123 },
+        ),
+      ).to.be.rejectedWith(TypeError, "GLUON: Reason is not a string.");
+    });
+    it("should throw an error if the client user does not have the MANAGE_MESSAGES permission", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      await expect(
+        Message.delete(
+          client,
+          TEST_DATA.GUILD_ID,
+          TEST_DATA.CHANNEL_ID,
+          TEST_DATA.MESSAGE_ID,
+        ),
+      ).to.be.rejectedWith(Error, "MISSING PERMISSIONS: MANAGE_MESSAGES");
+    });
+    it("should call makeRequest with the correct arguments", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const request = spy(client.request, "makeRequest");
+      await Message.delete(
+        client,
+        TEST_DATA.GUILD_ID,
+        TEST_DATA.CHANNEL_ID,
+        TEST_DATA.MESSAGE_ID,
+      );
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("deleteChannelMessage", [
+        TEST_DATA.CHANNEL_ID,
+        TEST_DATA.MESSAGE_ID,
+      ]);
+      expect(request.firstCall.args[2]).to.be.an("object");
     });
   });
 
