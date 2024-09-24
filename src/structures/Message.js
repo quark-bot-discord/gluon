@@ -827,7 +827,13 @@ class Message {
    * @async
    */
   delete({ reason } = {}) {
-    return Message.delete(this.#_client, this.channelId, this.id, { reason });
+    return Message.delete(
+      this.#_client,
+      this.guildId,
+      this.channelId,
+      this.id,
+      { reason },
+    );
   }
 
   /**
@@ -1167,15 +1173,29 @@ class Message {
    * @async
    * @throws {TypeError}
    */
-  static async delete(client, channelId, messageId, { reason } = {}) {
+  static async delete(client, guildId, channelId, messageId, { reason } = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
     if (typeof messageId !== "string")
       throw new TypeError("GLUON: Message ID is not a string.");
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        GuildChannelsManager.getChannel(
+          client,
+          guildId,
+          channelId,
+        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        PERMISSIONS.MANAGE_MESSAGES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
 
     const body = {};
 
