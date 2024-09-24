@@ -79,7 +79,7 @@ declare class ChannelMessageManager extends BaseCacheManager {
      * @throws {TypeError}
      * @static
      */
-    public static purgeChannelMessages(client: Client, channelId: string, messages: Array<string>, { reason }?: any): Promise<void>;
+    public static purgeChannelMessages(client: Client, guildId: any, channelId: string, messages: Array<string>, { reason }?: {}): Promise<void>;
     /**
      * Creates a channel message manager.
      * @param {Client} client The client instance.

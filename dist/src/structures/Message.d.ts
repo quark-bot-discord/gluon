@@ -129,7 +129,7 @@ declare class Message {
      * @async
      * @throws {TypeError}
      */
-    public static delete(client: Client, channelId: string, messageId: string, { reason }?: any | null): Promise<void>;
+    public static delete(client: Client, guildId: any, channelId: string, messageId: string, { reason }?: string | null): Promise<void>;
     /**
      * Creates the structure for a message.
      * @param {Client} client The client instance.
