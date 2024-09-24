@@ -615,7 +615,7 @@ export namespace TEST_DATA {
         export { user_3 as user };
         let nick_2: any;
         export { nick_2 as nick };
-        let roles_4: any[];
+        let roles_4: string[];
         export { roles_4 as roles };
         let joined_at_4: string;
         export { joined_at_4 as joined_at };
