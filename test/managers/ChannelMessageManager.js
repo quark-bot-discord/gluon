@@ -359,47 +359,47 @@ describe("ChannelMessageManager", function () {
         TEST_DATA.MESSAGE_ID,
       ]);
     });
-    it("should throw an error when the client is not a Client instance", function () {
+    it("should throw an error when the client is not a Client instance", async function () {
       const fetchMessage = ChannelMessageManager.fetchMessage();
-      expect(fetchMessage).to.be.rejectedWith(
+      await expect(fetchMessage).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client must be a Client instance.",
+        "GLUON: Client is not a Client instance.",
       );
     });
-    it("should throw an error when the guildId is not a string", function () {
+    it("should throw an error when the guildId is not a string", async function () {
       const fetchMessage = ChannelMessageManager.fetchMessage(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         123456,
         TEST_DATA.CHANNEL_ID,
         TEST_DATA.MESSAGE_ID,
       );
-      expect(fetchMessage).to.be.rejectedWith(
+      await expect(fetchMessage).to.be.rejectedWith(
         TypeError,
-        "GLUON: Guild ID must be a string.",
+        "GLUON: Guild ID is not a string.",
       );
     });
-    it("should throw an error when the channelId is not a string", function () {
+    it("should throw an error when the channelId is not a string", async function () {
       const fetchMessage = ChannelMessageManager.fetchMessage(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         123456,
         TEST_DATA.MESSAGE_ID,
       );
-      expect(fetchMessage).to.be.rejectedWith(
+      await expect(fetchMessage).to.be.rejectedWith(
         TypeError,
-        "GLUON: Channel ID must be a string.",
+        "GLUON: Channel ID is not a string.",
       );
     });
-    it("should throw an error when the messageId is not a string", function () {
+    it("should throw an error when the messageId is not a string", async function () {
       const fetchMessage = ChannelMessageManager.fetchMessage(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         TEST_DATA.CHANNEL_ID,
         123456,
       );
-      expect(fetchMessage).to.be.rejectedWith(
+      await expect(fetchMessage).to.be.rejectedWith(
         TypeError,
-        "GLUON: Message ID must be a string.",
+        "GLUON: Message ID is not a string.",
       );
     });
   });
@@ -432,117 +432,142 @@ describe("ChannelMessageManager", function () {
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("getChannelMessages", [channel.id]);
     });
-    it("should throw an error when the client is not a Client instance", function () {
+    it("should throw an error when the client is not a Client instance", async function () {
       const fetchMessages = ChannelMessageManager.fetchMessages();
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client must be a Client instance.",
+        "GLUON: Client is not a Client instance.",
       );
     });
-    it("should throw an error when the guildId is not a string", function () {
+    it("should throw an error when the guildId is not a string", async function () {
       const fetchMessages = ChannelMessageManager.fetchMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         123456,
         TEST_DATA.CHANNEL_ID,
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Guild ID must be a string.",
+        "GLUON: Guild ID is not a string.",
       );
     });
-    it("should throw an error when the channelId is not a string", function () {
+    it("should throw an error when the channelId is not a string", async function () {
       const fetchMessages = ChannelMessageManager.fetchMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         123456,
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Channel ID must be a string.",
+        "GLUON: Channel ID is not a string.",
       );
     });
-    it("should throw an error when the limit is not a number", function () {
+    it("should throw an error when the limit is not a number", async function () {
       const fetchMessages = ChannelMessageManager.fetchMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         TEST_DATA.CHANNEL_ID,
         { limit: null },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Limit must be a number.",
+        "GLUON: Limit is not a number.",
       );
     });
-    it("should throw an error when the limit is less than 1", function () {
+    it("should throw an error when the limit is less than 1", async function () {
       const fetchMessages = ChannelMessageManager.fetchMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         TEST_DATA.CHANNEL_ID,
         { limit: -1 },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         RangeError,
-        "GLUON: Limit must be at least 1.",
+        "GLUON: Limit must be between 1 and 100.",
       );
     });
-    it("should throw an error when the limit is greater than 100", function () {
+    it("should throw an error when the limit is greater than 100", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const fetchMessages = ChannelMessageManager.fetchMessages(
-        TEST_CLIENTS.ALL_CACHES_ENABLED(),
-        TEST_DATA.GUILD_ID,
-        TEST_DATA.CHANNEL_ID,
-        101,
+        client,
+        guild.id,
+        channel.id,
+        { limit: 101 },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         RangeError,
-        "GLUON: Limit must be at most 100.",
+        "GLUON: Limit must be between 1 and 100.",
       );
     });
-    it("should throw an error when the before is not a string", function () {
+    it("should throw an error when the before is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER_1(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const fetchMessages = ChannelMessageManager.fetchMessages(
-        TEST_CLIENTS.ALL_CACHES_ENABLED(),
-        TEST_DATA.GUILD_ID,
-        TEST_DATA.CHANNEL_ID,
-        { limit: 50, before: null },
+        client,
+        guild.id,
+        channel.id,
+        { limit: 50, before: 123 },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Before must be a string.",
+        "GLUON: Before is not a string.",
       );
     });
-    it("should throw an error when the after is not a string", function () {
+    it("should throw an error when the after is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER_1(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const fetchMessages = ChannelMessageManager.fetchMessages(
-        TEST_CLIENTS.ALL_CACHES_ENABLED(),
-        TEST_DATA.GUILD_ID,
-        TEST_DATA.CHANNEL_ID,
-        { limit: 50, after: null },
+        client,
+        guild.id,
+        channel.id,
+        { limit: 50, after: 123 },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: After must be a string.",
+        "GLUON: After is not a string.",
       );
     });
-    it("should throw an error when the around is not a string", function () {
+    it("should throw an error when the around is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER_1(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const fetchMessages = ChannelMessageManager.fetchMessages(
-        TEST_CLIENTS.ALL_CACHES_ENABLED(),
-        TEST_DATA.GUILD_ID,
-        TEST_DATA.CHANNEL_ID,
-        { limit: 50, around: null },
+        client,
+        guild.id,
+        channel.id,
+        { limit: 50, around: 123 },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Around must be a string.",
+        "GLUON: Around is not a string.",
       );
     });
-    it("should throw an error if before, after, and around are all provided", function () {
+    it("should throw an error if before, after, and around are all provided", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_MEMBERS.CLIENT_MEMBER_1(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const fetchMessages = ChannelMessageManager.fetchMessages(
-        TEST_CLIENTS.ALL_CACHES_ENABLED(),
-        TEST_DATA.GUILD_ID,
-        TEST_DATA.CHANNEL_ID,
+        client,
+        guild.id,
+        channel.id,
         { limit: 50, before: "123456", after: "123456", around: "123456" },
       );
-      expect(fetchMessages).to.be.rejectedWith(
+      await expect(fetchMessages).to.be.rejectedWith(
         Error,
-        "GLUON: Only one of before, after, or around may be provided.",
+        "GLUON: Only one of around, before, or after may be provided.",
       );
     });
     it("should make a request with the correct arguments when before is provided", async function () {
@@ -643,6 +668,7 @@ describe("ChannelMessageManager", function () {
         guild.id,
         channel.id,
         [TEST_DATA.MESSAGE_ID],
+        { reason: "testing" },
       );
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith(
@@ -651,45 +677,61 @@ describe("ChannelMessageManager", function () {
         { messages: [TEST_DATA.MESSAGE_ID] },
       );
     });
-    it("should throw an error when the client is not a Client instance", function () {
+    it("should throw an error when the client is not a Client instance", async function () {
       const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages();
-      expect(purgeChannelMessages).to.be.rejectedWith(
+      await expect(purgeChannelMessages).to.be.rejectedWith(
         TypeError,
         "GLUON: Client must be a Client instance.",
       );
     });
-    it("should throw an error when the guildId is not a string", function () {
+    it("should throw an error when the guildId is not a string", async function () {
       const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         123456,
         TEST_DATA.CHANNEL_ID,
       );
-      expect(purgeChannelMessages).to.be.rejectedWith(
+      await expect(purgeChannelMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Guild ID must be a string.",
+        "GLUON: Guild ID is not a string.",
       );
     });
-    it("should throw an error when the channelId is not a string", function () {
+    it("should throw an error when the channelId is not a string", async function () {
       const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         123456,
       );
-      expect(purgeChannelMessages).to.be.rejectedWith(
+      await expect(purgeChannelMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Channel ID must be a string.",
+        "GLUON: Channel ID is not a string.",
       );
     });
-    it("should throw an error when the messages is not an array of strings", function () {
+    it("should throw an error when the messages is not an array of strings", async function () {
       const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages(
         TEST_CLIENTS.ALL_CACHES_ENABLED(),
         TEST_DATA.GUILD_ID,
         TEST_DATA.CHANNEL_ID,
         [123456],
       );
-      expect(purgeChannelMessages).to.be.rejectedWith(
+      await expect(purgeChannelMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Messages is not an array of strings.",
+        "GLUON: Messages is not an array of message id strings.",
+      );
+    });
+    it("should throw an error if the client user does not have the MANAGE_MESSAGES permission", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages(
+        client,
+        guild.id,
+        channel.id,
+        [TEST_DATA.MESSAGE_ID],
+      );
+      await expect(purgeChannelMessages).to.be.rejectedWith(
+        Error,
+        "MISSING PERMISSIONS: MANAGE_MESSAGES",
       );
     });
   });
