@@ -632,12 +632,18 @@ describe("ChannelMessageManager", function () {
   context("check purgeChannelMessages", function () {
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+      TEST_MEMBERS.CLIENT_MEMBER(client);
       const request = spy(client.request, "makeRequest");
-      await ChannelMessageManager.purgeChannelMessages(client, channel.id, [
-        TEST_DATA.MESSAGE_ID,
-      ]);
+      await ChannelMessageManager.purgeChannelMessages(
+        client,
+        guild.id,
+        channel.id,
+        [TEST_DATA.MESSAGE_ID],
+      );
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith(
         "postBulkDeleteMessages",
@@ -672,6 +678,18 @@ describe("ChannelMessageManager", function () {
       expect(purgeChannelMessages).to.be.rejectedWith(
         TypeError,
         "GLUON: Channel ID must be a string.",
+      );
+    });
+    it("should throw an error when the messages is not an array of strings", function () {
+      const purgeChannelMessages = ChannelMessageManager.purgeChannelMessages(
+        TEST_CLIENTS.ALL_CACHES_ENABLED(),
+        TEST_DATA.GUILD_ID,
+        TEST_DATA.CHANNEL_ID,
+        [123456],
+      );
+      expect(purgeChannelMessages).to.be.rejectedWith(
+        TypeError,
+        "GLUON: Messages is not an array of strings.",
       );
     });
   });
