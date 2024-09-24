@@ -3,6 +3,7 @@ import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import GuildChannelsManager from "./GuildChannelsManager.js";
 
 /**
  * Manages all messages within a channel.
@@ -386,12 +387,15 @@ class ChannelMessageManager extends BaseCacheManager {
    */
   static async purgeChannelMessages(
     client,
+    guildId,
     channelId,
     messages,
     { reason } = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
     if (
@@ -403,6 +407,24 @@ class ChannelMessageManager extends BaseCacheManager {
       );
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+
+    if (
+      !checkPermission(
+        GuildChannelsManager.getChannel(
+          client,
+          guildId,
+          channelId,
+        ).checkPermission(
+          await GuildChannelsManager.getChannel(
+            client,
+            guildId,
+            channelId,
+          ).guild.me(),
+        ),
+        PERMISSIONS.MANAGE_MESSAGES,
+      )
+    )
+      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
 
     const body = {};
 
