@@ -34,5 +34,13 @@ describe("HexToInt", function () {
       const result = hexToInt("deadbeef");
       expect(result).to.equal(3735928559);
     });
+    it("should accept hex strings with 0x prefix", function () {
+      const result = hexToInt("0xdeadbeef");
+      expect(result).to.equal(3735928559);
+    });
+    it("should accept hex strings with # prefix", function () {
+      const result = hexToInt("#deadbeef");
+      expect(result).to.equal(3735928559);
+    });
   });
 });
