@@ -1302,7 +1302,9 @@ export const TEST_USERS = {
 
 export const TEST_EMOJIS = {
   GENERIC_EMOJI: (client) => {
-    const emoji = new Emoji(client, TEST_DATA.EMOJI);
+    const emoji = new Emoji(client, TEST_DATA.EMOJI, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
     return emoji;
   },
 };
