@@ -1,7 +1,7 @@
 import Client from "./Client.js";
 import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
-import { Member, Message, Role, ScheduledEvent } from "./structures.js";
+import { Emoji, Member, Message, Role, ScheduledEvent } from "./structures.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1297,5 +1297,12 @@ export const TEST_USERS = {
   GENERIC_USER: (client) => {
     const user = new User(client, TEST_DATA.USER);
     return user;
+  },
+};
+
+export const TEST_EMOJIS = {
+  GENERIC_EMOJI: (client) => {
+    const emoji = new Emoji(client, TEST_DATA.EMOJI);
+    return emoji;
   },
 };
