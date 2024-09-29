@@ -1623,6 +1623,9 @@ export namespace TEST_SCHEDULED_EVENTS {
 export namespace TEST_USERS {
     function GENERIC_USER(client: any): User;
 }
+export namespace TEST_EMOJIS {
+    function GENERIC_EMOJI(client: any): Emoji;
+}
 import Client from "./Client.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1633,4 +1636,5 @@ import { Message } from "./structures.js";
 import { Role } from "./structures.js";
 import { ScheduledEvent } from "./structures.js";
 import User from "./structures/User.js";
+import { Emoji } from "./structures.js";
 //# sourceMappingURL=testData.d.ts.map
