@@ -273,21 +273,24 @@ class Role {
    * @public
    */
   get mention() {
-    return Role.getMention(this.id);
+    return Role.getMention(this.id, this.guildId);
   }
 
   /**
    * Returns a mention for the role.
    * @param {String} roleId The ID of the role to mention.
+   * @param {String} guildId The ID of the guild that the role belongs to.
    * @returns {String}
    * @public
    * @static
    * @method
    */
-  static getMention(roleId) {
+  static getMention(roleId, guildId) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
-    return `<@&${roleId}>`;
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    return roleId === guildId ? "@everyone" : `<@&${roleId}>`;
   }
 
   /**

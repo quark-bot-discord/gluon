@@ -129,14 +129,25 @@ describe("Role", function () {
 
   context("check getMention", function () {
     it("should return the correct mention", function () {
-      expect(Role.getMention(TEST_DATA.ROLE_ID)).to.equal(
+      expect(Role.getMention(TEST_DATA.ROLE_ID, TEST_DATA.GUILD_ID)).to.equal(
         `<@&${TEST_DATA.ROLE_ID}>`,
+      );
+    });
+    it("should return the correct mention for the @everyone role", function () {
+      expect(Role.getMention(TEST_DATA.GUILD_ID, TEST_DATA.GUILD_ID)).to.equal(
+        "@everyone",
       );
     });
     it("should throw an error if the role id is not a string", function () {
       expect(() => Role.getMention(123)).to.throw(
         TypeError,
         "GLUON: Role ID must be a string",
+      );
+    });
+    it("should throw an error if the guild id is not a string", function () {
+      expect(() => Role.getMention(TEST_DATA.ROLE_ID, 123)).to.throw(
+        TypeError,
+        "GLUON: Guild ID must be a string",
       );
     });
   });
