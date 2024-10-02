@@ -1626,6 +1626,9 @@ export namespace TEST_USERS {
 export namespace TEST_EMOJIS {
     function GENERIC_EMOJI(client: any): Emoji;
 }
+export namespace TEST_INVITES {
+    function GENERIC_INVITE(client: any): Invite;
+}
 import Client from "./Client.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1637,4 +1640,5 @@ import { Role } from "./structures.js";
 import { ScheduledEvent } from "./structures.js";
 import User from "./structures/User.js";
 import { Emoji } from "./structures.js";
+import { Invite } from "./structures.js";
 //# sourceMappingURL=testData.d.ts.map
