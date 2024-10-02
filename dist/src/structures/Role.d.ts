@@ -6,12 +6,13 @@ declare class Role {
     /**
      * Returns a mention for the role.
      * @param {String} roleId The ID of the role to mention.
+     * @param {String} guildId The ID of the guild that the role belongs to.
      * @returns {String}
      * @public
      * @static
      * @method
      */
-    public static getMention(roleId: string): string;
+    public static getMention(roleId: string, guildId: string): string;
     /**
      * Returns the URL of the role's icon.
      * @param {String} id The ID of the role.
