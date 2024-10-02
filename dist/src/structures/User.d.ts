@@ -128,6 +128,13 @@ declare class User {
      */
     public readonly get avatarIsAnimated(): boolean;
     /**
+     * Whether the user has an avatar or not.
+     * @readonly
+     * @type {Boolean}
+     * @public
+     */
+    public readonly get hasAvatar(): boolean;
+    /**
      * @method
      * @public
      */

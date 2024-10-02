@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 373,
-                8854
+                9019
             ],
             "filename": "User.js",
             "lineno": 11,
@@ -336,7 +336,7 @@
         "meta": {
             "range": [
                 373,
-                8854
+                9019
             ],
             "filename": "User.js",
             "lineno": 11,
@@ -1362,18 +1362,54 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns a mention string for the user.\n   * @param {String} id The ID of the user to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
+        "comment": "/**\n   * Whether the user has an avatar or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                6285,
-                6430
+                6217,
+                6273
             ],
             "filename": "User.js",
-            "lineno": 282,
+            "lineno": 280,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000520",
+                "name": "User#hasAvatar",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Whether the user has an avatar or not.",
+        "readonly": true,
+        "type": {
+            "names": [
+                "Boolean"
+            ]
+        },
+        "access": "public",
+        "name": "hasAvatar",
+        "longname": "User#hasAvatar",
+        "kind": "member",
+        "memberof": "User",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Returns a mention string for the user.\n   * @param {String} id The ID of the user to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
+        "meta": {
+            "range": [
+                6450,
+                6595
+            ],
+            "filename": "User.js",
+            "lineno": 292,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000531",
                 "name": "User.getMention",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1416,15 +1452,15 @@
         "comment": "/**\n   * Returns the URL to the user's avatar.\n   * @param {String} id The ID of the user to get the avatar for.\n   * @param {String?} hash The hash of the avatar.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6668,
-                7164
+                6833,
+                7329
             ],
             "filename": "User.js",
-            "lineno": 297,
+            "lineno": 307,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000539",
+                "id": "astnode100000550",
                 "name": "User.getAvatarUrl",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1478,15 +1514,15 @@
         "comment": "/**\n   * Determines whether the user should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                7461,
-                7745
+                7626,
+                7910
             ],
             "filename": "User.js",
-            "lineno": 319,
+            "lineno": 329,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000601",
+                "id": "astnode100000612",
                 "name": "User.shouldCache",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1538,15 +1574,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7787,
-                7836
+                7952,
+                8001
             ],
             "filename": "User.js",
-            "lineno": 332,
+            "lineno": 342,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000625",
+                "id": "astnode100000636",
                 "name": "User#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1567,15 +1603,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7878,
-                7935
+                8043,
+                8100
             ],
             "filename": "User.js",
-            "lineno": 340,
+            "lineno": 350,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000636",
+                "id": "astnode100000647",
                 "name": "User#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1596,15 +1632,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                8118,
-                8852
+                8283,
+                9017
             ],
             "filename": "User.js",
-            "lineno": 351,
+            "lineno": 361,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000649",
+                "id": "astnode100000660",
                 "name": "User#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1647,15 +1683,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8230,
-                8241
+                8395,
+                8406
             ],
             "filename": "User.js",
-            "lineno": 355,
+            "lineno": 365,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000663",
+                "id": "astnode100000674",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1671,15 +1707,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8253,
-                8286
+                8418,
+                8451
             ],
             "filename": "User.js",
-            "lineno": 356,
+            "lineno": 366,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000667",
+                "id": "astnode100000678",
                 "name": "avatar",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1695,15 +1731,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8298,
-                8319
+                8463,
+                8484
             ],
             "filename": "User.js",
-            "lineno": 357,
+            "lineno": 367,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000672",
+                "id": "astnode100000683",
                 "name": "_cached",
                 "type": "MemberExpression",
                 "value": "this._cached"
@@ -1719,15 +1755,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8331,
-                8344
+                8496,
+                8509
             ],
             "filename": "User.js",
-            "lineno": 358,
+            "lineno": 368,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000676",
+                "id": "astnode100000687",
                 "name": "bot",
                 "type": "MemberExpression",
                 "value": "this.bot"
@@ -1743,15 +1779,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8356,
-                8379
+                8521,
+                8544
             ],
             "filename": "User.js",
-            "lineno": 359,
+            "lineno": 369,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000680",
+                "id": "astnode100000691",
                 "name": "username",
                 "type": "MemberExpression",
                 "value": "this.username"
@@ -1767,15 +1803,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8391,
-                8419
+                8556,
+                8584
             ],
             "filename": "User.js",
-            "lineno": 360,
+            "lineno": 370,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000684",
+                "id": "astnode100000695",
                 "name": "global_name",
                 "type": "MemberExpression",
                 "value": "this.globalName"
@@ -1791,15 +1827,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8431,
-                8464
+                8596,
+                8629
             ],
             "filename": "User.js",
-            "lineno": 361,
+            "lineno": 371,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000688",
+                "id": "astnode100000699",
                 "name": "discriminator",
                 "type": "MemberExpression",
                 "value": "this.discriminator"
@@ -1815,15 +1851,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8621,
-                8632
+                8786,
+                8797
             ],
             "filename": "User.js",
-            "lineno": 368,
+            "lineno": 378,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000704",
+                "id": "astnode100000715",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1839,15 +1875,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8644,
-                8677
+                8809,
+                8842
             ],
             "filename": "User.js",
-            "lineno": 369,
+            "lineno": 379,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000708",
+                "id": "astnode100000719",
                 "name": "avatar",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1863,15 +1899,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8689,
-                8702
+                8854,
+                8867
             ],
             "filename": "User.js",
-            "lineno": 370,
+            "lineno": 380,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000713",
+                "id": "astnode100000724",
                 "name": "bot",
                 "type": "MemberExpression",
                 "value": "this.bot"
@@ -1887,15 +1923,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8714,
-                8737
+                8879,
+                8902
             ],
             "filename": "User.js",
-            "lineno": 371,
+            "lineno": 381,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000717",
+                "id": "astnode100000728",
                 "name": "username",
                 "type": "MemberExpression",
                 "value": "this.username"
@@ -1911,15 +1947,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8749,
-                8777
+                8914,
+                8942
             ],
             "filename": "User.js",
-            "lineno": 372,
+            "lineno": 382,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000721",
+                "id": "astnode100000732",
                 "name": "global_name",
                 "type": "MemberExpression",
                 "value": "this.globalName"
@@ -1935,15 +1971,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8789,
-                8822
+                8954,
+                8987
             ],
             "filename": "User.js",
-            "lineno": 373,
+            "lineno": 383,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000725",
+                "id": "astnode100000736",
                 "name": "discriminator",
                 "type": "MemberExpression",
                 "value": "this.discriminator"
@@ -1959,15 +1995,15 @@
         "comment": "",
         "meta": {
             "range": [
-                8856,
-                8876
+                9021,
+                9041
             ],
             "filename": "User.js",
-            "lineno": 380,
+            "lineno": 390,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000729",
+                "id": "astnode100000740",
                 "name": "module.exports",
                 "type": "Identifier"
             }
