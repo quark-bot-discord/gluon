@@ -272,6 +272,16 @@ class User {
   }
 
   /**
+   * Whether the user has an avatar or not.
+   * @readonly
+   * @type {Boolean}
+   * @public
+   */
+  get hasAvatar() {
+    return this.#_avatar !== null;
+  }
+
+  /**
    * Returns a mention string for the user.
    * @param {String} id The ID of the user to mention.
    * @returns {String}
