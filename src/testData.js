@@ -1,7 +1,14 @@
 import Client from "./Client.js";
 import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
-import { Emoji, Member, Message, Role, ScheduledEvent } from "./structures.js";
+import {
+  Emoji,
+  Invite,
+  Member,
+  Message,
+  Role,
+  ScheduledEvent,
+} from "./structures.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
@@ -1306,5 +1313,14 @@ export const TEST_EMOJIS = {
       guildId: TEST_DATA.GUILD_ID,
     });
     return emoji;
+  },
+};
+
+export const TEST_INVITES = {
+  GENERIC_INVITE: (client) => {
+    const invite = new Invite(client, TEST_DATA.INVITE, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return invite;
   },
 };
