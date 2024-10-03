@@ -17,4 +17,5 @@ export { default as MessageComponents } from "./util/builder/messageComponents.j
 export { default as resolveEmoji } from "./util/discord/resolveEmoji.js";
 export { default as TextInput } from "./util/builder/textInputBuilder.js";
 export { default as verifyMessageLink } from "./util/discord/verifyMessageLink.js";
+export { default as escapedString } from "./util/discord/escapedString.js";
 //# sourceMappingURL=util.d.ts.map
