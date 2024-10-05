@@ -27,6 +27,12 @@ declare class MessagePollManager {
      */
     public _removeVote(user_id: string, answer_id: number): void;
     /**
+     * Returns the result for a given answer.
+     * @param {Number} answerId The ID of the answer to get the result for.
+     * @returns {Array<String>}
+     */
+    getResult(answerId: number): Array<string>;
+    /**
      * Returns the JSON representation of this structure.
      * @param {Number} format The format to return the data in.
      * @returns {Object}
