@@ -338,14 +338,20 @@ export namespace TEST_DATA {
             let channel_id_3: string;
             export { channel_id_3 as channel_id };
             export let question: string;
-            export let options: {
-                id: string;
-                option: string;
+            export let answers: {
+                answer_id: number;
+                poll_media: {
+                    text: string;
+                };
             }[];
-            export let votes: {
-                user_id: string;
-                option_id: string;
-            }[];
+            export namespace results {
+                let is_finalized: boolean;
+                let answer_counts: {
+                    id: number;
+                    count: number;
+                    me_voted: boolean;
+                }[];
+            }
             export let expiry: string;
         }
     }
@@ -464,7 +470,7 @@ export namespace TEST_DATA {
         export let target_id: string;
         export let action_type: number;
         export let changes: any[];
-        export namespace options_1 {
+        export namespace options {
             let channel_id_4: string;
             export { channel_id_4 as channel_id };
             let id_14: string;
@@ -472,7 +478,6 @@ export namespace TEST_DATA {
             let type_7: number;
             export { type_7 as type };
         }
-        export { options_1 as options };
         export let reason: string;
         export namespace context {
             let id_15: string;
@@ -884,8 +889,8 @@ export namespace TEST_DATA {
         export namespace data_1 {
             let name_12: string;
             export { name_12 as name };
-            let options_2: any[];
-            export { options_2 as options };
+            let options_1: any[];
+            export { options_1 as options };
         }
         export { data_1 as data };
         let guild_id_9: string;
@@ -1245,8 +1250,8 @@ export namespace TEST_DATA {
             export { name_15 as name };
             let description_1: string;
             export { description_1 as description };
-            let options_3: any[];
-            export { options_3 as options };
+            let options_2: any[];
+            export { options_2 as options };
         }
         export { data_4 as data };
         let guild_id_14: string;
@@ -1487,7 +1492,7 @@ export namespace TEST_DATA {
     namespace POLL {
         let question_1: string;
         export { question_1 as question };
-        export let answers: {
+        let answers_1: {
             answer_id: number;
             poll_media: {
                 text: string;
@@ -1497,18 +1502,22 @@ export namespace TEST_DATA {
                 };
             };
         }[];
+        export { answers_1 as answers };
         let expiry_1: string;
         export { expiry_1 as expiry };
         export let allow_multiselect: boolean;
         export let layout_type: number;
-        export namespace results {
-            let is_finalized: boolean;
-            let answer_counts: {
+        export namespace results_1 {
+            let is_finalized_1: boolean;
+            export { is_finalized_1 as is_finalized };
+            let answer_counts_1: {
                 id: number;
                 count: number;
                 me_voted: boolean;
             }[];
+            export { answer_counts_1 as answer_counts };
         }
+        export { results_1 as results };
     }
     namespace PERMISSION_OVERWRITE {
         let id_50: string;
