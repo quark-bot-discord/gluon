@@ -80,8 +80,19 @@ class MessagePollManager {
     if (currentUserList)
       this.#cache.set(
         String(answer_id),
-        currentUserList.filter((x) => x != BigInt(user_id)),
+        currentUserList.filter((x) => x !== BigInt(user_id)),
       );
+  }
+
+  /**
+   * Returns the result for a given answer.
+   * @param {Number} answerId The ID of the answer to get the result for.
+   * @returns {Array<String>}
+   */
+  getResult(answerId) {
+    if (typeof answerId !== "number")
+      throw new TypeError("GLUON: Answer ID must be a number.");
+    return this.#cache.get(String(answerId))?.map((v) => String(v)) ?? [];
   }
 
   /**

@@ -300,7 +300,7 @@ class Embed {
 
     for (let i = 0; i < this.fields.length; i++)
       string +=
-        this.fields[i].name != "\u200b"
+        this.fields[i].name !== "\u200b"
           ? `**${this.fields[i].name}**:\n${this.fields[i].value}\n`
           : `${this.fields[i].value}\n`;
 

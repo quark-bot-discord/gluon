@@ -69,10 +69,12 @@ describe("Poll", function () {
       const poll = new Poll(client, TEST_DATA.POLL, {
         guildId: TEST_DATA.GUILD_ID,
       });
+      poll._results._addVote("123456", 1);
       expect(poll.answers).to.deep.equal([
         {
           answer: `<:${TEST_DATA.POLL.answers[0].poll_media.emoji.name}:${TEST_DATA.POLL.answers[0].poll_media.emoji.id}> ${TEST_DATA.POLL.answers[0].poll_media.text}`,
           answerId: TEST_DATA.POLL.answers[0].answer_id,
+          result: ["123456"],
         },
       ]);
     });
@@ -279,7 +281,11 @@ describe("Poll", function () {
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);
-      expect(rebundled.answers).to.deep.equal(poll.answers);
+      expect(rebundled.answers).to.deep.equal(
+        poll.answers.map((a) => {
+          return { answer: a.answer, answerId: a.answerId, result: [] };
+        }),
+      );
       expect(rebundled.question).to.equal(poll.question);
       expect(rebundled.guildId).to.equal(poll.guildId);
       expect(rebundled._results).to.be.an.instanceOf(MessagePollManager);
@@ -356,7 +362,11 @@ describe("Poll", function () {
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);
-      expect(rebundled.answers).to.deep.equal(poll.answers);
+      expect(rebundled.answers).to.deep.equal(
+        poll.answers.map((a) => {
+          return { answer: a.answer, answerId: a.answerId, result: [] };
+        }),
+      );
       expect(rebundled.question).to.equal(poll.question);
       expect(rebundled.guildId).to.equal(poll.guildId);
       expect(rebundled._results).to.be.an.instanceOf(MessagePollManager);

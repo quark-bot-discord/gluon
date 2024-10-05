@@ -16,6 +16,9 @@ describe("MessagePollManager", function () {
       const messagePollManager = new MessagePollManager(client, {});
       expect(messagePollManager).to.be.an.instanceOf(MessagePollManager);
       expect(messagePollManager).to.have.property("_addVote");
+      expect(messagePollManager).to.have.property("_removeVote");
+      expect(messagePollManager).to.have.property("getResult");
+      expect(messagePollManager).to.have.property("toJSON");
     });
   });
 
@@ -104,6 +107,29 @@ describe("MessagePollManager", function () {
       ).to.deep.equal({
         1: [],
       });
+    });
+  });
+
+  context("check getResult method", function () {
+    it("should throw an error if answerId is not a string", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const messagePollManager = new MessagePollManager(client);
+      expect(() => messagePollManager.getResult("123456")).to.throw(
+        TypeError,
+        "GLUON: Answer ID must be a number.",
+      );
+    });
+    it("should return an empty array if the answerId does not exist", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const messagePollManager = new MessagePollManager(client);
+      expect(messagePollManager.getResult(1)).to.deep.equal([]);
+    });
+    it("should return the correct result for the answerId", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const messagePollManager = new MessagePollManager(client, {
+        1: ["123456"],
+      });
+      expect(messagePollManager.getResult(1)).to.deep.equal(["123456"]);
     });
   });
 

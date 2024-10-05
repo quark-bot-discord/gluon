@@ -127,6 +127,7 @@ class Poll {
       return {
         answerId: a.answer_id,
         answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
+        result: this._results.getResult(a.answer_id),
       };
     });
   }
