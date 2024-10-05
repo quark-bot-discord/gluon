@@ -327,18 +327,24 @@ export const TEST_DATA = {
       id: "123456789012345678",
       channel_id: "123456789012345678",
       question: "test poll",
-      options: [
+      answers: [
         {
-          id: "123456789012345678",
-          option: "test option",
+          answer_id: 1,
+          poll_media: {
+            text: "test option",
+          },
         },
       ],
-      votes: [
-        {
-          user_id: "123456789012345678",
-          option_id: "123456789012345678",
-        },
-      ],
+      results: {
+        is_finalized: true,
+        answer_counts: [
+          {
+            id: 1,
+            count: 1,
+            me_voted: false,
+          },
+        ],
+      },
       expiry: "2021-01-01T00:00:00.000Z",
     },
   },
