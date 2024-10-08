@@ -4,7 +4,7 @@
  * @returns {String} The combined permissions.
  */
 function combinePermissions(...permissions) {
-  if (permissions.length == 0)
+  if (permissions.length === 0)
     throw new TypeError("GLUON: Permissions must be provided.");
 
   if (!permissions.every((permission) => typeof permission == "string"))
