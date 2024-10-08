@@ -1599,6 +1599,7 @@ export namespace TEST_CHANNELS {
     function TEXT_CHANNEL_2_ALL_CACHES_ENABLED(client: any): TextChannel;
     function VOICE_CHANNEL_ALL_CACHES_ENABLED(client: any): VoiceChannel;
     function CATEGORY_CHANNEL_ALL_CACHES_ENABLED(client: any): CategoryChannel;
+    function THREAD_CHANNEL(client: any): Thread;
 }
 export namespace TEST_MEMBERS {
     export function CLIENT_MEMBER_1(client: any): Member;
@@ -1643,6 +1644,7 @@ import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
 import VoiceChannel from "./structures/VoiceChannel.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
+import { Thread } from "./structures.js";
 import { Member } from "./structures.js";
 import { Message } from "./structures.js";
 import { Role } from "./structures.js";
