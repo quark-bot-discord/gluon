@@ -8,6 +8,7 @@ import {
   Message,
   Role,
   ScheduledEvent,
+  Thread,
 } from "./structures.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
 import Guild from "./structures/Guild.js";
@@ -1171,6 +1172,12 @@ export const TEST_CHANNELS = {
   },
   CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client) => {
     const channel = new CategoryChannel(client, TEST_DATA.CATEGORY_CHANNEL, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    return channel;
+  },
+  THREAD_CHANNEL: (client) => {
+    const channel = new Thread(client, TEST_DATA.THREAD, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
