@@ -17,7 +17,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setTitle(title: string): Embed;
+    public setTitle(title: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     title: string;
     /**
      * Sets the embed description.
@@ -27,7 +29,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setDescription(text: string): Embed;
+    public setDescription(text: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     description: string;
     /**
      * Sets the url of the embed.
@@ -37,7 +41,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setURL(url: string): Embed;
+    public setURL(url: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     url: string;
     /**
      * Sets the timestamp displayed on the embed.
@@ -56,7 +62,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setColor(color: string | number): Embed;
+    public setColor(color: string | number, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     color: number;
     /**
      * Sets the embed thumbnail image.
@@ -66,7 +74,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setThumbnail(url: string): Embed;
+    public setThumbnail(url: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     thumbnail: {
         url: string;
     };
@@ -79,7 +89,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setFooter(text: string, icon: string | null): Embed;
+    public setFooter(text: string, icon: string | null, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     footer: {
         text: string;
     };
@@ -93,7 +105,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setAuthor(name: string | null, url: string | null, icon_url: string | null): Embed;
+    public setAuthor(name: string | null, url: string | null, icon_url: string | null, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     author: {};
     /**
      * Adds a field to the embed.
@@ -105,7 +119,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public addField(name: string, value: string, inline?: boolean | null): Embed;
+    public addField(name: string, value: string, inline?: boolean | null, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     /**
      * Sets the embed image url.
      * @param {String} url The image url.
@@ -113,7 +129,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setImage(url: string): Embed;
+    public setImage(url: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     image: {
         url: string;
     };
@@ -124,7 +142,9 @@ declare class Embed {
      * @method
      * @public
      */
-    public setVideo(url: string): Embed;
+    public setVideo(url: string, { suppressValidation }?: {
+        suppressValidation?: false;
+    }): Embed;
     video: {
         url: string;
     };
