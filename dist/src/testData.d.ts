@@ -1618,7 +1618,9 @@ export namespace TEST_MEMBERS {
     export { ROLE_OVERRIDES_MEMBER_2_1 as ROLE_OVERRIDES_MEMBER_2 };
 }
 export namespace TEST_MESSAGES {
-    function GENERIC_MESSAGE(client: any): Message;
+    function GENERIC_MESSAGE(client: any, { channelId }?: {
+        channelId?: string;
+    }): Message;
 }
 export namespace TEST_ROLES {
     function GENERIC_ADMIN_ROLE(client: any): Role;
