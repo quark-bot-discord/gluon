@@ -1126,6 +1126,7 @@ export const TEST_GUILDS = {
   ALL_CACHES_ENABLED: (client) => {
     const guild = new Guild(client, TEST_DATA.GUILD);
     guild._cacheOptions.setChannelCaching(true);
+    guild._cacheOptions.setThreadCaching(true);
     guild._cacheOptions.setEmojiCaching(true);
     guild._cacheOptions.setRoleCaching(true);
     guild._cacheOptions.setMessageCaching(true);
@@ -1139,6 +1140,7 @@ export const TEST_GUILDS = {
   NO_CACHES_ENABLED: (client) => {
     const guild = new Guild(client, TEST_DATA.GUILD);
     guild._cacheOptions.setChannelCaching(false);
+    guild._cacheOptions.setThreadCaching(false);
     guild._cacheOptions.setEmojiCaching(false);
     guild._cacheOptions.setRoleCaching(false);
     guild._cacheOptions.setMessageCaching(false);
