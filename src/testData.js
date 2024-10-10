@@ -1258,10 +1258,13 @@ export const TEST_MEMBERS = {
 };
 
 export const TEST_MESSAGES = {
-  GENERIC_MESSAGE: (client) => {
+  GENERIC_MESSAGE: (
+    client,
+    { channelId = TEST_DATA.CHANNEL_ID } = { channelId: TEST_DATA.CHANNEL_ID },
+  ) => {
     const message = new Message(client, TEST_DATA.MESSAGE, {
       guildId: TEST_DATA.GUILD_ID,
-      channelId: TEST_DATA.CHANNEL_ID,
+      channelId,
     });
     return message;
   },
