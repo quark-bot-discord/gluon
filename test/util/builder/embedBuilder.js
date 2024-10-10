@@ -281,19 +281,19 @@ describe("Embed", function () {
     it("should throw an error if the provided field name is not a string", function () {
       const embed = new Embed();
       expect(() => {
-        embed.addField(1, "fieldValue").toJSON();
+        embed.addField(1, "fieldValue");
       }).to.throw(
         TypeError,
-        "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+        "GLUON: Embed field name and value must be provided.",
       );
     });
     it("should throw an error if the provided field value is not a string", function () {
       const embed = new Embed();
       expect(() => {
-        embed.addField("field", 1).toJSON();
+        embed.addField("field", 1);
       }).to.throw(
         TypeError,
-        "GLUON: Embed fields must be an array of objects with name (string), value (string), and inline (boolean) properties.",
+        "GLUON: Embed field name and value must be provided.",
       );
     });
     it("should throw an error if the provided field inline is not a boolean", function () {
