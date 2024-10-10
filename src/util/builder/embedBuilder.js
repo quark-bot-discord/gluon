@@ -40,8 +40,12 @@ class Embed {
    * @method
    * @public
    */
-  setTitle(title) {
-    if (!title) throw new TypeError("GLUON: Embed title must be provided.");
+  setTitle(
+    title,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (!title && suppressValidation === false)
+      throw new TypeError("GLUON: Embed title must be provided.");
 
     this.title =
       title && title.length > LIMITS.MAX_EMBED_TITLE
@@ -59,8 +63,11 @@ class Embed {
    * @method
    * @public
    */
-  setDescription(text) {
-    if (typeof text !== "string")
+  setDescription(
+    text,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (typeof text !== "string" && suppressValidation === false)
       throw new TypeError("GLUON: Embed description must be provided.");
 
     this.description =
@@ -79,8 +86,9 @@ class Embed {
    * @method
    * @public
    */
-  setURL(url) {
-    if (!url) throw new TypeError("GLUON: Embed url must be provided.");
+  setURL(url, { suppressValidation = false } = { suppressValidation: false }) {
+    if ((!url || typeof url !== "string") && suppressValidation === false)
+      throw new TypeError("GLUON: Embed url must be provided.");
 
     this.url = url;
 
@@ -109,11 +117,15 @@ class Embed {
    * @method
    * @public
    */
-  setColor(color) {
-    if (!color) throw new TypeError("GLUON: Embed color must be provided.");
+  setColor(
+    color,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (!color && suppressValidation === false)
+      throw new TypeError("GLUON: Embed color must be provided.");
 
     if (typeof color == "string") {
-      if (color[0] == "#") color = color.substring(1);
+      if (color[0] === "#") color = color.substring(1);
 
       this.color = hexToInt(color);
     } else if (typeof color == "number") this.color = color;
@@ -129,8 +141,11 @@ class Embed {
    * @method
    * @public
    */
-  setThumbnail(url) {
-    if (!url)
+  setThumbnail(
+    url,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (!url && typeof url !== "string" && suppressValidation === false)
       throw new TypeError("GLUON: Embed thumbnail url must be provided.");
 
     this.thumbnail = {
@@ -149,8 +164,12 @@ class Embed {
    * @method
    * @public
    */
-  setFooter(text, icon) {
-    if (!text)
+  setFooter(
+    text,
+    icon,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (!text && typeof text !== "string" && suppressValidation === false)
       throw new TypeError("GLUON: Embed footer text must be provided.");
 
     this.footer = {
@@ -174,8 +193,13 @@ class Embed {
    * @method
    * @public
    */
-  setAuthor(name, url, icon_url) {
-    if (!name)
+  setAuthor(
+    name,
+    url,
+    icon_url,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (!name && typeof name !== "string" && suppressValidation === false)
       throw new TypeError("GLUON: Embed author name must be provided.");
 
     this.author = {};
@@ -201,13 +225,21 @@ class Embed {
    * @method
    * @public
    */
-  addField(name, value, inline = false) {
-    if (this.fields.length >= LIMITS.MAX_EMBED_FIELDS)
+  addField(
+    name,
+    value,
+    inline = false,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (
+      this.fields.length >= LIMITS.MAX_EMBED_FIELDS &&
+      suppressValidation === false
+    )
       throw new RangeError(
         `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
       );
 
-    if (!name || !value)
+    if ((!name || !value) && suppressValidation === false)
       throw new TypeError(
         "GLUON: Embed field name and value must be provided.",
       );
@@ -234,8 +266,11 @@ class Embed {
    * @method
    * @public
    */
-  setImage(url) {
-    if (typeof url !== "string")
+  setImage(
+    url,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if (typeof url !== "string" && suppressValidation === false)
       throw new TypeError("GLUON: Embed image url must be a string.");
 
     this.image = {
@@ -252,8 +287,11 @@ class Embed {
    * @method
    * @public
    */
-  setVideo(url) {
-    if (typeof url !== "string")
+  setVideo(
+    url,
+    { suppressValidation = false } = { suppressValidation: false },
+  ) {
+    if ((!url || typeof url !== "string") && suppressValidation === false)
       throw new TypeError("GLUON: Embed video url must be a string.");
 
     this.video = {
