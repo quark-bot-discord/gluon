@@ -308,24 +308,27 @@ class EventHandler {
       `GUILD_MEMBER_REMOVE ${data.guild_id}`,
     );
 
-    GuildMemberManager.getCacheManager(this.#_client, data.guild_id)
-      .get(data.user.id, { useRules: true })
-      .then((member) => {
-        const guild = GuildManager.getCacheManager(this.#_client).get(
-          data.guild_id,
-        );
-        if (member) guild?.members.delete(data.user.id);
-        else {
-          member = new User(this.#_client, data.user, { nocache: true });
-          member.user = member;
-          member.guild = guild || null;
-          if (!member.guild) member.guildId = data.guild_id;
-        }
+    const cacheManager = GuildMemberManager.getCacheManager(
+      this.#_client,
+      data.guild_id,
+    );
 
-        member.guild._decrementMemberCount();
+    cacheManager.fetchWithRules(data.user.id).then((member) => {
+      const guild = GuildManager.getCacheManager(this.#_client).get(
+        data.guild_id,
+      );
+      if (member) guild?.members.delete(data.user.id);
+      else {
+        member = new User(this.#_client, data.user, { nocache: true });
+        member.user = member;
+        member.guild = guild || null;
+        if (!member.guild) member.guildId = data.guild_id;
+      }
 
-        this.#_client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
-      });
+      member.guild._decrementMemberCount();
+
+      this.#_client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
+    });
   }
 
   GUILD_MEMBER_UPDATE(data) {
@@ -334,17 +337,20 @@ class EventHandler {
       `GUILD_MEMBER_UPDATE ${data.guild_id}`,
     );
 
-    GuildMemberManager.getCacheManager(this.#_client, data.guild_id)
-      .get(data.user.id, { useRules: true })
-      .then((oldMember) => {
-        const newMember = new Member(this.#_client, data, {
-          userId: data.user.id,
-          guildId: data.guild_id,
-          user: data.user,
-        });
+    const cacheManager = GuildMemberManager.getCacheManager(
+      this.#_client,
+      data.guild_id,
+    );
 
-        this.#_client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+    cacheManager.fetchWithRules(data.user.id).then((oldMember) => {
+      const newMember = new Member(this.#_client, data, {
+        userId: data.user.id,
+        guildId: data.guild_id,
+        user: data.user,
       });
+
+      this.#_client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
+    });
   }
 
   GUILD_MEMBERS_CHUNK(data) {
@@ -466,20 +472,25 @@ class EventHandler {
       `MESSAGE_UPDATE ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.id, { useRules: true })
-      .then((oldMessage) => {
-        const newMessage = new Message(this.#_client, data, {
-          channelId: data.channel_id,
-          guildId: data.guild_id,
-        });
+    );
 
-        this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+    cacheManager.fetchWithRules(data.id).then((oldMessage) => {
+      const newMessage = new Message(this.#_client, data, {
+        channelId: data.channel_id,
+        guildId: data.guild_id,
       });
+
+      if (
+        !newMessage.editedTimestamp ||
+        newMessage.editedTimestamp * 1000 + 10000 < Date.now()
+      )
+        return;
+      this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+    });
   }
 
   MESSAGE_DELETE(data) {
@@ -488,15 +499,15 @@ class EventHandler {
       `MESSAGE_DELETE ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.id, { useRules: true })
-      .then((message) => {
-        this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
-      });
+    );
+
+    cacheManager.fetchWithRules(data.id).then((message) => {
+      this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
+    });
   }
 
   MESSAGE_DELETE_BULK(data) {
@@ -505,15 +516,15 @@ class EventHandler {
       `MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
 
+    const cacheManager = ChannelMessageManager.getCacheManager(
+      this.#_client,
+      data.guild_id,
+      data.channel_id,
+    );
+
     const messages = [];
     for (let i = 0; i < data.ids.length; i++)
-      messages.push(
-        ChannelMessageManager.getCacheManager(
-          this.#_client,
-          data.guild_id,
-          data.channel_id,
-        ).get(data.ids[i], { useRules: true }),
-      );
+      messages.push(cacheManager.fetchWithRules(data.ids[i]));
 
     Promise.all(messages).then((m) =>
       this.#_client.emit(
@@ -876,18 +887,18 @@ class EventHandler {
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.message_id, { useRules: true })
-      .then((message) => {
-        if (message) {
-          message.poll.results._addVote(data.user_id, data.answer_id);
-        }
-        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
-      });
+    );
+
+    cacheManager.fetchWithRules(data.message_id).then((message) => {
+      if (message) {
+        message.poll.results._addVote(data.user_id, data.answer_id);
+      }
+      this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
+    });
   }
 
   MESSAGE_POLL_VOTE_REMOVE(data) {
@@ -896,18 +907,18 @@ class EventHandler {
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.message_id, { useRules: true })
-      .then((message) => {
-        if (message) {
-          message.poll.results._removeVote(data.user_id, data.answer_id);
-        }
-        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
-      });
+    );
+
+    cacheManager.fetchWithRules(data.message_id).then((message) => {
+      if (message) {
+        message.poll.results._removeVote(data.user_id, data.answer_id);
+      }
+      this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
+    });
   }
 
   MESSAGE_REACTION_ADD(data) {
@@ -916,28 +927,28 @@ class EventHandler {
       `MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.message_id, { useRules: true })
-      .then((message) => {
-        if (message) {
-          message.reactions._addReaction(
-            data.user_id,
-            data.emoji.id ? data.emoji.id : data.emoji.name,
-            data,
-          );
-        }
-        const finalData = data;
+    );
 
-        finalData.emoji = new Emoji(this.#_client, data.emoji, {
-          guildId: data.guild_id,
-        });
+    cacheManager.fetchWithRules(data.message_id).then((message) => {
+      if (message) {
+        message.reactions._addReaction(
+          data.user_id,
+          data.emoji.id ? data.emoji.id : data.emoji.name,
+          data,
+        );
+      }
+      const finalData = data;
 
-        this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
+      finalData.emoji = new Emoji(this.#_client, data.emoji, {
+        guildId: data.guild_id,
       });
+
+      this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
+    });
   }
 
   MESSAGE_REACTION_REMOVE(data) {
@@ -946,27 +957,27 @@ class EventHandler {
       `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
 
-    ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
-    )
-      .get(data.message_id, { useRules: true })
-      .then((message) => {
-        if (message) {
-          message.reactions._removeReaction(
-            data.user_id,
-            data.emoji.id ? data.emoji.id : data.emoji.name,
-          );
-        }
-        const finalData = data;
+    );
 
-        finalData.emoji = new Emoji(this.#_client, data.emoji, {
-          guildId: data.guild_id,
-        });
+    cacheManager.fetchWithRules(data.message_id).then((message) => {
+      if (message) {
+        message.reactions._removeReaction(
+          data.user_id,
+          data.emoji.id ? data.emoji.id : data.emoji.name,
+        );
+      }
+      const finalData = data;
 
-        this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
+      finalData.emoji = new Emoji(this.#_client, data.emoji, {
+        guildId: data.guild_id,
       });
+
+      this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
+    });
   }
 }
 
