@@ -10,10 +10,8 @@ class CategoryChannel {
   #_guild_id;
   #type;
   #name;
-  #_parent_id;
   #_attributes;
   #permission_overwrites;
-  #_cacheOptions;
   /**
    * Creates the structure for a category channel.
    * @param {Client} client The client instance.
@@ -74,21 +72,6 @@ class CategoryChannel {
       typeof existing.name == "string"
     )
       this.#name = existing.name;
-
-    if (typeof data.parent_id == "string") {
-      /**
-       * The id of the parent channel.
-       * @type {BigInt?}
-       * @private
-       */
-      this.#_parent_id = BigInt(data.parent_id);
-    } else if (
-      typeof data.parent_id != "string" &&
-      data.parent_id === undefined &&
-      existing &&
-      typeof existing.parentId == "string"
-    )
-      this.#_parent_id = existing.parentId;
 
     /**
      * The attributes of the channel.
@@ -157,28 +140,6 @@ class CategoryChannel {
   }
 
   /**
-   * The ID of the parent channel.
-   * @type {String?}
-   * @readonly
-   * @public
-   */
-  get parentId() {
-    return this.#_parent_id ? String(this.#_parent_id) : null;
-  }
-
-  /**
-   * The parent channel.
-   * @type {Channel?}
-   * @readonly
-   * @public
-   */
-  get parent() {
-    return this.parentId
-      ? this.guild?.channels.get(this.parentId) || null
-      : null;
-  }
-
-  /**
    * The name of the channel.
    * @type {String}
    * @readonly
@@ -229,16 +190,6 @@ class CategoryChannel {
   }
 
   /**
-   * The cache options for this channel.
-   * @type {ChannelCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _cacheOptions() {
-    return this.#_cacheOptions;
-  }
-
-  /**
    * @method
    * @public
    */
@@ -270,7 +221,6 @@ class CategoryChannel {
         return {
           id: this.id,
           guild_id: this.guildId,
-          parent_id: this.parentId,
           name: this.name,
           type: this.type,
           nsfw: this.nsfw,
