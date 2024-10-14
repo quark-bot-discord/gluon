@@ -66,7 +66,36 @@ describe("BaseCacheManager", function () {
       baseCacheManager.expireBucket(bucket);
       setTimeout(async () => {
         await expect(
-          guildEmojisManager.get("key", { useRules: true }),
+          guildEmojisManager.fetchWithRules("key"),
+        ).to.eventually.equal("value");
+        done();
+      }, 1500);
+    });
+    it("should return the correct value when using standard cache and cache rules", function (done) {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guildEmojisManager = new GuildEmojisManager(client, guild);
+      const externalCache = new Map();
+      new GluonCacheRule()
+        .setStructureType(GuildEmojisManager)
+        .setName("test")
+        .setHandlerFunction((value) => {
+          return externalCache.set("key", value);
+        })
+        .setRetrieveFunction((key) => {
+          return externalCache.get(key);
+        })
+        .applyRule();
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: GuildEmojisManager,
+      });
+      baseCacheManager.set("key", "value", 1);
+      const expiryDate = new Date(Date.now() + 1 * 1000);
+      const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
+      baseCacheManager.expireBucket(bucket);
+      setTimeout(async () => {
+        await expect(
+          guildEmojisManager.fetchWithRules("key"),
         ).to.eventually.equal("value");
         done();
       }, 1500);

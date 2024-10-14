@@ -139,7 +139,6 @@ describe("CategoryChannel", function () {
             type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
           },
         ],
-        parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
       });
     });
   });
@@ -167,7 +166,6 @@ describe("CategoryChannel", function () {
           type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
         },
       ],
-      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
     });
     expect(
       categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
@@ -185,7 +183,6 @@ describe("CategoryChannel", function () {
           type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
         },
       ],
-      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
     });
     expect(
       categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
@@ -203,7 +200,6 @@ describe("CategoryChannel", function () {
           type: TEST_DATA.CATEGORY_CHANNEL.permission_overwrites[0].type,
         },
       ],
-      parent_id: TEST_DATA.CATEGORY_CHANNEL.parent_id,
     });
   });
   context("check bundling", function () {

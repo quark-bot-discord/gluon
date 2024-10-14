@@ -188,11 +188,12 @@ class ChannelMessageManager extends BaseCacheManager {
       throw new TypeError("GLUON: Channel ID must be a string.");
     if (typeof messageId !== "string")
       throw new TypeError("GLUON: Message ID must be a string.");
-    return ChannelMessageManager.getCacheManager(
+    const cacheManager = ChannelMessageManager.getCacheManager(
       client,
       guildId,
       channelId,
-    ).get(messageId);
+    );
+    return cacheManager.get(messageId);
   }
 
   /**

@@ -90,13 +90,44 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  get(key, { useRules = false } = { useRules: false }) {
+  get(key) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.#cache.get(key);
     if (value) return value;
-    else if (useRules) return this.#_callFetches(key);
     else return null;
+  }
+
+  /**
+   * Fetches a value from the rules cache.
+   * @param {String} key The key to fetch.
+   * @returns {Object?} The fetched value.
+   * @public
+   * @method
+   * @throws {TypeError}
+   * @async
+   */
+  fetchFromRules(key) {
+    if (typeof key !== "string")
+      throw new TypeError("GLUON: Key must be a string.");
+    return this.#_callFetches(key);
+  }
+
+  /**
+   * Fetches a value from the cache or from the rules cache.
+   * @param {String} key The key to fetch.
+   * @returns {Object?} The fetched value.
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  async fetchWithRules(key) {
+    if (typeof key !== "string")
+      throw new TypeError("GLUON: Key must be a string.");
+    const value = this.get(key);
+    if (value) return value;
+    else return this.#_callFetches(key);
   }
 
   /**
@@ -146,7 +177,7 @@ class BaseCacheManager {
     if (!this.#expiryBucket.has(bucket)) return;
     for (const key of this.#expiryBucket.get(bucket)) {
       try {
-        const value = this.get(key);
+        const value = this.#cache.get(key);
         if (value) this.#_callRules(value);
       } catch (e) {
         console.error(e);
