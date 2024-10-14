@@ -34,20 +34,6 @@ declare class CategoryChannel {
      */
     public readonly get guild(): Guild;
     /**
-     * The ID of the parent channel.
-     * @type {String?}
-     * @readonly
-     * @public
-     */
-    public readonly get parentId(): string;
-    /**
-     * The parent channel.
-     * @type {Channel?}
-     * @readonly
-     * @public
-     */
-    public readonly get parent(): Channel;
-    /**
      * The name of the channel.
      * @type {String}
      * @readonly
@@ -83,13 +69,6 @@ declare class CategoryChannel {
      */
     public readonly get mention(): string;
     /**
-     * The cache options for this channel.
-     * @type {ChannelCacheOptions}
-     * @readonly
-     * @public
-     */
-    public readonly get _cacheOptions(): ChannelCacheOptions;
-    /**
      * @method
      * @public
      */
@@ -104,7 +83,6 @@ declare class CategoryChannel {
     public toJSON(format: number): any;
     #private;
 }
-import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import Client from "../Client.js";
 //# sourceMappingURL=CategoryChannel.d.ts.map

@@ -26,9 +26,27 @@ declare class BaseCacheManager {
      * @method
      * @throws {TypeError}
      */
-    public get(key: string, { useRules }?: {
-        useRules: boolean;
-    }): any | null;
+    public get(key: string): any | null;
+    /**
+     * Fetches a value from the rules cache.
+     * @param {String} key The key to fetch.
+     * @returns {Object?} The fetched value.
+     * @public
+     * @method
+     * @throws {TypeError}
+     * @async
+     */
+    public fetchFromRules(key: string): any | null;
+    /**
+     * Fetches a value from the cache or from the rules cache.
+     * @param {String} key The key to fetch.
+     * @returns {Object?} The fetched value.
+     * @public
+     * @method
+     * @async
+     * @throws {TypeError}
+     */
+    public fetchWithRules(key: string): any | null;
     /**
      * Sets a value in the cache.
      * @param {String} key The key to set.
