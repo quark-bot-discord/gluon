@@ -149,9 +149,7 @@ class Emoji {
    * @public
    */
   get url() {
-    return `${CDN_BASE_URL}/emojis/${this.id}.${
-      this.animated == true ? "gif" : "png"
-    }`;
+    return Emoji.getUrl(this.id, this.animated);
   }
 
   /**
@@ -211,8 +209,25 @@ class Emoji {
       throw new TypeError("GLUON: Emoji id must be a string.");
     if (animated && typeof animated !== "boolean")
       throw new TypeError("GLUON: Emoji animated must be a boolean.");
-    if (id) return `<${animated == true ? "a" : ""}:${name}:${id}>`;
+    if (id) return `<${animated === true ? "a" : ""}:${name}:${id}>`;
     else return name;
+  }
+
+  /**
+   * Returns the url for an emoji.
+   * @param {String} id The id of the emoji.
+   * @param {Boolean} animated Whether the emoji is animated.
+   * @returns {String}
+   * @public
+   * @static
+   * @method
+   */
+  static getUrl(id, animated = false) {
+    if (typeof id !== "string")
+      throw new TypeError("GLUON: Emoji id must be a string.");
+    if (typeof animated !== "boolean")
+      throw new TypeError("GLUON: Emoji animated must be a boolean.");
+    return `${CDN_BASE_URL}/emojis/${id}.${animated === true ? "gif" : "png"}`;
   }
 
   /**
