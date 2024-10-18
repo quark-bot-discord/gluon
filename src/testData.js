@@ -499,7 +499,7 @@ export const TEST_DATA = {
       username: "quark",
       discriminator: "0001",
       avatar: null,
-      bot: false,
+      bot: true,
       system: false,
       mfa_enabled: false,
       locale: "en-US",
