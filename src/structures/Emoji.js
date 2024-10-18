@@ -149,7 +149,7 @@ class Emoji {
    * @public
    */
   get url() {
-    return Emoji.getUrl(this.id, this.animated);
+    return this.id ? Emoji.getUrl(this.id, this.animated) : null;
   }
 
   /**
