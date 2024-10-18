@@ -16,6 +16,16 @@ declare class Emoji {
      */
     public static getMention(name: string, id: string | null, animated: boolean | null): string;
     /**
+     * Returns the url for an emoji.
+     * @param {String} id The id of the emoji.
+     * @param {Boolean} animated Whether the emoji is animated.
+     * @returns {String}
+     * @public
+     * @static
+     * @method
+     */
+    public static getUrl(id: string, animated?: boolean): string;
+    /**
      * Determines whether the emoji should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
      * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
