@@ -288,19 +288,19 @@ describe("Client", function () {
       });
       expect(client.registerCommands).to.be.a("function");
     });
-    it("should throw an error if commands is not an array", function () {
+    it("should throw an error if commands is not an array", async function () {
       const client = new Client({
         intents: INTENTS.GUILDS,
       });
-      expect(() => client.registerCommands({})).to.throw(
+      await expect(client.registerCommands({})).to.be.rejectedWith(
         "GLUON: Commands is not an array of Command objects.",
       );
     });
-    it("should throw an error if commands is not an array of Command objects", function () {
+    it("should throw an error if commands is not an array of Command objects", async function () {
       const client = new Client({
         intents: INTENTS.GUILDS,
       });
-      expect(() => client.registerCommands([{}])).to.throw(
+      await expect(client.registerCommands([{}])).to.be.rejectedWith(
         "GLUON: Commands is not an array of Command objects.",
       );
     });
