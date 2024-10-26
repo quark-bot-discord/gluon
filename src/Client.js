@@ -534,7 +534,7 @@ class Client extends EventsEmitter {
    * @async
    * @throws {TypeError}
    */
-  registerCommands(commands) {
+  async registerCommands(commands) {
     if (
       !Array.isArray(commands) ||
       !commands.every((c) => c instanceof Command)
