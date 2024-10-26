@@ -3,6 +3,7 @@ import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import {
   Emoji,
+  Interaction,
   Invite,
   Member,
   Message,
@@ -1340,5 +1341,12 @@ export const TEST_INVITES = {
       guildId: TEST_DATA.GUILD_ID,
     });
     return invite;
+  },
+};
+
+export const TEST_INTERACTIONS = {
+  GENERIC_INTERACTION: (client) => {
+    const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+    return interaction;
   },
 };
