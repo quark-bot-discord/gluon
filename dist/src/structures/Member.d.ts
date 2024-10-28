@@ -185,6 +185,13 @@ declare class Member {
      */
     public readonly get user(): User;
     /**
+     * The hash of the member's avatar, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     * @public
+     */
+    public readonly get _originalAvatarHash(): string;
+    /**
      * The url of the member's avatar.
      * @readonly
      * @type {String}

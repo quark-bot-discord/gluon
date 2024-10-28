@@ -110,6 +110,13 @@ declare class Guild {
      */
     public readonly get id(): string;
     /**
+     * The hash of the guild's icon, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     * @public
+     */
+    public readonly get _originalIconHash(): string;
+    /**
      * The icon URL of the guild.
      * @readonly
      * @type {String?}

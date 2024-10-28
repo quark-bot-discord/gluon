@@ -72,6 +72,13 @@ declare class Role {
      */
     public readonly get mentionable(): boolean;
     /**
+     * The hash of the role's avatar, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     * @public
+     */
+    public readonly get _originalIconHash(): string;
+    /**
      * The icon URL of the role.
      * @readonly
      * @type {String?}

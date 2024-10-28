@@ -79,6 +79,13 @@ declare class ScheduledEvent {
      */
     public readonly get description(): string;
     /**
+     * The hash of the event's image, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     * @public
+     */
+    public readonly get _originalImageHash(): string;
+    /**
      * The url of the events's image.
      * @readonly
      * @type {String?}

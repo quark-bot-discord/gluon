@@ -93,6 +93,13 @@ declare class User {
      */
     public readonly get mention(): string;
     /**
+     * The hash of the users's avatar, as it was received from Discord.
+     * @readonly
+     * @type {String?}
+     * @public
+     */
+    public readonly get _originalAvatarHash(): string;
+    /**
      * The avatar URL of the user.
      * @readonly
      * @type {String}
