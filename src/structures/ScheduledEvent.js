@@ -252,9 +252,9 @@ class ScheduledEvent {
    * The hash of the event's image, as it was received from Discord.
    * @readonly
    * @type {String?}
-   * @private
+   * @public
    */
-  get #_originalImageHash() {
+  get _originalImageHash() {
     return this.#_image
       ? // eslint-disable-next-line quotes
         `${this.#_formattedImageHash}`
@@ -284,7 +284,7 @@ class ScheduledEvent {
    * @public
    */
   get displayImageURL() {
-    return ScheduledEvent.getImageUrl(this.id, this.#_originalImageHash);
+    return ScheduledEvent.getImageUrl(this.id, this._originalImageHash);
   }
 
   /**
@@ -463,7 +463,7 @@ class ScheduledEvent {
           scheduled_end_time: this.scheduledEndTime
             ? this.scheduledEndTime * 1000
             : undefined,
-          image: this.#_originalImageHash,
+          image: this._originalImageHash,
           user_count: this.userCount,
           entity_type: this.#rawEntityType,
           status: this.#rawStatus,

@@ -27,6 +27,7 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent).to.have.property("scheduledEndTime");
       expect(scheduledEvent).to.have.property("userCount");
       expect(scheduledEvent).to.have.property("location");
+      expect(scheduledEvent).to.have.property("_originalImageHash");
       expect(scheduledEvent).to.have.property("toString");
     });
   });
@@ -169,6 +170,18 @@ describe("ScheduledEvent", function () {
         TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       expect(scheduledEvent.scheduledEndTime).to.equal(
         (new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time) / 1000) | 0,
+      );
+    });
+  });
+
+  context("check _originalImageHash", function () {
+    it("should have the correct _originalImageHash", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const scheduledEvent =
+        TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
+      expect(scheduledEvent._originalImageHash).to.equal(
+        TEST_DATA.SCHEDULED_EVENT.image,
       );
     });
   });
@@ -427,6 +440,9 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
       expect(scheduledEvent.name).to.equal(rebundled.name);
       expect(scheduledEvent.location).to.equal(rebundled.location);
+      expect(scheduledEvent._originalImageHash).to.equal(
+        rebundled._originalImageHash,
+      );
       expect(rebundled.guild).to.be.an.instanceOf(Guild);
       expect(rebundled.guild.toJSON()).to.deep.equal(
         scheduledEvent.guild.toJSON(),
@@ -462,6 +478,9 @@ describe("ScheduledEvent", function () {
       expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
       expect(scheduledEvent.name).to.equal(rebundled.name);
       expect(scheduledEvent.location).to.equal(rebundled.location);
+      expect(scheduledEvent._originalImageHash).to.equal(
+        rebundled._originalImageHash,
+      );
       expect(rebundled.guild).to.be.an.instanceOf(Guild);
       expect(rebundled.guild.toJSON()).to.deep.equal(
         scheduledEvent.guild.toJSON(),
@@ -494,6 +513,9 @@ describe("ScheduledEvent", function () {
     expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
     expect(scheduledEvent.name).to.equal(rebundled.name);
     expect(scheduledEvent.location).to.equal(rebundled.location);
+    expect(scheduledEvent._originalImageHash).to.equal(
+      rebundled._originalImageHash,
+    );
     expect(rebundled.guild).to.be.an.instanceOf(Guild);
     expect(rebundled.guild.toJSON()).to.deep.equal(
       scheduledEvent.guild.toJSON(),
@@ -525,6 +547,9 @@ describe("ScheduledEvent", function () {
   expect(scheduledEvent.creatorId).to.equal(rebundled.creatorId);
   expect(scheduledEvent.name).to.equal(rebundled.name);
   expect(scheduledEvent.location).to.equal(rebundled.location);
+  expect(scheduledEvent._originalImageHash).to.equal(
+    rebundled._originalImageHash,
+  );
   expect(rebundled.guild).to.be.an.instanceOf(Guild);
   expect(rebundled.guild.toJSON()).to.deep.equal(scheduledEvent.guild.toJSON());
   expect(scheduledEvent.toString()).to.equal(rebundled.toString());

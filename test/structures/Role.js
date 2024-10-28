@@ -33,6 +33,7 @@ describe("Role", function () {
       expect(role).to.have.property("position");
       expect(role).to.have.property("permissions");
       expect(role).to.have.property("tags");
+      expect(role).to.have.property("_originalIconHash");
       expect(role).to.have.property("toString");
       expect(role).to.have.property("toJSON");
     });
@@ -149,6 +150,27 @@ describe("Role", function () {
         TypeError,
         "GLUON: Guild ID must be a string",
       );
+    });
+  });
+
+  context("check _originalIconHash", function () {
+    it("should have the correct _originalIconHash", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = new Role(client, {
+        id: TEST_DATA.ROLE_ID,
+        name: "role",
+        color: 123456,
+        position: 1,
+        permissions: 8,
+        tags: {
+          bot_id: "123456789012345678",
+          integration_id: null,
+          premium_subscriber: null,
+        },
+        icon: "hash",
+      });
+      expect(role._originalIconHash).to.equal("hash");
     });
   });
 
@@ -298,6 +320,7 @@ describe("Role", function () {
       expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);
+      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
     });
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -323,6 +346,7 @@ describe("Role", function () {
       expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);
+      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
     });
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -348,6 +372,7 @@ describe("Role", function () {
       expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);
+      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
     });
     it("should return the correct bundle with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -373,6 +398,7 @@ describe("Role", function () {
       expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
       expect(rebundled.guild.id).to.equal(role.guild.id);
       expect(rebundled.guildId).to.equal(role.guildId);
+      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
     });
   });
 });

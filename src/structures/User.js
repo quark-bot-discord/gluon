@@ -190,9 +190,9 @@ class User {
    * The hash of the users's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
-   * @private
+   * @public
    */
-  get #_originalAvatarHash() {
+  get _originalAvatarHash() {
     return this.#_avatar
       ? // eslint-disable-next-line quotes
         `${this.avatarIsAnimated ? "a_" : ""}${this.#_formattedAvatarHash}`
@@ -226,7 +226,7 @@ class User {
   get displayAvatarURL() {
     if (this.#overrideAvatar) return this.#overrideAvatar;
 
-    return User.getAvatarUrl(this.id, this.#_originalAvatarHash);
+    return User.getAvatarUrl(this.id, this._originalAvatarHash);
   }
 
   /**
@@ -363,7 +363,7 @@ class User {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
         return {
           id: this.id,
-          avatar: this.#_originalAvatarHash,
+          avatar: this._originalAvatarHash,
           _cached: this._cached,
           bot: this.bot,
           username: this.username,
@@ -376,7 +376,7 @@ class User {
       default: {
         return {
           id: this.id,
-          avatar: this.#_originalAvatarHash,
+          avatar: this._originalAvatarHash,
           bot: this.bot,
           username: this.username,
           global_name: this.globalName,

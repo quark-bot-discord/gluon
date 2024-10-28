@@ -33,6 +33,7 @@ describe("Member", function () {
       expect(member).to.have.property("rejoined");
       expect(member).to.have.property("displayAvatarURL");
       expect(member).to.have.property("displayAvatarURLNoFallback");
+      expect(member).to.have.property("_originalAvatarHash");
       expect(member).to.have.property("permissions");
       expect(member).to.have.property("avatarIsAnimated");
       expect(member).to.have.property("mention");
@@ -649,6 +650,15 @@ describe("Member", function () {
     });
   });
 
+  context("check _originalAvatarHash", function () {
+    it("should have the correct _originalAvatarHash", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = TEST_MEMBERS.GENERIC_MEMBER(client);
+      expect(member._originalAvatarHash).to.be.null;
+    });
+  });
+
   context("check permissions", function () {
     it("should have the correct permissions", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -847,6 +857,9 @@ describe("Member", function () {
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
+      expect(rebundled._originalAvatarHash).to.equal(
+        member._originalAvatarHash,
+      );
     });
     it("should rebundle correctly with custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -881,6 +894,9 @@ describe("Member", function () {
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
+      expect(rebundled._originalAvatarHash).to.equal(
+        member._originalAvatarHash,
+      );
     });
     it("should rebundle correctly with custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -915,6 +931,9 @@ describe("Member", function () {
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
+      expect(rebundled._originalAvatarHash).to.equal(
+        member._originalAvatarHash,
+      );
     });
     it("should rebundle correctly with custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -949,6 +968,9 @@ describe("Member", function () {
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
+      expect(rebundled._originalAvatarHash).to.equal(
+        member._originalAvatarHash,
+      );
     });
   });
 });

@@ -551,9 +551,9 @@ class Guild {
    * The hash of the guild's icon, as it was received from Discord.
    * @readonly
    * @type {String?}
-   * @private
+   * @public
    */
-  get #_originalIconHash() {
+  get _originalIconHash() {
     return this.#_icon
       ? // eslint-disable-next-line quotes
         `${this.#_formattedIconHash}`
@@ -585,7 +585,7 @@ class Guild {
    * @public
    */
   get displayIconURL() {
-    return Guild.getIcon(this.id, this.#_originalIconHash);
+    return Guild.getIcon(this.id, this._originalIconHash);
   }
 
   /**
@@ -1601,7 +1601,7 @@ class Guild {
         return {
           id: this.id,
           name: this.name,
-          icon: this.#_originalIconHash,
+          icon: this._originalIconHash,
           owner_id: this.ownerId,
           joined_at: this.joinedAt * 1000,
           unavailable: this.unavailable,
@@ -1625,7 +1625,7 @@ class Guild {
         return {
           id: this.id,
           name: this.name,
-          icon: this.#_originalIconHash,
+          icon: this._originalIconHash,
           owner_id: this.ownerId,
           joined_at: new Date(this.joinedAt * 1000).toISOString(),
           premium_tier: this.premiumTier,

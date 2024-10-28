@@ -159,9 +159,9 @@ class Role {
    * The hash of the role's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
-   * @private
+   * @public
    */
-  get #_originalIconHash() {
+  get _originalIconHash() {
     return this.#_icon
       ? // eslint-disable-next-line quotes
         `${this.#_formattedIconHash}`
@@ -193,7 +193,7 @@ class Role {
    * @public
    */
   get displayIconURL() {
-    return Role.getIconUrl(this.id, this.#_originalIconHash);
+    return Role.getIconUrl(this.id, this._originalIconHash);
   }
 
   /**
@@ -367,7 +367,7 @@ class Role {
           color: this.color,
           position: this.position,
           permissions: this.permissions,
-          icon: this.#_originalIconHash,
+          icon: this._originalIconHash,
           _attributes: this.#_attributes,
           tags: this.tags,
         };
@@ -380,7 +380,7 @@ class Role {
           color: this.color,
           position: this.position,
           permissions: this.permissions,
-          icon: this.#_originalIconHash,
+          icon: this._originalIconHash,
           tags: this.tags,
           hoist: this.hoist,
           managed: this.managed,

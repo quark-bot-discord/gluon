@@ -9,7 +9,6 @@ import {
   TEST_ROLES,
 } from "../../src/testData.js";
 import {
-  Member,
   Guild,
   GuildEmojisManager,
   GuildInviteManager,
@@ -17,7 +16,6 @@ import {
   GuildMemberManager,
   GuildChannelsManager,
   GuildCacheOptions,
-  Role,
 } from "../../src/structures.js";
 import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 
@@ -62,6 +60,7 @@ describe("Guild", function () {
       expect(guild).to.have.property("nsfwLevel");
       expect(guild).to.have.property("emojis");
       expect(guild).to.have.property("invites");
+      expect(guild).to.have.property("_originalIconHash");
       expect(guild).to.have.property("_cacheOptions");
       expect(guild).to.have.property("toString");
       expect(guild).to.have.property("toJSON");
@@ -272,6 +271,13 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(guild.channels).to.be.an.instanceOf(GuildChannelsManager);
+    });
+  });
+  context("check _originalIconHash", function () {
+    it("should have the correct _originalIconHash", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      expect(guild._originalIconHash).to.equal(TEST_DATA.GUILD.icon);
     });
   });
   context("check _cacheOptions", function () {

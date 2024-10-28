@@ -27,6 +27,7 @@ describe("User", function () {
       expect(user).to.have.property("createdTimestamp");
       expect(user).to.have.property("bot");
       expect(user).to.have.property("avatarIsAnimated");
+      expect(user).to.have.property("_originalAvatarHash");
       expect(user).to.have.property("toString");
       expect(user).to.have.property("toJSON");
     });
@@ -85,6 +86,18 @@ describe("User", function () {
       expect(user.displayAvatarURL).to.equal(
         "https://cdn.discordapp.com/avatars/301655085954367490/a_000000000000000000000000deadbeef.gif",
       );
+    });
+  });
+
+  context("check _originalAvatarHash", function () {
+    it("should have the correct _originalAvatarHash", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const user = new User(client, {
+        ...TEST_DATA.USER,
+        avatar: "deadbeef",
+      });
+      expect(user._originalAvatarHash).to.equal("deadbeef");
     });
   });
 
@@ -262,6 +275,7 @@ describe("User", function () {
       expect(rebundled.tag).to.equal(user.tag);
       expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
       expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled._originalAvatarHash).to.equal(user._originalAvatarHash);
       expect(rebundled.toString()).to.equal(user.toString());
       expect(rebundled.toJSON()).to.deep.equal(user.toJSON());
     });
@@ -284,6 +298,7 @@ describe("User", function () {
       expect(rebundled.tag).to.equal(user.tag);
       expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
       expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled._originalAvatarHash).to.equal(user._originalAvatarHash);
       expect(rebundled.toString()).to.equal(user.toString());
     });
     it("should bundle correctly with a custom toJSON", function () {
@@ -305,6 +320,7 @@ describe("User", function () {
       expect(rebundled.tag).to.equal(user.tag);
       expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
       expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled._originalAvatarHash).to.equal(user._originalAvatarHash);
       expect(rebundled.toString()).to.equal(user.toString());
     });
     it("should bundle correctly with a custom toJSON", function () {
@@ -326,6 +342,7 @@ describe("User", function () {
       expect(rebundled.tag).to.equal(user.tag);
       expect(rebundled.createdTimestamp).to.equal(user.createdTimestamp);
       expect(rebundled.avatarIsAnimated).to.equal(user.avatarIsAnimated);
+      expect(rebundled._originalAvatarHash).to.equal(user._originalAvatarHash);
       expect(rebundled.toString()).to.equal(user.toString());
     });
   });

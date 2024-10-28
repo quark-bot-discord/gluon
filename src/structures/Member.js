@@ -345,9 +345,9 @@ class Member {
    * The hash of the member's avatar, as it was received from Discord.
    * @readonly
    * @type {String?}
-   * @private
+   * @public
    */
-  get #_originalAvatarHash() {
+  get _originalAvatarHash() {
     return this.#_avatar
       ? // eslint-disable-next-line quotes
         `${this.avatarIsAnimated ? "a_" : ""}${this.#_formattedAvatarHash}`
@@ -380,7 +380,7 @@ class Member {
    */
   get displayAvatarURL() {
     return (
-      Member.getAvatarUrl(this.id, this.guildId, this.#_originalAvatarHash) ??
+      Member.getAvatarUrl(this.id, this.guildId, this._originalAvatarHash) ??
       this.user.displayAvatarURL
     );
   }
@@ -392,11 +392,7 @@ class Member {
    * @public
    */
   get displayAvatarURLNoFallback() {
-    return Member.getAvatarUrl(
-      this.id,
-      this.guildId,
-      this.#_originalAvatarHash,
-    );
+    return Member.getAvatarUrl(this.id, this.guildId, this._originalAvatarHash);
   }
 
   /**
@@ -813,7 +809,7 @@ class Member {
           user: this.user.toJSON(format),
           nick: this.nick,
           joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
-          avatar: this.#_originalAvatarHash,
+          avatar: this._originalAvatarHash,
           permissions: String(this.permissions),
           roles: Array.isArray(this.#_roles)
             ? this.#_roles
@@ -835,7 +831,7 @@ class Member {
           joined_at: this.joinedAt
             ? new Date(this.joinedAt * 1000).toISOString()
             : undefined,
-          avatar: this.#_originalAvatarHash,
+          avatar: this._originalAvatarHash,
           permissions: String(this.permissions),
           roles: Array.isArray(this.#_roles)
             ? this.#_roles
