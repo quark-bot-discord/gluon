@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 910,
-                22979
+                23267
             ],
             "filename": "Member.js",
             "lineno": 24,
@@ -410,7 +410,7 @@
         "meta": {
             "range": [
                 910,
-                22979
+                23267
             ],
             "filename": "Member.js",
             "lineno": 24,
@@ -2068,11 +2068,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Whether the user has not yet passed the guild's membership screening requirements.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
+        "comment": "/**\n   * The url of the member's avatar without falling back to the user's avatar.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                9744,
-                9820
+                9734,
+                9879
             ],
             "filename": "Member.js",
             "lineno": 394,
@@ -2080,6 +2080,42 @@
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000988",
+                "name": "Member#displayAvatarURLNoFallback",
+                "type": "MethodDefinition",
+                "paramnames": []
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "The url of the member's avatar without falling back to the user's avatar.",
+        "readonly": true,
+        "type": {
+            "names": [
+                "String"
+            ]
+        },
+        "access": "public",
+        "name": "displayAvatarURLNoFallback",
+        "longname": "Member#displayAvatarURLNoFallback",
+        "kind": "member",
+        "memberof": "Member",
+        "scope": "instance",
+        "params": []
+    },
+    {
+        "comment": "/**\n   * Whether the user has not yet passed the guild's membership screening requirements.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
+        "meta": {
+            "range": [
+                10032,
+                10108
+            ],
+            "filename": "Member.js",
+            "lineno": 408,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100001007",
                 "name": "Member#pending",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2107,15 +2143,15 @@
         "comment": "/**\n   * Whether the user has an animated avatar or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                9938,
-                10023
+                10226,
+                10311
             ],
             "filename": "Member.js",
-            "lineno": 404,
+            "lineno": 418,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001005",
+                "id": "astnode100001024",
                 "name": "Member#avatarIsAnimated",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2143,15 +2179,15 @@
         "comment": "/**\n   * The mention string for the member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                10127,
-                10185
+                10415,
+                10473
             ],
             "filename": "Member.js",
-            "lineno": 414,
+            "lineno": 428,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001022",
+                "id": "astnode100001041",
                 "name": "Member#mention",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2179,15 +2215,15 @@
         "comment": "/**\n   * The hash name for the member.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                10284,
-                10358
+                10572,
+                10646
             ],
             "filename": "Member.js",
-            "lineno": 424,
+            "lineno": 438,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001034",
+                "id": "astnode100001053",
                 "name": "Member#hashName",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2215,15 +2251,15 @@
         "comment": "/**\n   * Returns the mention string for the member.\n   * @param {String} userId The id of the user to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                10543,
-                10700
+                10831,
+                10988
             ],
             "filename": "Member.js",
-            "lineno": 436,
+            "lineno": 450,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001049",
+                "id": "astnode100001068",
                 "name": "Member.getMention",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2266,15 +2302,15 @@
         "comment": "/**\n   * Returns the avatar url for the member.\n   * @param {String} id The id of the user.\n   * @param {String} guild_id The id of the guild the user belongs to.\n   * @param {String?} hash The avatar hash of the user.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                10993,
-                11514
+                11281,
+                11802
             ],
             "filename": "Member.js",
-            "lineno": 452,
+            "lineno": 466,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001068",
+                "id": "astnode100001087",
                 "name": "Member.getAvatarUrl",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2338,15 +2374,15 @@
         "comment": "/**\n   * Adds a role to the member.\n   * @param {String} role_id The id of the role to add to the member.\n   * @param {Object?} options The options for adding the role to the member.\n   * @param {String?} options.reason The reason for adding the role to the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                11893,
-                12034
+                12181,
+                12322
             ],
             "filename": "Member.js",
-            "lineno": 477,
+            "lineno": 491,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001127",
+                "id": "astnode100001146",
                 "name": "Member#addRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2421,15 +2457,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11918,
-                11924
+                12206,
+                12212
             ],
             "filename": "Member.js",
-            "lineno": 477,
+            "lineno": 491,
             "columnno": 27,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001133",
+                "id": "astnode100001152",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2445,15 +2481,15 @@
         "comment": "",
         "meta": {
             "range": [
-                12015,
-                12021
+                12303,
+                12309
             ],
             "filename": "Member.js",
-            "lineno": 479,
+            "lineno": 493,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001155",
+                "id": "astnode100001174",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2469,15 +2505,15 @@
         "comment": "/**\n   * Removes a role from the member.\n   * @param {String} role_id The id of the role to remove from the member.\n   * @param {Object?} options The options for removing the role from the member.\n   * @param {String?} options.reason The reason for removing the role from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                12431,
-                12578
+                12719,
+                12866
             ],
             "filename": "Member.js",
-            "lineno": 494,
+            "lineno": 508,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001157",
+                "id": "astnode100001176",
                 "name": "Member#removeRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2552,15 +2588,15 @@
         "comment": "",
         "meta": {
             "range": [
-                12459,
-                12465
+                12747,
+                12753
             ],
             "filename": "Member.js",
-            "lineno": 494,
+            "lineno": 508,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001163",
+                "id": "astnode100001182",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2576,15 +2612,15 @@
         "comment": "",
         "meta": {
             "range": [
-                12559,
-                12565
+                12847,
+                12853
             ],
             "filename": "Member.js",
-            "lineno": 496,
+            "lineno": 510,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001185",
+                "id": "astnode100001204",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2600,15 +2636,15 @@
         "comment": "/**\n   * Adds a timeout to the member.\n   * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.\n   * @param {Object?} options The options for timing out the member.\n   * @param {String?} options.reason The reason for timing out the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                12970,
-                13725
+                13258,
+                14013
             ],
             "filename": "Member.js",
-            "lineno": 511,
+            "lineno": 525,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001187",
+                "id": "astnode100001206",
                 "name": "Member#timeoutAdd",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2683,15 +2719,15 @@
         "comment": "",
         "meta": {
             "range": [
-                13004,
-                13010
+                13292,
+                13298
             ],
             "filename": "Member.js",
-            "lineno": 511,
+            "lineno": 525,
             "columnno": 36,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001193",
+                "id": "astnode100001212",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2707,15 +2743,15 @@
         "comment": "",
         "meta": {
             "range": [
-                13479,
-                13488
+                13767,
+                13776
             ],
             "filename": "Member.js",
-            "lineno": 526,
+            "lineno": 540,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001241",
+                "id": "astnode100001260",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2733,15 +2769,15 @@
         "comment": "",
         "meta": {
             "range": [
-                13507,
-                13542
+                13795,
+                13830
             ],
             "filename": "Member.js",
-            "lineno": 528,
+            "lineno": 542,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001247",
+                "id": "astnode100001266",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2760,15 +2796,15 @@
         "comment": "",
         "meta": {
             "range": [
-                13549,
-                13598
+                13837,
+                13886
             ],
             "filename": "Member.js",
-            "lineno": 530,
+            "lineno": 544,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001253",
+                "id": "astnode100001272",
                 "name": "body.communication_disabled_until",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2787,15 +2823,15 @@
         "comment": "/**\n   * Removes a timeout from the member.\n   * @param {Object?} options The options for untiming out the member.\n   * @param {String?} options.reason The reason for removing the time out from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                14044,
-                14657
+                14332,
+                14945
             ],
             "filename": "Member.js",
-            "lineno": 549,
+            "lineno": 563,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001278",
+                "id": "astnode100001297",
                 "name": "Member#timeoutRemove",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2860,15 +2896,15 @@
         "comment": "",
         "meta": {
             "range": [
-                14066,
-                14072
+                14354,
+                14360
             ],
             "filename": "Member.js",
-            "lineno": 549,
+            "lineno": 563,
             "columnno": 24,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001283",
+                "id": "astnode100001302",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -2884,15 +2920,15 @@
         "comment": "",
         "meta": {
             "range": [
-                14420,
-                14429
+                14708,
+                14717
             ],
             "filename": "Member.js",
-            "lineno": 561,
+            "lineno": 575,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001322",
+                "id": "astnode100001341",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2910,15 +2946,15 @@
         "comment": "",
         "meta": {
             "range": [
-                14448,
-                14483
+                14736,
+                14771
             ],
             "filename": "Member.js",
-            "lineno": 563,
+            "lineno": 577,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001328",
+                "id": "astnode100001347",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2937,15 +2973,15 @@
         "comment": "",
         "meta": {
             "range": [
-                14490,
-                14530
+                14778,
+                14818
             ],
             "filename": "Member.js",
-            "lineno": 565,
+            "lineno": 579,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001334",
+                "id": "astnode100001353",
                 "name": "body.communication_disabled_until",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -2964,15 +3000,15 @@
         "comment": "/**\n   * Updates the member's roles.\n   * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.\n   * @param {Object?} options The options for updating the member's roles.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                14986,
-                15784
+                15274,
+                16072
             ],
             "filename": "Member.js",
-            "lineno": 584,
+            "lineno": 598,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001359",
+                "id": "astnode100001378",
                 "name": "Member#massUpdateRoles",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3037,15 +3073,15 @@
         "comment": "",
         "meta": {
             "range": [
-                15017,
-                15023
+                15305,
+                15311
             ],
             "filename": "Member.js",
-            "lineno": 584,
+            "lineno": 598,
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001365",
+                "id": "astnode100001384",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -3061,15 +3097,15 @@
         "comment": "",
         "meta": {
             "range": [
-                15538,
-                15547
+                15826,
+                15835
             ],
             "filename": "Member.js",
-            "lineno": 602,
+            "lineno": 616,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001427",
+                "id": "astnode100001446",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -3087,15 +3123,15 @@
         "comment": "",
         "meta": {
             "range": [
-                15566,
-                15601
+                15854,
+                15889
             ],
             "filename": "Member.js",
-            "lineno": 604,
+            "lineno": 618,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001433",
+                "id": "astnode100001452",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -3114,15 +3150,15 @@
         "comment": "",
         "meta": {
             "range": [
-                15608,
-                15657
+                15896,
+                15945
             ],
             "filename": "Member.js",
-            "lineno": 606,
+            "lineno": 620,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001439",
+                "id": "astnode100001458",
                 "name": "body.roles",
                 "type": "CallExpression",
                 "funcscope": "<anonymous>",
@@ -3141,15 +3177,15 @@
         "comment": "/**\n   * Determines whether the member should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                16083,
-                16615
+                16371,
+                16903
             ],
             "filename": "Member.js",
-            "lineno": 624,
+            "lineno": 638,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001473",
+                "id": "astnode100001492",
                 "name": "Member.shouldCache",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3202,15 +3238,15 @@
         "comment": "/**\n   * Returns the hash name for the message.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} memberId The id of the member.\n   * @returns {String}\n   */",
         "meta": {
             "range": [
-                16828,
-                17124
+                17116,
+                17412
             ],
             "filename": "Member.js",
-            "lineno": 644,
+            "lineno": 658,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001515",
+                "id": "astnode100001534",
                 "name": "Member.getHashName",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3262,15 +3298,15 @@
         "comment": "/**\n   * Decrypts a member.\n   * @param {Client} client The client instance.\n   * @param {String} data The encrypted message data.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} userId The id of the member.\n   * @returns {Member}\n   */",
         "meta": {
             "range": [
-                17418,
-                17998
+                17706,
+                18286
             ],
             "filename": "Member.js",
-            "lineno": 660,
+            "lineno": 674,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001544",
+                "id": "astnode100001563",
                 "name": "Member.decrypt",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3342,15 +3378,15 @@
         "comment": "",
         "meta": {
             "range": [
-                17947,
-                17961
+                18235,
+                18249
             ],
             "filename": "Member.js",
-            "lineno": 670,
+            "lineno": 684,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001598",
+                "id": "astnode100001617",
                 "name": "userId",
                 "type": "Identifier",
                 "value": "userId"
@@ -3366,15 +3402,15 @@
         "comment": "",
         "meta": {
             "range": [
-                17969,
-                17985
+                18257,
+                18273
             ],
             "filename": "Member.js",
-            "lineno": 671,
+            "lineno": 685,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001600",
+                "id": "astnode100001619",
                 "name": "guildId",
                 "type": "Identifier",
                 "value": "guildId"
@@ -3390,15 +3426,15 @@
         "comment": "/**\n   * Adds a role to a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to add.\n   * @param {Object} options The options for adding the role.\n   * @param {String} options.reason The reason for adding the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                18516,
-                19431
+                18804,
+                19719
             ],
             "filename": "Member.js",
-            "lineno": 689,
+            "lineno": 703,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001602",
+                "id": "astnode100001621",
                 "name": "Member.addRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3500,15 +3536,15 @@
         "comment": "",
         "meta": {
             "range": [
-                18572,
-                18578
+                18860,
+                18866
             ],
             "filename": "Member.js",
-            "lineno": 689,
+            "lineno": 703,
             "columnno": 58,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001611",
+                "id": "astnode100001630",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -3524,15 +3560,15 @@
         "comment": "",
         "meta": {
             "range": [
-                19241,
-                19250
+                19529,
+                19538
             ],
             "filename": "Member.js",
-            "lineno": 707,
+            "lineno": 721,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001680",
+                "id": "astnode100001699",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -3550,15 +3586,15 @@
         "comment": "",
         "meta": {
             "range": [
-                19269,
-                19304
+                19557,
+                19592
             ],
             "filename": "Member.js",
-            "lineno": 709,
+            "lineno": 723,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001686",
+                "id": "astnode100001705",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -3577,15 +3613,15 @@
         "comment": "/**\n   * Removes a role from a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to remove.\n   * @param {Object} options The options for removing the role.\n   * @param {String} options.reason The reason for removing the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                19961,
-                20880
+                20249,
+                21168
             ],
             "filename": "Member.js",
-            "lineno": 732,
+            "lineno": 746,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001705",
+                "id": "astnode100001724",
                 "name": "Member.removeRole",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3687,15 +3723,15 @@
         "comment": "",
         "meta": {
             "range": [
-                20020,
-                20026
+                20308,
+                20314
             ],
             "filename": "Member.js",
-            "lineno": 732,
+            "lineno": 746,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001714",
+                "id": "astnode100001733",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -3711,15 +3747,15 @@
         "comment": "",
         "meta": {
             "range": [
-                20689,
-                20698
+                20977,
+                20986
             ],
             "filename": "Member.js",
-            "lineno": 750,
+            "lineno": 764,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001783",
+                "id": "astnode100001802",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -3737,15 +3773,15 @@
         "comment": "",
         "meta": {
             "range": [
-                20717,
-                20752
+                21005,
+                21040
             ],
             "filename": "Member.js",
-            "lineno": 752,
+            "lineno": 766,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001789",
+                "id": "astnode100001808",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -3764,15 +3800,15 @@
         "comment": "/**\n   * Encrypts the member.\n   * @returns {String}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                20971,
-                21044
+                21259,
+                21332
             ],
             "filename": "Member.js",
-            "lineno": 767,
+            "lineno": 781,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001808",
+                "id": "astnode100001827",
                 "name": "Member#encrypt",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3803,15 +3839,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                21086,
-                21137
+                21374,
+                21425
             ],
             "filename": "Member.js",
-            "lineno": 775,
+            "lineno": 789,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001822",
+                "id": "astnode100001841",
                 "name": "Member#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3832,15 +3868,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                21179,
-                21236
+                21467,
+                21524
             ],
             "filename": "Member.js",
-            "lineno": 783,
+            "lineno": 797,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001833",
+                "id": "astnode100001852",
                 "name": "Member#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3861,15 +3897,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                21419,
-                22977
+                21707,
+                23265
             ],
             "filename": "Member.js",
-            "lineno": 794,
+            "lineno": 808,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001846",
+                "id": "astnode100001865",
                 "name": "Member#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3912,15 +3948,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21577,
-                21607
+                21865,
+                21895
             ],
             "filename": "Member.js",
-            "lineno": 799,
+            "lineno": 813,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001864",
+                "id": "astnode100001883",
                 "name": "user",
                 "type": "CallExpression",
                 "value": ""
@@ -3936,15 +3972,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21619,
-                21634
+                21907,
+                21922
             ],
             "filename": "Member.js",
-            "lineno": 800,
+            "lineno": 814,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001872",
+                "id": "astnode100001891",
                 "name": "nick",
                 "type": "MemberExpression",
                 "value": "this.nick"
@@ -3960,15 +3996,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21646,
-                21705
+                21934,
+                21993
             ],
             "filename": "Member.js",
-            "lineno": 801,
+            "lineno": 815,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001876",
+                "id": "astnode100001895",
                 "name": "joined_at",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -3984,15 +4020,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21717,
-                21750
+                22005,
+                22038
             ],
             "filename": "Member.js",
-            "lineno": 802,
+            "lineno": 816,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001887",
+                "id": "astnode100001906",
                 "name": "avatar",
                 "type": "MemberExpression",
                 "value": "this."
@@ -4008,15 +4044,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21762,
-                21799
+                22050,
+                22087
             ],
             "filename": "Member.js",
-            "lineno": 803,
+            "lineno": 817,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001892",
+                "id": "astnode100001911",
                 "name": "permissions",
                 "type": "CallExpression",
                 "value": ""
@@ -4032,15 +4068,15 @@
         "comment": "",
         "meta": {
             "range": [
-                21811,
-                21994
+                22099,
+                22282
             ],
             "filename": "Member.js",
-            "lineno": 804,
+            "lineno": 818,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001898",
+                "id": "astnode100001917",
                 "name": "roles",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -4056,15 +4092,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22006,
-                22116
+                22294,
+                22404
             ],
             "filename": "Member.js",
-            "lineno": 809,
+            "lineno": 823,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001933",
+                "id": "astnode100001952",
                 "name": "communication_disabled_until",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -4080,15 +4116,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22128,
-                22145
+                22416,
+                22433
             ],
             "filename": "Member.js",
-            "lineno": 812,
+            "lineno": 826,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001944",
+                "id": "astnode100001963",
                 "name": "flags",
                 "type": "MemberExpression",
                 "value": "this.flags"
@@ -4104,15 +4140,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22157,
-                22187
+                22445,
+                22475
             ],
             "filename": "Member.js",
-            "lineno": 813,
+            "lineno": 827,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001948",
+                "id": "astnode100001967",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -4128,15 +4164,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22298,
-                22328
+                22586,
+                22616
             ],
             "filename": "Member.js",
-            "lineno": 819,
+            "lineno": 833,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001961",
+                "id": "astnode100001980",
                 "name": "user",
                 "type": "CallExpression",
                 "value": ""
@@ -4152,15 +4188,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22340,
-                22355
+                22628,
+                22643
             ],
             "filename": "Member.js",
-            "lineno": 820,
+            "lineno": 834,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001969",
+                "id": "astnode100001988",
                 "name": "nick",
                 "type": "MemberExpression",
                 "value": "this.nick"
@@ -4176,15 +4212,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22367,
-                22474
+                22655,
+                22762
             ],
             "filename": "Member.js",
-            "lineno": 821,
+            "lineno": 835,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001973",
+                "id": "astnode100001992",
                 "name": "joined_at",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -4200,15 +4236,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22486,
-                22519
+                22774,
+                22807
             ],
             "filename": "Member.js",
-            "lineno": 824,
+            "lineno": 838,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001989",
+                "id": "astnode100002008",
                 "name": "avatar",
                 "type": "MemberExpression",
                 "value": "this."
@@ -4224,15 +4260,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22531,
-                22568
+                22819,
+                22856
             ],
             "filename": "Member.js",
-            "lineno": 825,
+            "lineno": 839,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100001994",
+                "id": "astnode100002013",
                 "name": "permissions",
                 "type": "CallExpression",
                 "value": ""
@@ -4248,15 +4284,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22580,
-                22763
+                22868,
+                23051
             ],
             "filename": "Member.js",
-            "lineno": 826,
+            "lineno": 840,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100002000",
+                "id": "astnode100002019",
                 "name": "roles",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -4272,15 +4308,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22775,
-                22885
+                23063,
+                23173
             ],
             "filename": "Member.js",
-            "lineno": 831,
+            "lineno": 845,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100002035",
+                "id": "astnode100002054",
                 "name": "communication_disabled_until",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -4296,15 +4332,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22897,
-                22914
+                23185,
+                23202
             ],
             "filename": "Member.js",
-            "lineno": 834,
+            "lineno": 848,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100002046",
+                "id": "astnode100002065",
                 "name": "flags",
                 "type": "MemberExpression",
                 "value": "this.flags"
@@ -4320,15 +4356,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22926,
-                22947
+                23214,
+                23235
             ],
             "filename": "Member.js",
-            "lineno": 835,
+            "lineno": 849,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100002050",
+                "id": "astnode100002069",
                 "name": "pending",
                 "type": "MemberExpression",
                 "value": "this.pending"
@@ -4344,15 +4380,15 @@
         "comment": "",
         "meta": {
             "range": [
-                22981,
-                23003
+                23269,
+                23291
             ],
             "filename": "Member.js",
-            "lineno": 842,
+            "lineno": 856,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100002054",
+                "id": "astnode100002073",
                 "name": "module.exports",
                 "type": "Identifier"
             }

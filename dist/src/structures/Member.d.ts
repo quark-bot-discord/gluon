@@ -192,6 +192,13 @@ declare class Member {
      */
     public readonly get displayAvatarURL(): string;
     /**
+     * The url of the member's avatar without falling back to the user's avatar.
+     * @readonly
+     * @type {String}
+     * @public
+     */
+    public readonly get displayAvatarURLNoFallback(): string;
+    /**
      * Whether the user has not yet passed the guild's membership screening requirements.
      * @readonly
      * @type {Boolean}
