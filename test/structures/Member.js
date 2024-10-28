@@ -32,6 +32,7 @@ describe("Member", function () {
       expect(member).to.have.property("highestRolePosition");
       expect(member).to.have.property("rejoined");
       expect(member).to.have.property("displayAvatarURL");
+      expect(member).to.have.property("displayAvatarURLNoFallback");
       expect(member).to.have.property("permissions");
       expect(member).to.have.property("avatarIsAnimated");
       expect(member).to.have.property("mention");
@@ -639,6 +640,15 @@ describe("Member", function () {
     });
   });
 
+  context("check displayAvatarURLNoFallback", function () {
+    it("should have the correct displayAvatarURLNoFallback", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const member = TEST_MEMBERS.GENERIC_MEMBER(client);
+      expect(member.displayAvatarURLNoFallback).to.be.null;
+    });
+  });
+
   context("check permissions", function () {
     it("should have the correct permissions", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -831,6 +841,9 @@ describe("Member", function () {
       expect(rebundled.rejoined).to.equal(member.rejoined);
       expect(rebundled.permissions).to.equal(member.permissions);
       expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.displayAvatarURLNoFallback).to.equal(
+        member.displayAvatarURLNoFallback,
+      );
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
@@ -862,6 +875,9 @@ describe("Member", function () {
       expect(rebundled.rejoined).to.equal(member.rejoined);
       expect(rebundled.permissions).to.equal(member.permissions);
       expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.displayAvatarURLNoFallback).to.equal(
+        member.displayAvatarURLNoFallback,
+      );
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
@@ -893,6 +909,9 @@ describe("Member", function () {
       expect(rebundled.rejoined).to.equal(member.rejoined);
       expect(rebundled.permissions).to.equal(member.permissions);
       expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.displayAvatarURLNoFallback).to.equal(
+        member.displayAvatarURLNoFallback,
+      );
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);
@@ -924,6 +943,9 @@ describe("Member", function () {
       expect(rebundled.rejoined).to.equal(member.rejoined);
       expect(rebundled.permissions).to.equal(member.permissions);
       expect(rebundled.displayAvatarURL).to.equal(member.displayAvatarURL);
+      expect(rebundled.displayAvatarURLNoFallback).to.equal(
+        member.displayAvatarURLNoFallback,
+      );
       expect(rebundled.pending).to.equal(member.pending);
       expect(rebundled.avatarIsAnimated).to.equal(member.avatarIsAnimated);
       expect(rebundled.mention).to.equal(member.mention);

@@ -386,6 +386,20 @@ class Member {
   }
 
   /**
+   * The url of the member's avatar without falling back to the user's avatar.
+   * @readonly
+   * @type {String}
+   * @public
+   */
+  get displayAvatarURLNoFallback() {
+    return Member.getAvatarUrl(
+      this.id,
+      this.guildId,
+      this.#_originalAvatarHash,
+    );
+  }
+
+  /**
    * Whether the user has not yet passed the guild's membership screening requirements.
    * @readonly
    * @type {Boolean}
