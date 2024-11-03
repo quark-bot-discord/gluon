@@ -191,12 +191,12 @@ class Member {
       this.guild.members.set(userId, this);
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `CACHE MEMBER ${guildId} ${data.id}`,
+        `CACHE MEMBER ${guildId} ${userId}`,
       );
     } else {
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `NO CACHE MEMBER ${guildId} ${data.id} (${memberIsClient} ${nocache} ${shouldCache})`,
+        `NO CACHE MEMBER ${guildId} ${userId} (${memberIsClient} ${nocache} ${shouldCache})`,
       );
     }
   }
