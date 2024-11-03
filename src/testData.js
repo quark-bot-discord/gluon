@@ -188,7 +188,6 @@ export const TEST_DATA = {
     nsfw: false,
     topic: "test nice",
     last_message_id: null,
-    parent_id: null,
     last_pin_timestamp: null,
     owner_id: "123456789012345678",
     parent_id: "123456789112345678",
