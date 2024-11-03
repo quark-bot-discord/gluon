@@ -115,12 +115,12 @@ class User {
       this.#_client.users.set(data.id, this);
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `CACHE USER ${guildId} ${data.id}`,
+        `CACHE USER ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `CACHE USER ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+        `CACHE USER ${data.id} (${nocache} ${shouldCache})`,
       );
     }
   }
