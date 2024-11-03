@@ -97,7 +97,9 @@ describe("User", function () {
         ...TEST_DATA.USER,
         avatar: "deadbeef",
       });
-      expect(user._originalAvatarHash).to.equal("deadbeef");
+      expect(user._originalAvatarHash).to.equal(
+        "000000000000000000000000deadbeef",
+      );
     });
   });
 

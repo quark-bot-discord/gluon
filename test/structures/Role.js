@@ -157,19 +157,25 @@ describe("Role", function () {
     it("should have the correct _originalIconHash", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = new Role(client, {
-        id: TEST_DATA.ROLE_ID,
-        name: "role",
-        color: 123456,
-        position: 1,
-        permissions: 8,
-        tags: {
-          bot_id: "123456789012345678",
-          integration_id: null,
-          premium_subscriber: null,
+      const role = new Role(
+        client,
+        {
+          id: TEST_DATA.ROLE_ID,
+          name: "role",
+          color: 123456,
+          position: 1,
+          permissions: 8,
+          tags: {
+            bot_id: "123456789012345678",
+            integration_id: null,
+            premium_subscriber: null,
+          },
+          icon: "hash",
         },
-        icon: "hash",
-      });
+        {
+          guildId: TEST_DATA.GUILD_ID,
+        },
+      );
       expect(role._originalIconHash).to.equal("hash");
     });
   });
