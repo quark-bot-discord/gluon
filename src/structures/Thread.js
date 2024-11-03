@@ -1,5 +1,5 @@
 import Client from "../Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
@@ -56,12 +56,23 @@ class Thread extends Channel {
      */
     this.#_parent_id = BigInt(data.parent_id);
 
-    if (
-      nocache === false &&
-      data.archived !== true &&
-      Thread.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
-    )
+    const shouldCache = Thread.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && data.archived !== true && shouldCache) {
       this.guild.channels.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE THREAD ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${data.archived} ${shouldCache})`,
+      );
+    }
   }
 
   /**

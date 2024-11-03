@@ -7,6 +7,7 @@ import {
   TO_JSON_TYPES_ENUM,
   LIMITS,
   MESSAGE_FLAGS,
+  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
@@ -349,33 +350,64 @@ class Message {
         this.#message_snapshots = existing.messageSnapshots;
     }
 
+    const shouldCache = Message.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+      this.channel._cacheOptions,
+    );
+
+    const attachmentsPresent =
+      this.#attachments.length !== 0 &&
+      this.channel._cacheOptions.fileCaching === true;
+    const contentPresent =
+      this.#content && this.channel._cacheOptions.contentCaching === true;
+    const pollPresent =
+      this.#poll && this.channel._cacheOptions.pollCaching === true;
+    const reactionsPresent =
+      this.#reactions && this.channel._cacheOptions.reactionCaching === true;
+    const embedsPresent =
+      this.#embeds.length !== 0 &&
+      this.channel._cacheOptions.embedCaching === true;
+    const attributesPresent =
+      this.#_attributes !== 0 &&
+      this.channel._cacheOptions.attributeCaching === true;
+    const referencePresent =
+      this.#reference.message_id &&
+      this.channel._cacheOptions.referenceCaching === true;
+    const webhookPresent =
+      this.#webhook_id && this.channel._cacheOptions.webhookCaching === true;
+    const stickerPresent =
+      this.#sticker_items.length !== 0 &&
+      this.channel._cacheOptions.stickerCaching === true;
+    const snapshotsPresent =
+      this.#message_snapshots &&
+      this.channel._cacheOptions.referenceCaching === true;
+
     if (
       nocache === false &&
-      Message.shouldCache(
-        this.#_client._cacheOptions,
-        this.guild._cacheOptions,
-        this.channel._cacheOptions,
-      ) &&
-      ((this.#attachments.length !== 0 &&
-        this.channel._cacheOptions.fileCaching === true) ||
-        (this.#content && this.channel._cacheOptions.contentCaching === true) ||
-        (this.#poll && this.channel._cacheOptions.pollCaching === true) ||
-        (this.#reactions &&
-          this.channel._cacheOptions.reactionCaching === true) ||
-        (this.#embeds.length !== 0 &&
-          this.channel._cacheOptions.embedCaching === true) ||
-        (this.#_attributes !== 0 &&
-          this.channel._cacheOptions.attributeCaching === true) ||
-        (this.#reference.message_id &&
-          this.channel._cacheOptions.referenceCaching === true) ||
-        (this.#webhook_id &&
-          this.channel._cacheOptions.webhookCaching === true) ||
-        (this.#sticker_items.length !== 0 &&
-          this.channel._cacheOptions.stickerCaching === true) ||
-        (this.#message_snapshots &&
-          this.channel._cacheOptions.referenceCaching === true))
-    )
+      shouldCache &&
+      (attachmentsPresent ||
+        contentPresent ||
+        pollPresent ||
+        reactionsPresent ||
+        embedsPresent ||
+        attributesPresent ||
+        referencePresent ||
+        webhookPresent ||
+        stickerPresent ||
+        snapshotsPresent)
+    ) {
       this.channel?.messages.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE MESSAGE ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE MESSAGE ${guildId} ${data.id} (${nocache} ${shouldCache} ${attachmentsPresent} ${contentPresent} ${pollPresent} ${reactionsPresent} ${embedsPresent} ${attributesPresent} ${referencePresent} ${webhookPresent} ${stickerPresent} ${snapshotsPresent})`,
+      );
+    }
   }
 
   /**

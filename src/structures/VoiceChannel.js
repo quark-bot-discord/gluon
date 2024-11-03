@@ -1,5 +1,5 @@
 import Client from "../Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
 import util from "util";
@@ -72,11 +72,23 @@ class VoiceChannel extends Channel {
     else if (existing && typeof existing.rtcRegion == "string")
       this.#rtc_region = existing.rtcRegion;
 
-    if (
-      nocache === false &&
-      Channel.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
-    )
+    const shouldCache = Channel.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache) {
       this.guild.channels.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE VOICECHANNEL ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE VOICECHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)

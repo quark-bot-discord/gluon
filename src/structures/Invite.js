@@ -1,5 +1,9 @@
 import Client from "../Client.js";
-import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  GLUON_DEBUG_LEVELS,
+  INVITE_BASE_URL,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
@@ -105,16 +109,26 @@ class Invite {
        */
       this.#max_uses = data.max_uses;
 
-    if (
-      nocache === false &&
-      Invite.shouldCache(
-        this.#_client._cacheOptions,
-        this.guild._cacheOptions,
-      ) &&
-      this.#_code &&
-      ((this.#expires && this.#expires > Date.now() / 1000) || !this.#expires)
-    )
+    const shouldCache = Invite.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    const notExpired =
+      (this.#expires && this.#expires > Date.now() / 1000) || !this.#expires;
+
+    if (nocache === false && shouldCache && this.#_code && notExpired) {
       this.guild.invites.set(data.code, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE INVITE ${guildId} ${data.code}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE INVITE ${guildId} ${data.code} (${nocache} ${notExpired})`,
+      );
+    }
   }
 
   /**

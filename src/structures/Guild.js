@@ -1,6 +1,7 @@
 import {
   AUDIT_LOG_TYPES,
   CDN_BASE_URL,
+  GLUON_DEBUG_LEVELS,
   NAME,
   PERMISSIONS,
   TO_JSON_TYPES_ENUM,
@@ -88,8 +89,20 @@ class Guild {
     if (data.unavailable == true) {
       this.#unavailable = true;
 
-      if (nocache === false && Guild.shouldCache(this.#_client._cacheOptions))
+      const shouldCache = Guild.shouldCache(this.#_client._cacheOptions);
+
+      if (nocache === false && shouldCache) {
         this.#_client.guilds.set(data.id, this);
+        this.#_client._emitDebug(
+          GLUON_DEBUG_LEVELS.INFO,
+          `CACHE GUILD ${data.id} (UNAVAILABLE)`,
+        );
+      } else {
+        this.#_client._emitDebug(
+          GLUON_DEBUG_LEVELS.INFO,
+          `NO CACHE GUILD ${data.id} (UNAVAILABLE) (${nocache} ${shouldCache})`,
+        );
+      }
       return;
     }
 
@@ -459,8 +472,20 @@ class Guild {
       data._cacheOptions || this.#_client._defaultGuildCacheOptions.toJSON(),
     );
 
-    if (nocache === false && Guild.shouldCache(this.#_client._cacheOptions))
+    const shouldCache = Guild.shouldCache(this.#_client._cacheOptions);
+
+    if (nocache === false && shouldCache) {
       this.#_client.guilds.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE GUILD ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE GUILD ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
 
     if (
       data.members &&

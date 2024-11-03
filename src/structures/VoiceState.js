@@ -1,5 +1,9 @@
 import Client from "../Client.js";
-import { GLUON_CACHING_OPTIONS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  GLUON_CACHING_OPTIONS,
+  GLUON_DEBUG_LEVELS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Member from "./Member.js";
@@ -124,14 +128,23 @@ class VoiceState {
       this.#request_to_speak_timestamp =
         (new Date(data.request_to_speak_timestamp).getTime() / 1000) | 0;
 
-    if (
-      nocache === false &&
-      VoiceState.shouldCache(
-        this.#_client._cacheOptions,
-        this.guild._cacheOptions,
-      )
-    )
+    const shouldCache = VoiceState.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache) {
       this.guild.voiceStates.set(data.user_id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE VOICESTATE ${guildId} ${data.user_id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE VOICESTATE ${guildId} ${data.user_id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
 
   /**

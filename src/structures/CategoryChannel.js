@@ -1,5 +1,5 @@
 import Client from "../Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
@@ -102,11 +102,23 @@ class CategoryChannel {
     )
       this.#permission_overwrites = existing.permissionOverwrites;
 
-    if (
-      nocache === false &&
-      Channel.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
-    )
+    const shouldCache = Channel.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache) {
       this.guild?.channels.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE CATEGORYCHANNEL ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE CATEGORYCHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
 
   /**

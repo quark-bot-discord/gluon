@@ -3,6 +3,7 @@ import {
   MEMBER_FLAGS,
   TO_JSON_TYPES_ENUM,
   CDN_BASE_URL,
+  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -179,15 +180,24 @@ class Member {
         if (data.roles[i] != guildId) this.#_roles.push(BigInt(data.roles[i]));
     }
 
-    if (
-      this.id === this.#_client.user.id ||
-      (nocache === false &&
-        Member.shouldCache(
-          this.#_client._cacheOptions,
-          this.guild._cacheOptions,
-        ))
-    ) {
+    const memberIsClient = this.id === this.#_client.user.id;
+
+    const shouldCache = Member.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (memberIsClient || (nocache === false && shouldCache)) {
       this.guild.members.set(userId, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE MEMBER ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE MEMBER ${guildId} ${data.id} (${memberIsClient} ${nocache} ${shouldCache})`,
+      );
     }
   }
 

@@ -1,5 +1,9 @@
 import Client from "../Client.js";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  CDN_BASE_URL,
+  GLUON_DEBUG_LEVELS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -108,11 +112,23 @@ class Role {
 
     if (data.tags) this.#tags = data.tags;
 
-    if (
-      nocache === false &&
-      Role.shouldCache(this.#_client._cacheOptions, this.guild._cacheOptions)
-    )
+    const shouldCache = Role.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache) {
       this.guild.roles.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE ROLE ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE ROLE ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
 
   /**

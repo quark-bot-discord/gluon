@@ -1,5 +1,9 @@
 import Client from "../Client.js";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  CDN_BASE_URL,
+  GLUON_DEBUG_LEVELS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -81,15 +85,23 @@ class Emoji {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (
-      nocache === false &&
-      Emoji.shouldCache(
-        this.#_client._cacheOptions,
-        this.guild._cacheOptions,
-      ) &&
-      this.id
-    )
+    const shouldCache = Emoji.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache && this.id) {
       this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE EMOJI ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
 
   /**

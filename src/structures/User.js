@@ -1,5 +1,9 @@
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  CDN_BASE_URL,
+  GLUON_DEBUG_LEVELS,
+  TO_JSON_TYPES_ENUM,
+} from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Client from "../Client.js";
@@ -105,8 +109,19 @@ class User {
     if (data._cached) this.#_cached = data._cached;
     else this.#_cached = (new Date().getTime() / 1000) | 0;
 
-    if (nocache === false && User.shouldCache(this.#_client._cacheOptions)) {
+    const shouldCache = User.shouldCache(this.#_client._cacheOptions);
+
+    if (nocache === false && shouldCache) {
       this.#_client.users.set(data.id, this);
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE USER ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GLUON_DEBUG_LEVELS.INFO,
+        `CACHE USER ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
     }
   }
 
