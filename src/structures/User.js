@@ -120,7 +120,7 @@ class User {
     } else {
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `CACHE USER ${data.id} (${nocache} ${shouldCache})`,
+        `NO CACHE USER ${data.id} (${nocache} ${shouldCache})`,
       );
     }
   }
