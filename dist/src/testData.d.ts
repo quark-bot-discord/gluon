@@ -202,12 +202,12 @@ export namespace TEST_DATA {
         export { topic_3 as topic };
         let last_message_id_3: any;
         export { last_message_id_3 as last_message_id };
-        let parent_id_4: string;
-        export { parent_id_4 as parent_id };
         let last_pin_timestamp_3: any;
         export { last_pin_timestamp_3 as last_pin_timestamp };
         let owner_id_1: string;
         export { owner_id_1 as owner_id };
+        let parent_id_4: string;
+        export { parent_id_4 as parent_id };
     }
     let CHANNEL_ID: string;
     let MESSAGE_ID: string;
