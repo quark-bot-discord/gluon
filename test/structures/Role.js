@@ -170,13 +170,15 @@ describe("Role", function () {
             integration_id: null,
             premium_subscriber: null,
           },
-          icon: "hash",
+          icon: "deadbeef",
         },
         {
           guildId: TEST_DATA.GUILD_ID,
         },
       );
-      expect(role._originalIconHash).to.equal("hash");
+      expect(role._originalIconHash).to.equal(
+        "000000000000000000000000deadbeef",
+      );
     });
   });
 
