@@ -60,6 +60,13 @@ declare class Interaction {
      */
     public readonly get member(): Member;
     /**
+     * The options provided with the interaction.
+     * @type {Array<Object>}
+     * @readonly
+     * @public
+     */
+    public readonly get options(): any[];
+    /**
      * Prompts a user to enter text using a modal.
      * @param {Object} options Modal options.
      * @returns {Promise<void>}
