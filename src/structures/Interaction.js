@@ -18,6 +18,7 @@ class Interaction {
   #_channel_id;
   #token;
   #member;
+  #options;
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.
@@ -82,6 +83,13 @@ class Interaction {
      * @private
      */
     this.#token = data.token;
+
+    /**
+     * The options provided with the interaction.
+     * @type {Array<Object>}
+     * @private
+     */
+    this.#options = data.data.options;
   }
 
   /**
@@ -152,6 +160,16 @@ class Interaction {
    */
   get member() {
     return this.#member;
+  }
+
+  /**
+   * The options provided with the interaction.
+   * @type {Array<Object>}
+   * @readonly
+   * @public
+   */
+  get options() {
+    return this.#options;
   }
 
   /**
@@ -357,6 +375,9 @@ class Interaction {
           channel_id: this.channelId,
           member: this.member.toJSON(format),
           type: this.type,
+          data: {
+            options: this.options,
+          },
         };
       }
     }

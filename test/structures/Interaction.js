@@ -26,6 +26,7 @@ describe("Interaction", function () {
       expect(interaction).to.have.property("guildId");
       expect(interaction).to.have.property("channelId");
       expect(interaction).to.have.property("member");
+      expect(interaction).to.have.property("options");
       expect(interaction).to.have.property("guild");
       expect(interaction).to.have.property("channel");
       expect(interaction).to.have.property("textPrompt");
@@ -100,6 +101,16 @@ describe("Interaction", function () {
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.channel.id).to.equal(TEST_DATA.INTERACTION.channel_id);
       expect(interaction.channel).to.be.an.instanceOf(TextChannel);
+    });
+  });
+
+  context("check options", function () {
+    it("should have the correct options", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+      expect(interaction.options).to.deep.equal([]);
     });
   });
 
