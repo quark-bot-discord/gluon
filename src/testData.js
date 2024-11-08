@@ -2,6 +2,7 @@ import Client from "./Client.js";
 import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import {
+  ButtonClick,
   Emoji,
   Interaction,
   Invite,
@@ -1346,6 +1347,13 @@ export const TEST_INVITES = {
 export const TEST_INTERACTIONS = {
   GENERIC_INTERACTION: (client) => {
     const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+    return interaction;
+  },
+  BUTTON_CLICK: (client) => {
+    const interaction = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
+      guildId: TEST_DATA.GUILD_ID,
+      channelId: TEST_DATA.CHANNEL_ID,
+    });
     return interaction;
   },
 };
