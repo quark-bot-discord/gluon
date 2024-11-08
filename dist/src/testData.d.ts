@@ -1642,7 +1642,9 @@ export namespace TEST_INVITES {
     function GENERIC_INVITE(client: any): Invite;
 }
 export namespace TEST_INTERACTIONS {
-    function GENERIC_INTERACTION(client: any): Interaction;
+    export function GENERIC_INTERACTION(client: any): Interaction;
+    export function BUTTON_CLICK_1(client: any): ButtonClick;
+    export { BUTTON_CLICK_1 as BUTTON_CLICK };
 }
 import Client from "./Client.js";
 import Guild from "./structures/Guild.js";
@@ -1658,4 +1660,5 @@ import User from "./structures/User.js";
 import { Emoji } from "./structures.js";
 import { Invite } from "./structures.js";
 import { Interaction } from "./structures.js";
+import { ButtonClick } from "./structures.js";
 //# sourceMappingURL=testData.d.ts.map
