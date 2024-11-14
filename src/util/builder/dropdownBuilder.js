@@ -271,7 +271,6 @@ class Dropdown {
           SELECT_MENU_TYPES.USER,
           SELECT_MENU_TYPES.ROLE,
           SELECT_MENU_TYPES.MENTIONABLE,
-          SELECT_MENU_TYPES.CHANNEL,
         ].includes(this.type)
       )
         throw new TypeError(
