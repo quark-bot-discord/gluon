@@ -1643,6 +1643,8 @@ export namespace TEST_INVITES {
 }
 export namespace TEST_INTERACTIONS {
     export function GENERIC_INTERACTION(client: any): Interaction;
+    export function SLASH_COMMAND_1(client: any): SlashCommand;
+    export { SLASH_COMMAND_1 as SLASH_COMMAND };
     export function BUTTON_CLICK_1(client: any): ButtonClick;
     export { BUTTON_CLICK_1 as BUTTON_CLICK };
 }
@@ -1660,5 +1662,6 @@ import User from "./structures/User.js";
 import { Emoji } from "./structures.js";
 import { Invite } from "./structures.js";
 import { Interaction } from "./structures.js";
+import { SlashCommand } from "./structures.js";
 import { ButtonClick } from "./structures.js";
 //# sourceMappingURL=testData.d.ts.map
