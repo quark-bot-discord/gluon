@@ -10,6 +10,7 @@ import {
   Message,
   Role,
   ScheduledEvent,
+  SlashCommand,
   Thread,
 } from "./structures.js";
 import CategoryChannel from "./structures/CategoryChannel.js";
@@ -1347,6 +1348,10 @@ export const TEST_INVITES = {
 export const TEST_INTERACTIONS = {
   GENERIC_INTERACTION: (client) => {
     const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+    return interaction;
+  },
+  SLASH_COMMAND: (client) => {
+    const interaction = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
     return interaction;
   },
   BUTTON_CLICK: (client) => {
