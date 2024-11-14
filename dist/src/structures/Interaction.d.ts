@@ -19,7 +19,7 @@ declare class Interaction {
      * @method
      * @throws {Error | TypeError}
      */
-    public static edit(client: Client, interactionToken: string, { content, files, embeds, components }: any | null): Promise<Interaction>;
+    public static edit(client: Client, interactionToken: string, { content, files, embeds, components }?: any | null): Promise<Interaction>;
     /**
      * Creates the structure for an interaction.
      * @param {Client} client The client instance.
@@ -83,13 +83,6 @@ declare class Interaction {
      */
     public readonly get member(): Member;
     /**
-     * The options provided with the interaction.
-     * @type {Array<Object>}
-     * @readonly
-     * @public
-     */
-    public readonly get options(): any[];
-    /**
      * Prompts a user to enter text using a modal.
      * @param {Object} options Modal options.
      * @returns {Promise<void>}
@@ -131,6 +124,20 @@ declare class Interaction {
      * @method
      */
     public acknowledge(): Promise<Interaction>;
+    /**
+     * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
+     * @param {Object?} options The new interaction response options.
+     * @param {String?} options.content The new content of the interaction response.
+     * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
+     * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
+     * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+     * @returns {Promise<Interaction>}
+     * @public
+     * @async
+     * @method
+     * @throws {Error | TypeError}
+     */
+    public edit({ content, files, embeds, components }?: any | null): Promise<Interaction>;
     /**
      * @method
      * @public

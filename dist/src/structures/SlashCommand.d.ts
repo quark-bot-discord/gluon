@@ -12,6 +12,13 @@ declare class SlashCommand extends Interaction {
      * @public
      */
     public readonly get data(): any;
+    /**
+     * The options provided with the slash command.
+     * @type {Array<Object>}
+     * @readonly
+     * @public
+     */
+    public readonly get options(): any[];
     #private;
 }
 import Interaction from "./Interaction.js";
