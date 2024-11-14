@@ -13,6 +13,7 @@ import cacheChannel from "../util/gluon/cacheChannel.js";
  */
 class SlashCommand extends Interaction {
   #data;
+  #options;
   /**
    * Creates a slash command interaction structure.
    * @param {Client} client The client instance.
@@ -49,6 +50,13 @@ class SlashCommand extends Interaction {
     if (data.data.resolved?.channels)
       for (const value of Object.values(data.data.resolved.channels))
         cacheChannel(client, value, data.guild_id);
+
+    /**
+     * The options provided with the interaction.
+     * @type {Array<Object>}
+     * @private
+     */
+    this.#options = data.data.options;
   }
 
   /**
@@ -59,6 +67,16 @@ class SlashCommand extends Interaction {
    */
   get data() {
     return this.#data;
+  }
+
+  /**
+   * The options provided with the slash command.
+   * @type {Array<Object>}
+   * @readonly
+   * @public
+   */
+  get options() {
+    return this.#options;
   }
 
   /**

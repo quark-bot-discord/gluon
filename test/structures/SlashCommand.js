@@ -16,6 +16,7 @@ describe("SlashCommand", function () {
       const slashCommand = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
       expect(slashCommand).to.have.property("id");
       expect(slashCommand).to.have.property("data");
+      expect(slashCommand).to.have.property("options");
       expect(slashCommand).to.have.property("toString");
     });
   });
@@ -26,6 +27,17 @@ describe("SlashCommand", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const slashCommand = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
       expect(slashCommand.data).to.equal(TEST_DATA.SLASH_COMMAND.data);
+    });
+  });
+
+  context("check options", function () {
+    it("should have the correct options", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const slashCommand = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
+      expect(slashCommand.options).to.equal(
+        TEST_DATA.SLASH_COMMAND.data.options,
+      );
     });
   });
 

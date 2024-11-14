@@ -18,7 +18,6 @@ class Interaction {
   #_channel_id;
   #token;
   #member;
-  #options;
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.
@@ -83,13 +82,6 @@ class Interaction {
      * @private
      */
     this.#token = data.token;
-
-    /**
-     * The options provided with the interaction.
-     * @type {Array<Object>}
-     * @private
-     */
-    this.#options = data.data.options;
   }
 
   /**
@@ -170,16 +162,6 @@ class Interaction {
    */
   get member() {
     return this.#member;
-  }
-
-  /**
-   * The options provided with the interaction.
-   * @type {Array<Object>}
-   * @readonly
-   * @public
-   */
-  get options() {
-    return this.#options;
   }
 
   /**
@@ -318,6 +300,28 @@ class Interaction {
 
   /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
+   * @param {Object?} options The new interaction response options.
+   * @param {String?} options.content The new content of the interaction response.
+   * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
+   * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
+   * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+   * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
+   * @throws {Error | TypeError}
+   */
+  async edit({ content, files, embeds, components } = {}) {
+    return Interaction.edit(this.#_client, this.#token, {
+      content,
+      files,
+      embeds,
+      components,
+    });
+  }
+
+  /**
+   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
    * @param {Client} client The client instance.
    * @param {String} interactionToken The interaction token.
    * @param {Object?} options The new interaction response options.
@@ -334,7 +338,7 @@ class Interaction {
   static async edit(
     client,
     interactionToken,
-    { content, files, embeds, components },
+    { content, files, embeds, components } = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -393,10 +397,6 @@ class Interaction {
           guild_id: this.guildId,
           channel_id: this.channelId,
           member: this.member.toJSON(format),
-          type: this.type,
-          data: {
-            options: this.options,
-          },
         };
       }
     }
