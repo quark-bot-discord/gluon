@@ -14,6 +14,7 @@ import {
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
+import sleep from "../util/general/sleep.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -47,61 +48,43 @@ class BetterRequestHandler {
 
     this.#endpoints = endpoints;
 
-    this.#queueWorker = (data) => {
-      return new Promise(async (resolve, reject) => {
-        const bucket = await getBucket(
-          this.#_client,
-          this.#localRatelimitCache,
-          data.hash,
+    this.#queueWorker = async (data) => {
+      const bucket = await getBucket(
+        this.#_client,
+        this.#localRatelimitCache,
+        data.hash,
+      );
+      if (
+        !bucket ||
+        bucket.remaining !== 0 ||
+        (bucket.remaining === 0 &&
+          new Date().getTime() / 1000 > bucket.reset + this.#latency)
+      )
+        return this.#http(data.hash, data.request, data.params, data.body);
+      else {
+        this.#_client._emitDebug(
+          GLUON_DEBUG_LEVELS.WARN,
+          `RATELIMITED ${data.hash} (bucket reset):${
+            bucket.reset
+          } (latency):${this.#latency}  (time until retry):${
+            (bucket.reset + this.#latency) * 1000 - new Date().getTime()
+          } (current time):${(new Date().getTime() / 1000) | 0}`,
         );
-        if (
-          !bucket ||
-          bucket.remaining !== 0 ||
-          (bucket.remaining === 0 &&
-            new Date().getTime() / 1000 > bucket.reset + this.#latency)
-        )
-          this.#http(
-            data.hash,
-            data.request,
-            data.params,
-            data.body,
-            resolve,
-            reject,
-          );
-        else {
+        if (this.#queues[data.hash].length() > this.#maxQueueSize) {
           this.#_client._emitDebug(
-            GLUON_DEBUG_LEVELS.WARN,
-            `RATELIMITED ${data.hash} (bucket reset):${
-              bucket.reset
-            } (latency):${this.#latency}  (time until retry):${
-              (bucket.reset + this.#latency) * 1000 - new Date().getTime()
-            } (current time):${(new Date().getTime() / 1000) | 0}`,
+            GLUON_DEBUG_LEVELS.DANGER,
+            `KILL QUEUE ${data.hash}`,
           );
-          if (this.#queues[data.hash].length() > this.#maxQueueSize) {
-            this.#_client._emitDebug(
-              GLUON_DEBUG_LEVELS.DANGER,
-              `KILL QUEUE ${data.hash}`,
-            );
-            this.#queues[data.hash].kill();
-            delete this.#queues[data.hash];
-          }
-          setTimeout(
-            () => {
-              this.#http(
-                data.hash,
-                data.request,
-                data.params,
-                data.body,
-                resolve,
-                reject,
-              );
-            },
-            (bucket.reset + this.#latency) * 1000 -
-              new Date().getTime() +
-              this.#fuzz,
-          );
+          this.#queues[data.hash].kill();
+          delete this.#queues[data.hash];
         }
-      });
+        await sleep(
+          (bucket.reset + this.#latency) * 1000 -
+            new Date().getTime() +
+            this.#fuzz,
+        );
+        return this.#http(data.hash, data.request, data.params, data.body);
+      }
     };
 
     this.#queues = {};
@@ -205,7 +188,7 @@ class BetterRequestHandler {
     throw new Error("GLUON: Request ran out of retries");
   }
 
-  async #http(hash, request, params, body, resolve, reject) {
+  async #http(hash, request, params, body) {
     const actualRequest = this.#endpoints[request];
 
     const path = actualRequest.path(...(params ?? []));
@@ -315,7 +298,7 @@ class BetterRequestHandler {
           clearTimeout(timeout);
         }
 
-      if (!res) return reject(e);
+      if (!res) throw e;
 
       let json;
 
@@ -337,16 +320,6 @@ class BetterRequestHandler {
         console.error(error);
       }
 
-      if (res.ok) resolve(json);
-      else
-        reject(
-          new Error(
-            `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
-              ...(params ?? []),
-            )} ${json ? JSON.stringify(json) : ""} FAILED`,
-          ),
-        );
-
       this.#_client.emit("requestCompleted", {
         status: res.status,
         method: actualRequest.method,
@@ -358,20 +331,26 @@ class BetterRequestHandler {
         GLUON_DEBUG_LEVELS.INFO,
         `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
       );
+
+      if (res.ok) return json;
+      else
+        throw new Error(
+          `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
+            ...(params ?? []),
+          )} ${json ? JSON.stringify(json) : ""} FAILED`,
+        );
     } else {
       const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
 
-      setTimeout(() => {
-        reject(
-          new Error(`GLUON: 429 - Hit ratelimit, retry in ${retryNextIn}`),
-        );
-      }, 1500);
+      await sleep(1500);
 
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.WARN,
         `READD ${hash} to request queue`,
       );
+
+      throw new Error(`GLUON: 429 - Hit ratelimit, retry in ${retryNextIn}`);
     }
   }
 }
