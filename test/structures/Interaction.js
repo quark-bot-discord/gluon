@@ -29,10 +29,11 @@ describe("Interaction", function () {
       expect(interaction).to.have.property("options");
       expect(interaction).to.have.property("guild");
       expect(interaction).to.have.property("channel");
+      expect(interaction).to.have.property("token");
       expect(interaction).to.have.property("textPrompt");
       expect(interaction).to.have.property("autocompleteResponse");
       expect(interaction).to.have.property("reply");
-      expect(interaction).to.have.property("edit");
+      expect(Interaction).to.have.property("edit");
       expect(interaction).to.have.property("acknowledge");
     });
   });
@@ -43,6 +44,15 @@ describe("Interaction", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction.id).to.equal(TEST_DATA.INTERACTION.id);
+    });
+  });
+
+  context("check token", function () {
+    it("should have the correct token", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+      expect(interaction.token).to.equal(TEST_DATA.INTERACTION.token);
     });
   });
 
@@ -314,14 +324,30 @@ describe("Interaction", function () {
     it("should be a function", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      expect(interaction.edit).to.be.a("function");
+      expect(Interaction.edit).to.be.a("function");
+    });
+    it("should throw an error if client is not an instance of Client", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      await expect(Interaction.edit({})).to.be.rejectedWith(
+        Error,
+        "GLUON: Client must be an instance of Client",
+      );
+    });
+    it("should throw an error if interactionToken is not a string", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      await expect(Interaction.edit(client, 123)).to.be.rejectedWith(
+        Error,
+        "GLUON: Interaction token must be a string",
+      );
     });
     it("should throw an error if no content, files, embeds, or components are provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.edit()).to.be.rejectedWith(
+      await expect(
+        Interaction.edit(client, "vcsfdjhdfkjvhkdf"),
+      ).to.be.rejectedWith(
         Error,
         "GLUON: Must provide content, embeds, components or files",
       );
@@ -330,14 +356,15 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.edit({ content: "test" })).to.not.be.rejected;
+      await expect(
+        Interaction.edit(client, "vcsfdjhdfkjvhkdf", { content: "test" }),
+      ).to.not.be.rejected;
     });
     it("should call makeRequest with the correct parameters", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await interaction.edit({ content: "test" });
+      await Interaction.edit(client, "vcsfdjhdfkjvhkdf", { content: "test" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith("patchOriginalInteractionResponse", [
         TEST_DATA.CLIENT_USER.id,

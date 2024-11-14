@@ -103,6 +103,16 @@ class Interaction {
   }
 
   /**
+   * The token of the interaction.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get token() {
+    return this.#token;
+  }
+
+  /**
    * The type of interaction.
    * @type {Number}
    * @readonly
@@ -286,39 +296,6 @@ class Interaction {
   }
 
   /**
-   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
-   * @param {Object?} options The new interaction response options.
-   * @param {String?} options.content The new content of the interaction response.
-   * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
-   * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
-   * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
-   * @returns {Promise<Interaction>}
-   * @public
-   * @async
-   * @method
-   * @throws {Error | TypeError}
-   */
-  async edit({ content, files, embeds, components } = {}) {
-    Message.sendValidation({ content, embeds, components, files });
-
-    const body = {};
-
-    if (content) body.content = content;
-    if (files) body.files = files;
-    if (embeds) body.embeds = embeds;
-    if (components)
-      body.components = Array.isArray(components) != true ? components : [];
-
-    await this.#_client.request.makeRequest(
-      "patchOriginalInteractionResponse",
-      [this.#_client.user.id, this.#token],
-      body,
-    );
-
-    return this;
-  }
-
-  /**
    * Silently acknowledges an interaction.
    * @returns {Promise<Interaction>}
    * @public
@@ -337,6 +314,48 @@ class Interaction {
     );
 
     return this;
+  }
+
+  /**
+   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
+   * @param {Client} client The client instance.
+   * @param {String} interactionToken The interaction token.
+   * @param {Object?} options The new interaction response options.
+   * @param {String?} options.content The new content of the interaction response.
+   * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
+   * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
+   * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+   * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
+   * @throws {Error | TypeError}
+   */
+  static async edit(
+    client,
+    interactionToken,
+    { content, files, embeds, components },
+  ) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof interactionToken !== "string")
+      throw new TypeError("GLUON: Interaction token must be a string");
+
+    Message.sendValidation({ content, embeds, components, files });
+
+    const body = {};
+
+    if (content) body.content = content;
+    if (files) body.files = files;
+    if (embeds) body.embeds = embeds;
+    if (components)
+      body.components = Array.isArray(components) != true ? components : [];
+
+    return client.request.makeRequest(
+      "patchOriginalInteractionResponse",
+      [client.user.id, interactionToken],
+      body,
+    );
   }
 
   /**
