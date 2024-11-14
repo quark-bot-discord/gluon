@@ -60,7 +60,13 @@ class BetterRequestHandler {
         (bucket.remaining === 0 &&
           new Date().getTime() / 1000 > bucket.reset + this.#latency)
       )
-        return this.#http(data.hash, data.request, data.params, data.body);
+        return this.#http(
+          data.hash,
+          data.request,
+          data.params,
+          data.body,
+          data._stack,
+        );
       else {
         this.#_client._emitDebug(
           GLUON_DEBUG_LEVELS.WARN,
@@ -83,7 +89,13 @@ class BetterRequestHandler {
             new Date().getTime() +
             this.#fuzz,
         );
-        return this.#http(data.hash, data.request, data.params, data.body);
+        return this.#http(
+          data.hash,
+          data.request,
+          data.params,
+          data.body,
+          data._stack,
+        );
       }
     };
 
@@ -173,11 +185,13 @@ class BetterRequestHandler {
 
     while (retries--)
       try {
+        const _stack = new Error().stack;
         const result = await this.#queues[hash].push({
           hash,
           request,
           params,
           body,
+          _stack,
         });
         if (this.#queues[hash].idle()) delete this.#queues[hash];
         return result;
@@ -188,7 +202,7 @@ class BetterRequestHandler {
     throw new Error("GLUON: Request ran out of retries");
   }
 
-  async #http(hash, request, params, body) {
+  async #http(hash, request, params, body, _stack) {
     const actualRequest = this.#endpoints[request];
 
     const path = actualRequest.path(...(params ?? []));
@@ -337,7 +351,7 @@ class BetterRequestHandler {
         throw new Error(
           `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
             ...(params ?? []),
-          )} ${json ? JSON.stringify(json) : ""} FAILED`,
+          )} ${json ? JSON.stringify(json) : ""} FAILED (stack): ${_stack}`,
         );
     } else {
       const retryNextIn =
@@ -350,7 +364,9 @@ class BetterRequestHandler {
         `READD ${hash} to request queue`,
       );
 
-      throw new Error(`GLUON: 429 - Hit ratelimit, retry in ${retryNextIn}`);
+      throw new Error(
+        `GLUON: 429 - Hit ratelimit, retry in ${retryNextIn} (stack): ${_stack}`,
+      );
     }
   }
 }
