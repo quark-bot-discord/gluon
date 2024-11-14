@@ -5,6 +5,22 @@ export default Interaction;
  */
 declare class Interaction {
     /**
+     * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
+     * @param {Client} client The client instance.
+     * @param {String} interactionToken The interaction token.
+     * @param {Object?} options The new interaction response options.
+     * @param {String?} options.content The new content of the interaction response.
+     * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
+     * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
+     * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+     * @returns {Promise<Interaction>}
+     * @public
+     * @async
+     * @method
+     * @throws {Error | TypeError}
+     */
+    public static edit(client: Client, interactionToken: string, { content, files, embeds, components }: any | null): Promise<Interaction>;
+    /**
      * Creates the structure for an interaction.
      * @param {Client} client The client instance.
      * @param {Object} data The interaction data from Discord.
@@ -17,6 +33,13 @@ declare class Interaction {
      * @public
      */
     public readonly get id(): string;
+    /**
+     * The token of the interaction.
+     * @type {String}
+     * @readonly
+     * @public
+     */
+    public readonly get token(): string;
     /**
      * The type of interaction.
      * @type {Number}
@@ -100,20 +123,6 @@ declare class Interaction {
      * @method
      */
     public reply({ content, files, embeds, components, quiet }?: any | null): Promise<Interaction>;
-    /**
-     * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
-     * @param {Object?} options The new interaction response options.
-     * @param {String?} options.content The new content of the interaction response.
-     * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
-     * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
-     * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
-     * @returns {Promise<Interaction>}
-     * @public
-     * @async
-     * @method
-     * @throws {Error | TypeError}
-     */
-    public edit({ content, files, embeds, components }?: any | null): Promise<Interaction>;
     /**
      * Silently acknowledges an interaction.
      * @returns {Promise<Interaction>}
