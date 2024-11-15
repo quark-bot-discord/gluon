@@ -294,7 +294,6 @@ class EventHandler {
     const member = new Member(this.#_client, data, {
       userId: data.user.id,
       guildId: data.guild_id,
-      user: data.user,
     });
 
     member.guild.incrementMemberCount();
@@ -346,7 +345,6 @@ class EventHandler {
       const newMember = new Member(this.#_client, data, {
         userId: data.user.id,
         guildId: data.guild_id,
-        user: data.user,
       });
 
       this.#_client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
@@ -363,7 +361,6 @@ class EventHandler {
       new Member(this.#_client, data.members[i], {
         userId: data.members[i].user.id,
         guildId: data.guild_id,
-        user: data.members[i].user,
       });
   }
 

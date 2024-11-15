@@ -144,7 +144,6 @@ class GuildMemberManager extends BaseCacheManager {
     return new Member(client, data, {
       userId,
       guildId,
-      user: data.user,
     });
   }
 
@@ -186,7 +185,6 @@ class GuildMemberManager extends BaseCacheManager {
         new Member(client, data[i], {
           userId: data[i].user.id,
           guildId,
-          user: data[i].user,
         }),
       );
 

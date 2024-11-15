@@ -5,6 +5,7 @@ import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
+import User from "./User.js";
 
 /**
  * Represents a slash command.
@@ -40,7 +41,7 @@ class SlashCommand extends Interaction {
         new Member(client, value, {
           userId: key,
           guildId: data.guild_id,
-          user: data.data.resolved.users[key],
+          user: new User(client, data.data.resolved.users[key]),
         });
     if (data.data.resolved?.roles)
       for (const value of Object.values(data.data.resolved.roles))

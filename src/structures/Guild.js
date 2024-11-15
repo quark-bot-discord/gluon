@@ -496,7 +496,6 @@ class Guild {
         new Member(this.#_client, data.members[i], {
           userId: data.members[i].user.id,
           guildId: data.id,
-          user: data.members[i].user,
           nocache,
         });
 

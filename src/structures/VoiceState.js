@@ -97,7 +97,6 @@ class VoiceState {
       this.#member = new Member(this.#_client, data.member, {
         userId: data.user_id,
         guildId: data.guild_id,
-        user: data.member.user,
         nocache,
       });
     else this.#member = this.guild?.members.get(data.user_id) || null;
