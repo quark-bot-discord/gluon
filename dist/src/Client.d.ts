@@ -154,6 +154,13 @@ declare class Client extends TypedEmitter<{
      */
     public readonly get guilds(): GuildManager;
     /**
+     * The session data for this client.
+     * @type {Object}
+     * @readonly
+     * @public
+     */
+    public readonly get sessionData(): any;
+    /**
      * The function to call when a soft restart is needed.
      * @public
      * @method

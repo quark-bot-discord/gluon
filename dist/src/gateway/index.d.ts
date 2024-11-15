@@ -11,6 +11,11 @@ declare class Shard {
     };
     jitter(): number;
     updatePresence(name: any, type: any, status: any, afk: any, since: any): void;
+    getSessionData(): {
+        sessionId: any;
+        sequence: any;
+        resumeGatewayUrl: any;
+    };
     zlib: any;
     terminateSocketTimeout: NodeJS.Timeout;
     resetRetries(): void;
