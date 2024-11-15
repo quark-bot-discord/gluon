@@ -241,7 +241,7 @@ describe("BaseCacheManager", function () {
       const baseCacheManager = new BaseCacheManager(client, {
         structureType: guildEmojisManager,
       });
-      baseCacheManager.set("key", "value");
+      baseCacheManager.set("key", { value: "value", toJSON: () => "value" });
       expect(baseCacheManager.toJSON()).to.deep.equal(["value"]);
     });
   });

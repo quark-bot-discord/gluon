@@ -334,7 +334,7 @@ class BaseCacheManager {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
-        return [...this.#cache.values()];
+        return [...this.#cache.values()].map((value) => value.toJSON(format));
       }
     }
   }
