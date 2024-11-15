@@ -547,7 +547,9 @@ class Member {
 
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
-    body.communication_disabled_until = timeout_until;
+    body.communication_disabled_until = new Date(
+      timeout_until * 1000,
+    ).toISOString();
 
     await this.#_client.request.makeRequest(
       "patchGuildMember",
