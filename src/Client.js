@@ -335,6 +335,16 @@ class Client extends EventsEmitter {
   }
 
   /**
+   * The session data for this client.
+   * @type {Object}
+   * @readonly
+   * @public
+   */
+  get sessionData() {
+    return this.#shards.map((shard) => shard.getSessionData());
+  }
+
+  /**
    * The function to call when a soft restart is needed.
    * @public
    * @method

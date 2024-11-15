@@ -208,6 +208,14 @@ class Shard {
     this.#ws.send(_updatePresence(name, type, status, afk, since));
   }
 
+  getSessionData() {
+    return {
+      sessionId: this.#_sessionId,
+      sequence: this.#_s,
+      resumeGatewayUrl: this.#resumeGatewayUrl,
+    };
+  }
+
   #heartbeatInit() {
     setTimeout(() => {
       this.#heartbeat();
