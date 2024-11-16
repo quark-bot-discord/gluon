@@ -10,6 +10,7 @@ import util from "util";
  */
 class ModalResponse extends Interaction {
   #values;
+  #custom_id;
   /**
    * Creates a modal submitted interaction structure.
    * @param {Client} client The client instance.
@@ -24,11 +25,28 @@ class ModalResponse extends Interaction {
       throw new TypeError("GLUON: Data must be an object");
 
     /**
+     * The custom id of the button.
+     * @type {String}
+     * @private
+     */
+    this.#custom_id = data.data.custom_id;
+
+    /**
      * The entered modal values.
      * @type {Array<Object>}
      * @private
      */
     this.#values = data.data.components[0].components;
+  }
+
+  /**
+   * The custom id of the modal.
+   * @type {String}
+   * @readonly
+   * @public
+   */
+  get customId() {
+    return this.#custom_id;
   }
 
   /**
@@ -72,6 +90,7 @@ class ModalResponse extends Interaction {
         return {
           ...super.toJSON(format),
           values: this.values,
+          custom_id: this.customId,
         };
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -79,6 +98,7 @@ class ModalResponse extends Interaction {
         return {
           ...super.toJSON(format),
           data: {
+            custom_id: this.customId,
             components: [
               {
                 components: this.values,

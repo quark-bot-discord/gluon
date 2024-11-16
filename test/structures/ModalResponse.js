@@ -20,6 +20,7 @@ describe("ModalResponse", function () {
       expect(modalResponse).to.have.property("guildId");
       expect(modalResponse).to.have.property("channelId");
       expect(modalResponse).to.have.property("member");
+      expect(modalResponse).to.have.property("customId");
       expect(modalResponse).to.have.property("values");
       expect(modalResponse).to.have.property("guild");
       expect(modalResponse).to.have.property("channel");
@@ -101,6 +102,7 @@ describe("ModalResponse", function () {
                 TEST_DATA.MODAL_RESPONSE.data.components[0].components,
             },
           ],
+          custom_id: TEST_DATA.MODAL_RESPONSE.data.custom_id,
         },
       });
     });
@@ -137,6 +139,7 @@ describe("ModalResponse", function () {
         },
         type: TEST_DATA.MODAL_RESPONSE.type,
         values: TEST_DATA.MODAL_RESPONSE.data.components[0].components,
+        custom_id: TEST_DATA.MODAL_RESPONSE.data.custom_id,
       });
       expect(
         modalResponse.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
@@ -171,6 +174,7 @@ describe("ModalResponse", function () {
                 TEST_DATA.MODAL_RESPONSE.data.components[0].components,
             },
           ],
+          custom_id: "test",
         },
       });
     });

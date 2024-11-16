@@ -736,6 +736,7 @@ export const TEST_DATA = {
     id: "123451189012345678",
     type: 5,
     data: {
+      custom_id: "test",
       components: [
         {
           type: 1,
