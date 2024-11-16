@@ -432,9 +432,7 @@ class EventHandler {
       });
     else {
       newVoiceState = null;
-      this.#_client.guilds
-        .get(data.guild_id)
-        ?.voice_states.delete(data.user_id);
+      this.#_client.guilds.get(data.guild_id)?.voiceStates.delete(data.user_id);
     }
 
     this.#_client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
