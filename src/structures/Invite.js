@@ -307,8 +307,8 @@ class Invite {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {
           code: this.code,
-          channel: this.channel.toJSON(format),
-          inviter: this.inviter.toJSON(format),
+          channel: this.channel?.toJSON(format),
+          inviter: this.inviter?.toJSON(format),
           uses: this.uses,
           expires: this.expires ? this.expires * 1000 : undefined,
           max_uses: this.maxUses,
@@ -318,8 +318,8 @@ class Invite {
       default: {
         return {
           code: this.code,
-          channel: this.channel.toJSON(format),
-          inviter: this.inviter.toJSON(format),
+          channel: this.channel?.toJSON(format),
+          inviter: this.inviter?.toJSON(format),
           uses: this.uses,
           expires_at: this.expires
             ? new Date(this.expires * 1000).toISOString()
