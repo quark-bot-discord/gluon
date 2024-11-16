@@ -1014,7 +1014,9 @@ export namespace TEST_DATA {
         let type_13: number;
         export { type_13 as type };
         export namespace data_2 {
-            let components: {
+            let custom_id_2: string;
+            export { custom_id_2 as custom_id };
+            export let components: {
                 type: number;
                 components: {
                     custom_id: string;
@@ -1075,8 +1077,8 @@ export namespace TEST_DATA {
         let type_14: number;
         export { type_14 as type };
         export namespace data_3 {
-            let custom_id_2: string;
-            export { custom_id_2 as custom_id };
+            let custom_id_3: string;
+            export { custom_id_3 as custom_id };
             let component_type_1: number;
             export { component_type_1 as component_type };
             export let values: string[];

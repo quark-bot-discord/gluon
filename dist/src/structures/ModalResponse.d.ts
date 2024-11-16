@@ -6,6 +6,13 @@ export default ModalResponse;
  */
 declare class ModalResponse extends Interaction {
     /**
+     * The custom id of the modal.
+     * @type {String}
+     * @readonly
+     * @public
+     */
+    public readonly get customId(): string;
+    /**
      * The entered modal values.
      * @type {Array<Object>}
      * @readonly
