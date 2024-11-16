@@ -296,7 +296,7 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    member.guild.incrementMemberCount();
+    member.guild._incrementMemberCount();
 
     this.#_client.emit(EVENTS.GUILD_MEMBER_ADD, member);
   }
