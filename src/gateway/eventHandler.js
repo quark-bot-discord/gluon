@@ -423,7 +423,7 @@ class EventHandler {
     );
 
     const oldVoiceState =
-      this.#_client.guilds.get(data.guild_id)?.voice_states.get(data.user_id) ||
+      this.#_client.guilds.get(data.guild_id)?.voiceStates.get(data.user_id) ||
       null;
     let newVoiceState;
     if (data.channel_id)
