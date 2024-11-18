@@ -404,4 +404,24 @@ export default {
       return HttpResponse.json(TEST_DATA.TEXT_CHANNEL);
     },
   },
+  getClientEmojis: {
+    path: (client_id) => {
+      return `/applications/${client_id}/emojis`;
+    },
+    method: "GET",
+    majorParams: [0],
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json([TEST_DATA.EMOJI]);
+    },
+  },
+  postAddClientEmoji: {
+    path: (client_id) => {
+      return `/applications/${client_id}/emojis`;
+    },
+    method: "POST",
+    majorParams: [0],
+    mockResponse: ({ params } = {}) => {
+      return HttpResponse.json(TEST_DATA.EMOJI);
+    },
+  },
 };

@@ -561,6 +561,40 @@ class Client extends EventsEmitter {
   }
 
   /**
+   * Fetches the emojis for this client.
+   * @returns {Array<Object>}
+   * @public
+   * @method
+   * @async
+   */
+  async fetchEmojis() {
+    return this.request.makeRequest("getClientEmojis", [this.user.id]);
+  }
+
+  /**
+   * Creates an emoji for this client.
+   * @param {Object} emoji The emoji to create.
+   * @param {String} emoji.name The name of the emoji.
+   * @param {String} emoji.image The image of the emoji (base64, should start with "data:image/png;base64,").
+   * @returns {Promise<void>}
+   * @public
+   * @method
+   * @async
+   * @throws {TypeError}
+   */
+  async createEmoji({ name, image }) {
+    if (typeof name !== "string")
+      throw new TypeError(`GLUON: Name is not a string. Got ${typeof name}`);
+    if (typeof image !== "string")
+      throw new TypeError(`GLUON: Image is not a string. Got ${typeof image}`);
+
+    return this.request.makeRequest("createClientEmoji", [this.user.id], {
+      name,
+      image,
+    });
+  }
+
+  /**
    * Sets the bot's status across all shards.
    * @param {Object} status Status options.
    * @param {String} status.name The bot's new status.

@@ -321,6 +321,69 @@ describe("Client", function () {
       );
     });
   });
+  context("check fetchEmojis", function () {
+    it("should be a function", function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      expect(client.fetchEmojis).to.be.a("function");
+    });
+    it("should call getGuildEmojis with the correct arguments", async function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      client.request = { makeRequest: () => {} };
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const request = spy(client.request, "makeRequest");
+      await client.fetchEmojis();
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith("getClientEmojis", [
+        TEST_DATA.CLIENT_USER.id,
+      ]);
+    });
+  });
+  context("check createEmoji", function () {
+    it("should be a function", function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      expect(client.createEmoji).to.be.a("function");
+    });
+    it("should throw an error if name is not a string", async function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      await expect(client.createEmoji({ name: 1 })).to.be.rejectedWith(
+        "GLUON: Name is not a string.",
+      );
+    });
+    it("should throw an error if image is not a string", async function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      await expect(
+        client.createEmoji({ name: "test", image: 1 }),
+      ).to.be.rejectedWith("GLUON: Image is not a string.");
+    });
+    it("should call createGuildEmoji with the correct arguments", async function () {
+      const client = new Client({
+        intents: INTENTS.GUILDS,
+      });
+      client.request = { makeRequest: () => {} };
+      client.user = new User(client, TEST_DATA.CLIENT_USER);
+      const request = spy(client.request, "makeRequest");
+      await client.createEmoji({ name: "test", image: "testImage" });
+      expect(request).to.be.calledOnce;
+      expect(request).to.be.calledOnceWith(
+        "createClientEmoji",
+        [TEST_DATA.CLIENT_USER.id],
+        {
+          name: "test",
+          image: "testImage",
+        },
+      );
+    });
+  });
   context("check setStatus", function () {
     it("should be a function", function () {
       const client = new Client({
