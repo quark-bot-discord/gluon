@@ -238,6 +238,29 @@ declare class Client extends TypedEmitter<{
      */
     public registerCommands(commands: Array<Command>): Array<any>;
     /**
+     * Fetches the emojis for this client.
+     * @returns {Array<Object>}
+     * @public
+     * @method
+     * @async
+     */
+    public fetchEmojis(): Array<any>;
+    /**
+     * Creates an emoji for this client.
+     * @param {Object} emoji The emoji to create.
+     * @param {String} emoji.name The name of the emoji.
+     * @param {String} emoji.image The image of the emoji (base64, should start with "data:image/png;base64,").
+     * @returns {Promise<void>}
+     * @public
+     * @method
+     * @async
+     * @throws {TypeError}
+     */
+    public createEmoji({ name, image }: {
+        name: string;
+        image: string;
+    }): Promise<void>;
+    /**
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
      * @param {String} status.name The bot's new status.

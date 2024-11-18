@@ -380,6 +380,26 @@ declare namespace _default {
         export function mockResponse_36({ params }?: {}): any;
         export { mockResponse_36 as mockResponse };
     }
+    namespace getClientEmojis {
+        export function path_37(client_id: any): string;
+        export { path_37 as path };
+        let method_37: string;
+        export { method_37 as method };
+        let majorParams_37: number[];
+        export { majorParams_37 as majorParams };
+        export function mockResponse_37({ params }?: {}): any;
+        export { mockResponse_37 as mockResponse };
+    }
+    namespace postAddClientEmoji {
+        export function path_38(client_id: any): string;
+        export { path_38 as path };
+        let method_38: string;
+        export { method_38 as method };
+        let majorParams_38: number[];
+        export { majorParams_38 as majorParams };
+        export function mockResponse_38({ params }?: {}): any;
+        export { mockResponse_38 as mockResponse };
+    }
 }
 export default _default;
 //# sourceMappingURL=endpoints.d.ts.map
