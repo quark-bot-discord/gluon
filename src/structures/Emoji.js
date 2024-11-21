@@ -131,7 +131,16 @@ class Emoji {
    * @public
    */
   get animated() {
-    return (this.#_attributes & (0b1 << 2)) == 0b1 << 2;
+    return Emoji.isAnimated(this.#_attributes);
+  }
+
+  /**
+   * Checks if the emoji is animated.
+   * @param {Number} attributes The attributes of the emoji.
+   * @returns {Boolean}
+   */
+  static isAnimated(attributes) {
+    return (attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
   /**
