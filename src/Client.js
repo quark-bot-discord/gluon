@@ -588,7 +588,7 @@ class Client extends EventsEmitter {
     if (typeof image !== "string")
       throw new TypeError(`GLUON: Image is not a string. Got ${typeof image}`);
 
-    return this.request.makeRequest("createClientEmoji", [this.user.id], {
+    return this.request.makeRequest("postAddClientEmoji", [this.user.id], {
       name,
       image,
     });
