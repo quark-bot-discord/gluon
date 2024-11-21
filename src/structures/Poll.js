@@ -112,7 +112,7 @@ class Poll {
    * @public
    */
   get question() {
-    return this.#question;
+    return `${this.#question.emoji ? `${Emoji.getMention(this.#question.emoji.name, this.#question.emoji.id, this.#question.emoji.animated)} ` : ""}${this.#question.text ? this.#question.text : ""}`;
   }
 
   /**
@@ -211,7 +211,7 @@ class Poll {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {
-          question: this.question,
+          question: this.#question,
           answers: this.#answers,
           expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
@@ -222,7 +222,7 @@ class Poll {
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return {
-          question: this.question,
+          question: this.#question,
           answers: this.#answers,
           expiry: this.expiry
             ? new Date(this.expiry * 1000).toISOString()

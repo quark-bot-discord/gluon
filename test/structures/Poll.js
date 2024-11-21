@@ -37,7 +37,7 @@ describe("Poll", function () {
       const poll = new Poll(client, TEST_DATA.POLL, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(poll.question).to.equal(TEST_DATA.POLL.question);
+      expect(poll.question).to.equal(TEST_DATA.POLL.question.text);
     });
   });
 

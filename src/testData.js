@@ -1019,7 +1019,9 @@ export const TEST_DATA = {
     image: "000000000000000000000000deadbeef",
   },
   POLL: {
-    question: "test poll",
+    question: {
+      text: "test poll",
+    },
     answers: [
       {
         answer_id: 1,
