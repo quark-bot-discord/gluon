@@ -890,7 +890,7 @@ class EventHandler {
 
     cacheManager.fetchWithRules(data.message_id).then((message) => {
       if (message) {
-        message.poll.results._addVote(data.user_id, data.answer_id);
+        message.poll._results._addVote(data.user_id, data.answer_id);
       }
       this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
     });
@@ -910,7 +910,7 @@ class EventHandler {
 
     cacheManager.fetchWithRules(data.message_id).then((message) => {
       if (message) {
-        message.poll.results._removeVote(data.user_id, data.answer_id);
+        message.poll._results._removeVote(data.user_id, data.answer_id);
       }
       this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
     });
