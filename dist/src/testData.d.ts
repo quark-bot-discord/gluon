@@ -1492,7 +1492,9 @@ export namespace TEST_DATA {
         export { image_1 as image };
     }
     namespace POLL {
-        let question_1: string;
+        export namespace question_1 {
+            let text: string;
+        }
         export { question_1 as question };
         let answers_1: {
             answer_id: number;
