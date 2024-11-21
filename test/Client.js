@@ -375,7 +375,7 @@ describe("Client", function () {
       await client.createEmoji({ name: "test", image: "testImage" });
       expect(request).to.be.calledOnce;
       expect(request).to.be.calledOnceWith(
-        "createClientEmoji",
+        "postAddClientEmoji",
         [TEST_DATA.CLIENT_USER.id],
         {
           name: "test",
