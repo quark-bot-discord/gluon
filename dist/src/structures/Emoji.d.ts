@@ -5,6 +5,12 @@ export default Emoji;
  */
 declare class Emoji {
     /**
+     * Checks if the emoji is animated.
+     * @param {Number} attributes The attributes of the emoji.
+     * @returns {Boolean}
+     */
+    static isAnimated(attributes: number): boolean;
+    /**
      * Returns the mention string for an emoji.
      * @param {String} name The name of the emoji.
      * @param {String?} id The id of the emoji.

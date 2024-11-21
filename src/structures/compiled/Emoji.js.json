@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 417,
-                7957
+                8172
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -241,7 +241,7 @@
         "meta": {
             "range": [
                 417,
-                7957
+                8172
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -809,7 +809,7 @@
         "meta": {
             "range": [
                 3611,
-                3688
+                3679
             ],
             "filename": "Emoji.js",
             "lineno": 133,
@@ -841,18 +841,68 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Whether the emoji is available.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
+        "comment": "/**\n   * Checks if the emoji is animated.\n   * @param {Number} attributes The attributes of the emoji.\n   * @returns {Boolean}\n   */",
         "meta": {
             "range": [
-                3790,
-                3868
+                3818,
+                3903
             ],
             "filename": "Emoji.js",
-            "lineno": 143,
+            "lineno": 142,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000378",
+                "id": "astnode100000374",
+                "name": "Emoji.isAnimated",
+                "type": "MethodDefinition",
+                "paramnames": [
+                    "attributes"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "description": "Checks if the emoji is animated.",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Number"
+                    ]
+                },
+                "description": "The attributes of the emoji.",
+                "name": "attributes"
+            }
+        ],
+        "returns": [
+            {
+                "type": {
+                    "names": [
+                        "Boolean"
+                    ]
+                }
+            }
+        ],
+        "name": "isAnimated",
+        "longname": "Emoji.isAnimated",
+        "kind": "function",
+        "memberof": "Emoji",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * Whether the emoji is available.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
+        "meta": {
+            "range": [
+                4005,
+                4083
+            ],
+            "filename": "Emoji.js",
+            "lineno": 152,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000389",
                 "name": "Emoji#available",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -880,15 +930,15 @@
         "comment": "/**\n   * The mention string for the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3971,
-                4054
+                4186,
+                4269
             ],
             "filename": "Emoji.js",
-            "lineno": 153,
+            "lineno": 162,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000395",
+                "id": "astnode100000406",
                 "name": "Emoji#mention",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -916,15 +966,15 @@
         "comment": "/**\n   * The url for the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4146,
-                4227
+                4361,
+                4442
             ],
             "filename": "Emoji.js",
-            "lineno": 163,
+            "lineno": 172,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000413",
+                "id": "astnode100000424",
                 "name": "Emoji#url",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -952,15 +1002,15 @@
         "comment": "/**\n   * The id of the guild that this emoji belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4344,
-                4399
+                4559,
+                4614
             ],
             "filename": "Emoji.js",
-            "lineno": 173,
+            "lineno": 182,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000433",
+                "id": "astnode100000444",
                 "name": "Emoji#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -988,15 +1038,15 @@
         "comment": "/**\n   * The guild that this emoji belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4506,
-                4582
+                4721,
+                4797
             ],
             "filename": "Emoji.js",
-            "lineno": 183,
+            "lineno": 192,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000444",
+                "id": "astnode100000455",
                 "name": "Emoji#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1025,15 +1075,15 @@
         "comment": "/**\n   * The id of the emoji, if it is custom.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4690,
-                4753
+                4905,
+                4968
             ],
             "filename": "Emoji.js",
-            "lineno": 193,
+            "lineno": 202,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000463",
+                "id": "astnode100000474",
                 "name": "Emoji#id",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1062,15 +1112,15 @@
         "comment": "/**\n   * The name of the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4845,
-                4884
+                5060,
+                5099
             ],
             "filename": "Emoji.js",
-            "lineno": 203,
+            "lineno": 212,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000480",
+                "id": "astnode100000491",
                 "name": "Emoji#name",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1098,15 +1148,15 @@
         "comment": "/**\n   * Returns the mention string for an emoji.\n   * @param {String} name The name of the emoji.\n   * @param {String?} id The id of the emoji.\n   * @param {Boolean?} animated Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5166,
-                5625
+                5381,
+                5840
             ],
             "filename": "Emoji.js",
-            "lineno": 217,
+            "lineno": 226,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000489",
+                "id": "astnode100000500",
                 "name": "Emoji.getMention",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1171,15 +1221,15 @@
         "comment": "/**\n   * Returns the url for an emoji.\n   * @param {String} id The id of the emoji.\n   * @param {Boolean} animated Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5845,
-                6172
+                6060,
+                6387
             ],
             "filename": "Emoji.js",
-            "lineno": 237,
+            "lineno": 246,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000545",
+                "id": "astnode100000556",
                 "name": "Emoji.getUrl",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1233,15 +1283,15 @@
         "comment": "/**\n   * Determines whether the emoji should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6470,
-                7000
+                6685,
+                7215
             ],
             "filename": "Emoji.js",
-            "lineno": 254,
+            "lineno": 263,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000585",
+                "id": "astnode100000596",
                 "name": "Emoji.shouldCache",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1294,15 +1344,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7042,
-                7105
+                7257,
+                7320
             ],
             "filename": "Emoji.js",
-            "lineno": 272,
+            "lineno": 281,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000627",
+                "id": "astnode100000638",
                 "name": "Emoji#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1323,15 +1373,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7147,
-                7204
+                7362,
+                7419
             ],
             "filename": "Emoji.js",
-            "lineno": 280,
+            "lineno": 289,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000642",
+                "id": "astnode100000653",
                 "name": "Emoji#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -1352,15 +1402,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7387,
-                7955
+                7602,
+                8170
             ],
             "filename": "Emoji.js",
-            "lineno": 291,
+            "lineno": 300,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000655",
+                "id": "astnode100000666",
                 "name": "Emoji#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1403,15 +1453,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7545,
-                7556
+                7760,
+                7771
             ],
             "filename": "Emoji.js",
-            "lineno": 296,
+            "lineno": 305,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000673",
+                "id": "astnode100000684",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1427,15 +1477,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7568,
-                7583
+                7783,
+                7798
             ],
             "filename": "Emoji.js",
-            "lineno": 297,
+            "lineno": 306,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000677",
+                "id": "astnode100000688",
                 "name": "name",
                 "type": "MemberExpression",
                 "value": "this.name"
@@ -1451,15 +1501,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7595,
-                7625
+                7810,
+                7840
             ],
             "filename": "Emoji.js",
-            "lineno": 298,
+            "lineno": 307,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000681",
+                "id": "astnode100000692",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -1475,15 +1525,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7736,
-                7747
+                7951,
+                7962
             ],
             "filename": "Emoji.js",
-            "lineno": 304,
+            "lineno": 313,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000694",
+                "id": "astnode100000705",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -1499,15 +1549,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7759,
-                7774
+                7974,
+                7989
             ],
             "filename": "Emoji.js",
-            "lineno": 305,
+            "lineno": 314,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000698",
+                "id": "astnode100000709",
                 "name": "name",
                 "type": "MemberExpression",
                 "value": "this.name"
@@ -1523,15 +1573,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7786,
-                7809
+                8001,
+                8024
             ],
             "filename": "Emoji.js",
-            "lineno": 306,
+            "lineno": 315,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000702",
+                "id": "astnode100000713",
                 "name": "animated",
                 "type": "MemberExpression",
                 "value": "this.animated"
@@ -1547,15 +1597,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7821,
-                7842
+                8036,
+                8057
             ],
             "filename": "Emoji.js",
-            "lineno": 307,
+            "lineno": 316,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000706",
+                "id": "astnode100000717",
                 "name": "managed",
                 "type": "MemberExpression",
                 "value": "this.managed"
@@ -1571,15 +1621,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7854,
-                7888
+                8069,
+                8103
             ],
             "filename": "Emoji.js",
-            "lineno": 308,
+            "lineno": 317,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000710",
+                "id": "astnode100000721",
                 "name": "require_colons",
                 "type": "MemberExpression",
                 "value": "this.requireColons"
@@ -1595,15 +1645,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7900,
-                7925
+                8115,
+                8140
             ],
             "filename": "Emoji.js",
-            "lineno": 309,
+            "lineno": 318,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000714",
+                "id": "astnode100000725",
                 "name": "available",
                 "type": "MemberExpression",
                 "value": "this.available"
@@ -1619,15 +1669,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7959,
-                7980
+                8174,
+                8195
             ],
             "filename": "Emoji.js",
-            "lineno": 316,
+            "lineno": 325,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000718",
+                "id": "astnode100000729",
                 "name": "module.exports",
                 "type": "Identifier"
             }
