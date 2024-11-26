@@ -50,6 +50,12 @@ declare class Attachment {
      */
     public readonly get channelId(): string;
     /**
+     * Fetches the data of the attachment.
+     * @returns {Promise<ArrayBuffer>}
+     * @public
+     */
+    public fetchData(): Promise<ArrayBuffer>;
+    /**
      * @method
      * @public
      */
