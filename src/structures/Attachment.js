@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import Client from "../Client.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
@@ -136,6 +137,16 @@ class Attachment {
    */
   get channelId() {
     return this.#_channel_id ? String(this.#_channel_id) : undefined;
+  }
+
+  /**
+   * Fetches the data of the attachment.
+   * @returns {Promise<ArrayBuffer>}
+   * @public
+   */
+  async fetchData() {
+    const res = await fetch(this.url);
+    return res.arrayBuffer();
   }
 
   /**
