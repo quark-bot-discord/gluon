@@ -327,28 +327,34 @@ export const TEST_DATA = {
       },
     ],
     poll: {
-      id: "123456789012345678",
-      channel_id: "123456789012345678",
-      question: "test poll",
+      question: {
+        text: "test poll",
+      },
       answers: [
         {
           answer_id: 1,
           poll_media: {
-            text: "test option",
+            text: "test",
+            emoji: {
+              id: "123456789012345678",
+              name: "test",
+            },
           },
         },
       ],
+      expiry: "2021-01-01T00:00:00.000Z",
+      allow_multiselect: false,
+      layout_type: 1,
       results: {
-        is_finalized: true,
+        is_finalized: false,
         answer_counts: [
           {
             id: 1,
             count: 1,
-            me_voted: false,
+            me_voted: true,
           },
         ],
       },
-      expiry: "2021-01-01T00:00:00.000Z",
     },
   },
   MEMBER_ID: "301655085954367490",
