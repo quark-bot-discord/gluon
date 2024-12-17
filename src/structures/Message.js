@@ -1288,7 +1288,7 @@ class Message {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {
           id: this.id,
-          author: this.author.toJSON(format),
+          author: this.author?.toJSON(format),
           member: this.member?.toJSON(format),
           content: this.content,
           _attributes: this.#_attributes,
@@ -1298,7 +1298,9 @@ class Message {
             ? this.editedTimestamp * 1000
             : null,
           poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots,
+          message_snapshots: this.messageSnapshots?.map((m) =>
+            m.toJSON(format),
+          ),
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
@@ -1316,7 +1318,7 @@ class Message {
         return {
           id: this.id,
           channel_id: this.channelId,
-          author: this.author.toJSON(format),
+          author: this.author?.toJSON(format),
           member: this.member?.toJSON(format),
           content: this.content,
           pinned: this.pinned,
@@ -1326,7 +1328,9 @@ class Message {
             ? this.editedTimestamp * 1000
             : null,
           poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots,
+          message_snapshots: this.messageSnapshots?.map((m) =>
+            m.toJSON(format),
+          ),
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
