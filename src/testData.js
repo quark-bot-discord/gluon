@@ -307,10 +307,8 @@ export const TEST_DATA = {
     },
     message_snapshots: [
       {
-        id: "123456339012345699",
         type: 0,
         content: "test message @everyone",
-        channel_id: "123456789012345678",
       },
     ],
     referenced_message: {

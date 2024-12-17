@@ -724,14 +724,15 @@ class Message {
    */
   get messageSnapshots() {
     return this.#message_snapshots && Array.isArray(this.#message_snapshots)
-      ? this.#message_snapshots.map(
-          (snapshot) =>
-            new Message(this.#_client, snapshot, {
-              channelId: this.channelId,
-              guildId: this.guildId,
-              nocache: true,
-            }),
-        )
+      ? this.#message_snapshots.map((snapshot) => {
+          snapshot.id = this.id;
+          return new Message(this.#_client, snapshot, {
+            channelId: this.channelId,
+            guildId: this.guildId,
+            nocache: true,
+            ignoreExisting: true,
+          });
+        })
       : null;
   }
 
