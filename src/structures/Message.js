@@ -341,7 +341,7 @@ class Message {
     if (this.channel._cacheOptions.referenceCaching === true) {
       /**
        * The snapshot data about the message.
-       * @type {Object?}
+       * @type {Array<Object>?}
        * @private
        */
       if (data.message_snapshots)
@@ -718,12 +718,21 @@ class Message {
 
   /**
    * The snapshot data about the message.
-   * @type {Object?}
+   * @type {Array<Message>?}
    * @readonly
    * @public
    */
   get messageSnapshots() {
-    return this.#message_snapshots;
+    return this.#message_snapshots && Array.isArray(this.#message_snapshots)
+      ? this.#message_snapshots.map(
+          (snapshot) =>
+            new Message(this.#_client, snapshot, {
+              channelId,
+              guildId,
+              nocache: true,
+            }),
+        )
+      : null;
   }
 
   /**
