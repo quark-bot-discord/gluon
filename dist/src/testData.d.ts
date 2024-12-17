@@ -312,10 +312,8 @@ export namespace TEST_DATA {
             export { guild_id_5 as guild_id };
         }
         export let message_snapshots: {
-            id: string;
             type: number;
             content: string;
-            channel_id: string;
         }[];
         export namespace referenced_message {
             let id_8: string;
