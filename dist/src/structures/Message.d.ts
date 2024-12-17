@@ -332,11 +332,11 @@ declare class Message {
     public readonly get stickerItems(): Sticker[];
     /**
      * The snapshot data about the message.
-     * @type {Object?}
+     * @type {Array<Message>?}
      * @readonly
      * @public
      */
-    public readonly get messageSnapshots(): any;
+    public readonly get messageSnapshots(): Message[];
     /**
      * The URL of the message.
      * @type {String}
