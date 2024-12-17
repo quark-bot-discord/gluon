@@ -727,8 +727,8 @@ class Message {
       ? this.#message_snapshots.map(
           (snapshot) =>
             new Message(this.#_client, snapshot, {
-              channelId,
-              guildId,
+              channelId: this.channelId,
+              guildId: this.guildId,
               nocache: true,
             }),
         )
