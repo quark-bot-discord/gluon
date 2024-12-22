@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 456,
-                3043
+                3045
             ],
             "filename": "SlashCommand.js",
             "lineno": 15,
@@ -139,7 +139,7 @@
         "meta": {
             "range": [
                 456,
-                3043
+                3045
             ],
             "filename": "SlashCommand.js",
             "lineno": 15,
@@ -532,11 +532,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                2718,
-                3041
+                2720,
+                3043
             ],
             "filename": "SlashCommand.js",
             "lineno": 107,
@@ -562,6 +562,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -587,8 +588,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2972,
-                2983
+                2974,
+                2985
             ],
             "filename": "SlashCommand.js",
             "lineno": 115,
@@ -611,8 +612,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2995,
-                3011
+                2997,
+                3013
             ],
             "filename": "SlashCommand.js",
             "lineno": 116,
@@ -635,8 +636,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3045,
-                3073
+                3047,
+                3075
             ],
             "filename": "SlashCommand.js",
             "lineno": 123,

@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 268,
-                4272
+                4274
             ],
             "filename": "VoiceChannel.js",
             "lineno": 11,
@@ -216,7 +216,7 @@
         "meta": {
             "range": [
                 268,
-                4272
+                4274
             ],
             "filename": "VoiceChannel.js",
             "lineno": 11,
@@ -886,11 +886,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3889,
-                4270
+                3891,
+                4272
             ],
             "filename": "VoiceChannel.js",
             "lineno": 155,
@@ -916,6 +916,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -941,8 +942,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4143,
-                4164
+                4145,
+                4166
             ],
             "filename": "VoiceChannel.js",
             "lineno": 163,
@@ -965,8 +966,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4176,
-                4202
+                4178,
+                4204
             ],
             "filename": "VoiceChannel.js",
             "lineno": 164,
@@ -989,8 +990,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4214,
-                4240
+                4216,
+                4242
             ],
             "filename": "VoiceChannel.js",
             "lineno": 165,
@@ -1013,8 +1014,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4274,
-                4302
+                4276,
+                4304
             ],
             "filename": "VoiceChannel.js",
             "lineno": 172,

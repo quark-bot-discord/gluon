@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 1352,
-                39944
+                40032
             ],
             "filename": "Message.js",
             "lineno": 34,
@@ -610,7 +610,7 @@
         "meta": {
             "range": [
                 1352,
-                39944
+                40032
             ],
             "filename": "Message.js",
             "lineno": 34,
@@ -3981,11 +3981,11 @@
         "memberof": "Message"
     },
     {
-        "comment": "/**\n   * Replies to the message.\n   * @param {Object?} options Embeds, components and files to attach to the message.\n   * @param {String?} options.content The message content.\n   * @param {Embed?} options.embed Embed to send with the message.\n   * @param {MessageComponents?} options.components Message components to send with the message.\n   * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#create-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
+        "comment": "/**\n   * Replies to the message.\n   * @param {Object?} [options] Embeds, components and files to attach to the message.\n   * @param {String?} [options.content] The message content.\n   * @param {Embed?} [options.embed] Embed to send with the message.\n   * @param {MessageComponents?} [options.components] Message components to send with the message.\n   * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#create-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                21215,
-                21585
+                21225,
+                21595
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4011,6 +4011,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Embeds, components and files to attach to the message.",
                 "name": "options"
@@ -4021,6 +4022,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message content.",
                 "name": "options.content"
@@ -4031,6 +4033,7 @@
                         "Embed"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Embed to send with the message.",
                 "name": "options.embed"
@@ -4041,6 +4044,7 @@
                         "MessageComponents"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Message components to send with the message.",
                 "name": "options.components"
@@ -4051,6 +4055,7 @@
                         "Array.<FileUpload>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of file objects for files to send with the message.",
                 "name": "options.files"
@@ -4090,8 +4095,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21223,
-                21230
+                21233,
+                21240
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4114,8 +4119,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21232,
-                21238
+                21242,
+                21248
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4138,8 +4143,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21240,
-                21250
+                21250,
+                21260
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4162,8 +4167,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21252,
-                21257
+                21262,
+                21267
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4186,8 +4191,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21259,
-                21283
+                21269,
+                21293
             ],
             "filename": "Message.js",
             "lineno": 793,
@@ -4210,8 +4215,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21371,
-                21378
+                21381,
+                21388
             ],
             "filename": "Message.js",
             "lineno": 795,
@@ -4234,8 +4239,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21386,
-                21503
+                21396,
+                21513
             ],
             "filename": "Message.js",
             "lineno": 796,
@@ -4258,8 +4263,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21407,
-                21426
+                21417,
+                21436
             ],
             "filename": "Message.js",
             "lineno": 797,
@@ -4283,8 +4288,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21436,
-                21462
+                21446,
+                21472
             ],
             "filename": "Message.js",
             "lineno": 798,
@@ -4308,8 +4313,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21472,
-                21494
+                21482,
+                21504
             ],
             "filename": "Message.js",
             "lineno": 799,
@@ -4333,8 +4338,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21511,
-                21517
+                21521,
+                21527
             ],
             "filename": "Message.js",
             "lineno": 801,
@@ -4357,8 +4362,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21525,
-                21535
+                21535,
+                21545
             ],
             "filename": "Message.js",
             "lineno": 802,
@@ -4381,8 +4386,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21543,
-                21548
+                21553,
+                21558
             ],
             "filename": "Message.js",
             "lineno": 803,
@@ -4405,8 +4410,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21556,
-                21572
+                21566,
+                21582
             ],
             "filename": "Message.js",
             "lineno": 804,
@@ -4426,11 +4431,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Edits the message, assuming it is sent by the client user.\n   * @param {Object?} options Content, embeds and components to attach to the message.\n   * @param {String?} options.content The message content.\n   * @param {Embed?} options.embed Embed to send with the message.\n   * @param {MessageComponents?} options.components Message components to send with the message.\n   * @param {Array<Attachment>?} options.attachments Array of attachment objects for files to send with the message.\n   * @param {Number?} options.flags The message flags.\n   * @param {Object?} options.reference The message reference.\n   * @param {String?} options.reference.message_id The id of the message to reference.\n   * @param {String?} options.reference.channel_id The id of the channel to reference.\n   * @param {String?} options.reference.guild_id The id of the guild to reference.\n   * @param {FileUpload[]?} options.files Array of file objects for files to send with the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
+        "comment": "/**\n   * Edits the message, assuming it is sent by the client user.\n   * @param {Object?} [options] Content, embeds and components to attach to the message.\n   * @param {String?} [options.content] The message content.\n   * @param {Embed?} [options.embed] Embed to send with the message.\n   * @param {MessageComponents?} [options.components] Message components to send with the message.\n   * @param {Array<Attachment>?} [options.attachments] Array of attachment objects for files to send with the message.\n   * @param {Number?} [options.flags] The message flags.\n   * @param {Object?} [options.reference] The message reference.\n   * @param {String?} [options.reference.message_id] The id of the message to reference.\n   * @param {String?} [options.reference.channel_id] The id of the channel to reference.\n   * @param {String?} [options.reference.guild_id] The id of the guild to reference.\n   * @param {FileUpload[]?} [options.files] Array of file objects for files to send with the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                22756,
-                23441
+                22788,
+                23473
             ],
             "filename": "Message.js",
             "lineno": 828,
@@ -4456,6 +4461,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Content, embeds and components to attach to the message.",
                 "name": "options"
@@ -4466,6 +4472,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message content.",
                 "name": "options.content"
@@ -4476,6 +4483,7 @@
                         "Embed"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Embed to send with the message.",
                 "name": "options.embed"
@@ -4486,6 +4494,7 @@
                         "MessageComponents"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Message components to send with the message.",
                 "name": "options.components"
@@ -4496,6 +4505,7 @@
                         "Array.<Attachment>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of attachment objects for files to send with the message.",
                 "name": "options.attachments"
@@ -4506,6 +4516,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message flags.",
                 "name": "options.flags"
@@ -4516,6 +4527,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message reference.",
                 "name": "options.reference"
@@ -4526,6 +4538,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The id of the message to reference.",
                 "name": "options.reference.message_id"
@@ -4536,6 +4549,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The id of the channel to reference.",
                 "name": "options.reference.channel_id"
@@ -4546,6 +4560,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The id of the guild to reference.",
                 "name": "options.reference.guild_id"
@@ -4556,6 +4571,7 @@
                         "Array.<FileUpload>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of file objects for files to send with the message.",
                 "name": "options.files"
@@ -4595,8 +4611,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22774,
-                22784
+                22806,
+                22816
             ],
             "filename": "Message.js",
             "lineno": 830,
@@ -4619,8 +4635,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22792,
-                22797
+                22824,
+                22829
             ],
             "filename": "Message.js",
             "lineno": 831,
@@ -4643,8 +4659,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22805,
-                22827
+                22837,
+                22859
             ],
             "filename": "Message.js",
             "lineno": 832,
@@ -4667,8 +4683,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22835,
-                22855
+                22867,
+                22887
             ],
             "filename": "Message.js",
             "lineno": 833,
@@ -4691,8 +4707,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22863,
-                22893
+                22895,
+                22925
             ],
             "filename": "Message.js",
             "lineno": 834,
@@ -4715,8 +4731,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22901,
-                22922
+                22933,
+                22954
             ],
             "filename": "Message.js",
             "lineno": 835,
@@ -4739,8 +4755,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22930,
-                23065
+                22962,
+                23097
             ],
             "filename": "Message.js",
             "lineno": 836,
@@ -4763,8 +4779,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22952,
-                22988
+                22984,
+                23020
             ],
             "filename": "Message.js",
             "lineno": 837,
@@ -4787,8 +4803,8 @@
         "comment": "",
         "meta": {
             "range": [
-                22998,
-                23024
+                23030,
+                23056
             ],
             "filename": "Message.js",
             "lineno": 838,
@@ -4811,8 +4827,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23034,
-                23056
+                23066,
+                23088
             ],
             "filename": "Message.js",
             "lineno": 839,
@@ -4835,8 +4851,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23083,
-                23099
+                23115,
+                23131
             ],
             "filename": "Message.js",
             "lineno": 842,
@@ -4859,8 +4875,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23107,
-                23118
+                23139,
+                23150
             ],
             "filename": "Message.js",
             "lineno": 843,
@@ -4883,8 +4899,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23126,
-                23139
+                23158,
+                23171
             ],
             "filename": "Message.js",
             "lineno": 844,
@@ -4907,8 +4923,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23147,
-                23159
+                23179,
+                23191
             ],
             "filename": "Message.js",
             "lineno": 845,
@@ -4931,8 +4947,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23167,
-                23184
+                23199,
+                23216
             ],
             "filename": "Message.js",
             "lineno": 846,
@@ -4955,8 +4971,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23192,
-                23203
+                23224,
+                23235
             ],
             "filename": "Message.js",
             "lineno": 847,
@@ -4979,8 +4995,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23211,
-                23226
+                23243,
+                23258
             ],
             "filename": "Message.js",
             "lineno": 848,
@@ -5003,8 +5019,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23327,
-                23334
+                23359,
+                23366
             ],
             "filename": "Message.js",
             "lineno": 852,
@@ -5027,8 +5043,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23342,
-                23352
+                23374,
+                23384
             ],
             "filename": "Message.js",
             "lineno": 853,
@@ -5051,8 +5067,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23360,
-                23365
+                23392,
+                23397
             ],
             "filename": "Message.js",
             "lineno": 854,
@@ -5075,8 +5091,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23373,
-                23379
+                23405,
+                23411
             ],
             "filename": "Message.js",
             "lineno": 855,
@@ -5099,8 +5115,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23387,
-                23398
+                23419,
+                23430
             ],
             "filename": "Message.js",
             "lineno": 856,
@@ -5123,8 +5139,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23406,
-                23411
+                23438,
+                23443
             ],
             "filename": "Message.js",
             "lineno": 857,
@@ -5147,8 +5163,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23419,
-                23428
+                23451,
+                23460
             ],
             "filename": "Message.js",
             "lineno": 858,
@@ -5168,11 +5184,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Deletes the message.\n   * @param {Object?} options The options for deleting the message.\n   * @param {String?} options.reason The reason for deleting the message\n   * @returns {Promise<void>}\n   * @method\n   * @public\n   * @async\n   */",
+        "comment": "/**\n   * Deletes the message.\n   * @param {Object?} [options] The options for deleting the message.\n   * @param {String?} [options.reason] The reason for deleting the message\n   * @returns {Promise<void>}\n   * @method\n   * @public\n   * @async\n   */",
         "meta": {
             "range": [
-                23692,
-                23851
+                23728,
+                23887
             ],
             "filename": "Message.js",
             "lineno": 871,
@@ -5198,6 +5214,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for deleting the message.",
                 "name": "options"
@@ -5208,6 +5225,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for deleting the message",
                 "name": "options.reason"
@@ -5234,8 +5252,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23701,
-                23707
+                23737,
+                23743
             ],
             "filename": "Message.js",
             "lineno": 871,
@@ -5258,8 +5276,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23831,
-                23837
+                23867,
+                23873
             ],
             "filename": "Message.js",
             "lineno": 877,
@@ -5282,8 +5300,8 @@
         "comment": "/**\n   * Determines whether the message should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @param {ChannelCacheOptions} channelCacheOptions The cache options for the channel.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                24240,
-                25050
+                24276,
+                25086
             ],
             "filename": "Message.js",
             "lineno": 891,
@@ -5350,11 +5368,11 @@
         "memberof": "Message"
     },
     {
-        "comment": "/**\n   * Posts a message to the specified channel.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel to send the message to.\n   * @param {String} guildId The id of the guild which the channel belongs to.\n   * @param {Object?} options Content, embeds, components and files to attach to the message.\n   * @param {String?} options.content The message content.\n   * @param {Embed[]} options.embeds Array of embeds to send with the message.\n   * @param {MessageComponents?} options.components Message components to send with the message.\n   * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.\n   * @param {Boolean?} options.suppressMentions Whether to suppress mentions in the message.\n   * @returns {Promise<Message>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
+        "comment": "/**\n   * Posts a message to the specified channel.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel to send the message to.\n   * @param {String} guildId The id of the guild which the channel belongs to.\n   * @param {Object?} [options] Content, embeds, components and files to attach to the message.\n   * @param {String?} [options.content] The message content.\n   * @param {Embed[]} [options.embeds] Array of embeds to send with the message.\n   * @param {MessageComponents?} [options.components] Message components to send with the message.\n   * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.\n   * @param {Boolean?} [options.suppressMentions] Whether to suppress mentions in the message.\n   * @returns {Promise<Message>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                25941,
-                27586
+                25989,
+                27634
             ],
             "filename": "Message.js",
             "lineno": 931,
@@ -5410,6 +5428,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Content, embeds, components and files to attach to the message.",
                 "name": "options"
@@ -5420,6 +5439,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message content.",
                 "name": "options.content"
@@ -5430,6 +5450,7 @@
                         "Array.<Embed>"
                     ]
                 },
+                "optional": true,
                 "description": "Array of embeds to send with the message.",
                 "name": "options.embeds"
             },
@@ -5439,6 +5460,7 @@
                         "MessageComponents"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Message components to send with the message.",
                 "name": "options.components"
@@ -5449,6 +5471,7 @@
                         "Array.<FileUpload>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of file objects for files to send with the message.",
                 "name": "options.files"
@@ -5459,6 +5482,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether to suppress mentions in the message.",
                 "name": "options.suppressMentions"
@@ -5494,8 +5518,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26012,
-                26019
+                26060,
+                26067
             ],
             "filename": "Message.js",
             "lineno": 936,
@@ -5518,8 +5542,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26027,
-                26033
+                26075,
+                26081
             ],
             "filename": "Message.js",
             "lineno": 937,
@@ -5542,8 +5566,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26041,
-                26051
+                26089,
+                26099
             ],
             "filename": "Message.js",
             "lineno": 938,
@@ -5566,8 +5590,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26059,
-                26064
+                26107,
+                26112
             ],
             "filename": "Message.js",
             "lineno": 939,
@@ -5590,8 +5614,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26072,
-                26081
+                26120,
+                26129
             ],
             "filename": "Message.js",
             "lineno": 940,
@@ -5614,8 +5638,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26089,
-                26113
+                26137,
+                26161
             ],
             "filename": "Message.js",
             "lineno": 941,
@@ -5638,8 +5662,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26131,
-                26154
+                26179,
+                26202
             ],
             "filename": "Message.js",
             "lineno": 943,
@@ -5662,8 +5686,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26511,
-                26518
+                26559,
+                26566
             ],
             "filename": "Message.js",
             "lineno": 953,
@@ -5686,8 +5710,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26520,
-                26526
+                26568,
+                26574
             ],
             "filename": "Message.js",
             "lineno": 953,
@@ -5710,8 +5734,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26528,
-                26538
+                26576,
+                26586
             ],
             "filename": "Message.js",
             "lineno": 953,
@@ -5734,8 +5758,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26540,
-                26545
+                26588,
+                26593
             ],
             "filename": "Message.js",
             "lineno": 953,
@@ -5758,8 +5782,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26547,
-                26556
+                26595,
+                26604
             ],
             "filename": "Message.js",
             "lineno": 953,
@@ -5782,8 +5806,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27014,
-                27023
+                27062,
+                27071
             ],
             "filename": "Message.js",
             "lineno": 970,
@@ -5808,8 +5832,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27043,
-                27065
+                27091,
+                27113
             ],
             "filename": "Message.js",
             "lineno": 972,
@@ -5835,8 +5859,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27107,
-                27127
+                27155,
+                27175
             ],
             "filename": "Message.js",
             "lineno": 974,
@@ -5862,8 +5886,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27149,
-                27177
+                27197,
+                27225
             ],
             "filename": "Message.js",
             "lineno": 975,
@@ -5889,8 +5913,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27194,
-                27212
+                27242,
+                27260
             ],
             "filename": "Message.js",
             "lineno": 976,
@@ -5916,8 +5940,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27257,
-                27283
+                27305,
+                27331
             ],
             "filename": "Message.js",
             "lineno": 978,
@@ -5943,8 +5967,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27291,
-                27323
+                27339,
+                27371
             ],
             "filename": "Message.js",
             "lineno": 979,
@@ -5970,8 +5994,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27350,
-                27384
+                27398,
+                27432
             ],
             "filename": "Message.js",
             "lineno": 981,
@@ -5997,8 +6021,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27397,
-                27501
+                27445,
+                27549
             ],
             "filename": "Message.js",
             "lineno": 983,
@@ -6023,8 +6047,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27549,
-                27558
+                27597,
+                27606
             ],
             "filename": "Message.js",
             "lineno": 990,
@@ -6047,8 +6071,8 @@
         "comment": "",
         "meta": {
             "range": [
-                27566,
-                27573
+                27614,
+                27621
             ],
             "filename": "Message.js",
             "lineno": 991,
@@ -6068,11 +6092,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Edits a message.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel the message belongs to.\n   * @param {String} messageId The id of the message.\n   * @param {String} guildId The id of the guild the message belongs to.\n   * @param {Object?} options The message options.\n   * @param {String?} options.content The message content.\n   * @param {Embed[]?} options.embeds Array of embeds to send with the message.\n   * @param {MessageComponents?} options.components Message components to send with the message.\n   * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.\n   * @param {Array<Attachment>?} options.attachments Array of attachment objects for existing attachments sent with the message.\n   * @returns {Promise<Message>}\n   */",
+        "comment": "/**\n   * Edits a message.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel the message belongs to.\n   * @param {String} messageId The id of the message.\n   * @param {String} guildId The id of the guild the message belongs to.\n   * @param {Object?} [options] The message options.\n   * @param {String?} [options.content] The message content.\n   * @param {Embed[]?} [options.embeds] Array of embeds to send with the message.\n   * @param {MessageComponents?} [options.components] Message components to send with the message.\n   * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.\n   * @param {Array<Attachment>?} [options.attachments] Array of attachment objects for existing attachments sent with the message.\n   * @returns {Promise<Message>}\n   */",
         "meta": {
             "range": [
-                28431,
-                29773
+                28491,
+                29833
             ],
             "filename": "Message.js",
             "lineno": 1009,
@@ -6138,6 +6162,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message options.",
                 "name": "options"
@@ -6148,6 +6173,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The message content.",
                 "name": "options.content"
@@ -6158,6 +6184,7 @@
                         "Array.<Embed>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of embeds to send with the message.",
                 "name": "options.embeds"
@@ -6168,6 +6195,7 @@
                         "MessageComponents"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Message components to send with the message.",
                 "name": "options.components"
@@ -6178,6 +6206,7 @@
                         "Array.<FileUpload>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of file objects for files to send with the message.",
                 "name": "options.files"
@@ -6188,6 +6217,7 @@
                         "Array.<Attachment>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Array of attachment objects for existing attachments sent with the message.",
                 "name": "options.attachments"
@@ -6213,8 +6243,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28511,
-                28518
+                28571,
+                28578
             ],
             "filename": "Message.js",
             "lineno": 1014,
@@ -6237,8 +6267,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28520,
-                28526
+                28580,
+                28586
             ],
             "filename": "Message.js",
             "lineno": 1014,
@@ -6261,8 +6291,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28528,
-                28538
+                28588,
+                28598
             ],
             "filename": "Message.js",
             "lineno": 1014,
@@ -6285,8 +6315,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28540,
-                28551
+                28600,
+                28611
             ],
             "filename": "Message.js",
             "lineno": 1014,
@@ -6309,8 +6339,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28553,
-                28558
+                28613,
+                28618
             ],
             "filename": "Message.js",
             "lineno": 1014,
@@ -6333,8 +6363,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29019,
-                29026
+                29079,
+                29086
             ],
             "filename": "Message.js",
             "lineno": 1025,
@@ -6357,8 +6387,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29028,
-                29034
+                29088,
+                29094
             ],
             "filename": "Message.js",
             "lineno": 1025,
@@ -6381,8 +6411,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29036,
-                29046
+                29096,
+                29106
             ],
             "filename": "Message.js",
             "lineno": 1025,
@@ -6405,8 +6435,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29048,
-                29059
+                29108,
+                29119
             ],
             "filename": "Message.js",
             "lineno": 1025,
@@ -6429,8 +6459,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29061,
-                29066
+                29121,
+                29126
             ],
             "filename": "Message.js",
             "lineno": 1025,
@@ -6453,8 +6483,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29403,
-                29412
+                29463,
+                29472
             ],
             "filename": "Message.js",
             "lineno": 1039,
@@ -6479,8 +6509,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29419,
-                29441
+                29479,
+                29501
             ],
             "filename": "Message.js",
             "lineno": 1041,
@@ -6506,8 +6536,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29447,
-                29467
+                29507,
+                29527
             ],
             "filename": "Message.js",
             "lineno": 1042,
@@ -6533,8 +6563,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29473,
-                29501
+                29533,
+                29561
             ],
             "filename": "Message.js",
             "lineno": 1043,
@@ -6560,8 +6590,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29507,
-                29537
+                29567,
+                29597
             ],
             "filename": "Message.js",
             "lineno": 1044,
@@ -6587,8 +6617,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29543,
-                29561
+                29603,
+                29621
             ],
             "filename": "Message.js",
             "lineno": 1045,
@@ -6614,8 +6644,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29574,
-                29688
+                29634,
+                29748
             ],
             "filename": "Message.js",
             "lineno": 1047,
@@ -6640,8 +6670,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29736,
-                29745
+                29796,
+                29805
             ],
             "filename": "Message.js",
             "lineno": 1054,
@@ -6664,8 +6694,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29753,
-                29760
+                29813,
+                29820
             ],
             "filename": "Message.js",
             "lineno": 1055,
@@ -6688,8 +6718,8 @@
         "comment": "/**\n   * Returns the hash name for the message.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} channelId The id of the channel that the message belongs to.\n   * @param {String} messageId The id of the message.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                30134,
-                30561
+                30194,
+                30621
             ],
             "filename": "Message.js",
             "lineno": 1070,
@@ -6768,8 +6798,8 @@
         "comment": "/**\n   * Decrypts a message.\n   * @param {Client} client The client instance.\n   * @param {String} data The encrypted message data.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} channelId The id of the channel that the message belongs to.\n   * @param {String} messageId The id of the message.\n   * @returns {Message}\n   * @public\n   * @static\n   * @method\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                31007,
-                31721
+                31067,
+                31781
             ],
             "filename": "Message.js",
             "lineno": 1093,
@@ -6868,8 +6898,8 @@
         "comment": "",
         "meta": {
             "range": [
-                31689,
-                31698
+                31749,
+                31758
             ],
             "filename": "Message.js",
             "lineno": 1107,
@@ -6892,8 +6922,8 @@
         "comment": "",
         "meta": {
             "range": [
-                31700,
-                31707
+                31760,
+                31767
             ],
             "filename": "Message.js",
             "lineno": 1107,
@@ -6913,11 +6943,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Validates the message content, embeds, components and files.\n   * @param {Object} options The message options.\n   * @param {String} options.content The message content.\n   * @param {Embed[]} options.embeds Array of embeds to send with the message.\n   * @param {MessageComponents} options.components Message components to send with the message.\n   * @param {Array<FileUpload>} options.files Array of file objects for files to send with the message.\n   * @param {Array<Attachment>} options.attachments Array of attachment objects for existing attachments sent with the message.\n   * @param {Number} options.flags The message flags.\n   * @param {Object} options.reference The message reference.\n   * @param {String} options.reference.message_id The id of the message to reference.\n   * @param {String} options.reference.channel_id The id of the channel to reference.\n   * @param {String} options.reference.guild_id The id of the guild to reference.\n   * @returns {void}\n   * @throws {Error | TypeError | RangeError}\n   * @public\n   * @static\n   * @method\n   */",
+        "comment": "/**\n   * Validates the message content, embeds, components and files.\n   * @param {Object} [options] The message options.\n   * @param {String} [options.content] The message content.\n   * @param {Embed[]} [options.embeds] Array of embeds to send with the message.\n   * @param {MessageComponents} [options.components] Message components to send with the message.\n   * @param {Array<FileUpload>} [options.files] Array of file objects for files to send with the message.\n   * @param {Array<Attachment>} [options.attachments] Array of attachment objects for existing attachments sent with the message.\n   * @param {Number} [options.flags] The message flags.\n   * @param {Object} [options.reference] The message reference.\n   * @param {String} [options.reference.message_id] The id of the message to reference.\n   * @param {String} [options.reference.channel_id] The id of the channel to reference.\n   * @param {String} [options.reference.guild_id] The id of the guild to reference.\n   * @returns {void}\n   * @throws {Error | TypeError | RangeError}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                32794,
-                35405
+                32876,
+                35487
             ],
             "filename": "Message.js",
             "lineno": 1130,
@@ -6943,6 +6973,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "description": "The message options.",
                 "name": "options"
             },
@@ -6952,6 +6983,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "description": "The message content.",
                 "name": "options.content"
             },
@@ -6961,6 +6993,7 @@
                         "Array.<Embed>"
                     ]
                 },
+                "optional": true,
                 "description": "Array of embeds to send with the message.",
                 "name": "options.embeds"
             },
@@ -6970,6 +7003,7 @@
                         "MessageComponents"
                     ]
                 },
+                "optional": true,
                 "description": "Message components to send with the message.",
                 "name": "options.components"
             },
@@ -6979,6 +7013,7 @@
                         "Array.<FileUpload>"
                     ]
                 },
+                "optional": true,
                 "description": "Array of file objects for files to send with the message.",
                 "name": "options.files"
             },
@@ -6988,6 +7023,7 @@
                         "Array.<Attachment>"
                     ]
                 },
+                "optional": true,
                 "description": "Array of attachment objects for existing attachments sent with the message.",
                 "name": "options.attachments"
             },
@@ -6997,6 +7033,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The message flags.",
                 "name": "options.flags"
             },
@@ -7006,6 +7043,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "description": "The message reference.",
                 "name": "options.reference"
             },
@@ -7015,6 +7053,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "description": "The id of the message to reference.",
                 "name": "options.reference.message_id"
             },
@@ -7024,6 +7063,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "description": "The id of the channel to reference.",
                 "name": "options.reference.channel_id"
             },
@@ -7033,6 +7073,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "description": "The id of the guild to reference.",
                 "name": "options.reference.guild_id"
             }
@@ -7068,8 +7109,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32822,
-                32829
+                32904,
+                32911
             ],
             "filename": "Message.js",
             "lineno": 1131,
@@ -7092,8 +7133,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32835,
-                32841
+                32917,
+                32923
             ],
             "filename": "Message.js",
             "lineno": 1132,
@@ -7116,8 +7157,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32847,
-                32857
+                32929,
+                32939
             ],
             "filename": "Message.js",
             "lineno": 1133,
@@ -7140,8 +7181,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32863,
-                32868
+                32945,
+                32950
             ],
             "filename": "Message.js",
             "lineno": 1134,
@@ -7164,8 +7205,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32874,
-                32885
+                32956,
+                32967
             ],
             "filename": "Message.js",
             "lineno": 1135,
@@ -7188,8 +7229,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32891,
-                32896
+                32973,
+                32978
             ],
             "filename": "Message.js",
             "lineno": 1136,
@@ -7212,8 +7253,8 @@
         "comment": "",
         "meta": {
             "range": [
-                32902,
-                32911
+                32984,
+                32993
             ],
             "filename": "Message.js",
             "lineno": 1137,
@@ -7233,11 +7274,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Deletes one message.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel that the message belongs to.\n   * @param {String} messageId The id of the message to delete.\n   * @param {Object?} options\n   * @param {String?} options.reason The reason for deleting the message.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
+        "comment": "/**\n   * Deletes one message.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel that the message belongs to.\n   * @param {String} messageId The id of the message to delete.\n   * @param {Object?} [options]\n   * @param {String?} [options.reason] The reason for deleting the message.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                35839,
-                36985
+                35925,
+                37071
             ],
             "filename": "Message.js",
             "lineno": 1218,
@@ -7294,6 +7335,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "name": "options"
             },
@@ -7303,6 +7345,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for deleting the message.",
                 "name": "options.reason"
@@ -7338,8 +7381,8 @@
         "comment": "",
         "meta": {
             "range": [
-                35900,
-                35906
+                35986,
+                35992
             ],
             "filename": "Message.js",
             "lineno": 1218,
@@ -7362,8 +7405,8 @@
         "comment": "",
         "meta": {
             "range": [
-                36799,
-                36808
+                36885,
+                36894
             ],
             "filename": "Message.js",
             "lineno": 1242,
@@ -7388,8 +7431,8 @@
         "comment": "",
         "meta": {
             "range": [
-                36827,
-                36862
+                36913,
+                36948
             ],
             "filename": "Message.js",
             "lineno": 1244,
@@ -7415,8 +7458,8 @@
         "comment": "/**\n   * Encrypts the message.\n   * @returns {String}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                37077,
-                37166
+                37163,
+                37252
             ],
             "filename": "Message.js",
             "lineno": 1259,
@@ -7454,8 +7497,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                37208,
-                37260
+                37294,
+                37346
             ],
             "filename": "Message.js",
             "lineno": 1267,
@@ -7483,8 +7526,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                37302,
-                37359
+                37388,
+                37445
             ],
             "filename": "Message.js",
             "lineno": 1275,
@@ -7509,11 +7552,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                37542,
-                39942
+                37630,
+                40030
             ],
             "filename": "Message.js",
             "lineno": 1286,
@@ -7539,6 +7582,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -7563,8 +7607,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37700,
-                37711
+                37788,
+                37799
             ],
             "filename": "Message.js",
             "lineno": 1291,
@@ -7587,8 +7631,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37723,
-                37758
+                37811,
+                37846
             ],
             "filename": "Message.js",
             "lineno": 1292,
@@ -7611,8 +7655,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37770,
-                37805
+                37858,
+                37893
             ],
             "filename": "Message.js",
             "lineno": 1293,
@@ -7635,8 +7679,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37817,
-                37838
+                37905,
+                37926
             ],
             "filename": "Message.js",
             "lineno": 1294,
@@ -7659,8 +7703,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37850,
-                37880
+                37938,
+                37968
             ],
             "filename": "Message.js",
             "lineno": 1295,
@@ -7683,8 +7727,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37892,
-                37950
+                37980,
+                38038
             ],
             "filename": "Message.js",
             "lineno": 1296,
@@ -7707,8 +7751,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37962,
-                38010
+                38050,
+                38098
             ],
             "filename": "Message.js",
             "lineno": 1297,
@@ -7731,8 +7775,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38022,
-                38121
+                38110,
+                38209
             ],
             "filename": "Message.js",
             "lineno": 1298,
@@ -7755,8 +7799,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38133,
-                38164
+                38221,
+                38252
             ],
             "filename": "Message.js",
             "lineno": 1301,
@@ -7779,8 +7823,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38176,
-                38270
+                38264,
+                38358
             ],
             "filename": "Message.js",
             "lineno": 1302,
@@ -7803,8 +7847,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38282,
-                38297
+                38370,
+                38385
             ],
             "filename": "Message.js",
             "lineno": 1305,
@@ -7827,8 +7871,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38309,
-                38531
+                38397,
+                38619
             ],
             "filename": "Message.js",
             "lineno": 1306,
@@ -7851,8 +7895,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38387,
-                38490
+                38475,
+                38578
             ],
             "filename": "Message.js",
             "lineno": 1308,
@@ -7875,8 +7919,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38543,
-                38604
+                38631,
+                38692
             ],
             "filename": "Message.js",
             "lineno": 1313,
@@ -7899,8 +7943,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38616,
-                38663
+                38704,
+                38751
             ],
             "filename": "Message.js",
             "lineno": 1314,
@@ -7923,8 +7967,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38774,
-                38785
+                38862,
+                38873
             ],
             "filename": "Message.js",
             "lineno": 1320,
@@ -7947,8 +7991,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38797,
-                38823
+                38885,
+                38911
             ],
             "filename": "Message.js",
             "lineno": 1321,
@@ -7971,8 +8015,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38835,
-                38870
+                38923,
+                38958
             ],
             "filename": "Message.js",
             "lineno": 1322,
@@ -7995,8 +8039,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38882,
-                38917
+                38970,
+                39005
             ],
             "filename": "Message.js",
             "lineno": 1323,
@@ -8019,8 +8063,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38929,
-                38950
+                39017,
+                39038
             ],
             "filename": "Message.js",
             "lineno": 1324,
@@ -8043,8 +8087,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38962,
-                38981
+                39050,
+                39069
             ],
             "filename": "Message.js",
             "lineno": 1325,
@@ -8067,8 +8111,8 @@
         "comment": "",
         "meta": {
             "range": [
-                38993,
-                39051
+                39081,
+                39139
             ],
             "filename": "Message.js",
             "lineno": 1326,
@@ -8091,8 +8135,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39063,
-                39111
+                39151,
+                39199
             ],
             "filename": "Message.js",
             "lineno": 1327,
@@ -8115,8 +8159,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39123,
-                39222
+                39211,
+                39310
             ],
             "filename": "Message.js",
             "lineno": 1328,
@@ -8139,8 +8183,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39234,
-                39265
+                39322,
+                39353
             ],
             "filename": "Message.js",
             "lineno": 1331,
@@ -8163,8 +8207,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39277,
-                39371
+                39365,
+                39459
             ],
             "filename": "Message.js",
             "lineno": 1332,
@@ -8187,8 +8231,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39383,
-                39398
+                39471,
+                39486
             ],
             "filename": "Message.js",
             "lineno": 1335,
@@ -8211,8 +8255,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39410,
-                39632
+                39498,
+                39720
             ],
             "filename": "Message.js",
             "lineno": 1336,
@@ -8235,8 +8279,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39488,
-                39591
+                39576,
+                39679
             ],
             "filename": "Message.js",
             "lineno": 1338,
@@ -8259,8 +8303,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39644,
-                39706
+                39732,
+                39794
             ],
             "filename": "Message.js",
             "lineno": 1343,
@@ -8283,8 +8327,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39718,
-                39759
+                39806,
+                39847
             ],
             "filename": "Message.js",
             "lineno": 1344,
@@ -8307,8 +8351,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39771,
-                39809
+                39859,
+                39897
             ],
             "filename": "Message.js",
             "lineno": 1345,
@@ -8331,8 +8375,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39821,
-                39865
+                39909,
+                39953
             ],
             "filename": "Message.js",
             "lineno": 1346,
@@ -8355,8 +8399,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39877,
-                39912
+                39965,
+                40000
             ],
             "filename": "Message.js",
             "lineno": 1347,
@@ -8379,8 +8423,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39946,
-                39969
+                40034,
+                40057
             ],
             "filename": "Message.js",
             "lineno": 1354,

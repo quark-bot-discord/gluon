@@ -60,12 +60,12 @@ declare class Channel {
     });
     /**
      * Sends a message to this channel.
-     * @param {Object} data Embeds, components and files to include with the message.
-     * @param {String?} data.content The content of the message.
-     * @param {Array<Embed>?} data.embeds The embeds to include with the message.
-     * @param {Array<MessageComponents>?} data.components The components to include with the message.
-     * @param {Array<FileUpload>?} data.files The files to include with the message.
-     * @param {Boolean} data.suppressMentions Whether to suppress mentions in the message.
+     * @param {Object} [data] Embeds, components and files to include with the message.
+     * @param {String?} [data.content] The content of the message.
+     * @param {Array<Embed>?} [data.embeds] The embeds to include with the message.
+     * @param {Array<MessageComponents>?} [data.components] The components to include with the message.
+     * @param {Array<FileUpload>?} [data.files] The files to include with the message.
+     * @param {Boolean} [data.suppressMentions] Whether to suppress mentions in the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      * @method
@@ -74,11 +74,11 @@ declare class Channel {
      * @throws {Error | TypeError}
      */
     public send({ content, components, files, embeds, suppressMentions }?: {
-        content: string | null;
-        embeds: Array<Embed> | null;
-        components: Array<MessageComponents> | null;
-        files: Array<FileUpload> | null;
-        suppressMentions: boolean;
+        content?: string | null;
+        embeds?: Array<Embed> | null;
+        components?: Array<MessageComponents> | null;
+        files?: Array<FileUpload> | null;
+        suppressMentions?: boolean;
     }): Promise<Message>;
     /**
      * Returns the mention for this channel.
@@ -191,12 +191,12 @@ declare class Channel {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import Message from "./Message.js";

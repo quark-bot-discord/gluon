@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 204,
-                5277
+                5279
             ],
             "filename": "Reaction.js",
             "lineno": 9,
@@ -256,7 +256,7 @@
         "meta": {
             "range": [
                 204,
-                5277
+                5279
             ],
             "filename": "Reaction.js",
             "lineno": 9,
@@ -1092,11 +1092,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                4785,
-                5275
+                4787,
+                5277
             ],
             "filename": "Reaction.js",
             "lineno": 206,
@@ -1122,6 +1122,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -1146,8 +1147,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4943,
-                4975
+                4945,
+                4977
             ],
             "filename": "Reaction.js",
             "lineno": 211,
@@ -1170,8 +1171,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4987,
-                5012
+                4989,
+                5014
             ],
             "filename": "Reaction.js",
             "lineno": 212,
@@ -1194,8 +1195,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5024,
-                5073
+                5026,
+                5075
             ],
             "filename": "Reaction.js",
             "lineno": 213,
@@ -1218,8 +1219,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5184,
-                5216
+                5186,
+                5218
             ],
             "filename": "Reaction.js",
             "lineno": 219,
@@ -1242,8 +1243,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5228,
-                5245
+                5230,
+                5247
             ],
             "filename": "Reaction.js",
             "lineno": 220,
@@ -1266,8 +1267,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5279,
-                5303
+                5281,
+                5305
             ],
             "filename": "Reaction.js",
             "lineno": 227,

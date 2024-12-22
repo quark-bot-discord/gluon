@@ -16,10 +16,10 @@ declare class Role {
     /**
      * Returns the URL of the role's icon.
      * @param {String} id The ID of the role.
-     * @param {String?} hash The hash of the role's icon.
+     * @param {String?} [hash] The hash of the role's icon.
      * @returns {String}
      */
-    static getIconUrl(id: string, hash: string | null): string;
+    static getIconUrl(id: string, hash?: string | null): string;
     /**
      * Determines whether the role should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -148,12 +148,12 @@ declare class Role {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";

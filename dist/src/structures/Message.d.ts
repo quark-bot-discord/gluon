@@ -30,12 +30,12 @@ declare class Message {
      * @param {Client} client The client instance.
      * @param {String} channelId The id of the channel to send the message to.
      * @param {String} guildId The id of the guild which the channel belongs to.
-     * @param {Object?} options Content, embeds, components and files to attach to the message.
-     * @param {String?} options.content The message content.
-     * @param {Embed[]} options.embeds Array of embeds to send with the message.
-     * @param {MessageComponents?} options.components Message components to send with the message.
-     * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.
-     * @param {Boolean?} options.suppressMentions Whether to suppress mentions in the message.
+     * @param {Object?} [options] Content, embeds, components and files to attach to the message.
+     * @param {String?} [options.content] The message content.
+     * @param {Embed[]} [options.embeds] Array of embeds to send with the message.
+     * @param {MessageComponents?} [options.components] Message components to send with the message.
+     * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.
+     * @param {Boolean?} [options.suppressMentions] Whether to suppress mentions in the message.
      * @returns {Promise<Message>}
      * @public
      * @method
@@ -49,12 +49,12 @@ declare class Message {
      * @param {String} channelId The id of the channel the message belongs to.
      * @param {String} messageId The id of the message.
      * @param {String} guildId The id of the guild the message belongs to.
-     * @param {Object?} options The message options.
-     * @param {String?} options.content The message content.
-     * @param {Embed[]?} options.embeds Array of embeds to send with the message.
-     * @param {MessageComponents?} options.components Message components to send with the message.
-     * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.
-     * @param {Array<Attachment>?} options.attachments Array of attachment objects for existing attachments sent with the message.
+     * @param {Object?} [options] The message options.
+     * @param {String?} [options.content] The message content.
+     * @param {Embed[]?} [options.embeds] Array of embeds to send with the message.
+     * @param {MessageComponents?} [options.components] Message components to send with the message.
+     * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.
+     * @param {Array<Attachment>?} [options.attachments] Array of attachment objects for existing attachments sent with the message.
      * @returns {Promise<Message>}
      */
     static edit(client: Client, channelId: string, messageId: string, guildId: string, { content, embeds, components, attachments, files }?: any | null): Promise<Message>;
@@ -86,17 +86,17 @@ declare class Message {
     public static decrypt(client: Client, data: string, guildId: string, channelId: string, messageId: string): Message;
     /**
      * Validates the message content, embeds, components and files.
-     * @param {Object} options The message options.
-     * @param {String} options.content The message content.
-     * @param {Embed[]} options.embeds Array of embeds to send with the message.
-     * @param {MessageComponents} options.components Message components to send with the message.
-     * @param {Array<FileUpload>} options.files Array of file objects for files to send with the message.
-     * @param {Array<Attachment>} options.attachments Array of attachment objects for existing attachments sent with the message.
-     * @param {Number} options.flags The message flags.
-     * @param {Object} options.reference The message reference.
-     * @param {String} options.reference.message_id The id of the message to reference.
-     * @param {String} options.reference.channel_id The id of the channel to reference.
-     * @param {String} options.reference.guild_id The id of the guild to reference.
+     * @param {Object} [options] The message options.
+     * @param {String} [options.content] The message content.
+     * @param {Embed[]} [options.embeds] Array of embeds to send with the message.
+     * @param {MessageComponents} [options.components] Message components to send with the message.
+     * @param {Array<FileUpload>} [options.files] Array of file objects for files to send with the message.
+     * @param {Array<Attachment>} [options.attachments] Array of attachment objects for existing attachments sent with the message.
+     * @param {Number} [options.flags] The message flags.
+     * @param {Object} [options.reference] The message reference.
+     * @param {String} [options.reference.message_id] The id of the message to reference.
+     * @param {String} [options.reference.channel_id] The id of the channel to reference.
+     * @param {String} [options.reference.guild_id] The id of the guild to reference.
      * @returns {void}
      * @throws {Error | TypeError | RangeError}
      * @public
@@ -104,16 +104,16 @@ declare class Message {
      * @method
      */
     public static sendValidation({ content, embeds, components, files, attachments, flags, reference, }?: {
-        content: string;
-        embeds: Embed[];
-        components: MessageComponents;
-        files: Array<FileUpload>;
-        attachments: Array<Attachment>;
-        flags: number;
-        reference: {
-            message_id: string;
-            channel_id: string;
-            guild_id: string;
+        content?: string;
+        embeds?: Embed[];
+        components?: MessageComponents;
+        files?: Array<FileUpload>;
+        attachments?: Array<Attachment>;
+        flags?: number;
+        reference?: {
+            message_id?: string;
+            channel_id?: string;
+            guild_id?: string;
         };
     }): void;
     /**
@@ -121,8 +121,8 @@ declare class Message {
      * @param {Client} client The client instance.
      * @param {String} channelId The id of the channel that the message belongs to.
      * @param {String} messageId The id of the message to delete.
-     * @param {Object?} options
-     * @param {String?} options.reason The reason for deleting the message.
+     * @param {Object?} [options]
+     * @param {String?} [options.reason] The reason for deleting the message.
      * @returns {Promise<void>}
      * @public
      * @method
@@ -353,11 +353,11 @@ declare class Message {
     public readonly get hashName(): string;
     /**
      * Replies to the message.
-     * @param {Object?} options Embeds, components and files to attach to the message.
-     * @param {String?} options.content The message content.
-     * @param {Embed?} options.embed Embed to send with the message.
-     * @param {MessageComponents?} options.components Message components to send with the message.
-     * @param {Array<FileUpload>?} options.files Array of file objects for files to send with the message.
+     * @param {Object?} [options] Embeds, components and files to attach to the message.
+     * @param {String?} [options.content] The message content.
+     * @param {Embed?} [options.embed] Embed to send with the message.
+     * @param {MessageComponents?} [options.components] Message components to send with the message.
+     * @param {Array<FileUpload>?} [options.files] Array of file objects for files to send with the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#create-message}
      * @method
@@ -368,17 +368,17 @@ declare class Message {
     public reply({ content, embeds, components, files, suppressMentions }?: any | null): Promise<Message>;
     /**
      * Edits the message, assuming it is sent by the client user.
-     * @param {Object?} options Content, embeds and components to attach to the message.
-     * @param {String?} options.content The message content.
-     * @param {Embed?} options.embed Embed to send with the message.
-     * @param {MessageComponents?} options.components Message components to send with the message.
-     * @param {Array<Attachment>?} options.attachments Array of attachment objects for files to send with the message.
-     * @param {Number?} options.flags The message flags.
-     * @param {Object?} options.reference The message reference.
-     * @param {String?} options.reference.message_id The id of the message to reference.
-     * @param {String?} options.reference.channel_id The id of the channel to reference.
-     * @param {String?} options.reference.guild_id The id of the guild to reference.
-     * @param {FileUpload[]?} options.files Array of file objects for files to send with the message.
+     * @param {Object?} [options] Content, embeds and components to attach to the message.
+     * @param {String?} [options.content] The message content.
+     * @param {Embed?} [options.embed] Embed to send with the message.
+     * @param {MessageComponents?} [options.components] Message components to send with the message.
+     * @param {Array<Attachment>?} [options.attachments] Array of attachment objects for files to send with the message.
+     * @param {Number?} [options.flags] The message flags.
+     * @param {Object?} [options.reference] The message reference.
+     * @param {String?} [options.reference.message_id] The id of the message to reference.
+     * @param {String?} [options.reference.channel_id] The id of the channel to reference.
+     * @param {String?} [options.reference.guild_id] The id of the guild to reference.
+     * @param {FileUpload[]?} [options.files] Array of file objects for files to send with the message.
      * @returns {Promise<Message>}
      * @see {@link https://discord.com/developers/docs/resources/channel#edit-message}
      * @method
@@ -389,8 +389,8 @@ declare class Message {
     public edit({ components, files, content, embeds, attachments, flags, reference, }?: any | null): Promise<Message>;
     /**
      * Deletes the message.
-     * @param {Object?} options The options for deleting the message.
-     * @param {String?} options.reason The reason for deleting the message
+     * @param {Object?} [options] The options for deleting the message.
+     * @param {String?} [options.reason] The reason for deleting the message
      * @returns {Promise<void>}
      * @method
      * @public
@@ -411,12 +411,12 @@ declare class Message {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import User from "./User.js";

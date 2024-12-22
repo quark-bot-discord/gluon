@@ -24,7 +24,7 @@ declare class Emoji {
     /**
      * Returns the url for an emoji.
      * @param {String} id The id of the emoji.
-     * @param {Boolean} animated Whether the emoji is animated.
+     * @param {Boolean} [animated] Whether the emoji is animated.
      * @returns {String}
      * @public
      * @static
@@ -130,12 +130,12 @@ declare class Emoji {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";

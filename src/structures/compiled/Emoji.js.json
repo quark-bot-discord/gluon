@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 417,
-                8172
+                8176
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -241,7 +241,7 @@
         "meta": {
             "range": [
                 417,
-                8172
+                8176
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -1218,11 +1218,11 @@
         "memberof": "Emoji"
     },
     {
-        "comment": "/**\n   * Returns the url for an emoji.\n   * @param {String} id The id of the emoji.\n   * @param {Boolean} animated Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
+        "comment": "/**\n   * Returns the url for an emoji.\n   * @param {String} id The id of the emoji.\n   * @param {Boolean} [animated] Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6060,
-                6387
+                6062,
+                6389
             ],
             "filename": "Emoji.js",
             "lineno": 246,
@@ -1258,6 +1258,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "description": "Whether the emoji is animated.",
                 "name": "animated",
                 "defaultvalue": false
@@ -1283,8 +1284,8 @@
         "comment": "/**\n   * Determines whether the emoji should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6685,
-                7215
+                6687,
+                7217
             ],
             "filename": "Emoji.js",
             "lineno": 263,
@@ -1344,8 +1345,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7257,
-                7320
+                7259,
+                7322
             ],
             "filename": "Emoji.js",
             "lineno": 281,
@@ -1373,8 +1374,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7362,
-                7419
+                7364,
+                7421
             ],
             "filename": "Emoji.js",
             "lineno": 289,
@@ -1399,11 +1400,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7602,
-                8170
+                7606,
+                8174
             ],
             "filename": "Emoji.js",
             "lineno": 300,
@@ -1429,6 +1430,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -1453,8 +1455,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7760,
-                7771
+                7764,
+                7775
             ],
             "filename": "Emoji.js",
             "lineno": 305,
@@ -1477,8 +1479,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7783,
-                7798
+                7787,
+                7802
             ],
             "filename": "Emoji.js",
             "lineno": 306,
@@ -1501,8 +1503,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7810,
-                7840
+                7814,
+                7844
             ],
             "filename": "Emoji.js",
             "lineno": 307,
@@ -1525,8 +1527,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7951,
-                7962
+                7955,
+                7966
             ],
             "filename": "Emoji.js",
             "lineno": 313,
@@ -1549,8 +1551,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7974,
-                7989
+                7978,
+                7993
             ],
             "filename": "Emoji.js",
             "lineno": 314,
@@ -1573,8 +1575,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8001,
-                8024
+                8005,
+                8028
             ],
             "filename": "Emoji.js",
             "lineno": 315,
@@ -1597,8 +1599,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8036,
-                8057
+                8040,
+                8061
             ],
             "filename": "Emoji.js",
             "lineno": 316,
@@ -1621,8 +1623,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8069,
-                8103
+                8073,
+                8107
             ],
             "filename": "Emoji.js",
             "lineno": 317,
@@ -1645,8 +1647,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8115,
-                8140
+                8119,
+                8144
             ],
             "filename": "Emoji.js",
             "lineno": 318,
@@ -1669,8 +1671,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8174,
-                8195
+                8178,
+                8199
             ],
             "filename": "Emoji.js",
             "lineno": 325,

@@ -119,12 +119,12 @@ declare class Invite {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import User from "./User.js";

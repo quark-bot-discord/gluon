@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 480,
-                4859
+                4861
             ],
             "filename": "Thread.js",
             "lineno": 13,
@@ -197,7 +197,7 @@
         "meta": {
             "range": [
                 480,
-                4859
+                4861
             ],
             "filename": "Thread.js",
             "lineno": 13,
@@ -760,11 +760,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                4515,
-                4857
+                4517,
+                4859
             ],
             "filename": "Thread.js",
             "lineno": 166,
@@ -790,6 +790,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -815,8 +816,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4769,
-                4791
+                4771,
+                4793
             ],
             "filename": "Thread.js",
             "lineno": 174,
@@ -839,8 +840,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4803,
-                4827
+                4805,
+                4829
             ],
             "filename": "Thread.js",
             "lineno": 175,
@@ -863,8 +864,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4861,
-                4883
+                4863,
+                4885
             ],
             "filename": "Thread.js",
             "lineno": 182,

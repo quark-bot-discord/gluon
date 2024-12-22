@@ -7,13 +7,13 @@ declare class ScheduledEvent {
     /**
      * Returns the URL of the event's image.
      * @param {String} id The id of the event.
-     * @param {String?} hash The hash of the event's image.
+     * @param {String?} [hash] The hash of the event's image.
      * @returns {String}
      * @public
      * @static
      * @method
      */
-    public static getImageUrl(id: string, hash: string | null): string;
+    public static getImageUrl(id: string, hash?: string | null): string;
     /**
      * Determines whether the scheduled event should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -148,12 +148,12 @@ declare class ScheduledEvent {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import User from "./User.js";

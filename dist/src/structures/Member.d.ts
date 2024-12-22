@@ -17,13 +17,13 @@ declare class Member {
      * Returns the avatar url for the member.
      * @param {String} id The id of the user.
      * @param {String} guild_id The id of the guild the user belongs to.
-     * @param {String?} hash The avatar hash of the user.
+     * @param {String?} [hash] The avatar hash of the user.
      * @returns {String}
      * @public
      * @static
      * @method
      */
-    public static getAvatarUrl(id: string, guildId: any, hash: string | null): string;
+    public static getAvatarUrl(id: string, guildId: any, hash?: string | null): string;
     /**
      * Determines whether the member should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -56,8 +56,8 @@ declare class Member {
      * @param {String} guildId The guild id the member belongs to.
      * @param {String} userId The id of the member who the action is occuring on.
      * @param {String} roleId The id of the role to add.
-     * @param {Object} options The options for adding the role.
-     * @param {String} options.reason The reason for adding the role.
+     * @param {Object} [options] The options for adding the role.
+     * @param {String?} [options.reason] The reason for adding the role.
      * @returns {Promise<void>}
      * @public
      * @method
@@ -65,7 +65,7 @@ declare class Member {
      * @throws {TypeError}
      */
     public static addRole(client: Client, guildId: string, userId: string, roleId: string, { reason }?: {
-        reason: string;
+        reason?: string | null;
     }): Promise<void>;
     /**
      * Removes a role from a member.
@@ -73,8 +73,8 @@ declare class Member {
      * @param {String} guildId The guild id the member belongs to.
      * @param {String} userId The id of the member who the action is occuring on.
      * @param {String} roleId The id of the role to remove.
-     * @param {Object} options The options for removing the role.
-     * @param {String} options.reason The reason for removing the role.
+     * @param {Object} [options] The options for removing the role.
+     * @param {String?} [options.reason] The reason for removing the role.
      * @returns {Promise<void>}
      * @public
      * @method
@@ -82,7 +82,7 @@ declare class Member {
      * @throws {TypeError}
      */
     public static removeRole(client: Client, guildId: string, userId: string, roleId: string, { reason }?: {
-        reason: string;
+        reason?: string | null;
     }): Promise<void>;
     /**
      * Creates the structure for a guild member.
@@ -236,8 +236,8 @@ declare class Member {
     /**
      * Adds a role to the member.
      * @param {String} role_id The id of the role to add to the member.
-     * @param {Object?} options The options for adding the role to the member.
-     * @param {String?} options.reason The reason for adding the role to the member.
+     * @param {Object?} [options] The options for adding the role to the member.
+     * @param {String?} [options.reason] The reason for adding the role to the member.
      * @returns {Promise<void>}
      * @public
      * @async
@@ -248,8 +248,8 @@ declare class Member {
     /**
      * Removes a role from the member.
      * @param {String} role_id The id of the role to remove from the member.
-     * @param {Object?} options The options for removing the role from the member.
-     * @param {String?} options.reason The reason for removing the role from the member.
+     * @param {Object?} [options] The options for removing the role from the member.
+     * @param {String?} [options.reason] The reason for removing the role from the member.
      * @returns {Promise<void>}
      * @public
      * @async
@@ -260,8 +260,8 @@ declare class Member {
     /**
      * Adds a timeout to the member.
      * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.
-     * @param {Object?} options The options for timing out the member.
-     * @param {String?} options.reason The reason for timing out the member.
+     * @param {Object?} [options] The options for timing out the member.
+     * @param {String?} [options.reason] The reason for timing out the member.
      * @returns {Promise<void>}
      * @public
      * @async
@@ -271,8 +271,8 @@ declare class Member {
     public timeoutAdd(timeout_until: number, { reason }?: any | null): Promise<void>;
     /**
      * Removes a timeout from the member.
-     * @param {Object?} options The options for untiming out the member.
-     * @param {String?} options.reason The reason for removing the time out from the member.
+     * @param {Object?} [options] The options for untiming out the member.
+     * @param {String?} [options.reason] The reason for removing the time out from the member.
      * @returns {Promise<void>}
      * @public
      * @async
@@ -283,7 +283,8 @@ declare class Member {
     /**
      * Updates the member's roles.
      * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.
-     * @param {Object?} options The options for updating the member's roles.
+     * @param {Object?} [options] The options for updating the member's roles.
+     * @param {String?} [options.reason] The reason for updating the member's roles.
      * @returns {Promise<void>}
      * @public
      * @async
@@ -305,12 +306,12 @@ declare class Member {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import Role from "./Role.js";

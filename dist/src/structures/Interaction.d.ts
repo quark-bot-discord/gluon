@@ -8,11 +8,11 @@ declare class Interaction {
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
      * @param {Client} client The client instance.
      * @param {String} interactionToken The interaction token.
-     * @param {Object?} options The new interaction response options.
-     * @param {String?} options.content The new content of the interaction response.
-     * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
-     * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
-     * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+     * @param {Object?} [options] The new interaction response options.
+     * @param {String?} [options.content] The new content of the interaction response.
+     * @param {Array<FileUpload>?} [options.files] The new files to send with the interaction response.
+     * @param {Array<Embed>?} [options.embeds] The new embeds to send with the interaction response.
+     * @param {Array<ActionRow>?} [options.components] The new components to send with the interaction response.
      * @returns {Promise<Interaction>}
      * @public
      * @async
@@ -85,31 +85,41 @@ declare class Interaction {
     /**
      * Prompts a user to enter text using a modal.
      * @param {Object} options Modal options.
+     * @param {String} options.title The title of the modal.
+     * @param {String} options.customId The custom id of the modal.
+     * @param {TextInput} options.textInputModal The text input modal.
      * @returns {Promise<void>}
      * @public
      * @async
      * @method
      * @throws {Error | TypeError}
      */
-    public textPrompt({ title, customId, textInputModal }?: any): Promise<void>;
+    public textPrompt({ title, customId, textInputModal }?: {
+        title: string;
+        customId: string;
+        textInputModal: TextInput;
+    }): Promise<void>;
     /**
      * Responds to autocomplete interactions.
      * @param {Object} options Autocompletion options.
+     * @param {Array<CommandChoice>} options.choices The choices to send back.
      * @returns {Promise<Interaction>}
      * @public
      * @async
      * @method
      * @throws {Error}
      */
-    public autocompleteResponse({ choices }?: any): Promise<Interaction>;
+    public autocompleteResponse({ choices }?: {
+        choices: Array<CommandChoice>;
+    }): Promise<Interaction>;
     /**
      * Replies to an interaction.
-     * @param {Object?} options An embed, components, and whether the response should be as an ephemeral message.
-     * @param {String?} options.content The content of the interaction response.
-     * @param {Array<FileUpload>?} options.files The files to send with the interaction response.
-     * @param {Array<Embed>?} options.embeds The embeds to send with the interaction response.
-     * @param {Array<ActionRow>?} options.components The components to send with the interaction response.
-     * @param {Boolean?} options.quiet Whether the response should be an ephemeral message.
+     * @param {Object?} [options] An embed, components, and whether the response should be as an ephemeral message.
+     * @param {String?} [options.content] The content of the interaction response.
+     * @param {Array<FileUpload>?} [options.files] The files to send with the interaction response.
+     * @param {Array<Embed>?} [options.embeds] The embeds to send with the interaction response.
+     * @param {Array<ActionRow>?} [options.components] The components to send with the interaction response.
+     * @param {Boolean?} [options.quiet] Whether the response should be an ephemeral message.
      * @returns {Promise<Interaction>}
      * @public
      * @async
@@ -126,11 +136,11 @@ declare class Interaction {
     public acknowledge(): Promise<Interaction>;
     /**
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
-     * @param {Object?} options The new interaction response options.
-     * @param {String?} options.content The new content of the interaction response.
-     * @param {Array<FileUpload>?} options.files The new files to send with the interaction response.
-     * @param {Array<Embed>?} options.embeds The new embeds to send with the interaction response.
-     * @param {Array<ActionRow>?} options.components The new components to send with the interaction response.
+     * @param {Object?} [options] The new interaction response options.
+     * @param {String?} [options.content] The new content of the interaction response.
+     * @param {Array<FileUpload>?} [options.files] The new files to send with the interaction response.
+     * @param {Array<Embed>?} [options.embeds] The new embeds to send with the interaction response.
+     * @param {Array<ActionRow>?} [options.components] The new components to send with the interaction response.
      * @returns {Promise<Interaction>}
      * @public
      * @async
@@ -145,14 +155,16 @@ declare class Interaction {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import Member from "./Member.js";
+import TextInput from "../util/builder/textInputBuilder.js";
+import { CommandChoice } from "../util.js";
 import Client from "../Client.js";
 //# sourceMappingURL=Interaction.d.ts.map

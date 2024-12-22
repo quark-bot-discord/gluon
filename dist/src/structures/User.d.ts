@@ -16,13 +16,13 @@ declare class User {
     /**
      * Returns the URL to the user's avatar.
      * @param {String} id The ID of the user to get the avatar for.
-     * @param {String?} hash The hash of the avatar.
+     * @param {String?} [hash] The hash of the avatar.
      * @returns {String}
      * @public
      * @static
      * @method
      */
-    public static getAvatarUrl(id: string, hash: string | null): string;
+    public static getAvatarUrl(id: string, hash?: string | null): string;
     /**
      * Determines whether the user should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -148,12 +148,12 @@ declare class User {
     public toString(): string;
     /**
      * Returns the JSON representation of this structure.
-     * @param {Number} format The format to return the data in.
+     * @param {Number} [format] The format to return the data in.
      * @returns {Object}
      * @public
      * @method
      */
-    public toJSON(format: number): any;
+    public toJSON(format?: number): any;
     #private;
 }
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";

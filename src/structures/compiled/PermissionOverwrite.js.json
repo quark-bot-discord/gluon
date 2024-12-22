@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 115,
-                2568
+                2570
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 5,
@@ -564,11 +564,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                2223,
-                2566
+                2225,
+                2568
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 117,
@@ -594,6 +594,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -618,8 +619,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2442,
-                2453
+                2444,
+                2455
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 124,
@@ -642,8 +643,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2465,
-                2480
+                2467,
+                2482
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 125,
@@ -666,8 +667,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2492,
-                2509
+                2494,
+                2511
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 126,
@@ -690,8 +691,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2521,
-                2536
+                2523,
+                2538
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 127,
@@ -714,8 +715,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2570,
-                2605
+                2572,
+                2607
             ],
             "filename": "PermissionOverwrite.js",
             "lineno": 134,

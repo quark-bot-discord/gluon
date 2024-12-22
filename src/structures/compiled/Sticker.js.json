@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 211,
-                2953
+                2955
             ],
             "filename": "Sticker.js",
             "lineno": 13,
@@ -183,7 +183,7 @@
         "meta": {
             "range": [
                 211,
-                2953
+                2955
             ],
             "filename": "Sticker.js",
             "lineno": 13,
@@ -645,11 +645,11 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                2624,
-                2951
+                2626,
+                2953
             ],
             "filename": "Sticker.js",
             "lineno": 145,
@@ -675,6 +675,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -699,8 +700,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2843,
-                2854
+                2845,
+                2856
             ],
             "filename": "Sticker.js",
             "lineno": 152,
@@ -723,8 +724,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2866,
-                2881
+                2868,
+                2883
             ],
             "filename": "Sticker.js",
             "lineno": 153,
@@ -747,8 +748,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2893,
-                2921
+                2895,
+                2923
             ],
             "filename": "Sticker.js",
             "lineno": 154,
@@ -771,8 +772,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2955,
-                2978
+                2957,
+                2980
             ],
             "filename": "Sticker.js",
             "lineno": 161,

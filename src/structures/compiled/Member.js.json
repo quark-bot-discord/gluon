@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 932,
-                23646
+                23761
             ],
             "filename": "Member.js",
             "lineno": 25,
@@ -410,7 +410,7 @@
         "meta": {
             "range": [
                 932,
-                23646
+                23761
             ],
             "filename": "Member.js",
             "lineno": 25,
@@ -2388,11 +2388,11 @@
         "memberof": "Member"
     },
     {
-        "comment": "/**\n   * Returns the avatar url for the member.\n   * @param {String} id The id of the user.\n   * @param {String} guild_id The id of the guild the user belongs to.\n   * @param {String?} hash The avatar hash of the user.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
+        "comment": "/**\n   * Returns the avatar url for the member.\n   * @param {String} id The id of the user.\n   * @param {String} guild_id The id of the guild the user belongs to.\n   * @param {String?} [hash] The avatar hash of the user.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                11618,
-                12139
+                11620,
+                12141
             ],
             "filename": "Member.js",
             "lineno": 472,
@@ -2438,6 +2438,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The avatar hash of the user.",
                 "name": "hash"
@@ -2460,11 +2461,11 @@
         "memberof": "Member"
     },
     {
-        "comment": "/**\n   * Adds a role to the member.\n   * @param {String} role_id The id of the role to add to the member.\n   * @param {Object?} options The options for adding the role to the member.\n   * @param {String?} options.reason The reason for adding the role to the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
+        "comment": "/**\n   * Adds a role to the member.\n   * @param {String} role_id The id of the role to add to the member.\n   * @param {Object?} [options] The options for adding the role to the member.\n   * @param {String?} [options.reason] The reason for adding the role to the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                12518,
-                12659
+                12524,
+                12665
             ],
             "filename": "Member.js",
             "lineno": 497,
@@ -2500,6 +2501,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for adding the role to the member.",
                 "name": "options"
@@ -2510,6 +2512,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for adding the role to the member.",
                 "name": "options.reason"
@@ -2546,8 +2549,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12543,
-                12549
+                12549,
+                12555
             ],
             "filename": "Member.js",
             "lineno": 497,
@@ -2570,8 +2573,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12640,
-                12646
+                12646,
+                12652
             ],
             "filename": "Member.js",
             "lineno": 499,
@@ -2591,11 +2594,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Removes a role from the member.\n   * @param {String} role_id The id of the role to remove from the member.\n   * @param {Object?} options The options for removing the role from the member.\n   * @param {String?} options.reason The reason for removing the role from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
+        "comment": "/**\n   * Removes a role from the member.\n   * @param {String} role_id The id of the role to remove from the member.\n   * @param {Object?} [options] The options for removing the role from the member.\n   * @param {String?} [options.reason] The reason for removing the role from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                13056,
-                13203
+                13066,
+                13213
             ],
             "filename": "Member.js",
             "lineno": 514,
@@ -2631,6 +2634,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for removing the role from the member.",
                 "name": "options"
@@ -2641,6 +2645,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for removing the role from the member.",
                 "name": "options.reason"
@@ -2677,8 +2682,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13084,
-                13090
+                13094,
+                13100
             ],
             "filename": "Member.js",
             "lineno": 514,
@@ -2701,8 +2706,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13184,
-                13190
+                13194,
+                13200
             ],
             "filename": "Member.js",
             "lineno": 516,
@@ -2722,11 +2727,11 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Adds a timeout to the member.\n   * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.\n   * @param {Object?} options The options for timing out the member.\n   * @param {String?} options.reason The reason for timing out the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
+        "comment": "/**\n   * Adds a timeout to the member.\n   * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.\n   * @param {Object?} [options] The options for timing out the member.\n   * @param {String?} [options.reason] The reason for timing out the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                13595,
-                14394
+                13609,
+                14408
             ],
             "filename": "Member.js",
             "lineno": 531,
@@ -2762,6 +2767,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for timing out the member.",
                 "name": "options"
@@ -2772,6 +2778,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for timing out the member.",
                 "name": "options.reason"
@@ -2808,8 +2815,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13629,
-                13635
+                13643,
+                13649
             ],
             "filename": "Member.js",
             "lineno": 531,
@@ -2832,8 +2839,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14104,
-                14113
+                14118,
+                14127
             ],
             "filename": "Member.js",
             "lineno": 546,
@@ -2858,8 +2865,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14132,
-                14167
+                14146,
+                14181
             ],
             "filename": "Member.js",
             "lineno": 548,
@@ -2885,8 +2892,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14174,
-                14267
+                14188,
+                14281
             ],
             "filename": "Member.js",
             "lineno": 550,
@@ -2909,11 +2916,11 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * Removes a timeout from the member.\n   * @param {Object?} options The options for untiming out the member.\n   * @param {String?} options.reason The reason for removing the time out from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
+        "comment": "/**\n   * Removes a timeout from the member.\n   * @param {Object?} [options] The options for untiming out the member.\n   * @param {String?} [options.reason] The reason for removing the time out from the member.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                14713,
-                15326
+                14731,
+                15344
             ],
             "filename": "Member.js",
             "lineno": 571,
@@ -2939,6 +2946,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for untiming out the member.",
                 "name": "options"
@@ -2949,6 +2957,7 @@
                         "String"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The reason for removing the time out from the member.",
                 "name": "options.reason"
@@ -2985,8 +2994,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14735,
-                14741
+                14753,
+                14759
             ],
             "filename": "Member.js",
             "lineno": 571,
@@ -3009,8 +3018,8 @@
         "comment": "",
         "meta": {
             "range": [
-                15089,
-                15098
+                15107,
+                15116
             ],
             "filename": "Member.js",
             "lineno": 583,
@@ -3035,8 +3044,8 @@
         "comment": "",
         "meta": {
             "range": [
-                15117,
-                15152
+                15135,
+                15170
             ],
             "filename": "Member.js",
             "lineno": 585,
@@ -3062,8 +3071,8 @@
         "comment": "",
         "meta": {
             "range": [
-                15159,
-                15199
+                15177,
+                15217
             ],
             "filename": "Member.js",
             "lineno": 587,
@@ -3086,14 +3095,14 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * Updates the member's roles.\n   * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.\n   * @param {Object?} options The options for updating the member's roles.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
+        "comment": "/**\n   * Updates the member's roles.\n   * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.\n   * @param {Object?} [options] The options for updating the member's roles.\n   * @param {String?} [options.reason] The reason for updating the member's roles.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {TypeError | Error}\n   */",
         "meta": {
             "range": [
-                15655,
-                16453
+                15758,
+                16556
             ],
             "filename": "Member.js",
-            "lineno": 606,
+            "lineno": 607,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3126,9 +3135,21 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "The options for updating the member's roles.",
                 "name": "options"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String"
+                    ]
+                },
+                "optional": true,
+                "nullable": true,
+                "description": "The reason for updating the member's roles.",
+                "name": "options.reason"
             }
         ],
         "returns": [
@@ -3162,11 +3183,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15686,
-                15692
+                15789,
+                15795
             ],
             "filename": "Member.js",
-            "lineno": 606,
+            "lineno": 607,
             "columnno": 33,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3186,11 +3207,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16207,
-                16216
+                16310,
+                16319
             ],
             "filename": "Member.js",
-            "lineno": 624,
+            "lineno": 625,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3212,11 +3233,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16235,
-                16270
+                16338,
+                16373
             ],
             "filename": "Member.js",
-            "lineno": 626,
+            "lineno": 627,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3239,11 +3260,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16277,
-                16326
+                16380,
+                16429
             ],
             "filename": "Member.js",
-            "lineno": 628,
+            "lineno": 629,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3266,11 +3287,11 @@
         "comment": "/**\n   * Determines whether the member should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                16752,
-                17284
+                16855,
+                17387
             ],
             "filename": "Member.js",
-            "lineno": 646,
+            "lineno": 647,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3327,11 +3348,11 @@
         "comment": "/**\n   * Returns the hash name for the message.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} memberId The id of the member.\n   * @returns {String}\n   */",
         "meta": {
             "range": [
-                17497,
-                17793
+                17600,
+                17896
             ],
             "filename": "Member.js",
-            "lineno": 666,
+            "lineno": 667,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3387,11 +3408,11 @@
         "comment": "/**\n   * Decrypts a member.\n   * @param {Client} client The client instance.\n   * @param {String} data The encrypted message data.\n   * @param {String} guildId The id of the guild that the message belongs to.\n   * @param {String} userId The id of the member.\n   * @returns {Member}\n   */",
         "meta": {
             "range": [
-                18087,
-                18667
+                18190,
+                18770
             ],
             "filename": "Member.js",
-            "lineno": 682,
+            "lineno": 683,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3467,11 +3488,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18616,
-                18630
+                18719,
+                18733
             ],
             "filename": "Member.js",
-            "lineno": 692,
+            "lineno": 693,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3491,11 +3512,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18638,
-                18654
+                18741,
+                18757
             ],
             "filename": "Member.js",
-            "lineno": 693,
+            "lineno": 694,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3512,14 +3533,14 @@
         "scope": "global"
     },
     {
-        "comment": "/**\n   * Adds a role to a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to add.\n   * @param {Object} options The options for adding the role.\n   * @param {String} options.reason The reason for adding the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
+        "comment": "/**\n   * Adds a role to a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to add.\n   * @param {Object} [options] The options for adding the role.\n   * @param {String?} [options.reason] The reason for adding the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                19185,
-                20100
+                19293,
+                20208
             ],
             "filename": "Member.js",
-            "lineno": 711,
+            "lineno": 712,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3582,6 +3603,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "description": "The options for adding the role.",
                 "name": "options"
             },
@@ -3591,6 +3613,8 @@
                         "String"
                     ]
                 },
+                "optional": true,
+                "nullable": true,
                 "description": "The reason for adding the role.",
                 "name": "options.reason"
             }
@@ -3625,11 +3649,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19241,
-                19247
+                19349,
+                19355
             ],
             "filename": "Member.js",
-            "lineno": 711,
+            "lineno": 712,
             "columnno": 58,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3649,11 +3673,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19910,
-                19919
+                20018,
+                20027
             ],
             "filename": "Member.js",
-            "lineno": 729,
+            "lineno": 730,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3675,11 +3699,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19938,
-                19973
+                20046,
+                20081
             ],
             "filename": "Member.js",
-            "lineno": 731,
+            "lineno": 732,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3699,14 +3723,14 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * Removes a role from a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to remove.\n   * @param {Object} options The options for removing the role.\n   * @param {String} options.reason The reason for removing the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
+        "comment": "/**\n   * Removes a role from a member.\n   * @param {Client} client The client instance.\n   * @param {String} guildId The guild id the member belongs to.\n   * @param {String} userId The id of the member who the action is occuring on.\n   * @param {String} roleId The id of the role to remove.\n   * @param {Object} [options] The options for removing the role.\n   * @param {String?} [options.reason] The reason for removing the role.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                20630,
-                21549
+                20743,
+                21662
             ],
             "filename": "Member.js",
-            "lineno": 754,
+            "lineno": 755,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3769,6 +3793,7 @@
                         "Object"
                     ]
                 },
+                "optional": true,
                 "description": "The options for removing the role.",
                 "name": "options"
             },
@@ -3778,6 +3803,8 @@
                         "String"
                     ]
                 },
+                "optional": true,
+                "nullable": true,
                 "description": "The reason for removing the role.",
                 "name": "options.reason"
             }
@@ -3812,11 +3839,11 @@
         "comment": "",
         "meta": {
             "range": [
-                20689,
-                20695
+                20802,
+                20808
             ],
             "filename": "Member.js",
-            "lineno": 754,
+            "lineno": 755,
             "columnno": 61,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3836,11 +3863,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21358,
-                21367
+                21471,
+                21480
             ],
             "filename": "Member.js",
-            "lineno": 772,
+            "lineno": 773,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3862,11 +3889,11 @@
         "comment": "",
         "meta": {
             "range": [
-                21386,
-                21421
+                21499,
+                21534
             ],
             "filename": "Member.js",
-            "lineno": 774,
+            "lineno": 775,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3889,11 +3916,11 @@
         "comment": "/**\n   * Encrypts the member.\n   * @returns {String}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                21640,
-                21713
+                21753,
+                21826
             ],
             "filename": "Member.js",
-            "lineno": 789,
+            "lineno": 790,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3928,11 +3955,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                21755,
-                21806
+                21868,
+                21919
             ],
             "filename": "Member.js",
-            "lineno": 797,
+            "lineno": 798,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3957,11 +3984,11 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                21848,
-                21905
+                21961,
+                22018
             ],
             "filename": "Member.js",
-            "lineno": 805,
+            "lineno": 806,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -3983,14 +4010,14 @@
         "params": []
     },
     {
-        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} format The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+        "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                22088,
-                23644
+                22203,
+                23759
             ],
             "filename": "Member.js",
-            "lineno": 816,
+            "lineno": 817,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4013,6 +4040,7 @@
                         "Number"
                     ]
                 },
+                "optional": true,
                 "description": "The format to return the data in.",
                 "name": "format"
             }
@@ -4037,11 +4065,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22246,
-                22276
+                22361,
+                22391
             ],
             "filename": "Member.js",
-            "lineno": 821,
+            "lineno": 822,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4061,11 +4089,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22288,
-                22303
+                22403,
+                22418
             ],
             "filename": "Member.js",
-            "lineno": 822,
+            "lineno": 823,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4085,11 +4113,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22315,
-                22374
+                22430,
+                22489
             ],
             "filename": "Member.js",
-            "lineno": 823,
+            "lineno": 824,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4109,11 +4137,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22386,
-                22418
+                22501,
+                22533
             ],
             "filename": "Member.js",
-            "lineno": 824,
+            "lineno": 825,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4133,11 +4161,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22430,
-                22467
+                22545,
+                22582
             ],
             "filename": "Member.js",
-            "lineno": 825,
+            "lineno": 826,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4157,11 +4185,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22479,
-                22662
+                22594,
+                22777
             ],
             "filename": "Member.js",
-            "lineno": 826,
+            "lineno": 827,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4181,11 +4209,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22674,
-                22784
+                22789,
+                22899
             ],
             "filename": "Member.js",
-            "lineno": 831,
+            "lineno": 832,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4205,11 +4233,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22796,
-                22813
+                22911,
+                22928
             ],
             "filename": "Member.js",
-            "lineno": 834,
+            "lineno": 835,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4229,11 +4257,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22825,
-                22855
+                22940,
+                22970
             ],
             "filename": "Member.js",
-            "lineno": 835,
+            "lineno": 836,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4253,11 +4281,11 @@
         "comment": "",
         "meta": {
             "range": [
-                22966,
-                22996
+                23081,
+                23111
             ],
             "filename": "Member.js",
-            "lineno": 841,
+            "lineno": 842,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4277,11 +4305,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23008,
-                23023
+                23123,
+                23138
             ],
             "filename": "Member.js",
-            "lineno": 842,
+            "lineno": 843,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4301,11 +4329,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23035,
-                23142
+                23150,
+                23257
             ],
             "filename": "Member.js",
-            "lineno": 843,
+            "lineno": 844,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4325,11 +4353,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23154,
-                23186
+                23269,
+                23301
             ],
             "filename": "Member.js",
-            "lineno": 846,
+            "lineno": 847,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4349,11 +4377,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23198,
-                23235
+                23313,
+                23350
             ],
             "filename": "Member.js",
-            "lineno": 847,
+            "lineno": 848,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4373,11 +4401,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23247,
-                23430
+                23362,
+                23545
             ],
             "filename": "Member.js",
-            "lineno": 848,
+            "lineno": 849,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4397,11 +4425,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23442,
-                23552
+                23557,
+                23667
             ],
             "filename": "Member.js",
-            "lineno": 853,
+            "lineno": 854,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4421,11 +4449,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23564,
-                23581
+                23679,
+                23696
             ],
             "filename": "Member.js",
-            "lineno": 856,
+            "lineno": 857,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4445,11 +4473,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23593,
-                23614
+                23708,
+                23729
             ],
             "filename": "Member.js",
-            "lineno": 857,
+            "lineno": 858,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
@@ -4469,11 +4497,11 @@
         "comment": "",
         "meta": {
             "range": [
-                23648,
-                23670
+                23763,
+                23785
             ],
             "filename": "Member.js",
-            "lineno": 864,
+            "lineno": 865,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
