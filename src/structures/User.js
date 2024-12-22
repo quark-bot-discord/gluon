@@ -313,7 +313,7 @@ class User {
   /**
    * Returns the URL to the user's avatar.
    * @param {String} id The ID of the user to get the avatar for.
-   * @param {String?} hash The hash of the avatar.
+   * @param {String?} [hash] The hash of the avatar.
    * @returns {String}
    * @public
    * @static
@@ -368,7 +368,7 @@ class User {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
+   * @param {Number} [format] The format to return the data in.
    * @returns {Object}
    * @public
    * @method

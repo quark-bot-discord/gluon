@@ -395,7 +395,7 @@ class ScheduledEvent {
   /**
    * Returns the URL of the event's image.
    * @param {String} id The id of the event.
-   * @param {String?} hash The hash of the event's image.
+   * @param {String?} [hash] The hash of the event's image.
    * @returns {String}
    * @public
    * @static
@@ -454,7 +454,7 @@ class ScheduledEvent {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
+   * @param {Number} [format] The format to return the data in.
    * @returns {Object}
    * @public
    * @method

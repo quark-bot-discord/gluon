@@ -312,7 +312,7 @@ class Role {
   /**
    * Returns the URL of the role's icon.
    * @param {String} id The ID of the role.
-   * @param {String?} hash The hash of the role's icon.
+   * @param {String?} [hash] The hash of the role's icon.
    * @returns {String}
    */
   static getIconUrl(id, hash) {
@@ -368,7 +368,7 @@ class Role {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
+   * @param {Number} [format] The format to return the data in.
    * @returns {Object}
    * @public
    * @method

@@ -28,6 +28,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Client from "../Client.js";
 import Message from "./Message.js";
+import { Embed } from "../util.js";
 
 /**
  * Represents a Discord guild.
@@ -1078,7 +1079,9 @@ class Guild {
   /**
    * Bans a user with the given id from the guild.
    * @param {String} user_id The id of the user to ban.
-   * @param {Object?} options Ban options.
+   * @param {Object?} [options] Ban options.
+   * @param {String?} [options.reason] The reason for banning the user.
+   * @param {Number?} [options.seconds] The number of seconds to delete messages for.
    * @returns {Promise<void?>}
    * @async
    * @public
@@ -1122,7 +1125,8 @@ class Guild {
   /**
    * Unbans a user with the given id from the guild.
    * @param {String} user_id The id of the user to unban.
-   * @param {Object?} options Unban options.
+   * @param {Object?} [options] Unban options.
+   * @param {String?} [options.reason] The reason for unbanning the user.
    * @returns {Promise<void?>}
    * @async
    * @public
@@ -1158,7 +1162,8 @@ class Guild {
   /**
    * Kicks a user with the given id from the guild.
    * @param {String} user_id The id of the user to kick.
-   * @param {Object?} options Kick options.
+   * @param {Object?} [options] Kick options.
+   * @param {String?} [options.reason] The reason for kicking the user.
    * @returns {Promise<void?>}
    * @async
    * @public
@@ -1195,7 +1200,8 @@ class Guild {
    * Removes the given role from the given member.
    * @param {String} user_id The id of the user.
    * @param {String} role_id The id of the role.
-   * @param {Object?} options Remove role options.
+   * @param {Object?} [options] Remove role options.
+   * @param {String?} [options.reason] The reason for removing the role.
    * @returns {Promise<void?>}
    * @async
    * @public
@@ -1233,7 +1239,12 @@ class Guild {
 
   /**
    * Fetches audit logs.
-   * @param {Object?} options Audit log fetch options.
+   * @param {Object?} [options] Audit log fetch options.
+   * @param {Number?} [options.limit] The number of entries to fetch.
+   * @param {Number?} [options.type] The type of audit log to fetch.
+   * @param {String?} [options.user_id] The id of the user to fetch the audit log for.
+   * @param {String?} [options.before] The id of the audit log entry to fetch before.
+   * @param {String?} [options.after] The id of the audit log entry to fetch after
    * @returns {Promise<AuditLog[]?>}
    * @async
    * @public
@@ -1433,8 +1444,8 @@ class Guild {
    * Creates a webhook in the given channel with the name "Gluon".
    * @param {Client} client The client instance.
    * @param {String} channelId The id of the channel to create the webhook in.
-   * @param {Object} options The options for creating the webhook.
-   * @param {String} options.name The name of the webhook.
+   * @param {Object} [options] The options for creating the webhook.
+   * @param {String} [options.name] The name of the webhook.
    * @returns {Promise<Object>}
    * @public
    * @method
@@ -1508,8 +1519,13 @@ class Guild {
    * Posts a webhook with the provided webhook id and token.
    * @param {Client} client The client instance.
    * @param {Object} referenceData An object with the webhook id and token.
+   * @param {String} referenceData.id The id of the webhook.
+   * @param {String} referenceData.token The token of the webhook.
    * @param {String?} content The message to send with the webhook.
-   * @param {Object?} options Embeds, components and files to attach to the webhook.
+   * @param {Object?} [options] Embeds, components and files to attach to the webhook.
+   * @param {Embed[]} [options.embeds] The embeds to attach to the webhook.
+   * @param {MessageComponent[]} [options.components] The components to attach to the webhook.
+   * @param {File[]} [options.files] The files to attach to the webhook.
    * @returns {Promise<void>}
    * @public
    * @method
@@ -1613,7 +1629,7 @@ class Guild {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
+   * @param {Number} [format] The format to return the data in.
    * @returns {Object}
    * @public
    * @method

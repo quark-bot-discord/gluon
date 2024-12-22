@@ -73,6 +73,8 @@ class TextChannel extends Channel {
   /**
    * Bulk deletes all the message IDs provided.
    * @param {String[]} messages An array of message IDs, as strings.
+   * @param {Object?} [options] Additional options for this method.
+   * @param {String?} [options.reason] The reason for this action.
    * @returns {Promise<void>}
    * @method
    * @async
@@ -128,7 +130,7 @@ class TextChannel extends Channel {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} format The format to return the data in.
+   * @param {Number} [format] The format to return the data in.
    * @returns {Object}
    * @public
    * @method
