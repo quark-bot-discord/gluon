@@ -10,23 +10,23 @@
   ],
   "exports": {
     "./constants": {
-      "types": "./dist/constants.d.ts",
+      "types": "./dist/src/constants.d.ts",
       "default": "./src/constants.js"
     },
     "./util": {
-      "types": "./dist/util.d.ts",
+      "types": "./dist/src/util.d.ts",
       "default": "./src/util.js"
     },
     "./structures": {
-      "types": "./dist/structures.d.ts",
+      "types": "./dist/src/structures.d.ts",
       "default": "./src/structures.js"
     },
     "./compiledStructures": {
-      "types": "./dist/compiledStructures.d.ts",
+      "types": "./dist/src/compiledStructures.d.ts",
       "default": "./src/compiledStructures.js"
     },
     "./testData": {
-      "types": "./dist/testData.d.ts",
+      "types": "./dist/src/testData.d.ts",
       "default": "./src/testData.js"
     },
     ".": {
