@@ -1,5 +1,150 @@
 export default Embed;
 /**
+ * Represents an author in an embed.
+ */
+export type EmbedAuthor = {
+    /**
+     * The author name.
+     */
+    name: string;
+    /**
+     * The author url.
+     */
+    url?: string;
+    /**
+     * The author icon url.
+     */
+    icon_url?: string;
+};
+/**
+ * Represents an embed field.
+ */
+export type EmbedField = {
+    /**
+     * The field name.
+     */
+    name: string;
+    /**
+     * The field value.
+     */
+    value: string;
+    /**
+     * Whether the field should be inline.
+     */
+    inline: boolean;
+};
+/**
+ * Represents an embed footer.
+ */
+export type EmbedFooter = {
+    /**
+     * The footer text.
+     */
+    text: string;
+    /**
+     * The footer icon url.
+     */
+    icon_url?: string;
+};
+/**
+ * Represents an embed.
+ */
+export type Embed = {
+    /**
+     * The title of the embed.
+     */
+    title?: string;
+    /**
+     * The description of the embed.
+     */
+    description?: string;
+    /**
+     * The url of the embed.
+     */
+    url?: string;
+    /**
+     * The timestamp of the embed.
+     */
+    timestamp?: number;
+    /**
+     * The color of the embed.
+     */
+    color?: number;
+    /**
+     * The footer of the embed.
+     */
+    footer?: EmbedFooter;
+    /**
+     * The author of the embed.
+     */
+    author?: EmbedAuthor;
+    /**
+     * The fields of the embed.
+     */
+    fields?: Array<EmbedField>;
+    /**
+     * The image of the embed.
+     */
+    image?: {
+        url?: string;
+    };
+    /**
+     * The thumbnail of the embed.
+     */
+    thumbnail?: {
+        url?: string;
+    };
+    /**
+     * The video of the embed.
+     */
+    video?: {
+        url?: string;
+    };
+    /**
+     * The character count of the embed.
+     */
+    characterCount: number;
+};
+/**
+ * Represents an author in an embed.
+ * @typedef {Object} EmbedAuthor
+ * @property {String} name The author name.
+ * @property {String} [url] The author url.
+ * @property {String} [icon_url] The author icon url.
+ */
+/**
+ * Represents an embed field.
+ * @typedef {Object} EmbedField
+ * @property {String} name The field name.
+ * @property {String} value The field value.
+ * @property {Boolean} inline Whether the field should be inline.
+ */
+/**
+ * Represents an embed footer.
+ * @typedef {Object} EmbedFooter
+ * @property {String} text The footer text.
+ * @property {String} [icon_url] The footer icon url.
+ */
+/**
+ * Represents an embed.
+ * @typedef {Object} Embed
+ * @property {String} [title] The title of the embed.
+ * @property {String} [description] The description of the embed.
+ * @property {String} [url] The url of the embed.
+ * @property {Number} [timestamp] The timestamp of the embed.
+ * @property {Number} [color] The color of the embed.
+ * @property {EmbedFooter} [footer] The footer of the embed.
+ * @property {EmbedAuthor} [author] The author of the embed.
+ * @property {Array<EmbedField>} [fields] The fields of the embed.
+ * @property {Object} [image] The image of the embed.
+ * @property {String} [image.url] The image url.
+ * @property {Object} [thumbnail] The thumbnail of the embed.
+ * @property {String} [thumbnail.url] The thumbnail url.
+ * @property {Object} [video] The video of the embed.
+ * @property {String} [video.url] The video url.
+ * @property {Number} characterCount The character count of the embed.
+ */
+/**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
