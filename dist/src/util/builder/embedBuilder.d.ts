@@ -6,8 +6,32 @@ export default Embed;
 declare class Embed {
     /**
      * Creates an embed structure.
+     * @param {Object?} [data] The embed data.
+     * @param {String?} [data.title] The title of the embed.
+     * @param {String?} [data.description] The description of the embed.
+     * @param {String?} [data.url] The url of the embed.
+     * @param {Number?} [data.timestamp] The timestamp of the embed.
+     * @param {String?} [data.color] The color of the embed.
+     * @param {Object?} [data.footer] The footer of the embed.
+     * @param {String?} [data.footer.text] The footer text.
+     * @param {String?} [data.footer.icon_url] The footer icon url.
+     * @param {Object?} [data.author] The author of the embed.
+     * @param {String?} [data.author.name] The author name.
+     * @param {String?} [data.author.url] The author url.
+     * @param {String?} [data.author.icon_url] The author icon url.
+     * @param {Array?} [data.fields] The fields of the embed.
+     * @param {String?} [data.fields.name] The field name.
+     * @param {String?} [data.fields.value] The field value.
+     * @param {Boolean?} [data.fields.inline] Whether the field should be inline.
+     * @param {Object?} [data.image] The image of the embed.
+     * @param {String?} [data.image.url] The image url.
+     * @param {Object?} [data.thumbnail] The thumbnail of the embed.
+     * @param {String?} [data.thumbnail.url] The thumbnail url.
+     * @param {Object?} [data.video] The video of the embed.
+     * @param {String?} [data.video.url] The video url.
+     * @constructor
      */
-    constructor(data: any);
+    constructor(data?: any | null);
     fields: any[];
     /**
      * Sets the title of the embed.
