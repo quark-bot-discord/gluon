@@ -26,8 +26,8 @@ import isValidUrl from "../general/isValidUrl.js";
  */
 
 /**
- * Represents an embed.
- * @typedef {Object} Embed
+ * Helps to create an embed for a message.
+ * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  * @property {String} [title] The title of the embed.
  * @property {String} [description] The description of the embed.
  * @property {String} [url] The url of the embed.
@@ -43,11 +43,6 @@ import isValidUrl from "../general/isValidUrl.js";
  * @property {Object} [video] The video of the embed.
  * @property {String} [video.url] The video url.
  * @property {Number} characterCount The character count of the embed.
- */
-
-/**
- * Helps to create an embed for a message.
- * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
 class Embed {
   /**
