@@ -183,7 +183,7 @@ class Channel {
    * @param {Object} [data] Embeds, components and files to include with the message.
    * @param {String?} [data.content] The content of the message.
    * @param {Array<Embed>?} [data.embeds] The embeds to include with the message.
-   * @param {Array<MessageComponents>?} [data.components] The components to include with the message.
+   * @param {MessageComponents?} [data.components] The components to include with the message.
    * @param {Array<FileUpload>?} [data.files] The files to include with the message.
    * @param {Boolean} [data.suppressMentions] Whether to suppress mentions in the message.
    * @returns {Promise<Message>}
