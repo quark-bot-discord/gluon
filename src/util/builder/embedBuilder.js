@@ -26,25 +26,93 @@ import isValidUrl from "../general/isValidUrl.js";
  */
 
 /**
+ * Represents embed media.
+ * @typedef {Object} EmbedMedia
+ * @property {String} url The media url.
+ */
+
+/**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
- * @property {String} [title] The title of the embed.
- * @property {String} [description] The description of the embed.
- * @property {String} [url] The url of the embed.
- * @property {Number} [timestamp] The timestamp of the embed.
- * @property {Number} [color] The color of the embed.
- * @property {EmbedFooter} [footer] The footer of the embed.
- * @property {EmbedAuthor} [author] The author of the embed.
- * @property {Array<EmbedField>} [fields] The fields of the embed.
- * @property {Object} [image] The image of the embed.
- * @property {String} [image.url] The image url.
- * @property {Object} [thumbnail] The thumbnail of the embed.
- * @property {String} [thumbnail.url] The thumbnail url.
- * @property {Object} [video] The video of the embed.
- * @property {String} [video.url] The video url.
- * @property {Number} characterCount The character count of the embed.
  */
 class Embed {
+  /**
+   * The title of the embed.
+   * @type {String}
+   * @public
+   */
+  title;
+
+  /**
+   * The description of the embed.
+   * @type {String}
+   * @public
+   */
+  description;
+
+  /**
+   * The url of the embed.
+   * @type {String}
+   * @public
+   */
+  url;
+
+  /**
+   * The timestamp of the embed.
+   * @type {Number}
+   * @public
+   */
+  timestamp;
+
+  /**
+   * The color of the embed.
+   * @type {Number}
+   * @public
+   */
+  color;
+
+  /**
+   * The footer of the embed.
+   * @type {EmbedFooter}
+   * @public
+   */
+  footer;
+
+  /**
+   * The author of the embed.
+   * @type {EmbedAuthor}
+   * @public
+   */
+  author;
+
+  /**
+   * The fields of the embed.
+   * @type {Array<EmbedField>}
+   * @public
+   */
+  fields;
+
+  /**
+   * The image of the embed.
+   * @type {EmbedMedia}
+   * @public
+   */
+  image;
+
+  /**
+   * The thumbnail of the embed.
+   * @type {EmbedMedia}
+   * @public
+   */
+  thumbnail;
+
+  /**
+   * The video of the embed.
+   * @type {EmbedMedia}
+   * @public
+   */
+  video;
+
   /**
    * Creates an embed structure.
    * @param {Object?} [data] The embed data.
