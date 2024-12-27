@@ -31,14 +31,14 @@ declare class Thread extends Channel {
      * @readonly
      * @public
      */
-    public readonly get owner(): Member;
+    public readonly get owner(): Member | null;
     /**
      * The text channel that this thread belongs to.
      * @type {TextChannel?}
      * @readonly
      * @public
      */
-    public readonly get parent(): TextChannel;
+    public readonly get parent(): TextChannel | null;
     #private;
 }
 import Channel from "./Channel.js";

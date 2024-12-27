@@ -4,6 +4,7 @@ export default Emoji;
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
  */
 declare class Emoji {
+    [x: number]: () => string;
     /**
      * Checks if the emoji is animated.
      * @param {Number} attributes The attributes of the emoji.
@@ -108,14 +109,14 @@ declare class Emoji {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The id of the emoji, if it is custom.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get id(): string;
+    public readonly get id(): string | null;
     /**
      * The name of the emoji.
      * @type {String}

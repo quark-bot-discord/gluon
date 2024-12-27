@@ -18,7 +18,7 @@ declare class ModalResponse extends Interaction {
      * @readonly
      * @public
      */
-    public readonly get values(): any[];
+    public readonly get values(): Array<any>;
     #private;
 }
 import Interaction from "./Interaction.js";

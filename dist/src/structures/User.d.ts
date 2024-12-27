@@ -4,6 +4,7 @@ export default User;
  * @see {@link https://discord.com/developers/docs/resources/user}
  */
 declare class User {
+    [x: number]: () => string;
     /**
      * Returns a mention string for the user.
      * @param {String} id The ID of the user to mention.
@@ -77,7 +78,7 @@ declare class User {
      * @readonly
      * @public
      */
-    public readonly get discriminator(): string;
+    public readonly get discriminator(): string | null;
     /**
      * The UNIX (seconds) timestamp when this user was last cached.
      * @type {Number}
@@ -98,7 +99,7 @@ declare class User {
      * @type {String?}
      * @public
      */
-    public readonly get _originalAvatarHash(): string;
+    public readonly get _originalAvatarHash(): string | null;
     /**
      * The avatar URL of the user.
      * @readonly

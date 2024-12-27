@@ -4,6 +4,7 @@ export default Interaction;
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
  */
 declare class Interaction {
+    [x: number]: () => string;
     /**
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
      * @param {Client} client The client instance.
@@ -60,7 +61,7 @@ declare class Interaction {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The id of the channel that this interaction belongs to.
      * @type {String}
@@ -74,14 +75,14 @@ declare class Interaction {
      * @readonly
      * @public
      */
-    public readonly get channel(): any;
+    public readonly get channel(): (TextChannel | VoiceChannel | Thread) | null;
     /**
      * The member that triggered the interaction, if it was run in a guild.
      * @type {Member?}
      * @readonly
      * @public
      */
-    public readonly get member(): Member;
+    public readonly get member(): Member | null;
     /**
      * Prompts a user to enter text using a modal.
      * @param {Object} options Modal options.

@@ -1,5 +1,6 @@
 export default PermissionOverwrite;
 declare class PermissionOverwrite {
+    [x: number]: () => string;
     /**
      * Creates the structure for a permission overwrite.
      * @param {Client} client The client instance.

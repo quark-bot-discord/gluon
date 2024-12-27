@@ -124,7 +124,7 @@ declare class Client extends TypedEmitter<{
      * @readonly
      * @public
      */
-    public readonly get shardIds(): number[];
+    public readonly get shardIds(): Array<number>;
     /**
      * The total number of shards that this client is managing.
      * @type {Number}

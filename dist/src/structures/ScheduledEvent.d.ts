@@ -4,6 +4,7 @@ export default ScheduledEvent;
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
  */
 declare class ScheduledEvent {
+    [x: number]: () => string;
     /**
      * Returns the URL of the event's image.
      * @param {String} id The id of the event.
@@ -63,14 +64,14 @@ declare class ScheduledEvent {
      * @readonly
      * @public
      */
-    public readonly get creatorId(): string;
+    public readonly get creatorId(): string | null;
     /**
      * The user who created the event.
      * @type {User?}
      * @readonly
      * @public
      */
-    public readonly get creator(): User;
+    public readonly get creator(): User | null;
     /**
      * The description of the event.
      * @type {String}
@@ -84,14 +85,14 @@ declare class ScheduledEvent {
      * @type {String?}
      * @public
      */
-    public readonly get _originalImageHash(): string;
+    public readonly get _originalImageHash(): string | null;
     /**
      * The url of the events's image.
      * @readonly
      * @type {String?}
      * @public
      */
-    public readonly get displayImageURL(): string;
+    public readonly get displayImageURL(): string | null;
     /**
      * Where the event is scheduled to take place.
      * @readonly
@@ -112,7 +113,7 @@ declare class ScheduledEvent {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The UNIX timestamp of the start time for the event.
      * @type {Number}
@@ -126,7 +127,7 @@ declare class ScheduledEvent {
      * @readonly
      * @public
      */
-    public readonly get scheduledEndTime(): number;
+    public readonly get scheduledEndTime(): number | null;
     /**
      * The number of users who have signed up for the event.
      * @type {Number}
@@ -140,7 +141,7 @@ declare class ScheduledEvent {
      * @readonly
      * @public
      */
-    public readonly get location(): string;
+    public readonly get location(): string | null;
     /**
      * @method
      * @public

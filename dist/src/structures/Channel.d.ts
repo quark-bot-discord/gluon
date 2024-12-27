@@ -4,6 +4,7 @@ export default Channel;
  * @see {@link https://discord.com/developers/docs/resources/channel}
  */
 declare class Channel {
+    [x: number]: () => string;
     /**
      * Returns the mention string for a channel.
      * @param {String} channelId The ID of the channel to mention.
@@ -63,7 +64,7 @@ declare class Channel {
      * @param {Object} [data] Embeds, components and files to include with the message.
      * @param {String?} [data.content] The content of the message.
      * @param {Array<Embed>?} [data.embeds] The embeds to include with the message.
-     * @param {Array<MessageComponents>?} [data.components] The components to include with the message.
+     * @param {MessageComponents?} [data.components] The components to include with the message.
      * @param {Array<FileUpload>?} [data.files] The files to include with the message.
      * @param {Boolean} [data.suppressMentions] Whether to suppress mentions in the message.
      * @returns {Promise<Message>}
@@ -76,7 +77,7 @@ declare class Channel {
     public send({ content, components, files, embeds, suppressMentions }?: {
         content?: string | null;
         embeds?: Array<Embed> | null;
-        components?: Array<MessageComponents> | null;
+        components?: MessageComponents | null;
         files?: Array<FileUpload> | null;
         suppressMentions?: boolean;
     }): Promise<Message>;
@@ -100,14 +101,14 @@ declare class Channel {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The parent channel.
      * @type {Channel?}
      * @readonly
      * @public
      */
-    public readonly get parent(): Channel;
+    public readonly get parent(): Channel | null;
     /**
      * The ID of the channel.
      * @type {String}
@@ -128,7 +129,7 @@ declare class Channel {
      * @readonly
      * @public
      */
-    public readonly get parentId(): string;
+    public readonly get parentId(): string | null;
     /**
      * The type of channel.
      * @type {Number}
@@ -142,28 +143,28 @@ declare class Channel {
      * @readonly
      * @public
      */
-    public readonly get name(): string;
+    public readonly get name(): string | null;
     /**
      * The topic of the channel.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get topic(): string;
+    public readonly get topic(): string | null;
     /**
      * The permission overwrites for this channel.
      * @type {Array<Object>}
      * @readonly
      * @public
      */
-    public readonly get permissionOverwrites(): any[];
+    public readonly get permissionOverwrites(): Array<any>;
     /**
      * The message send cooldown for the channel.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get rateLimitPerUser(): number;
+    public readonly get rateLimitPerUser(): number | null;
     /**
      * The cache options for this channel.
      * @type {ChannelCacheOptions}

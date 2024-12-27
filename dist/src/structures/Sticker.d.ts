@@ -3,6 +3,7 @@ export default Sticker;
  * Represents an sticker.
  */
 declare class Sticker {
+    [x: number]: () => string;
     /**
      * Creates the structure for a sticker
      * @param {Client} client The client instance.
@@ -43,7 +44,7 @@ declare class Sticker {
      * @readonly
      * @public
      */
-    public readonly get previewImageURL(): string;
+    public readonly get previewImageURL(): string | null;
     /**
      * @method
      * @public

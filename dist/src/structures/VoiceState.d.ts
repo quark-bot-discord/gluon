@@ -3,6 +3,7 @@ export default VoiceState;
  * Represents a voice state.
  */
 declare class VoiceState {
+    [x: number]: () => string;
     /**
      * Determines whether the voice state should be cached.
      * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -80,7 +81,7 @@ declare class VoiceState {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The id of the guild that this voice state belongs to.
      * @type {String}
@@ -94,7 +95,7 @@ declare class VoiceState {
      * @readonly
      * @public
      */
-    public readonly get channel(): Channel;
+    public readonly get channel(): Channel | null;
     /**
      * The id of the channel involved.
      * @type {String}
@@ -108,7 +109,7 @@ declare class VoiceState {
      * @readonly
      * @public
      */
-    public readonly get member(): Member;
+    public readonly get member(): Member | null;
     /**
      * The id of the user the voice state is about.
      * @type {String}
@@ -129,7 +130,7 @@ declare class VoiceState {
      * @readonly
      * @public
      */
-    public readonly get requestToSpeakTimestamp(): number;
+    public readonly get requestToSpeakTimestamp(): number | null;
     /**
      * @method
      * @public

@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 672,
-                14308
+                14301
             ],
             "filename": "Channel.js",
             "lineno": 19,
@@ -409,7 +409,7 @@
         "meta": {
             "range": [
                 672,
-                14308
+                14301
             ],
             "filename": "Channel.js",
             "lineno": 19,
@@ -1068,11 +1068,11 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * Sends a message to this channel.\n   * @param {Object} [data] Embeds, components and files to include with the message.\n   * @param {String?} [data.content] The content of the message.\n   * @param {Array<Embed>?} [data.embeds] The embeds to include with the message.\n   * @param {Array<MessageComponents>?} [data.components] The components to include with the message.\n   * @param {Array<FileUpload>?} [data.files] The files to include with the message.\n   * @param {Boolean} [data.suppressMentions] Whether to suppress mentions in the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#create-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
+        "comment": "/**\n   * Sends a message to this channel.\n   * @param {Object} [data] Embeds, components and files to include with the message.\n   * @param {String?} [data.content] The content of the message.\n   * @param {Array<Embed>?} [data.embeds] The embeds to include with the message.\n   * @param {MessageComponents?} [data.components] The components to include with the message.\n   * @param {Array<FileUpload>?} [data.files] The files to include with the message.\n   * @param {Boolean} [data.suppressMentions] Whether to suppress mentions in the message.\n   * @returns {Promise<Message>}\n   * @see {@link https://discord.com/developers/docs/resources/channel#create-message}\n   * @method\n   * @public\n   * @async\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                5818,
-                6100
+                5811,
+                6093
             ],
             "filename": "Channel.js",
             "lineno": 196,
@@ -1127,7 +1127,7 @@
             {
                 "type": {
                     "names": [
-                        "Array.<MessageComponents>"
+                        "MessageComponents"
                     ]
                 },
                 "optional": true,
@@ -1191,8 +1191,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5830,
-                5837
+                5823,
+                5830
             ],
             "filename": "Channel.js",
             "lineno": 197,
@@ -1215,8 +1215,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5839,
-                5849
+                5832,
+                5842
             ],
             "filename": "Channel.js",
             "lineno": 197,
@@ -1239,8 +1239,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5851,
-                5856
+                5844,
+                5849
             ],
             "filename": "Channel.js",
             "lineno": 197,
@@ -1263,8 +1263,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5858,
-                5864
+                5851,
+                5857
             ],
             "filename": "Channel.js",
             "lineno": 197,
@@ -1287,8 +1287,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5866,
-                5890
+                5859,
+                5883
             ],
             "filename": "Channel.js",
             "lineno": 197,
@@ -1311,8 +1311,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5903,
-                5926
+                5896,
+                5919
             ],
             "filename": "Channel.js",
             "lineno": 198,
@@ -1335,8 +1335,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6011,
-                6018
+                6004,
+                6011
             ],
             "filename": "Channel.js",
             "lineno": 202,
@@ -1359,8 +1359,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6026,
-                6036
+                6019,
+                6029
             ],
             "filename": "Channel.js",
             "lineno": 203,
@@ -1383,8 +1383,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6044,
-                6049
+                6037,
+                6042
             ],
             "filename": "Channel.js",
             "lineno": 204,
@@ -1407,8 +1407,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6057,
-                6063
+                6050,
+                6056
             ],
             "filename": "Channel.js",
             "lineno": 205,
@@ -1431,8 +1431,8 @@
         "comment": "",
         "meta": {
             "range": [
-                6071,
-                6087
+                6064,
+                6080
             ],
             "filename": "Channel.js",
             "lineno": 206,
@@ -1455,8 +1455,8 @@
         "comment": "/**\n   * Returns the mention for this channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6207,
-                6266
+                6200,
+                6259
             ],
             "filename": "Channel.js",
             "lineno": 216,
@@ -1491,8 +1491,8 @@
         "comment": "/**\n   * Whether this channel is marked as NSFW or not.\n   * @readonly\n   * @returns {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                6386,
-                6459
+                6379,
+                6452
             ],
             "filename": "Channel.js",
             "lineno": 226,
@@ -1531,8 +1531,8 @@
         "comment": "/**\n   * The guild that this channel belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6568,
-                6644
+                6561,
+                6637
             ],
             "filename": "Channel.js",
             "lineno": 236,
@@ -1568,8 +1568,8 @@
         "comment": "/**\n   * The parent channel.\n   * @type {Channel?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6735,
-                6848
+                6728,
+                6841
             ],
             "filename": "Channel.js",
             "lineno": 246,
@@ -1605,8 +1605,8 @@
         "comment": "/**\n   * The ID of the channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6940,
-                6984
+                6933,
+                6977
             ],
             "filename": "Channel.js",
             "lineno": 258,
@@ -1641,8 +1641,8 @@
         "comment": "/**\n   * The ID of the guild that this channel belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7103,
-                7158
+                7096,
+                7151
             ],
             "filename": "Channel.js",
             "lineno": 268,
@@ -1677,8 +1677,8 @@
         "comment": "/**\n   * The ID of the parent channel.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7258,
-                7341
+                7251,
+                7334
             ],
             "filename": "Channel.js",
             "lineno": 278,
@@ -1714,8 +1714,8 @@
         "comment": "/**\n   * The type of channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7431,
-                7470
+                7424,
+                7463
             ],
             "filename": "Channel.js",
             "lineno": 288,
@@ -1750,8 +1750,8 @@
         "comment": "/**\n   * The name of the channel.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7565,
-                7604
+                7558,
+                7597
             ],
             "filename": "Channel.js",
             "lineno": 298,
@@ -1787,8 +1787,8 @@
         "comment": "/**\n   * The topic of the channel.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7700,
-                7741
+                7693,
+                7734
             ],
             "filename": "Channel.js",
             "lineno": 308,
@@ -1824,8 +1824,8 @@
         "comment": "/**\n   * The permission overwrites for this channel.\n   * @type {Array<Object>}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7861,
-                7933
+                7854,
+                7926
             ],
             "filename": "Channel.js",
             "lineno": 318,
@@ -1860,8 +1860,8 @@
         "comment": "/**\n   * The message send cooldown for the channel.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                8046,
-                8112
+                8039,
+                8105
             ],
             "filename": "Channel.js",
             "lineno": 328,
@@ -1897,8 +1897,8 @@
         "comment": "/**\n   * The cache options for this channel.\n   * @type {ChannelCacheOptions}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                8230,
-                8287
+                8223,
+                8280
             ],
             "filename": "Channel.js",
             "lineno": 338,
@@ -1933,8 +1933,8 @@
         "comment": "/**\n   * The messages in this channel.\n   * @type {ChannelMessageManager}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                8401,
-                8448
+                8394,
+                8441
             ],
             "filename": "Channel.js",
             "lineno": 348,
@@ -1969,8 +1969,8 @@
         "comment": "/**\n   * Returns the mention string for a channel.\n   * @param {String} channelId The ID of the channel to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                8638,
-                8777
+                8631,
+                8770
             ],
             "filename": "Channel.js",
             "lineno": 360,
@@ -2020,8 +2020,8 @@
         "comment": "/**\n   * Determines whether the channel should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                9077,
-                9611
+                9070,
+                9604
             ],
             "filename": "Channel.js",
             "lineno": 374,
@@ -2081,8 +2081,8 @@
         "comment": "/**\n   * Follows a news channel.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The ID of the channel.\n   * @param {String} followChannelId THe ID of the channel to follow.\n   * @returns {Promise<void>}\n   * @public\n   * @static\n   * @async\n   * @method\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                9935,
-                10503
+                9928,
+                10496
             ],
             "filename": "Channel.js",
             "lineno": 400,
@@ -2162,8 +2162,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10333,
-                10342
+                10326,
+                10335
             ],
             "filename": "Channel.js",
             "lineno": 408,
@@ -2188,8 +2188,8 @@
         "comment": "",
         "meta": {
             "range": [
-                10349,
-                10384
+                10342,
+                10377
             ],
             "filename": "Channel.js",
             "lineno": 410,
@@ -2215,8 +2215,8 @@
         "comment": "/**\n   * Returns an array of webhooks for the specified channel.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The ID of the channel.\n   * @returns {Promise<Array<Object>>}\n   * @public\n   * @static\n   * @async\n   * @method\n   */",
         "meta": {
             "range": [
-                10773,
-                11105
+                10766,
+                11098
             ],
             "filename": "Channel.js",
             "lineno": 429,
@@ -2277,8 +2277,8 @@
         "comment": "/**\n   * Returns the permissions for a member in this channel.\n   * @param {Member} member The member to check the permissions for.\n   * @returns {String}\n   */",
         "meta": {
             "range": [
-                11272,
-                12780
+                11265,
+                12773
             ],
             "filename": "Channel.js",
             "lineno": 443,
@@ -2327,8 +2327,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11473,
-                11520
+                11466,
+                11513
             ],
             "filename": "Channel.js",
             "lineno": 447,
@@ -2353,8 +2353,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11532,
-                11674
+                11525,
+                11667
             ],
             "filename": "Channel.js",
             "lineno": 448,
@@ -2379,8 +2379,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11706,
-                11754
+                11699,
+                11747
             ],
             "filename": "Channel.js",
             "lineno": 453,
@@ -2406,8 +2406,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11762,
-                11810
+                11755,
+                11803
             ],
             "filename": "Channel.js",
             "lineno": 454,
@@ -2433,8 +2433,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11826,
-                11864
+                11819,
+                11857
             ],
             "filename": "Channel.js",
             "lineno": 456,
@@ -2459,8 +2459,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11874,
-                11913
+                11867,
+                11906
             ],
             "filename": "Channel.js",
             "lineno": 457,
@@ -2485,8 +2485,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11928,
-                11933
+                11921,
+                11926
             ],
             "filename": "Channel.js",
             "lineno": 458,
@@ -2511,8 +2511,8 @@
         "comment": "",
         "meta": {
             "range": [
-                11979,
-                12135
+                11972,
+                12128
             ],
             "filename": "Channel.js",
             "lineno": 459,
@@ -2537,8 +2537,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12163,
-                12210
+                12156,
+                12203
             ],
             "filename": "Channel.js",
             "lineno": 465,
@@ -2564,8 +2564,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12220,
-                12269
+                12213,
+                12262
             ],
             "filename": "Channel.js",
             "lineno": 466,
@@ -2591,8 +2591,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12289,
-                12338
+                12282,
+                12331
             ],
             "filename": "Channel.js",
             "lineno": 469,
@@ -2618,8 +2618,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12344,
-                12393
+                12337,
+                12386
             ],
             "filename": "Channel.js",
             "lineno": 470,
@@ -2645,8 +2645,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12405,
-                12552
+                12398,
+                12545
             ],
             "filename": "Channel.js",
             "lineno": 471,
@@ -2671,8 +2671,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12598,
-                12660
+                12591,
+                12653
             ],
             "filename": "Channel.js",
             "lineno": 475,
@@ -2698,8 +2698,8 @@
         "comment": "",
         "meta": {
             "range": [
-                12668,
-                12730
+                12661,
+                12723
             ],
             "filename": "Channel.js",
             "lineno": 476,
@@ -2725,8 +2725,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                12822,
-                12874
+                12815,
+                12867
             ],
             "filename": "Channel.js",
             "lineno": 485,
@@ -2754,8 +2754,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                12916,
-                12973
+                12909,
+                12966
             ],
             "filename": "Channel.js",
             "lineno": 493,
@@ -2783,8 +2783,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                13158,
-                14306
+                13151,
+                14299
             ],
             "filename": "Channel.js",
             "lineno": 504,
@@ -2835,8 +2835,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13316,
-                13327
+                13309,
+                13320
             ],
             "filename": "Channel.js",
             "lineno": 509,
@@ -2859,8 +2859,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13339,
-                13354
+                13332,
+                13347
             ],
             "filename": "Channel.js",
             "lineno": 510,
@@ -2883,8 +2883,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13366,
-                13381
+                13359,
+                13374
             ],
             "filename": "Channel.js",
             "lineno": 511,
@@ -2907,8 +2907,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13393,
-                13410
+                13386,
+                13403
             ],
             "filename": "Channel.js",
             "lineno": 512,
@@ -2931,8 +2931,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13422,
-                13464
+                13415,
+                13457
             ],
             "filename": "Channel.js",
             "lineno": 513,
@@ -2955,8 +2955,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13476,
-                13513
+                13469,
+                13506
             ],
             "filename": "Channel.js",
             "lineno": 514,
@@ -2979,8 +2979,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13525,
-                13555
+                13518,
+                13548
             ],
             "filename": "Channel.js",
             "lineno": 515,
@@ -3003,8 +3003,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13567,
-                13615
+                13560,
+                13608
             ],
             "filename": "Channel.js",
             "lineno": 516,
@@ -3027,8 +3027,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13627,
-                13665
+                13620,
+                13658
             ],
             "filename": "Channel.js",
             "lineno": 517,
@@ -3051,8 +3051,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13677,
-                13778
+                13670,
+                13771
             ],
             "filename": "Channel.js",
             "lineno": 518,
@@ -3075,8 +3075,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13889,
-                13900
+                13882,
+                13893
             ],
             "filename": "Channel.js",
             "lineno": 526,
@@ -3099,8 +3099,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13912,
-                13927
+                13905,
+                13920
             ],
             "filename": "Channel.js",
             "lineno": 527,
@@ -3123,8 +3123,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13939,
-                13954
+                13932,
+                13947
             ],
             "filename": "Channel.js",
             "lineno": 528,
@@ -3147,8 +3147,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13966,
-                13983
+                13959,
+                13976
             ],
             "filename": "Channel.js",
             "lineno": 529,
@@ -3171,8 +3171,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13995,
-                14037
+                13988,
+                14030
             ],
             "filename": "Channel.js",
             "lineno": 530,
@@ -3195,8 +3195,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14049,
-                14086
+                14042,
+                14079
             ],
             "filename": "Channel.js",
             "lineno": 531,
@@ -3219,8 +3219,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14098,
-                14113
+                14091,
+                14106
             ],
             "filename": "Channel.js",
             "lineno": 532,
@@ -3243,8 +3243,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14125,
-                14163
+                14118,
+                14156
             ],
             "filename": "Channel.js",
             "lineno": 533,
@@ -3267,8 +3267,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14175,
-                14276
+                14168,
+                14269
             ],
             "filename": "Channel.js",
             "lineno": 534,
@@ -3291,8 +3291,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14310,
-                14333
+                14303,
+                14326
             ],
             "filename": "Channel.js",
             "lineno": 543,

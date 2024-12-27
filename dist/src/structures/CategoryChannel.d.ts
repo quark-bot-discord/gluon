@@ -1,5 +1,6 @@
 export default CategoryChannel;
 declare class CategoryChannel {
+    [x: number]: () => string;
     /**
      * Creates the structure for a category channel.
      * @param {Client} client The client instance.
@@ -32,7 +33,7 @@ declare class CategoryChannel {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The name of the channel.
      * @type {String}
@@ -53,7 +54,7 @@ declare class CategoryChannel {
      * @readonly
      * @public
      */
-    public readonly get permissionOverwrites(): PermissionOverwrite[];
+    public readonly get permissionOverwrites(): Array<PermissionOverwrite>;
     /**
      * Whether the channel is nsfw.
      * @type {Boolean}

@@ -4,6 +4,7 @@ export default AuditLog;
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
  */
 declare class AuditLog {
+    [x: number]: () => string;
     /**
      * Creates a structure for an audit log entry.
      * @param {Client} client The client instance.
@@ -43,105 +44,105 @@ declare class AuditLog {
      * @readonly
      * @public
      */
-    public readonly get targetId(): string;
+    public readonly get targetId(): string | null;
     /**
      * The channel id involved with this audit log entry.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get channelId(): string;
+    public readonly get channelId(): string | null;
     /**
      * The guild that this audit log belongs to.
      * @type {Guild?}
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The channel involved with this audit log entry.
      * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.
      * @readonly
      * @public
      */
-    public readonly get channel(): any;
+    public readonly get channel(): (TextChannel | VoiceChannel) | null;
     /**
      * The target user involved with this audit log entry.
      * @type {User?}
      * @readonly
      * @public
      */
-    public readonly get target(): User;
+    public readonly get target(): User | null;
     /**
      * The executor user involved with this audit log entry.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get executorId(): string;
+    public readonly get executorId(): string | null;
     /**
      * The executor user involved with this audit log entry.
      * @type {User?}
      * @readonly
      * @public
      */
-    public readonly get executor(): User;
+    public readonly get executor(): User | null;
     /**
      * The reason for this audit log entry.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get reason(): string;
+    public readonly get reason(): string | null;
     /**
      * The count of this type of audit log entry.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get count(): number;
+    public readonly get count(): number | null;
     /**
      * The inactivity period for when members are purged.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get deleteMemberDays(): number;
+    public readonly get deleteMemberDays(): number | null;
     /**
      * The number of members removed for when members are purged.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get membersRemoved(): number;
+    public readonly get membersRemoved(): number | null;
     /**
      * The id of the overwritten entity.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get specialId(): string;
+    public readonly get specialId(): string | null;
     /**
      * The type of the overwritten entity - role ("0") or member ("1")
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get specialType(): number;
+    public readonly get specialType(): number | null;
     /**
      * The new voice channel status.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get status(): string;
+    public readonly get status(): string | null;
     /**
      * The changes in this audit log entry.
      * @type {Object?}
      * @readonly
      * @public
      */
-    public readonly get changes(): any;
+    public readonly get changes(): any | null;
     /**
      * @method
      * @public

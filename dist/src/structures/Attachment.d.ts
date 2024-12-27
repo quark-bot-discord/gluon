@@ -4,6 +4,7 @@ export default Attachment;
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
  */
 declare class Attachment {
+    [x: number]: () => string;
     /**
      * Creates a structure for an attachment.
      * @param {Client} client The client instance.

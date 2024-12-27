@@ -4,6 +4,7 @@ export default Member;
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
  */
 declare class Member {
+    [x: number]: () => string;
     /**
      * Returns the mention string for the member.
      * @param {String} userId The id of the user to mention.
@@ -120,28 +121,28 @@ declare class Member {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The nickname of the member.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get nick(): string;
+    public readonly get nick(): string | null;
     /**
      * The UNIX timestamp for when this member joined the guild.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get joinedAt(): number;
+    public readonly get joinedAt(): number | null;
     /**
      * The UNIX timestamp for when this member's timeout expires, if applicable.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get timeoutUntil(): number;
+    public readonly get timeoutUntil(): number | null;
     /**
      * The flags for this user.
      * @type {Number}
@@ -155,7 +156,7 @@ declare class Member {
      * @type {Array<Role>}
      * @public
      */
-    public readonly get roles(): Role[];
+    public readonly get roles(): Array<Role>;
     /**
      * The position of the member's highest role.
      * @readonly
@@ -190,7 +191,7 @@ declare class Member {
      * @type {String?}
      * @public
      */
-    public readonly get _originalAvatarHash(): string;
+    public readonly get _originalAvatarHash(): string | null;
     /**
      * The url of the member's avatar.
      * @readonly

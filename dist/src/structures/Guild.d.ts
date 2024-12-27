@@ -4,6 +4,7 @@ export default Guild;
  * @see {@link https://discord.com/developers/docs/resources/guild}
  */
 declare class Guild {
+    [x: number]: () => string;
     /**
      * Deletes a webhook.
      * @param {Client} client The client instance.
@@ -123,14 +124,14 @@ declare class Guild {
      * @type {String?}
      * @public
      */
-    public readonly get _originalIconHash(): string;
+    public readonly get _originalIconHash(): string | null;
     /**
      * The icon URL of the guild.
      * @readonly
      * @type {String?}
      * @public
      */
-    public readonly get displayIconURL(): string;
+    public readonly get displayIconURL(): string | null;
     /**
      * The owner of the guild.
      * @type {Member}
@@ -269,7 +270,7 @@ declare class Guild {
      * @readonly
      * @public
      */
-    public readonly get description(): string;
+    public readonly get description(): string | null;
     /**
      * The icon hash of the guild.
      * @type {String}
@@ -297,28 +298,28 @@ declare class Guild {
      * @readonly
      * @public
      */
-    public readonly get systemChannelId(): string;
+    public readonly get systemChannelId(): string | null;
     /**
      * The system channel of the guild.
      * @type {TextChannel?}
      * @readonly
      * @public
      */
-    public readonly get systemChannel(): TextChannel;
+    public readonly get systemChannel(): TextChannel | null;
     /**
      * The rules channel id of the guild.
      * @type {String?}
      * @readonly
      * @public
      */
-    public readonly get rulesChannelId(): string;
+    public readonly get rulesChannelId(): string | null;
     /**
      * The rules channel of the guild.
      * @type {TextChannel?}
      * @readonly
      * @public
      */
-    public readonly get rulesChannel(): TextChannel;
+    public readonly get rulesChannel(): TextChannel | null;
     /**
      * The preferred locale of the guild.
      * @type {String}

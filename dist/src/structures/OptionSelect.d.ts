@@ -38,7 +38,7 @@ declare class OptionSelect extends Interaction {
      * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
      * @public
      */
-    public readonly get values(): any[];
+    public readonly get values(): Array<any>;
     #private;
 }
 import Interaction from "./Interaction.js";

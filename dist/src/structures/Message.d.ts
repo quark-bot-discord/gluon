@@ -3,6 +3,7 @@ export default Message;
  * A message belonging to a channel within a guild.
  */
 declare class Message {
+    [x: number]: () => string;
     /**
      * The URL of the message.
      * @param {String} guildId The id of the guild that the message belongs to.
@@ -153,7 +154,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get editedTimestamp(): number;
+    public readonly get editedTimestamp(): number | null;
     /**
      * The user who sent the message.
      * @type {User}
@@ -174,7 +175,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get member(): Member;
+    public readonly get member(): Member | null;
     /**
      * Whether this message includes user mentions.
      * @readonly
@@ -223,7 +224,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The guild that this message belongs to.
      * @type {String}
@@ -237,7 +238,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get channel(): Channel;
+    public readonly get channel(): Channel | null;
     /**
      * The channel that this message belongs to.
      * @type {String}
@@ -265,14 +266,14 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get content(): string;
+    public readonly get content(): string | null;
     /**
      * The message poll.
      * @type {Poll?}
      * @readonly
      * @public
      */
-    public readonly get poll(): Poll;
+    public readonly get poll(): Poll | null;
     /**
      * The message reactions.
      * @type {MessageReactionManager}
@@ -286,7 +287,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get embeds(): Embed[];
+    public readonly get embeds(): Array<Embed>;
     /**
      * The message that this message references.
      * @type {Object}
@@ -322,7 +323,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get webhookId(): string;
+    public readonly get webhookId(): string | null;
     /**
      * Stickers sent with this message.
      * @type {Sticker[]}
@@ -336,7 +337,7 @@ declare class Message {
      * @readonly
      * @public
      */
-    public readonly get messageSnapshots(): Message[];
+    public readonly get messageSnapshots(): Array<Message> | null;
     /**
      * The URL of the message.
      * @type {String}

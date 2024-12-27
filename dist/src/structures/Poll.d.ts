@@ -1,5 +1,6 @@
 export default Poll;
 declare class Poll {
+    [x: number]: () => string;
     /**
      * Creates the structure for a poll.
      * @param {Client} client The client instance.
@@ -37,7 +38,7 @@ declare class Poll {
      * @readonly
      * @public
      */
-    public readonly get answers(): any[];
+    public readonly get answers(): Array<any>;
     /**
      * The UNIX timestamp of the expiry time for the poll.
      * @type {Number}

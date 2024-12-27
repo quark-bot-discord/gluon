@@ -3,6 +3,7 @@ export default Reaction;
  * Represents a reaction belonging to a message.
  */
 declare class Reaction {
+    [x: number]: () => string;
     /**
      * Creates the structure for a reaction.
      * @param {Client} client The client instance.
@@ -27,14 +28,14 @@ declare class Reaction {
      * @type {Array<Member | String>}
      * @public
      */
-    public readonly get reacted(): any[];
+    public readonly get reacted(): Array<Member | string>;
     /**
      * The user ids of the users who reacted.
      * @readonly
      * @type {Array<String>}
      * @public
      */
-    public readonly get reactedIds(): string[];
+    public readonly get reactedIds(): Array<string>;
     /**
      * The id of the guild that this reaction belongs to.
      * @type {String}
@@ -48,7 +49,7 @@ declare class Reaction {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The emoji used for the reaction.
      * @type {Emoji}
@@ -62,7 +63,7 @@ declare class Reaction {
      * @readonly
      * @public
      */
-    public readonly get initialReactor(): string;
+    public readonly get initialReactor(): string | null;
     /**
      * Adds a user to the list of reactors.
      * @param {String} userId The id of the user to add as a reactor.

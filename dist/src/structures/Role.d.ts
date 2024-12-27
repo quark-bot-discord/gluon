@@ -3,6 +3,7 @@ export default Role;
  * Represents a role belonging to a guild.
  */
 declare class Role {
+    [x: number]: () => string;
     /**
      * Returns a mention for the role.
      * @param {String} roleId The ID of the role to mention.
@@ -77,21 +78,21 @@ declare class Role {
      * @type {String?}
      * @public
      */
-    public readonly get _originalIconHash(): string;
+    public readonly get _originalIconHash(): string | null;
     /**
      * The icon URL of the role.
      * @readonly
      * @type {String?}
      * @public
      */
-    public readonly get displayIconURL(): string;
+    public readonly get displayIconURL(): string | null;
     /**
      * The guild that this role belongs to.
      * @type {Guild?}
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The ID of the guild that this role belongs to.
      * @type {String}

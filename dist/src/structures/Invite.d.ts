@@ -3,6 +3,7 @@ export default Invite;
  * Represents a guild invite.
  */
 declare class Invite {
+    [x: number]: () => string;
     /**
      * Returns the URL of the invite.
      * @param {String} code The code of the invite.
@@ -48,7 +49,7 @@ declare class Invite {
      * @readonly
      * @public
      */
-    public readonly get channel(): any;
+    public readonly get channel(): (TextChannel | VoiceChannel) | null;
     /**
      * The code of the invite.
      * @type {String}
@@ -76,28 +77,28 @@ declare class Invite {
      * @readonly
      * @public
      */
-    public readonly get guild(): Guild;
+    public readonly get guild(): Guild | null;
     /**
      * The number of times the invite has been used.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get uses(): number;
+    public readonly get uses(): number | null;
     /**
      * The UNIX timestamp of when the invite expires.
      * @type {Number?}
      * @readonly
      * @public
      */
-    public readonly get expires(): number;
+    public readonly get expires(): number | null;
     /**
      * The user who created the invite.
      * @type {User?}
      * @readonly
      * @public
      */
-    public readonly get inviter(): User;
+    public readonly get inviter(): User | null;
     /**
      * The URL of the invite.
      * @type {String}
@@ -111,7 +112,7 @@ declare class Invite {
      * @readonly
      * @public
      */
-    public readonly get maxUses(): number;
+    public readonly get maxUses(): number | null;
     /**
      * @method
      * @public
