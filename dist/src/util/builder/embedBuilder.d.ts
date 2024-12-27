@@ -47,6 +47,15 @@ export type EmbedFooter = {
     icon_url?: string;
 };
 /**
+ * Represents embed media.
+ */
+export type EmbedMedia = {
+    /**
+     * The media url.
+     */
+    url: string;
+};
+/**
  * Represents an author in an embed.
  * @typedef {Object} EmbedAuthor
  * @property {String} name The author name.
@@ -67,23 +76,13 @@ export type EmbedFooter = {
  * @property {String} [icon_url] The footer icon url.
  */
 /**
+ * Represents embed media.
+ * @typedef {Object} EmbedMedia
+ * @property {String} url The media url.
+ */
+/**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
- * @property {String} [title] The title of the embed.
- * @property {String} [description] The description of the embed.
- * @property {String} [url] The url of the embed.
- * @property {Number} [timestamp] The timestamp of the embed.
- * @property {Number} [color] The color of the embed.
- * @property {EmbedFooter} [footer] The footer of the embed.
- * @property {EmbedAuthor} [author] The author of the embed.
- * @property {Array<EmbedField>} [fields] The fields of the embed.
- * @property {Object} [image] The image of the embed.
- * @property {String} [image.url] The image url.
- * @property {Object} [thumbnail] The thumbnail of the embed.
- * @property {String} [thumbnail.url] The thumbnail url.
- * @property {Object} [video] The video of the embed.
- * @property {String} [video.url] The video url.
- * @property {Number} characterCount The character count of the embed.
  */
 declare class Embed {
     /**
@@ -114,7 +113,72 @@ declare class Embed {
      * @constructor
      */
     constructor(data?: any | null);
-    fields: any[];
+    /**
+     * The title of the embed.
+     * @type {String}
+     * @public
+     */
+    public title: string;
+    /**
+     * The description of the embed.
+     * @type {String}
+     * @public
+     */
+    public description: string;
+    /**
+     * The url of the embed.
+     * @type {String}
+     * @public
+     */
+    public url: string;
+    /**
+     * The timestamp of the embed.
+     * @type {Number}
+     * @public
+     */
+    public timestamp: number;
+    /**
+     * The color of the embed.
+     * @type {Number}
+     * @public
+     */
+    public color: number;
+    /**
+     * The footer of the embed.
+     * @type {EmbedFooter}
+     * @public
+     */
+    public footer: EmbedFooter;
+    /**
+     * The author of the embed.
+     * @type {EmbedAuthor}
+     * @public
+     */
+    public author: EmbedAuthor;
+    /**
+     * The fields of the embed.
+     * @type {Array<EmbedField>}
+     * @public
+     */
+    public fields: Array<EmbedField>;
+    /**
+     * The image of the embed.
+     * @type {EmbedMedia}
+     * @public
+     */
+    public image: EmbedMedia;
+    /**
+     * The thumbnail of the embed.
+     * @type {EmbedMedia}
+     * @public
+     */
+    public thumbnail: EmbedMedia;
+    /**
+     * The video of the embed.
+     * @type {EmbedMedia}
+     * @public
+     */
+    public video: EmbedMedia;
     /**
      * Sets the title of the embed.
      * @param {String} title The title of the embed.
@@ -124,7 +188,6 @@ declare class Embed {
      * @public
      */
     public setTitle(title: string): Embed;
-    title: string;
     /**
      * Sets the embed description.
      * @param {String} text The description.
@@ -134,7 +197,6 @@ declare class Embed {
      * @public
      */
     public setDescription(text: string): Embed;
-    description: string;
     /**
      * Sets the url of the embed.
      * @param {String} url The url.
@@ -144,7 +206,6 @@ declare class Embed {
      * @public
      */
     public setURL(url: string): Embed;
-    url: string;
     /**
      * Sets the timestamp displayed on the embed.
      * @param {Number?} timestamp The UNIX timestamp.
@@ -153,7 +214,6 @@ declare class Embed {
      * @public
      */
     public setTimestamp(timestamp: number | null): Embed;
-    timestamp: number;
     /**
      * Sets the color of the embed.
      * @param {String | Number} color The color.
@@ -163,7 +223,6 @@ declare class Embed {
      * @public
      */
     public setColor(color: string | number): Embed;
-    color: number;
     /**
      * Sets the embed thumbnail image.
      * @param {String} url The url of the thumbnail.
@@ -173,9 +232,6 @@ declare class Embed {
      * @public
      */
     public setThumbnail(url: string): Embed;
-    thumbnail: {
-        url: string;
-    };
     /**
      * Sets the embed footer.
      * @param {String} text The footer text.
@@ -186,9 +242,6 @@ declare class Embed {
      * @public
      */
     public setFooter(text: string, icon: string | null): Embed;
-    footer: {
-        text: string;
-    };
     /**
      * Sets the embed author info.
      * @param {String?} name The embed author.
@@ -200,7 +253,6 @@ declare class Embed {
      * @public
      */
     public setAuthor(name: string | null, url: string | null, icon_url: string | null): Embed;
-    author: {};
     /**
      * Adds a field to the embed.
      * @param {String} name Sets the embed field name.
@@ -220,9 +272,6 @@ declare class Embed {
      * @public
      */
     public setImage(url: string): Embed;
-    image: {
-        url: string;
-    };
     /**
      * Sets the embed video url.
      * @param {String} url The video url.
@@ -231,9 +280,6 @@ declare class Embed {
      * @public
      */
     public setVideo(url: string): Embed;
-    video: {
-        url: string;
-    };
     /**
      * Returns the character count of the embed.
      * @returns {Number}
