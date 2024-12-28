@@ -228,6 +228,7 @@ describe("Message", function () {
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       expect(message.embeds).to.deep.equal([
         {
+          author: undefined,
           color: TEST_DATA.MESSAGE.embeds[0].color,
           description: TEST_DATA.MESSAGE.embeds[0].description,
           fields: [
