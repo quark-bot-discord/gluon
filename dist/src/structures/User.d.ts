@@ -39,7 +39,7 @@ declare class User {
      * @param {Client} client The client instance.
      * @param {Object} data The raw user data.
      * @param {Object?} options Additional options for this structure.
-     * @param {Boolean?} options.nocache Whether the user should be cached or not.
+     * @param {Boolean?} [options.nocache] Whether the user should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/user#user-object}
      */
     constructor(client: Client, data: any, { nocache }?: any | null);

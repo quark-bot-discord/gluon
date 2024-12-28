@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 417,
-                8176
+                8178
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -157,11 +157,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for an emoji.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw emoji data from Discord.\n   * @param {Object} options The options for this emoji.\n   * @param {String} options.guildId The id of the guild that the emoji belongs to.\n   * @param {Boolean?} options.nocache Whether this emoji should be cached or not.\n   */",
+        "comment": "/**\n   * Creates the structure for an emoji.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw emoji data from Discord.\n   * @param {Object} options The options for this emoji.\n   * @param {String} options.guildId The id of the guild that the emoji belongs to.\n   * @param {Boolean?} [options.nocache] Whether this emoji should be cached or not.\n   */",
         "meta": {
             "range": [
-                877,
-                3147
+                879,
+                3149
             ],
             "filename": "Emoji.js",
             "lineno": 29,
@@ -225,6 +225,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this emoji should be cached or not.",
                 "name": "options.nocache"
@@ -241,7 +242,7 @@
         "meta": {
             "range": [
                 417,
-                8176
+                8178
             ],
             "filename": "Emoji.js",
             "lineno": 15,
@@ -310,6 +311,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this emoji should be cached or not.",
                 "name": "options.nocache"
@@ -320,8 +322,8 @@
         "comment": "",
         "meta": {
             "range": [
-                905,
-                912
+                907,
+                914
             ],
             "filename": "Emoji.js",
             "lineno": 29,
@@ -344,8 +346,8 @@
         "comment": "",
         "meta": {
             "range": [
-                914,
-                929
+                916,
+                931
             ],
             "filename": "Emoji.js",
             "lineno": 29,
@@ -368,8 +370,8 @@
         "comment": "",
         "meta": {
             "range": [
-                936,
-                950
+                938,
+                952
             ],
             "filename": "Emoji.js",
             "lineno": 29,
@@ -392,8 +394,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1450,
-                1472
+                1452,
+                1474
             ],
             "filename": "Emoji.js",
             "lineno": 44,
@@ -424,8 +426,8 @@
         "comment": "/**\n     * The id of the emoji (if it is custom).\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1580,
-                1624
+                1582,
+                1626
             ],
             "filename": "Emoji.js",
             "lineno": 51,
@@ -457,8 +459,8 @@
         "comment": "/**\n     * The name of the emoji (if it is custom).\n     * @type {String?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1734,
-                1756
+                1736,
+                1758
             ],
             "filename": "Emoji.js",
             "lineno": 58,
@@ -490,8 +492,8 @@
         "comment": "/**\n     * The attributes of the emoji.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1853,
-                1894
+                1855,
+                1896
             ],
             "filename": "Emoji.js",
             "lineno": 65,
@@ -522,8 +524,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1978,
-                2007
+                1980,
+                2009
             ],
             "filename": "Emoji.js",
             "lineno": 68,
@@ -548,8 +550,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2057,
-                2086
+                2059,
+                2088
             ],
             "filename": "Emoji.js",
             "lineno": 69,
@@ -574,8 +576,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2156,
-                2185
+                2158,
+                2187
             ],
             "filename": "Emoji.js",
             "lineno": 72,
@@ -600,8 +602,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2257,
-                2286
+                2259,
+                2288
             ],
             "filename": "Emoji.js",
             "lineno": 75,
@@ -626,8 +628,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2360,
-                2389
+                2362,
+                2391
             ],
             "filename": "Emoji.js",
             "lineno": 78,
@@ -652,8 +654,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2434,
-                2463
+                2436,
+                2465
             ],
             "filename": "Emoji.js",
             "lineno": 79,
@@ -678,8 +680,8 @@
         "comment": "/**\n     * The id of the guild that this emoji belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                2579,
-                2612
+                2581,
+                2614
             ],
             "filename": "Emoji.js",
             "lineno": 86,
@@ -710,8 +712,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2625,
-                2730
+                2627,
+                2732
             ],
             "filename": "Emoji.js",
             "lineno": 88,
@@ -736,8 +738,8 @@
         "comment": "/**\n   * Whether the emoji requires colons.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3252,
-                3334
+                3254,
+                3336
             ],
             "filename": "Emoji.js",
             "lineno": 113,
@@ -772,8 +774,8 @@
         "comment": "/**\n   * Whether the emoji is managed.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3434,
-                3510
+                3436,
+                3512
             ],
             "filename": "Emoji.js",
             "lineno": 123,
@@ -808,8 +810,8 @@
         "comment": "/**\n   * Whether the emoji is animated.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3611,
-                3679
+                3613,
+                3681
             ],
             "filename": "Emoji.js",
             "lineno": 133,
@@ -844,8 +846,8 @@
         "comment": "/**\n   * Checks if the emoji is animated.\n   * @param {Number} attributes The attributes of the emoji.\n   * @returns {Boolean}\n   */",
         "meta": {
             "range": [
-                3818,
-                3903
+                3820,
+                3905
             ],
             "filename": "Emoji.js",
             "lineno": 142,
@@ -894,8 +896,8 @@
         "comment": "/**\n   * Whether the emoji is available.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4005,
-                4083
+                4007,
+                4085
             ],
             "filename": "Emoji.js",
             "lineno": 152,
@@ -930,8 +932,8 @@
         "comment": "/**\n   * The mention string for the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4186,
-                4269
+                4188,
+                4271
             ],
             "filename": "Emoji.js",
             "lineno": 162,
@@ -966,8 +968,8 @@
         "comment": "/**\n   * The url for the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4361,
-                4442
+                4363,
+                4444
             ],
             "filename": "Emoji.js",
             "lineno": 172,
@@ -1002,8 +1004,8 @@
         "comment": "/**\n   * The id of the guild that this emoji belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4559,
-                4614
+                4561,
+                4616
             ],
             "filename": "Emoji.js",
             "lineno": 182,
@@ -1038,8 +1040,8 @@
         "comment": "/**\n   * The guild that this emoji belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4721,
-                4797
+                4723,
+                4799
             ],
             "filename": "Emoji.js",
             "lineno": 192,
@@ -1075,8 +1077,8 @@
         "comment": "/**\n   * The id of the emoji, if it is custom.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4905,
-                4968
+                4907,
+                4970
             ],
             "filename": "Emoji.js",
             "lineno": 202,
@@ -1112,8 +1114,8 @@
         "comment": "/**\n   * The name of the emoji.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5060,
-                5099
+                5062,
+                5101
             ],
             "filename": "Emoji.js",
             "lineno": 212,
@@ -1148,8 +1150,8 @@
         "comment": "/**\n   * Returns the mention string for an emoji.\n   * @param {String} name The name of the emoji.\n   * @param {String?} id The id of the emoji.\n   * @param {Boolean?} animated Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5381,
-                5840
+                5383,
+                5842
             ],
             "filename": "Emoji.js",
             "lineno": 226,
@@ -1221,8 +1223,8 @@
         "comment": "/**\n   * Returns the url for an emoji.\n   * @param {String} id The id of the emoji.\n   * @param {Boolean} [animated] Whether the emoji is animated.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6062,
-                6389
+                6064,
+                6391
             ],
             "filename": "Emoji.js",
             "lineno": 246,
@@ -1284,8 +1286,8 @@
         "comment": "/**\n   * Determines whether the emoji should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6687,
-                7217
+                6689,
+                7219
             ],
             "filename": "Emoji.js",
             "lineno": 263,
@@ -1345,8 +1347,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7259,
-                7322
+                7261,
+                7324
             ],
             "filename": "Emoji.js",
             "lineno": 281,
@@ -1374,8 +1376,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7364,
-                7421
+                7366,
+                7423
             ],
             "filename": "Emoji.js",
             "lineno": 289,
@@ -1403,8 +1405,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7606,
-                8174
+                7608,
+                8176
             ],
             "filename": "Emoji.js",
             "lineno": 300,
@@ -1455,8 +1457,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7764,
-                7775
+                7766,
+                7777
             ],
             "filename": "Emoji.js",
             "lineno": 305,
@@ -1479,8 +1481,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7787,
-                7802
+                7789,
+                7804
             ],
             "filename": "Emoji.js",
             "lineno": 306,
@@ -1503,8 +1505,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7814,
-                7844
+                7816,
+                7846
             ],
             "filename": "Emoji.js",
             "lineno": 307,
@@ -1527,8 +1529,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7955,
-                7966
+                7957,
+                7968
             ],
             "filename": "Emoji.js",
             "lineno": 313,
@@ -1551,8 +1553,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7978,
-                7993
+                7980,
+                7995
             ],
             "filename": "Emoji.js",
             "lineno": 314,
@@ -1575,8 +1577,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8005,
-                8028
+                8007,
+                8030
             ],
             "filename": "Emoji.js",
             "lineno": 315,
@@ -1599,8 +1601,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8040,
-                8061
+                8042,
+                8063
             ],
             "filename": "Emoji.js",
             "lineno": 316,
@@ -1623,8 +1625,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8073,
-                8107
+                8075,
+                8109
             ],
             "filename": "Emoji.js",
             "lineno": 317,
@@ -1647,8 +1649,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8119,
-                8144
+                8121,
+                8146
             ],
             "filename": "Emoji.js",
             "lineno": 318,
@@ -1671,8 +1673,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8178,
-                8199
+                8180,
+                8201
             ],
             "filename": "Emoji.js",
             "lineno": 325,

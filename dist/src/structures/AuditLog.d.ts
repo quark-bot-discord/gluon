@@ -10,11 +10,11 @@ declare class AuditLog {
      * @param {Client} client The client instance.
      * @param {Object} data Audit log data from Discord.
      * @param {Object} options Additional options for this structure.
-     * @param {Array<Object>?} options.users Resolved users who are involved with the audit log entries.
+     * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
      * @param {String} options.guildId The ID of the guild that this audit log belongs to.
      */
     constructor(client: Client, data: any, { users, guildId }?: {
-        users: Array<any> | null;
+        users?: Array<any> | null;
         guildId: string;
     });
     /**

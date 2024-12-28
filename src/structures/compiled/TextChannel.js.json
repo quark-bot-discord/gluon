@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 480,
-                4196
+                4198
             ],
             "filename": "TextChannel.js",
             "lineno": 17,
@@ -60,11 +60,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a text channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this channel belongs to.\n   * @param {Boolean?} options.nocache Whether this channel should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n   */",
+        "comment": "/**\n   * Creates the structure for a text channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this channel belongs to.\n   * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}\n   */",
         "meta": {
             "range": [
-                1036,
-                2379
+                1038,
+                2381
             ],
             "filename": "TextChannel.js",
             "lineno": 28,
@@ -128,6 +128,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this channel should be cached or not.",
                 "name": "options.nocache"
@@ -147,7 +148,7 @@
         "meta": {
             "range": [
                 480,
-                4196
+                4198
             ],
             "filename": "TextChannel.js",
             "lineno": 17,
@@ -219,6 +220,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this channel should be cached or not.",
                 "name": "options.nocache"
@@ -229,8 +231,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1064,
-                1071
+                1066,
+                1073
             ],
             "filename": "TextChannel.js",
             "lineno": 28,
@@ -253,8 +255,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1073,
-                1088
+                1075,
+                1090
             ],
             "filename": "TextChannel.js",
             "lineno": 28,
@@ -277,8 +279,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1095,
-                1109
+                1097,
+                1111
             ],
             "filename": "TextChannel.js",
             "lineno": 28,
@@ -301,8 +303,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1141,
-                1148
+                1143,
+                1150
             ],
             "filename": "TextChannel.js",
             "lineno": 29,
@@ -325,8 +327,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1648,
-                1670
+                1650,
+                1672
             ],
             "filename": "TextChannel.js",
             "lineno": 45,
@@ -357,8 +359,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1683,
-                1790
+                1685,
+                1792
             ],
             "filename": "TextChannel.js",
             "lineno": 47,
@@ -383,8 +385,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2222,
-                2227
+                2224,
+                2229
             ],
             "filename": "TextChannel.js",
             "lineno": 66,
@@ -409,8 +411,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2325,
-                2343
+                2327,
+                2345
             ],
             "filename": "TextChannel.js",
             "lineno": 68,
@@ -433,8 +435,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2355,
-                2362
+                2357,
+                2364
             ],
             "filename": "TextChannel.js",
             "lineno": 69,
@@ -457,8 +459,8 @@
         "comment": "/**\n   * Bulk deletes all the message IDs provided.\n   * @param {String[]} messages An array of message IDs, as strings.\n   * @param {Object?} [options] Additional options for this method.\n   * @param {String?} [options.reason] The reason for this action.\n   * @returns {Promise<void>}\n   * @method\n   * @async\n   * @public\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                2748,
-                3525
+                2750,
+                3527
             ],
             "filename": "TextChannel.js",
             "lineno": 84,
@@ -542,8 +544,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2777,
-                2783
+                2779,
+                2785
             ],
             "filename": "TextChannel.js",
             "lineno": 84,
@@ -566,8 +568,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3312,
-                3321
+                3314,
+                3323
             ],
             "filename": "TextChannel.js",
             "lineno": 102,
@@ -592,8 +594,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3328,
-                3352
+                3330,
+                3354
             ],
             "filename": "TextChannel.js",
             "lineno": 104,
@@ -619,8 +621,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3371,
-                3406
+                3373,
+                3408
             ],
             "filename": "TextChannel.js",
             "lineno": 106,
@@ -646,8 +648,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3567,
-                3623
+                3569,
+                3625
             ],
             "filename": "TextChannel.js",
             "lineno": 119,
@@ -675,8 +677,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3665,
-                3722
+                3667,
+                3724
             ],
             "filename": "TextChannel.js",
             "lineno": 127,
@@ -704,8 +706,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3922,
-                4194
+                3924,
+                4196
             ],
             "filename": "TextChannel.js",
             "lineno": 139,
@@ -757,8 +759,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4198,
-                4225
+                4200,
+                4227
             ],
             "filename": "TextChannel.js",
             "lineno": 153,

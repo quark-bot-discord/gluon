@@ -10,11 +10,11 @@ declare class VoiceChannel extends Channel {
      * @param {Object} data The raw channel data from Discord.
      * @param {Object} options Additional options for this structure.
      * @param {String} options.guildId The id of the guild that the voice channel belongs to.
-     * @param {Boolean?} options.nocache Whether the voice channel should be cached.
+     * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.
      */
     constructor(client: Client, data: any, { guildId, nocache }?: {
         guildId: string;
-        nocache: boolean | null;
+        nocache?: boolean | null;
     });
     /**
      * The bitrate of the channel.

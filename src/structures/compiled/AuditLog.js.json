@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 282,
-                9614
+                9616
             ],
             "filename": "AuditLog.js",
             "lineno": 10,
@@ -457,11 +457,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {Array<Object>?} options.users Resolved users who are involved with the audit log entries.\n   * @param {String} options.guildId The ID of the guild that this audit log belongs to.\n   */",
+        "comment": "/**\n   * Creates a structure for an audit log entry.\n   * @param {Client} client The client instance.\n   * @param {Object} data Audit log data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.\n   * @param {String} options.guildId The ID of the guild that this audit log belongs to.\n   */",
         "meta": {
             "range": [
-                968,
-                4908
+                970,
+                4910
             ],
             "filename": "AuditLog.js",
             "lineno": 37,
@@ -516,6 +516,7 @@
                         "Array.<Object>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Resolved users who are involved with the audit log entries.",
                 "name": "options.users"
@@ -541,7 +542,7 @@
         "meta": {
             "range": [
                 282,
-                9614
+                9616
             ],
             "filename": "AuditLog.js",
             "lineno": 10,
@@ -601,6 +602,7 @@
                         "Array.<Object>"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Resolved users who are involved with the audit log entries.",
                 "name": "options.users"
@@ -620,8 +622,8 @@
         "comment": "",
         "meta": {
             "range": [
-                996,
-                1001
+                998,
+                1003
             ],
             "filename": "AuditLog.js",
             "lineno": 37,
@@ -644,8 +646,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1003,
-                1010
+                1005,
+                1012
             ],
             "filename": "AuditLog.js",
             "lineno": 37,
@@ -668,8 +670,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1588,
-                1610
+                1590,
+                1612
             ],
             "filename": "AuditLog.js",
             "lineno": 55,
@@ -700,8 +702,8 @@
         "comment": "/**\n     * The id of the audit log entry.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1709,
-                1736
+                1711,
+                1738
             ],
             "filename": "AuditLog.js",
             "lineno": 62,
@@ -732,8 +734,8 @@
         "comment": "/**\n     * The ID of the guild that this audit log belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1856,
-                1889
+                1858,
+                1891
             ],
             "filename": "AuditLog.js",
             "lineno": 69,
@@ -764,8 +766,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2014,
-                2050
+                2016,
+                2052
             ],
             "filename": "AuditLog.js",
             "lineno": 76,
@@ -790,8 +792,8 @@
         "comment": "/**\n     * The id of the target user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                2146,
-                2211
+                2148,
+                2213
             ],
             "filename": "AuditLog.js",
             "lineno": 83,
@@ -823,8 +825,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2284,
-                2334
+                2286,
+                2336
             ],
             "filename": "AuditLog.js",
             "lineno": 86,
@@ -849,8 +851,8 @@
         "comment": "/**\n         * The resolved target user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2466,
-                2510
+                2468,
+                2512
             ],
             "filename": "AuditLog.js",
             "lineno": 93,
@@ -882,8 +884,8 @@
         "comment": "/**\n     * The id of the executor user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                2614,
-                2677
+                2616,
+                2679
             ],
             "filename": "AuditLog.js",
             "lineno": 101,
@@ -915,8 +917,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2752,
-                2804
+                2754,
+                2806
             ],
             "filename": "AuditLog.js",
             "lineno": 104,
@@ -941,8 +943,8 @@
         "comment": "/**\n         * The resolved executor user.\n         * @type {User?}\n         * @private\n         */",
         "meta": {
             "range": [
-                2938,
-                2984
+                2940,
+                2986
             ],
             "filename": "AuditLog.js",
             "lineno": 111,
@@ -974,8 +976,8 @@
         "comment": "/**\n     * The reason for this audit log entry.\n     * @type {String?}\n     * @private\n     */",
         "meta": {
             "range": [
-                3096,
-                3130
+                3098,
+                3132
             ],
             "filename": "AuditLog.js",
             "lineno": 119,
@@ -1007,8 +1009,8 @@
         "comment": "/**\n         * The channel id involved with this audit log entry.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3335,
-                3386
+                3337,
+                3388
             ],
             "filename": "AuditLog.js",
             "lineno": 128,
@@ -1040,8 +1042,8 @@
         "comment": "/**\n         * The count of this type of audit log entry.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3560,
-                3602
+                3562,
+                3604
             ],
             "filename": "AuditLog.js",
             "lineno": 137,
@@ -1073,8 +1075,8 @@
         "comment": "/**\n         * The inactivity period for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                3789,
-                3857
+                3791,
+                3859
             ],
             "filename": "AuditLog.js",
             "lineno": 145,
@@ -1106,8 +1108,8 @@
         "comment": "/**\n         * The number of members removed for when members are purged.\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                4049,
-                4111
+                4051,
+                4113
             ],
             "filename": "AuditLog.js",
             "lineno": 153,
@@ -1139,8 +1141,8 @@
         "comment": "/**\n         * The id of the overwritten entity.\n         * @type {BigInt?}\n         * @private\n         */",
         "meta": {
             "range": [
-                4265,
-                4307
+                4267,
+                4309
             ],
             "filename": "AuditLog.js",
             "lineno": 161,
@@ -1172,8 +1174,8 @@
         "comment": "/**\n         * The type of the overwritten entity - role (\"0\") or member (\"1\")\n         * @type {Number?}\n         * @private\n         */",
         "meta": {
             "range": [
-                4493,
-                4541
+                4495,
+                4543
             ],
             "filename": "AuditLog.js",
             "lineno": 169,
@@ -1205,8 +1207,8 @@
         "comment": "/**\n         * The new voice channel status.\n         * @type {String?}\n         * @private\n         */",
         "meta": {
             "range": [
-                4695,
-                4729
+                4697,
+                4731
             ],
             "filename": "AuditLog.js",
             "lineno": 177,
@@ -1238,8 +1240,8 @@
         "comment": "/**\n       * The changes in this audit log entry.\n       * @type {Object?}\n       * @private\n       */",
         "meta": {
             "range": [
-                4875,
-                4903
+                4877,
+                4905
             ],
             "filename": "AuditLog.js",
             "lineno": 186,
@@ -1271,8 +1273,8 @@
         "comment": "/**\n   * The id of the audit log entry.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5008,
-                5052
+                5010,
+                5054
             ],
             "filename": "AuditLog.js",
             "lineno": 195,
@@ -1307,8 +1309,8 @@
         "comment": "/**\n   * The ID of the guild that this audit log belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5173,
-                5228
+                5175,
+                5230
             ],
             "filename": "AuditLog.js",
             "lineno": 205,
@@ -1343,8 +1345,8 @@
         "comment": "/**\n   * The type of action that occurred.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5331,
-                5383
+                5333,
+                5385
             ],
             "filename": "AuditLog.js",
             "lineno": 215,
@@ -1379,8 +1381,8 @@
         "comment": "/**\n   * The id of the target user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5480,
-                5563
+                5482,
+                5565
             ],
             "filename": "AuditLog.js",
             "lineno": 225,
@@ -1416,8 +1418,8 @@
         "comment": "/**\n   * The channel id involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5684,
-                5770
+                5686,
+                5772
             ],
             "filename": "AuditLog.js",
             "lineno": 235,
@@ -1453,8 +1455,8 @@
         "comment": "/**\n   * The guild that this audit log belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5881,
-                5957
+                5883,
+                5959
             ],
             "filename": "AuditLog.js",
             "lineno": 245,
@@ -1490,8 +1492,8 @@
         "comment": "/**\n   * The channel involved with this audit log entry.\n   * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6145,
-                6225
+                6147,
+                6227
             ],
             "filename": "AuditLog.js",
             "lineno": 255,
@@ -1528,8 +1530,8 @@
         "comment": "/**\n   * The target user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6345,
-                6388
+                6347,
+                6390
             ],
             "filename": "AuditLog.js",
             "lineno": 265,
@@ -1565,8 +1567,8 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6512,
-                6601
+                6514,
+                6603
             ],
             "filename": "AuditLog.js",
             "lineno": 275,
@@ -1602,8 +1604,8 @@
         "comment": "/**\n   * The executor user involved with this audit log entry.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6723,
-                6770
+                6725,
+                6772
             ],
             "filename": "AuditLog.js",
             "lineno": 285,
@@ -1639,8 +1641,8 @@
         "comment": "/**\n   * The reason for this audit log entry.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6877,
-                6920
+                6879,
+                6922
             ],
             "filename": "AuditLog.js",
             "lineno": 295,
@@ -1676,8 +1678,8 @@
         "comment": "/**\n   * The count of this type of audit log entry.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7033,
-                7074
+                7035,
+                7076
             ],
             "filename": "AuditLog.js",
             "lineno": 305,
@@ -1713,8 +1715,8 @@
         "comment": "/**\n   * The inactivity period for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7195,
-                7260
+                7197,
+                7262
             ],
             "filename": "AuditLog.js",
             "lineno": 315,
@@ -1750,8 +1752,8 @@
         "comment": "/**\n   * The number of members removed for when members are purged.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7389,
-                7449
+                7391,
+                7451
             ],
             "filename": "AuditLog.js",
             "lineno": 325,
@@ -1787,8 +1789,8 @@
         "comment": "/**\n   * The id of the overwritten entity.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7553,
-                7637
+                7555,
+                7639
             ],
             "filename": "AuditLog.js",
             "lineno": 335,
@@ -1824,8 +1826,8 @@
         "comment": "/**\n   * The type of the overwritten entity - role (\"0\") or member (\"1\")\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7771,
-                7825
+                7773,
+                7827
             ],
             "filename": "AuditLog.js",
             "lineno": 345,
@@ -1861,8 +1863,8 @@
         "comment": "/**\n   * The new voice channel status.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                7925,
-                7968
+                7927,
+                7970
             ],
             "filename": "AuditLog.js",
             "lineno": 355,
@@ -1898,8 +1900,8 @@
         "comment": "/**\n   * The changes in this audit log entry.\n   * @type {Object?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                8075,
-                8120
+                8077,
+                8122
             ],
             "filename": "AuditLog.js",
             "lineno": 365,
@@ -1935,8 +1937,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                8162,
-                8222
+                8164,
+                8224
             ],
             "filename": "AuditLog.js",
             "lineno": 373,
@@ -1964,8 +1966,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                8264,
-                8321
+                8266,
+                8323
             ],
             "filename": "AuditLog.js",
             "lineno": 381,
@@ -1993,8 +1995,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                8506,
-                9612
+                8508,
+                9614
             ],
             "filename": "AuditLog.js",
             "lineno": 392,
@@ -2045,8 +2047,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8725,
-                8736
+                8727,
+                8738
             ],
             "filename": "AuditLog.js",
             "lineno": 399,
@@ -2069,8 +2071,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8748,
-                8770
+                8750,
+                8772
             ],
             "filename": "AuditLog.js",
             "lineno": 400,
@@ -2093,8 +2095,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8782,
-                8810
+                8784,
+                8812
             ],
             "filename": "AuditLog.js",
             "lineno": 401,
@@ -2117,8 +2119,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8822,
-                8859
+                8824,
+                8861
             ],
             "filename": "AuditLog.js",
             "lineno": 402,
@@ -2141,8 +2143,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8871,
-                8908
+                8873,
+                8910
             ],
             "filename": "AuditLog.js",
             "lineno": 403,
@@ -2165,8 +2167,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8920,
-                8939
+                8922,
+                8941
             ],
             "filename": "AuditLog.js",
             "lineno": 404,
@@ -2189,8 +2191,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8951,
-                9549
+                8953,
+                9551
             ],
             "filename": "AuditLog.js",
             "lineno": 405,
@@ -2213,8 +2215,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8974,
-                9013
+                8976,
+                9015
             ],
             "filename": "AuditLog.js",
             "lineno": 406,
@@ -2238,8 +2240,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9027,
-                9089
+                9029,
+                9091
             ],
             "filename": "AuditLog.js",
             "lineno": 407,
@@ -2263,8 +2265,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9103,
-                9246
+                9105,
+                9248
             ],
             "filename": "AuditLog.js",
             "lineno": 408,
@@ -2288,8 +2290,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9260,
-                9396
+                9262,
+                9398
             ],
             "filename": "AuditLog.js",
             "lineno": 412,
@@ -2313,8 +2315,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9410,
-                9441
+                9412,
+                9443
             ],
             "filename": "AuditLog.js",
             "lineno": 416,
@@ -2338,8 +2340,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9455,
-                9490
+                9457,
+                9492
             ],
             "filename": "AuditLog.js",
             "lineno": 417,
@@ -2363,8 +2365,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9504,
-                9536
+                9506,
+                9538
             ],
             "filename": "AuditLog.js",
             "lineno": 418,
@@ -2388,8 +2390,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9561,
-                9582
+                9563,
+                9584
             ],
             "filename": "AuditLog.js",
             "lineno": 420,
@@ -2412,8 +2414,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9616,
-                9640
+                9618,
+                9642
             ],
             "filename": "AuditLog.js",
             "lineno": 427,

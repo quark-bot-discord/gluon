@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 368,
-                9118
+                9120
             ],
             "filename": "VoiceState.js",
             "lineno": 15,
@@ -229,11 +229,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a voice state.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw voice state data from Discord.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice state belongs to.\n   * @param {Boolean?} options.nocache Whether this voice state should be cached.\n   */",
+        "comment": "/**\n   * Creates the structure for a voice state.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw voice state data from Discord.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice state belongs to.\n   * @param {Boolean?} [options.nocache] Whether this voice state should be cached.\n   */",
         "meta": {
             "range": [
-                929,
-                4280
+                931,
+                4282
             ],
             "filename": "VoiceState.js",
             "lineno": 32,
@@ -297,6 +297,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this voice state should be cached.",
                 "name": "options.nocache"
@@ -313,7 +314,7 @@
         "meta": {
             "range": [
                 368,
-                9118
+                9120
             ],
             "filename": "VoiceState.js",
             "lineno": 15,
@@ -379,6 +380,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this voice state should be cached.",
                 "name": "options.nocache"
@@ -389,8 +391,8 @@
         "comment": "",
         "meta": {
             "range": [
-                957,
-                964
+                959,
+                966
             ],
             "filename": "VoiceState.js",
             "lineno": 32,
@@ -413,8 +415,8 @@
         "comment": "",
         "meta": {
             "range": [
-                966,
-                981
+                968,
+                983
             ],
             "filename": "VoiceState.js",
             "lineno": 32,
@@ -437,8 +439,8 @@
         "comment": "",
         "meta": {
             "range": [
-                988,
-                1002
+                990,
+                1004
             ],
             "filename": "VoiceState.js",
             "lineno": 32,
@@ -461,8 +463,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1502,
-                1524
+                1504,
+                1526
             ],
             "filename": "VoiceState.js",
             "lineno": 47,
@@ -493,8 +495,8 @@
         "comment": "/**\n     * The id of the guild that this voice state belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1646,
-                1679
+                1648,
+                1681
             ],
             "filename": "VoiceState.js",
             "lineno": 54,
@@ -525,8 +527,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1708,
-                1840
+                1710,
+                1842
             ],
             "filename": "VoiceState.js",
             "lineno": 57,
@@ -552,8 +554,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1853,
-                1913
+                1855,
+                1915
             ],
             "filename": "VoiceState.js",
             "lineno": 61,
@@ -578,8 +580,8 @@
         "comment": "/**\n     * The id of the channel involved.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                2013,
-                2056
+                2015,
+                2058
             ],
             "filename": "VoiceState.js",
             "lineno": 68,
@@ -610,8 +612,8 @@
         "comment": "/**\n     * The attributes of the voice state.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                2159,
-                2200
+                2161,
+                2202
             ],
             "filename": "VoiceState.js",
             "lineno": 75,
@@ -642,8 +644,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2230,
-                2259
+                2232,
+                2261
             ],
             "filename": "VoiceState.js",
             "lineno": 77,
@@ -668,8 +670,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2289,
-                2318
+                2291,
+                2320
             ],
             "filename": "VoiceState.js",
             "lineno": 79,
@@ -694,8 +696,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2353,
-                2382
+                2355,
+                2384
             ],
             "filename": "VoiceState.js",
             "lineno": 81,
@@ -720,8 +722,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2417,
-                2446
+                2419,
+                2448
             ],
             "filename": "VoiceState.js",
             "lineno": 83,
@@ -746,8 +748,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2483,
-                2512
+                2485,
+                2514
             ],
             "filename": "VoiceState.js",
             "lineno": 85,
@@ -772,8 +774,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2548,
-                2577
+                2550,
+                2579
             ],
             "filename": "VoiceState.js",
             "lineno": 87,
@@ -798,8 +800,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2611,
-                2640
+                2613,
+                2642
             ],
             "filename": "VoiceState.js",
             "lineno": 89,
@@ -824,8 +826,8 @@
         "comment": "/**\n       * The member the voice state is about.\n       * @type {Member?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2779,
-                2922
+                2781,
+                2924
             ],
             "filename": "VoiceState.js",
             "lineno": 97,
@@ -857,8 +859,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2843,
-                2863
+                2845,
+                2865
             ],
             "filename": "VoiceState.js",
             "lineno": 98,
@@ -881,8 +883,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2873,
-                2895
+                2875,
+                2897
             ],
             "filename": "VoiceState.js",
             "lineno": 99,
@@ -905,8 +907,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2905,
-                2912
+                2907,
+                2914
             ],
             "filename": "VoiceState.js",
             "lineno": 100,
@@ -929,8 +931,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2933,
-                2993
+                2935,
+                2995
             ],
             "filename": "VoiceState.js",
             "lineno": 102,
@@ -955,8 +957,8 @@
         "comment": "/**\n     * The id of the user the voice state is about.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                3106,
-                3143
+                3108,
+                3145
             ],
             "filename": "VoiceState.js",
             "lineno": 109,
@@ -987,8 +989,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3296,
-                3322
+                3298,
+                3324
             ],
             "filename": "VoiceState.js",
             "lineno": 116,
@@ -1013,8 +1015,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3391,
-                3421
+                3393,
+                3423
             ],
             "filename": "VoiceState.js",
             "lineno": 118,
@@ -1039,8 +1041,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3432,
-                3470
+                3434,
+                3472
             ],
             "filename": "VoiceState.js",
             "lineno": 119,
@@ -1065,8 +1067,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3638,
-                3745
+                3640,
+                3747
             ],
             "filename": "VoiceState.js",
             "lineno": 127,
@@ -1091,8 +1093,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3758,
-                3868
+                3760,
+                3870
             ],
             "filename": "VoiceState.js",
             "lineno": 130,
@@ -1117,8 +1119,8 @@
         "comment": "/**\n   * Is server deafened?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                4370,
-                4443
+                4372,
+                4445
             ],
             "filename": "VoiceState.js",
             "lineno": 155,
@@ -1153,8 +1155,8 @@
         "comment": "/**\n   * Is server muted?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                4530,
-                4603
+                4532,
+                4605
             ],
             "filename": "VoiceState.js",
             "lineno": 165,
@@ -1189,8 +1191,8 @@
         "comment": "/**\n   * Is self defeaned?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                4691,
-                4768
+                4693,
+                4770
             ],
             "filename": "VoiceState.js",
             "lineno": 175,
@@ -1225,8 +1227,8 @@
         "comment": "/**\n   * Is self muted?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                4853,
-                4930
+                4855,
+                4932
             ],
             "filename": "VoiceState.js",
             "lineno": 185,
@@ -1261,8 +1263,8 @@
         "comment": "/**\n   * Is streaming?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                5014,
-                5093
+                5016,
+                5095
             ],
             "filename": "VoiceState.js",
             "lineno": 195,
@@ -1297,8 +1299,8 @@
         "comment": "/**\n   * Is sharing video?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                5181,
-                5259
+                5183,
+                5261
             ],
             "filename": "VoiceState.js",
             "lineno": 205,
@@ -1333,8 +1335,8 @@
         "comment": "/**\n   * Is suppressed (for stage channels)?\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                5365,
-                5442
+                5367,
+                5444
             ],
             "filename": "VoiceState.js",
             "lineno": 215,
@@ -1369,8 +1371,8 @@
         "comment": "/**\n   * The guild that this voice state belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5555,
-                5631
+                5557,
+                5633
             ],
             "filename": "VoiceState.js",
             "lineno": 225,
@@ -1406,8 +1408,8 @@
         "comment": "/**\n   * The id of the guild that this voice state belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5754,
-                5809
+                5756,
+                5811
             ],
             "filename": "VoiceState.js",
             "lineno": 235,
@@ -1442,8 +1444,8 @@
         "comment": "/**\n   * The channel involved.\n   * @type {Channel?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5902,
-                5982
+                5904,
+                5984
             ],
             "filename": "VoiceState.js",
             "lineno": 245,
@@ -1479,8 +1481,8 @@
         "comment": "/**\n   * The id of the channel involved.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6083,
-                6142
+                6085,
+                6144
             ],
             "filename": "VoiceState.js",
             "lineno": 255,
@@ -1515,8 +1517,8 @@
         "comment": "/**\n   * The member the voice state is about.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6249,
-                6292
+                6251,
+                6294
             ],
             "filename": "VoiceState.js",
             "lineno": 265,
@@ -1552,8 +1554,8 @@
         "comment": "/**\n   * The id of the user the voice state is about.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6406,
-                6461
+                6408,
+                6463
             ],
             "filename": "VoiceState.js",
             "lineno": 275,
@@ -1588,8 +1590,8 @@
         "comment": "/**\n   * The UNIX time the user joined the voice channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6579,
-                6622
+                6581,
+                6624
             ],
             "filename": "VoiceState.js",
             "lineno": 285,
@@ -1624,8 +1626,8 @@
         "comment": "/**\n   * The UNIX timestamp of when the user requested to speak.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                6748,
-                6828
+                6750,
+                6830
             ],
             "filename": "VoiceState.js",
             "lineno": 295,
@@ -1661,8 +1663,8 @@
         "comment": "/**\n   * Determines whether the voice state should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                7132,
-                7672
+                7134,
+                7674
             ],
             "filename": "VoiceState.js",
             "lineno": 308,
@@ -1722,8 +1724,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7714,
-                7775
+                7716,
+                7777
             ],
             "filename": "VoiceState.js",
             "lineno": 326,
@@ -1751,8 +1753,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                7817,
-                7874
+                7819,
+                7876
             ],
             "filename": "VoiceState.js",
             "lineno": 334,
@@ -1780,8 +1782,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                8059,
-                9116
+                8061,
+                9118
             ],
             "filename": "VoiceState.js",
             "lineno": 345,
@@ -1832,8 +1834,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8217,
-                8239
+                8219,
+                8241
             ],
             "filename": "VoiceState.js",
             "lineno": 350,
@@ -1856,8 +1858,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8251,
-                8277
+                8253,
+                8279
             ],
             "filename": "VoiceState.js",
             "lineno": 351,
@@ -1880,8 +1882,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8289,
-                8319
+                8291,
+                8321
             ],
             "filename": "VoiceState.js",
             "lineno": 352,
@@ -1904,8 +1906,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8331,
-                8365
+                8333,
+                8367
             ],
             "filename": "VoiceState.js",
             "lineno": 353,
@@ -1928,8 +1930,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8377,
-                8399
+                8379,
+                8401
             ],
             "filename": "VoiceState.js",
             "lineno": 354,
@@ -1952,8 +1954,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8411,
-                8430
+                8413,
+                8432
             ],
             "filename": "VoiceState.js",
             "lineno": 355,
@@ -1976,8 +1978,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8442,
-                8505
+                8444,
+                8507
             ],
             "filename": "VoiceState.js",
             "lineno": 356,
@@ -2000,8 +2002,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8616,
-                8638
+                8618,
+                8640
             ],
             "filename": "VoiceState.js",
             "lineno": 362,
@@ -2024,8 +2026,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8650,
-                8676
+                8652,
+                8678
             ],
             "filename": "VoiceState.js",
             "lineno": 363,
@@ -2048,8 +2050,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8688,
-                8703
+                8690,
+                8705
             ],
             "filename": "VoiceState.js",
             "lineno": 364,
@@ -2072,8 +2074,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8715,
-                8730
+                8717,
+                8732
             ],
             "filename": "VoiceState.js",
             "lineno": 365,
@@ -2096,8 +2098,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8742,
-                8766
+                8744,
+                8768
             ],
             "filename": "VoiceState.js",
             "lineno": 366,
@@ -2120,8 +2122,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8778,
-                8802
+                8780,
+                8804
             ],
             "filename": "VoiceState.js",
             "lineno": 367,
@@ -2144,8 +2146,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8814,
-                8842
+                8816,
+                8844
             ],
             "filename": "VoiceState.js",
             "lineno": 368,
@@ -2168,8 +2170,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8854,
-                8880
+                8856,
+                8882
             ],
             "filename": "VoiceState.js",
             "lineno": 369,
@@ -2192,8 +2194,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8892,
-                8915
+                8894,
+                8917
             ],
             "filename": "VoiceState.js",
             "lineno": 370,
@@ -2216,8 +2218,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8927,
-                8946
+                8929,
+                8948
             ],
             "filename": "VoiceState.js",
             "lineno": 371,
@@ -2240,8 +2242,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8958,
-                8980
+                8960,
+                8982
             ],
             "filename": "VoiceState.js",
             "lineno": 372,
@@ -2264,8 +2266,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8992,
-                9011
+                8994,
+                9013
             ],
             "filename": "VoiceState.js",
             "lineno": 373,
@@ -2288,8 +2290,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9023,
-                9086
+                9025,
+                9088
             ],
             "filename": "VoiceState.js",
             "lineno": 374,
@@ -2312,8 +2314,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9120,
-                9146
+                9122,
+                9148
             ],
             "filename": "VoiceState.js",
             "lineno": 381,

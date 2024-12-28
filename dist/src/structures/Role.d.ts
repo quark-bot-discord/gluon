@@ -37,12 +37,12 @@ declare class Role {
      * @param {Object} data The raw role data from Discord.
      * @param {Object} options Additional options for this structure.
      * @param {String} options.guildId The id of the guild that the role belongs to.
-     * @param {Boolean?} options.nocache Whether this role should be cached or not.
+     * @param {Boolean?} [options.nocache] Whether this role should be cached or not.
      * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
      */
     constructor(client: Client, data: any, { guildId, nocache }?: {
         guildId: string;
-        nocache: boolean | null;
+        nocache?: boolean | null;
     });
     /**
      * The ID of the role.

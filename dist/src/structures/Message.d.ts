@@ -138,15 +138,15 @@ declare class Message {
      * @param {Object} options Additional options for this structure.
      * @param {String} options.channelId The id of the channel that the message belongs to.
      * @param {String} options.guildId The id of the guild that the channel belongs to.
-     * @param {Boolean?} options.nocache Whether this message should be cached or not.
-     * @param {Boolean?} options.ignoreExisting Whether to ignore existing messages in the cache.
+     * @param {Boolean?} [options.nocache] Whether this message should be cached or not.
+     * @param {Boolean?} [options.ignoreExisting] Whether to ignore existing messages in the cache.
      * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
      */
     constructor(client: Client, data: any, { channelId, guildId, nocache, ignoreExisting }?: {
         channelId: string;
         guildId: string;
-        nocache: boolean | null;
-        ignoreExisting: boolean | null;
+        nocache?: boolean | null;
+        ignoreExisting?: boolean | null;
     });
     /**
      * The timestamp for when this message was last edited.

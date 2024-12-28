@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 268,
-                4274
+                4276
             ],
             "filename": "VoiceChannel.js",
             "lineno": 11,
@@ -132,11 +132,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} options.nocache Whether the voice channel should be cached.\n   */",
+        "comment": "/**\n   * Creates the structure for a voice channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the voice channel belongs to.\n   * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.\n   */",
         "meta": {
             "range": [
-                774,
-                3049
+                776,
+                3051
             ],
             "filename": "VoiceChannel.js",
             "lineno": 24,
@@ -200,6 +200,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
                 "name": "options.nocache"
@@ -216,7 +217,7 @@
         "meta": {
             "range": [
                 268,
-                4274
+                4276
             ],
             "filename": "VoiceChannel.js",
             "lineno": 11,
@@ -285,6 +286,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether the voice channel should be cached.",
                 "name": "options.nocache"
@@ -295,8 +297,8 @@
         "comment": "",
         "meta": {
             "range": [
-                802,
-                809
+                804,
+                811
             ],
             "filename": "VoiceChannel.js",
             "lineno": 24,
@@ -319,8 +321,8 @@
         "comment": "",
         "meta": {
             "range": [
-                811,
-                826
+                813,
+                828
             ],
             "filename": "VoiceChannel.js",
             "lineno": 24,
@@ -343,8 +345,8 @@
         "comment": "",
         "meta": {
             "range": [
-                833,
-                847
+                835,
+                849
             ],
             "filename": "VoiceChannel.js",
             "lineno": 24,
@@ -367,8 +369,8 @@
         "comment": "",
         "meta": {
             "range": [
-                879,
-                886
+                881,
+                888
             ],
             "filename": "VoiceChannel.js",
             "lineno": 25,
@@ -391,8 +393,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1386,
-                1408
+                1388,
+                1410
             ],
             "filename": "VoiceChannel.js",
             "lineno": 41,
@@ -423,8 +425,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1421,
-                1473
+                1423,
+                1475
             ],
             "filename": "VoiceChannel.js",
             "lineno": 43,
@@ -449,8 +451,8 @@
         "comment": "/**\n       * The bitrate of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                1622,
-                1650
+                1624,
+                1652
             ],
             "filename": "VoiceChannel.js",
             "lineno": 51,
@@ -481,8 +483,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1708,
-                1740
+                1710,
+                1742
             ],
             "filename": "VoiceChannel.js",
             "lineno": 53,
@@ -507,8 +509,8 @@
         "comment": "/**\n       * The user limit of the channel.\n       * @type {Number}\n       * @private\n       */",
         "meta": {
             "range": [
-                1895,
-                1929
+                1897,
+                1931
             ],
             "filename": "VoiceChannel.js",
             "lineno": 61,
@@ -539,8 +541,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2001,
-                2038
+                2003,
+                2040
             ],
             "filename": "VoiceChannel.js",
             "lineno": 63,
@@ -565,8 +567,8 @@
         "comment": "/**\n       * The region of the voice channel.\n       * @type {String}\n       * @private\n       */",
         "meta": {
             "range": [
-                2195,
-                2229
+                2197,
+                2231
             ],
             "filename": "VoiceChannel.js",
             "lineno": 71,
@@ -597,8 +599,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2301,
-                2338
+                2303,
+                2340
             ],
             "filename": "VoiceChannel.js",
             "lineno": 73,
@@ -623,8 +625,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2351,
-                2458
+                2353,
+                2460
             ],
             "filename": "VoiceChannel.js",
             "lineno": 75,
@@ -649,8 +651,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2892,
-                2897
+                2894,
+                2899
             ],
             "filename": "VoiceChannel.js",
             "lineno": 94,
@@ -675,8 +677,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2995,
-                3013
+                2997,
+                3015
             ],
             "filename": "VoiceChannel.js",
             "lineno": 96,
@@ -699,8 +701,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3025,
-                3032
+                3027,
+                3034
             ],
             "filename": "VoiceChannel.js",
             "lineno": 97,
@@ -723,8 +725,8 @@
         "comment": "/**\n   * The bitrate of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3146,
-                3191
+                3148,
+                3193
             ],
             "filename": "VoiceChannel.js",
             "lineno": 107,
@@ -759,8 +761,8 @@
         "comment": "/**\n   * The user limit of the channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3291,
-                3341
+                3293,
+                3343
             ],
             "filename": "VoiceChannel.js",
             "lineno": 117,
@@ -795,8 +797,8 @@
         "comment": "/**\n   * The region of the voice channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3443,
-                3493
+                3445,
+                3495
             ],
             "filename": "VoiceChannel.js",
             "lineno": 127,
@@ -831,8 +833,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3535,
-                3592
+                3537,
+                3594
             ],
             "filename": "VoiceChannel.js",
             "lineno": 135,
@@ -860,8 +862,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                3634,
-                3691
+                3636,
+                3693
             ],
             "filename": "VoiceChannel.js",
             "lineno": 143,
@@ -889,8 +891,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3891,
-                4272
+                3893,
+                4274
             ],
             "filename": "VoiceChannel.js",
             "lineno": 155,
@@ -942,8 +944,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4145,
-                4166
+                4147,
+                4168
             ],
             "filename": "VoiceChannel.js",
             "lineno": 163,
@@ -966,8 +968,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4178,
-                4204
+                4180,
+                4206
             ],
             "filename": "VoiceChannel.js",
             "lineno": 164,
@@ -990,8 +992,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4216,
-                4242
+                4218,
+                4244
             ],
             "filename": "VoiceChannel.js",
             "lineno": 165,
@@ -1014,8 +1016,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4276,
-                4304
+                4278,
+                4306
             ],
             "filename": "VoiceChannel.js",
             "lineno": 172,

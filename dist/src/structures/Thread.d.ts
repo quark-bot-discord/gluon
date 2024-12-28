@@ -11,12 +11,12 @@ declare class Thread extends Channel {
      * @param {Object} data Raw channel data.
      * @param {Object} options Additional options for this structure.
      * @param {String} options.guildId The ID of the guild that this thread belongs to.
-     * @param {Boolean?} options.nocache Whether this thread should be cached or not.
+     * @param {Boolean?} [options.nocache] Whether this thread should be cached or not.
      * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
      */
     constructor(client: Client, data: any, { guildId, nocache }?: {
         guildId: string;
-        nocache: boolean | null;
+        nocache?: boolean | null;
     });
     /**
      * The ID of the member who created this thread.

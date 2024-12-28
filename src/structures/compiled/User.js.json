@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 400,
-                9341
+                9343
             ],
             "filename": "User.js",
             "lineno": 15,
@@ -257,11 +257,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates a structure for a user.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw user data.\n   * @param {Object?} options Additional options for this structure.\n   * @param {Boolean?} options.nocache Whether the user should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/user#user-object}\n   */",
+        "comment": "/**\n   * Creates a structure for a user.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw user data.\n   * @param {Object?} options Additional options for this structure.\n   * @param {Boolean?} [options.nocache] Whether the user should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/user#user-object}\n   */",
         "meta": {
             "range": [
-                915,
-                3167
+                917,
+                3169
             ],
             "filename": "User.js",
             "lineno": 33,
@@ -317,6 +317,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether the user should be cached or not.",
                 "name": "options.nocache"
@@ -336,7 +337,7 @@
         "meta": {
             "range": [
                 400,
-                9341
+                9343
             ],
             "filename": "User.js",
             "lineno": 15,
@@ -397,6 +398,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether the user should be cached or not.",
                 "name": "options.nocache"
@@ -407,8 +409,8 @@
         "comment": "",
         "meta": {
             "range": [
-                956,
-                971
+                958,
+                973
             ],
             "filename": "User.js",
             "lineno": 36,
@@ -431,8 +433,8 @@
         "comment": "",
         "meta": {
             "range": [
-                984,
-                998
+                986,
+                1000
             ],
             "filename": "User.js",
             "lineno": 37,
@@ -455,8 +457,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1407,
-                1429
+                1409,
+                1431
             ],
             "filename": "User.js",
             "lineno": 52,
@@ -487,8 +489,8 @@
         "comment": "/**\n     * The id of the user.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1517,
-                1544
+                1519,
+                1546
             ],
             "filename": "User.js",
             "lineno": 59,
@@ -519,8 +521,8 @@
         "comment": "/**\n     * The attributes of the user.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1640,
-                1661
+                1642,
+                1663
             ],
             "filename": "User.js",
             "lineno": 66,
@@ -551,8 +553,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1690,
-                1719
+                1692,
+                1721
             ],
             "filename": "User.js",
             "lineno": 68,
@@ -577,8 +579,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1789,
-                1818
+                1791,
+                1820
             ],
             "filename": "User.js",
             "lineno": 71,
@@ -603,8 +605,8 @@
         "comment": "/**\n     * The avatar of the user.\n     * @type {BigInt?}\n     * @private\n     */",
         "meta": {
             "range": [
-                1911,
-                2004
+                1913,
+                2006
             ],
             "filename": "User.js",
             "lineno": 78,
@@ -636,8 +638,8 @@
         "comment": "/**\n     * The username of the user.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                2098,
-                2128
+                2100,
+                2130
             ],
             "filename": "User.js",
             "lineno": 87,
@@ -668,8 +670,8 @@
         "comment": "/**\n     * The global name of the user.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                2225,
-                2261
+                2227,
+                2263
             ],
             "filename": "User.js",
             "lineno": 94,
@@ -700,8 +702,8 @@
         "comment": "/**\n       * The discriminator of the user (only if user is a bot).\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2452,
-                2500
+                2454,
+                2502
             ],
             "filename": "User.js",
             "lineno": 102,
@@ -733,8 +735,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2647,
-                2675
+                2649,
+                2677
             ],
             "filename": "User.js",
             "lineno": 109,
@@ -759,8 +761,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2686,
-                2735
+                2688,
+                2737
             ],
             "filename": "User.js",
             "lineno": 110,
@@ -785,8 +787,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2748,
-                2807
+                2750,
+                2809
             ],
             "filename": "User.js",
             "lineno": 112,
@@ -811,8 +813,8 @@
         "comment": "/**\n   * Overrides the user's avatar with a custom URL.\n   * @param {String} url The URL of the avatar to override the user's avatar with.\n   * @public\n   * @method\n   * @returns {void}\n   */",
         "meta": {
             "range": [
-                3365,
-                3425
+                3367,
+                3427
             ],
             "filename": "User.js",
             "lineno": 135,
@@ -862,8 +864,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3394,
-                3420
+                3396,
+                3422
             ],
             "filename": "User.js",
             "lineno": 136,
@@ -888,8 +890,8 @@
         "comment": "/**\n   * The ID of the user.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3514,
-                3558
+                3516,
+                3560
             ],
             "filename": "User.js",
             "lineno": 145,
@@ -924,8 +926,8 @@
         "comment": "/**\n   * The username of the user.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3653,
-                3700
+                3655,
+                3702
             ],
             "filename": "User.js",
             "lineno": 155,
@@ -960,8 +962,8 @@
         "comment": "/**\n   * The global name of the user.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3798,
-                3850
+                3800,
+                3852
             ],
             "filename": "User.js",
             "lineno": 165,
@@ -996,8 +998,8 @@
         "comment": "/**\n   * The discriminator of the user.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3951,
-                4265
+                3953,
+                4267
             ],
             "filename": "User.js",
             "lineno": 175,
@@ -1033,8 +1035,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4024,
-                4076
+                4026,
+                4078
             ],
             "filename": "User.js",
             "lineno": 177,
@@ -1059,8 +1061,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4172,
-                4225
+                4174,
+                4227
             ],
             "filename": "User.js",
             "lineno": 180,
@@ -1086,8 +1088,8 @@
         "comment": "/**\n   * The UNIX (seconds) timestamp when this user was last cached.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4395,
-                4440
+                4397,
+                4442
             ],
             "filename": "User.js",
             "lineno": 190,
@@ -1122,8 +1124,8 @@
         "comment": "/**\n   * The mention string for the user.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4542,
-                4598
+                4544,
+                4600
             ],
             "filename": "User.js",
             "lineno": 200,
@@ -1158,8 +1160,8 @@
         "comment": "/**\n   * The hash of the users's avatar, as it was received from Discord.\n   * @readonly\n   * @type {String?}\n   * @public\n   */",
         "meta": {
             "range": [
-                4733,
-                4922
+                4735,
+                4924
             ],
             "filename": "User.js",
             "lineno": 210,
@@ -1195,8 +1197,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5112,
-                5154
+                5114,
+                5156
             ],
             "filename": "User.js",
             "lineno": 226,
@@ -1221,8 +1223,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5243,
-                5278
+                5245,
+                5280
             ],
             "filename": "User.js",
             "lineno": 230,
@@ -1248,8 +1250,8 @@
         "comment": "/**\n   * The avatar URL of the user.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                5407,
-                5560
+                5409,
+                5562
             ],
             "filename": "User.js",
             "lineno": 241,
@@ -1284,8 +1286,8 @@
         "comment": "/**\n   * The username of the user, including their discriminator if they are a bot (username#0001).\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
-                5720,
-                5840
+                5722,
+                5842
             ],
             "filename": "User.js",
             "lineno": 253,
@@ -1320,8 +1322,8 @@
         "comment": "/**\n   * The UNIX (seconds) timestamp of when this user created their Discord account.\n   * @readonly\n   * @type {Number}\n   * @public\n   */",
         "meta": {
             "range": [
-                5987,
-                6049
+                5989,
+                6051
             ],
             "filename": "User.js",
             "lineno": 265,
@@ -1356,8 +1358,8 @@
         "comment": "/**\n   * Whether the user is a bot or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                6153,
-                6225
+                6155,
+                6227
             ],
             "filename": "User.js",
             "lineno": 275,
@@ -1392,8 +1394,8 @@
         "comment": "/**\n   * Whether the user has an animated avatar or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                6343,
-                6428
+                6345,
+                6430
             ],
             "filename": "User.js",
             "lineno": 285,
@@ -1428,8 +1430,8 @@
         "comment": "/**\n   * Whether the user has an avatar or not.\n   * @readonly\n   * @type {Boolean}\n   * @public\n   */",
         "meta": {
             "range": [
-                6537,
-                6593
+                6539,
+                6595
             ],
             "filename": "User.js",
             "lineno": 295,
@@ -1464,8 +1466,8 @@
         "comment": "/**\n   * Returns a mention string for the user.\n   * @param {String} id The ID of the user to mention.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6770,
-                6915
+                6772,
+                6917
             ],
             "filename": "User.js",
             "lineno": 307,
@@ -1515,8 +1517,8 @@
         "comment": "/**\n   * Returns the URL to the user's avatar.\n   * @param {String} id The ID of the user to get the avatar for.\n   * @param {String?} [hash] The hash of the avatar.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                7155,
-                7651
+                7157,
+                7653
             ],
             "filename": "User.js",
             "lineno": 322,
@@ -1578,8 +1580,8 @@
         "comment": "/**\n   * Determines whether the user should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                7948,
-                8232
+                7950,
+                8234
             ],
             "filename": "User.js",
             "lineno": 344,
@@ -1638,8 +1640,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                8274,
-                8323
+                8276,
+                8325
             ],
             "filename": "User.js",
             "lineno": 357,
@@ -1667,8 +1669,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                8365,
-                8422
+                8367,
+                8424
             ],
             "filename": "User.js",
             "lineno": 365,
@@ -1696,8 +1698,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                8607,
-                9339
+                8609,
+                9341
             ],
             "filename": "User.js",
             "lineno": 376,
@@ -1748,8 +1750,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8719,
-                8730
+                8721,
+                8732
             ],
             "filename": "User.js",
             "lineno": 380,
@@ -1772,8 +1774,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8742,
-                8774
+                8744,
+                8776
             ],
             "filename": "User.js",
             "lineno": 381,
@@ -1796,8 +1798,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8786,
-                8807
+                8788,
+                8809
             ],
             "filename": "User.js",
             "lineno": 382,
@@ -1820,8 +1822,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8819,
-                8832
+                8821,
+                8834
             ],
             "filename": "User.js",
             "lineno": 383,
@@ -1844,8 +1846,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8844,
-                8867
+                8846,
+                8869
             ],
             "filename": "User.js",
             "lineno": 384,
@@ -1868,8 +1870,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8879,
-                8907
+                8881,
+                8909
             ],
             "filename": "User.js",
             "lineno": 385,
@@ -1892,8 +1894,8 @@
         "comment": "",
         "meta": {
             "range": [
-                8919,
-                8952
+                8921,
+                8954
             ],
             "filename": "User.js",
             "lineno": 386,
@@ -1916,8 +1918,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9109,
-                9120
+                9111,
+                9122
             ],
             "filename": "User.js",
             "lineno": 393,
@@ -1940,8 +1942,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9132,
-                9164
+                9134,
+                9166
             ],
             "filename": "User.js",
             "lineno": 394,
@@ -1964,8 +1966,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9176,
-                9189
+                9178,
+                9191
             ],
             "filename": "User.js",
             "lineno": 395,
@@ -1988,8 +1990,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9201,
-                9224
+                9203,
+                9226
             ],
             "filename": "User.js",
             "lineno": 396,
@@ -2012,8 +2014,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9236,
-                9264
+                9238,
+                9266
             ],
             "filename": "User.js",
             "lineno": 397,
@@ -2036,8 +2038,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9276,
-                9309
+                9278,
+                9311
             ],
             "filename": "User.js",
             "lineno": 398,
@@ -2060,8 +2062,8 @@
         "comment": "",
         "meta": {
             "range": [
-                9343,
-                9363
+                9345,
+                9365
             ],
             "filename": "User.js",
             "lineno": 405,

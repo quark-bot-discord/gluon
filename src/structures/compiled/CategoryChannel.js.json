@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 231,
-                5734
+                5737
             ],
             "filename": "CategoryChannel.js",
             "lineno": 7,
@@ -203,11 +203,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a category channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this channel belongs to.\n   * @param {Boolean} options.nocache Whether this channel should be cached or not.\n   */",
+        "comment": "/**\n   * Creates the structure for a category channel.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw channel data.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this channel belongs to.\n   * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.\n   */",
         "meta": {
             "range": [
-                754,
-                3574
+                757,
+                3577
             ],
             "filename": "CategoryChannel.js",
             "lineno": 23,
@@ -271,6 +271,8 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
+                "nullable": true,
                 "description": "Whether this channel should be cached or not.",
                 "name": "options.nocache"
             }
@@ -284,8 +286,8 @@
         "comment": "",
         "meta": {
             "range": [
-                782,
-                789
+                785,
+                792
             ],
             "filename": "CategoryChannel.js",
             "lineno": 23,
@@ -308,8 +310,8 @@
         "comment": "",
         "meta": {
             "range": [
-                791,
-                806
+                794,
+                809
             ],
             "filename": "CategoryChannel.js",
             "lineno": 23,
@@ -332,8 +334,8 @@
         "comment": "",
         "meta": {
             "range": [
-                813,
-                827
+                816,
+                830
             ],
             "filename": "CategoryChannel.js",
             "lineno": 23,
@@ -356,8 +358,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1327,
-                1349
+                1330,
+                1352
             ],
             "filename": "CategoryChannel.js",
             "lineno": 38,
@@ -388,8 +390,8 @@
         "comment": "/**\n     * The id of the channel.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1440,
-                1467
+                1443,
+                1470
             ],
             "filename": "CategoryChannel.js",
             "lineno": 45,
@@ -420,8 +422,8 @@
         "comment": "/**\n     * The ID of the guild that this channel belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1585,
-                1618
+                1588,
+                1621
             ],
             "filename": "CategoryChannel.js",
             "lineno": 52,
@@ -452,8 +454,8 @@
         "comment": "/**\n     * The type of channel.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                1707,
-                1729
+                1710,
+                1732
             ],
             "filename": "CategoryChannel.js",
             "lineno": 59,
@@ -484,8 +486,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1742,
-                1794
+                1745,
+                1797
             ],
             "filename": "CategoryChannel.js",
             "lineno": 61,
@@ -510,8 +512,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1921,
-                1943
+                1924,
+                1946
             ],
             "filename": "CategoryChannel.js",
             "lineno": 68,
@@ -536,8 +538,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2066,
-                2092
+                2069,
+                2095
             ],
             "filename": "CategoryChannel.js",
             "lineno": 74,
@@ -562,8 +564,8 @@
         "comment": "/**\n     * The attributes of the channel.\n     * @type {Number}\n     * @private\n     */",
         "meta": {
             "range": [
-                2191,
-                2232
+                2194,
+                2235
             ],
             "filename": "CategoryChannel.js",
             "lineno": 81,
@@ -594,8 +596,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2295,
-                2324
+                2298,
+                2327
             ],
             "filename": "CategoryChannel.js",
             "lineno": 84,
@@ -620,8 +622,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2407,
-                2436
+                2410,
+                2439
             ],
             "filename": "CategoryChannel.js",
             "lineno": 86,
@@ -646,8 +648,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2729,
-                2856
+                2732,
+                2859
             ],
             "filename": "CategoryChannel.js",
             "lineno": 95,
@@ -672,8 +674,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2990,
-                3049
+                2993,
+                3052
             ],
             "filename": "CategoryChannel.js",
             "lineno": 103,
@@ -698,8 +700,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3062,
-                3169
+                3065,
+                3172
             ],
             "filename": "CategoryChannel.js",
             "lineno": 105,
@@ -724,8 +726,8 @@
         "comment": "/**\n   * The ID of the channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3666,
-                3710
+                3669,
+                3713
             ],
             "filename": "CategoryChannel.js",
             "lineno": 130,
@@ -760,8 +762,8 @@
         "comment": "/**\n   * The ID of the guild that this channel belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3829,
-                3884
+                3832,
+                3887
             ],
             "filename": "CategoryChannel.js",
             "lineno": 140,
@@ -796,8 +798,8 @@
         "comment": "/**\n   * The guild that this channel belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3993,
-                4069
+                3996,
+                4072
             ],
             "filename": "CategoryChannel.js",
             "lineno": 150,
@@ -833,8 +835,8 @@
         "comment": "/**\n   * The name of the channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4163,
-                4202
+                4166,
+                4205
             ],
             "filename": "CategoryChannel.js",
             "lineno": 160,
@@ -869,8 +871,8 @@
         "comment": "/**\n   * The type of channel.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4292,
-                4331
+                4295,
+                4334
             ],
             "filename": "CategoryChannel.js",
             "lineno": 170,
@@ -905,8 +907,8 @@
         "comment": "/**\n   * The permission overwrites for the channel.\n   * @type {Array<PermissionOverwrite>}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4463,
-                4535
+                4466,
+                4538
             ],
             "filename": "CategoryChannel.js",
             "lineno": 180,
@@ -941,8 +943,8 @@
         "comment": "/**\n   * Whether the channel is nsfw.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4634,
-                4707
+                4637,
+                4710
             ],
             "filename": "CategoryChannel.js",
             "lineno": 190,
@@ -977,8 +979,8 @@
         "comment": "/**\n   * The mention string of the channel.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4811,
-                4858
+                4814,
+                4861
             ],
             "filename": "CategoryChannel.js",
             "lineno": 200,
@@ -1013,8 +1015,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4900,
-                4960
+                4903,
+                4963
             ],
             "filename": "CategoryChannel.js",
             "lineno": 208,
@@ -1042,8 +1044,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                5002,
-                5059
+                5005,
+                5062
             ],
             "filename": "CategoryChannel.js",
             "lineno": 216,
@@ -1071,8 +1073,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                5244,
-                5732
+                5247,
+                5735
             ],
             "filename": "CategoryChannel.js",
             "lineno": 227,
@@ -1123,8 +1125,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5463,
-                5474
+                5466,
+                5477
             ],
             "filename": "CategoryChannel.js",
             "lineno": 234,
@@ -1147,8 +1149,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5486,
-                5508
+                5489,
+                5511
             ],
             "filename": "CategoryChannel.js",
             "lineno": 235,
@@ -1171,8 +1173,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5520,
-                5535
+                5523,
+                5538
             ],
             "filename": "CategoryChannel.js",
             "lineno": 236,
@@ -1195,8 +1197,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5547,
-                5562
+                5550,
+                5565
             ],
             "filename": "CategoryChannel.js",
             "lineno": 237,
@@ -1219,8 +1221,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5574,
-                5589
+                5577,
+                5592
             ],
             "filename": "CategoryChannel.js",
             "lineno": 238,
@@ -1243,8 +1245,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5601,
-                5702
+                5604,
+                5705
             ],
             "filename": "CategoryChannel.js",
             "lineno": 239,
@@ -1267,8 +1269,8 @@
         "comment": "",
         "meta": {
             "range": [
-                5736,
-                5767
+                5739,
+                5770
             ],
             "filename": "CategoryChannel.js",
             "lineno": 248,

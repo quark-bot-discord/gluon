@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 359,
-                7904
+                7906
             ],
             "filename": "Invite.js",
             "lineno": 15,
@@ -229,11 +229,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for an invite.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw invite data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the invite belongs to.\n   * @param {Boolean?} options.nocache Whether this invite should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}\n   */",
+        "comment": "/**\n   * Creates the structure for an invite.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw invite data from Discord.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The id of the guild that the invite belongs to.\n   * @param {Boolean?} [options.nocache] Whether this invite should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}\n   */",
         "meta": {
             "range": [
-                976,
-                3761
+                978,
+                3763
             ],
             "filename": "Invite.js",
             "lineno": 33,
@@ -297,6 +297,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this invite should be cached or not.",
                 "name": "options.nocache"
@@ -316,7 +317,7 @@
         "meta": {
             "range": [
                 359,
-                7904
+                7906
             ],
             "filename": "Invite.js",
             "lineno": 15,
@@ -385,6 +386,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this invite should be cached or not.",
                 "name": "options.nocache"
@@ -395,8 +397,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1004,
-                1011
+                1006,
+                1013
             ],
             "filename": "Invite.js",
             "lineno": 33,
@@ -419,8 +421,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1013,
-                1028
+                1015,
+                1030
             ],
             "filename": "Invite.js",
             "lineno": 33,
@@ -443,8 +445,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1035,
-                1049
+                1037,
+                1051
             ],
             "filename": "Invite.js",
             "lineno": 33,
@@ -467,8 +469,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1549,
-                1571
+                1551,
+                1573
             ],
             "filename": "Invite.js",
             "lineno": 48,
@@ -499,8 +501,8 @@
         "comment": "/**\n     * The id of the guild that this role belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1686,
-                1719
+                1688,
+                1721
             ],
             "filename": "Invite.js",
             "lineno": 55,
@@ -531,8 +533,8 @@
         "comment": "/**\n     * The code for the invite.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                1812,
-                1835
+                1814,
+                1837
             ],
             "filename": "Invite.js",
             "lineno": 62,
@@ -563,8 +565,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1974,
-                2017
+                1976,
+                2019
             ],
             "filename": "Invite.js",
             "lineno": 69,
@@ -589,8 +591,8 @@
         "comment": "/**\n       * The user who created the invite.\n       * @type {User?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2151,
-                2217
+                2153,
+                2219
             ],
             "filename": "Invite.js",
             "lineno": 77,
@@ -622,8 +624,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2207,
-                2214
+                2209,
+                2216
             ],
             "filename": "Invite.js",
             "lineno": 77,
@@ -646,8 +648,8 @@
         "comment": "/**\n       * The number of times the invite has been used.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2382,
-                2404
+                2384,
+                2406
             ],
             "filename": "Invite.js",
             "lineno": 85,
@@ -679,8 +681,8 @@
         "comment": "/**\n       * The UNIX timestamp of when the invite expires.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2557,
-                2621
+                2559,
+                2623
             ],
             "filename": "Invite.js",
             "lineno": 93,
@@ -712,8 +714,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2675,
-                2710
+                2677,
+                2712
             ],
             "filename": "Invite.js",
             "lineno": 95,
@@ -738,8 +740,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2828,
-                2917
+                2830,
+                2919
             ],
             "filename": "Invite.js",
             "lineno": 101,
@@ -764,8 +766,8 @@
         "comment": "/**\n       * The maximum number of uses allowed for the invite.\n       * @type {Number?}\n       * @private\n       */",
         "meta": {
             "range": [
-                3091,
-                3121
+                3093,
+                3123
             ],
             "filename": "Invite.js",
             "lineno": 110,
@@ -797,8 +799,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3134,
-                3240
+                3136,
+                3242
             ],
             "filename": "Invite.js",
             "lineno": 112,
@@ -823,8 +825,8 @@
         "comment": "",
         "meta": {
             "range": [
-                3253,
-                3342
+                3255,
+                3344
             ],
             "filename": "Invite.js",
             "lineno": 117,
@@ -849,8 +851,8 @@
         "comment": "/**\n   * The id of the channel the invite is directed to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3879,
-                3938
+                3881,
+                3940
             ],
             "filename": "Invite.js",
             "lineno": 140,
@@ -885,8 +887,8 @@
         "comment": "/**\n   * The channel the invite is directed to.\n   * @type {(TextChannel | VoiceChannel)?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4069,
-                4148
+                4071,
+                4150
             ],
             "filename": "Invite.js",
             "lineno": 150,
@@ -923,8 +925,8 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4241,
-                4277
+                4243,
+                4279
             ],
             "filename": "Invite.js",
             "lineno": 160,
@@ -959,8 +961,8 @@
         "comment": "/**\n   * The code of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4370,
-                4410
+                4372,
+                4412
             ],
             "filename": "Invite.js",
             "lineno": 170,
@@ -995,8 +997,8 @@
         "comment": "/**\n   * The id of the guild that this invite belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4528,
-                4583
+                4530,
+                4585
             ],
             "filename": "Invite.js",
             "lineno": 180,
@@ -1031,8 +1033,8 @@
         "comment": "/**\n   * The guild that this role belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4689,
-                4765
+                4691,
+                4767
             ],
             "filename": "Invite.js",
             "lineno": 190,
@@ -1068,8 +1070,8 @@
         "comment": "/**\n   * The number of times the invite has been used.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                4881,
-                4920
+                4883,
+                4922
             ],
             "filename": "Invite.js",
             "lineno": 200,
@@ -1105,8 +1107,8 @@
         "comment": "/**\n   * The UNIX timestamp of when the invite expires.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5037,
-                5082
+                5039,
+                5084
             ],
             "filename": "Invite.js",
             "lineno": 210,
@@ -1142,8 +1144,8 @@
         "comment": "/**\n   * The user who created the invite.\n   * @type {User?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5183,
-                5228
+                5185,
+                5230
             ],
             "filename": "Invite.js",
             "lineno": 220,
@@ -1179,8 +1181,8 @@
         "comment": "/**\n   * The URL of the invite.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5320,
-                5372
+                5322,
+                5374
             ],
             "filename": "Invite.js",
             "lineno": 230,
@@ -1215,8 +1217,8 @@
         "comment": "/**\n   * The maximum number of uses allowed for the invite.\n   * @type {Number?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                5493,
-                5539
+                5495,
+                5541
             ],
             "filename": "Invite.js",
             "lineno": 240,
@@ -1252,8 +1254,8 @@
         "comment": "/**\n   * Returns the URL of the invite.\n   * @param {String} code The code of the invite.\n   * @returns {String}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                5703,
-                5860
+                5705,
+                5862
             ],
             "filename": "Invite.js",
             "lineno": 252,
@@ -1303,8 +1305,8 @@
         "comment": "/**\n   * Determines whether the invite should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   */",
         "meta": {
             "range": [
-                6159,
-                6691
+                6161,
+                6693
             ],
             "filename": "Invite.js",
             "lineno": 267,
@@ -1364,8 +1366,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                6733,
-                6786
+                6735,
+                6788
             ],
             "filename": "Invite.js",
             "lineno": 285,
@@ -1393,8 +1395,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                6828,
-                6885
+                6830,
+                6887
             ],
             "filename": "Invite.js",
             "lineno": 293,
@@ -1422,8 +1424,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                7070,
-                7902
+                7072,
+                7904
             ],
             "filename": "Invite.js",
             "lineno": 304,
@@ -1474,8 +1476,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7228,
-                7243
+                7230,
+                7245
             ],
             "filename": "Invite.js",
             "lineno": 309,
@@ -1498,8 +1500,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7255,
-                7292
+                7257,
+                7294
             ],
             "filename": "Invite.js",
             "lineno": 310,
@@ -1522,8 +1524,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7304,
-                7341
+                7306,
+                7343
             ],
             "filename": "Invite.js",
             "lineno": 311,
@@ -1546,8 +1548,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7353,
-                7368
+                7355,
+                7370
             ],
             "filename": "Invite.js",
             "lineno": 312,
@@ -1570,8 +1572,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7380,
-                7435
+                7382,
+                7437
             ],
             "filename": "Invite.js",
             "lineno": 313,
@@ -1594,8 +1596,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7447,
-                7469
+                7449,
+                7471
             ],
             "filename": "Invite.js",
             "lineno": 314,
@@ -1618,8 +1620,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7580,
-                7595
+                7582,
+                7597
             ],
             "filename": "Invite.js",
             "lineno": 320,
@@ -1642,8 +1644,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7607,
-                7644
+                7609,
+                7646
             ],
             "filename": "Invite.js",
             "lineno": 321,
@@ -1666,8 +1668,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7656,
-                7693
+                7658,
+                7695
             ],
             "filename": "Invite.js",
             "lineno": 322,
@@ -1690,8 +1692,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7705,
-                7720
+                7707,
+                7722
             ],
             "filename": "Invite.js",
             "lineno": 323,
@@ -1714,8 +1716,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7732,
-                7838
+                7734,
+                7840
             ],
             "filename": "Invite.js",
             "lineno": 324,
@@ -1738,8 +1740,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7850,
-                7872
+                7852,
+                7874
             ],
             "filename": "Invite.js",
             "lineno": 327,
@@ -1762,8 +1764,8 @@
         "comment": "",
         "meta": {
             "range": [
-                7906,
-                7928
+                7908,
+                7930
             ],
             "filename": "Invite.js",
             "lineno": 334,

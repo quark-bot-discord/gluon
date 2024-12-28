@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 480,
-                4861
+                4863
             ],
             "filename": "Thread.js",
             "lineno": 13,
@@ -110,11 +110,11 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this thread belongs to.\n   * @param {Boolean?} options.nocache Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
+        "comment": "/**\n   * Creates the structure for a thread.\n   * @param {Client} client The client instance.\n   * @param {Object} data Raw channel data.\n   * @param {Object} options Additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this thread belongs to.\n   * @param {Boolean?} [options.nocache] Whether this thread should be cached or not.\n   * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}\n   */",
         "meta": {
             "range": [
-                1048,
-                2546
+                1050,
+                2548
             ],
             "filename": "Thread.js",
             "lineno": 26,
@@ -178,6 +178,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this thread should be cached or not.",
                 "name": "options.nocache"
@@ -197,7 +198,7 @@
         "meta": {
             "range": [
                 480,
-                4861
+                4863
             ],
             "filename": "Thread.js",
             "lineno": 13,
@@ -269,6 +270,7 @@
                         "Boolean"
                     ]
                 },
+                "optional": true,
                 "nullable": true,
                 "description": "Whether this thread should be cached or not.",
                 "name": "options.nocache"
@@ -279,8 +281,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1076,
-                1083
+                1078,
+                1085
             ],
             "filename": "Thread.js",
             "lineno": 26,
@@ -303,8 +305,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1085,
-                1100
+                1087,
+                1102
             ],
             "filename": "Thread.js",
             "lineno": 26,
@@ -327,8 +329,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1107,
-                1121
+                1109,
+                1123
             ],
             "filename": "Thread.js",
             "lineno": 26,
@@ -351,8 +353,8 @@
         "comment": "",
         "meta": {
             "range": [
-                1153,
-                1160
+                1155,
+                1162
             ],
             "filename": "Thread.js",
             "lineno": 27,
@@ -375,8 +377,8 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1660,
-                1682
+                1662,
+                1684
             ],
             "filename": "Thread.js",
             "lineno": 43,
@@ -407,8 +409,8 @@
         "comment": "/**\n     * The ID of the user who created this thread.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1794,
-                1833
+                1796,
+                1835
             ],
             "filename": "Thread.js",
             "lineno": 50,
@@ -439,8 +441,8 @@
         "comment": "/**\n     * The ID of the text channel that this thread belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1957,
-                1998
+                1959,
+                2000
             ],
             "filename": "Thread.js",
             "lineno": 57,
@@ -471,8 +473,8 @@
         "comment": "",
         "meta": {
             "range": [
-                2011,
-                2117
+                2013,
+                2119
             ],
             "filename": "Thread.js",
             "lineno": 59,
@@ -497,8 +499,8 @@
         "comment": "/**\n   * The ID of the member who created this thread.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2661,
-                2716
+                2663,
+                2718
             ],
             "filename": "Thread.js",
             "lineno": 84,
@@ -533,8 +535,8 @@
         "comment": "/**\n   * The member who created this thread.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2822,
-                2897
+                2824,
+                2899
             ],
             "filename": "Thread.js",
             "lineno": 94,
@@ -570,8 +572,8 @@
         "comment": "/**\n   * The ID of the text channel that this thread belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3022,
-                3079
+                3024,
+                3081
             ],
             "filename": "Thread.js",
             "lineno": 104,
@@ -606,8 +608,8 @@
         "comment": "/**\n   * The text channel that this thread belongs to.\n   * @type {TextChannel?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3200,
-                3278
+                3202,
+                3280
             ],
             "filename": "Thread.js",
             "lineno": 114,
@@ -643,8 +645,8 @@
         "comment": "/**\n   * Determines whether the thread should be cached.\n   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.\n   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.\n   * @returns {Boolean}\n   * @public\n   * @static\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                3592,
-                4125
+                3594,
+                4127
             ],
             "filename": "Thread.js",
             "lineno": 128,
@@ -705,8 +707,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4167,
-                4218
+                4169,
+                4220
             ],
             "filename": "Thread.js",
             "lineno": 146,
@@ -734,8 +736,8 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                4260,
-                4317
+                4262,
+                4319
             ],
             "filename": "Thread.js",
             "lineno": 154,
@@ -763,8 +765,8 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   * @override\n   */",
         "meta": {
             "range": [
-                4517,
-                4859
+                4519,
+                4861
             ],
             "filename": "Thread.js",
             "lineno": 166,
@@ -816,8 +818,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4771,
-                4793
+                4773,
+                4795
             ],
             "filename": "Thread.js",
             "lineno": 174,
@@ -840,8 +842,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4805,
-                4829
+                4807,
+                4831
             ],
             "filename": "Thread.js",
             "lineno": 175,
@@ -864,8 +866,8 @@
         "comment": "",
         "meta": {
             "range": [
-                4863,
-                4885
+                4865,
+                4887
             ],
             "filename": "Thread.js",
             "lineno": 182,
