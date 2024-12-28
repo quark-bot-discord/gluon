@@ -24,7 +24,7 @@ class Emoji {
    * @param {Object} data The raw emoji data from Discord.
    * @param {Object} options The options for this emoji.
    * @param {String} options.guildId The id of the guild that the emoji belongs to.
-   * @param {Boolean?} options.nocache Whether this emoji should be cached or not.
+   * @param {Boolean?} [options.nocache] Whether this emoji should be cached or not.
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     if (!(client instanceof Client))

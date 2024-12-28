@@ -27,7 +27,7 @@ class Invite {
    * @param {Object} data The raw invite data from Discord.
    * @param {Object} options Additional options for this structure.
    * @param {String} options.guildId The id of the guild that the invite belongs to.
-   * @param {Boolean?} options.nocache Whether this invite should be cached or not.
+   * @param {Boolean?} [options.nocache] Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {

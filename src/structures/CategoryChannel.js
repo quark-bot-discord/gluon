@@ -18,7 +18,7 @@ class CategoryChannel {
    * @param {Object} data The raw channel data.
    * @param {Object} options The additional options for this structure.
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
-   * @param {Boolean} options.nocache Whether this channel should be cached or not.
+   * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    */
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     if (!(client instanceof Client))

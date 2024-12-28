@@ -62,7 +62,7 @@ class Guild {
    * @param {Client} client The client instance.
    * @param {Object} data Raw guild data.
    * @param {Object?} options The additional options for this structure.
-   * @param {Boolean?} options.nocache Whether this guild should be cached or not.
+   * @param {Boolean?} [options.nocache] Whether this guild should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
    */
   constructor(client, data, { nocache = false } = { nocache: false }) {

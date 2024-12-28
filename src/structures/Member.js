@@ -41,8 +41,8 @@ class Member {
    * @param {Object} options Additional options for the member.
    * @param {String} options.userId The id of the member.
    * @param {String} options.guildId The id of the guild that the member belongs to.
-   * @param {User?} options.user A user object for this member.
-   * @param {Boolean?} options.nocache Whether this member should be cached.
+   * @param {User?} [options.user] A user object for this member.
+   * @param {Boolean?} [options.nocache] Whether this member should be cached.
    */
   constructor(
     client,
