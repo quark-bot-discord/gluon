@@ -4,6 +4,7 @@ class FileUpload {
   #name;
   #stream;
   #path;
+  #size;
   /**
    * The name of the file.
    * @param {String} name The name of the file.
@@ -46,6 +47,19 @@ class FileUpload {
   }
 
   /**
+   * The size of the file.
+   * @param {Number} size The size of the file.
+   * @returns {FileUpload}
+   */
+  setSize(size) {
+    if (!size) throw new TypeError("GLUON: File size must be provided.");
+    if (typeof size !== "number")
+      throw new TypeError("GLUON: File size must be a number.");
+    this.#size = size;
+    return this;
+  }
+
+  /**
    * The name of the file.
    * @type {String}
    * @readonly
@@ -72,6 +86,15 @@ class FileUpload {
     return this.#path;
   }
 
+  /**
+   * The size of the file.
+   * @type {Number}
+   * @readonly
+   */
+  get size() {
+    return this.#size;
+  }
+
   toJSON(
     format,
     { suppressValidation = false } = { suppressValidation: false },
@@ -82,6 +105,10 @@ class FileUpload {
       if (!this.#stream && !this.#path)
         throw new TypeError("GLUON: File stream or path must be provided.");
     }
+    const commonProperties = {
+      name: this.#name,
+      size: this.#size,
+    };
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -89,12 +116,12 @@ class FileUpload {
       default: {
         if (this.#stream)
           return {
-            name: this.#name,
+            ...commonProperties,
             stream: this.#stream,
           };
         else
           return {
-            name: this.#name,
+            ...commonProperties,
             attachment: this.#path,
           };
       }
