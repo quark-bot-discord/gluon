@@ -19,6 +19,12 @@ declare class FileUpload {
      */
     setPath(path: string): FileUpload;
     /**
+     * The size of the file.
+     * @param {Number} size The size of the file.
+     * @returns {FileUpload}
+     */
+    setSize(size: number): FileUpload;
+    /**
      * The name of the file.
      * @type {String}
      * @readonly
@@ -36,16 +42,22 @@ declare class FileUpload {
      * @readonly
      */
     readonly get attachment(): string;
+    /**
+     * The size of the file.
+     * @type {Number}
+     * @readonly
+     */
+    readonly get size(): number;
     toJSON(format: any, { suppressValidation }?: {
         suppressValidation?: false;
     }): {
-        name: any;
         stream: any;
-        attachment?: undefined;
-    } | {
         name: any;
+        size: any;
+    } | {
         attachment: any;
-        stream?: undefined;
+        name: any;
+        size: any;
     };
     #private;
 }
