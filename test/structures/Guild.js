@@ -949,13 +949,13 @@ describe("Guild", function () {
         "GLUON: VALUE_OUT_OF_RANGE: limit",
       );
     });
-    it("should throw an error if type is provided but it is not a number", async function () {
+    it("should throw an error if type is provided but it is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       TEST_MEMBERS.CLIENT_MEMBER(client);
-      await expect(guild.fetchAuditLogs({ type: "123" })).to.be.rejectedWith(
+      await expect(guild.fetchAuditLogs({ type: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: INVALID_TYPE: type",
       );
@@ -1010,7 +1010,7 @@ describe("Guild", function () {
       await expect(
         guild.fetchAuditLogs({
           limit: 1,
-          type: 1,
+          type: "MEMBER_UPDATE",
           user_id: TEST_DATA.CLIENT_MEMBER.user.id,
           before: "123",
           after: "123",
