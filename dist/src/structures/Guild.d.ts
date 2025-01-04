@@ -465,7 +465,7 @@ declare class Guild {
      * Fetches audit logs.
      * @param {Object?} [options] Audit log fetch options.
      * @param {Number?} [options.limit] The number of entries to fetch.
-     * @param {Number?} [options.type] The type of audit log to fetch.
+     * @param {String?} [options.type] The type of audit log to fetch.
      * @param {String?} [options.user_id] The id of the user to fetch the audit log for.
      * @param {String?} [options.before] The id of the audit log entry to fetch before.
      * @param {String?} [options.after] The id of the audit log entry to fetch after

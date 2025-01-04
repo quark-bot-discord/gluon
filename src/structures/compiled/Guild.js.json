@@ -5649,7 +5649,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n   * Fetches audit logs.\n   * @param {Object?} [options] Audit log fetch options.\n   * @param {Number?} [options.limit] The number of entries to fetch.\n   * @param {Number?} [options.type] The type of audit log to fetch.\n   * @param {String?} [options.user_id] The id of the user to fetch the audit log for.\n   * @param {String?} [options.before] The id of the audit log entry to fetch before.\n   * @param {String?} [options.after] The id of the audit log entry to fetch after\n   * @returns {Promise<AuditLog[]?>}\n   * @async\n   * @public\n   * @method\n   * @throws {Error | TypeError}\n   */",
+        "comment": "/**\n   * Fetches audit logs.\n   * @param {Object?} [options] Audit log fetch options.\n   * @param {Number?} [options.limit] The number of entries to fetch.\n   * @param {String?} [options.type] The type of audit log to fetch.\n   * @param {String?} [options.user_id] The id of the user to fetch the audit log for.\n   * @param {String?} [options.before] The id of the audit log entry to fetch before.\n   * @param {String?} [options.after] The id of the audit log entry to fetch after\n   * @returns {Promise<AuditLog[]?>}\n   * @async\n   * @public\n   * @method\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
                 33666,
@@ -5698,7 +5698,7 @@
             {
                 "type": {
                     "names": [
-                        "Number"
+                        "String"
                     ]
                 },
                 "optional": true,
