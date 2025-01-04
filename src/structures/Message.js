@@ -825,19 +825,29 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  edit({
-    components,
-    files,
-    content = this.content,
-    embeds = this.embeds,
-    attachments = this.attachments,
-    flags = this.flagsRaw,
-    reference = {
-      message_id: this.reference.messageId,
-      channel_id: this.channelId,
-      guild_id: this.guildId,
+  edit(
+    {
+      components,
+      files,
+      content = this.content,
+      embeds = this.embeds,
+      attachments = this.attachments,
+      flags = this.flagsRaw,
+      reference = {
+        message_id: this.reference.messageId,
+        channel_id: this.channelId,
+        guild_id: this.guildId,
+      },
+    } = {
+      components: null,
+      files: null,
+      content: null,
+      embeds: null,
+      attachments: null,
+      flags: null,
+      reference: null,
     },
-  }) {
+  ) {
     return Message.edit(this.#_client, this.channelId, this.id, this.guildId, {
       content,
       components,
