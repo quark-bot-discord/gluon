@@ -787,7 +787,7 @@ class EventHandler {
     if (oldEmojis.size < data.emojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
-      const oldIds = Array.from(oldEmojis.keys());
+      const oldIds = oldEmojis.toJSON().map((e) => e.id);
 
       for (let i = 0; i < data.emojis.length; i++) {
         let matchingFound = false;
@@ -812,7 +812,7 @@ class EventHandler {
     } else if (oldEmojis.size > data.emojis.length) {
       // EMOJI DELETED
       let deletedId;
-      const oldIds = Array.from(oldEmojis.keys());
+      const oldIds = oldEmojis.toJSON().map((e) => e.id);
 
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
@@ -836,7 +836,7 @@ class EventHandler {
       this.#_client.emit(EVENTS.GUILD_EMOJI_DELETE, deletedEmoji);
     } else {
       // EMOJI UPDATED
-      const oldEmojisArray = Array.from(oldEmojis.values());
+      const oldEmojisArray = oldEmojis.toJSON();
 
       let newEmoji;
       let oldEmoji;
