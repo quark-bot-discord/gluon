@@ -783,23 +783,26 @@ class EventHandler {
     );
 
     const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis;
+    const newEmojis = data.emojis.map(
+      (emoji) => new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
+    );
 
-    if (oldEmojis.size < data.emojis.length) {
+    if (oldEmojis.size < newEmojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
       const oldIds = oldEmojis.toJSON().map((e) => e.id);
 
-      for (let i = 0; i < data.emojis.length; i++) {
+      for (let i = 0; i < newEmojis.length; i++) {
         let matchingFound = false;
 
         for (let n = 0; n < oldIds.length; n++)
-          if (oldIds[n] == data.emojis[i].id) {
+          if (oldIds[n] == newEmojis[i].id) {
             matchingFound = true;
             break;
           }
 
         if (matchingFound != true) {
-          addedEmojiRaw = data.emojis[i];
+          addedEmojiRaw = newEmojis[i];
           break;
         }
       }
@@ -809,7 +812,7 @@ class EventHandler {
       });
 
       this.#_client.emit(EVENTS.GUILD_EMOJI_CREATE, addedEmoji);
-    } else if (oldEmojis.size > data.emojis.length) {
+    } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
       const oldIds = oldEmojis.toJSON().map((e) => e.id);
@@ -817,8 +820,8 @@ class EventHandler {
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
 
-        for (let n = 0; n < data.emojis.length; n++)
-          if (oldIds[i] == data.emojis[n].id) {
+        for (let n = 0; n < newEmojis.length; n++)
+          if (oldIds[i] == newEmojis[n].id) {
             matchingFound = true;
             break;
           }
@@ -842,7 +845,7 @@ class EventHandler {
       let oldEmoji;
 
       for (let i = 0; i < oldEmojisArray.length; i++) {
-        const correspondingNewEmojiRaw = data.emojis.find(
+        const correspondingNewEmojiRaw = newEmojis.find(
           (e) => e.id == oldEmojisArray[i].id,
         );
         const correspondingNewEmoji = new Emoji(
