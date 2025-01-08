@@ -92,7 +92,7 @@ class EventHandler {
     );
 
     if (
-      this.#_client.guilds.get(data.id)?.unavailable == true &&
+      GuildManager.getGuild(this.#_client, data.id)?.unavailable == true &&
       data.unavailable != true
     ) {
       guild = new Guild(this.#_client, data);
@@ -115,7 +115,7 @@ class EventHandler {
       `GUILD_UPDATE ${data.id}`,
     );
 
-    const oldGuild = this.#_client.guilds.get(data.id);
+    const oldGuild = GuildManager.getGuild(this.#_client, data.id);
     const newGuild = new Guild(this.#_client, data);
 
     this.#_client.emit(EVENTS.GUILD_UPDATE, oldGuild, newGuild);
@@ -128,7 +128,7 @@ class EventHandler {
     );
 
     if (data.unavailable != true) {
-      const guild = this.#_client.guilds.get(data.id);
+      const guild = GuildManager.getGuild(this.#_client, data.id);
 
       this.#_client.guilds.delete(data.id);
 
@@ -738,14 +738,14 @@ class EventHandler {
     const scheduledEvent =
       this.#_client.guilds
         .get(data.guild_id)
-        ?.scheduled_events.get(data.guild_scheduled_event_id) || null;
+        ?.scheduledEvents.get(data.guild_scheduled_event_id) || null;
 
     if (scheduledEvent) {
       scheduledEvent.user_count--;
 
       this.#_client.guilds
         .get(data.guild_id)
-        ?.scheduled_events.set(data.guild_scheduled_event_id, scheduledEvent);
+        ?.scheduledEvents.set(data.guild_scheduled_event_id, scheduledEvent);
     }
 
     const user = this.#_client.users.get(data.user_id) || null;
