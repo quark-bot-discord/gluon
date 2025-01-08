@@ -712,16 +712,17 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      this.#_client.guilds
-        .get(data.guild_id)
-        ?.scheduled_events.get(data.guild_scheduled_event_id) || null;
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+        data.guild_scheduled_event_id,
+      ) || null;
 
     if (scheduledEvent) {
       scheduledEvent.user_count++;
 
-      this.#_client.guilds
-        .get(data.guild_id)
-        ?.scheduled_events.set(data.guild_scheduled_event_id, scheduledEvent);
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
+        data.guild_scheduled_event_id,
+        scheduledEvent,
+      );
     }
 
     const user = this.#_client.users.get(data.user_id) || null;
@@ -736,16 +737,17 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      this.#_client.guilds
-        .get(data.guild_id)
-        ?.scheduledEvents.get(data.guild_scheduled_event_id) || null;
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+        data.guild_scheduled_event_id,
+      ) || null;
 
     if (scheduledEvent) {
       scheduledEvent.user_count--;
 
-      this.#_client.guilds
-        .get(data.guild_id)
-        ?.scheduledEvents.set(data.guild_scheduled_event_id, scheduledEvent);
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
+        data.guild_scheduled_event_id,
+        scheduledEvent,
+      );
     }
 
     const user = this.#_client.users.get(data.user_id) || null;
