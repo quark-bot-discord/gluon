@@ -176,7 +176,9 @@ class EventHandler {
     const role = this.#_client.guilds
       .get(data.guild_id)
       ?.roles.get(data.role_id);
-    this.#_client.guilds.get(data.guild_id)?.roles.delete(data.role_id);
+    GuildManager.getGuild(this.#_client, data.guild_id)?.roles.delete(
+      data.role_id,
+    );
 
     this.#_client.emit(EVENTS.GUILD_ROLE_DELETE, role);
   }
@@ -215,7 +217,9 @@ class EventHandler {
     const channel = this.#_client.guilds
       .get(data.guild_id)
       ?.channels.get(data.id);
-    this.#_client.guilds.get(data.guild_id)?.channels.delete(data.id);
+    GuildManager.getGuild(this.#_client, data.guild_id)?.channels.delete(
+      data.id,
+    );
 
     this.#_client.emit(EVENTS.CHANNEL_DELETE, channel);
   }
@@ -265,7 +269,9 @@ class EventHandler {
     const thread = this.#_client.guilds
       .get(data.guild_id)
       ?.channels.get(data.id);
-    this.#_client.guilds.get(data.guild_id)?.channels.delete(data.id);
+    GuildManager.getGuild(this.#_client, data.guild_id)?.channels.delete(
+      data.id,
+    );
 
     this.#_client.emit(EVENTS.THREAD_DELETE, thread);
   }
@@ -371,7 +377,7 @@ class EventHandler {
     );
 
     const user = new User(this.#_client, data.user);
-    user.guild = this.#_client.guilds.get(data.guild_id) || null;
+    user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
     this.#_client.emit(EVENTS.GUILD_BAN_ADD, user);
@@ -384,7 +390,7 @@ class EventHandler {
     );
 
     const user = new User(this.#_client, data.user);
-    user.guild = this.#_client.guilds.get(data.guild_id) || null;
+    user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
     this.#_client.emit(EVENTS.GUILD_BAN_REMOVE, user);
@@ -407,7 +413,7 @@ class EventHandler {
       `INVITE_DELETE ${data.guild_id}`,
     );
 
-    const guild = this.#_client.guilds.get(data.guild_id);
+    const guild = GuildManager.getGuild(this.#_client, data.guild_id);
 
     const invite = guild?.invites?.get(data.code) || null;
 
@@ -423,8 +429,9 @@ class EventHandler {
     );
 
     const oldVoiceState =
-      this.#_client.guilds.get(data.guild_id)?.voiceStates.get(data.user_id) ||
-      null;
+      GuildManager.getGuild(this.#_client, data.guild_id)?.voiceStates.get(
+        data.user_id,
+      ) || null;
     let newVoiceState;
     if (data.channel_id)
       newVoiceState = new VoiceState(this.#_client, data, {
@@ -432,7 +439,9 @@ class EventHandler {
       });
     else {
       newVoiceState = null;
-      this.#_client.guilds.get(data.guild_id)?.voiceStates.delete(data.user_id);
+      GuildManager.getGuild(this.#_client, data.guild_id)?.voiceStates.delete(
+        data.user_id,
+      );
     }
 
     this.#_client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
@@ -665,8 +674,9 @@ class EventHandler {
     );
 
     const oldScheduledEvent =
-      this.#_client.guilds.get(data.guild_id)?.scheduled_events.get(data.id) ||
-      null;
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+        data.id,
+      ) || null;
     const newScheduledEvent = new ScheduledEvent(this.#_client, data, {
       guildId: data.guild_id,
     });
@@ -685,9 +695,12 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      this.#_client.guilds.get(data.guild_id)?.scheduled_events.get(data.id) ||
-      null;
-    this.#_client.guilds.get(data.guild_id)?.scheduled_events.delete(data.id);
+      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+        data.id,
+      ) || null;
+    GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.delete(
+      data.id,
+    );
 
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }
@@ -782,7 +795,10 @@ class EventHandler {
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
-    const oldEmojis = this.#_client.guilds.get(data.guild_id)?.emojis;
+    const oldEmojis = GuildManager.getGuild(
+      this.#_client,
+      data.guild_id,
+    )?.emojis;
     const newEmojis = data.emojis.map(
       (emoji) => new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
     );
@@ -834,7 +850,9 @@ class EventHandler {
 
       const deletedEmoji = oldEmojis.get(deletedId);
 
-      this.#_client.guilds.get(data.guild_id)?.emojis.delete(deletedId);
+      GuildManager.getGuild(this.#_client, data.guild_id)?.emojis.delete(
+        deletedId,
+      );
 
       this.#_client.emit(EVENTS.GUILD_EMOJI_DELETE, deletedEmoji);
     } else {
