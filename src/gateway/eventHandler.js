@@ -324,10 +324,12 @@ class EventHandler {
       );
       if (member) guild?.members.delete(data.user.id);
       else {
-        member = new User(this.#_client, data.user, { nocache: true });
-        member.user = member;
-        member.guild = guild || null;
-        if (!member.guild) member.guildId = data.guild_id;
+        const user = new User(this.#_client, data.user, { nocache: true });
+        member = new Member(
+          this.#_client,
+          {},
+          { userId: data.user.id, guildId: data.guild_id, user, nocache: true },
+        );
       }
 
       member.guild._decrementMemberCount();
