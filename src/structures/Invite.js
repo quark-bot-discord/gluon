@@ -67,6 +67,7 @@ class Invite {
      * @private
      */
     if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
+    else if (data.channel_id) this.#_channel_id = BigInt(data.channel_id);
 
     if (data.inviter)
       /**
