@@ -36,6 +36,7 @@ export namespace EVENTS {
     let GUILD_UPDATE: string;
     let MESSAGE_CREATE: string;
     let MESSAGE_UPDATE: string;
+    let MESSAGE_EDIT: string;
     let MESSAGE_DELETE: string;
     let MESSAGE_DELETE_BULK: string;
     let GUILD_AUDIT_LOG_ENTRY_CREATE: string;
