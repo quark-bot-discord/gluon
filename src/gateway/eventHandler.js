@@ -421,7 +421,12 @@ class EventHandler {
 
     guild?.invites?.delete(data.code);
 
-    this.#_client.emit(EVENTS.INVITE_DELETE, data, invite);
+    const partialInvite = new Invite(this.#_client, data, {
+      guildId: data.guild_id,
+      nocache: true,
+    });
+
+    this.#_client.emit(EVENTS.INVITE_DELETE, partialInvite, invite);
   }
 
   VOICE_STATE_UPDATE(data) {
