@@ -498,9 +498,11 @@ class EventHandler {
       if (
         !newMessage.editedTimestamp ||
         newMessage.editedTimestamp * 1000 + 10000 < Date.now()
-      )
-        return;
-      this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+      ) {
+        this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+      } else {
+        this.#_client.emit(EVENTS.MESSAGE_EDIT, oldMessage, newMessage);
+      }
     });
   }
 

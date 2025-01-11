@@ -37,6 +37,7 @@ export const EVENTS = {
   GUILD_UPDATE: "guildUpdate",
   MESSAGE_CREATE: "messageCreate",
   MESSAGE_UPDATE: "messageUpdate",
+  MESSAGE_EDIT: "messageEdit",
   MESSAGE_DELETE: "messageDelete",
   MESSAGE_DELETE_BULK: "messageDeleteBulk",
   GUILD_AUDIT_LOG_ENTRY_CREATE: "guildAuditLogEntryCreate",
