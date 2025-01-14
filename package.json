@@ -39,6 +39,7 @@
   },
   "scripts": {
     "test": "mocha \"test/**/*.js\" --file test/setup.js",
+    "coverage": "c8 --reporter=text mocha \"test/**/*.js\" --file test/setup.js",
     "example": "node ./example/bot.js",
     "prepare": "husky"
   },
@@ -67,6 +68,7 @@
     "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
+    "c8": "^10.1.3",
     "chai": "^5.1.1",
     "chai-as-promised": "^8.0.0",
     "chai-spies": "^1.1.0",
