@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 1352,
-                40036
+                39880
             ],
             "filename": "Message.js",
             "lineno": 34,
@@ -612,7 +612,7 @@
         "meta": {
             "range": [
                 1352,
-                40036
+                39880
             ],
             "filename": "Message.js",
             "lineno": 34,
@@ -6951,7 +6951,7 @@
         "meta": {
             "range": [
                 32880,
-                35491
+                35335
             ],
             "filename": "Message.js",
             "lineno": 1130,
@@ -7281,15 +7281,15 @@
         "comment": "/**\n   * Deletes one message.\n   * @param {Client} client The client instance.\n   * @param {String} channelId The id of the channel that the message belongs to.\n   * @param {String} messageId The id of the message to delete.\n   * @param {Object?} [options]\n   * @param {String?} [options.reason] The reason for deleting the message.\n   * @returns {Promise<void>}\n   * @public\n   * @method\n   * @async\n   * @throws {TypeError}\n   */",
         "meta": {
             "range": [
-                35929,
-                37075
+                35773,
+                36919
             ],
             "filename": "Message.js",
-            "lineno": 1218,
+            "lineno": 1215,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003142",
+                "id": "astnode100003124",
                 "name": "Message.delete",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -7385,15 +7385,15 @@
         "comment": "",
         "meta": {
             "range": [
-                35990,
-                35996
+                35834,
+                35840
             ],
             "filename": "Message.js",
-            "lineno": 1218,
+            "lineno": 1215,
             "columnno": 63,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003151",
+                "id": "astnode100003133",
                 "name": "reason",
                 "type": "Identifier",
                 "value": "reason"
@@ -7409,15 +7409,15 @@
         "comment": "",
         "meta": {
             "range": [
-                36889,
-                36898
+                36733,
+                36742
             ],
             "filename": "Message.js",
-            "lineno": 1242,
+            "lineno": 1239,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003237",
+                "id": "astnode100003219",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -7435,15 +7435,15 @@
         "comment": "",
         "meta": {
             "range": [
-                36917,
-                36952
+                36761,
+                36796
             ],
             "filename": "Message.js",
-            "lineno": 1244,
+            "lineno": 1241,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003243",
+                "id": "astnode100003225",
                 "name": "body[\"X-Audit-Log-Reason\"]",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -7462,15 +7462,15 @@
         "comment": "/**\n   * Encrypts the message.\n   * @returns {String}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                37167,
-                37256
+                37011,
+                37100
             ],
             "filename": "Message.js",
-            "lineno": 1259,
+            "lineno": 1256,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003261",
+                "id": "astnode100003243",
                 "name": "Message#encrypt",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -7501,15 +7501,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                37298,
-                37350
+                37142,
+                37194
             ],
             "filename": "Message.js",
-            "lineno": 1267,
+            "lineno": 1264,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003278",
+                "id": "astnode100003260",
                 "name": "Message#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -7530,15 +7530,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                37392,
-                37449
+                37236,
+                37293
             ],
             "filename": "Message.js",
-            "lineno": 1275,
+            "lineno": 1272,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003289",
+                "id": "astnode100003271",
                 "name": "Message#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -7559,15 +7559,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                37634,
-                40034
+                37478,
+                39878
             ],
             "filename": "Message.js",
-            "lineno": 1286,
+            "lineno": 1283,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003302",
+                "id": "astnode100003284",
                 "name": "Message#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -7611,15 +7611,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37792,
-                37803
+                37636,
+                37647
             ],
             "filename": "Message.js",
-            "lineno": 1291,
+            "lineno": 1288,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003320",
+                "id": "astnode100003302",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -7635,15 +7635,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37815,
-                37850
+                37659,
+                37694
             ],
             "filename": "Message.js",
-            "lineno": 1292,
+            "lineno": 1289,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003324",
+                "id": "astnode100003306",
                 "name": "author",
                 "type": "ChainExpression",
                 "value": ""
@@ -7659,15 +7659,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37862,
-                37897
+                37706,
+                37741
             ],
             "filename": "Message.js",
-            "lineno": 1293,
+            "lineno": 1290,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003326",
+                "id": "astnode100003308",
                 "name": "member",
                 "type": "ChainExpression",
                 "value": ""
@@ -7683,15 +7683,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37909,
-                37930
+                37753,
+                37774
             ],
             "filename": "Message.js",
-            "lineno": 1294,
+            "lineno": 1291,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003328",
+                "id": "astnode100003310",
                 "name": "content",
                 "type": "MemberExpression",
                 "value": "this.content"
@@ -7707,15 +7707,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37942,
-                37972
+                37786,
+                37816
             ],
             "filename": "Message.js",
-            "lineno": 1295,
+            "lineno": 1292,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003332",
+                "id": "astnode100003314",
                 "name": "_attributes",
                 "type": "MemberExpression",
                 "value": "this."
@@ -7731,15 +7731,15 @@
         "comment": "",
         "meta": {
             "range": [
-                37984,
-                38042
+                37828,
+                37886
             ],
             "filename": "Message.js",
-            "lineno": 1296,
+            "lineno": 1293,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003337",
+                "id": "astnode100003319",
                 "name": "attachments",
                 "type": "CallExpression",
                 "value": ""
@@ -7755,15 +7755,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38054,
-                38102
+                37898,
+                37946
             ],
             "filename": "Message.js",
-            "lineno": 1297,
+            "lineno": 1294,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003351",
+                "id": "astnode100003333",
                 "name": "embeds",
                 "type": "CallExpression",
                 "value": ""
@@ -7779,15 +7779,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38114,
-                38213
+                37958,
+                38057
             ],
             "filename": "Message.js",
-            "lineno": 1298,
+            "lineno": 1295,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003365",
+                "id": "astnode100003347",
                 "name": "edited_timestamp",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -7803,15 +7803,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38225,
-                38256
+                38069,
+                38100
             ],
             "filename": "Message.js",
-            "lineno": 1301,
+            "lineno": 1298,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003376",
+                "id": "astnode100003358",
                 "name": "poll",
                 "type": "ChainExpression",
                 "value": ""
@@ -7827,15 +7827,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38268,
-                38362
+                38112,
+                38206
             ],
             "filename": "Message.js",
-            "lineno": 1302,
+            "lineno": 1299,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003378",
+                "id": "astnode100003360",
                 "name": "message_snapshots",
                 "type": "ChainExpression",
                 "value": ""
@@ -7851,15 +7851,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38374,
-                38389
+                38218,
+                38233
             ],
             "filename": "Message.js",
-            "lineno": 1305,
+            "lineno": 1302,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003380",
+                "id": "astnode100003362",
                 "name": "type",
                 "type": "MemberExpression",
                 "value": "this.type"
@@ -7875,15 +7875,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38401,
-                38623
+                38245,
+                38467
             ],
             "filename": "Message.js",
-            "lineno": 1306,
+            "lineno": 1303,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003384",
+                "id": "astnode100003366",
                 "name": "referenced_message",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -7899,15 +7899,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38479,
-                38582
+                38323,
+                38426
             ],
             "filename": "Message.js",
-            "lineno": 1308,
+            "lineno": 1305,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003388",
+                "id": "astnode100003370",
                 "name": "id",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -7923,15 +7923,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38635,
-                38696
+                38479,
+                38540
             ],
             "filename": "Message.js",
-            "lineno": 1313,
+            "lineno": 1310,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003402",
+                "id": "astnode100003384",
                 "name": "sticker_items",
                 "type": "CallExpression",
                 "value": ""
@@ -7947,15 +7947,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38708,
-                38755
+                38552,
+                38599
             ],
             "filename": "Message.js",
-            "lineno": 1314,
+            "lineno": 1311,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003416",
+                "id": "astnode100003398",
                 "name": "messageReactions",
                 "type": "CallExpression",
                 "value": ""
@@ -7971,15 +7971,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38866,
-                38877
+                38710,
+                38721
             ],
             "filename": "Message.js",
-            "lineno": 1320,
+            "lineno": 1317,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003432",
+                "id": "astnode100003414",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -7995,15 +7995,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38889,
-                38915
+                38733,
+                38759
             ],
             "filename": "Message.js",
-            "lineno": 1321,
+            "lineno": 1318,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003436",
+                "id": "astnode100003418",
                 "name": "channel_id",
                 "type": "MemberExpression",
                 "value": "this.channelId"
@@ -8019,15 +8019,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38927,
-                38962
+                38771,
+                38806
             ],
             "filename": "Message.js",
-            "lineno": 1322,
+            "lineno": 1319,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003440",
+                "id": "astnode100003422",
                 "name": "author",
                 "type": "ChainExpression",
                 "value": ""
@@ -8043,15 +8043,15 @@
         "comment": "",
         "meta": {
             "range": [
-                38974,
-                39009
+                38818,
+                38853
             ],
             "filename": "Message.js",
-            "lineno": 1323,
+            "lineno": 1320,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003442",
+                "id": "astnode100003424",
                 "name": "member",
                 "type": "ChainExpression",
                 "value": ""
@@ -8067,15 +8067,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39021,
-                39042
+                38865,
+                38886
             ],
             "filename": "Message.js",
-            "lineno": 1324,
+            "lineno": 1321,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003444",
+                "id": "astnode100003426",
                 "name": "content",
                 "type": "MemberExpression",
                 "value": "this.content"
@@ -8091,15 +8091,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39054,
-                39073
+                38898,
+                38917
             ],
             "filename": "Message.js",
-            "lineno": 1325,
+            "lineno": 1322,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003448",
+                "id": "astnode100003430",
                 "name": "pinned",
                 "type": "MemberExpression",
                 "value": "this.pinned"
@@ -8115,15 +8115,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39085,
-                39143
+                38929,
+                38987
             ],
             "filename": "Message.js",
-            "lineno": 1326,
+            "lineno": 1323,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003452",
+                "id": "astnode100003434",
                 "name": "attachments",
                 "type": "CallExpression",
                 "value": ""
@@ -8139,15 +8139,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39155,
-                39203
+                38999,
+                39047
             ],
             "filename": "Message.js",
-            "lineno": 1327,
+            "lineno": 1324,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003466",
+                "id": "astnode100003448",
                 "name": "embeds",
                 "type": "CallExpression",
                 "value": ""
@@ -8163,15 +8163,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39215,
-                39314
+                39059,
+                39158
             ],
             "filename": "Message.js",
-            "lineno": 1328,
+            "lineno": 1325,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003480",
+                "id": "astnode100003462",
                 "name": "edited_timestamp",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -8187,15 +8187,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39326,
-                39357
+                39170,
+                39201
             ],
             "filename": "Message.js",
-            "lineno": 1331,
+            "lineno": 1328,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003491",
+                "id": "astnode100003473",
                 "name": "poll",
                 "type": "ChainExpression",
                 "value": ""
@@ -8211,15 +8211,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39369,
-                39463
+                39213,
+                39307
             ],
             "filename": "Message.js",
-            "lineno": 1332,
+            "lineno": 1329,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003493",
+                "id": "astnode100003475",
                 "name": "message_snapshots",
                 "type": "ChainExpression",
                 "value": ""
@@ -8235,15 +8235,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39475,
-                39490
+                39319,
+                39334
             ],
             "filename": "Message.js",
-            "lineno": 1335,
+            "lineno": 1332,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003495",
+                "id": "astnode100003477",
                 "name": "type",
                 "type": "MemberExpression",
                 "value": "this.type"
@@ -8259,15 +8259,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39502,
-                39724
+                39346,
+                39568
             ],
             "filename": "Message.js",
-            "lineno": 1336,
+            "lineno": 1333,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003499",
+                "id": "astnode100003481",
                 "name": "referenced_message",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -8283,15 +8283,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39580,
-                39683
+                39424,
+                39527
             ],
             "filename": "Message.js",
-            "lineno": 1338,
+            "lineno": 1335,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003503",
+                "id": "astnode100003485",
                 "name": "id",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -8307,15 +8307,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39736,
-                39798
+                39580,
+                39642
             ],
             "filename": "Message.js",
-            "lineno": 1343,
+            "lineno": 1340,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003517",
+                "id": "astnode100003499",
                 "name": "sticker_items",
                 "type": "ChainExpression",
                 "value": ""
@@ -8331,15 +8331,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39810,
-                39851
+                39654,
+                39695
             ],
             "filename": "Message.js",
-            "lineno": 1344,
+            "lineno": 1341,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003519",
+                "id": "astnode100003501",
                 "name": "reactions",
                 "type": "ChainExpression",
                 "value": ""
@@ -8355,15 +8355,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39863,
-                39901
+                39707,
+                39745
             ],
             "filename": "Message.js",
-            "lineno": 1345,
+            "lineno": 1342,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003521",
+                "id": "astnode100003503",
                 "name": "mention_everyone",
                 "type": "MemberExpression",
                 "value": "this.mentionEveryone"
@@ -8379,15 +8379,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39913,
-                39957
+                39757,
+                39801
             ],
             "filename": "Message.js",
-            "lineno": 1346,
+            "lineno": 1343,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003525",
+                "id": "astnode100003507",
                 "name": "mention_roles",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -8403,15 +8403,15 @@
         "comment": "",
         "meta": {
             "range": [
-                39969,
-                40004
+                39813,
+                39848
             ],
             "filename": "Message.js",
-            "lineno": 1347,
+            "lineno": 1344,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003533",
+                "id": "astnode100003515",
                 "name": "mentions",
                 "type": "ConditionalExpression",
                 "value": ""
@@ -8427,15 +8427,15 @@
         "comment": "",
         "meta": {
             "range": [
-                40038,
-                40061
+                39882,
+                39905
             ],
             "filename": "Message.js",
-            "lineno": 1354,
+            "lineno": 1351,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100003541",
+                "id": "astnode100003523",
                 "name": "module.exports",
                 "type": "Identifier"
             }
