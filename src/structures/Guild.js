@@ -1068,7 +1068,7 @@ class Guild {
    * @method
    * @throws {Error}
    */
-  me() {
+  async me() {
     const cached = this.members.get(this.#_client.user.id);
 
     if (cached) return cached;
