@@ -1545,12 +1545,11 @@ class Guild {
     if (typeof token !== "string")
       throw new TypeError("GLUON: Webhook token is not a string.");
 
-    Message.sendValidation(content, { embeds, components, files });
+    Message.sendValidation({ content, embeds, components, files });
 
     const body = {};
 
     if (content) body.content = content;
-
     if (embeds) body.embeds = embeds;
     if (components) body.components;
     if (files) body.files = files;
