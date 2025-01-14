@@ -1521,8 +1521,8 @@ class Guild {
    * @param {Object} referenceData An object with the webhook id and token.
    * @param {String} referenceData.id The id of the webhook.
    * @param {String} referenceData.token The token of the webhook.
-   * @param {String?} content The message to send with the webhook.
    * @param {Object?} [options] Embeds, components and files to attach to the webhook.
+   * @param {String} [options.content] The content to attach to the webhook.
    * @param {Embed[]} [options.embeds] The embeds to attach to the webhook.
    * @param {MessageComponent[]} [options.components] The components to attach to the webhook.
    * @param {File[]} [options.files] The files to attach to the webhook.
@@ -1536,8 +1536,7 @@ class Guild {
   static async postWebhook(
     client,
     { id, token },
-    content,
-    { embeds, components, files } = {},
+    { content, embeds, components, files } = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
