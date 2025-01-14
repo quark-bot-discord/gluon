@@ -1141,7 +1141,7 @@ class Message {
         "GLUON: Must provide content, embeds, components or files",
       );
 
-    if (typeof content !== "undefined" && typeof content !== "string")
+    if (content && typeof content !== "string")
       throw new TypeError("GLUON: Content must be a string.");
 
     if (content && content.length > LIMITS.MAX_MESSAGE_CONTENT)
@@ -1150,7 +1150,7 @@ class Message {
       );
 
     if (
-      typeof embeds !== "undefined" &&
+      embeds &&
       (!Array.isArray(embeds) || !embeds.every((e) => e instanceof Embed))
     )
       throw new TypeError("GLUON: Embeds must be an array of embeds.");
@@ -1160,14 +1160,11 @@ class Message {
         `GLUON: Embeds exceeds ${LIMITS.MAX_MESSAGE_EMBEDS}.`,
       );
 
-    if (
-      typeof components !== "undefined" &&
-      !(components instanceof MessageComponents)
-    )
+    if (components && !(components instanceof MessageComponents))
       throw new TypeError("GLUON: Components must be an array of components.");
 
     if (
-      typeof files !== "undefined" &&
+      files &&
       (!Array.isArray(files) || !files.every((f) => f instanceof FileUpload))
     )
       throw new TypeError("GLUON: Files must be an array of files.");
@@ -1176,7 +1173,7 @@ class Message {
       throw new RangeError(`GLUON: Files exceeds ${LIMITS.MAX_MESSAGE_FILES}.`);
 
     if (
-      typeof attachments !== "undefined" &&
+      attachments &&
       (!Array.isArray(attachments) ||
         !attachments.every((a) => a instanceof Attachment))
     )
@@ -1192,7 +1189,7 @@ class Message {
     if (typeof flags !== "undefined" && typeof flags !== "number")
       throw new TypeError("GLUON: Flags must be a number.");
 
-    if (typeof reference !== "undefined" && typeof reference !== "object")
+    if (reference && typeof reference !== "object")
       throw new TypeError("GLUON: Reference must be an object.");
     if (reference && typeof reference.message_id !== "string")
       throw new TypeError("GLUON: Reference message id must be a string.");
