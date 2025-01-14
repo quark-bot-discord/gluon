@@ -67,8 +67,8 @@ declare class Guild {
      * @param {Object} referenceData An object with the webhook id and token.
      * @param {String} referenceData.id The id of the webhook.
      * @param {String} referenceData.token The token of the webhook.
-     * @param {String?} content The message to send with the webhook.
      * @param {Object?} [options] Embeds, components and files to attach to the webhook.
+     * @param {String} [options.content] The content to attach to the webhook.
      * @param {Embed[]} [options.embeds] The embeds to attach to the webhook.
      * @param {MessageComponent[]} [options.components] The components to attach to the webhook.
      * @param {File[]} [options.files] The files to attach to the webhook.
@@ -82,7 +82,7 @@ declare class Guild {
     public static postWebhook(client: Client, { id, token }: {
         id: string;
         token: string;
-    }, content: string | null, { embeds, components, files }?: any | null): Promise<void>;
+    }, { content, embeds, components, files }?: any | null): Promise<void>;
     /**
      * Returns the icon URL of the guild.
      * @param {String} id The id of the guild.
