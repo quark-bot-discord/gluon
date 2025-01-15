@@ -77,7 +77,7 @@ class Dropdown {
   /**
    * Sets which channel types are selectable by the user.
    * @param {Array<Number>} channelTypes An array of channel types to offer as a choice.
-   * @returns {CommandOption}
+   * @returns {Dropdown}
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
   addChannelTypes(channelTypes) {
@@ -112,7 +112,7 @@ class Dropdown {
   /**
    * Sets the minimum value the user may enter.
    * @param {Number} value The minimum number value that the user may enter.
-   * @returns {CommandOption}
+   * @returns {Dropdown}
    */
   setMinValue(value) {
     if (typeof value != "number")
