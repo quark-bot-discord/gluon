@@ -166,6 +166,16 @@ class Interaction {
   }
 
   /**
+   * The id of the member that triggered the interaction, if it was run in a guild.
+   * @type {String?}
+   * @readonly
+   * @public
+   */
+  get memberId() {
+    return this.member?.id || null;
+  }
+
+  /**
    * Prompts a user to enter text using a modal.
    * @param {Object} options Modal options.
    * @param {String} options.title The title of the modal.
