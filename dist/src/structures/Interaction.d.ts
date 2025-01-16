@@ -84,6 +84,13 @@ declare class Interaction {
      */
     public readonly get member(): Member | null;
     /**
+     * The id of the member that triggered the interaction, if it was run in a guild.
+     * @type {String?}
+     * @readonly
+     * @public
+     */
+    public readonly get memberId(): string | null;
+    /**
      * Prompts a user to enter text using a modal.
      * @param {Object} options Modal options.
      * @param {String} options.title The title of the modal.
