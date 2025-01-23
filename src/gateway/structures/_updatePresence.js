@@ -13,6 +13,7 @@ function _updatePresence(
     activities.push({
       name,
       type,
+      state: type === 4 ? name : undefined,
     });
 
   return erlpack.pack({
