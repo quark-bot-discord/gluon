@@ -53,6 +53,12 @@ class GuildManager extends BaseCacheManager {
     return client.guilds;
   }
 
+  /**
+   * Gets a guild from the cache.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild to get.
+   * @returns {Guild?}
+   */
   static getGuild(client, guildId) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
