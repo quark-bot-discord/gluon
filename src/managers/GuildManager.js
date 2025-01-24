@@ -58,6 +58,10 @@ class GuildManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {String} guildId The ID of the guild to get.
    * @returns {Guild?}
+   * @public
+   * @method
+   * @throws {TypeError}
+   * @static
    */
   static getGuild(client, guildId) {
     if (!(client instanceof Client))
