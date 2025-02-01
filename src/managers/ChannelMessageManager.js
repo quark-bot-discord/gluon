@@ -153,7 +153,7 @@ class ChannelMessageManager extends BaseCacheManager {
   set(id, message) {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
-    return super.set(id, message);
+    return super.set(id, message, this.#_client._cacheOptions.messageTTL);
   }
 
   /**
