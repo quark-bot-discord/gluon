@@ -1590,6 +1590,7 @@ class Guild {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
+    this.#channels.forEach((c) => c.messages?._intervalCallback());
   }
 
   /**
