@@ -15,6 +15,8 @@ const client = new Client({
   cacheRoles: true,
   cacheEmojis: true,
   intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.MESSAGE_CONTENT,
+  totalShards: 2,
+  shardIds: [1],
 });
 
 client._defaultGuildCacheOptions.setChannelCaching(true);
@@ -22,7 +24,12 @@ client._defaultGuildCacheOptions.setRoleCaching(true);
 
 client.on("ready", () => {
   console.log("ready");
-  console.log(client.user);
+  console.log(client.user.tag);
+  setTimeout(() => console.log(client.checkProcess()), 3000);
+});
+
+client.on("initialised", () => {
+  console.log(client.guilds.size);
   client.guilds.forEach((guild) => {
     guild._cacheOptions.setChannelCaching(true);
     guild._cacheOptions.setEmojiCaching(true);
@@ -33,6 +40,24 @@ client.on("ready", () => {
     guild._cacheOptions.setVoiceStateCaching(true);
     guild._cacheOptions.setScheduledEventCaching(true);
     guild._cacheOptions.setInviteCaching(true);
+    console.log(guild.id);
+    console.log(guild.channels.toJSON());
+    guild.channels.forEach((channel) => {
+      console.log("CHANNEL ID", channel.id);
+      console.log("CHANNEL NAME", channel.name);
+      console.log("CHANNEL TYPE", channel.type);
+      if (channel.type === 4) return;
+      channel._cacheOptions.setMessageCaching(true);
+      channel._cacheOptions.setFileCaching(true);
+      channel._cacheOptions.setContentCaching(true);
+      channel._cacheOptions.setPollCaching(true);
+      channel._cacheOptions.setReactionCaching(true);
+      channel._cacheOptions.setEmbedCaching(true);
+      channel._cacheOptions.setAttributeCaching(true);
+      channel._cacheOptions.setReferenceCaching(true);
+      channel._cacheOptions.setStickerCaching(true);
+      channel._cacheOptions.setWebhookCaching(true);
+    });
   });
 });
 
@@ -76,13 +101,13 @@ client.on("messageCreate", (message) => {
       .setTitle("hello?")
       .setColor("5865F2")
       .setDescription("hello world!");
-    message.channel.send("", {
+    message.channel.send({
       embeds: [embed],
     });
   }
   if (message.content == "file") {
     const file = new FileUpload().setName("file.txt").setStream("hello world!");
-    message.channel.send("", {
+    message.channel.send({
       files: [file],
     });
   }
