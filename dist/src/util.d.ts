@@ -21,4 +21,5 @@ export { default as escapedString } from "./util/discord/escapedString.js";
 export { default as combinePermissions } from "./util/discord/combinePermissions.js";
 export { default as FileUpload } from "./util/builder/fileUpload.js";
 export { default as isValidUrl } from "./util/general/isValidUrl.js";
+export { default as GluonCacheRule } from "./util/gluon/gluonCacheRule.js";
 //# sourceMappingURL=util.d.ts.map
