@@ -41,7 +41,7 @@ class ChannelMessageManager extends BaseCacheManager {
 
     /**
      * The channel that is being managed.
-     * @type {Channel}
+     * @type {TextChannel | VoiceChannel | Thread}
      * @private
      */
     this.#channel = channel;
@@ -61,6 +61,16 @@ class ChannelMessageManager extends BaseCacheManager {
    */
   get guild() {
     return this.#guild;
+  }
+
+  /**
+   * The channel that is being managed.
+   * @type {TextChannel | VoiceChannel | Thread}
+   * @readonly
+   * @public
+   */
+  get channel() {
+    return this.#channel;
   }
 
   /**
