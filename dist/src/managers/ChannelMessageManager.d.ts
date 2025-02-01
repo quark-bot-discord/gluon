@@ -97,6 +97,13 @@ declare class ChannelMessageManager extends BaseCacheManager {
      */
     readonly get guild(): Guild;
     /**
+     * The channel that is being managed.
+     * @type {TextChannel | VoiceChannel | Thread}
+     * @readonly
+     * @public
+     */
+    public readonly get channel(): TextChannel | VoiceChannel | Thread;
+    /**
      * Fetches a collection of messages or a singular message from the channel.
      * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
      * @returns {Promise<Array<Message>> | Promise<Message>}
