@@ -5,6 +5,15 @@ export default GuildEmojisManager;
 declare class GuildEmojisManager extends BaseCacheManager {
     static identifier: string;
     /**
+     * Fetches a particular emoji that belongs to this guild, checking the cache first.
+     * @param {Client} client The client instance.
+     * @param {String} guildId The ID of the guild to fetch the emoji from.
+     * @param {String} emojiId The ID of the emoji to fetch.
+     * @returns {Promise<Emoji>} The fetched emoji.
+     */
+    static fetchEmoji(client: Client, guildId: string, emojiId: string): Promise<Emoji>;
+    static getEmoji(client: any, guildId: any, emojiId: any): any;
+    /**
      * Creates a guild emoji manager.
      * @param {Client} client The client instance.
      * @param {Guild} guild The guild that this emoji manager belongs to.
