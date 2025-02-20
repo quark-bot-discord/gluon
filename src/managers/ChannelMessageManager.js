@@ -183,7 +183,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @param {String} guildId The ID of the guild.
    * @param {String} channelId The ID of the channel.
    * @param {String} messageId The ID of the message.
-   * @returns {Message}
+   * @returns {Message?}
    * @public
    * @static
    * @method

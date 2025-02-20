@@ -57,23 +57,23 @@ class GuildScheduledEventManager extends BaseCacheManager {
 
   /**
    * Fetches a scheduled event from the API.
-   * @param {String} scheduled_event_id The ID of the event to fetch.
+   * @param {String} scheduledEventId The ID of the event to fetch.
    * @returns {Promise<ScheduledEvent>}
    * @async
    * @method
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(scheduled_event_id) {
-    if (typeof scheduled_event_id !== "string")
+  async fetch(scheduledEventId) {
+    if (typeof scheduledEventId !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 
-    const cachedEvent = await this.get(scheduled_event_id);
+    const cachedEvent = await this.get(scheduledEventId);
     if (cachedEvent) return cachedEvent;
 
     const data = await this.#_client.request.makeRequest(
       "getGuildScheduledEvent",
-      [this.#guild.id, scheduled_event_id],
+      [this.#guild.id, scheduledEventId],
     );
 
     return new ScheduledEvent(this.#_client, data, {

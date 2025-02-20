@@ -41,7 +41,7 @@ class GuildInviteManager extends BaseCacheManager {
 
   /**
    * Fetches all invites for this guild.
-   * @returns {Promise<Array<Invite>?>} The fetched invites.
+   * @returns {Promise<Array<Invite>>} The fetched invites.
    * @public
    * @async
    * @method

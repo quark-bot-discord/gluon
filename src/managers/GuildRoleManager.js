@@ -40,18 +40,18 @@ class GuildRoleManager extends BaseCacheManager {
 
   /**
    * Fetches a role that belongs to this guild.
-   * @param {String} role_id The id of the role to fetch.
+   * @param {String} roleId The id of the role to fetch.
    * @returns {Promise<Role>} The fetched role.
    * @async
    * @public
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(role_id) {
-    if (typeof role_id !== "string")
+  async fetch(roleId) {
+    if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
-    const cachedRole = await this.get(role_id);
+    const cachedRole = await this.get(roleId);
     if (cachedRole) return cachedRole;
 
     const data = await this.#_client.request.makeRequest("getRoles", [
@@ -62,7 +62,7 @@ class GuildRoleManager extends BaseCacheManager {
       const role = new Role(this.#_client, data[i], {
         guildId: this.#guild.id,
       });
-      if (role.id == role_id) matchedRole = role;
+      if (role.id == roleId) matchedRole = role;
     }
 
     return matchedRole;

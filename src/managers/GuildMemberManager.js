@@ -50,7 +50,7 @@ class GuildMemberManager extends BaseCacheManager {
   /**
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.
-   * @returns {Promise<Member>} The fetched member.
+   * @returns {Promise<Member?>} The fetched member.
    * @async
    * @method
    * @public
@@ -67,7 +67,7 @@ class GuildMemberManager extends BaseCacheManager {
   /**
    * Searches for members via a search query.
    * @param {String} query The search query.
-   * @returns {Promise<Array<Member>?>} The members which match the search query.
+   * @returns {Promise<Array<Member>>} The members which match the search query.
    * @async
    * @method
    * @public
