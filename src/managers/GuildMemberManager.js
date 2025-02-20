@@ -148,6 +148,30 @@ class GuildMemberManager extends BaseCacheManager {
   }
 
   /**
+   * Gets a member from the cache.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild.
+   * @param {String} userId The ID of the user.
+   * @returns {Member?}
+   * @public
+   * @method
+   * @static
+   * @throws {TypeError}
+   */
+  static getMember(client, guildId, userId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID is not a string.");
+    if (typeof userId !== "string")
+      throw new TypeError("GLUON: User ID is not a string.");
+    return GuildMemberManager.getCacheManager(
+      client,
+      guildId,
+    ).guild.members.get(userId);
+  }
+
+  /**
    * Searches for members via a search query.
    * @param {Client} client The client instance.
    * @param {String} guildId The id of the guild to search.

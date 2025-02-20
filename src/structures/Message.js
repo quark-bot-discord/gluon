@@ -27,6 +27,7 @@ import Client from "../Client.js";
 import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
+import GuildMemberManager from "../managers/GuildMemberManager.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -37,7 +38,6 @@ class Message {
   #_channel_id;
   #_id;
   #author;
-  #member;
   #attachments;
   #content;
   #poll;
@@ -141,20 +141,13 @@ class Message {
       });
     else if (existing?.author) this.#author = existing.author;
 
-    if (data.member)
-      /**
-       * The member who sent the message.
-       * @type {Member?}
-       * @private
-       */
-      this.#member = new Member(this.#_client, data.member, {
+    if (data.member) {
+      new Member(this.#_client, data.member, {
         userId: data.author.id,
         guildId,
         user: new User(this.#_client, data.author),
       });
-    else if (data.author)
-      this.#member = this.guild?.members.get(data.author.id) || null;
-    else if (existing?.member) this.#member = existing.member;
+    }
 
     // should only be stored if file logging is enabled
     /**
@@ -447,7 +440,14 @@ class Message {
    * @public
    */
   get member() {
-    return this.#member;
+    if (!this.author || !this.author.id) {
+      return null;
+    }
+    return GuildMemberManager.getMember(
+      this.#_client,
+      this.guildId,
+      this.authorId,
+    );
   }
 
   /**
