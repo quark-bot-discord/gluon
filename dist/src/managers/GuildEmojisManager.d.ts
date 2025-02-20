@@ -10,9 +10,25 @@ declare class GuildEmojisManager extends BaseCacheManager {
      * @param {String} guildId The ID of the guild to fetch the emoji from.
      * @param {String} emojiId The ID of the emoji to fetch.
      * @returns {Promise<Emoji>} The fetched emoji.
+     * @public
+     * @method
+     * @static
+     * @async
+     * @throws {TypeError}
      */
-    static fetchEmoji(client: Client, guildId: string, emojiId: string): Promise<Emoji>;
-    static getEmoji(client: any, guildId: any, emojiId: any): any;
+    public static fetchEmoji(client: Client, guildId: string, emojiId: string): Promise<Emoji>;
+    /**
+     * Gets an emoji from the cache.
+     * @param {Client} client The client instance.
+     * @param {String} guildId The ID of the guild to get the emoji from.
+     * @param {String} emojiId The ID of the emoji to get.
+     * @returns {Emoji?}
+     * @public
+     * @method
+     * @static
+     * @throws {TypeError}
+     */
+    public static getEmoji(client: Client, guildId: string, emojiId: string): Emoji | null;
     /**
      * Creates a guild emoji manager.
      * @param {Client} client The client instance.

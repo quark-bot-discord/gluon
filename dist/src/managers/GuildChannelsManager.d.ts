@@ -9,9 +9,9 @@ declare class GuildChannelsManager extends BaseCacheManager {
      * @param {Client} client The client instance.
      * @param {String} guildId The ID of the guild to get the channel from.
      * @param {String} channelId The ID of the channel to get.
-     * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel}
+     * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
      */
-    static getChannel(client: Client, guildId: string, channelId: string): VoiceChannel | TextChannel | Thread | CategoryChannel;
+    static getChannel(client: Client, guildId: string, channelId: string): VoiceChannel | TextChannel | Thread | CategoryChannel | null;
     /**
      * Returns the cache manager for a guild.
      * @param {Client} client The client instance.
@@ -44,13 +44,13 @@ declare class GuildChannelsManager extends BaseCacheManager {
     /**
      * Fetches a particular channel belonging to this guild.
      * @param {String} channel_id The id of the channel to fetch.
-     * @returns {Promise<VoiceChannel> | Promise<Thread> | Promise<TextChannel>} The fetched channel.
+     * @returns {Promise<VoiceChannel | Thread | TextChannel>} The fetched channel.
      * @public
      * @async
      * @method
      * @throws {TypeError | Error}
      */
-    public fetch(channel_id: string): Promise<VoiceChannel> | Promise<Thread> | Promise<TextChannel>;
+    public fetch(channel_id: string): Promise<VoiceChannel | Thread | TextChannel>;
     /**
      * Adds a channel to the cache.
      * @param {String} id The ID of the channel to cache.

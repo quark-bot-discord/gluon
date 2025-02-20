@@ -47,14 +47,14 @@ declare class GuildRoleManager extends BaseCacheManager {
     constructor(client: Client, guild: Guild);
     /**
      * Fetches a role that belongs to this guild.
-     * @param {String} role_id The id of the role to fetch.
+     * @param {String} roleId The id of the role to fetch.
      * @returns {Promise<Role>} The fetched role.
      * @async
      * @public
      * @method
      * @throws {TypeError | Error}
      */
-    public fetch(role_id: string): Promise<Role>;
+    public fetch(roleId: string): Promise<Role>;
     /**
      * Adds a role to the cache.
      * @param {String} id The ID of the role to cache

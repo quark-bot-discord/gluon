@@ -22,13 +22,13 @@ declare class ChannelMessageManager extends BaseCacheManager {
      * @param {String} guildId The ID of the guild.
      * @param {String} channelId The ID of the channel.
      * @param {String} messageId The ID of the message.
-     * @returns {Message}
+     * @returns {Message?}
      * @public
      * @static
      * @method
      * @throws {TypeError}
      */
-    public static getMessage(client: Client, guildId: string, channelId: string, messageId: string): Message;
+    public static getMessage(client: Client, guildId: string, channelId: string, messageId: string): Message | null;
     /**
      * Fetches a message from the channel.
      * @param {Client} client The client instance.

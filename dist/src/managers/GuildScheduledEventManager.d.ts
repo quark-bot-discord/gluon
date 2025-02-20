@@ -13,14 +13,14 @@ declare class GuildScheduledEventManager extends BaseCacheManager {
     public list(): Promise<Array<ScheduledEvent>>;
     /**
      * Fetches a scheduled event from the API.
-     * @param {String} scheduled_event_id The ID of the event to fetch.
+     * @param {String} scheduledEventId The ID of the event to fetch.
      * @returns {Promise<ScheduledEvent>}
      * @async
      * @method
      * @public
      * @throws {TypeError | Error}
      */
-    public fetch(scheduled_event_id: string): Promise<ScheduledEvent>;
+    public fetch(scheduledEventId: string): Promise<ScheduledEvent>;
     /**
      * Cache a scheduled event.
      * @param {String} id The ID of the event to cache.

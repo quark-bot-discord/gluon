@@ -12,13 +12,13 @@ declare class GuildInviteManager extends BaseCacheManager {
     constructor(client: Client, guild: Guild);
     /**
      * Fetches all invites for this guild.
-     * @returns {Promise<Array<Invite>?>} The fetched invites.
+     * @returns {Promise<Array<Invite>>} The fetched invites.
      * @public
      * @async
      * @method
      * @throws {Error}
      */
-    public fetch(): Promise<Array<Invite> | null>;
+    public fetch(): Promise<Array<Invite>>;
     /**
      * Adds an invite to the cache.
      * @param {String} code The code of the invite to cache.
