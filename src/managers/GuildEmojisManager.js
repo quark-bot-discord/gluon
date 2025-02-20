@@ -1,6 +1,7 @@
 import Client from "../Client.js";
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import GuildManager from "./GuildManager.js";
 
 /**
  * Manages all emojis within a guild.
@@ -50,15 +51,50 @@ class GuildEmojisManager extends BaseCacheManager {
     if (typeof emojiId !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
-    const cached = await this.get(emojiId);
+    return GuildEmojisManager.fetchEmoji(
+      this.#_client,
+      this.#guild.id,
+      emojiId,
+    );
+  }
+
+  /**
+   * Fetches a particular emoji that belongs to this guild, checking the cache first.
+   * @param {Client} client The client instance.
+   * @param {String} guildId The ID of the guild to fetch the emoji from.
+   * @param {String} emojiId The ID of the emoji to fetch.
+   * @returns {Promise<Emoji>} The fetched emoji.
+   */
+  static async fetchEmoji(client, guildId, emojiId) {
+    if (!(client instanceof Client)) {
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    }
+    if (typeof guildId !== "string") {
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    }
+    if (typeof emojiId !== "string") {
+      throw new TypeError("GLUON: Emoji ID must be a string.");
+    }
+
+    const cached = GuildEmojisManager.getEmoji(client, guildId, emojiId);
     if (cached) return cached;
 
-    const data = await this.#_client.request.makeRequest("getEmoji", [
-      this.#guild.id,
+    const data = await client.request.makeRequest("getEmoji", [
+      guildId,
       emojiId,
     ]);
 
-    return new Emoji(this.#_client, data, { guildId: this.#guild.id });
+    return new Emoji(client, data, { guildId });
+  }
+
+  static getEmoji(client, guildId, emojiId) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be a Client instance.");
+    if (typeof guildId !== "string")
+      throw new TypeError("GLUON: Guild ID must be a string.");
+    if (typeof emojiId !== "string")
+      throw new TypeError("GLUON: Emoji ID must be a string.");
+    return GuildManager.getGuild(client, guildId).emojis.get(emojiId);
   }
 
   /**
