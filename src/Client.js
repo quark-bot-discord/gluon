@@ -598,10 +598,10 @@ class Client extends EventsEmitter {
    * Sets the bot's status across all shards.
    * @param {Object} status Status options.
    * @param {String} status.name The bot's new status.
-   * @param {Number} status.type The type of status.
-   * @param {String} status.status The bot's status.
-   * @param {Boolean} status.afk Whether the bot is afk.
-   * @param {Number} status.since The time since the bot has been afk.
+   * @param {Number} [status.type] The type of status.
+   * @param {String} [status.status] The bot's status.
+   * @param {Boolean} [status.afk] Whether the bot is afk.
+   * @param {Number} [status.since] The time since the bot has been afk.
    * @returns {void}
    * @public
    * @method
