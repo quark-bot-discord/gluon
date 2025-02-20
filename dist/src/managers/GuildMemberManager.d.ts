@@ -25,6 +25,18 @@ declare class GuildMemberManager extends BaseCacheManager {
      */
     public static fetchMember(client: Client, guildId: string, userId: string): Promise<Member>;
     /**
+     * Gets a member from the cache.
+     * @param {Client} client The client instance.
+     * @param {String} guildId The ID of the guild.
+     * @param {String} userId The ID of the user.
+     * @returns {Member?}
+     * @public
+     * @method
+     * @static
+     * @throws {TypeError}
+     */
+    public static getMember(client: Client, guildId: string, userId: string): Member | null;
+    /**
      * Searches for members via a search query.
      * @param {Client} client The client instance.
      * @param {String} guildId The id of the guild to search.
