@@ -264,10 +264,10 @@ declare class Client extends TypedEmitter<{
      * Sets the bot's status across all shards.
      * @param {Object} status Status options.
      * @param {String} status.name The bot's new status.
-     * @param {Number} status.type The type of status.
-     * @param {String} status.status The bot's status.
-     * @param {Boolean} status.afk Whether the bot is afk.
-     * @param {Number} status.since The time since the bot has been afk.
+     * @param {Number} [status.type] The type of status.
+     * @param {String} [status.status] The bot's status.
+     * @param {Boolean} [status.afk] Whether the bot is afk.
+     * @param {Number} [status.since] The time since the bot has been afk.
      * @returns {void}
      * @public
      * @method
@@ -275,10 +275,10 @@ declare class Client extends TypedEmitter<{
      */
     public setStatus({ name, type, status, afk, since }?: {
         name: string;
-        type: number;
-        status: string;
-        afk: boolean;
-        since: number;
+        type?: number;
+        status?: string;
+        afk?: boolean;
+        since?: number;
     }): void;
     /**
      * Initiates the login sequence
