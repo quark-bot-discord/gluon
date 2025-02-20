@@ -208,12 +208,12 @@ declare class Embed {
     public setURL(url: string): Embed;
     /**
      * Sets the timestamp displayed on the embed.
-     * @param {Number?} timestamp The UNIX timestamp.
+     * @param {Number?} [timestamp] The UNIX timestamp.
      * @returns {Embed}
      * @method
      * @public
      */
-    public setTimestamp(timestamp: number | null): Embed;
+    public setTimestamp(timestamp?: number | null): Embed;
     /**
      * Sets the color of the embed.
      * @param {String | Number} color The color.
