@@ -221,7 +221,7 @@ class Embed {
 
   /**
    * Sets the timestamp displayed on the embed.
-   * @param {Number?} timestamp The UNIX timestamp.
+   * @param {Number?} [timestamp] The UNIX timestamp.
    * @returns {Embed}
    * @method
    * @public
