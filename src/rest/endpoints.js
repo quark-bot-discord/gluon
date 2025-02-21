@@ -122,6 +122,16 @@ export default {
       return new HttpResponse(undefined, { status: 204 });
     },
   },
+  deleteOriginalInteractionResponse: {
+    path: (application_id, interaction_token) => {
+      return `/webhooks/${application_id}/${interaction_token}/messages/@original`;
+    },
+    method: "DELETE",
+    majorParams: [0, 1],
+    mockResponse: ({ params } = {}) => {
+      return new HttpResponse(undefined, { status: 204 });
+    },
+  },
   postBulkDeleteMessages: {
     path: (channel_id) => {
       return `/channels/${channel_id}/messages/bulk-delete`;

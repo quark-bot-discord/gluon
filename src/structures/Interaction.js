@@ -314,6 +314,41 @@ class Interaction {
   }
 
   /**
+   * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.
+   * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
+   * @throws {Error | TypeError}
+   */
+  async delete() {
+    return Interaction.delete(this.#_client, this.#token);
+  }
+
+  /**
+   * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.
+   * @param {Client} client The client instance.
+   * @param {String} interactionToken The interaction token.
+   * @returns {Promise<Interaction>}
+   * @public
+   * @async
+   * @method
+   * @static
+   * @throws {Error | TypeError}
+   */
+  static async delete(client, interactionToken) {
+    if (!(client instanceof Client))
+      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (typeof interactionToken !== "string")
+      throw new TypeError("GLUON: Interaction token must be a string");
+
+    return client.request.makeRequest("deleteOriginalInteractionResponse", [
+      client.user.id,
+      interactionToken,
+    ]);
+  }
+
+  /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
    * @param {Object?} [options] The new interaction response options.
    * @param {String?} [options.content] The new content of the interaction response.
