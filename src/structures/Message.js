@@ -170,14 +170,14 @@ class Message {
      * @type {String?}
      * @private
      */
-    if (this.channel._cacheOptions.contentCaching === true) {
+    if (this.channel?._cacheOptions.contentCaching !== false) {
       this.#content = data.content;
       if (!this.#content && existing && existing.content)
         this.#content = existing.content;
       else if (!this.#content) this.#content = null;
     }
 
-    if (this.channel._cacheOptions.pollCaching === true) {
+    if (this.channel?._cacheOptions.pollCaching !== false) {
       /**
        * The message poll.
        * @type {Object?}
@@ -194,7 +194,7 @@ class Message {
       else if (this.#poll == undefined) this.#poll = undefined;
     }
 
-    if (this.channel._cacheOptions.reactionCaching === true) {
+    if (this.channel?._cacheOptions.reactionCaching !== false) {
       if (existing?.reactions)
         /**
          * The message reactions.
@@ -210,7 +210,7 @@ class Message {
         );
     }
 
-    if (this.channel._cacheOptions.embedCaching === true) {
+    if (this.channel?._cacheOptions.embedCaching !== false) {
       /**
        * The message embeds.
        * @type {Embed[]}
@@ -222,7 +222,7 @@ class Message {
       else if (this.#embeds == undefined) this.#embeds = [];
     }
 
-    if (this.channel._cacheOptions.attributeCaching === true) {
+    if (this.channel?._cacheOptions.attributeCaching !== false) {
       /**
        * The message attributes.
        * @type {Number}
@@ -272,7 +272,7 @@ class Message {
         this.#_attributes |= 0b1 << 4;
     }
 
-    if (this.channel._cacheOptions.referenceCaching === true) {
+    if (this.channel?._cacheOptions.referenceCaching !== false) {
       /**
        * The message that this message references.
        * @type {Object}
@@ -305,7 +305,7 @@ class Message {
     )
       this.#type = existing.type;
 
-    if (this.channel._cacheOptions.webhookCaching === true) {
+    if (this.channel?._cacheOptions.webhookCaching !== false) {
       /**
        * The id of the webhook this message is from.
        * @type {BigInt?}
@@ -315,7 +315,7 @@ class Message {
       else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
     }
 
-    if (this.channel._cacheOptions.stickerCaching === true) {
+    if (this.channel?._cacheOptions.stickerCaching !== false) {
       /**
        * Stickers sent with this message.
        * @type {Sticker[]}
@@ -331,7 +331,7 @@ class Message {
         this.#sticker_items = existing.stickerItems;
     }
 
-    if (this.channel._cacheOptions.referenceCaching === true) {
+    if (this.channel?._cacheOptions.referenceCaching !== false) {
       /**
        * The snapshot data about the message.
        * @type {Array<Object>?}
@@ -343,11 +343,13 @@ class Message {
         this.#message_snapshots = existing.messageSnapshots;
     }
 
-    const shouldCache = Message.shouldCache(
-      this.#_client._cacheOptions,
-      this.guild._cacheOptions,
-      this.channel._cacheOptions,
-    );
+    const shouldCache = this.channel
+      ? Message.shouldCache(
+          this.#_client._cacheOptions,
+          this.guild._cacheOptions,
+          this.channel._cacheOptions,
+        )
+      : false;
 
     const attachmentsPresent =
       this.#attachments.length !== 0 &&
