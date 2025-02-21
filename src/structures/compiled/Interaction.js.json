@@ -4,7 +4,7 @@
         "meta": {
             "range": [
                 536,
-                11970
+                12555
             ],
             "filename": "Interaction.js",
             "lineno": 14,
@@ -206,18 +206,43 @@
         "access": "private"
     },
     {
-        "comment": "/**\n   * Creates the structure for an interaction.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
+        "comment": "",
         "meta": {
             "range": [
-                807,
-                2279
+                638,
+                659
             ],
             "filename": "Interaction.js",
-            "lineno": 27,
+            "lineno": 22,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
                 "id": "astnode100000044",
+                "name": "_responses_sent",
+                "type": "ClassPrivateProperty"
+            }
+        },
+        "undocumented": true,
+        "name": "_responses_sent",
+        "longname": "Interaction#_responses_sent",
+        "kind": "member",
+        "memberof": "Interaction",
+        "scope": "instance",
+        "access": "private"
+    },
+    {
+        "comment": "/**\n   * Creates the structure for an interaction.\n   * @param {Client} client The client instance.\n   * @param {Object} data The interaction data from Discord.\n   */",
+        "meta": {
+            "range": [
+                831,
+                2450
+            ],
+            "filename": "Interaction.js",
+            "lineno": 28,
+            "columnno": 2,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000046",
                 "name": "Interaction",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -261,7 +286,7 @@
         "meta": {
             "range": [
                 536,
-                11970
+                12555
             ],
             "filename": "Interaction.js",
             "lineno": 14,
@@ -311,15 +336,15 @@
         "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
         "meta": {
             "range": [
-                1127,
-                1149
+                1151,
+                1173
             ],
             "filename": "Interaction.js",
-            "lineno": 38,
+            "lineno": 39,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000069",
+                "id": "astnode100000071",
                 "name": "this.",
                 "type": "Identifier",
                 "value": "client",
@@ -343,15 +368,15 @@
         "comment": "/**\n     * The id of the message.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1240,
-                1267
+                1264,
+                1291
             ],
             "filename": "Interaction.js",
-            "lineno": 45,
+            "lineno": 46,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000076",
+                "id": "astnode100000078",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -375,15 +400,15 @@
         "comment": "/**\n     * The type of interaction.\n     * @type {Number}\n     * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-type}\n     * @private\n     */",
         "meta": {
             "range": [
-                1480,
-                1502
+                1504,
+                1526
             ],
             "filename": "Interaction.js",
-            "lineno": 53,
+            "lineno": 54,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000087",
+                "id": "astnode100000089",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.type",
@@ -410,15 +435,15 @@
         "comment": "/**\n     * The id of the guild that this interaction belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1624,
-                1663
+                1648,
+                1687
             ],
             "filename": "Interaction.js",
-            "lineno": 60,
+            "lineno": 61,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000096",
+                "id": "astnode100000098",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -442,15 +467,15 @@
         "comment": "/**\n     * The id of the channel that this interaction belongs to.\n     * @type {BigInt}\n     * @private\n     */",
         "meta": {
             "range": [
-                1787,
-                1830
+                1811,
+                1854
             ],
             "filename": "Interaction.js",
-            "lineno": 67,
+            "lineno": 68,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000107",
+                "id": "astnode100000109",
                 "name": "this.",
                 "type": "CallExpression",
                 "value": "",
@@ -474,15 +499,15 @@
         "comment": "/**\n       * The member that triggered the interaction, if it was run in a guild.\n       * @type {Member?}\n       * @private\n       */",
         "meta": {
             "range": [
-                2001,
-                2134
+                2025,
+                2158
             ],
             "filename": "Interaction.js",
-            "lineno": 75,
+            "lineno": 76,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000122",
+                "id": "astnode100000124",
                 "name": "this.",
                 "type": "NewExpression",
                 "value": "",
@@ -507,15 +532,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2065,
-                2092
+                2089,
+                2116
             ],
             "filename": "Interaction.js",
-            "lineno": 76,
+            "lineno": 77,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000137",
+                "id": "astnode100000139",
                 "name": "userId",
                 "type": "MemberExpression",
                 "value": "data.member.user.id"
@@ -531,15 +556,15 @@
         "comment": "",
         "meta": {
             "range": [
-                2102,
-                2124
+                2126,
+                2148
             ],
             "filename": "Interaction.js",
-            "lineno": 77,
+            "lineno": 78,
             "columnno": 8,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000145",
+                "id": "astnode100000147",
                 "name": "guildId",
                 "type": "MemberExpression",
                 "value": "data.guild_id"
@@ -555,15 +580,15 @@
         "comment": "/**\n     * The interaction token, needed to respond to it.\n     * @type {String}\n     * @private\n     */",
         "meta": {
             "range": [
-                2250,
-                2274
+                2274,
+                2298
             ],
             "filename": "Interaction.js",
-            "lineno": 85,
+            "lineno": 86,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000150",
+                "id": "astnode100000152",
                 "name": "this.",
                 "type": "MemberExpression",
                 "value": "data.token",
@@ -584,18 +609,50 @@
         "scope": "static"
     },
     {
+        "comment": "/**\n     * Whether a response has been sent to the interaction.\n     * @type {Boolean}\n     * @private\n     */",
+        "meta": {
+            "range": [
+                2420,
+                2445
+            ],
+            "filename": "Interaction.js",
+            "lineno": 93,
+            "columnno": 4,
+            "path": "/home/runner/work/gluon/gluon/src/structures",
+            "code": {
+                "id": "astnode100000161",
+                "name": "this.",
+                "type": "Literal",
+                "value": 0,
+                "paramnames": []
+            }
+        },
+        "description": "Whether a response has been sent to the interaction.",
+        "type": {
+            "names": [
+                "Boolean"
+            ]
+        },
+        "access": "private",
+        "name": "Interaction",
+        "longname": "Interaction.Interaction",
+        "kind": "member",
+        "memberof": "Interaction",
+        "scope": "static"
+    },
+    {
         "comment": "/**\n   * The id of the interaction.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2375,
-                2419
+                2546,
+                2590
             ],
             "filename": "Interaction.js",
-            "lineno": 94,
+            "lineno": 102,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000158",
+                "id": "astnode100000167",
                 "name": "Interaction#id",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -623,15 +680,15 @@
         "comment": "/**\n   * The token of the interaction.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2518,
-                2559
+                2689,
+                2730
             ],
             "filename": "Interaction.js",
-            "lineno": 104,
+            "lineno": 112,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000169",
+                "id": "astnode100000178",
                 "name": "Interaction#token",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -659,15 +716,15 @@
         "comment": "/**\n   * The type of interaction.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2653,
-                2692
+                2824,
+                2863
             ],
             "filename": "Interaction.js",
-            "lineno": 114,
+            "lineno": 122,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000178",
+                "id": "astnode100000187",
                 "name": "Interaction#type",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -695,15 +752,15 @@
         "comment": "/**\n   * The id of the guild that this interaction belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2815,
-                2870
+                2986,
+                3041
             ],
             "filename": "Interaction.js",
-            "lineno": 124,
+            "lineno": 132,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000187",
+                "id": "astnode100000196",
                 "name": "Interaction#guildId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -731,15 +788,15 @@
         "comment": "/**\n   * The guild that this interaction belongs to.\n   * @type {Guild?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                2983,
-                3059
+                3154,
+                3230
             ],
             "filename": "Interaction.js",
-            "lineno": 134,
+            "lineno": 142,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000198",
+                "id": "astnode100000207",
                 "name": "Interaction#guild",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -768,15 +825,15 @@
         "comment": "/**\n   * The id of the channel that this interaction belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3184,
-                3243
+                3355,
+                3414
             ],
             "filename": "Interaction.js",
-            "lineno": 144,
+            "lineno": 152,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000217",
+                "id": "astnode100000226",
                 "name": "Interaction#channelId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -804,15 +861,15 @@
         "comment": "/**\n   * The channel that this interaction belongs to.\n   * @type {(TextChannel | VoiceChannel | Thread)?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3390,
-                3470
+                3561,
+                3641
             ],
             "filename": "Interaction.js",
-            "lineno": 154,
+            "lineno": 162,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000228",
+                "id": "astnode100000237",
                 "name": "Interaction#channel",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -843,15 +900,15 @@
         "comment": "/**\n   * The member that triggered the interaction, if it was run in a guild.\n   * @type {Member?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3609,
-                3652
+                3780,
+                3823
             ],
             "filename": "Interaction.js",
-            "lineno": 164,
+            "lineno": 172,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000236",
+                "id": "astnode100000245",
                 "name": "Interaction#member",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -880,15 +937,15 @@
         "comment": "/**\n   * The id of the member that triggered the interaction, if it was run in a guild.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
         "meta": {
             "range": [
-                3801,
-                3857
+                3972,
+                4028
             ],
             "filename": "Interaction.js",
-            "lineno": 174,
+            "lineno": 182,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000245",
+                "id": "astnode100000254",
                 "name": "Interaction#memberId",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -917,15 +974,15 @@
         "comment": "/**\n   * Prompts a user to enter text using a modal.\n   * @param {Object} options Modal options.\n   * @param {String} options.title The title of the modal.\n   * @param {String} options.customId The custom id of the modal.\n   * @param {TextInput} options.textInputModal The text input modal.\n   * @returns {Promise<void>}\n   * @public\n   * @async\n   * @method\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                4261,
-                5052
+                4432,
+                5223
             ],
             "filename": "Interaction.js",
-            "lineno": 190,
+            "lineno": 198,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000253",
+                "id": "astnode100000262",
                 "name": "Interaction#textPrompt",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1006,15 +1063,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4280,
-                4285
+                4451,
+                4456
             ],
             "filename": "Interaction.js",
-            "lineno": 190,
+            "lineno": 198,
             "columnno": 21,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000258",
+                "id": "astnode100000267",
                 "name": "title",
                 "type": "Identifier",
                 "value": "title"
@@ -1030,15 +1087,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4287,
-                4295
+                4458,
+                4466
             ],
             "filename": "Interaction.js",
-            "lineno": 190,
+            "lineno": 198,
             "columnno": 28,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000260",
+                "id": "astnode100000269",
                 "name": "customId",
                 "type": "Identifier",
                 "value": "customId"
@@ -1054,15 +1111,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4297,
-                4311
+                4468,
+                4482
             ],
             "filename": "Interaction.js",
-            "lineno": 190,
+            "lineno": 198,
             "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000262",
+                "id": "astnode100000271",
                 "name": "textInputModal",
                 "type": "Identifier",
                 "value": "textInputModal"
@@ -1078,15 +1135,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4644,
-                4653
+                4815,
+                4824
             ],
             "filename": "Interaction.js",
-            "lineno": 200,
+            "lineno": 208,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000294",
+                "id": "astnode100000303",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -1104,15 +1161,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4660,
-                4673
+                4831,
+                4844
             ],
             "filename": "Interaction.js",
-            "lineno": 202,
+            "lineno": 210,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000298",
+                "id": "astnode100000307",
                 "name": "body.type",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -1131,15 +1188,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4679,
-                4693
+                4850,
+                4864
             ],
             "filename": "Interaction.js",
-            "lineno": 203,
+            "lineno": 211,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000304",
+                "id": "astnode100000313",
                 "name": "body.data",
                 "type": "ObjectExpression",
                 "funcscope": "<anonymous>",
@@ -1158,15 +1215,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4700,
-                4723
+                4871,
+                4894
             ],
             "filename": "Interaction.js",
-            "lineno": 205,
+            "lineno": 213,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000310",
+                "id": "astnode100000319",
                 "name": "body.data.title",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1185,15 +1242,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4730,
-                4760
+                4901,
+                4931
             ],
             "filename": "Interaction.js",
-            "lineno": 207,
+            "lineno": 215,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000318",
+                "id": "astnode100000327",
                 "name": "body.data.custom_id",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1212,15 +1269,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4773,
-                4830
+                4944,
+                5001
             ],
             "filename": "Interaction.js",
-            "lineno": 209,
+            "lineno": 217,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000326",
+                "id": "astnode100000335",
                 "name": "components",
                 "type": "CallExpression",
                 "value": ""
@@ -1238,15 +1295,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4837,
-                4919
+                5008,
+                5090
             ],
             "filename": "Interaction.js",
-            "lineno": 211,
+            "lineno": 219,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000335",
+                "id": "astnode100000344",
                 "name": "body.data.components",
                 "type": "ConditionalExpression",
                 "funcscope": "<anonymous>",
@@ -1265,15 +1322,15 @@
         "comment": "/**\n   * Responds to autocomplete interactions.\n   * @param {Object} options Autocompletion options.\n   * @param {Array<CommandChoice>} options.choices The choices to send back.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   * @throws {Error}\n   */",
         "meta": {
             "range": [
-                5338,
-                5711
+                5509,
+                5882
             ],
             "filename": "Interaction.js",
-            "lineno": 231,
+            "lineno": 239,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000373",
+                "id": "astnode100000382",
                 "name": "Interaction#autocompleteResponse",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1335,15 +1392,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5367,
-                5374
+                5538,
+                5545
             ],
             "filename": "Interaction.js",
-            "lineno": 231,
+            "lineno": 239,
             "columnno": 31,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000378",
+                "id": "astnode100000387",
                 "name": "choices",
                 "type": "Identifier",
                 "value": "choices"
@@ -1359,15 +1416,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5495,
-                5504
+                5666,
+                5675
             ],
             "filename": "Interaction.js",
-            "lineno": 235,
+            "lineno": 243,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000397",
+                "id": "astnode100000406",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -1385,15 +1442,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5511,
-                5524
+                5682,
+                5695
             ],
             "filename": "Interaction.js",
-            "lineno": 237,
+            "lineno": 245,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000401",
+                "id": "astnode100000410",
                 "name": "body.type",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -1412,15 +1469,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5530,
-                5544
+                5701,
+                5715
             ],
             "filename": "Interaction.js",
-            "lineno": 238,
+            "lineno": 246,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000407",
+                "id": "astnode100000416",
                 "name": "body.data",
                 "type": "ObjectExpression",
                 "funcscope": "<anonymous>",
@@ -1439,15 +1496,15 @@
         "comment": "",
         "meta": {
             "range": [
-                5551,
-                5578
+                5722,
+                5749
             ],
             "filename": "Interaction.js",
-            "lineno": 240,
+            "lineno": 248,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000413",
+                "id": "astnode100000422",
                 "name": "body.data.choices",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1466,15 +1523,15 @@
         "comment": "/**\n   * Replies to an interaction.\n   * @param {Object?} [options] An embed, components, and whether the response should be as an ephemeral message.\n   * @param {String?} [options.content] The content of the interaction response.\n   * @param {Array<FileUpload>?} [options.files] The files to send with the interaction response.\n   * @param {Array<Embed>?} [options.embeds] The embeds to send with the interaction response.\n   * @param {Array<ActionRow>?} [options.components] The components to send with the interaction response.\n   * @param {Boolean?} [options.quiet] Whether the response should be an ephemeral message.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   */",
         "meta": {
             "range": [
-                6421,
-                7332
+                6592,
+                7917
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000441",
+                "id": "astnode100000450",
                 "name": "Interaction#reply",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -1575,15 +1632,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6435,
-                6442
+                6606,
+                6613
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000446",
+                "id": "astnode100000455",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -1599,15 +1656,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6444,
-                6449
+                6615,
+                6620
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 25,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000448",
+                "id": "astnode100000457",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -1623,15 +1680,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6451,
-                6457
+                6622,
+                6628
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 32,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000450",
+                "id": "astnode100000459",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -1647,15 +1704,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6459,
-                6469
+                6630,
+                6640
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 40,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000452",
+                "id": "astnode100000461",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -1671,15 +1728,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6471,
-                6476
+                6642,
+                6647
             ],
             "filename": "Interaction.js",
-            "lineno": 262,
+            "lineno": 270,
             "columnno": 52,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000454",
+                "id": "astnode100000463",
                 "name": "quiet",
                 "type": "Identifier",
                 "value": "quiet"
@@ -1695,15 +1752,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6671,
-                6678
+                6842,
+                6849
             ],
             "filename": "Interaction.js",
-            "lineno": 268,
+            "lineno": 276,
             "columnno": 29,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000480",
+                "id": "astnode100000489",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -1719,15 +1776,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6680,
-                6686
+                6851,
+                6857
             ],
             "filename": "Interaction.js",
-            "lineno": 268,
+            "lineno": 276,
             "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000482",
+                "id": "astnode100000491",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -1743,15 +1800,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6688,
-                6698
+                6859,
+                6869
             ],
             "filename": "Interaction.js",
-            "lineno": 268,
+            "lineno": 276,
             "columnno": 46,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000484",
+                "id": "astnode100000493",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -1767,15 +1824,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6700,
-                6705
+                6871,
+                6876
             ],
             "filename": "Interaction.js",
-            "lineno": 268,
+            "lineno": 276,
             "columnno": 58,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000486",
+                "id": "astnode100000495",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -1791,15 +1848,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6852,
-                6861
+                7023,
+                7032
             ],
             "filename": "Interaction.js",
-            "lineno": 273,
+            "lineno": 281,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000503",
+                "id": "astnode100000512",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -1817,15 +1874,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6868,
-                6881
+                7039,
+                7052
             ],
             "filename": "Interaction.js",
-            "lineno": 275,
+            "lineno": 283,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000507",
+                "id": "astnode100000516",
                 "name": "body.type",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -1844,15 +1901,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6887,
-                6901
+                7058,
+                7072
             ],
             "filename": "Interaction.js",
-            "lineno": 276,
+            "lineno": 284,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000513",
+                "id": "astnode100000522",
                 "name": "body.data",
                 "type": "ObjectExpression",
                 "funcscope": "<anonymous>",
@@ -1871,15 +1928,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6921,
-                6948
+                7092,
+                7119
             ],
             "filename": "Interaction.js",
-            "lineno": 278,
+            "lineno": 286,
             "columnno": 17,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000521",
+                "id": "astnode100000530",
                 "name": "body.data.content",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1898,15 +1955,15 @@
         "comment": "",
         "meta": {
             "range": [
-                6965,
-                6983
+                7136,
+                7154
             ],
             "filename": "Interaction.js",
-            "lineno": 279,
+            "lineno": 287,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000531",
+                "id": "astnode100000540",
                 "name": "body.files",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1925,15 +1982,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7001,
-                7026
+                7172,
+                7197
             ],
             "filename": "Interaction.js",
-            "lineno": 280,
+            "lineno": 288,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000539",
+                "id": "astnode100000548",
                 "name": "body.data.embeds",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -1952,15 +2009,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7054,
-                7136
+                7225,
+                7307
             ],
             "filename": "Interaction.js",
-            "lineno": 282,
+            "lineno": 290,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000549",
+                "id": "astnode100000558",
                 "name": "body.data.components",
                 "type": "ConditionalExpression",
                 "funcscope": "<anonymous>",
@@ -1979,15 +2036,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7161,
-                7181
+                7332,
+                7352
             ],
             "filename": "Interaction.js",
-            "lineno": 284,
+            "lineno": 292,
             "columnno": 23,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000570",
+                "id": "astnode100000579",
                 "name": "body.data.flags",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -2006,15 +2063,15 @@
         "comment": "/**\n   * Silently acknowledges an interaction.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   */",
         "meta": {
             "range": [
-                7466,
-                7678
+                8051,
+                8263
             ],
             "filename": "Interaction.js",
-            "lineno": 302,
+            "lineno": 323,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000600",
+                "id": "astnode100000662",
                 "name": "Interaction#acknowledge",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2046,15 +2103,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7498,
-                7507
+                8083,
+                8092
             ],
             "filename": "Interaction.js",
-            "lineno": 303,
+            "lineno": 324,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000605",
+                "id": "astnode100000667",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2072,15 +2129,15 @@
         "comment": "",
         "meta": {
             "range": [
-                7514,
-                7527
+                8099,
+                8112
             ],
             "filename": "Interaction.js",
-            "lineno": 305,
+            "lineno": 326,
             "columnno": 4,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000609",
+                "id": "astnode100000671",
                 "name": "body.type",
                 "type": "Literal",
                 "funcscope": "<anonymous>",
@@ -2099,15 +2156,15 @@
         "comment": "/**\n   * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                7897,
-                7976
+                8482,
+                8561
             ],
             "filename": "Interaction.js",
-            "lineno": 324,
+            "lineno": 345,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000637",
+                "id": "astnode100000699",
                 "name": "Interaction#delete",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -2149,15 +2206,15 @@
         "comment": "/**\n   * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.\n   * @param {Client} client The client instance.\n   * @param {String} interactionToken The interaction token.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   * @static\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                8318,
-                8730
+                8903,
+                9315
             ],
             "filename": "Interaction.js",
-            "lineno": 339,
+            "lineno": 360,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000654",
+                "id": "astnode100000716",
                 "name": "Interaction.delete",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2221,15 +2278,15 @@
         "comment": "/**\n   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.\n   * @param {Object?} [options] The new interaction response options.\n   * @param {String?} [options.content] The new content of the interaction response.\n   * @param {Array<FileUpload>?} [options.files] The new files to send with the interaction response.\n   * @param {Array<Embed>?} [options.embeds] The new embeds to send with the interaction response.\n   * @param {Array<ActionRow>?} [options.components] The new components to send with the interaction response.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                9414,
-                9601
+                9999,
+                10186
             ],
             "filename": "Interaction.js",
-            "lineno": 364,
+            "lineno": 385,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000693",
+                "id": "astnode100000755",
                 "name": "Interaction#edit",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2329,15 +2386,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9427,
-                9434
+                10012,
+                10019
             ],
             "filename": "Interaction.js",
-            "lineno": 364,
+            "lineno": 385,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000698",
+                "id": "astnode100000760",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -2353,15 +2410,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9436,
-                9441
+                10021,
+                10026
             ],
             "filename": "Interaction.js",
-            "lineno": 364,
+            "lineno": 385,
             "columnno": 24,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000700",
+                "id": "astnode100000762",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -2377,15 +2434,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9443,
-                9449
+                10028,
+                10034
             ],
             "filename": "Interaction.js",
-            "lineno": 364,
+            "lineno": 385,
             "columnno": 31,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000702",
+                "id": "astnode100000764",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -2401,15 +2458,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9451,
-                9461
+                10036,
+                10046
             ],
             "filename": "Interaction.js",
-            "lineno": 364,
+            "lineno": 385,
             "columnno": 39,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000704",
+                "id": "astnode100000766",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -2425,15 +2482,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9536,
-                9543
+                10121,
+                10128
             ],
             "filename": "Interaction.js",
-            "lineno": 366,
+            "lineno": 387,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000722",
+                "id": "astnode100000784",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -2449,15 +2506,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9551,
-                9556
+                10136,
+                10141
             ],
             "filename": "Interaction.js",
-            "lineno": 367,
+            "lineno": 388,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000724",
+                "id": "astnode100000786",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -2473,15 +2530,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9564,
-                9570
+                10149,
+                10155
             ],
             "filename": "Interaction.js",
-            "lineno": 368,
+            "lineno": 389,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000726",
+                "id": "astnode100000788",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -2497,15 +2554,15 @@
         "comment": "",
         "meta": {
             "range": [
-                9578,
-                9588
+                10163,
+                10173
             ],
             "filename": "Interaction.js",
-            "lineno": 369,
+            "lineno": 390,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000728",
+                "id": "astnode100000790",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -2521,15 +2578,15 @@
         "comment": "/**\n   * Edits a response to an interaction. Works up to 15 minutes after the response was sent.\n   * @param {Client} client The client instance.\n   * @param {String} interactionToken The interaction token.\n   * @param {Object?} [options] The new interaction response options.\n   * @param {String?} [options.content] The new content of the interaction response.\n   * @param {Array<FileUpload>?} [options.files] The new files to send with the interaction response.\n   * @param {Array<Embed>?} [options.embeds] The new embeds to send with the interaction response.\n   * @param {Array<ActionRow>?} [options.components] The new components to send with the interaction response.\n   * @returns {Promise<Interaction>}\n   * @public\n   * @async\n   * @method\n   * @throws {Error | TypeError}\n   */",
         "meta": {
             "range": [
-                10395,
-                11181
+                10980,
+                11766
             ],
             "filename": "Interaction.js",
-            "lineno": 388,
+            "lineno": 409,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000730",
+                "id": "astnode100000792",
                 "name": "Interaction.edit",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -2649,15 +2706,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10454,
-                10461
+                11039,
+                11046
             ],
             "filename": "Interaction.js",
-            "lineno": 391,
+            "lineno": 412,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000737",
+                "id": "astnode100000799",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -2673,15 +2730,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10463,
-                10468
+                11048,
+                11053
             ],
             "filename": "Interaction.js",
-            "lineno": 391,
+            "lineno": 412,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000739",
+                "id": "astnode100000801",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -2697,15 +2754,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10470,
-                10476
+                11055,
+                11061
             ],
             "filename": "Interaction.js",
-            "lineno": 391,
+            "lineno": 412,
             "columnno": 22,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000741",
+                "id": "astnode100000803",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -2721,15 +2778,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10478,
-                10488
+                11063,
+                11073
             ],
             "filename": "Interaction.js",
-            "lineno": 391,
+            "lineno": 412,
             "columnno": 30,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000743",
+                "id": "astnode100000805",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -2745,15 +2802,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10762,
-                10769
+                11347,
+                11354
             ],
             "filename": "Interaction.js",
-            "lineno": 398,
+            "lineno": 419,
             "columnno": 29,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000771",
+                "id": "astnode100000833",
                 "name": "content",
                 "type": "Identifier",
                 "value": "content"
@@ -2769,15 +2826,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10771,
-                10777
+                11356,
+                11362
             ],
             "filename": "Interaction.js",
-            "lineno": 398,
+            "lineno": 419,
             "columnno": 38,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000773",
+                "id": "astnode100000835",
                 "name": "embeds",
                 "type": "Identifier",
                 "value": "embeds"
@@ -2793,15 +2850,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10779,
-                10789
+                11364,
+                11374
             ],
             "filename": "Interaction.js",
-            "lineno": 398,
+            "lineno": 419,
             "columnno": 46,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000775",
+                "id": "astnode100000837",
                 "name": "components",
                 "type": "Identifier",
                 "value": "components"
@@ -2817,15 +2874,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10791,
-                10796
+                11376,
+                11381
             ],
             "filename": "Interaction.js",
-            "lineno": 398,
+            "lineno": 419,
             "columnno": 58,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000777",
+                "id": "astnode100000839",
                 "name": "files",
                 "type": "Identifier",
                 "value": "files"
@@ -2841,15 +2898,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10812,
-                10821
+                11397,
+                11406
             ],
             "filename": "Interaction.js",
-            "lineno": 400,
+            "lineno": 421,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000780",
+                "id": "astnode100000842",
                 "name": "body",
                 "type": "ObjectExpression",
                 "value": "{}"
@@ -2867,15 +2924,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10841,
-                10863
+                11426,
+                11448
             ],
             "filename": "Interaction.js",
-            "lineno": 402,
+            "lineno": 423,
             "columnno": 17,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000786",
+                "id": "astnode100000848",
                 "name": "body.content",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2894,15 +2951,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10880,
-                10898
+                11465,
+                11483
             ],
             "filename": "Interaction.js",
-            "lineno": 403,
+            "lineno": 424,
             "columnno": 15,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000794",
+                "id": "astnode100000856",
                 "name": "body.files",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2921,15 +2978,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10916,
-                10936
+                11501,
+                11521
             ],
             "filename": "Interaction.js",
-            "lineno": 404,
+            "lineno": 425,
             "columnno": 16,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000802",
+                "id": "astnode100000864",
                 "name": "body.embeds",
                 "type": "Identifier",
                 "funcscope": "<anonymous>",
@@ -2948,15 +3005,15 @@
         "comment": "",
         "meta": {
             "range": [
-                10964,
-                11033
+                11549,
+                11618
             ],
             "filename": "Interaction.js",
-            "lineno": 406,
+            "lineno": 427,
             "columnno": 6,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000810",
+                "id": "astnode100000872",
                 "name": "body.components",
                 "type": "ConditionalExpression",
                 "funcscope": "<anonymous>",
@@ -2975,15 +3032,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                11223,
-                11279
+                11808,
+                11864
             ],
             "filename": "Interaction.js",
-            "lineno": 419,
+            "lineno": 440,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000840",
+                "id": "astnode100000902",
                 "name": "Interaction#toString",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3004,15 +3061,15 @@
         "comment": "/**\n   * @method\n   * @public\n   */",
         "meta": {
             "range": [
-                11321,
-                11378
+                11906,
+                11963
             ],
             "filename": "Interaction.js",
-            "lineno": 427,
+            "lineno": 448,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000851",
+                "id": "astnode100000913",
                 "name": "Interaction#util.inspect.custom",
                 "type": "MethodDefinition",
                 "paramnames": []
@@ -3033,15 +3090,15 @@
         "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
         "meta": {
             "range": [
-                11563,
-                11968
+                12148,
+                12553
             ],
             "filename": "Interaction.js",
-            "lineno": 438,
+            "lineno": 459,
             "columnno": 2,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000864",
+                "id": "astnode100000926",
                 "name": "Interaction#toJSON",
                 "type": "MethodDefinition",
                 "paramnames": [
@@ -3085,15 +3142,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11782,
-                11793
+                12367,
+                12378
             ],
             "filename": "Interaction.js",
-            "lineno": 445,
+            "lineno": 466,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000887",
+                "id": "astnode100000949",
                 "name": "id",
                 "type": "MemberExpression",
                 "value": "this.id"
@@ -3109,15 +3166,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11805,
-                11820
+                12390,
+                12405
             ],
             "filename": "Interaction.js",
-            "lineno": 446,
+            "lineno": 467,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000891",
+                "id": "astnode100000953",
                 "name": "type",
                 "type": "MemberExpression",
                 "value": "this.type"
@@ -3133,15 +3190,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11832,
-                11854
+                12417,
+                12439
             ],
             "filename": "Interaction.js",
-            "lineno": 447,
+            "lineno": 468,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000895",
+                "id": "astnode100000957",
                 "name": "guild_id",
                 "type": "MemberExpression",
                 "value": "this.guildId"
@@ -3157,15 +3214,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11866,
-                11892
+                12451,
+                12477
             ],
             "filename": "Interaction.js",
-            "lineno": 448,
+            "lineno": 469,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000899",
+                "id": "astnode100000961",
                 "name": "channel_id",
                 "type": "MemberExpression",
                 "value": "this.channelId"
@@ -3181,15 +3238,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11904,
-                11938
+                12489,
+                12523
             ],
             "filename": "Interaction.js",
-            "lineno": 449,
+            "lineno": 470,
             "columnno": 10,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000903",
+                "id": "astnode100000965",
                 "name": "member",
                 "type": "CallExpression",
                 "value": ""
@@ -3205,15 +3262,15 @@
         "comment": "",
         "meta": {
             "range": [
-                11972,
-                11999
+                12557,
+                12584
             ],
             "filename": "Interaction.js",
-            "lineno": 456,
+            "lineno": 477,
             "columnno": 0,
             "path": "/home/runner/work/gluon/gluon/src/structures",
             "code": {
-                "id": "astnode100000911",
+                "id": "astnode100000973",
                 "name": "module.exports",
                 "type": "Identifier"
             }
