@@ -304,6 +304,10 @@ class Interaction {
         body,
       );
       this.#_responses_sent++;
+    } else {
+      throw new Error(
+        "GLUON: You have reached the maximum number of responses for this interaction (5).",
+      );
     }
 
     return this;
