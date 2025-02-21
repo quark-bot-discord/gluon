@@ -297,6 +297,7 @@ class Interaction {
         [this.id, this.#token],
         body,
       );
+      this.#_responses_sent++;
     } else if (this.#_responses_sent < 6) {
       await this.#_client.request.makeRequest(
         "postExecuteWebhook",
