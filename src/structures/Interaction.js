@@ -19,6 +19,7 @@ class Interaction {
   #_channel_id;
   #token;
   #member;
+  #_responses_sent = 0;
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.
@@ -83,6 +84,13 @@ class Interaction {
      * @private
      */
     this.#token = data.token;
+
+    /**
+     * Whether a response has been sent to the interaction.
+     * @type {Boolean}
+     * @private
+     */
+    this.#_responses_sent = 0;
   }
 
   /**
@@ -283,11 +291,20 @@ class Interaction {
         Array.isArray(components) != true ? components : [];
     if (quiet == true) body.data.flags = 64;
 
-    await this.#_client.request.makeRequest(
-      "postInteractionResponse",
-      [this.id, this.#token],
-      body,
-    );
+    if (this.#_responses_sent === 0) {
+      await this.#_client.request.makeRequest(
+        "postInteractionResponse",
+        [this.id, this.#token],
+        body,
+      );
+    } else if (this.#_responses_sent < 6) {
+      await this.#_client.request.makeRequest(
+        "postExecuteWebhook",
+        [this.#_client.user.id, this.#token],
+        body,
+      );
+      this.#_responses_sent++;
+    }
 
     return this;
   }
