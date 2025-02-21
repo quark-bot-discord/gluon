@@ -353,30 +353,30 @@ class Message {
 
     const attachmentsPresent =
       this.#attachments.length !== 0 &&
-      this.channel._cacheOptions.fileCaching === true;
+      this.channel?._cacheOptions.fileCaching !== false;
     const contentPresent =
-      this.#content && this.channel._cacheOptions.contentCaching === true;
+      this.#content && this.channel?._cacheOptions.contentCaching !== false;
     const pollPresent =
-      this.#poll && this.channel._cacheOptions.pollCaching === true;
+      this.#poll && this.channel?._cacheOptions.pollCaching !== false;
     const reactionsPresent =
-      this.#reactions && this.channel._cacheOptions.reactionCaching === true;
+      this.#reactions && this.channel?._cacheOptions.reactionCaching !== false;
     const embedsPresent =
       this.#embeds.length !== 0 &&
-      this.channel._cacheOptions.embedCaching === true;
+      this.channel?._cacheOptions.embedCaching !== false;
     const attributesPresent =
       this.#_attributes !== 0 &&
-      this.channel._cacheOptions.attributeCaching === true;
+      this.channel?._cacheOptions.attributeCaching !== false;
     const referencePresent =
       this.#reference.message_id &&
-      this.channel._cacheOptions.referenceCaching === true;
+      this.channel?._cacheOptions.referenceCaching !== false;
     const webhookPresent =
-      this.#webhook_id && this.channel._cacheOptions.webhookCaching === true;
+      this.#webhook_id && this.channel?._cacheOptions.webhookCaching !== false;
     const stickerPresent =
       this.#sticker_items.length !== 0 &&
-      this.channel._cacheOptions.stickerCaching === true;
+      this.channel?._cacheOptions.stickerCaching !== false;
     const snapshotsPresent =
       this.#message_snapshots &&
-      this.channel._cacheOptions.referenceCaching === true;
+      this.channel?._cacheOptions.referenceCaching !== false;
 
     if (
       nocache === false &&
