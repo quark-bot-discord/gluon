@@ -235,13 +235,13 @@ declare class Embed {
     /**
      * Sets the embed footer.
      * @param {String} text The footer text.
-     * @param {String?} icon The url of the footer icon.
+     * @param {String?} [icon] The url of the footer icon.
      * @returns {Embed}
      * @throws {TypeError}
      * @method
      * @public
      */
-    public setFooter(text: string, icon: string | null): Embed;
+    public setFooter(text: string, icon?: string | null): Embed;
     /**
      * Sets the embed author info.
      * @param {String?} name The embed author.
