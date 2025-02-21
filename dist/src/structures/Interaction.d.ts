@@ -6,6 +6,18 @@ export default Interaction;
 declare class Interaction {
     [x: number]: () => string;
     /**
+     * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.
+     * @param {Client} client The client instance.
+     * @param {String} interactionToken The interaction token.
+     * @returns {Promise<Interaction>}
+     * @public
+     * @async
+     * @method
+     * @static
+     * @throws {Error | TypeError}
+     */
+    public static delete(client: Client, interactionToken: string): Promise<Interaction>;
+    /**
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
      * @param {Client} client The client instance.
      * @param {String} interactionToken The interaction token.
@@ -142,6 +154,15 @@ declare class Interaction {
      * @method
      */
     public acknowledge(): Promise<Interaction>;
+    /**
+     * Deletes a response to an interaction. Works up to 15 minutes after the response was sent.
+     * @returns {Promise<Interaction>}
+     * @public
+     * @async
+     * @method
+     * @throws {Error | TypeError}
+     */
+    public delete(): Promise<Interaction>;
     /**
      * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
      * @param {Object?} [options] The new interaction response options.
