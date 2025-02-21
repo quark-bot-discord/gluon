@@ -275,7 +275,7 @@ class Embed {
   /**
    * Sets the embed footer.
    * @param {String} text The footer text.
-   * @param {String?} icon The url of the footer icon.
+   * @param {String?} [icon] The url of the footer icon.
    * @returns {Embed}
    * @throws {TypeError}
    * @method
