@@ -278,20 +278,20 @@ class Interaction {
     if (typeof quiet !== "undefined" && typeof quiet !== "boolean")
       throw new TypeError("GLUON: Quiet must be a boolean.");
 
-    const body = {};
-
-    body.type = 4;
-    body.data = {};
-
-    if (content) body.data.content = content;
-    if (files) body.files = files;
-    if (embeds) body.data.embeds = embeds;
-    if (components)
-      body.data.components =
-        Array.isArray(components) != true ? components : [];
-    if (quiet == true) body.data.flags = 64;
-
     if (this.#_responses_sent === 0) {
+      const body = {};
+
+      body.type = 4;
+      body.data = {};
+
+      if (content) body.data.content = content;
+      if (files) body.files = files;
+      if (embeds) body.data.embeds = embeds;
+      if (components)
+        body.data.components =
+          Array.isArray(components) != true ? components : [];
+      if (quiet == true) body.data.flags = 64;
+
       await this.#_client.request.makeRequest(
         "postInteractionResponse",
         [this.id, this.#token],
@@ -299,6 +299,15 @@ class Interaction {
       );
       this.#_responses_sent++;
     } else if (this.#_responses_sent < 6) {
+      const body = {};
+
+      if (content) body.content = content;
+      if (files) body.files = files;
+      if (embeds) body.embeds = embeds;
+      if (components)
+        body.components = Array.isArray(components) != true ? components : [];
+      if (quiet == true) body.flags = 64;
+
       await this.#_client.request.makeRequest(
         "postExecuteWebhook",
         [this.#_client.user.id, this.#token],
