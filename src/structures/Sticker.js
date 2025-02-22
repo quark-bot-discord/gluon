@@ -4,6 +4,7 @@ import {
   CDN_BASE_URL,
   STICKER_FORMATS_ENUM,
   TO_JSON_TYPES_ENUM,
+  MEDIA_BASE_URL,
 } from "../constants.js";
 import util from "util";
 
@@ -109,8 +110,7 @@ class Sticker {
         return null;
       }
       case STICKER_FORMATS_ENUM.GIF: {
-        cdnImageFormat = "gif";
-        break;
+        return `${MEDIA_BASE_URL}/stickers/${this.id}.gif`;
       }
       case STICKER_FORMATS_ENUM.PNG:
       case STICKER_FORMATS_ENUM.APNG:
