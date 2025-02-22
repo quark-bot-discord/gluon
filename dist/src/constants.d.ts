@@ -318,6 +318,7 @@ export namespace STICKER_FORMATS_ENUM {
     let PNG: number;
     let APNG: number;
     let LOTTIE: number;
+    let GIF: number;
 }
 export namespace WEBSOCKET_STATES {
     let CONNECTING: number;
