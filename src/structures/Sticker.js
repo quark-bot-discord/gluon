@@ -108,6 +108,10 @@ class Sticker {
       case STICKER_FORMATS_ENUM.LOTTIE: {
         return null;
       }
+      case STICKER_FORMATS_ENUM.GIF: {
+        cdnImageFormat = "gif";
+        break;
+      }
       case STICKER_FORMATS_ENUM.PNG:
       case STICKER_FORMATS_ENUM.APNG:
       default: {

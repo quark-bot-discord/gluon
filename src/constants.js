@@ -300,6 +300,7 @@ export const STICKER_FORMATS_ENUM = {
   PNG: 1,
   APNG: 2,
   LOTTIE: 3,
+  GIF: 4,
 };
 export const WEBSOCKET_STATES = {
   CONNECTING: 0,
