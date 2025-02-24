@@ -167,10 +167,10 @@ declare class Member {
     /**
      * The overall calculated permissions for this member.
      * @readonly
-     * @type {BigInt}
+     * @type {String}
      * @public
      */
-    public readonly get permissions(): BigInt;
+    public readonly get permissions(): string;
     /**
      * Whether the member has joined the guild before.
      * @readonly
