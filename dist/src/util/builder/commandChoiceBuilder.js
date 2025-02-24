@@ -73,7 +73,9 @@ class CommandChoice {
    */
   toJSON(
     format,
-    { suppressValidation = false } = { suppressValidation: false },
+    { suppressValidation = false } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.name)

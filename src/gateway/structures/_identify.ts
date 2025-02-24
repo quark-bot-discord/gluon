@@ -9,7 +9,11 @@ import { Identify } from "src/gateway.js";
  * @param {Number} intents The intents to use.
  * @returns {Buffer}
  */
-function _identify(token: string, shard: number[], intents: number): Buffer {
+function _identify(
+  token: string,
+  shard: [number, number],
+  intents: number,
+): Buffer {
   if (typeof token !== "string") {
     throw new TypeError("GLUON: Token must be a string.");
   }

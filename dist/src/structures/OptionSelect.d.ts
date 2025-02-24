@@ -60,7 +60,59 @@ declare class OptionSelect extends Interaction {
   toJSON(format: any):
     | {
         custom_id: any;
-        message: any;
+        message:
+          | {
+              id: string;
+              author: any;
+              member: any;
+              content: any;
+              _attributes: any;
+              attachments: any;
+              embeds: any;
+              edited_timestamp: number | null;
+              poll: any;
+              message_snapshots: any[] | undefined;
+              type: any;
+              referenced_message:
+                | {
+                    id: string | undefined;
+                  }
+                | undefined;
+              sticker_items: any;
+              messageReactions: any;
+              channel_id?: undefined;
+              pinned?: undefined;
+              reactions?: undefined;
+              mention_everyone?: undefined;
+              mention_roles?: undefined;
+              mentions?: undefined;
+            }
+          | {
+              id: string;
+              channel_id: string;
+              author: any;
+              member: any;
+              content: any;
+              pinned: boolean;
+              attachments: any;
+              embeds: any;
+              edited_timestamp: number | null;
+              poll: any;
+              message_snapshots: any[] | undefined;
+              type: any;
+              referenced_message:
+                | {
+                    id: string | undefined;
+                  }
+                | undefined;
+              sticker_items: any;
+              reactions: any;
+              mention_everyone: boolean;
+              mention_roles: string[];
+              mentions: string[];
+              _attributes?: undefined;
+              messageReactions?: undefined;
+            };
         values: any;
         id: string;
         type: any;
@@ -97,7 +149,59 @@ declare class OptionSelect extends Interaction {
           custom_id: any;
           values: any;
         };
-        message: any;
+        message:
+          | {
+              id: string;
+              author: any;
+              member: any;
+              content: any;
+              _attributes: any;
+              attachments: any;
+              embeds: any;
+              edited_timestamp: number | null;
+              poll: any;
+              message_snapshots: any[] | undefined;
+              type: any;
+              referenced_message:
+                | {
+                    id: string | undefined;
+                  }
+                | undefined;
+              sticker_items: any;
+              messageReactions: any;
+              channel_id?: undefined;
+              pinned?: undefined;
+              reactions?: undefined;
+              mention_everyone?: undefined;
+              mention_roles?: undefined;
+              mentions?: undefined;
+            }
+          | {
+              id: string;
+              channel_id: string;
+              author: any;
+              member: any;
+              content: any;
+              pinned: boolean;
+              attachments: any;
+              embeds: any;
+              edited_timestamp: number | null;
+              poll: any;
+              message_snapshots: any[] | undefined;
+              type: any;
+              referenced_message:
+                | {
+                    id: string | undefined;
+                  }
+                | undefined;
+              sticker_items: any;
+              reactions: any;
+              mention_everyone: boolean;
+              mention_roles: string[];
+              mentions: string[];
+              _attributes?: undefined;
+              messageReactions?: undefined;
+            };
         id: string;
         type: any;
         guild_id: string;

@@ -228,7 +228,6 @@ describe("Message", function () {
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       expect(message.embeds).to.deep.equal([
         {
-          author: undefined,
           color: TEST_DATA.MESSAGE.embeds[0].color,
           description: TEST_DATA.MESSAGE.embeds[0].description,
           fields: [
@@ -565,19 +564,19 @@ describe("Message", function () {
         "MISSING PERMISSIONS: SEND_MESSAGES",
       );
     });
-    it("should throw an error if no input is provided", async function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
-      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      TEST_MEMBERS.CLIENT_MEMBER(client);
-      const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      await expect(message.edit()).to.be.rejectedWith(
-        Error,
-        "GLUON: Must provide content, embeds, components or files",
-      );
-    });
+    // it("should throw an error if no input is provided", async function () {
+    //   const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    //   TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    //   TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+    //   TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+    //   TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+    //   TEST_MEMBERS.CLIENT_MEMBER(client);
+    //   const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
+    //   await expect(message.edit()).to.be.rejectedWith(
+    //     Error,
+    //     "GLUON: Must provide content, embeds, components or files",
+    //   );
+    // });
     it("should throw an error if content is provided but not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);

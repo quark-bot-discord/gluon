@@ -1,2 +1,2 @@
-declare function _heartbeat(d: any): Buffer<ArrayBufferLike>;
+declare function _heartbeat(d: number): Buffer;
 export default _heartbeat;

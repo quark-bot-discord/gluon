@@ -59,12 +59,8 @@ import util from "util";
 class Attachment {
   /**
    * Creates a structure for an attachment.
-   * @param {Client} client The client instance.
-   * @param {Object} data Attachment data from Discord.
-   * @param {Object} options Additional options for the attachment.
-   * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
-  constructor(client, data, { channelId } = {}) {
+  constructor(client, data, { channelId }) {
     _Attachment__client.set(this, void 0);
     _Attachment__id.set(this, void 0);
     _Attachment__channel_id.set(this, void 0);
@@ -101,7 +97,7 @@ class Attachment {
      * @private
      */
     __classPrivateFieldSet(this, _Attachment_size, data.size, "f");
-    if (data.url) {
+    if ("url" in data && data.url) {
       /**
        * Data about the file url.
        * @type {Object?}
@@ -136,7 +132,6 @@ class Attachment {
   }
   /**
    * The id of the attachment.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -145,7 +140,6 @@ class Attachment {
   }
   /**
    * The name of the file.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -154,7 +148,6 @@ class Attachment {
   }
   /**
    * The size of the file.
-   * @type {Number}
    * @readonly
    * @public
    */
@@ -163,7 +156,6 @@ class Attachment {
   }
   /**
    * The url to the file.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -191,18 +183,16 @@ class Attachment {
   }
   /**
    * The channel that this attachment belongs to.
-   * @type {String}
    * @readonly
    * @public
    */
   get channelId() {
     return __classPrivateFieldGet(this, _Attachment__channel_id, "f")
       ? String(__classPrivateFieldGet(this, _Attachment__channel_id, "f"))
-      : undefined;
+      : null;
   }
   /**
    * Fetches the data of the attachment.
-   * @returns {Promise<ArrayBuffer>}
    * @public
    */
   async fetchData() {
@@ -232,10 +222,6 @@ class Attachment {
   }
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
    */
   toJSON(format) {
     switch (format) {

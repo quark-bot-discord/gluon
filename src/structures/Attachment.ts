@@ -2,12 +2,21 @@ import fetch from "node-fetch";
 import Client from "../Client.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import {
+  AttachmentCacheJSON,
+  AttachmentDiscordJSON,
+  AttachmentRaw,
+  AttachmentStorageJSON,
+  AttachmentType,
+} from "./interfaces/Attachment.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
  */
-class Attachment {
+class Attachment implements AttachmentType {
   #_client;
   #_id;
   #_channel_id;
@@ -17,12 +26,16 @@ class Attachment {
 
   /**
    * Creates a structure for an attachment.
-   * @param {Client} client The client instance.
-   * @param {Object} data Attachment data from Discord.
-   * @param {Object} options Additional options for the attachment.
-   * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
-  constructor(client: any, data: any, { channelId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data:
+      | AttachmentRaw
+      | AttachmentStorageJSON
+      | AttachmentCacheJSON
+      | AttachmentDiscordJSON,
+    { channelId }: { channelId: Snowflake },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -58,7 +71,7 @@ class Attachment {
      */
     this.#size = data.size;
 
-    if (data.url) {
+    if ("url" in data && data.url) {
       /**
        * Data about the file url.
        * @type {Object?}
@@ -85,7 +98,6 @@ class Attachment {
 
   /**
    * The id of the attachment.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -95,7 +107,6 @@ class Attachment {
 
   /**
    * The name of the file.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -105,7 +116,6 @@ class Attachment {
 
   /**
    * The size of the file.
-   * @type {Number}
    * @readonly
    * @public
    */
@@ -115,7 +125,6 @@ class Attachment {
 
   /**
    * The url to the file.
-   * @type {String}
    * @readonly
    * @public
    */
@@ -137,17 +146,15 @@ class Attachment {
 
   /**
    * The channel that this attachment belongs to.
-   * @type {String}
    * @readonly
    * @public
    */
   get channelId() {
-    return this.#_channel_id ? String(this.#_channel_id) : undefined;
+    return this.#_channel_id ? String(this.#_channel_id) : null;
   }
 
   /**
    * Fetches the data of the attachment.
-   * @returns {Promise<ArrayBuffer>}
    * @public
    */
   async fetchData() {
@@ -174,12 +181,8 @@ class Attachment {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {

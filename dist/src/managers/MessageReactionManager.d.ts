@@ -1,3 +1,4 @@
+import Reaction from "../structures/Reaction.js";
 /**
  * Manages the reactions of a message.
  */
@@ -34,6 +35,23 @@ declare class MessageReactionManager {
    * @public
    * @method
    */
-  toJSON(format: any): {};
+  toJSON(format: any):
+    | {
+        [key: string]: Reaction;
+      }
+    | (
+        | {
+            emoji: any;
+            _reacted: any;
+            initial_reactor: string | undefined;
+            count?: undefined;
+          }
+        | {
+            emoji: any;
+            count: any;
+            _reacted?: undefined;
+            initial_reactor?: undefined;
+          }
+      )[];
 }
 export default MessageReactionManager;

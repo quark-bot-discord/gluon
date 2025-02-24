@@ -26,15 +26,22 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
-import Client from "../Client.js";
 import Message from "./Message.js";
-import { Embed } from "../util.js";
+import {
+  GuildCacheJSON,
+  GuildDiscordJSON,
+  GuildRaw,
+  GuildRawGateway,
+  GuildStorageJSON,
+  GuildType,
+} from "./interfaces/Guild.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
  */
-class Guild {
+class Guild implements GuildType {
   #_client;
   #_id;
   #unavailable;
@@ -66,11 +73,16 @@ class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
    */
   constructor(
-    client: any,
-    data: any,
+    client: ClientType,
+    data:
+      | GuildRaw
+      | GuildRawGateway
+      | GuildCacheJSON
+      | GuildStorageJSON
+      | GuildDiscordJSON,
     { nocache = false } = { nocache: false },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -91,7 +103,7 @@ class Guild {
      */
     this.#_id = BigInt(data.id);
 
-    if (data.unavailable == true) {
+    if ("unavailable" in data && data.unavailable == true) {
       this.#unavailable = true;
 
       const shouldCache = Guild.shouldCache(this.#_client._cacheOptions);
@@ -129,7 +141,9 @@ class Guild {
      * @type {String?}
      * @private
      */
-    this.#description = data.description;
+    if ("description" in data) {
+      this.#description = data.description;
+    }
     if (this.#description === undefined && existing && existing.description)
       this.#description = existing.description;
     else if (!this.#description) this.#description = null;
@@ -153,7 +167,7 @@ class Guild {
      */
     this.#_owner_id = BigInt(data.owner_id);
 
-    if (data.joined_at)
+    if ("joined_at" in data && data.joined_at)
       /**
        * UNIX (seconds) timestamp for when the bot user was added to this guild.
        * @type {Number?}
@@ -162,7 +176,7 @@ class Guild {
       this.#joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
     else if (existing?.joinedAt) this.#joined_at = existing.joinedAt;
 
-    if (data.member_count)
+    if ("member_count" in data)
       /**
        * The member count of this guild.
        * @type {Number}
@@ -283,14 +297,17 @@ class Guild {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? data.system_channel_flags;
+    this.#_attributes =
+      "_attributes" in data ? data._attributes : data.system_channel_flags;
 
     if (
-      typeof data.mfa_level == "number" ||
+      ("mfa_level" in data && typeof data.mfa_level == "number") ||
       (existing && typeof existing.mfaLevel == "number")
     ) {
       const mfaLevel =
-        typeof data.mfa_level == "number" ? data.mfa_level : existing.mfaLevel;
+        "mfa_level" in data && typeof data.mfa_level == "number"
+          ? data.mfa_level
+          : existing.mfaLevel;
       switch (mfaLevel) {
         case 0:
           // none
@@ -306,10 +323,12 @@ class Guild {
     }
 
     if (
-      typeof data.verification_level == "number" ||
+      ("verification_level" in data &&
+        typeof data.verification_level == "number") ||
       (existing && typeof existing.verificationLevel == "number")
     ) {
       const verificationLevel =
+        "verification_level" in data &&
         typeof data.verification_level == "number"
           ? data.verification_level
           : existing.verificationLevel;
@@ -340,10 +359,12 @@ class Guild {
     }
 
     if (
-      typeof data.default_message_notifications == "number" ||
+      ("default_message_notifications" in data &&
+        typeof data.default_message_notifications == "number") ||
       (existing && typeof existing.defaultMessageNotifications == "number")
     ) {
       const defaultMessageNotifications =
+        "default_message_notifications" in data &&
         typeof data.default_message_notifications == "number"
           ? data.default_message_notifications
           : existing.defaultMessageNotifications;
@@ -362,10 +383,12 @@ class Guild {
     }
 
     if (
-      typeof data.explicit_content_filter == "number" ||
+      ("explicit_content_filter" in data &&
+        typeof data.explicit_content_filter == "number") ||
       (existing && typeof existing.explicitContentFilter == "number")
     ) {
       const explicitContentFilter =
+        "explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number"
           ? data.explicit_content_filter
           : existing.explicitContentFilter;
@@ -388,11 +411,11 @@ class Guild {
     }
 
     if (
-      typeof data.nsfw_level == "number" ||
+      ("nsfw_level" in data && typeof data.nsfw_level == "number") ||
       (existing && typeof existing.nsfwLevel == "number")
     ) {
       const nsfwLevel =
-        typeof data.nsfw_level == "number"
+        "nsfw_level" in data && typeof data.nsfw_level == "number"
           ? data.nsfw_level
           : existing.nsfwLevel;
       switch (nsfwLevel) {
@@ -448,6 +471,7 @@ class Guild {
     }
 
     if (
+      "premium_progress_bar_enabled" in data &&
       typeof data.premium_progress_bar_enabled == "boolean" &&
       data.premium_progress_bar_enabled == true
     )
@@ -495,7 +519,7 @@ class Guild {
     }
 
     if (
-      data.members &&
+      "members" in data &&
       Member.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
         true
     )
@@ -507,7 +531,7 @@ class Guild {
         });
 
     if (
-      data.channels &&
+      "channels" in data &&
       Channel.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
         true
     )
@@ -515,7 +539,7 @@ class Guild {
         cacheChannel(this.#_client, data.channels[i], data.id, nocache);
 
     if (
-      data.threads &&
+      "threads" in data &&
       Thread.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
         true
     )
@@ -526,7 +550,7 @@ class Guild {
         });
 
     if (
-      data.voice_states &&
+      "voice_states" in data &&
       VoiceState.shouldCache(
         this.#_client._cacheOptions,
         this._cacheOptions,
@@ -557,7 +581,7 @@ class Guild {
         });
 
     if (
-      data.invites &&
+      "invites" in data &&
       Invite.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
         true
     )
@@ -825,7 +849,6 @@ class Guild {
    * Server boost level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
    * @readonly
-   * @type {Number}
    * @public
    */
   get premiumTier() {
@@ -1451,8 +1474,8 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static async deleteWebhook(client: any, webhookId: any) {
-    if (!(client instanceof Client))
+  static async deleteWebhook(client: ClientType, webhookId: any) {
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
@@ -1473,11 +1496,11 @@ class Guild {
    * @static
    */
   static createWebhook(
-    client: any,
+    client: ClientType,
     channelId: any,
     { name = NAME } = { name: NAME },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
@@ -1505,8 +1528,12 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static modifyWebhook(client: any, webhookId: any, { channelId }: any = {}) {
-    if (!(client instanceof Client))
+  static modifyWebhook(
+    client: ClientType,
+    webhookId: any,
+    { channelId }: any = {},
+  ) {
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
@@ -1532,8 +1559,8 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: any, webhookId: any) {
-    if (!(client instanceof Client))
+  static fetchWebhook(client: ClientType, webhookId: any) {
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
@@ -1559,11 +1586,11 @@ class Guild {
    * @static
    */
   static async postWebhook(
-    client: any,
+    client: ClientType,
     { id, token }: any,
     { content, embeds, components, files }: any = {},
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof id !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
@@ -1657,12 +1684,10 @@ class Guild {
 
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
@@ -1674,11 +1699,12 @@ class Guild {
           joined_at: this.joinedAt * 1000,
           unavailable: this.unavailable,
           member_count: this.memberCount,
+          premium_tier: this.premiumTier,
           preferred_locale: this.preferredLocale,
           _cache_options: this._cacheOptions,
           _attributes: this.#_attributes,
-          system_channel_id: this.systemChannelId ?? undefined,
-          rules_channel_id: this.rulesChannelId ?? undefined,
+          system_channel_id: this.systemChannelId ?? null,
+          rules_channel_id: this.rulesChannelId ?? null,
           premium_subscription_count: this.premiumSubscriptionCount,
           members: this.members.toJSON(format),
           channels: this.channels.toJSON(format),
@@ -1701,8 +1727,8 @@ class Guild {
           member_count: this.memberCount,
           preferred_locale: this.preferredLocale,
           system_channel_flags: this.rawSystemChannelFlags,
-          system_channel_id: this.systemChannelId ?? undefined,
-          rules_channel_id: this.rulesChannelId ?? undefined,
+          system_channel_id: this.systemChannelId ?? null,
+          rules_channel_id: this.rulesChannelId ?? null,
           premium_subscription_count: this.premiumSubscriptionCount,
           premium_progress_bar_enabled: this.premiumProgressBarEnabled,
           default_message_notifications: this.rawDefaultMessageNotifications,

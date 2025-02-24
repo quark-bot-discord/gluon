@@ -326,7 +326,9 @@ class Embed {
    */
   toJSON(
     format,
-    { suppressValidation = false } = { suppressValidation: false },
+    { suppressValidation = false } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (this.title && typeof this.title !== "string")

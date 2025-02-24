@@ -1144,7 +1144,7 @@ export const TEST_CLIENTS = {
 
 export const TEST_GUILDS = {
   ALL_CACHES_ENABLED: (client: any) => {
-    const guild = new Guild(client, TEST_DATA.GUILD);
+    const guild = new Guild(client, TEST_DATA.GUILD as any);
     // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setChannelCaching(true);
     // @ts-expect-error TS(2532): Object is possibly 'undefined'.
@@ -1168,7 +1168,7 @@ export const TEST_GUILDS = {
     return guild;
   },
   NO_CACHES_ENABLED: (client: any) => {
-    const guild = new Guild(client, TEST_DATA.GUILD);
+    const guild = new Guild(client, TEST_DATA.GUILD as any);
     // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setChannelCaching(false);
     // @ts-expect-error TS(2532): Object is possibly 'undefined'.

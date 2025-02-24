@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
@@ -53,7 +54,7 @@ class OptionSelect extends Interaction {
      * @type {Message}
      * @private
      */
-    this.#message = new Message(this.#_client, data.message, {
+    this.#message = new Message(this.#_client as ClientType, data.message, {
       channelId,
       guildId,
     });

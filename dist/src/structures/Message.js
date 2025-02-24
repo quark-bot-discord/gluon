@@ -821,7 +821,7 @@ class Message {
           String(
             __classPrivateFieldGet(this, _Message_reference, "f").message_id,
           )
-        : undefined,
+        : null,
     };
   }
   /**
@@ -1057,29 +1057,20 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  edit(
-    {
-      components,
-      files,
+  edit(options = {}) {
+    const {
+      components = undefined,
+      files = [],
       content = this.content,
       embeds = this.embeds,
       attachments = this.attachments,
       flags = this.flagsRaw,
       reference = {
-        message_id: this.reference.messageId,
-        channel_id: this.channelId,
-        guild_id: this.guildId,
+        messageId: this.reference.messageId,
+        channelId: this.channelId,
+        guildId: this.guildId,
       },
-    } = {
-      components: null,
-      files: null,
-      content: null,
-      embeds: null,
-      attachments: null,
-      flags: null,
-      reference: null,
-    },
-  ) {
+    } = options;
     return Message.edit(
       __classPrivateFieldGet(this, _Message__client, "f"),
       this.channelId,
@@ -1508,7 +1499,6 @@ class Message {
    * @public
    * @method
    */
-  // @ts-expect-error TS(7023): 'toJSON' implicitly has return type 'any' because ... Remove this comment to see the full error message
   toJSON(format) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

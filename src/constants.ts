@@ -442,9 +442,9 @@ export const LIMITS = {
 };
 export const COMMAND_NAME_REGEX =
   /^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u;
-export const TO_JSON_TYPES_ENUM = {
-  DISCORD_FORMAT: 1, // default
-  CACHE_FORMAT: 2,
-  STORAGE_FORMAT: 3,
-};
+export enum TO_JSON_TYPES_ENUM {
+  DISCORD_FORMAT = 1, // default
+  CACHE_FORMAT = 2,
+  STORAGE_FORMAT = 3,
+}
 export const GLUON_VERSION = packageJSON.version;

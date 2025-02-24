@@ -1,8 +1,11 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import { MessageType } from "./interfaces/Message.js";
+import ClientType from "src/interfaces/Client.js";
 /**
  * A message belonging to a channel within a guild.
  */
-declare class Message {
+declare class Message implements MessageType {
   #private;
   /**
    * Creates the structure for a message.
@@ -16,7 +19,7 @@ declare class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
    */
   constructor(
-    client: any,
+    client: ClientType,
     data: any,
     { channelId, guildId, nocache, ignoreExisting }?: any,
   );
@@ -167,7 +170,7 @@ declare class Message {
    * @public
    */
   get reference(): {
-    messageId: string | undefined;
+    messageId: string | null;
   };
   /**
    * The flags of the message.
@@ -278,22 +281,20 @@ declare class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  edit({
-    components,
-    files,
-    content,
-    embeds,
-    attachments,
-    flags,
-    reference,
-  }?: {
-    components: null;
-    files: null;
-    content?: null;
-    embeds?: null;
-    attachments?: null;
-    flags?: null;
-    reference?: null;
+  edit(options?: {
+    components?: any;
+    files?: any[] | undefined;
+    content?: string | undefined;
+    embeds?: any[] | undefined;
+    attachments?: any[] | undefined;
+    flags?: number | undefined;
+    reference?:
+      | {
+          messageId: string | null;
+          channelId: string;
+          guildId: string;
+        }
+      | undefined;
   }): Promise<Message>;
   /**
    * Deletes the message.
@@ -338,7 +339,7 @@ declare class Message {
    * @throws {TypeError}
    */
   static send(
-    client: any,
+    client: ClientType,
     channelId: any,
     guildId: any,
     { content, embeds, components, files, reference, suppressMentions }?: any,
@@ -358,7 +359,7 @@ declare class Message {
    * @returns {Promise<Message>}
    */
   static edit(
-    client: any,
+    client: ClientType,
     channelId: any,
     messageId: any,
     guildId: any,
@@ -390,7 +391,7 @@ declare class Message {
    * @throws {TypeError}
    */
   static decrypt(
-    client: any,
+    client: ClientType,
     data: any,
     guildId: any,
     channelId: any,
@@ -468,6 +469,58 @@ declare class Message {
    * @public
    * @method
    */
-  toJSON(format: any): any;
+  toJSON(format: TO_JSON_TYPES_ENUM):
+    | {
+        id: string;
+        author: any;
+        member: any;
+        content: any;
+        _attributes: any;
+        attachments: any;
+        embeds: any;
+        edited_timestamp: number | null;
+        poll: any;
+        message_snapshots: any[] | undefined;
+        type: any;
+        referenced_message:
+          | {
+              id: string | undefined;
+            }
+          | undefined;
+        sticker_items: any;
+        messageReactions: any;
+        channel_id?: undefined;
+        pinned?: undefined;
+        reactions?: undefined;
+        mention_everyone?: undefined;
+        mention_roles?: undefined;
+        mentions?: undefined;
+      }
+    | {
+        id: string;
+        channel_id: string;
+        author: any;
+        member: any;
+        content: any;
+        pinned: boolean;
+        attachments: any;
+        embeds: any;
+        edited_timestamp: number | null;
+        poll: any;
+        message_snapshots: any[] | undefined;
+        type: any;
+        referenced_message:
+          | {
+              id: string | undefined;
+            }
+          | undefined;
+        sticker_items: any;
+        reactions: any;
+        mention_everyone: boolean;
+        mention_roles: string[];
+        mentions: string[];
+        _attributes?: undefined;
+        messageReactions?: undefined;
+      };
 }
 export default Message;

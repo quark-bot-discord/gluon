@@ -139,7 +139,9 @@ class FileUpload {
   }
   toJSON(
     format,
-    { suppressValidation = false } = { suppressValidation: false },
+    { suppressValidation = false } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!__classPrivateFieldGet(this, _FileUpload_name, "f"))

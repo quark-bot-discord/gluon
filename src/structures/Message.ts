@@ -28,11 +28,13 @@ import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
+import { MessageType } from "./interfaces/Message.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * A message belonging to a channel within a guild.
  */
-class Message {
+class Message implements MessageType {
   #_client;
   #_guild_id;
   #_channel_id;
@@ -63,7 +65,7 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
    */
   constructor(
-    client: any,
+    client: ClientType,
     data: any,
     { channelId, guildId, nocache = false, ignoreExisting = false }: any = {
       nocache: false,
@@ -628,7 +630,7 @@ class Message {
       messageId: this.#reference.message_id
         ? // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           String(this.#reference.message_id)
-        : undefined,
+        : null,
     };
   }
 
@@ -840,28 +842,35 @@ class Message {
    * @throws {Error | TypeError}
    */
   edit(
-    {
-      components,
-      files,
+    options: {
+      components?: any;
+      files?: any[] | undefined;
+      content?: string | undefined;
+      embeds?: any[] | undefined;
+      attachments?: any[] | undefined;
+      flags?: number | undefined;
+      reference?:
+        | {
+            messageId: string | null;
+            channelId: string;
+            guildId: string;
+          }
+        | undefined;
+    } = {},
+  ) {
+    const {
+      components = undefined,
+      files = [],
       content = this.content,
       embeds = this.embeds,
       attachments = this.attachments,
       flags = this.flagsRaw,
       reference = {
-        message_id: this.reference.messageId,
-        channel_id: this.channelId,
-        guild_id: this.guildId,
+        messageId: this.reference.messageId,
+        channelId: this.channelId,
+        guildId: this.guildId,
       },
-    } = {
-      components: null,
-      files: null,
-      content: null,
-      embeds: null,
-      attachments: null,
-      flags: null,
-      reference: null,
-    },
-  ) {
+    } = options;
     return Message.edit(this.#_client, this.channelId, this.id, this.guildId, {
       content,
       components,
@@ -943,7 +952,7 @@ class Message {
    * @throws {TypeError}
    */
   static async send(
-    client: any,
+    client: ClientType,
     channelId: any,
     guildId: any,
     {
@@ -1028,7 +1037,7 @@ class Message {
    * @returns {Promise<Message>}
    */
   static async edit(
-    client: any,
+    client: ClientType,
     channelId: any,
     messageId: any,
     guildId: any,
@@ -1117,7 +1126,7 @@ class Message {
    * @throws {TypeError}
    */
   static decrypt(
-    client: any,
+    client: ClientType,
     data: any,
     guildId: any,
     channelId: any,
@@ -1319,8 +1328,7 @@ class Message {
    * @public
    * @method
    */
-  // @ts-expect-error TS(7023): 'toJSON' implicitly has return type 'any' because ... Remove this comment to see the full error message
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
@@ -1336,7 +1344,7 @@ class Message {
             ? this.editedTimestamp * 1000
             : null,
           poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots?.map((m) =>
+          message_snapshots: this.messageSnapshots?.map((m: any) =>
             m.toJSON(format),
           ),
           type: this.type,
@@ -1366,7 +1374,7 @@ class Message {
             ? this.editedTimestamp * 1000
             : null,
           poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots?.map((m) =>
+          message_snapshots: this.messageSnapshots?.map((m: any) =>
             m.toJSON(format),
           ),
           type: this.type,

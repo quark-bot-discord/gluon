@@ -165,7 +165,9 @@ class Dropdown {
    */
   toJSON(
     format,
-    { suppressValidation = false } = { suppressValidation: false },
+    { suppressValidation = false } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.type || typeof this.type != "number")

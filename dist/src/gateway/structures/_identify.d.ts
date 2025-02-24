@@ -6,8 +6,8 @@
  * @returns {Buffer}
  */
 declare function _identify(
-  token: any,
-  shard: any,
-  intents: any,
-): Buffer<ArrayBufferLike>;
+  token: string,
+  shard: [number, number],
+  intents: number,
+): Buffer;
 export default _identify;

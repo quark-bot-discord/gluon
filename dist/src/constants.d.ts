@@ -438,9 +438,9 @@ export declare const LIMITS: {
   MAX_MESSAGES_FETCH_LIMIT: number;
 };
 export declare const COMMAND_NAME_REGEX: RegExp;
-export declare const TO_JSON_TYPES_ENUM: {
-  DISCORD_FORMAT: number;
-  CACHE_FORMAT: number;
-  STORAGE_FORMAT: number;
-};
+export declare enum TO_JSON_TYPES_ENUM {
+  DISCORD_FORMAT = 1, // default
+  CACHE_FORMAT = 2,
+  STORAGE_FORMAT = 3,
+}
 export declare const GLUON_VERSION: string;

@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import Client from "../Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
@@ -96,7 +97,7 @@ class VoiceChannel extends Channel {
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
-        new Message(this.#_client, data.messages[i], {
+        new Message(this.#_client as ClientType, data.messages[i], {
           channelId: this.id,
           guildId,
         });

@@ -157,7 +157,6 @@ class MessagePollManager {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         const pollResponses = {};
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         for (const [key, values] of __classPrivateFieldGet(
           this,
           _MessagePollManager_cache,

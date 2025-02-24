@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import Client from "../Client.js";
 import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
@@ -132,7 +133,7 @@ class ChannelMessageManager extends BaseCacheManager {
     const messages = [];
     for (let i = 0; i < data.length; i++)
       messages.push(
-        new Message(this.#_client, data[i], {
+        new Message(this.#_client as ClientType, data[i], {
           channelId: data[i].channel_id,
           guildId: this.#channel.guild.id,
         }),
@@ -274,7 +275,7 @@ class ChannelMessageManager extends BaseCacheManager {
       messageId,
     ]);
 
-    return new Message(client, data, {
+    return new Message(client as ClientType, data, {
       channelId,
       guildId,
     });
@@ -383,7 +384,7 @@ class ChannelMessageManager extends BaseCacheManager {
     const messages = [];
     for (let i = 0; i < data.length; i++) {
       messages.push(
-        new Message(client, data[i], {
+        new Message(client as ClientType, data[i], {
           channelId: data[i].channel_id,
           guildId,
         }),

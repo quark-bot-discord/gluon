@@ -7,13 +7,14 @@ function _updatePresence(
   since = null,
 ) {
   const activities = [];
-  if (name)
+  if (name) {
     activities.push({
       name,
       type,
       state: type === 4 ? name : undefined,
     });
-  return erlpack.pack({
+  }
+  const payload = {
     op: 3,
     d: {
       since,
@@ -21,7 +22,8 @@ function _updatePresence(
       status,
       afk,
     },
-  });
+  };
+  return erlpack.pack(payload);
 }
 export default _updatePresence;
 //# sourceMappingURL=_updatePresence.js.map

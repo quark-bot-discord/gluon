@@ -572,7 +572,6 @@ class Channel {
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
-        // @ts-expect-error TS(2531): Object is possibly 'null'.
         (p) =>
           p.id === member.roles[i].id &&
           p.type === PERMISSION_OVERWRITE_TYPES.ROLE,

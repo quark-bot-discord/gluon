@@ -1,6 +1,6 @@
 declare function _resume(
-  token: any,
-  session_id: any,
-  seq: any,
-): Buffer<ArrayBufferLike>;
+  token: string,
+  session_id: string,
+  seq: number,
+): Buffer;
 export default _resume;

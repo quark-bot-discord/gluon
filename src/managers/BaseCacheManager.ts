@@ -263,9 +263,9 @@ class BaseCacheManager {
    */
   #_callRules(value: any) {
     const rules = Object.values(BaseCacheManager.rules);
-    // @ts-expect-error TS(2571): Object is of type 'unknown'.
     for (const rule of rules)
-      if (rule.structure === this.#structureType) rule.store(value);
+      if ((rule as any).structure === this.#structureType)
+        (rule as any).store(value);
   }
 
   /**

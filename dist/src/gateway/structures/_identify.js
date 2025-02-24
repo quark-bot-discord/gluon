@@ -8,13 +8,16 @@ import { NAME, GLUON_VERSION } from "../../constants.js";
  * @returns {Buffer}
  */
 function _identify(token, shard, intents) {
-  if (typeof token !== "string")
+  if (typeof token !== "string") {
     throw new TypeError("GLUON: Token must be a string.");
-  if (!Array.isArray(shard))
+  }
+  if (!Array.isArray(shard)) {
     throw new TypeError("GLUON: Shard must be an array.");
-  if (typeof intents !== "number")
+  }
+  if (typeof intents !== "number") {
     throw new TypeError("GLUON: Intents must be a number.");
-  return erlpack.pack({
+  }
+  const payload = {
     op: 2,
     d: {
       token,
@@ -38,7 +41,8 @@ function _identify(token, shard, intents) {
       },
       intents,
     },
-  });
+  };
+  return erlpack.pack(payload);
 }
 export default _identify;
 //# sourceMappingURL=_identify.js.map

@@ -11,6 +11,7 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
 import Client from "../Client.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * Represents a channel within Discord.
@@ -214,7 +215,7 @@ class Channel {
       suppressMentions: false,
     },
   ) {
-    return Message.send(this.#_client, this.id, this.guildId, {
+    return Message.send(this.#_client as ClientType, this.id, this.guildId, {
       content,
       components,
       files,
@@ -486,9 +487,8 @@ class Channel {
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
-        // @ts-expect-error TS(2531): Object is possibly 'null'.
         (p: any) =>
-          p.id === member.roles[i].id &&
+          p.id === (member.roles as any)[i].id &&
           p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
       );
       if (role) {

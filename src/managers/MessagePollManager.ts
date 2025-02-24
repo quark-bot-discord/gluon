@@ -106,8 +106,7 @@ class MessagePollManager {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
-        const pollResponses = {};
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+        const pollResponses: { [key: string]: string[] } = {};
         for (const [key, values] of this.#cache)
           pollResponses[key] = values.map((v: any) => String(v));
         return pollResponses;

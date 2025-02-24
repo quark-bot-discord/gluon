@@ -1,11 +1,21 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Thread from "./Thread.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import {
+  GuildCacheJSON,
+  GuildDiscordJSON,
+  GuildRaw,
+  GuildRawGateway,
+  GuildStorageJSON,
+  GuildType,
+} from "./interfaces/Guild.js";
+import ClientType from "src/interfaces/Client.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
  */
-declare class Guild {
+declare class Guild implements GuildType {
   #private;
   /**
    * Creates the structure for a guild.
@@ -16,8 +26,13 @@ declare class Guild {
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
    */
   constructor(
-    client: any,
-    data: any,
+    client: ClientType,
+    data:
+      | GuildRaw
+      | GuildRawGateway
+      | GuildCacheJSON
+      | GuildStorageJSON
+      | GuildDiscordJSON,
     {
       nocache,
     }?: {
@@ -162,7 +177,6 @@ declare class Guild {
    * Server boost level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
    * @readonly
-   * @type {Number}
    * @public
    */
   get premiumTier(): 1 | 0 | 2 | 3 | null;
@@ -468,7 +482,7 @@ declare class Guild {
    * @throws {TypeError}
    * @static
    */
-  static deleteWebhook(client: any, webhookId: any): Promise<void>;
+  static deleteWebhook(client: ClientType, webhookId: any): Promise<void>;
   /**
    * Creates a webhook in the given channel with the name "Gluon".
    * @param {Client} client The client instance.
@@ -483,7 +497,7 @@ declare class Guild {
    * @static
    */
   static createWebhook(
-    client: any,
+    client: ClientType,
     channelId: any,
     {
       name,
@@ -504,7 +518,11 @@ declare class Guild {
    * @throws {TypeError}
    * @static
    */
-  static modifyWebhook(client: any, webhookId: any, { channelId }?: any): any;
+  static modifyWebhook(
+    client: ClientType,
+    webhookId: any,
+    { channelId }?: any,
+  ): any;
   /**
    * Fetches a webhook by the webhook's id.
    * @param {Client} client The client instance.
@@ -516,7 +534,7 @@ declare class Guild {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: any, webhookId: any): any;
+  static fetchWebhook(client: ClientType, webhookId: any): any;
   /**
    * Posts a webhook with the provided webhook id and token.
    * @param {Client} client The client instance.
@@ -536,7 +554,7 @@ declare class Guild {
    * @static
    */
   static postWebhook(
-    client: any,
+    client: ClientType,
     { id, token }: any,
     { content, embeds, components, files }?: any,
   ): Promise<void>;
@@ -576,12 +594,10 @@ declare class Guild {
   [util.inspect.custom](): string;
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: TO_JSON_TYPES_ENUM):
     | {
         id: string;
         name: any;
@@ -590,11 +606,12 @@ declare class Guild {
         joined_at: number;
         unavailable: boolean;
         member_count: any;
+        premium_tier: number | null;
         preferred_locale: any;
         _cache_options: GuildCacheOptions | undefined;
         _attributes: any;
-        system_channel_id: string | undefined;
-        rules_channel_id: string | undefined;
+        system_channel_id: string | null;
+        rules_channel_id: string | null;
         premium_subscription_count: any;
         members: any;
         channels: any;
@@ -602,7 +619,6 @@ declare class Guild {
         roles: any;
         emojis: any;
         invites: any;
-        premium_tier?: undefined;
         system_channel_flags?: undefined;
         premium_progress_bar_enabled?: undefined;
         default_message_notifications?: undefined;
@@ -622,8 +638,8 @@ declare class Guild {
         member_count: any;
         preferred_locale: any;
         system_channel_flags: number;
-        system_channel_id: string | undefined;
-        rules_channel_id: string | undefined;
+        system_channel_id: string | null;
+        rules_channel_id: string | null;
         premium_subscription_count: any;
         premium_progress_bar_enabled: boolean;
         default_message_notifications: number | null;

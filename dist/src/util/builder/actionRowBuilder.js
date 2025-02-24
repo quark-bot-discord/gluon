@@ -29,7 +29,9 @@ class ActionRow {
    */
   toJSON(
     format,
-    { suppressValidation = false } = { suppressValidation: false },
+    { suppressValidation = false } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (this.components.length > LIMITS.MAX_ACTION_ROW_BUTTONS)

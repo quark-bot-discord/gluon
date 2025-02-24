@@ -83,7 +83,6 @@ class MessageReactionManager {
      * @private
      */
     __classPrivateFieldSet(this, _MessageReactionManager_cache, {}, "f");
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     for (const [messageReaction, messageReactionValue] of Object.entries(
       existingReactions,
     ))
@@ -117,11 +116,9 @@ class MessageReactionManager {
       throw new TypeError("GLUON: Emoji must be a string.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object.");
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (
       !__classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[emoji]
     )
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[emoji] =
         new Reaction(
           __classPrivateFieldGet(this, _MessageReactionManager__client, "f"),
@@ -134,7 +131,6 @@ class MessageReactionManager {
             ).id,
           },
         );
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[
       emoji
     ]._addReactor(userId);
@@ -152,15 +148,12 @@ class MessageReactionManager {
       throw new TypeError("GLUON: User ID must be a string.");
     if (typeof emoji !== "string")
       throw new TypeError("GLUON: Emoji must be a string.");
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (
       __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[emoji]
     ) {
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[
         emoji
       ]._removeReactor(userId);
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       if (
         __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[emoji]
           .count == 0
@@ -182,7 +175,6 @@ class MessageReactionManager {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         const messageReactions = {};
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         for (const [reaction, reactionData] of Object.entries(
           __classPrivateFieldGet(this, _MessageReactionManager_cache, "f"),
         ))
@@ -195,10 +187,7 @@ class MessageReactionManager {
           Object.values(
             __classPrivateFieldGet(this, _MessageReactionManager_cache, "f"),
           ),
-        ).map((o) =>
-          // @ts-expect-error TS(2571): Object is of type 'unknown'.
-          o.toJSON(format),
-        );
+        ).map((o) => o.toJSON(format));
       }
     }
   }

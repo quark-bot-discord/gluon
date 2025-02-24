@@ -8,7 +8,7 @@ import Reaction from "../structures/Reaction.js";
 class MessageReactionManager {
   #_client;
   #guild;
-  #cache;
+  #cache: { [key: string]: Reaction };
   /**
    * Creates a message reaction manager.
    * @param {Object} existingReactions Existing reactions for a message.
@@ -41,7 +41,6 @@ class MessageReactionManager {
      */
     this.#cache = {};
 
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     for (const [messageReaction, messageReactionValue] of Object.entries(
       existingReactions,
     ))
@@ -71,14 +70,11 @@ class MessageReactionManager {
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object.");
 
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (!this.#cache[emoji])
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       this.#cache[emoji] = new Reaction(this.#_client, data, {
         guildId: this.#guild.id,
       });
 
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     this.#cache[emoji]._addReactor(userId);
   }
 
@@ -97,12 +93,9 @@ class MessageReactionManager {
     if (typeof emoji !== "string")
       throw new TypeError("GLUON: Emoji must be a string.");
 
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (this.#cache[emoji]) {
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       this.#cache[emoji]._removeReactor(userId);
 
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       if (this.#cache[emoji].count == 0) delete this.#cache[emoji];
     }
   }
@@ -118,16 +111,14 @@ class MessageReactionManager {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
-        const messageReactions = {};
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+        const messageReactions: { [key: string]: Reaction } = {};
         for (const [reaction, reactionData] of Object.entries(this.#cache))
-          messageReactions[reaction] = reactionData.toJSON(format);
+          messageReactions[reaction] = (reactionData as any).toJSON(format);
         return messageReactions;
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return Array.from(Object.values(this.#cache)).map((o) =>
-          // @ts-expect-error TS(2571): Object is of type 'unknown'.
           o.toJSON(format),
         );
       }

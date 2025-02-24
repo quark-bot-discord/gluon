@@ -8,6 +8,7 @@ import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
 import Client from "../Client.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * Represents a text channel within Discord.
@@ -68,7 +69,7 @@ class TextChannel extends Channel {
 
     if (data.messages)
       for (let i = 0; i < data.messages.length; i++)
-        new Message(this.#_client, data.messages[i], {
+        new Message(this.#_client as ClientType, data.messages[i], {
           channelId: this.id,
           guildId,
         });

@@ -97,7 +97,17 @@ declare class Poll {
         expiry: number | null;
         allow_multiselect: any;
         layout_type: any;
-        _results: {};
+        _results:
+          | {
+              [key: string]: string[];
+            }
+          | {
+              answer_counts: {
+                id: number;
+                count: any;
+                me_voted: any;
+              }[];
+            };
         results?: undefined;
       }
     | {
@@ -106,7 +116,17 @@ declare class Poll {
         expiry: string | null;
         allow_multiselect: any;
         layout_type: any;
-        results: {};
+        results:
+          | {
+              [key: string]: string[];
+            }
+          | {
+              answer_counts: {
+                id: number;
+                count: any;
+                me_voted: any;
+              }[];
+            };
         _results?: undefined;
       };
 }

@@ -39,6 +39,16 @@ declare class MessagePollManager {
    * @public
    * @method
    */
-  toJSON(format: any): {};
+  toJSON(format: any):
+    | {
+        [key: string]: string[];
+      }
+    | {
+        answer_counts: {
+          id: number;
+          count: any;
+          me_voted: any;
+        }[];
+      };
 }
 export default MessagePollManager;

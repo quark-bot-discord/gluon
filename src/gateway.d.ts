@@ -1,20 +1,21 @@
 export interface Heartbeat {
-  op: 1;
+  op: GatewayOpcode.HEARTBEAT;
   d: number | null;
 }
 
 export interface Identify {
-  op: 2;
+  op: GatewayOpcode.IDENTIFY;
   d: {
     token: string;
+    compress?: boolean;
     properties: {
       os: string;
       browser: string;
       device: string;
     };
-    large_threshold: number;
-    shard: number[];
-    presence: {
+    large_threshold?: number;
+    shard?: [number, number];
+    presence?: {
       activities: {
         name: string;
         type: number;
@@ -28,7 +29,7 @@ export interface Identify {
 }
 
 export interface Resume {
-  op: 6;
+  op: GatewayOpcode.RESUME;
   d: {
     token: string;
     session_id: string;
@@ -37,15 +38,16 @@ export interface Resume {
 }
 
 export interface UpdatePresence {
-  op: 3;
+  op: GatewayOpcode.PRESENCE_UPDATE;
   d: {
-    since: number | null;
+    since: number?;
     activities: {
       name: string;
-      type: number;
-      state?: string;
+      type: PresenceType;
+      state?: string?;
+      url?: string?;
     }[];
-    status: string;
+    status: PresenceStatus;
     afk: boolean;
   };
 }
@@ -54,4 +56,25 @@ export type GatewayPayload = Heartbeat | Identify | Resume | UpdatePresence;
 
 export type PresenceStatus = "online" | "idle" | "dnd" | "invisible";
 
-export type PresenceType = 0 | 1 | 2 | 3 | 4;
+export enum PresenceType {
+  PLAYING = 0,
+  STREAMING = 1,
+  LISTENING = 2,
+  WATCHING = 3,
+  CUSTOM = 4,
+  COMPETING = 5,
+}
+
+export enum GatewayOpcode {
+  DISPATCH = 0,
+  HEARTBEAT = 1,
+  IDENTIFY = 2,
+  PRESENCE_UPDATE = 3,
+  VOICE_STATE_UPDATE = 4,
+  RESUME = 6,
+  RECONNECT = 7,
+  REQUEST_GUILD_MEMBERS = 8,
+  INVALID_SESSION = 9,
+  HELLO = 10,
+  HEARTBEAT_ACK = 11,
+}

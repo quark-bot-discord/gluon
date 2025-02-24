@@ -28,6 +28,7 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
+import ClientType from "./interfaces/Client.js";
 
 /**
  * A client user, which is able to handle multiple shards.
@@ -284,7 +285,7 @@ class Client extends EventsEmitter {
 
     if (initCache?.guilds)
       for (let i = 0; i < initCache.guilds.length; i++)
-        new Guild(this, initCache.guilds[i]);
+        new Guild(this as ClientType, initCache.guilds[i]);
 
     this.#softRestartFunction = softRestartFunction;
   }

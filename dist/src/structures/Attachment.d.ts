@@ -1,56 +1,68 @@
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import {
+  AttachmentCacheJSON,
+  AttachmentDiscordJSON,
+  AttachmentRaw,
+  AttachmentStorageJSON,
+  AttachmentType,
+} from "./interfaces/Attachment.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
  */
-declare class Attachment {
+declare class Attachment implements AttachmentType {
   #private;
   /**
    * Creates a structure for an attachment.
-   * @param {Client} client The client instance.
-   * @param {Object} data Attachment data from Discord.
-   * @param {Object} options Additional options for the attachment.
-   * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
-  constructor(client: any, data: any, { channelId }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | AttachmentRaw
+      | AttachmentStorageJSON
+      | AttachmentCacheJSON
+      | AttachmentDiscordJSON,
+    {
+      channelId,
+    }: {
+      channelId: Snowflake;
+    },
+  );
   /**
    * The id of the attachment.
-   * @type {String}
    * @readonly
    * @public
    */
   get id(): string;
   /**
    * The name of the file.
-   * @type {String}
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string;
   /**
    * The size of the file.
-   * @type {Number}
    * @readonly
    * @public
    */
-  get size(): any;
+  get size(): number;
   /**
    * The url to the file.
-   * @type {String}
    * @readonly
    * @public
    */
   get url(): string | null;
   /**
    * The channel that this attachment belongs to.
-   * @type {String}
    * @readonly
    * @public
    */
-  get channelId(): string | undefined;
+  get channelId(): string | null;
   /**
    * Fetches the data of the attachment.
-   * @returns {Promise<ArrayBuffer>}
    * @public
    */
   fetchData(): Promise<ArrayBuffer>;
@@ -66,22 +78,18 @@ declare class Attachment {
   [util.inspect.custom](): string;
   /**
    * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
    */
-  toJSON(format: any):
+  toJSON(format: TO_JSON_TYPES_ENUM):
     | {
         id: string;
-        filename: any;
-        size: any;
+        filename: string;
+        size: number;
         url?: undefined;
       }
     | {
         id: string;
-        filename: any;
-        size: any;
+        filename: string;
+        size: number;
         url: string | null;
       };
 }

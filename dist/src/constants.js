@@ -442,10 +442,13 @@ export const LIMITS = {
 };
 export const COMMAND_NAME_REGEX =
   /^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u;
-export const TO_JSON_TYPES_ENUM = {
-  DISCORD_FORMAT: 1, // default
-  CACHE_FORMAT: 2,
-  STORAGE_FORMAT: 3,
-};
+export var TO_JSON_TYPES_ENUM;
+(function (TO_JSON_TYPES_ENUM) {
+  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["DISCORD_FORMAT"] = 1)] =
+    "DISCORD_FORMAT";
+  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["CACHE_FORMAT"] = 2)] = "CACHE_FORMAT";
+  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["STORAGE_FORMAT"] = 3)] =
+    "STORAGE_FORMAT";
+})(TO_JSON_TYPES_ENUM || (TO_JSON_TYPES_ENUM = {}));
 export const GLUON_VERSION = packageJSON.version;
 //# sourceMappingURL=constants.js.map

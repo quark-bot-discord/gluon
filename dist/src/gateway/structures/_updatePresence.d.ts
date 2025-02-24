@@ -1,8 +1,9 @@
+import { PresenceStatus, PresenceType } from "src/gateway.js";
 declare function _updatePresence(
-  name: any,
-  type?: number,
-  status?: string,
+  name: string,
+  type?: PresenceType,
+  status?: PresenceStatus,
   afk?: boolean,
-  since?: null,
+  since?: number | null,
 ): Buffer<ArrayBufferLike>;
 export default _updatePresence;
