@@ -166,6 +166,13 @@ declare class Channel {
      */
     public readonly get rateLimitPerUser(): number | null;
     /**
+     * The position of the channel.
+     * @type {Number?}
+     * @readonly
+     * @public
+     */
+    public readonly get position(): number | null;
+    /**
      * The cache options for this channel.
      * @type {ChannelCacheOptions}
      * @readonly
