@@ -6,5 +6,4 @@ export default decryptStructure;
  * @returns {Message}
  */
 declare function decryptStructure(encryptedStructure: any, ...decryptionKeys: string[]): Message;
-import Message from "../../structures/Message.js";
 //# sourceMappingURL=decryptStructure.d.ts.map
