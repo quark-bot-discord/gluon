@@ -5,5 +5,4 @@ export default checkMemberPermissions;
  * @returns {String} The permissions of the member.
  */
 declare function checkMemberPermissions(roles: Role[]): string;
-import Role from "../../structures/Role.js";
 //# sourceMappingURL=checkMemberPermissions.d.ts.map
