@@ -153,10 +153,10 @@ declare class Member {
     /**
      * The member's roles.
      * @readonly
-     * @type {Array<Role>}
+     * @type {Array<Role> | null}
      * @public
      */
-    public readonly get roles(): Array<Role>;
+    public readonly get roles(): Array<Role> | null;
     /**
      * The position of the member's highest role.
      * @readonly
@@ -167,10 +167,10 @@ declare class Member {
     /**
      * The overall calculated permissions for this member.
      * @readonly
-     * @type {String}
+     * @type {String?}
      * @public
      */
-    public readonly get permissions(): string;
+    public readonly get permissions(): string | null;
     /**
      * Whether the member has joined the guild before.
      * @readonly
