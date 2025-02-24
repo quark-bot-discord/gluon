@@ -149,6 +149,17 @@ describe("Channel", function () {
     });
   });
 
+  context("check position", function () {
+    it("should have the correct position", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      expect(channel.position).to.equal(TEST_DATA.TEXT_CHANNEL.position);
+    });
+  });
+
   context("check nsfw", function () {
     it("should have the correct nsfw", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -278,6 +289,7 @@ describe("Channel", function () {
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
+        position: TEST_DATA.TEXT_CHANNEL.position,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         permission_overwrites: [],
         topic: TEST_DATA.TEXT_CHANNEL.topic,
@@ -298,6 +310,7 @@ describe("Channel", function () {
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
+        position: TEST_DATA.TEXT_CHANNEL.position,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         permission_overwrites: [],
         topic: TEST_DATA.TEXT_CHANNEL.topic,
@@ -310,6 +323,7 @@ describe("Channel", function () {
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
+        position: TEST_DATA.TEXT_CHANNEL.position,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         permission_overwrites: [],
         topic: TEST_DATA.TEXT_CHANNEL.topic,
@@ -320,6 +334,7 @@ describe("Channel", function () {
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
         parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
+        position: TEST_DATA.TEXT_CHANNEL.position,
         rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
         permission_overwrites: [],
         topic: TEST_DATA.TEXT_CHANNEL.topic,
