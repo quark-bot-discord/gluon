@@ -29,6 +29,7 @@ class Channel {
   #_attributes;
   #_cacheOptions;
   #messages;
+  #position;
   /**
    * Creates the base structure for a channel.
    * @param {Client} client The client instance.
@@ -131,6 +132,21 @@ class Channel {
       typeof existing.rateLimitPerUser == "number"
     )
       this.#rate_limit_per_user = existing.rateLimitPerUser;
+
+    /**
+     * The position of the channel.
+     * @type {Number?}
+     * @private
+     */
+    if (typeof data.position == "number") {
+      this.#position = data.position;
+    } else if (
+      typeof data.position != "number" &&
+      existing &&
+      typeof existing.position == "number"
+    ) {
+      this.#position = existing.position;
+    }
 
     if (typeof data.parent_id == "string") {
       /**
@@ -330,6 +346,16 @@ class Channel {
   }
 
   /**
+   * The position of the channel.
+   * @type {Number?}
+   * @readonly
+   * @public
+   */
+  get position() {
+    return this.#position;
+  }
+
+  /**
    * The cache options for this channel.
    * @type {ChannelCacheOptions}
    * @readonly
@@ -511,6 +537,7 @@ class Channel {
           name: this.name,
           topic: this.topic,
           rate_limit_per_user: this.rateLimitPerUser,
+          position: this.position,
           parent_id: this.parentId ?? undefined,
           _attributes: this.#_attributes,
           _cacheOptions: this._cacheOptions.toJSON(format),
@@ -528,6 +555,7 @@ class Channel {
           name: this.name,
           topic: this.topic,
           rate_limit_per_user: this.rateLimitPerUser,
+          position: this.position,
           parent_id: this.parentId ?? undefined,
           nsfw: this.nsfw,
           messages: this.messages.toJSON(format),
