@@ -140,7 +140,7 @@ class Embed {
    * @param {String?} [data.video.url] The video url.
    * @constructor
    */
-  constructor(data: any) {
+  constructor(data?: any) {
     this.fields = [];
     if (data) {
       if (data.title) this.setTitle(data.title);
