@@ -274,7 +274,7 @@ class Member {
   /**
    * The member's roles.
    * @readonly
-   * @type {Array<Role>}
+   * @type {Array<Role> | null}
    * @public
    */
   get roles() {
@@ -322,11 +322,15 @@ class Member {
   /**
    * The overall calculated permissions for this member.
    * @readonly
-   * @type {String}
+   * @type {String?}
    * @public
    */
   get permissions() {
     if (this.id == this.guild.ownerId) return PERMISSIONS.ADMINISTRATOR;
+
+    if (!this.roles) {
+      return null;
+    }
 
     return checkMemberPermissions(this.roles);
   }
