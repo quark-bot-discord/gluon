@@ -1,5 +1,4 @@
 import decryptText from "../general/decryptText.js";
-import Message from "../../structures/Message.js";
 import getKeyIv from "./getKeyIv.js";
 
 /**
