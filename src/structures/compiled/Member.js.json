@@ -1927,7 +1927,7 @@
         "scope": "inner"
     },
     {
-        "comment": "/**\n   * The overall calculated permissions for this member.\n   * @readonly\n   * @type {BigInt}\n   * @public\n   */",
+        "comment": "/**\n   * The overall calculated permissions for this member.\n   * @readonly\n   * @type {String}\n   * @public\n   */",
         "meta": {
             "range": [
                 8484,
@@ -1951,7 +1951,7 @@
         "readonly": true,
         "type": {
             "names": [
-                "BigInt"
+                "String"
             ]
         },
         "access": "public",
