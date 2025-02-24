@@ -1,6 +1,5 @@
-import erlpack from "erlpack";
-
-function _heartbeat(d) {
+async function _heartbeat(d) {
+  const erlpack = await import("erlpack");
   return erlpack.pack({
     op: 1,
     d: d ? d : null,

@@ -1,7 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import WebSocket from "ws";
-import erlpack from "erlpack";
-import ZlibSync from "zlib-sync";
 import _heartbeat from "./structures/_heartbeat.js";
 import _identify from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
@@ -73,7 +71,9 @@ class Shard {
     this.#lastHeartbeatTimestamp = null;
     this.#latencyMs = null;
 
-    this.#addListeners();
+    this.#addListeners().then(() => {
+      console.info("Listeners added");
+    });
   }
 
   #handleIncoming(data) {
@@ -205,7 +205,7 @@ class Shard {
   updatePresence(name, type, status, afk, since) {
     if (this.#ws.readyState != WebSocket.OPEN) return;
 
-    this.#ws.send(_updatePresence(name, type, status, afk, since));
+    _updatePresence(name, type, status, afk, since).then(this.#ws.send);
   }
 
   getSessionData() {
@@ -236,7 +236,7 @@ class Shard {
       this.#lastHeartbeatTimestamp = Date.now();
     }
 
-    this.#ws.send(_heartbeat(this.#_s));
+    _heartbeat(this.#_s).then(this.#ws.send);
     // we'll close the websocket if a heartbeat ACK is not received
     // unless its us responding to an opcode 1
     if (response != true)
@@ -257,13 +257,11 @@ class Shard {
       `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.#_client.totalShards}) and intents ${this.#_client.intents}`,
     );
 
-    this.#ws.send(
-      _identify(
-        this.#token,
-        [this.shard, this.#_client.totalShards],
-        this.#_client.intents,
-      ),
-    );
+    _identify(
+      this.#token,
+      [this.shard, this.#_client.totalShards],
+      this.#_client.intents,
+    ).then(this.#ws.send);
   }
 
   #reconnect() {
@@ -289,16 +287,18 @@ class Shard {
       `Resuming with token ${this.#token}, session id ${this.#_sessionId} and sequence ${this.#_s}`,
     );
 
-    this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
+    _resume(this.#token, this.#_sessionId, this.#_s).then(this.#ws.send);
 
     this.#resuming = false;
   }
 
-  #addListeners() {
+  async #addListeners() {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       "Adding websocket listeners",
     );
+
+    const ZlibSync = await import("zlib-sync");
 
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
@@ -354,12 +354,14 @@ class Shard {
             this.#shutDownWebsocket(data);
           }, 10000);
 
-          this.#addListeners();
+          this.#addListeners().then(() => {
+            console.info("Listeners added");
+          });
         }, this.#retries * 1000);
       else process.exit(1);
     });
 
-    this.#ws.on("message", (data) => {
+    this.#ws.on("message", async (data) => {
       /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
 
       if (data instanceof ArrayBuffer) data = Buffer.from(data);
@@ -368,7 +370,7 @@ class Shard {
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
         this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
         if (this.zlib.err) throw new Error(this.zlib.msg);
-
+        const erlpack = await import("erlpack");
         data = Buffer.from(this.zlib.result);
         return this.#handleIncoming(erlpack.unpack(data));
       } else this.zlib.push(data, false);

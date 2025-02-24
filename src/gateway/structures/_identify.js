@@ -1,4 +1,3 @@
-import erlpack from "erlpack";
 import { NAME, GLUON_VERSION } from "../../constants.js";
 
 /**
@@ -8,13 +7,14 @@ import { NAME, GLUON_VERSION } from "../../constants.js";
  * @param {Number} intents The intents to use.
  * @returns {Buffer}
  */
-function _identify(token, shard, intents) {
+async function _identify(token, shard, intents) {
   if (typeof token !== "string")
     throw new TypeError("GLUON: Token must be a string.");
   if (!Array.isArray(shard))
     throw new TypeError("GLUON: Shard must be an array.");
   if (typeof intents !== "number")
     throw new TypeError("GLUON: Intents must be a number.");
+  const erlpack = await import("erlpack");
   return erlpack.pack({
     op: 2,
     d: {
