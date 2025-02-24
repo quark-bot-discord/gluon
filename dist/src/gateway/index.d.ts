@@ -16,7 +16,7 @@ declare class Shard {
         sequence: any;
         resumeGatewayUrl: any;
     };
-    zlib: any;
+    zlib: import("zlib-sync").Inflate;
     terminateSocketTimeout: NodeJS.Timeout;
     resetRetries(): void;
     /**
