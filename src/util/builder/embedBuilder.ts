@@ -226,7 +226,7 @@ class Embed {
    * @method
    * @public
    */
-  setTimestamp(timestamp: any) {
+  setTimestamp(timestamp?: any) {
     if (timestamp) this.timestamp = timestamp * 1000;
     else this.timestamp = Date.now();
 
@@ -281,7 +281,7 @@ class Embed {
    * @method
    * @public
    */
-  setFooter(text: any, icon: any) {
+  setFooter(text: any, icon?: any) {
     if (!text || typeof text !== "string")
       throw new TypeError("GLUON: Embed footer text must be provided.");
 

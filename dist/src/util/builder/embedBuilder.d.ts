@@ -156,7 +156,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setTimestamp(timestamp: any): this;
+  setTimestamp(timestamp?: any): this;
   /**
    * Sets the color of the embed.
    * @param {String | Number} color The color.
@@ -184,7 +184,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setFooter(text: any, icon: any): this;
+  setFooter(text: any, icon?: any): this;
   /**
    * Sets the embed author info.
    * @param {String?} name The embed author.
