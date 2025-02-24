@@ -10,7 +10,6 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
-import Client from "../Client.js";
 import ClientType from "src/interfaces/Client.js";
 
 /**
@@ -40,7 +39,7 @@ class Channel {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
   constructor(client: any, data: any, { guildId }: any = {}) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -425,7 +424,7 @@ class Channel {
    * @throws {TypeError}
    */
   static async follow(client: any, channelId: any, followChannelId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
@@ -455,7 +454,7 @@ class Channel {
    * @method
    */
   static fetchWebhooks(client: any, channelId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");

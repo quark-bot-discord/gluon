@@ -46,7 +46,6 @@ var _VoiceChannel__client,
   _VoiceChannel_bitrate,
   _VoiceChannel_user_limit,
   _VoiceChannel_rtc_region;
-import Client from "../Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
@@ -70,7 +69,7 @@ class VoiceChannel extends Channel {
     _VoiceChannel_bitrate.set(this, void 0);
     _VoiceChannel_user_limit.set(this, void 0);
     _VoiceChannel_rtc_region.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

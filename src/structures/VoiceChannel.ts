@@ -1,5 +1,4 @@
 import ClientType from "src/interfaces/Client.js";
-import Client from "../Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
@@ -29,7 +28,7 @@ class VoiceChannel extends Channel {
   ) {
     super(client, data, { guildId });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

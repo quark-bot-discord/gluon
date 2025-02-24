@@ -49,7 +49,6 @@ var _CategoryChannel__client,
   _CategoryChannel_name,
   _CategoryChannel__attributes,
   _CategoryChannel_permission_overwrites;
-import Client from "../Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
@@ -71,7 +70,7 @@ class CategoryChannel {
     _CategoryChannel_name.set(this, void 0);
     _CategoryChannel__attributes.set(this, void 0);
     _CategoryChannel_permission_overwrites.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

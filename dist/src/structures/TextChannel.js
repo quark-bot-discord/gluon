@@ -52,7 +52,6 @@ import Channel from "./Channel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import Client from "../Client.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
@@ -71,7 +70,7 @@ class TextChannel extends Channel {
   constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
     super(client, data, { guildId });
     _TextChannel__client.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
