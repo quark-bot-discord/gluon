@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
@@ -18,7 +17,7 @@ class GuildEmojisManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildEmojisManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -71,9 +70,8 @@ class GuildEmojisManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static async fetchEmoji(client: any, guildId: any, emojiId: any) {
-    if (!(client instanceof Client)) {
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
-    }
     if (typeof guildId !== "string") {
       throw new TypeError("GLUON: Guild ID must be a string.");
     }
@@ -104,7 +102,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getEmoji(client: any, guildId: any, emojiId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");

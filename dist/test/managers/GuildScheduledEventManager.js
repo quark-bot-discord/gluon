@@ -29,7 +29,7 @@ describe("GuildScheduledEventManager", function () {
     it("should throw an error if client is not a Client instance", function () {
       expect(() => new GuildScheduledEventManager()).to.throw(
         TypeError,
-        "GLUON: Client must be an instance of Client.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if guild is not a Guild instance", function () {

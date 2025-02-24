@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -9,7 +8,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildScheduledEventManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");

@@ -45,7 +45,6 @@ var __classPrivateFieldGet =
 var _ChannelMessageManager__client,
   _ChannelMessageManager_channel,
   _ChannelMessageManager_guild;
-import Client from "../Client.js";
 import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -69,7 +68,7 @@ class ChannelMessageManager extends BaseCacheManager {
     _ChannelMessageManager__client.set(this, void 0);
     _ChannelMessageManager_channel.set(this, void 0);
     _ChannelMessageManager_guild.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -231,7 +230,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getCacheManager(client, guildId, channelId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -252,7 +251,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getMessage(client, guildId, channelId, messageId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -281,8 +280,8 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static async fetchMessage(client, guildId, channelId, messageId) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")
@@ -354,8 +353,8 @@ class ChannelMessageManager extends BaseCacheManager {
     channelId,
     { around, before, after, limit } = {},
   ) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")
@@ -455,7 +454,7 @@ class ChannelMessageManager extends BaseCacheManager {
     messages,
     { reason } = {},
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");

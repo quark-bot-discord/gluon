@@ -23,7 +23,7 @@ describe("MessagePollManager", function () {
     it("should throw an error if client is not a Client instance", function () {
       expect(() => new MessagePollManager()).to.throw(
         TypeError,
-        "GLUON: Client must be an instance of Client.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if existingResponses is not an object", function () {

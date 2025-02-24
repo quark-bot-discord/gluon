@@ -354,7 +354,7 @@ describe("ChannelMessageManager", function () {
       const fetchMessage = ChannelMessageManager.fetchMessage();
       await expect(fetchMessage).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error when the guildId is not a string", async function () {
@@ -426,7 +426,7 @@ describe("ChannelMessageManager", function () {
       const fetchMessages = ChannelMessageManager.fetchMessages();
       await expect(fetchMessages).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error when the guildId is not a string", async function () {

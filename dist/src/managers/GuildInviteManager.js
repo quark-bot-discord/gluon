@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildInviteManager__client, _GuildInviteManager_guild;
-import Client from "../Client.js";
 import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -61,7 +60,7 @@ class GuildInviteManager extends BaseCacheManager {
     super(client, { structureType: GuildInviteManager });
     _GuildInviteManager__client.set(this, void 0);
     _GuildInviteManager_guild.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");

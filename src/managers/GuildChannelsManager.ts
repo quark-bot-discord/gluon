@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import CategoryChannel from "../structures/CategoryChannel.js";
 import Channel from "../structures/Channel.js";
 import TextChannel from "../structures/TextChannel.js";
@@ -23,7 +22,7 @@ class GuildChannelsManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildChannelsManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -100,7 +99,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
    */
   static getChannel(client: any, guildId: any, channelId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -120,7 +119,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @method
    */
   static getCacheManager(client: any, guildId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -139,8 +138,8 @@ class GuildChannelsManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static async fetchChannel(client: any, guildId: any, channelId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")

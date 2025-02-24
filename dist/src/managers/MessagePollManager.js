@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _MessagePollManager__client, _MessagePollManager_cache;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 /**
  * Manages a poll for a message.
@@ -56,8 +55,8 @@ class MessagePollManager {
   constructor(client, existingResponses = {}) {
     _MessagePollManager__client.set(this, void 0);
     _MessagePollManager_cache.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof existingResponses !== "object")
       throw new TypeError("GLUON: Existing responses must be an object.");
     /**

@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
@@ -18,7 +17,7 @@ class GuildRoleManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildRoleManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -96,8 +95,8 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getRole(client: any, guildId: any, roleId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof roleId !== "string")
@@ -116,8 +115,8 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getCacheManager(client: any, guildId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     return GuildManager.getGuild(client, guildId).roles;
@@ -135,8 +134,8 @@ class GuildRoleManager extends BaseCacheManager {
    * @static
    */
   static async fetchRole(client: any, guildId: any, roleId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof roleId !== "undefined" && typeof roleId !== "string")

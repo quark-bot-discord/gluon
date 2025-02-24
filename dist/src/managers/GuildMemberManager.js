@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildMemberManager__client, _GuildMemberManager_guild;
-import Client from "../Client.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 /**
@@ -59,7 +58,7 @@ class GuildMemberManager extends BaseCacheManager {
     super(client, { structureType: GuildMemberManager });
     _GuildMemberManager__client.set(this, void 0);
     _GuildMemberManager_guild.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -141,7 +140,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @returns {GuildMemberManager}
    */
   static getCacheManager(client, guildId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -160,8 +159,8 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    */
   static async fetchMember(client, guildId, userId) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -192,8 +191,8 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getMember(client, guildId, userId) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -216,7 +215,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    */
   static async search(client, guildId, query) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");

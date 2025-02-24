@@ -62,17 +62,12 @@ describe("GuildChannelsManager", function () {
     });
     it("should throw an error when the client is not a Client instance", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const invalidClient = {};
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       await expect(
-        GuildChannelsManager.fetchChannel(
-          invalidClient,
-          guild.id,
-          TEST_DATA.CHANNEL_ID,
-        ),
+        GuildChannelsManager.fetchChannel(null, guild.id, TEST_DATA.CHANNEL_ID),
       ).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error when the guildId is not a string", async function () {
@@ -127,10 +122,9 @@ describe("GuildChannelsManager", function () {
     });
     it("should throw an error when the client is not a Client instance", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const invalidClient = {};
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(() => {
-        GuildChannelsManager.getCacheManager(invalidClient, guild.id);
+        GuildChannelsManager.getCacheManager(null, guild.id);
       }).to.throw(TypeError, "GLUON: Client must be a Client instance.");
     });
     it("should throw an error when the guildId is not a string", function () {
@@ -156,14 +150,9 @@ describe("GuildChannelsManager", function () {
     });
     it("should throw an error when the client is not a Client instance", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const invalidClient = {};
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(() => {
-        GuildChannelsManager.getChannel(
-          invalidClient,
-          guild.id,
-          TEST_DATA.CHANNEL_ID,
-        );
+        GuildChannelsManager.getChannel(null, guild.id, TEST_DATA.CHANNEL_ID);
       }).to.throw(TypeError, "GLUON: Client must be a Client instance.");
     });
     it("should throw an error when the guildId is not a string", function () {

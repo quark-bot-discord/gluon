@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildChannelsManager__client, _GuildChannelsManager_guild;
-import Client from "../Client.js";
 import CategoryChannel from "../structures/CategoryChannel.js";
 import Channel from "../structures/Channel.js";
 import TextChannel from "../structures/TextChannel.js";
@@ -65,7 +64,7 @@ class GuildChannelsManager extends BaseCacheManager {
     super(client, { structureType: GuildChannelsManager });
     _GuildChannelsManager__client.set(this, void 0);
     _GuildChannelsManager_guild.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -140,7 +139,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
    */
   static getChannel(client, guildId, channelId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -159,7 +158,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @method
    */
   static getCacheManager(client, guildId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -177,8 +176,8 @@ class GuildChannelsManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static async fetchChannel(client, guildId, channelId) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof channelId !== "string")

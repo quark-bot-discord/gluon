@@ -126,7 +126,7 @@ describe("GuildMemberManager", function () {
     it("should throw an error if client is not a Client instance", async function () {
       await expect(GuildMemberManager.fetchMember()).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if guildId is not a string", async function () {

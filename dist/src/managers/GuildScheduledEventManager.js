@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildScheduledEventManager__client, _GuildScheduledEventManager_guild;
-import Client from "../Client.js";
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 class GuildScheduledEventManager extends BaseCacheManager {
@@ -51,7 +50,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
     super(client, { structureType: GuildScheduledEventManager });
     _GuildScheduledEventManager__client.set(this, void 0);
     _GuildScheduledEventManager_guild.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");

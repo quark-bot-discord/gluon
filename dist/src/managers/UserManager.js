@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _UserManager__client;
-import Client from "../Client.js";
 import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 /**
@@ -57,7 +56,7 @@ class UserManager extends BaseCacheManager {
   constructor(client) {
     super(client, { structureType: UserManager });
     _UserManager__client.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     /**
      * The client instance.

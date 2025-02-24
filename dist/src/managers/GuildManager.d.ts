@@ -26,7 +26,7 @@ declare class GuildManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @returns {GuildManager}
    */
-  static getCacheManager(client: any): GuildManager;
+  static getCacheManager(client: any): any;
   /**
    * Gets a guild from the cache.
    * @param {Client} client The client instance.

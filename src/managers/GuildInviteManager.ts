@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -19,7 +18,7 @@ class GuildInviteManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildInviteManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");

@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -17,7 +16,7 @@ class GuildMemberManager extends BaseCacheManager {
   constructor(client: any, guild: any) {
     super(client, { structureType: GuildMemberManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild)
       throw new TypeError("GLUON: Guild must be a valid guild instance.");
@@ -103,7 +102,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @returns {GuildMemberManager}
    */
   static getCacheManager(client: any, guildId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
@@ -123,8 +122,8 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    */
   static async fetchMember(client: any, guildId: any, userId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -159,8 +158,8 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getMember(client: any, guildId: any, userId: any) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client is not a Client instance.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -184,7 +183,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    */
   static async search(client: any, guildId: any, query: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");

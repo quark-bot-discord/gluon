@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 
@@ -15,7 +14,7 @@ class UserManager extends BaseCacheManager {
   constructor(client: any) {
     super(client, { structureType: UserManager });
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
 
     /**

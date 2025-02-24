@@ -97,7 +97,7 @@ describe("GuildRoleManager", function () {
     it("should throw an error if client is not a Client instance", function () {
       expect(() => GuildRoleManager.getCacheManager()).to.throw(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if guildId is not a string", function () {
@@ -121,7 +121,7 @@ describe("GuildRoleManager", function () {
     it("should throw an error if client is not a Client instance", function () {
       expect(() => GuildRoleManager.getRole()).to.throw(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if guildId is not a string", function () {
@@ -178,12 +178,12 @@ describe("GuildRoleManager", function () {
       expect(request).to.have.been.calledOnce;
       expect(request).to.have.been.calledWith("getRoles", [TEST_DATA.GUILD_ID]);
     });
-    it("should throw an error if  client is not a Client instance", async function () {
+    it("should throw an error if client is not a Client instance", async function () {
       await expect(
-        GuildRoleManager.fetchRole({}, TEST_DATA.GUILD_ID, TEST_DATA.ROLE_ID),
+        GuildRoleManager.fetchRole(null, TEST_DATA.GUILD_ID, TEST_DATA.ROLE_ID),
       ).to.be.rejectedWith(
         TypeError,
-        "GLUON: Client is not a Client instance.",
+        "GLUON: Client must be a Client instance.",
       );
     });
     it("should throw an error if guildId is not a string", async function () {

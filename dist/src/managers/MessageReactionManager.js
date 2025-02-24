@@ -45,7 +45,6 @@ var __classPrivateFieldGet =
 var _MessageReactionManager__client,
   _MessageReactionManager_guild,
   _MessageReactionManager_cache;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
 /**
@@ -60,8 +59,8 @@ class MessageReactionManager {
     _MessageReactionManager__client.set(this, void 0);
     _MessageReactionManager_guild.set(this, void 0);
     _MessageReactionManager_cache.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client.");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild) throw new TypeError("GLUON: Guild must be provided.");
     if (typeof existingReactions !== "object")
       throw new TypeError("GLUON: Existing reactions must be an object.");

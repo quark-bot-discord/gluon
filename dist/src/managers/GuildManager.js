@@ -22,7 +22,6 @@ var __classPrivateFieldSet =
     );
   };
 var _GuildManager__client;
-import Client from "../Client.js";
 import Guild from "../structures/Guild.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 /**
@@ -36,7 +35,7 @@ class GuildManager extends BaseCacheManager {
   constructor(client) {
     super(client, { structureType: GuildManager });
     _GuildManager__client.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     /**
      * The client instance.
@@ -66,7 +65,7 @@ class GuildManager extends BaseCacheManager {
    * @returns {GuildManager}
    */
   static getCacheManager(client) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     return client.guilds;
   }
@@ -81,7 +80,7 @@ class GuildManager extends BaseCacheManager {
    * @static
    */
   static getGuild(client, guildId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
