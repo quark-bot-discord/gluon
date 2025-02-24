@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import WebSocket from "ws";
+import ZlibSync from "zlib-sync";
 import _heartbeat from "./structures/_heartbeat.js";
 import _identify from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
@@ -71,9 +72,7 @@ class Shard {
     this.#lastHeartbeatTimestamp = null;
     this.#latencyMs = null;
 
-    this.#addListeners().then(() => {
-      console.info("Listeners added");
-    });
+    this.#addListeners();
   }
 
   #handleIncoming(data) {
@@ -292,13 +291,11 @@ class Shard {
     this.#resuming = false;
   }
 
-  async #addListeners() {
+  #addListeners() {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       "Adding websocket listeners",
     );
-
-    const ZlibSync = await import("./zlib.js");
 
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
@@ -354,9 +351,7 @@ class Shard {
             this.#shutDownWebsocket(data);
           }, 10000);
 
-          this.#addListeners().then(() => {
-            console.info("Listeners added");
-          });
+          this.#addListeners();
         }, this.#retries * 1000);
       else process.exit(1);
     });
