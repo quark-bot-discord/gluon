@@ -1,4 +1,4 @@
-import Role from "../../structures/Role.js";
+// import Role from "../../structures/Role.js";
 
 /**
  * Returns the permissions of a member based on their roles.
@@ -12,10 +12,10 @@ function checkMemberPermissions(roles) {
   if (!Array.isArray(roles))
     throw new TypeError("GLUON: Member roles must be an array.");
 
-  if (!roles.every((role) => role instanceof Role))
-    throw new TypeError(
-      "GLUON: Member roles must be an array of Role instances.",
-    );
+  // if (!roles.every((role) => role instanceof Role))
+  //   throw new TypeError(
+  //     "GLUON: Member roles must be an array of Role instances.",
+  //   );
 
   let permissions = 0n;
 

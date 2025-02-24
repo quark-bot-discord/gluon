@@ -25,12 +25,12 @@ describe("CheckMemberPermissions", function () {
         "GLUON: Member roles must be an array.",
       );
     });
-    it("should throw an error if an array of roles is not provided", function () {
-      expect(() => checkMemberPermissions(["test"])).to.throw(
-        TypeError,
-        "GLUON: Member roles must be an array of Role instances.",
-      );
-    });
+    // it("should throw an error if an array of roles is not provided", function () {
+    //   expect(() => checkMemberPermissions(["test"])).to.throw(
+    //     TypeError,
+    //     "GLUON: Member roles must be an array of Role instances.",
+    //   );
+    // });
   });
 
   context("check calculated permissions", function () {
