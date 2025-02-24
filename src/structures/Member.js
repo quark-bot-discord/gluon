@@ -322,7 +322,7 @@ class Member {
   /**
    * The overall calculated permissions for this member.
    * @readonly
-   * @type {BigInt}
+   * @type {String}
    * @public
    */
   get permissions() {
