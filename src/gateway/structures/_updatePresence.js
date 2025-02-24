@@ -1,12 +1,12 @@
-async function _updatePresence(
+import erlpack from "erlpack";
+
+function _updatePresence(
   name,
   type = 0,
   status = "online",
   afk = false,
   since = null,
 ) {
-  const erlpack = await import("erlpack");
-
   const activities = [];
 
   if (name)

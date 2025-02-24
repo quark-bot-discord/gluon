@@ -1,5 +1,6 @@
-async function _resume(token, session_id, seq) {
-  const erlpack = await import("erlpack");
+import erlpack from "erlpack";
+
+function _resume(token, session_id, seq) {
   return erlpack.pack({
     op: 6,
     d: {
