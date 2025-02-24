@@ -121,7 +121,7 @@ declare class Embed {
    * @param {String?} [data.video.url] The video url.
    * @constructor
    */
-  constructor(data: any);
+  constructor(data?: any);
   /**
    * Sets the title of the embed.
    * @param {String} title The title of the embed.
