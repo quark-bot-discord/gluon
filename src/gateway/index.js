@@ -298,7 +298,7 @@ class Shard {
       "Adding websocket listeners",
     );
 
-    const ZlibSync = await import("zlib-sync");
+    const ZlibSync = await import("./zlib.js");
 
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
