@@ -87,11 +87,15 @@ import Command from "./util/builder/commandBuilder.js";
  * }>}
  */
 class Client extends EventsEmitter {
+  request: any;
+  user: any;
+  // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
   #token;
   #intents;
   #_cacheOptions;
   #_defaultGuildCacheOptions;
   #_sessionData;
+  // @ts-expect-error TS(7008): Member '#shards' implicitly has an 'any[]' type.
   #shards;
   #shardIds;
   #totalShards;
@@ -143,7 +147,7 @@ class Client extends EventsEmitter {
     sessionData,
     initCache,
     softRestartFunction,
-  } = {}) {
+  }: any = {}) {
     super();
 
     if (typeof cacheMessages !== "boolean")
@@ -234,6 +238,7 @@ class Client extends EventsEmitter {
      * @type {GuildCacheOptions}
      * @private
      */
+    // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
     this.#_defaultGuildCacheOptions = new GuildCacheOptions();
 
     /**
@@ -371,8 +376,8 @@ class Client extends EventsEmitter {
    * @returns {Object}
    */
   checkProcess() {
-    let guildIds = [];
-    this.guilds.forEach((guild) => guildIds.push(guild.id));
+    let guildIds: any = [];
+    this.guilds.forEach((guild: any) => guildIds.push(guild.id));
     const processInformation = {
       totalShards: this.totalShards,
       shardsManaged: this.shardIds,
@@ -383,11 +388,13 @@ class Client extends EventsEmitter {
       guilds: guildIds,
       processId: hash
         .sha256()
+        // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         .update(`${this.shardIds.join("_")}-${this.totalShards}`)
         .digest("hex"),
       restLatency: this.request.latency / 2,
     };
     for (let i = 0; i < this.#shards.length; i++)
+      // @ts-expect-error TS(2345): Argument of type 'any' is not assignable to parame... Remove this comment to see the full error message
       processInformation.shards.push(this.#shards[i].check());
     return processInformation;
   }
@@ -400,34 +407,41 @@ class Client extends EventsEmitter {
    * @method
    * @public
    */
-  _emitDebug(status, message) {
+  _emitDebug(status: any, message: any) {
     if (process.env.NODE_ENV !== "development") return;
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
     let shardStatus;
     const shardString = `[Shard: ${this.shardIds ? this.shardIds.join(", ") : "???"}]`;
     switch (status) {
       case GLUON_DEBUG_LEVELS.INFO: {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.blue(chalk.bgWhite("[Info]"), shardString);
         break;
       }
       case GLUON_DEBUG_LEVELS.WARN: {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.yellow(chalk.bgYellowBright("[Warn]"), shardString);
         break;
       }
       case GLUON_DEBUG_LEVELS.DANGER: {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.yellow(chalk.bgRed("[Danger]"), shardString);
         break;
       }
       case GLUON_DEBUG_LEVELS.ERROR: {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.red(chalk.bgRedBright("[Error]"), shardString);
         break;
       }
       case GLUON_DEBUG_LEVELS.NONE:
       default: {
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.gray(shardString);
         break;
       }
     }
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     const time = chalk.magenta(new Date().toTimeString().split(" ")[0]);
     const emitString = `${libName} ${shardStatus} @ ${time} => ${message}`;
     console.info(emitString);
@@ -447,8 +461,8 @@ class Client extends EventsEmitter {
     let totalEmojis = 0;
     let totalVoiceStates = 0;
 
-    this.guilds.forEach((guild) => {
-      guild.channels.forEach((channel) => {
+    this.guilds.forEach((guild: any) => {
+      guild.channels.forEach((channel: any) => {
         switch (channel.type) {
           case CHANNEL_TYPES.GUILD_NEWS_THREAD:
           case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
@@ -516,7 +530,7 @@ class Client extends EventsEmitter {
   getMemberCount() {
     let memberCount = 0;
 
-    this.guilds.forEach((guild) => {
+    this.guilds.forEach((guild: any) => {
       memberCount += guild.memberCount;
     });
 
@@ -544,7 +558,7 @@ class Client extends EventsEmitter {
    * @async
    * @throws {TypeError}
    */
-  async registerCommands(commands) {
+  async registerCommands(commands: any) {
     if (
       !Array.isArray(commands) ||
       !commands.every((c) => c instanceof Command)
@@ -582,7 +596,7 @@ class Client extends EventsEmitter {
    * @async
    * @throws {TypeError}
    */
-  async createEmoji({ name, image }) {
+  async createEmoji({ name, image }: any) {
     if (typeof name !== "string")
       throw new TypeError(`GLUON: Name is not a string. Got ${typeof name}`);
     if (typeof image !== "string")
@@ -607,7 +621,7 @@ class Client extends EventsEmitter {
    * @method
    * @throws {TypeError}
    */
-  setStatus({ name, type, status, afk, since } = {}) {
+  setStatus({ name, type, status, afk, since }: any = {}) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Name is not a string.");
     if (typeof type !== "undefined" && typeof type !== "number")
@@ -630,7 +644,7 @@ class Client extends EventsEmitter {
    * @method
    * @throws {TypeError}
    */
-  login(token) {
+  login(token: any) {
     if (typeof token !== "string")
       throw new TypeError("GLUON: Token is not a string.");
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
@@ -640,7 +654,7 @@ class Client extends EventsEmitter {
 
     this.request
       .makeRequest("getGatewayBot")
-      .then((gatewayInfo) => {
+      .then((gatewayInfo: any) => {
         let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
         if (
@@ -654,6 +668,7 @@ class Client extends EventsEmitter {
 
         for (
           let i = 0;
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
         )
@@ -672,6 +687,7 @@ class Client extends EventsEmitter {
                       ? this.#_sessionData[i].resumeGatewayUrl
                       : gatewayInfo.url,
                   ),
+                  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
                   this.shardIds[i],
                   this.#_sessionData
                     ? this.#_sessionData[i].sessionId
@@ -687,14 +703,14 @@ class Client extends EventsEmitter {
           }, 6000 * i);
 
         setInterval(async () => {
-          this.guilds.forEach((guild) => {
+          this.guilds.forEach((guild: any) => {
             guild._intervalCallback();
           });
 
           this.users._intervalCallback();
         }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
       })
-      .catch((error) => {
+      .catch((error: any) => {
         this._emitDebug(
           GLUON_DEBUG_LEVELS.ERROR,
           "Get gateway bot request failed, terminating process",

@@ -7,7 +7,7 @@ import getKeyIv from "./getKeyIv.js";
  * @param {...String} decryptionKeys The decryption keys to use.
  * @returns {Message}
  */
-function decryptStructure(encryptedStructure, ...decryptionKeys) {
+function decryptStructure(encryptedStructure: any, ...decryptionKeys: any[]) {
   if (typeof encryptedStructure !== "string")
     throw new TypeError("GLUON: Encrypted structure must be provided.");
 

@@ -4,7 +4,7 @@
  * @param {String} text Emoji mention. e.g. <:bitcoin:844240546246950922>
  * @returns {Object}
  */
-function resolveEmoji(text) {
+function resolveEmoji(text: any) {
   if (typeof text !== "string")
     throw new TypeError("GLUON: The emoji must be a string.");
 

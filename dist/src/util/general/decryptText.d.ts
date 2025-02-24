@@ -1,4 +1,3 @@
-export default decryptText;
 /**
  * Decrypts text and returns the plain text.
  * @param {String} text The text to decrypt.
@@ -7,5 +6,5 @@ export default decryptText;
  * @returns {String}
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
-declare function decryptText(text: string, key: CipherKey, iv: BinaryLike): string;
-//# sourceMappingURL=decryptText.d.ts.map
+declare function decryptText(text: any, key: any, iv: any): string;
+export default decryptText;

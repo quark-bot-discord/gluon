@@ -31,7 +31,11 @@ class Role {
    * @param {Boolean?} [options.nocache] Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -301,7 +305,7 @@ class Role {
    * @static
    * @method
    */
-  static getMention(roleId, guildId) {
+  static getMention(roleId: any, guildId: any) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
     if (typeof guildId !== "string")
@@ -315,7 +319,7 @@ class Role {
    * @param {String?} [hash] The hash of the role's icon.
    * @returns {String}
    */
-  static getIconUrl(id, hash) {
+  static getIconUrl(id: any, hash: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Role id must be a string.");
     if (hash && typeof hash !== "string")
@@ -336,7 +340,7 @@ class Role {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -373,7 +377,7 @@ class Role {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

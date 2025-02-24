@@ -5,6 +5,10 @@ import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}
  */
 class CommandChoice {
+  defaultLocale: any;
+  name: any;
+  name_localizations: any;
+  value: any;
   /**
    * Creates a choice for a command.
    */
@@ -17,7 +21,7 @@ class CommandChoice {
    * @param {String | Object} name Sets the name of the choice, or an object of names for localisation.
    * @returns {CommandChoice}
    */
-  setName(name) {
+  setName(name: any) {
     if (!name)
       throw new TypeError("GLUON: Command choice name must be provided.");
 
@@ -56,7 +60,7 @@ class CommandChoice {
    * @param {String} value Value of the choice.
    * @returns {CommandChoice}
    */
-  setValue(value) {
+  setValue(value: any) {
     if (!value)
       throw new TypeError("GLUON: Command choice value must be provided.");
 
@@ -76,7 +80,7 @@ class CommandChoice {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale) {
+  setDefaultLocale(locale: any) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -89,8 +93,10 @@ class CommandChoice {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.name)

@@ -3,7 +3,7 @@
  * @param {String} url The URL to validate.
  * @returns {Boolean}
  */
-function isValidUrl(url) {
+function isValidUrl(url: any) {
   try {
     return Boolean(new URL(url));
   } catch (e) {

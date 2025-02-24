@@ -5,7 +5,7 @@ import { LIMITS } from "../../constants.js";
  * @param {String} text A url to a Discord message.
  * @returns {String?} The link to a message, if it is present.
  */
-function verifyMessageLink(text) {
+function verifyMessageLink(text: any) {
   if (typeof text !== "string")
     throw new TypeError("GLUON: The text must be a string.");
 

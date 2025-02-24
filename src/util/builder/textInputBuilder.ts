@@ -10,6 +10,15 @@ import {
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-structure}
  */
 class TextInput {
+  custom_id: any;
+  label: any;
+  max_length: any;
+  min_length: any;
+  placeholder: any;
+  required: any;
+  style: any;
+  type: any;
+  value: any;
   /**
    * Creates a text input.
    */
@@ -22,7 +31,7 @@ class TextInput {
    * @param {String} label The text to display as a label to the input.
    * @returns {TextInput}
    */
-  setLabel(label) {
+  setLabel(label: any) {
     if (!label)
       throw new TypeError("GLUON: Text input label must be provided.");
 
@@ -40,7 +49,7 @@ class TextInput {
    * @returns {TextInput}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles}
    */
-  setStyle(style) {
+  setStyle(style: any) {
     if (!style)
       throw new TypeError("GLUON: Text input style must be provided.");
 
@@ -55,7 +64,7 @@ class TextInput {
    * @returns {TextInput}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
-  setCustomID(id) {
+  setCustomID(id: any) {
     if (!id)
       throw new TypeError("GLUON: Text input custom id must be provided.");
 
@@ -74,7 +83,7 @@ class TextInput {
    * @param {String} value The value to pre-fill the text input with.
    * @returns {TextInput}
    */
-  setValue(value) {
+  setValue(value: any) {
     if (!value)
       throw new TypeError("GLUON: Text input value must be provided.");
 
@@ -91,7 +100,7 @@ class TextInput {
    * @param {String} placeholder Placeholder text for the text input.
    * @returns {TextInput}
    */
-  setPlaceholder(placeholder) {
+  setPlaceholder(placeholder: any) {
     if (!placeholder)
       throw new TypeError("GLUON: Text input placeholder must be provided.");
 
@@ -108,7 +117,7 @@ class TextInput {
    * @param {Number} length Minimum user input length.
    * @returns {TextInput}
    */
-  setMinLength(length) {
+  setMinLength(length: any) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Text input min length must be a number.");
 
@@ -122,7 +131,7 @@ class TextInput {
    * @param {Number} length Maximum user input length.
    * @returns {TextInput}
    */
-  setMaxLength(length) {
+  setMaxLength(length: any) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Text input max length must be a number.");
 
@@ -136,8 +145,10 @@ class TextInput {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.type)

@@ -8,6 +8,8 @@ import {
  * Helps to construct an action row for a message.
  */
 class ActionRow {
+  components: any;
+  type: any;
   /**
    * Creates an action row.
    */
@@ -21,7 +23,7 @@ class ActionRow {
    * @param {Button | Dropdown} component A component to add to the action row.
    * @returns {ActionRow}
    */
-  addComponent(component) {
+  addComponent(component: any) {
     this.components.push(component);
 
     return this;
@@ -32,8 +34,10 @@ class ActionRow {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (this.components.length > LIMITS.MAX_ACTION_ROW_BUTTONS)

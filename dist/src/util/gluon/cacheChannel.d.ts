@@ -1,4 +1,7 @@
-export default cacheChannel;
+import CategoryChannel from "../../structures/CategoryChannel.js";
+import TextChannel from "../../structures/TextChannel.js";
+import Thread from "../../structures/Thread.js";
+import VoiceChannel from "../../structures/VoiceChannel.js";
 /**
  * Automatically determines the channel type and caches the channel appropriately.
  * @param {Client} client The client instance.
@@ -7,8 +10,10 @@ export default cacheChannel;
  * @param {Boolean?} nocache Whether the channel should be cached.
  * @returns {VoiceChannel | Thread | TextChannel}
  */
-declare function cacheChannel(client: Client, data: any, guildId: string, nocache?: boolean | null): VoiceChannel | Thread | TextChannel;
-import VoiceChannel from "../../structures/VoiceChannel.js";
-import Thread from "../../structures/Thread.js";
-import TextChannel from "../../structures/TextChannel.js";
-//# sourceMappingURL=cacheChannel.d.ts.map
+declare function cacheChannel(
+  client: any,
+  data: any,
+  guildId: any,
+  nocache?: boolean,
+): CategoryChannel | TextChannel | Thread | VoiceChannel;
+export default cacheChannel;

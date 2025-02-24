@@ -38,7 +38,7 @@ class Channel {
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
-  constructor(client, data, { guildId } = {}) {
+  constructor(client: any, data: any, { guildId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -110,7 +110,7 @@ class Channel {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p) => new PermissionOverwrite(this.#_client, p),
+        (p: any) => new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -210,7 +210,7 @@ class Channel {
    * @throws {Error | TypeError}
    */
   send(
-    { content, components, files, embeds, suppressMentions = false } = {
+    { content, components, files, embeds, suppressMentions = false }: any = {
       suppressMentions: false,
     },
   ) {
@@ -383,7 +383,7 @@ class Channel {
    * @static
    * @method
    */
-  static getMention(channelId) {
+  static getMention(channelId: any) {
     if (!channelId) throw new TypeError("GLUON: No channel ID provided.");
     return `<#${channelId}>`;
   }
@@ -397,7 +397,7 @@ class Channel {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -423,7 +423,7 @@ class Channel {
    * @method
    * @throws {TypeError}
    */
-  static async follow(client, channelId, followChannelId) {
+  static async follow(client: any, channelId: any, followChannelId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
@@ -433,6 +433,7 @@ class Channel {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'webhook_channel_id' does not exist on ty... Remove this comment to see the full error message
     body.webhook_channel_id = channelId;
 
     await client.request.makeRequest(
@@ -452,7 +453,7 @@ class Channel {
    * @async
    * @method
    */
-  static fetchWebhooks(client, channelId) {
+  static fetchWebhooks(client: any, channelId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
@@ -466,13 +467,14 @@ class Channel {
    * @param {Member} member The member to check the permissions for.
    * @returns {String}
    */
-  checkPermission(member) {
+  checkPermission(member: any) {
     if (!member) throw new TypeError("GLUON: No member provided.");
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member.");
+    // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     let overallPermissions = BigInt(member.permissions);
     const everyoneRole = this.permissionOverwrites.find(
-      (p) =>
+      (p: any) =>
         p.id === this.guildId && p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
     );
     if (everyoneRole) {
@@ -481,9 +483,11 @@ class Channel {
     }
     let overallRoleDenyPermissions = BigInt(0);
     let overallRoleAllowPermissions = BigInt(0);
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
-        (p) =>
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
+        (p: any) =>
           p.id === member.roles[i].id &&
           p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
       );
@@ -495,7 +499,8 @@ class Channel {
     overallPermissions &= ~overallRoleDenyPermissions;
     overallPermissions |= overallRoleAllowPermissions;
     const memberOverwritePermissions = this.permissionOverwrites.find(
-      (p) => p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
+      (p: any) =>
+        p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
     );
     if (memberOverwritePermissions) {
       overallPermissions &= ~BigInt(memberOverwritePermissions.deny);
@@ -527,7 +532,7 @@ class Channel {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
@@ -542,7 +547,7 @@ class Channel {
           _attributes: this.#_attributes,
           _cacheOptions: this._cacheOptions.toJSON(format),
           messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map((p) =>
+          permission_overwrites: this.permissionOverwrites.map((p: any) =>
             p.toJSON(format),
           ),
         };
@@ -559,7 +564,7 @@ class Channel {
           parent_id: this.parentId ?? undefined,
           nsfw: this.nsfw,
           messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map((p) =>
+          permission_overwrites: this.permissionOverwrites.map((p: any) =>
             p.toJSON(format),
           ),
         };

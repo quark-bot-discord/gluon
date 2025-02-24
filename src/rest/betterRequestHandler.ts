@@ -30,8 +30,9 @@ class BetterRequestHandler {
   #queueWorker;
   #queues;
   #localRatelimitCache;
+  // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
   #latencyMs;
-  constructor(client, token) {
+  constructor(client: any, token: any) {
     this.#_client = client;
 
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
@@ -48,7 +49,7 @@ class BetterRequestHandler {
 
     this.#endpoints = endpoints;
 
-    this.#queueWorker = async (data) => {
+    this.#queueWorker = async (data: any) => {
       const bucket = await getBucket(
         this.#_client,
         this.#localRatelimitCache,
@@ -76,12 +77,15 @@ class BetterRequestHandler {
             (bucket.reset + this.#latency) * 1000 - new Date().getTime()
           } (current time):${(new Date().getTime() / 1000) | 0}`,
         );
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (this.#queues[data.hash].length() > this.#maxQueueSize) {
           this.#_client._emitDebug(
             GLUON_DEBUG_LEVELS.DANGER,
             `KILL QUEUE ${data.hash}`,
           );
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           this.#queues[data.hash].kill();
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           delete this.#queues[data.hash];
         }
         await sleep(
@@ -112,10 +116,10 @@ class BetterRequestHandler {
   }
 
   async #handleBucket(
-    ratelimitBucket,
-    ratelimitRemaining,
-    ratelimitReset,
-    hash,
+    ratelimitBucket: any,
+    ratelimitRemaining: any,
+    ratelimitReset: any,
+    hash: any,
     retryAfter = 0,
   ) {
     if (!ratelimitBucket) return;
@@ -159,14 +163,15 @@ class BetterRequestHandler {
     }
   }
 
-  async makeRequest(request, params, body) {
+  async makeRequest(request: any, params: any, body: any) {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const actualRequest = this.#endpoints[request];
 
     const toHash =
       actualRequest.method +
       actualRequest.path(
         params
-          ? params.map((v, i) =>
+          ? params.map((v: any, i: any) =>
               actualRequest.majorParams.includes(i) ? v : null,
             )
           : [],
@@ -178,7 +183,9 @@ class BetterRequestHandler {
       `ADD ${hash} to request queue`,
     );
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (!this.#queues[hash])
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
 
     let retries = 5;
@@ -186,6 +193,7 @@ class BetterRequestHandler {
     while (retries--)
       try {
         const _stack = new Error().stack;
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const result = await this.#queues[hash].push({
           hash,
           request,
@@ -193,6 +201,7 @@ class BetterRequestHandler {
           body,
           _stack,
         });
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (this.#queues[hash].idle()) delete this.#queues[hash];
         return result;
       } catch (error) {
@@ -202,7 +211,8 @@ class BetterRequestHandler {
     throw new Error("GLUON: Request ran out of retries");
   }
 
-  async #http(hash, request, params, body, _stack) {
+  async #http(hash: any, request: any, params: any, body: any, _stack: any) {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const actualRequest = this.#endpoints[request];
 
     const path = actualRequest.path(...(params ?? []));
@@ -219,7 +229,7 @@ class BetterRequestHandler {
       (bucket.remaining === 0 &&
         new Date().getTime() / 1000 > bucket.reset + this.#latency)
     ) {
-      const serialize = (obj) => {
+      const serialize = (obj: any) => {
         const str = [];
         for (let p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
@@ -251,6 +261,7 @@ class BetterRequestHandler {
         actualRequest.method !== "GET" &&
         actualRequest.method !== "DELETE"
       )
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         headers["Content-Type"] = "application/json";
 
       if (
@@ -260,6 +271,7 @@ class BetterRequestHandler {
       )
         for (const [key, value] of Object.entries(body))
           if (actualRequest.useHeaders.includes(key)) {
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             headers[key] = encodeURIComponent(value);
             delete body[key];
           }
@@ -328,6 +340,7 @@ class BetterRequestHandler {
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),
           hash,
+          // @ts-expect-error TS(2571): Object is of type 'unknown'.
           res.status === 429 ? json.retry_after : 0,
         );
       } catch (error) {

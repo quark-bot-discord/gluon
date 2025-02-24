@@ -20,7 +20,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildChannelsManager });
 
     if (!(client instanceof Client))
@@ -52,7 +52,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(channel_id) {
+  async fetch(channel_id: any) {
     if (typeof channel_id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
 
@@ -76,7 +76,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, channel) {
+  set(id: any, channel: any) {
     if (
       !(
         channel instanceof VoiceChannel ||
@@ -99,7 +99,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @param {String} channelId The ID of the channel to get.
    * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
    */
-  static getChannel(client, guildId, channelId) {
+  static getChannel(client: any, guildId: any, channelId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -119,7 +119,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @static
    * @method
    */
-  static getCacheManager(client, guildId) {
+  static getCacheManager(client: any, guildId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -138,7 +138,7 @@ class GuildChannelsManager extends BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  static async fetchChannel(client, guildId, channelId) {
+  static async fetchChannel(client: any, guildId: any, channelId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")

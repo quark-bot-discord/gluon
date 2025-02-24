@@ -45,6 +45,7 @@ export const TEST_DATA = {
       {
         id: "123453333333345678",
         type: 0,
+        // @ts-expect-error TS(2362): The left-hand side of an arithmetic operation must... Remove this comment to see the full error message
         allow: PERMISSIONS.ADD_REACTIONS | PERMISSIONS.VIEW_CHANNEL,
         deny: PERMISSIONS.SEND_MESSAGES,
       },
@@ -52,6 +53,7 @@ export const TEST_DATA = {
         id: "619434557472505857",
         type: 0,
         allow: PERMISSIONS.ATTACH_FILES,
+        // @ts-expect-error TS(2362): The left-hand side of an arithmetic operation must... Remove this comment to see the full error message
         deny: PERMISSIONS.SEND_MESSAGES | PERMISSIONS.VIEW_CHANNEL,
       },
     ],
@@ -142,9 +144,13 @@ export const TEST_DATA = {
     nsfw_level: 0,
     stage_instances: [],
     stickers: [],
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     threads: [],
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     voice_states: [],
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     members: [],
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     channels: [
       {
         id: "123456789012345677",
@@ -177,6 +183,7 @@ export const TEST_DATA = {
         user_limit: 0,
       },
     ],
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     threads: [],
   },
   THREAD: {
@@ -299,6 +306,7 @@ export const TEST_DATA = {
     ],
     pinned: true,
     webhook_id: null,
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     type: 0,
     message_reference: {
       message_id: "123456339013345678",
@@ -775,6 +783,7 @@ export const TEST_DATA = {
       permissions: "0",
     },
     token: "test",
+    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     type: 5,
     version: 1,
   },
@@ -823,6 +832,7 @@ export const TEST_DATA = {
         global_name: "starman",
       },
       attachments: [],
+      // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
       application_id: "123456789",
       embeds: [],
       mentions: [],
@@ -833,6 +843,7 @@ export const TEST_DATA = {
       tts: false,
       timestamp: "2021-01-01T00:00:00.000Z",
       edited_timestamp: null,
+      // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
       content: "test message",
       flags: 0,
     },
@@ -1132,62 +1143,82 @@ export const TEST_CLIENTS = {
 };
 
 export const TEST_GUILDS = {
-  ALL_CACHES_ENABLED: (client) => {
+  ALL_CACHES_ENABLED: (client: any) => {
     const guild = new Guild(client, TEST_DATA.GUILD);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setChannelCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setThreadCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setEmojiCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setRoleCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMessageCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setFileCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMemberCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setVoiceStateCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setScheduledEventCaching(true);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setInviteCaching(true);
     return guild;
   },
-  NO_CACHES_ENABLED: (client) => {
+  NO_CACHES_ENABLED: (client: any) => {
     const guild = new Guild(client, TEST_DATA.GUILD);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setChannelCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setThreadCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setEmojiCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setRoleCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMessageCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setFileCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMemberCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setVoiceStateCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setScheduledEventCaching(false);
+    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setInviteCaching(false);
     return guild;
   },
 };
 
 export const TEST_CHANNELS = {
-  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client) => {
+  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client) => {
+  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client: any) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client) => {
+  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
     const channel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client) => {
+  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
     const channel = new CategoryChannel(client, TEST_DATA.CATEGORY_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  THREAD_CHANNEL: (client) => {
+  THREAD_CHANNEL: (client: any) => {
     const channel = new Thread(client, TEST_DATA.THREAD, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1196,70 +1227,70 @@ export const TEST_CHANNELS = {
 };
 
 export const TEST_MEMBERS = {
-  CLIENT_MEMBER: (client) => {
+  CLIENT_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
       userId: TEST_DATA.CLIENT_MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  THREAD_OWNER_MEMBER: (client) => {
+  THREAD_OWNER_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
       userId: TEST_DATA.THREAD.owner_id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  GUILD_OWNER_MEMBER: (client) => {
+  GUILD_OWNER_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.GUILD.owner_id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  GENERIC_MEMBER: (client) => {
+  GENERIC_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.MEMBER_ID,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  VOICE_STATE_MEMBER: (client) => {
+  VOICE_STATE_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       guildId: TEST_DATA.GUILD_ID,
       userId: TEST_DATA.VOICE_STATE.user_id,
     });
     return member;
   },
-  EXECUTOR_MEMBER: (client) => {
+  EXECUTOR_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.MEMBER_ADMIN, {
       userId: TEST_DATA.MEMBER_ADMIN.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  TARGET_MEMBER: (client) => {
+  TARGET_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  CLIENT_MEMBER_1: (client) => {
+  CLIENT_MEMBER_1: (client: any) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER_ADMIN, {
       userId: TEST_DATA.CLIENT_MEMBER_ADMIN.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  ROLE_OVERRIDES_MEMBER: (client) => {
+  ROLE_OVERRIDES_MEMBER: (client: any) => {
     const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER, {
       userId: TEST_DATA.ROLE_OVERRIDES_MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  ROLE_OVERRIDES_MEMBER_2: (client) => {
+  ROLE_OVERRIDES_MEMBER_2: (client: any) => {
     const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER_2, {
       userId: TEST_DATA.ROLE_OVERRIDES_MEMBER_2.user.id,
       guildId: TEST_DATA.GUILD_ID,
@@ -1270,7 +1301,7 @@ export const TEST_MEMBERS = {
 
 export const TEST_MESSAGES = {
   GENERIC_MESSAGE: (
-    client,
+    client: any,
     { channelId = TEST_DATA.CHANNEL_ID } = { channelId: TEST_DATA.CHANNEL_ID },
   ) => {
     const message = new Message(client, TEST_DATA.MESSAGE, {
@@ -1282,25 +1313,25 @@ export const TEST_MESSAGES = {
 };
 
 export const TEST_ROLES = {
-  GENERIC_ADMIN_ROLE: (client) => {
+  GENERIC_ADMIN_ROLE: (client: any) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ADMIN_ROLE_2: (client) => {
+  GENERIC_ADMIN_ROLE_2: (client: any) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ROLE: (client) => {
+  GENERIC_ROLE: (client: any) => {
     const role = new Role(client, TEST_DATA.ROLE_OVERRIDES, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ROLE_2: (client) => {
+  GENERIC_ROLE_2: (client: any) => {
     const role = new Role(client, TEST_DATA.ROLE_OVERRIDES_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1309,7 +1340,7 @@ export const TEST_ROLES = {
 };
 
 export const TEST_SCHEDULED_EVENTS = {
-  GENERIC_SCHEDULED_EVENT: (client) => {
+  GENERIC_SCHEDULED_EVENT: (client: any) => {
     const scheduledEvent = new ScheduledEvent(
       client,
       TEST_DATA.SCHEDULED_EVENT,
@@ -1317,7 +1348,7 @@ export const TEST_SCHEDULED_EVENTS = {
     );
     return scheduledEvent;
   },
-  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client) => {
+  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client: any) => {
     const scheduledEvent = new ScheduledEvent(
       client,
       TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
@@ -1328,14 +1359,14 @@ export const TEST_SCHEDULED_EVENTS = {
 };
 
 export const TEST_USERS = {
-  GENERIC_USER: (client) => {
+  GENERIC_USER: (client: any) => {
     const user = new User(client, TEST_DATA.USER);
     return user;
   },
 };
 
 export const TEST_EMOJIS = {
-  GENERIC_EMOJI: (client) => {
+  GENERIC_EMOJI: (client: any) => {
     const emoji = new Emoji(client, TEST_DATA.EMOJI, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1344,7 +1375,7 @@ export const TEST_EMOJIS = {
 };
 
 export const TEST_INVITES = {
-  GENERIC_INVITE: (client) => {
+  GENERIC_INVITE: (client: any) => {
     const invite = new Invite(client, TEST_DATA.INVITE, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1353,15 +1384,15 @@ export const TEST_INVITES = {
 };
 
 export const TEST_INTERACTIONS = {
-  GENERIC_INTERACTION: (client) => {
+  GENERIC_INTERACTION: (client: any) => {
     const interaction = new Interaction(client, TEST_DATA.INTERACTION);
     return interaction;
   },
-  SLASH_COMMAND: (client) => {
+  SLASH_COMMAND: (client: any) => {
     const interaction = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
     return interaction;
   },
-  BUTTON_CLICK: (client) => {
+  BUTTON_CLICK: (client: any) => {
     const interaction = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
       guildId: TEST_DATA.GUILD_ID,
       channelId: TEST_DATA.CHANNEL_ID,

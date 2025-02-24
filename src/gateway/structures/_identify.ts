@@ -1,5 +1,6 @@
 import erlpack from "erlpack";
 import { NAME, GLUON_VERSION } from "../../constants.js";
+import { Identify } from "src/gateway.js";
 
 /**
  * Creates an identify payload for the gateway.
@@ -8,14 +9,17 @@ import { NAME, GLUON_VERSION } from "../../constants.js";
  * @param {Number} intents The intents to use.
  * @returns {Buffer}
  */
-function _identify(token, shard, intents) {
-  if (typeof token !== "string")
+function _identify(token: string, shard: number[], intents: number): Buffer {
+  if (typeof token !== "string") {
     throw new TypeError("GLUON: Token must be a string.");
-  if (!Array.isArray(shard))
+  }
+  if (!Array.isArray(shard)) {
     throw new TypeError("GLUON: Shard must be an array.");
-  if (typeof intents !== "number")
+  }
+  if (typeof intents !== "number") {
     throw new TypeError("GLUON: Intents must be a number.");
-  return erlpack.pack({
+  }
+  const payload: Identify = {
     op: 2,
     d: {
       token,
@@ -39,7 +43,8 @@ function _identify(token, shard, intents) {
       },
       intents,
     },
-  });
+  };
+  return erlpack.pack(payload);
 }
 
 export default _identify;

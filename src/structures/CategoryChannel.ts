@@ -20,7 +20,11 @@ class CategoryChannel {
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -93,7 +97,7 @@ class CategoryChannel {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p) => new PermissionOverwrite(this.#_client, p),
+        (p: any) => new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -224,7 +228,7 @@ class CategoryChannel {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
@@ -236,7 +240,7 @@ class CategoryChannel {
           name: this.name,
           type: this.type,
           nsfw: this.nsfw,
-          permission_overwrites: this.permissionOverwrites.map((p) =>
+          permission_overwrites: this.permissionOverwrites.map((p: any) =>
             p.toJSON(format),
           ),
         };

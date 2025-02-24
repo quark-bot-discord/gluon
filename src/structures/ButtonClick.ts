@@ -21,7 +21,7 @@ class ButtonClick extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client, data, { guildId, channelId } = {}) {
+  constructor(client: any, data: any, { guildId, channelId }: any = {}) {
     super(client, data);
 
     if (!(client instanceof Client))
@@ -103,7 +103,7 @@ class ButtonClick extends Interaction {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

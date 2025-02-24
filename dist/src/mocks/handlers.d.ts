@@ -1,2 +1,2 @@
-export const handlers: any[];
-//# sourceMappingURL=handlers.d.ts.map
+declare const handlers: any[];
+export { handlers };

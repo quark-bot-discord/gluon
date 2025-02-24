@@ -6,12 +6,17 @@ import resolveEmoji from "../discord/resolveEmoji.js";
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
  */
 class DropdownOption {
+  default: any;
+  description: any;
+  emoji: any;
+  label: any;
+  value: any;
   /**
    * Sets the label.
    * @param {String} label Sets the label.
    * @returns {DropdownOption}
    */
-  setLabel(label) {
+  setLabel(label: any) {
     if (!label)
       throw new TypeError("GLUON: Dropdown option label must be provided.");
 
@@ -28,7 +33,7 @@ class DropdownOption {
    * @param {String} value Sets the value.
    * @returns {DropdownOption}
    */
-  setValue(value) {
+  setValue(value: any) {
     if (!value)
       throw new TypeError("GLUON: Dropdown option value must be provided.");
 
@@ -47,7 +52,7 @@ class DropdownOption {
    * @param {String} description Sets the description.
    * @returns {DropdownOption}
    */
-  setDescription(description) {
+  setDescription(description: any) {
     if (!description)
       throw new TypeError(
         "GLUON: Dropdown option description must be provided.",
@@ -66,7 +71,7 @@ class DropdownOption {
    * @param {String} emoji The emoji to display on the dropdown option. For a custom emoji, it should be in the format "<:bitcoin:844240546246950922>".
    * @returns {DropdownOption}
    */
-  setEmoji(emoji) {
+  setEmoji(emoji: any) {
     this.emoji = resolveEmoji(emoji);
 
     if (!this.emoji)
@@ -80,7 +85,7 @@ class DropdownOption {
    * @param {Boolean} isDefault Whether this option should be selected by default.
    * @returns {DropdownOption}
    */
-  setDefault(isDefault) {
+  setDefault(isDefault: any) {
     this.default = isDefault;
 
     return this;
@@ -91,8 +96,10 @@ class DropdownOption {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (typeof this.label !== "string")

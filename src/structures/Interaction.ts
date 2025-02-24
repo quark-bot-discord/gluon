@@ -25,7 +25,7 @@ class Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client, data) {
+  constructor(client: any, data: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -195,7 +195,7 @@ class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  async textPrompt({ title, customId, textInputModal } = {}) {
+  async textPrompt({ title, customId, textInputModal }: any = {}) {
     if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
 
@@ -207,15 +207,20 @@ class Interaction {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'type' does not exist on type '{}'.
     body.type = 9;
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data = {};
 
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data.title = title;
 
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data.custom_id = customId;
 
     const components = new ActionRow().addComponent(textInputModal);
 
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data.components =
       Array.isArray(components) != true ? [components] : [];
 
@@ -236,15 +241,18 @@ class Interaction {
    * @method
    * @throws {Error}
    */
-  async autocompleteResponse({ choices } = {}) {
+  async autocompleteResponse({ choices }: any = {}) {
     if (!choices || !Array.isArray(choices))
       throw new Error("GLUON: No choices provided.");
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'type' does not exist on type '{}'.
     body.type = 8;
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data = {};
 
+    // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
     body.data.choices = choices;
 
     await this.#_client.request.makeRequest(
@@ -267,7 +275,7 @@ class Interaction {
    * @async
    * @method
    */
-  async reply({ content, files, embeds, components, quiet } = {}) {
+  async reply({ content, files, embeds, components, quiet }: any = {}) {
     if (!content && !files && !embeds && !components)
       throw new Error(
         "GLUON: No content, files, embed, or components provided.",
@@ -281,15 +289,22 @@ class Interaction {
     if (this.#_responses_sent === 0) {
       const body = {};
 
+      // @ts-expect-error TS(2339): Property 'type' does not exist on type '{}'.
       body.type = 4;
+      // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
       body.data = {};
 
+      // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
       if (content) body.data.content = content;
+      // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
       if (files) body.files = files;
+      // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
       if (embeds) body.data.embeds = embeds;
       if (components)
+        // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
         body.data.components =
           Array.isArray(components) != true ? components : [];
+      // @ts-expect-error TS(2339): Property 'data' does not exist on type '{}'.
       if (quiet == true) body.data.flags = 64;
 
       await this.#_client.request.makeRequest(
@@ -301,11 +316,16 @@ class Interaction {
     } else if (this.#_responses_sent < 6) {
       const body = {};
 
+      // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
       if (content) body.content = content;
+      // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
       if (files) body.files = files;
+      // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
       if (embeds) body.embeds = embeds;
       if (components)
+        // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
         body.components = Array.isArray(components) != true ? components : [];
+      // @ts-expect-error TS(2339): Property 'flags' does not exist on type '{}'.
       if (quiet == true) body.flags = 64;
 
       await this.#_client.request.makeRequest(
@@ -333,6 +353,7 @@ class Interaction {
   async acknowledge() {
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'type' does not exist on type '{}'.
     body.type = 6;
 
     await this.#_client.request.makeRequest(
@@ -367,7 +388,7 @@ class Interaction {
    * @static
    * @throws {Error | TypeError}
    */
-  static async delete(client, interactionToken) {
+  static async delete(client: any, interactionToken: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
@@ -392,7 +413,7 @@ class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  async edit({ content, files, embeds, components } = {}) {
+  async edit({ content, files, embeds, components }: any = {}) {
     return Interaction.edit(this.#_client, this.#token, {
       content,
       files,
@@ -417,9 +438,9 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   static async edit(
-    client,
-    interactionToken,
-    { content, files, embeds, components } = {},
+    client: any,
+    interactionToken: any,
+    { content, files, embeds, components }: any = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -430,10 +451,14 @@ class Interaction {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     if (content) body.content = content;
+    // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     if (files) body.files = files;
+    // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     if (embeds) body.embeds = embeds;
     if (components)
+      // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
       body.components = Array.isArray(components) != true ? components : [];
 
     return client.request.makeRequest(
@@ -466,7 +491,7 @@ class Interaction {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -477,6 +502,7 @@ class Interaction {
           type: this.type,
           guild_id: this.guildId,
           channel_id: this.channelId,
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           member: this.member.toJSON(format),
         };
       }

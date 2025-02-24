@@ -22,7 +22,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @constructor
    * @public
    */
-  constructor(client, guild, channel) {
+  constructor(client: any, guild: any, channel: any) {
     super(client, { structureType: ChannelMessageManager });
 
     if (!(client instanceof Client))
@@ -82,7 +82,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(options) {
+  async fetch(options: any) {
     if (
       !checkPermission(
         (await this.#guild.me()).permissions,
@@ -150,7 +150,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, message) {
+  set(id: any, message: any) {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
     return super.set(id, message, this.#_client._cacheOptions.messageTTL);
@@ -167,7 +167,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client, guildId, channelId) {
+  static getCacheManager(client: any, guildId: any, channelId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -189,7 +189,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getMessage(client, guildId, channelId, messageId) {
+  static getMessage(client: any, guildId: any, channelId: any, messageId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -219,7 +219,12 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  static async fetchMessage(client, guildId, channelId, messageId) {
+  static async fetchMessage(
+    client: any,
+    guildId: any,
+    channelId: any,
+    messageId: any,
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -293,10 +298,10 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static async fetchMessages(
-    client,
-    guildId,
-    channelId,
-    { around, before, after, limit } = {},
+    client: any,
+    guildId: any,
+    channelId: any,
+    { around, before, after, limit }: any = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
@@ -360,10 +365,14 @@ class ChannelMessageManager extends BaseCacheManager {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'around' does not exist on type '{}'.
     if (around) body.around = around;
+    // @ts-expect-error TS(2339): Property 'before' does not exist on type '{}'.
     else if (before) body.before = before;
+    // @ts-expect-error TS(2339): Property 'after' does not exist on type '{}'.
     else if (after) body.after = after;
 
+    // @ts-expect-error TS(2339): Property 'limit' does not exist on type '{}'.
     if (limit) body.limit = limit;
 
     const data = await client.request.makeRequest(
@@ -397,11 +406,11 @@ class ChannelMessageManager extends BaseCacheManager {
    * @static
    */
   static async purgeChannelMessages(
-    client,
-    guildId,
-    channelId,
-    messages,
-    { reason } = {},
+    client: any,
+    guildId: any,
+    channelId: any,
+    messages: any,
+    { reason }: any = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -439,8 +448,10 @@ class ChannelMessageManager extends BaseCacheManager {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'messages' does not exist on type '{}'.
     body.messages = messages;
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await client.request.makeRequest(

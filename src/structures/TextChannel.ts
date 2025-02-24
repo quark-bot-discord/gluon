@@ -25,7 +25,11 @@ class TextChannel extends Channel {
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     super(client, data, { guildId });
 
     if (!(client instanceof Client))
@@ -81,7 +85,7 @@ class TextChannel extends Channel {
    * @public
    * @throws {Error | TypeError}
    */
-  async bulkDelete(messages, { reason } = {}) {
+  async bulkDelete(messages: any, { reason }: any = {}) {
     if (
       !checkPermission(
         this.checkPermission(await this.guild.me()),
@@ -101,8 +105,10 @@ class TextChannel extends Channel {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'messages' does not exist on type '{}'.
     body.messages = messages;
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await this.#_client.request.makeRequest(
@@ -136,7 +142,7 @@ class TextChannel extends Channel {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

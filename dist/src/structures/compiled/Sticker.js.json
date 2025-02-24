@@ -1,0 +1,684 @@
+[
+  {
+    "comment": "/**\n * Represents an sticker.\n */",
+    "meta": {
+      "range": [229, 3080],
+      "filename": "Sticker.js",
+      "lineno": 14,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000022",
+        "name": "Sticker",
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data"]
+      }
+    },
+    "classdesc": "Represents an sticker.",
+    "name": "Sticker",
+    "longname": "Sticker",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [247, 256],
+      "filename": "Sticker.js",
+      "lineno": 15,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000025",
+        "name": "_client",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_client",
+    "longname": "Sticker#_client",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [259, 264],
+      "filename": "Sticker.js",
+      "lineno": 16,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000026",
+        "name": "_id",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_id",
+    "longname": "Sticker#_id",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [267, 273],
+      "filename": "Sticker.js",
+      "lineno": 17,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000027",
+        "name": "name",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "name",
+    "longname": "Sticker#name",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [276, 289],
+      "filename": "Sticker.js",
+      "lineno": 18,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000028",
+        "name": "format_type",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "format_type",
+    "longname": "Sticker#format_type",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "/**\n   * Creates the structure for a sticker\n   * @param {Client} client The client instance.\n   * @param {Object} data Sticker data from Discord.\n   */",
+    "meta": {
+      "range": [447, 1163],
+      "filename": "Sticker.js",
+      "lineno": 24,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000029",
+        "name": "Sticker",
+        "type": "MethodDefinition",
+        "paramnames": ["client", "data"]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Creates the structure for a sticker",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
+        },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Sticker data from Discord.",
+        "name": "data"
+      }
+    ],
+    "name": "Sticker",
+    "longname": "Sticker",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "/**\n * Represents an sticker.\n */",
+    "meta": {
+      "range": [229, 3080],
+      "filename": "Sticker.js",
+      "lineno": 14,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000022",
+        "name": "Sticker",
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data"]
+      }
+    },
+    "name": "Sticker",
+    "longname": "Sticker",
+    "kind": "class",
+    "classdesc": "Represents an sticker.",
+    "scope": "global",
+    "description": "Creates the structure for a sticker",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
+        },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Sticker data from Discord.",
+        "name": "data"
+      }
+    ]
+  },
+  {
+    "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+    "meta": {
+      "range": [767, 789],
+      "filename": "Sticker.js",
+      "lineno": 35,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000054",
+        "name": "this.",
+        "type": "Identifier",
+        "value": "client",
+        "paramnames": []
+      }
+    },
+    "description": "The client instance.",
+    "type": {
+      "names": ["Client"]
+    },
+    "access": "private",
+    "name": "Sticker",
+    "longname": "Sticker.Sticker",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The id of the sticker.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [880, 907],
+      "filename": "Sticker.js",
+      "lineno": 42,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000061",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The id of the sticker.",
+    "type": {
+      "names": ["BigInt"]
+    },
+    "access": "private",
+    "name": "Sticker",
+    "longname": "Sticker.Sticker",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The name of the sticker.\n     * @type {String}\n     * @private\n     */",
+    "meta": {
+      "range": [1000, 1022],
+      "filename": "Sticker.js",
+      "lineno": 49,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000072",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.name",
+        "paramnames": []
+      }
+    },
+    "description": "The name of the sticker.",
+    "type": {
+      "names": ["String"]
+    },
+    "access": "private",
+    "name": "Sticker",
+    "longname": "Sticker.Sticker",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The format type of the sticker.\n     * @type {Number}\n     * @private\n     */",
+    "meta": {
+      "range": [1122, 1158],
+      "filename": "Sticker.js",
+      "lineno": 56,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000081",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.format_type",
+        "paramnames": []
+      }
+    },
+    "description": "The format type of the sticker.",
+    "type": {
+      "names": ["Number"]
+    },
+    "access": "private",
+    "name": "Sticker",
+    "longname": "Sticker.Sticker",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n   * The ID of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1255, 1299],
+      "filename": "Sticker.js",
+      "lineno": 65,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000089",
+        "name": "Sticker#id",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The ID of the sticker.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "id",
+    "longname": "Sticker#id",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The name of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1393, 1432],
+      "filename": "Sticker.js",
+      "lineno": 75,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000100",
+        "name": "Sticker#name",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The name of the sticker.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "name",
+    "longname": "Sticker#name",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The format of the sticker.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1528, 1591],
+      "filename": "Sticker.js",
+      "lineno": 85,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000109",
+        "name": "Sticker#format",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The format of the sticker.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "format",
+    "longname": "Sticker#format",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The format type of the sticker.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1692, 1744],
+      "filename": "Sticker.js",
+      "lineno": 95,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000119",
+        "name": "Sticker#formatType",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The format type of the sticker.",
+    "type": {
+      "names": ["Number"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "formatType",
+    "longname": "Sticker#formatType",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.\n   * @type {String?}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [1890, 2373],
+      "filename": "Sticker.js",
+      "lineno": 105,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000128",
+        "name": "Sticker#previewImageURL",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.",
+    "type": {
+      "names": ["String"]
+    },
+    "nullable": true,
+    "readonly": true,
+    "access": "public",
+    "name": "previewImageURL",
+    "longname": "Sticker#previewImageURL",
+    "kind": "member",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [1922, 1936],
+      "filename": "Sticker.js",
+      "lineno": 106,
+      "columnno": 8,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000133",
+        "name": "cdnImageFormat"
+      }
+    },
+    "undocumented": true,
+    "name": "cdnImageFormat",
+    "longname": "<anonymous>~cdnImageFormat",
+    "kind": "member",
+    "memberof": "<anonymous>",
+    "scope": "inner",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2248, 2270],
+      "filename": "Sticker.js",
+      "lineno": 118,
+      "columnno": 8,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000171",
+        "name": "cdnImageFormat",
+        "type": "Literal",
+        "funcscope": "<anonymous>",
+        "value": "png",
+        "paramnames": []
+      }
+    },
+    "undocumented": true,
+    "name": "cdnImageFormat",
+    "longname": "<anonymous>~cdnImageFormat",
+    "kind": "member",
+    "memberof": "<anonymous>",
+    "scope": "inner"
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [2415, 2467],
+      "filename": "Sticker.js",
+      "lineno": 130,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000186",
+        "name": "Sticker#toString",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "toString",
+    "longname": "Sticker#toString",
+    "memberof": "Sticker",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [2509, 2566],
+      "filename": "Sticker.js",
+      "lineno": 138,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000197",
+        "name": "Sticker#util.inspect.custom",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "custom",
+    "longname": "Sticker#util.inspect.custom",
+    "memberof": "Sticker#util.inspect",
+    "scope": "static",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+    "meta": {
+      "range": [2751, 3078],
+      "filename": "Sticker.js",
+      "lineno": 149,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000210",
+        "name": "Sticker#toJSON",
+        "type": "MethodDefinition",
+        "paramnames": ["format"]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Returns the JSON representation of this structure.",
+    "params": [
+      {
+        "type": {
+          "names": ["Number"]
+        },
+        "optional": true,
+        "description": "The format to return the data in.",
+        "name": "format"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": ["Object"]
+        }
+      }
+    ],
+    "access": "public",
+    "kind": "function",
+    "name": "toJSON",
+    "longname": "Sticker#toJSON",
+    "memberof": "Sticker",
+    "scope": "instance"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2970, 2981],
+      "filename": "Sticker.js",
+      "lineno": 156,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000233",
+        "name": "id",
+        "type": "MemberExpression",
+        "value": "this.id"
+      }
+    },
+    "undocumented": true,
+    "name": "id",
+    "longname": "id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2993, 3008],
+      "filename": "Sticker.js",
+      "lineno": 157,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000237",
+        "name": "name",
+        "type": "MemberExpression",
+        "value": "this.name"
+      }
+    },
+    "undocumented": true,
+    "name": "name",
+    "longname": "name",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3020, 3048],
+      "filename": "Sticker.js",
+      "lineno": 158,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000241",
+        "name": "format_type",
+        "type": "MemberExpression",
+        "value": "this.formatType"
+      }
+    },
+    "undocumented": true,
+    "name": "format_type",
+    "longname": "format_type",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3082, 3105],
+      "filename": "Sticker.js",
+      "lineno": 165,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000245",
+        "name": "module.exports",
+        "type": "Identifier"
+      }
+    },
+    "undocumented": true,
+    "name": "exports",
+    "longname": "module.exports",
+    "kind": "member",
+    "memberof": "module",
+    "scope": "static"
+  },
+  {
+    "kind": "package",
+    "longname": "package:undefined",
+    "files": ["/home/runner/work/gluon/gluon/src/structures/Sticker.js"]
+  }
+]

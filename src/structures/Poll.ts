@@ -20,7 +20,7 @@ class Poll {
    * @param {Object} options The additional options for this structure.
    * @param {String} options.guildId The ID of the guild that this poll belongs to.
    */
-  constructor(client, data, { guildId } = {}) {
+  constructor(client: any, data: any, { guildId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -123,7 +123,7 @@ class Poll {
    */
   get answers() {
     if (!this.#answers) return [];
-    return this.#answers.map((a) => {
+    return this.#answers.map((a: any) => {
       return {
         answerId: a.answer_id,
         answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
@@ -206,7 +206,7 @@ class Poll {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

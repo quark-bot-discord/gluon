@@ -1,0 +1,1205 @@
+[
+  {
+    "comment": "",
+    "meta": {
+      "range": [215, 5377],
+      "filename": "Poll.js",
+      "lineno": 7,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000022",
+        "name": "Poll",
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data", ""]
+      }
+    },
+    "undocumented": true,
+    "name": "Poll",
+    "longname": "Poll",
+    "kind": "class",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [230, 239],
+      "filename": "Poll.js",
+      "lineno": 8,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000025",
+        "name": "_client",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_client",
+    "longname": "Poll#_client",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [242, 253],
+      "filename": "Poll.js",
+      "lineno": 9,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000026",
+        "name": "_guild_id",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_guild_id",
+    "longname": "Poll#_guild_id",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [256, 266],
+      "filename": "Poll.js",
+      "lineno": 10,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000027",
+        "name": "question",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "question",
+    "longname": "Poll#question",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [269, 278],
+      "filename": "Poll.js",
+      "lineno": 11,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000028",
+        "name": "answers",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "answers",
+    "longname": "Poll#answers",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [281, 289],
+      "filename": "Poll.js",
+      "lineno": 12,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000029",
+        "name": "expiry",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "expiry",
+    "longname": "Poll#expiry",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [292, 311],
+      "filename": "Poll.js",
+      "lineno": 13,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000030",
+        "name": "allow_multiselect",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "allow_multiselect",
+    "longname": "Poll#allow_multiselect",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [314, 327],
+      "filename": "Poll.js",
+      "lineno": 14,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000031",
+        "name": "layout_type",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "layout_type",
+    "longname": "Poll#layout_type",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [330, 339],
+      "filename": "Poll.js",
+      "lineno": 15,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000032",
+        "name": "results",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "results",
+    "longname": "Poll#results",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "/**\n   * Creates the structure for a poll.\n   * @param {Client} client The client instance.\n   * @param {Object} data The raw poll data from Discord.\n   * @param {Object} options The additional options for this structure.\n   * @param {String} options.guildId The ID of the guild that this poll belongs to.\n   */",
+    "meta": {
+      "range": [656, 2155],
+      "filename": "Poll.js",
+      "lineno": 23,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000033",
+        "name": "Poll",
+        "type": "MethodDefinition",
+        "paramnames": ["client", "data", ""]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Creates the structure for a poll.",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
+        },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "The raw poll data from Discord.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "The additional options for this structure.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": ["String"]
+        },
+        "description": "The ID of the guild that this poll belongs to.",
+        "name": "options.guildId"
+      }
+    ],
+    "name": "Poll",
+    "longname": "Poll",
+    "kind": "class",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [684, 691],
+      "filename": "Poll.js",
+      "lineno": 23,
+      "columnno": 30,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000040",
+        "name": "guildId",
+        "type": "Identifier",
+        "value": "guildId"
+      }
+    },
+    "undocumented": true,
+    "name": "guildId",
+    "longname": "guildId",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+    "meta": {
+      "range": [1094, 1116],
+      "filename": "Poll.js",
+      "lineno": 36,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000072",
+        "name": "this.",
+        "type": "Identifier",
+        "value": "client",
+        "paramnames": []
+      }
+    },
+    "description": "The client instance.",
+    "type": {
+      "names": ["Client"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The ID of the guild that this poll belongs to.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [1231, 1264],
+      "filename": "Poll.js",
+      "lineno": 43,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000079",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The ID of the guild that this poll belongs to.",
+    "type": {
+      "names": ["BigInt"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The question of the poll.\n     * @type {String}\n     * @private\n     */",
+    "meta": {
+      "range": [1358, 1388],
+      "filename": "Poll.js",
+      "lineno": 50,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000088",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.question",
+        "paramnames": []
+      }
+    },
+    "description": "The question of the poll.",
+    "type": {
+      "names": ["String"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The answers of the poll.\n     * @type {Array<Object>}\n     * @private\n     */",
+    "meta": {
+      "range": [1488, 1516],
+      "filename": "Poll.js",
+      "lineno": 57,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000097",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.answers",
+        "paramnames": []
+      }
+    },
+    "description": "The answers of the poll.",
+    "type": {
+      "names": ["Array.<Object>"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The UNIX timestamp of the expiry time for the poll.\n     * @type {Number}\n     * @private\n     */",
+    "meta": {
+      "range": [1636, 1695],
+      "filename": "Poll.js",
+      "lineno": 64,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000106",
+        "name": "this.",
+        "type": "BinaryExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The UNIX timestamp of the expiry time for the poll.",
+    "type": {
+      "names": ["Number"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * Whether the poll allows multiselect.\n     * @type {Boolean}\n     * @private\n     */",
+    "meta": {
+      "range": [1801, 1849],
+      "filename": "Poll.js",
+      "lineno": 71,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000124",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.allow_multiselect",
+        "paramnames": []
+      }
+    },
+    "description": "Whether the poll allows multiselect.",
+    "type": {
+      "names": ["Boolean"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The layout type of the poll.\n     * @type {Number}\n     * @private\n     */",
+    "meta": {
+      "range": [1946, 1982],
+      "filename": "Poll.js",
+      "lineno": 78,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000133",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.layout_type",
+        "paramnames": []
+      }
+    },
+    "description": "The layout type of the poll.",
+    "type": {
+      "names": ["Number"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The poll responses.\n     * @type {MessagePollManager}\n     * @private\n     */",
+    "meta": {
+      "range": [2082, 2150],
+      "filename": "Poll.js",
+      "lineno": 85,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000142",
+        "name": "this.",
+        "type": "NewExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The poll responses.",
+    "type": {
+      "names": ["MessagePollManager"]
+    },
+    "access": "private",
+    "name": "Poll",
+    "longname": "Poll.Poll",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n   * The ID of the guild that this poll belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2271, 2326],
+      "filename": "Poll.js",
+      "lineno": 94,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000156",
+        "name": "Poll#guildId",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The ID of the guild that this poll belongs to.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "guildId",
+    "longname": "Poll#guildId",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The guild that this poll belongs to.\n   * @type {Guild}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2431, 2499],
+      "filename": "Poll.js",
+      "lineno": 104,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000167",
+        "name": "Poll#guild",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The guild that this poll belongs to.",
+    "type": {
+      "names": ["Guild"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "guild",
+    "longname": "Poll#guild",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The question of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2594, 2814],
+      "filename": "Poll.js",
+      "lineno": 114,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000184",
+        "name": "Poll#question",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The question of the poll.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "question",
+    "longname": "Poll#question",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The answers of the poll.\n   * @type {Array<Object>}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2915, 3292],
+      "filename": "Poll.js",
+      "lineno": 124,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000246",
+        "name": "Poll#answers",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The answers of the poll.",
+    "type": {
+      "names": ["Array.<Object>"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "answers",
+    "longname": "Poll#answers",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3027, 3048],
+      "filename": "Poll.js",
+      "lineno": 128,
+      "columnno": 8,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000271",
+        "name": "answerId",
+        "type": "MemberExpression",
+        "value": "a.answer_id"
+      }
+    },
+    "undocumented": true,
+    "name": "answerId",
+    "longname": "answerId",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3058, 3216],
+      "filename": "Poll.js",
+      "lineno": 129,
+      "columnno": 8,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000275",
+        "name": "answer",
+        "type": "TemplateLiteral",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "answer",
+    "longname": "answer",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3226, 3270],
+      "filename": "Poll.js",
+      "lineno": 130,
+      "columnno": 8,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000320",
+        "name": "result",
+        "type": "CallExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "result",
+    "longname": "result",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "/**\n   * The UNIX timestamp of the expiry time for the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [3413, 3456],
+      "filename": "Poll.js",
+      "lineno": 141,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000330",
+        "name": "Poll#expiry",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The UNIX timestamp of the expiry time for the poll.",
+    "type": {
+      "names": ["Number"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "expiry",
+    "longname": "Poll#expiry",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * Whether the poll allows multiselect.\n   * @type {Boolean}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [3563, 3627],
+      "filename": "Poll.js",
+      "lineno": 151,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000339",
+        "name": "Poll#allowMultiselect",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Whether the poll allows multiselect.",
+    "type": {
+      "names": ["Boolean"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "allowMultiselect",
+    "longname": "Poll#allowMultiselect",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The layout type of the poll.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [3725, 3820],
+      "filename": "Poll.js",
+      "lineno": 161,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000348",
+        "name": "Poll#layoutType",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The layout type of the poll.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "layoutType",
+    "longname": "Poll#layoutType",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The raw layout type of the poll.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [3922, 3977],
+      "filename": "Poll.js",
+      "lineno": 172,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000363",
+        "name": "Poll#rawLayoutType",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The raw layout type of the poll.",
+    "type": {
+      "names": ["Number"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "rawLayoutType",
+    "longname": "Poll#rawLayoutType",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The poll responses.\n   * @type {MessagePollManager}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [4078, 4124],
+      "filename": "Poll.js",
+      "lineno": 182,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000372",
+        "name": "Poll#_results",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The poll responses.",
+    "type": {
+      "names": ["MessagePollManager"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "_results",
+    "longname": "Poll#_results",
+    "kind": "member",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [4166, 4221],
+      "filename": "Poll.js",
+      "lineno": 190,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000381",
+        "name": "Poll#toString",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "toString",
+    "longname": "Poll#toString",
+    "memberof": "Poll",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [4263, 4320],
+      "filename": "Poll.js",
+      "lineno": 198,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000392",
+        "name": "Poll#util.inspect.custom",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "custom",
+    "longname": "Poll#util.inspect.custom",
+    "memberof": "Poll#util.inspect",
+    "scope": "static",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+    "meta": {
+      "range": [4505, 5375],
+      "filename": "Poll.js",
+      "lineno": 209,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000405",
+        "name": "Poll#toJSON",
+        "type": "MethodDefinition",
+        "paramnames": ["format"]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Returns the JSON representation of this structure.",
+    "params": [
+      {
+        "type": {
+          "names": ["Number"]
+        },
+        "optional": true,
+        "description": "The format to return the data in.",
+        "name": "format"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": ["Object"]
+        }
+      }
+    ],
+    "access": "public",
+    "kind": "function",
+    "name": "toJSON",
+    "longname": "Poll#toJSON",
+    "memberof": "Poll",
+    "scope": "instance"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4663, 4687],
+      "filename": "Poll.js",
+      "lineno": 214,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000423",
+        "name": "question",
+        "type": "MemberExpression",
+        "value": "this."
+      }
+    },
+    "undocumented": true,
+    "name": "question",
+    "longname": "question",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4699, 4721],
+      "filename": "Poll.js",
+      "lineno": 215,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000428",
+        "name": "answers",
+        "type": "MemberExpression",
+        "value": "this."
+      }
+    },
+    "undocumented": true,
+    "name": "answers",
+    "longname": "answers",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4733, 4780],
+      "filename": "Poll.js",
+      "lineno": 216,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000433",
+        "name": "expiry",
+        "type": "ConditionalExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "expiry",
+    "longname": "expiry",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4792, 4832],
+      "filename": "Poll.js",
+      "lineno": 217,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000444",
+        "name": "allow_multiselect",
+        "type": "MemberExpression",
+        "value": "this.allowMultiselect"
+      }
+    },
+    "undocumented": true,
+    "name": "allow_multiselect",
+    "longname": "allow_multiselect",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4844, 4875],
+      "filename": "Poll.js",
+      "lineno": 218,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000448",
+        "name": "layout_type",
+        "type": "MemberExpression",
+        "value": "this.rawLayoutType"
+      }
+    },
+    "undocumented": true,
+    "name": "layout_type",
+    "longname": "layout_type",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4887, 4925],
+      "filename": "Poll.js",
+      "lineno": 219,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000452",
+        "name": "_results",
+        "type": "CallExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "_results",
+    "longname": "_results",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5036, 5060],
+      "filename": "Poll.js",
+      "lineno": 225,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000468",
+        "name": "question",
+        "type": "MemberExpression",
+        "value": "this."
+      }
+    },
+    "undocumented": true,
+    "name": "question",
+    "longname": "question",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5072, 5094],
+      "filename": "Poll.js",
+      "lineno": 226,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000473",
+        "name": "answers",
+        "type": "MemberExpression",
+        "value": "this."
+      }
+    },
+    "undocumented": true,
+    "name": "answers",
+    "longname": "answers",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5106, 5201],
+      "filename": "Poll.js",
+      "lineno": 227,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000478",
+        "name": "expiry",
+        "type": "ConditionalExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "expiry",
+    "longname": "expiry",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5213, 5253],
+      "filename": "Poll.js",
+      "lineno": 230,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000494",
+        "name": "allow_multiselect",
+        "type": "MemberExpression",
+        "value": "this.allowMultiselect"
+      }
+    },
+    "undocumented": true,
+    "name": "allow_multiselect",
+    "longname": "allow_multiselect",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5265, 5296],
+      "filename": "Poll.js",
+      "lineno": 231,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000498",
+        "name": "layout_type",
+        "type": "MemberExpression",
+        "value": "this.rawLayoutType"
+      }
+    },
+    "undocumented": true,
+    "name": "layout_type",
+    "longname": "layout_type",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5308, 5345],
+      "filename": "Poll.js",
+      "lineno": 232,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000502",
+        "name": "results",
+        "type": "CallExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "results",
+    "longname": "results",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [5379, 5399],
+      "filename": "Poll.js",
+      "lineno": 239,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000510",
+        "name": "module.exports",
+        "type": "Identifier"
+      }
+    },
+    "undocumented": true,
+    "name": "exports",
+    "longname": "module.exports",
+    "kind": "member",
+    "memberof": "module",
+    "scope": "static"
+  },
+  {
+    "kind": "package",
+    "longname": "package:undefined",
+    "files": ["/home/runner/work/gluon/gluon/src/structures/Poll.js"]
+  }
+]

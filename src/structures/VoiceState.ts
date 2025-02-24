@@ -29,7 +29,11 @@ class VoiceState {
    * @param {String} options.guildId The id of the guild that the voice state belongs to.
    * @param {Boolean?} [options.nocache] Whether this voice state should be cached.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -305,7 +309,7 @@ class VoiceState {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -342,7 +346,7 @@ class VoiceState {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
@@ -353,6 +357,7 @@ class VoiceState {
           member: this.member.toJSON(format),
           user_id: this.memberId,
           joined: this.joined,
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
         };
       }
@@ -371,6 +376,7 @@ class VoiceState {
           member: this.member,
           user_id: this.memberId,
           joined: this.joined,
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
         };
       }

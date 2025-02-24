@@ -26,7 +26,11 @@ class Emoji {
    * @param {String} options.guildId The id of the guild that the emoji belongs to.
    * @param {Boolean?} [options.nocache] Whether this emoji should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -139,7 +143,7 @@ class Emoji {
    * @param {Number} attributes The attributes of the emoji.
    * @returns {Boolean}
    */
-  static isAnimated(attributes) {
+  static isAnimated(attributes: any) {
     return (attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
@@ -223,7 +227,7 @@ class Emoji {
    * @static
    * @method
    */
-  static getMention(name, id, animated) {
+  static getMention(name: any, id: any, animated: any) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Emoji name must be a string.");
     if (id && typeof id !== "string")
@@ -243,7 +247,7 @@ class Emoji {
    * @static
    * @method
    */
-  static getUrl(id, animated = false) {
+  static getUrl(id: any, animated = false) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Emoji id must be a string.");
     if (typeof animated !== "boolean")
@@ -260,7 +264,7 @@ class Emoji {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -297,7 +301,7 @@ class Emoji {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {

@@ -45,9 +45,9 @@ class Member {
    * @param {Boolean?} [options.nocache] Whether this member should be cached.
    */
   constructor(
-    client,
-    data,
-    { userId, guildId, user, nocache = false } = {
+    client: any,
+    data: any,
+    { userId, guildId, user, nocache = false }: any = {
       nocache: false,
     },
   ) {
@@ -93,6 +93,7 @@ class Member {
        * @type {User?}
        * @private
        */
+      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       this.#user = new User(this.#_client, data.user, { nocache });
     else if (existing?.user) this.#user = existing.user;
     else if (user) this.#user = user;
@@ -312,8 +313,11 @@ class Member {
 
     const roles = this.roles;
 
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < roles.length; i++)
+      // @ts-expect-error TS(2531): Object is possibly 'null'.
       if (roles[i].position > highestPosition)
+        // @ts-expect-error TS(2531): Object is possibly 'null'.
         highestPosition = roles[i].position;
 
     return highestPosition;
@@ -457,7 +461,7 @@ class Member {
    * @static
    * @method
    */
-  static getMention(userId) {
+  static getMention(userId: any) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
     return `<@${userId}>`;
@@ -473,7 +477,7 @@ class Member {
    * @static
    * @method
    */
-  static getAvatarUrl(id, guildId, hash) {
+  static getAvatarUrl(id: any, guildId: any, hash: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Member id must be a string.");
     if (typeof guildId !== "string")
@@ -498,7 +502,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async addRole(role_id, { reason } = {}) {
+  async addRole(role_id: any, { reason }: any = {}) {
     await Member.addRole(this.#_client, this.guildId, this.id, role_id, {
       reason,
     });
@@ -515,7 +519,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async removeRole(role_id, { reason } = {}) {
+  async removeRole(role_id: any, { reason }: any = {}) {
     await Member.removeRole(this.#_client, this.guildId, this.id, role_id, {
       reason,
     });
@@ -532,7 +536,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async timeoutAdd(timeout_until, { reason } = {}) {
+  async timeoutAdd(timeout_until: any, { reason }: any = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -549,8 +553,10 @@ class Member {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
+    // @ts-expect-error TS(2339): Property 'communication_disabled_until' does not e... Remove this comment to see the full error message
     body.communication_disabled_until = new Date(
       timeout_until * 1000,
     ).toISOString();
@@ -572,7 +578,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async timeoutRemove({ reason } = {}) {
+  async timeoutRemove({ reason }: any = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -586,8 +592,10 @@ class Member {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
+    // @ts-expect-error TS(2339): Property 'communication_disabled_until' does not e... Remove this comment to see the full error message
     body.communication_disabled_until = null;
 
     await this.#_client.request.makeRequest(
@@ -608,7 +616,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async massUpdateRoles(roles, { reason } = {}) {
+  async massUpdateRoles(roles: any, { reason }: any = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -628,8 +636,10 @@ class Member {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
+    // @ts-expect-error TS(2339): Property 'roles' does not exist on type '{}'.
     body.roles = roles.map((role) => role.toString());
 
     await this.#_client.request.makeRequest(
@@ -648,7 +658,7 @@ class Member {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -668,7 +678,7 @@ class Member {
    * @param {String} memberId The id of the member.
    * @returns {String}
    */
-  static getHashName(guildId, memberId) {
+  static getHashName(guildId: any, memberId: any) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof memberId !== "string")
@@ -684,7 +694,7 @@ class Member {
    * @param {String} userId The id of the member.
    * @returns {Member}
    */
-  static decrypt(client, data, guildId, userId) {
+  static decrypt(client: any, data: any, guildId: any, userId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
@@ -713,7 +723,13 @@ class Member {
    * @async
    * @throws {TypeError}
    */
-  static async addRole(client, guildId, userId, roleId, { reason } = {}) {
+  static async addRole(
+    client: any,
+    guildId: any,
+    userId: any,
+    roleId: any,
+    { reason }: any = {},
+  ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -733,6 +749,7 @@ class Member {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await client.request.makeRequest(
@@ -756,7 +773,13 @@ class Member {
    * @async
    * @throws {TypeError}
    */
-  static async removeRole(client, guildId, userId, roleId, { reason } = {}) {
+  static async removeRole(
+    client: any,
+    guildId: any,
+    userId: any,
+    roleId: any,
+    { reason }: any = {},
+  ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
@@ -776,6 +799,7 @@ class Member {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await client.request.makeRequest(
@@ -818,7 +842,7 @@ class Member {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

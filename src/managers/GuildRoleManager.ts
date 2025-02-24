@@ -15,7 +15,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this role manager belongs to.
    */
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildRoleManager });
 
     if (!(client instanceof Client))
@@ -47,7 +47,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(roleId) {
+  async fetch(roleId: any) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
@@ -78,7 +78,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, role) {
+  set(id: any, role: any) {
     if (!(role instanceof Role))
       throw new TypeError("GLUON: Role must be an instance of Role.");
     return super.set(id, role);
@@ -95,7 +95,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getRole(client, guildId, roleId) {
+  static getRole(client: any, guildId: any, roleId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -115,7 +115,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client, guildId) {
+  static getCacheManager(client: any, guildId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -134,7 +134,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async fetchRole(client, guildId, roleId) {
+  static async fetchRole(client: any, guildId: any, roleId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -155,7 +155,8 @@ class GuildRoleManager extends BaseCacheManager {
 
     const data = await client.request.makeRequest("getRoles", [guildId]);
 
-    if (!roleId) return data.map((role) => new Role(client, role, { guildId }));
+    if (!roleId)
+      return data.map((role: any) => new Role(client, role, { guildId }));
 
     let matchedRole;
     for (let i = 0; i < data.length; i++) {

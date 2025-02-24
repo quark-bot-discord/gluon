@@ -5,7 +5,7 @@ import hash from "hash.js";
  * @param  {...String} ids The IDs to structure the hash name.
  * @returns {String}
  */
-function structureHashName(...ids) {
+function structureHashName(...ids: any[]) {
   if (!ids || ids.length === 0)
     throw new TypeError("GLUON: At least one ID must be provided.");
   if (!ids.every((id) => typeof id === "string"))

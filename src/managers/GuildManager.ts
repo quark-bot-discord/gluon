@@ -12,7 +12,7 @@ class GuildManager extends BaseCacheManager {
    * Creates a guild manager.
    * @param {Client} client The client instance.
    */
-  constructor(client) {
+  constructor(client: any) {
     super(client, { structureType: GuildManager });
 
     if (!(client instanceof Client))
@@ -36,7 +36,7 @@ class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, guild) {
+  set(id: any, guild: any) {
     if (!(guild instanceof Guild))
       throw new TypeError("GLUON: Guild must be an instance of Guild.");
     return super.set(id, guild);
@@ -47,7 +47,7 @@ class GuildManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @returns {GuildManager}
    */
-  static getCacheManager(client) {
+  static getCacheManager(client: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     return client.guilds;
@@ -63,7 +63,7 @@ class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static getGuild(client, guildId) {
+  static getGuild(client: any, guildId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")

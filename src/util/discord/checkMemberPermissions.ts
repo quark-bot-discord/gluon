@@ -5,7 +5,7 @@
  * @param {Role[]} roles An array of roles to check permissions for.
  * @returns {String} The permissions of the member.
  */
-function checkMemberPermissions(roles) {
+function checkMemberPermissions(roles: any) {
   if (roles == undefined)
     throw new TypeError("GLUON: Member roles must be provided.");
 

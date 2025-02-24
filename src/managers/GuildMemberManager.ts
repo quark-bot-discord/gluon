@@ -14,7 +14,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this member manager belongs to.
    */
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildMemberManager });
 
     if (!(client instanceof Client))
@@ -56,7 +56,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(user_id) {
+  fetch(user_id: any) {
     return GuildMemberManager.fetchMember(
       this.#_client,
       this.#guild.id,
@@ -73,7 +73,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  search(query) {
+  search(query: any) {
     if (typeof query !== "string")
       throw new TypeError("GLUON: Query must be a string.");
 
@@ -90,7 +90,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, member) {
+  set(id: any, member: any) {
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member instance.");
     return super.set(id, member);
@@ -102,7 +102,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {String} guildId The ID of the guild.
    * @returns {GuildMemberManager}
    */
-  static getCacheManager(client, guildId) {
+  static getCacheManager(client: any, guildId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -122,7 +122,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async fetchMember(client, guildId, userId) {
+  static async fetchMember(client: any, guildId: any, userId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -158,7 +158,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    * @throws {TypeError}
    */
-  static getMember(client, guildId, userId) {
+  static getMember(client: any, guildId: any, userId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client is not a Client instance.");
     if (typeof guildId !== "string")
@@ -183,7 +183,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async search(client, guildId, query) {
+  static async search(client: any, guildId: any, query: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -193,8 +193,10 @@ class GuildMemberManager extends BaseCacheManager {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'query' does not exist on type '{}'.
     body.query = query;
 
+    // @ts-expect-error TS(2339): Property 'limit' does not exist on type '{}'.
     body.limit = 1000;
 
     const data = await client.request.makeRequest(

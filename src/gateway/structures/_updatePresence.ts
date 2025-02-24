@@ -1,22 +1,24 @@
 import erlpack from "erlpack";
+import { PresenceStatus, PresenceType, UpdatePresence } from "src/gateway.js";
 
 function _updatePresence(
-  name,
-  type = 0,
-  status = "online",
-  afk = false,
-  since = null,
+  name: string,
+  type: PresenceType = 0,
+  status: PresenceStatus = "online",
+  afk: boolean = false,
+  since: number | null = null,
 ) {
   const activities = [];
 
-  if (name)
+  if (name) {
     activities.push({
       name,
       type,
       state: type === 4 ? name : undefined,
     });
+  }
 
-  return erlpack.pack({
+  const payload: UpdatePresence = {
     op: 3,
     d: {
       since,
@@ -24,7 +26,9 @@ function _updatePresence(
       status,
       afk,
     },
-  });
+  };
+
+  return erlpack.pack(payload);
 }
 
 export default _updatePresence;

@@ -32,10 +32,11 @@ import gluon from "../util/art/gluon.js";
 class EventHandler {
   #_client;
   #shard;
+  // @ts-expect-error TS(7008): Member '#initialGuilds' implicitly has an 'any[]' ... Remove this comment to see the full error message
   #initialGuilds;
   #initialisedSent;
   #asciiArtSent;
-  constructor(client, ws) {
+  constructor(client: any, ws: any) {
     this.#_client = client;
 
     this.#shard = ws;
@@ -47,7 +48,7 @@ class EventHandler {
     this.#asciiArtSent = false;
   }
 
-  READY(data) {
+  READY(data: any) {
     this.#shard.sessionId = data.session_id;
 
     this.#shard.resumeGatewayUrl = data.resume_gateway_url;
@@ -60,7 +61,7 @@ class EventHandler {
 
     this.#_client.ready = true;
 
-    this.#initialGuilds = data.guilds.map((g) => g.id);
+    this.#initialGuilds = data.guilds.map((g: any) => g.id);
 
     if (this.#asciiArtSent === false) {
       this.#asciiArtSent = true;
@@ -75,7 +76,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.READY, this.#initialGuilds);
   }
 
-  RESUMED(data) {
+  RESUMED(data: any) {
     this.#shard.resetRetries();
 
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "RESUMED");
@@ -83,7 +84,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.RESUMED);
   }
 
-  GUILD_CREATE(data) {
+  GUILD_CREATE(data: any) {
     let guild;
 
     this.#_client._emitDebug(
@@ -109,7 +110,7 @@ class EventHandler {
     }
   }
 
-  GUILD_UPDATE(data) {
+  GUILD_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_UPDATE ${data.id}`,
@@ -121,7 +122,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_UPDATE, oldGuild, newGuild);
   }
 
-  GUILD_DELETE(data) {
+  GUILD_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_DELETE ${data.id}`,
@@ -138,7 +139,7 @@ class EventHandler {
     }
   }
 
-  GUILD_ROLE_CREATE(data) {
+  GUILD_ROLE_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_CREATE ${data.guild_id}`,
@@ -151,7 +152,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_ROLE_CREATE, role);
   }
 
-  GUILD_ROLE_UPDATE(data) {
+  GUILD_ROLE_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_UPDATE ${data.guild_id}`,
@@ -167,7 +168,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
   }
 
-  GUILD_ROLE_DELETE(data) {
+  GUILD_ROLE_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_DELETE ${data.guild_id}`,
@@ -183,7 +184,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_ROLE_DELETE, role);
   }
 
-  CHANNEL_CREATE(data) {
+  CHANNEL_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_CREATE ${data.guild_id}`,
@@ -194,7 +195,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.CHANNEL_CREATE, channel);
   }
 
-  CHANNEL_UPDATE(data) {
+  CHANNEL_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_UPDATE ${data.guild_id}`,
@@ -208,7 +209,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
   }
 
-  CHANNEL_DELETE(data) {
+  CHANNEL_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_DELETE ${data.guild_id}`,
@@ -224,7 +225,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.CHANNEL_DELETE, channel);
   }
 
-  CHANNEL_PINS_UPDATE(data) {
+  CHANNEL_PINS_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_PINS_UPDATE ${data.guild_id}`,
@@ -233,7 +234,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.CHANNEL_PINS_UPDATE, data);
   }
 
-  THREAD_CREATE(data) {
+  THREAD_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_CREATE ${data.guild_id}`,
@@ -244,7 +245,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.THREAD_CREATE, thread);
   }
 
-  THREAD_UPDATE(data) {
+  THREAD_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_UPDATE ${data.guild_id}`,
@@ -260,7 +261,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
   }
 
-  THREAD_DELETE(data) {
+  THREAD_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_DELETE ${data.guild_id}`,
@@ -276,7 +277,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.THREAD_DELETE, thread);
   }
 
-  THREAD_LIST_SYNC(data) {
+  THREAD_LIST_SYNC(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_LIST_SYNC ${data.guild_id}`,
@@ -291,7 +292,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.THREAD_LIST_SYNC, threads);
   }
 
-  GUILD_MEMBER_ADD(data) {
+  GUILD_MEMBER_ADD(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_ADD ${data.guild_id}`,
@@ -307,7 +308,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_MEMBER_ADD, member);
   }
 
-  GUILD_MEMBER_REMOVE(data) {
+  GUILD_MEMBER_REMOVE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_REMOVE ${data.guild_id}`,
@@ -318,12 +319,13 @@ class EventHandler {
       data.guild_id,
     );
 
-    cacheManager.fetchWithRules(data.user.id).then((member) => {
+    cacheManager.fetchWithRules(data.user.id).then((member: any) => {
       const guild = GuildManager.getCacheManager(this.#_client).get(
         data.guild_id,
       );
       if (member) guild?.members.delete(data.user.id);
       else {
+        // @ts-expect-error TS(2322): Type 'true' is not assignable to type 'false'.
         const user = new User(this.#_client, data.user, { nocache: true });
         member = new Member(
           this.#_client,
@@ -338,7 +340,7 @@ class EventHandler {
     });
   }
 
-  GUILD_MEMBER_UPDATE(data) {
+  GUILD_MEMBER_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_UPDATE ${data.guild_id}`,
@@ -349,7 +351,7 @@ class EventHandler {
       data.guild_id,
     );
 
-    cacheManager.fetchWithRules(data.user.id).then((oldMember) => {
+    cacheManager.fetchWithRules(data.user.id).then((oldMember: any) => {
       const newMember = new Member(this.#_client, data, {
         userId: data.user.id,
         guildId: data.guild_id,
@@ -359,7 +361,7 @@ class EventHandler {
     });
   }
 
-  GUILD_MEMBERS_CHUNK(data) {
+  GUILD_MEMBERS_CHUNK(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBERS_CHUNK ${data.guild_id}`,
@@ -372,33 +374,37 @@ class EventHandler {
       });
   }
 
-  GUILD_BAN_ADD(data) {
+  GUILD_BAN_ADD(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_BAN_ADD ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
+    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
+    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
     this.#_client.emit(EVENTS.GUILD_BAN_ADD, user);
   }
 
-  GUILD_BAN_REMOVE(data) {
+  GUILD_BAN_REMOVE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_BAN_REMOVE ${data.guild_id}`,
     );
 
     const user = new User(this.#_client, data.user);
+    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
+    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
     this.#_client.emit(EVENTS.GUILD_BAN_REMOVE, user);
   }
 
-  INVITE_CREATE(data) {
+  INVITE_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_CREATE ${data.guild_id}`,
@@ -409,7 +415,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.INVITE_CREATE, invite);
   }
 
-  INVITE_DELETE(data) {
+  INVITE_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_DELETE ${data.guild_id}`,
@@ -429,7 +435,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.INVITE_DELETE, partialInvite, invite);
   }
 
-  VOICE_STATE_UPDATE(data) {
+  VOICE_STATE_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `VOICE_STATE_UPDATE ${data.guild_id}`,
@@ -454,7 +460,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
   }
 
-  VOICE_CHANNEL_STATUS_UPDATE(data) {
+  VOICE_CHANNEL_STATUS_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
@@ -463,7 +469,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
   }
 
-  MESSAGE_CREATE(data) {
+  MESSAGE_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_CREATE ${data.guild_id}`,
@@ -477,7 +483,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.MESSAGE_CREATE, message);
   }
 
-  MESSAGE_UPDATE(data) {
+  MESSAGE_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_UPDATE ${data.guild_id}`,
@@ -489,7 +495,7 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.id).then((oldMessage) => {
+    cacheManager.fetchWithRules(data.id).then((oldMessage: any) => {
       const newMessage = new Message(this.#_client, data, {
         channelId: data.channel_id,
         guildId: data.guild_id,
@@ -507,7 +513,7 @@ class EventHandler {
     });
   }
 
-  MESSAGE_DELETE(data) {
+  MESSAGE_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_DELETE ${data.guild_id}`,
@@ -519,12 +525,12 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.id).then((message) => {
+    cacheManager.fetchWithRules(data.id).then((message: any) => {
       this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
     });
   }
 
-  MESSAGE_DELETE_BULK(data) {
+  MESSAGE_DELETE_BULK(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_DELETE_BULK ${data.guild_id}`,
@@ -548,7 +554,7 @@ class EventHandler {
     );
   }
 
-  INTERACTION_CREATE(data) {
+  INTERACTION_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INTERACTION_CREATE ${data.guild_id}`,
@@ -624,7 +630,7 @@ class EventHandler {
     }
   }
 
-  GUILD_AUDIT_LOG_ENTRY_CREATE(data) {
+  GUILD_AUDIT_LOG_ENTRY_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
@@ -637,7 +643,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
   }
 
-  ENTITLEMENT_CREATE(data) {
+  ENTITLEMENT_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_CREATE ${data.user_id}`,
@@ -646,7 +652,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_CREATE, data);
   }
 
-  ENTITLEMENT_UPDATE(data) {
+  ENTITLEMENT_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_UPDATE ${data.user_id}`,
@@ -655,7 +661,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
   }
 
-  ENTITLEMENT_DELETE(data) {
+  ENTITLEMENT_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_DELETE ${data.user_id}`,
@@ -664,7 +670,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_DELETE, data);
   }
 
-  GUILD_SCHEDULED_EVENT_CREATE(data) {
+  GUILD_SCHEDULED_EVENT_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
@@ -677,7 +683,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
   }
 
-  GUILD_SCHEDULED_EVENT_UPDATE(data) {
+  GUILD_SCHEDULED_EVENT_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
@@ -698,7 +704,7 @@ class EventHandler {
     );
   }
 
-  GUILD_SCHEDULED_EVENT_DELETE(data) {
+  GUILD_SCHEDULED_EVENT_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
@@ -715,7 +721,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }
 
-  GUILD_SCHEDULED_EVENT_USER_ADD(data) {
+  GUILD_SCHEDULED_EVENT_USER_ADD(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
@@ -740,7 +746,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
   }
 
-  GUILD_SCHEDULED_EVENT_USER_REMOVE(data) {
+  GUILD_SCHEDULED_EVENT_USER_REMOVE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
@@ -765,43 +771,47 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
   }
 
-  AUTO_MODERATION_RULE_CREATE(data) {
+  AUTO_MODERATION_RULE_CREATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
     );
 
+    // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_RULE_UPDATE(data) {
+  AUTO_MODERATION_RULE_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
     );
 
+    // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_RULE_DELETE(data) {
+  AUTO_MODERATION_RULE_DELETE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
     );
 
+    // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_ACTION_EXECUTION(data) {
+  AUTO_MODERATION_ACTION_EXECUTION(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
     );
 
+    // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_ACTION_EXECUTION' does n... Remove this comment to see the full error message
     this.#_client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
   }
 
-  GUILD_EMOJIS_UPDATE(data) {
+  GUILD_EMOJIS_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
@@ -812,13 +822,14 @@ class EventHandler {
       data.guild_id,
     )?.emojis;
     const newEmojis = data.emojis.map(
-      (emoji) => new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
+      (emoji: any) =>
+        new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
     );
 
     if (oldEmojis.size < newEmojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
-      const oldIds = oldEmojis.toJSON().map((e) => e.id);
+      const oldIds = oldEmojis.toJSON().map((e: any) => e.id);
 
       for (let i = 0; i < newEmojis.length; i++) {
         let matchingFound = false;
@@ -843,7 +854,7 @@ class EventHandler {
     } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
-      const oldIds = oldEmojis.toJSON().map((e) => e.id);
+      const oldIds = oldEmojis.toJSON().map((e: any) => e.id);
 
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
@@ -876,7 +887,7 @@ class EventHandler {
 
       for (let i = 0; i < oldEmojisArray.length; i++) {
         const correspondingNewEmojiRaw = newEmojis.find(
-          (e) => e.id == oldEmojisArray[i].id,
+          (e: any) => e.id == oldEmojisArray[i].id,
         );
         const correspondingNewEmoji = new Emoji(
           this.#_client,
@@ -900,7 +911,7 @@ class EventHandler {
     }
   }
 
-  WEBHOOKS_UPDATE(data) {
+  WEBHOOKS_UPDATE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `WEBHOOKS_UPDATE ${data.guild_id}`,
@@ -909,7 +920,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.WEBHOOKS_UPDATE, data);
   }
 
-  MESSAGE_POLL_VOTE_ADD(data) {
+  MESSAGE_POLL_VOTE_ADD(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
@@ -921,7 +932,7 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
+    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
       if (message) {
         message.poll._results._addVote(data.user_id, data.answer_id);
       }
@@ -929,7 +940,7 @@ class EventHandler {
     });
   }
 
-  MESSAGE_POLL_VOTE_REMOVE(data) {
+  MESSAGE_POLL_VOTE_REMOVE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
@@ -941,7 +952,7 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
+    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
       if (message) {
         message.poll._results._removeVote(data.user_id, data.answer_id);
       }
@@ -949,7 +960,7 @@ class EventHandler {
     });
   }
 
-  MESSAGE_REACTION_ADD(data) {
+  MESSAGE_REACTION_ADD(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_REACTION_ADD ${data.guild_id}`,
@@ -961,7 +972,7 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
+    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
       if (message) {
         message.reactions._addReaction(
           data.user_id,
@@ -979,7 +990,7 @@ class EventHandler {
     });
   }
 
-  MESSAGE_REACTION_REMOVE(data) {
+  MESSAGE_REACTION_REMOVE(data: any) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
@@ -991,7 +1002,7 @@ class EventHandler {
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
+    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
       if (message) {
         message.reactions._removeReaction(
           data.user_id,

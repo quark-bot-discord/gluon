@@ -1,16 +1,20 @@
 import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 
 class FileUpload {
+  // @ts-expect-error TS(7008): Member '#name' implicitly has an 'any' type.
   #name;
+  // @ts-expect-error TS(7008): Member '#stream' implicitly has an 'any' type.
   #stream;
+  // @ts-expect-error TS(7008): Member '#path' implicitly has an 'any' type.
   #path;
+  // @ts-expect-error TS(7008): Member '#size' implicitly has an 'any' type.
   #size;
   /**
    * The name of the file.
    * @param {String} name The name of the file.
    * @returns {FileUpload}
    */
-  setName(name) {
+  setName(name: any) {
     if (!name) throw new TypeError("GLUON: File name must be provided.");
     if (typeof name !== "string")
       throw new TypeError("GLUON: File name must be a string.");
@@ -27,7 +31,7 @@ class FileUpload {
    * @param {Stream} stream The stream of the file.
    * @returns {FileUpload}
    */
-  setStream(stream) {
+  setStream(stream: any) {
     if (!stream) throw new TypeError("GLUON: File stream must be provided.");
     this.#stream = stream;
     return this;
@@ -38,7 +42,7 @@ class FileUpload {
    * @param {String} path The path of the file.
    * @returns {FileUpload}
    */
-  setPath(path) {
+  setPath(path: any) {
     if (!path) throw new TypeError("GLUON: File path must be provided.");
     if (typeof path !== "string")
       throw new TypeError("GLUON: File path must be a string.");
@@ -51,7 +55,7 @@ class FileUpload {
    * @param {Number} size The size of the file.
    * @returns {FileUpload}
    */
-  setSize(size) {
+  setSize(size: any) {
     if (!size) throw new TypeError("GLUON: File size must be provided.");
     if (typeof size !== "number")
       throw new TypeError("GLUON: File size must be a number.");
@@ -96,8 +100,10 @@ class FileUpload {
   }
 
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.#name)

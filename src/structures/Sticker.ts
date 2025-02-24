@@ -21,7 +21,7 @@ class Sticker {
    * @param {Client} client The client instance.
    * @param {Object} data Sticker data from Discord.
    */
-  constructor(client, data) {
+  constructor(client: any, data: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -146,7 +146,7 @@ class Sticker {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

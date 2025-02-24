@@ -7,7 +7,11 @@ import { PERMISSIONS } from "../../constants.js";
  * @param {Boolean?} adminOverride Whether the admin permission should be taken into consideration.
  * @returns {Boolean}
  */
-function checkPermission(memberPermission, permission, adminOverride = true) {
+function checkPermission(
+  memberPermission: any,
+  permission: any,
+  adminOverride = true,
+) {
   if (typeof memberPermission != "string")
     throw new TypeError("GLUON: Permissions must be a String.");
   if (typeof permission != "string")

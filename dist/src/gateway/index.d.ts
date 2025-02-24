@@ -1,32 +1,39 @@
-export default Shard;
 declare class Shard {
-    constructor(client: any, token: any, url: any, shardId: any, sessionId?: any, sequence?: any, resumeGatewayUrl?: any);
+  #private;
+  shard: any;
+  terminateSocketTimeout: any;
+  zlib: any;
+  constructor(
+    client: any,
+    token: any,
+    url: any,
+    shardId: any,
+    sessionId?: null,
+    sequence?: null,
+    resumeGatewayUrl?: null,
+  );
+  halt(): void;
+  check(): {
     shard: any;
-    halt(): void;
-    check(): {
-        shard: any;
-        websocketState: any;
-        lastReconnect: any;
-        latency: number;
-    };
-    jitter(): number;
-    updatePresence(name: any, type: any, status: any, afk: any, since: any): void;
-    getSessionData(): {
-        sessionId: any;
-        sequence: any;
-        resumeGatewayUrl: any;
-    };
-    zlib: any;
-    terminateSocketTimeout: NodeJS.Timeout;
-    resetRetries(): void;
-    /**
-     * @param {String} id
-     */
-    set sessionId(id: string);
-    /**
-     * @param {String} url
-     */
-    set resumeGatewayUrl(url: string);
-    #private;
+    websocketState: any;
+    lastReconnect: any;
+    latency: number;
+  };
+  jitter(): number;
+  updatePresence(name: any, type: any, status: any, afk: any, since: any): void;
+  getSessionData(): {
+    sessionId: any;
+    sequence: any;
+    resumeGatewayUrl: any;
+  };
+  resetRetries(): void;
+  /**
+   * @param {String} id
+   */
+  set sessionId(id: any);
+  /**
+   * @param {String} url
+   */
+  set resumeGatewayUrl(url: any);
 }
-//# sourceMappingURL=index.d.ts.map
+export default Shard;

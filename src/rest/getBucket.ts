@@ -1,4 +1,4 @@
-async function getBucket(client, localRatelimitCache, hash) {
+async function getBucket(client: any, localRatelimitCache: any, hash: any) {
   if (client.redis) {
     try {
       const rawBucket = await client.redis.get(`gluon.paths.${hash}`);

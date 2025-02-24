@@ -7,7 +7,7 @@ import BaseCacheManager from "./BaseCacheManager.js";
  */
 class GuildVoiceStatesManager extends BaseCacheManager {
   static identifier = "voicestates";
-  constructor(client) {
+  constructor(client: any) {
     super(client, { structureType: GuildVoiceStatesManager });
 
     if (!(client instanceof Client))
@@ -23,7 +23,7 @@ class GuildVoiceStatesManager extends BaseCacheManager {
    * @method
    * @override
    */
-  set(id, voiceState) {
+  set(id: any, voiceState: any) {
     if (!(voiceState instanceof VoiceState))
       throw new TypeError("GLUON: VoiceState must be a VoiceState instance.");
     return super.set(id, voiceState);

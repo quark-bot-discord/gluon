@@ -3,7 +3,7 @@
  * @param  {...String} permissions The permissions to combine.
  * @returns {String} The combined permissions.
  */
-function combinePermissions(...permissions) {
+function combinePermissions(...permissions: string[]): string {
   if (permissions.length === 0)
     throw new TypeError("GLUON: Permissions must be provided.");
 

@@ -12,7 +12,7 @@ class UserManager extends BaseCacheManager {
    * Creates a user manager.
    * @param {Client} client The client instance.
    */
-  constructor(client) {
+  constructor(client: any) {
     super(client, { structureType: UserManager });
 
     if (!(client instanceof Client))
@@ -35,7 +35,7 @@ class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(userId) {
+  fetch(userId: any) {
     return UserManager.fetchUser(this.#_client, userId);
   }
 
@@ -49,7 +49,7 @@ class UserManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, user) {
+  set(id: any, user: any) {
     if (!(user instanceof User))
       throw new TypeError("GLUON: User must be an instance of User.");
     return super.set(id, user);
@@ -65,7 +65,7 @@ class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  static async fetchUser(client, userId) {
+  static async fetchUser(client: any, userId: any) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 

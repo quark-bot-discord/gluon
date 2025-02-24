@@ -1,19 +1,22 @@
-export default MessageComponents;
 /**
  * Structure for message components.
  */
 declare class MessageComponents {
-    actionRows: any[];
-    /**
-     * Adds an action row to the message.
-     * @param {ActionRow} actionRow Action row to add to the message.
-     * @returns {MessageComponents}
-     */
-    addActionRow(actionRow: ActionRow): MessageComponents;
-    /**
-     * Returns the correct Discord format for message components.
-     * @returns {Object}
-     */
-    toJSON(format: any): any;
+  actionRows: any;
+  /**
+   * Creates a group of message components for a message.
+   */
+  constructor();
+  /**
+   * Adds an action row to the message.
+   * @param {ActionRow} actionRow Action row to add to the message.
+   * @returns {MessageComponents}
+   */
+  addActionRow(actionRow: any): this;
+  /**
+   * Returns the correct Discord format for message components.
+   * @returns {Object}
+   */
+  toJSON(format: any): any;
 }
-//# sourceMappingURL=messageComponents.d.ts.map
+export default MessageComponents;

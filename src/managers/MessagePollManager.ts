@@ -11,7 +11,7 @@ class MessagePollManager {
    * Creates a message poll manager.
    * @param {Object} existingResponses Existing responses for a poll.
    */
-  constructor(client, existingResponses = {}) {
+  constructor(client: any, existingResponses = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client.");
     if (typeof existingResponses !== "object")
@@ -34,7 +34,7 @@ class MessagePollManager {
     for (const [answer, answerValue] of Object.entries(existingResponses))
       this.#cache.set(
         String(answer),
-        answerValue.map((v) => BigInt(v)),
+        answerValue.map((v: any) => BigInt(v)),
       );
   }
 
@@ -46,7 +46,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  _addVote(user_id, answer_id) {
+  _addVote(user_id: any, answer_id: any) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -68,7 +68,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  _removeVote(user_id, answer_id) {
+  _removeVote(user_id: any, answer_id: any) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -80,7 +80,7 @@ class MessagePollManager {
     if (currentUserList)
       this.#cache.set(
         String(answer_id),
-        currentUserList.filter((x) => x !== BigInt(user_id)),
+        currentUserList.filter((x: any) => x !== BigInt(user_id)),
       );
   }
 
@@ -89,10 +89,10 @@ class MessagePollManager {
    * @param {Number} answerId The ID of the answer to get the result for.
    * @returns {Array<String>}
    */
-  getResult(answerId) {
+  getResult(answerId: any) {
     if (typeof answerId !== "number")
       throw new TypeError("GLUON: Answer ID must be a number.");
-    return this.#cache.get(String(answerId))?.map((v) => String(v)) ?? [];
+    return this.#cache.get(String(answerId))?.map((v: any) => String(v)) ?? [];
   }
 
   /**
@@ -102,13 +102,14 @@ class MessagePollManager {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         const pollResponses = {};
+        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         for (const [key, values] of this.#cache)
-          pollResponses[key] = values.map((v) => String(v));
+          pollResponses[key] = values.map((v: any) => String(v));
         return pollResponses;
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:

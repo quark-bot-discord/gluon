@@ -1,10 +1,14 @@
 class GluonCacheRule {
+  handlerFunction: any;
+  name: any;
+  retrieveFunction: any;
+  structureType: any;
   /**
    * The name of the rule.
    * @param {String} name What the rule is called.
    * @returns {GluonCacheRule}
    */
-  setName(name) {
+  setName(name: any) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Rule name must be a string.");
 
@@ -22,7 +26,7 @@ class GluonCacheRule {
    * @method
    * @throws {TypeError}
    */
-  setHandlerFunction(handlerFunction) {
+  setHandlerFunction(handlerFunction: any) {
     if (typeof handlerFunction !== "function")
       throw new TypeError("GLUON: Rule handler function must be a function.");
 
@@ -40,7 +44,7 @@ class GluonCacheRule {
    * @method
    * @throws {TypeError}
    */
-  setStructureType(structureType) {
+  setStructureType(structureType: any) {
     if (!(structureType instanceof Object))
       throw new TypeError("GLUON: Rule structure type must be a class.");
 
@@ -57,7 +61,7 @@ class GluonCacheRule {
    * @method
    * @throws {TypeError}
    */
-  setRetrieveFunction(retrieveFunction) {
+  setRetrieveFunction(retrieveFunction: any) {
     if (typeof retrieveFunction !== "function")
       throw new TypeError("GLUON: Rule retrieve function must be a function.");
 

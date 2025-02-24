@@ -21,7 +21,11 @@ class VoiceChannel extends Channel {
    * @param {String} options.guildId The id of the guild that the voice channel belongs to.
    * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     super(client, data, { guildId });
 
     if (!(client instanceof Client))
@@ -152,7 +156,7 @@ class VoiceChannel extends Channel {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

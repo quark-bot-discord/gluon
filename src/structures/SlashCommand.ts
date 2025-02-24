@@ -20,7 +20,7 @@ class SlashCommand extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The raw interaction data from Discord.
    */
-  constructor(client, data) {
+  constructor(client: any, data: any) {
     super(client, data);
 
     if (!(client instanceof Client))
@@ -104,7 +104,7 @@ class SlashCommand extends Interaction {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

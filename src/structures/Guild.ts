@@ -65,7 +65,11 @@ class Guild {
    * @param {Boolean?} [options.nocache] Whether this guild should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object}
    */
-  constructor(client, data, { nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { nocache = false } = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -175,7 +179,8 @@ class Guild {
      */
     this.#voice_states = existing
       ? existing.voiceStates
-      : new GuildVoiceStatesManager(this.#_client, data.voice_states);
+      : // @ts-expect-error TS(2554): Expected 1 arguments, but got 2.
+        new GuildVoiceStatesManager(this.#_client, data.voice_states);
 
     /**
      * The member manager of this guild.
@@ -470,6 +475,7 @@ class Guild {
      * @private
      */
     this.#_cacheOptions = new GuildCacheOptions(
+      // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
       data._cacheOptions || this.#_client._defaultGuildCacheOptions.toJSON(),
     );
 
@@ -1088,7 +1094,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async ban(user_id, { reason, seconds } = {}) {
+  async ban(user_id: any, { reason, seconds }: any = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1111,8 +1117,10 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
     // number of seconds to delete messages for (0-604800)
+    // @ts-expect-error TS(2339): Property 'delete_message_seconds' does not exist o... Remove this comment to see the full error message
     if (seconds) body.delete_message_seconds = seconds;
 
     await this.#_client.request.makeRequest(
@@ -1133,7 +1141,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async unban(user_id, { reason } = {}) {
+  async unban(user_id: any, { reason }: any = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1150,6 +1158,7 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await this.#_client.request.makeRequest(
@@ -1170,7 +1179,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async kick(user_id, { reason } = {}) {
+  async kick(user_id: any, { reason }: any = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS)
     )
@@ -1187,6 +1196,7 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await this.#_client.request.makeRequest(
@@ -1208,7 +1218,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async removeMemberRole(user_id, role_id, { reason } = {}) {
+  async removeMemberRole(user_id: any, role_id: any, { reason }: any = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
@@ -1228,6 +1238,7 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await this.#_client.request.makeRequest(
@@ -1251,7 +1262,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async fetchAuditLogs({ limit, type, user_id, before, after } = {}) {
+  async fetchAuditLogs({ limit, type, user_id, before, after }: any = {}) {
     if (
       !checkPermission(
         (await this.me()).permissions,
@@ -1280,15 +1291,21 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'limit' does not exist on type '{}'.
     if (limit) body.limit = limit;
+    // @ts-expect-error TS(2339): Property 'limit' does not exist on type '{}'.
     else body.limit = 1;
 
+    // @ts-expect-error TS(2339): Property 'action_type' does not exist on type '{}'... Remove this comment to see the full error message
     if (type) body.action_type = AUDIT_LOG_TYPES[type];
 
+    // @ts-expect-error TS(2339): Property 'user_id' does not exist on type '{}'.
     if (user_id) body.user_id = user_id;
 
+    // @ts-expect-error TS(2339): Property 'before' does not exist on type '{}'.
     if (before) body.before = before;
 
+    // @ts-expect-error TS(2339): Property 'after' does not exist on type '{}'.
     if (after) body.after = after;
 
     const data = await this.#_client.request.makeRequest(
@@ -1299,9 +1316,11 @@ class Guild {
 
     if (
       type &&
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       AUDIT_LOG_TYPES[type] &&
       data &&
       data.audit_log_entries[0] &&
+      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type]
     )
       return null;
@@ -1309,7 +1328,7 @@ class Guild {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e) =>
+      (e: any) =>
         new AuditLog(this.#_client, e, {
           users: data.users,
           guildId: this.id,
@@ -1363,7 +1382,7 @@ class Guild {
    * @method
    * @throws {Error | TypeError}
    */
-  async fetchBan(user_id) {
+  async fetchBan(user_id: any) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1432,7 +1451,7 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static async deleteWebhook(client, webhookId) {
+  static async deleteWebhook(client: any, webhookId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1453,7 +1472,11 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static createWebhook(client, channelId, { name = NAME } = { name: NAME }) {
+  static createWebhook(
+    client: any,
+    channelId: any,
+    { name = NAME } = { name: NAME },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
@@ -1463,6 +1486,7 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'name' does not exist on type '{}'.
     body.name = name;
 
     return client.request.makeRequest("postCreateWebhook", [channelId], body);
@@ -1481,7 +1505,7 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static modifyWebhook(client, webhookId, { channelId } = {}) {
+  static modifyWebhook(client: any, webhookId: any, { channelId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1491,6 +1515,7 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'channel_id' does not exist on type '{}'.
     body.channel_id = channelId;
 
     return client.request.makeRequest("patchModifyWebhook", [webhookId], body);
@@ -1507,7 +1532,7 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client, webhookId) {
+  static fetchWebhook(client: any, webhookId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1534,9 +1559,9 @@ class Guild {
    * @static
    */
   static async postWebhook(
-    client,
-    { id, token },
-    { content, embeds, components, files } = {},
+    client: any,
+    { id, token }: any,
+    { content, embeds, components, files }: any = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1549,9 +1574,13 @@ class Guild {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     if (content) body.content = content;
+    // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     if (embeds) body.embeds = embeds;
+    // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
     if (components) body.components;
+    // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     if (files) body.files = files;
 
     await client.request.makeRequest("postExecuteWebhook", [id, token], body);
@@ -1566,7 +1595,7 @@ class Guild {
    * @static
    * @method
    */
-  static getIcon(id, hash) {
+  static getIcon(id: any, hash: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Guild id must be a string.");
     if (hash && typeof hash !== "string")
@@ -1590,7 +1619,7 @@ class Guild {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
-    this.#channels.forEach((c) => c.messages?._intervalCallback());
+    this.#channels.forEach((c: any) => c.messages?._intervalCallback());
   }
 
   /**
@@ -1601,7 +1630,7 @@ class Guild {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions) {
+  static shouldCache(gluonCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -1633,7 +1662,7 @@ class Guild {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

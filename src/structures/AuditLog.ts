@@ -34,7 +34,7 @@ class AuditLog {
    * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
-  constructor(client, data, { users, guildId } = {}) {
+  constructor(client: any, data: any, { users, guildId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -83,7 +83,7 @@ class AuditLog {
     this.#_target_id = data.target_id ? BigInt(data.target_id) : null;
 
     if (users && users.length != 0 && this.#_target_id) {
-      const user = users.find((u) => u.id == this.#_target_id);
+      const user = users.find((u: any) => u.id == this.#_target_id);
       if (user)
         /**
          * The resolved target user.
@@ -101,7 +101,7 @@ class AuditLog {
     this.#_executor_id = data.user_id ? BigInt(data.user_id) : null;
 
     if (users && users.length != 0 && this.#_executor_id) {
-      const user = users.find((u) => u.id == this.#_executor_id);
+      const user = users.find((u: any) => u.id == this.#_executor_id);
       if (user)
         /**
          * The resolved executor user.
@@ -389,7 +389,7 @@ class AuditLog {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:

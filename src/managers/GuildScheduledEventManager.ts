@@ -6,7 +6,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
   #_client;
   #guild;
   static identifier = "events";
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildScheduledEventManager });
 
     if (!(client instanceof Client))
@@ -64,7 +64,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(scheduledEventId) {
+  async fetch(scheduledEventId: any) {
     if (typeof scheduledEventId !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 
@@ -91,7 +91,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
    * @method
    * @override
    */
-  set(id, event) {
+  set(id: any, event: any) {
     if (!(event instanceof ScheduledEvent))
       throw new TypeError("GLUON: Event must be a ScheduledEvent instance.");
     return super.set(id, event);

@@ -10,6 +10,21 @@ import {
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
  */
 class CommandOption {
+  autocomplete: any;
+  channel_types: any;
+  choices: any;
+  defaultLocale: any;
+  description: any;
+  description_localizations: any;
+  max_length: any;
+  max_value: any;
+  min_length: any;
+  min_value: any;
+  name: any;
+  name_localizations: any;
+  options: any;
+  required: any;
+  type: any;
   /**
    * Creates an option for a command.
    */
@@ -26,7 +41,7 @@ class CommandOption {
    * @param {String | Object} name Sets the name of the option, or an object of names for localisation.
    * @returns {CommandOption}
    */
-  setName(name) {
+  setName(name: any) {
     if (!name)
       throw new TypeError("GLUON: Command option name must be provided.");
 
@@ -64,7 +79,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
    */
-  setType(type) {
+  setType(type: any) {
     if (typeof type != "number")
       throw new TypeError("GLUON: Command option type must be a number.");
 
@@ -79,7 +94,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setDescription(description) {
+  setDescription(description: any) {
     if (!description)
       throw new TypeError(
         "GLUON: Command option description must be provided.",
@@ -121,7 +136,7 @@ class CommandOption {
    * @param {Boolean} isRequired Whether the option is required.
    * @returns {CommandOption}
    */
-  setRequired(isRequired) {
+  setRequired(isRequired: any) {
     if (typeof isRequired != "boolean")
       throw new TypeError(
         "GLUON: Command option required status must be a boolean.",
@@ -137,7 +152,7 @@ class CommandOption {
    * @param {CommandChoice} choice Adds a choice to the option.
    * @returns {CommandOption}
    */
-  addChoice(choice) {
+  addChoice(choice: any) {
     if (this.choices.length >= LIMITS.MAX_COMMAND_OPTION_CHOICES)
       throw new RangeError(
         `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`,
@@ -156,7 +171,7 @@ class CommandOption {
    * @param {CommandOption} option Adds an option to this option.
    * @returns {CommandOption}
    */
-  addOption(option) {
+  addOption(option: any) {
     if (this.options.length >= LIMITS.MAX_COMMAND_OPTIONS)
       throw new RangeError(
         `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`,
@@ -175,7 +190,7 @@ class CommandOption {
    * @returns {CommandOption}
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
-  setChannelTypes(channelTypes) {
+  setChannelTypes(channelTypes: any) {
     if (!channelTypes)
       throw new TypeError(
         "GLUON: Command option channel types must be provided.",
@@ -196,7 +211,7 @@ class CommandOption {
    * @param {Number} value The minimum number value that the user may enter.
    * @returns {CommandOption}
    */
-  setMinValue(value) {
+  setMinValue(value: any) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option min value must be a number.");
 
@@ -210,7 +225,7 @@ class CommandOption {
    * @param {Number} value The maximum number value that the user may enter.
    * @returns {CommandOption}
    */
-  setMaxValue(value) {
+  setMaxValue(value: any) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option max value must be a number.");
 
@@ -224,7 +239,7 @@ class CommandOption {
    * @param {Number} length The minimum length that the user may enter.
    * @returns {CommandOption}
    */
-  setMinLength(length) {
+  setMinLength(length: any) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option min length must be a number.");
 
@@ -238,7 +253,7 @@ class CommandOption {
    * @param {Number} length The maximum length that the user may enter.
    * @returns {CommandOption}
    */
-  setMaxLength(length) {
+  setMaxLength(length: any) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option max length must be a number.");
 
@@ -252,7 +267,7 @@ class CommandOption {
    * @param {Boolean} autocomplete Whether autocomplete is enabled for this option.
    * @returns {CommandOption}
    */
-  setAutocomplete(autocomplete) {
+  setAutocomplete(autocomplete: any) {
     if (typeof autocomplete != "boolean")
       throw new TypeError(
         "GLUON: Command option autocomplete must be a boolean.",
@@ -269,7 +284,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale) {
+  setDefaultLocale(locale: any) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -282,8 +297,10 @@ class CommandOption {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.name)

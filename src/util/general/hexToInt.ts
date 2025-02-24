@@ -3,7 +3,7 @@
  * @param {String} hex The hex string to convert to an integer.
  * @returns {Number}
  */
-function hexToInt(hex) {
+function hexToInt(hex: any) {
   if (typeof hex !== "string")
     throw new TypeError("GLUON: Hex string must be a string.");
   if (hex.startsWith("0x")) hex = hex.slice(2);

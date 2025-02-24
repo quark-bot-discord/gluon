@@ -30,7 +30,11 @@ class Invite {
    * @param {Boolean?} [options.nocache] Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -75,6 +79,7 @@ class Invite {
        * @type {User?}
        * @private
        */
+      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       this.#inviter = new User(this.#_client, data.inviter, { nocache });
 
     if (typeof data.uses == "number")
@@ -250,7 +255,7 @@ class Invite {
    * @static
    * @method
    */
-  static getUrl(code) {
+  static getUrl(code: any) {
     if (typeof code != "string")
       throw new TypeError("GLUON: Invalid invite code.");
     return `${INVITE_BASE_URL}/${code}`;
@@ -265,7 +270,7 @@ class Invite {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -302,7 +307,7 @@ class Invite {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

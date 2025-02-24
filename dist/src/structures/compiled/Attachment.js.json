@@ -1,0 +1,1049 @@
+[
+  {
+    "comment": "/**\n * Represents an attachment.\n * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}\n */",
+    "meta": {
+      "range": [307, 4209],
+      "filename": "Attachment.js",
+      "lineno": 10,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000020",
+        "name": "Attachment",
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data", ""]
+      }
+    },
+    "classdesc": "Represents an attachment.",
+    "see": [
+      "{@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}"
+    ],
+    "name": "Attachment",
+    "longname": "Attachment",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [328, 337],
+      "filename": "Attachment.js",
+      "lineno": 11,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000023",
+        "name": "_client",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_client",
+    "longname": "Attachment#_client",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [340, 345],
+      "filename": "Attachment.js",
+      "lineno": 12,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000024",
+        "name": "_id",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_id",
+    "longname": "Attachment#_id",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [348, 361],
+      "filename": "Attachment.js",
+      "lineno": 13,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000025",
+        "name": "_channel_id",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_channel_id",
+    "longname": "Attachment#_channel_id",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [364, 374],
+      "filename": "Attachment.js",
+      "lineno": 14,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000026",
+        "name": "_urlData",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "_urlData",
+    "longname": "Attachment#_urlData",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [377, 383],
+      "filename": "Attachment.js",
+      "lineno": 15,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000027",
+        "name": "name",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "name",
+    "longname": "Attachment#name",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [386, 392],
+      "filename": "Attachment.js",
+      "lineno": 16,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000028",
+        "name": "size",
+        "type": "ClassPrivateProperty"
+      }
+    },
+    "undocumented": true,
+    "name": "size",
+    "longname": "Attachment#size",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "access": "private"
+  },
+  {
+    "comment": "/**\n   * Creates a structure for an attachment.\n   * @param {Client} client The client instance.\n   * @param {Object} data Attachment data from Discord.\n   * @param {Object} options Additional options for the attachment.\n   * @param {String} options.channelId The ID of the channel that this attachment belongs to.\n   */",
+    "meta": {
+      "range": [719, 2083],
+      "filename": "Attachment.js",
+      "lineno": 25,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000029",
+        "name": "Attachment",
+        "type": "MethodDefinition",
+        "paramnames": ["client", "data", ""]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Creates a structure for an attachment.",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
+        },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Attachment data from Discord.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Additional options for the attachment.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": ["String"]
+        },
+        "description": "The ID of the channel that this attachment belongs to.",
+        "name": "options.channelId"
+      }
+    ],
+    "name": "Attachment",
+    "longname": "Attachment",
+    "kind": "class",
+    "scope": "global",
+    "undocumented": true
+  },
+  {
+    "comment": "/**\n * Represents an attachment.\n * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}\n */",
+    "meta": {
+      "range": [307, 4209],
+      "filename": "Attachment.js",
+      "lineno": 10,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000020",
+        "name": "Attachment",
+        "type": "ClassDeclaration",
+        "paramnames": ["client", "data", ""]
+      }
+    },
+    "name": "Attachment",
+    "longname": "Attachment",
+    "kind": "class",
+    "classdesc": "Represents an attachment.",
+    "see": [
+      "{@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}"
+    ],
+    "scope": "global",
+    "description": "Creates a structure for an attachment.",
+    "params": [
+      {
+        "type": {
+          "names": ["Client"]
+        },
+        "description": "The client instance.",
+        "name": "client"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Attachment data from Discord.",
+        "name": "data"
+      },
+      {
+        "type": {
+          "names": ["Object"]
+        },
+        "description": "Additional options for the attachment.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": ["String"]
+        },
+        "description": "The ID of the channel that this attachment belongs to.",
+        "name": "options.channelId"
+      }
+    ]
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [747, 756],
+      "filename": "Attachment.js",
+      "lineno": 25,
+      "columnno": 30,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000036",
+        "name": "channelId",
+        "type": "Identifier",
+        "value": "channelId"
+      }
+    },
+    "undocumented": true,
+    "name": "channelId",
+    "longname": "channelId",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "/**\n     * The client instance.\n     * @type {Client}\n     * @private\n     */",
+    "meta": {
+      "range": [1163, 1185],
+      "filename": "Attachment.js",
+      "lineno": 38,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000068",
+        "name": "this.",
+        "type": "Identifier",
+        "value": "client",
+        "paramnames": []
+      }
+    },
+    "description": "The client instance.",
+    "type": {
+      "names": ["Client"]
+    },
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The id of the attachment.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [1279, 1306],
+      "filename": "Attachment.js",
+      "lineno": 45,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000075",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The id of the attachment.",
+    "type": {
+      "names": ["BigInt"]
+    },
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The name of the file.\n     * @type {String}\n     * @private\n     */",
+    "meta": {
+      "range": [1396, 1422],
+      "filename": "Attachment.js",
+      "lineno": 52,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000086",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.filename",
+        "paramnames": []
+      }
+    },
+    "description": "The name of the file.",
+    "type": {
+      "names": ["String"]
+    },
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The size of the file.\n     * @type {Number}\n     * @private\n     */",
+    "meta": {
+      "range": [1512, 1534],
+      "filename": "Attachment.js",
+      "lineno": 59,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000095",
+        "name": "this.",
+        "type": "MemberExpression",
+        "value": "data.size",
+        "paramnames": []
+      }
+    },
+    "description": "The size of the file.",
+    "type": {
+      "names": ["Number"]
+    },
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n       * Data about the file url.\n       * @type {Object?}\n       * @private\n       */",
+    "meta": {
+      "range": [1660, 1679],
+      "filename": "Attachment.js",
+      "lineno": 67,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000109",
+        "name": "this.",
+        "type": "ObjectExpression",
+        "value": "{}",
+        "paramnames": []
+      }
+    },
+    "description": "Data about the file url.",
+    "type": {
+      "names": ["Object"]
+    },
+    "nullable": true,
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [1694, 1736],
+      "filename": "Attachment.js",
+      "lineno": 69,
+      "columnno": 12,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000116",
+        "name": "urlParams",
+        "type": "MemberExpression",
+        "value": ".searchParams"
+      }
+    },
+    "undocumented": true,
+    "name": "urlParams",
+    "longname": "<anonymous>~urlParams",
+    "kind": "constant",
+    "memberof": "<anonymous>",
+    "scope": "inner",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [1744, 1798],
+      "filename": "Attachment.js",
+      "lineno": 70,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000126",
+        "name": "this..ex",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "undocumented": true,
+    "name": "ex",
+    "longname": "Attachment#.ex",
+    "kind": "member",
+    "memberof": "Attachment#",
+    "scope": "static"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [1806, 1860],
+      "filename": "Attachment.js",
+      "lineno": 71,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000144",
+        "name": "this..is",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "undocumented": true,
+    "name": "is",
+    "longname": "Attachment#.is",
+    "kind": "member",
+    "memberof": "Attachment#",
+    "scope": "static"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [1868, 1922],
+      "filename": "Attachment.js",
+      "lineno": 72,
+      "columnno": 6,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000162",
+        "name": "this..hm",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "undocumented": true,
+    "name": "hm",
+    "longname": "Attachment#.hm",
+    "kind": "member",
+    "memberof": "Attachment#",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * The channel that this attachment belongs to.\n     * @type {BigInt}\n     * @private\n     */",
+    "meta": {
+      "range": [2041, 2078],
+      "filename": "Attachment.js",
+      "lineno": 80,
+      "columnno": 4,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000180",
+        "name": "this.",
+        "type": "CallExpression",
+        "value": "",
+        "paramnames": []
+      }
+    },
+    "description": "The channel that this attachment belongs to.",
+    "type": {
+      "names": ["BigInt"]
+    },
+    "access": "private",
+    "name": "Attachment",
+    "longname": "Attachment.Attachment",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n   * The id of the attachment.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2178, 2222],
+      "filename": "Attachment.js",
+      "lineno": 89,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000188",
+        "name": "Attachment#id",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The id of the attachment.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "id",
+    "longname": "Attachment#id",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The name of the file.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2313, 2352],
+      "filename": "Attachment.js",
+      "lineno": 99,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000199",
+        "name": "Attachment#name",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The name of the file.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "name",
+    "longname": "Attachment#name",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The size of the file.\n   * @type {Number}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2443, 2482],
+      "filename": "Attachment.js",
+      "lineno": 109,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000208",
+        "name": "Attachment#size",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The size of the file.",
+    "type": {
+      "names": ["Number"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "size",
+    "longname": "Attachment#size",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The url to the file.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [2572, 2960],
+      "filename": "Attachment.js",
+      "lineno": 119,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000217",
+        "name": "Attachment#url",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The url to the file.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "url",
+    "longname": "Attachment#url",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [2633, 2732],
+      "filename": "Attachment.js",
+      "lineno": 122,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000230",
+        "name": "url",
+        "type": "NewExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "url",
+    "longname": "<anonymous>~url",
+    "kind": "constant",
+    "memberof": "<anonymous>",
+    "scope": "inner",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * The channel that this attachment belongs to.\n   * @type {String}\n   * @readonly\n   * @public\n   */",
+    "meta": {
+      "range": [3074, 3165],
+      "filename": "Attachment.js",
+      "lineno": 138,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000308",
+        "name": "Attachment#channelId",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "The channel that this attachment belongs to.",
+    "type": {
+      "names": ["String"]
+    },
+    "readonly": true,
+    "access": "public",
+    "name": "channelId",
+    "longname": "Attachment#channelId",
+    "kind": "member",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * Fetches the data of the attachment.\n   * @returns {Promise<ArrayBuffer>}\n   * @public\n   */",
+    "meta": {
+      "range": [3272, 3364],
+      "filename": "Attachment.js",
+      "lineno": 147,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000325",
+        "name": "Attachment#fetchData",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Fetches the data of the attachment.",
+    "returns": [
+      {
+        "type": {
+          "names": ["Promise.<ArrayBuffer>"]
+        }
+      }
+    ],
+    "access": "public",
+    "name": "fetchData",
+    "longname": "Attachment#fetchData",
+    "kind": "function",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": [],
+    "async": true
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3302, 3329],
+      "filename": "Attachment.js",
+      "lineno": 148,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000330",
+        "name": "res",
+        "type": "AwaitExpression",
+        "value": ""
+      }
+    },
+    "undocumented": true,
+    "name": "res",
+    "longname": "<anonymous>~res",
+    "kind": "constant",
+    "memberof": "<anonymous>",
+    "scope": "inner",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [3406, 3461],
+      "filename": "Attachment.js",
+      "lineno": 156,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000343",
+        "name": "Attachment#toString",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "toString",
+    "longname": "Attachment#toString",
+    "memberof": "Attachment",
+    "scope": "instance",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * @method\n   * @public\n   */",
+    "meta": {
+      "range": [3503, 3560],
+      "filename": "Attachment.js",
+      "lineno": 164,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000354",
+        "name": "Attachment#util.inspect.custom",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "kind": "function",
+    "access": "public",
+    "name": "custom",
+    "longname": "Attachment#util.inspect.custom",
+    "memberof": "Attachment#util.inspect",
+    "scope": "static",
+    "params": []
+  },
+  {
+    "comment": "/**\n   * Returns the JSON representation of this structure.\n   * @param {Number} [format] The format to return the data in.\n   * @returns {Object}\n   * @public\n   * @method\n   */",
+    "meta": {
+      "range": [3745, 4207],
+      "filename": "Attachment.js",
+      "lineno": 175,
+      "columnno": 2,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000367",
+        "name": "Attachment#toJSON",
+        "type": "MethodDefinition",
+        "paramnames": ["format"]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Returns the JSON representation of this structure.",
+    "params": [
+      {
+        "type": {
+          "names": ["Number"]
+        },
+        "optional": true,
+        "description": "The format to return the data in.",
+        "name": "format"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": ["Object"]
+        }
+      }
+    ],
+    "access": "public",
+    "kind": "function",
+    "name": "toJSON",
+    "longname": "Attachment#toJSON",
+    "memberof": "Attachment",
+    "scope": "instance"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3859, 3870],
+      "filename": "Attachment.js",
+      "lineno": 179,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000381",
+        "name": "id",
+        "type": "MemberExpression",
+        "value": "this.id"
+      }
+    },
+    "undocumented": true,
+    "name": "id",
+    "longname": "id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3882, 3901],
+      "filename": "Attachment.js",
+      "lineno": 180,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000385",
+        "name": "filename",
+        "type": "MemberExpression",
+        "value": "this.name"
+      }
+    },
+    "undocumented": true,
+    "name": "filename",
+    "longname": "filename",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [3913, 3928],
+      "filename": "Attachment.js",
+      "lineno": 181,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000389",
+        "name": "size",
+        "type": "MemberExpression",
+        "value": "this.size"
+      }
+    },
+    "undocumented": true,
+    "name": "size",
+    "longname": "size",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4083, 4094],
+      "filename": "Attachment.js",
+      "lineno": 188,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000405",
+        "name": "id",
+        "type": "MemberExpression",
+        "value": "this.id"
+      }
+    },
+    "undocumented": true,
+    "name": "id",
+    "longname": "id",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4106, 4125],
+      "filename": "Attachment.js",
+      "lineno": 189,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000409",
+        "name": "filename",
+        "type": "MemberExpression",
+        "value": "this.name"
+      }
+    },
+    "undocumented": true,
+    "name": "filename",
+    "longname": "filename",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4137, 4152],
+      "filename": "Attachment.js",
+      "lineno": 190,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000413",
+        "name": "size",
+        "type": "MemberExpression",
+        "value": "this.size"
+      }
+    },
+    "undocumented": true,
+    "name": "size",
+    "longname": "size",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4164, 4177],
+      "filename": "Attachment.js",
+      "lineno": 191,
+      "columnno": 10,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000417",
+        "name": "url",
+        "type": "MemberExpression",
+        "value": "this.url"
+      }
+    },
+    "undocumented": true,
+    "name": "url",
+    "longname": "url",
+    "kind": "member",
+    "scope": "global"
+  },
+  {
+    "comment": "",
+    "meta": {
+      "range": [4211, 4237],
+      "filename": "Attachment.js",
+      "lineno": 198,
+      "columnno": 0,
+      "path": "/home/runner/work/gluon/gluon/src/structures",
+      "code": {
+        "id": "astnode100000421",
+        "name": "module.exports",
+        "type": "Identifier"
+      }
+    },
+    "undocumented": true,
+    "name": "exports",
+    "longname": "module.exports",
+    "kind": "member",
+    "memberof": "module",
+    "scope": "static"
+  },
+  {
+    "kind": "package",
+    "longname": "package:undefined",
+    "files": ["/home/runner/work/gluon/gluon/src/structures/Attachment.js"]
+  }
+]

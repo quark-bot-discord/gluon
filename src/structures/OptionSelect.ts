@@ -22,7 +22,7 @@ class OptionSelect extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client, data, { channelId, guildId }) {
+  constructor(client: any, data: any, { channelId, guildId }: any) {
     super(client, data);
 
     if (!(client instanceof Client))
@@ -122,7 +122,7 @@ class OptionSelect extends Interaction {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

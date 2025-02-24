@@ -20,7 +20,7 @@ class BaseCacheManager {
    * @public
    * @constructor
    */
-  constructor(client, { structureType } = {}) {
+  constructor(client: any, { structureType }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client.");
     if (!structureType)
@@ -65,7 +65,7 @@ class BaseCacheManager {
    * @private
    * @method
    */
-  #getHash(key) {
+  #getHash(key: any) {
     return hashjs.sha256().update(key).digest("hex");
   }
 
@@ -76,7 +76,7 @@ class BaseCacheManager {
    * @private
    * @method
    */
-  #getKey(key) {
+  #getKey(key: any) {
     return `${this.#keyPrefix}${this.#getHash(key)}`;
   }
 
@@ -90,7 +90,7 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  get(key) {
+  get(key: any) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.#cache.get(key);
@@ -107,7 +107,7 @@ class BaseCacheManager {
    * @throws {TypeError}
    * @async
    */
-  fetchFromRules(key) {
+  fetchFromRules(key: any) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#_callFetches(key);
@@ -122,7 +122,7 @@ class BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  async fetchWithRules(key) {
+  async fetchWithRules(key: any) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.get(key);
@@ -140,7 +140,7 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  set(key, value, expiry = 0) {
+  set(key: any, value: any, expiry = 0) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     if (typeof expiry !== "number")
@@ -157,7 +157,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  #addToExpiryBucket(key, expiry) {
+  #addToExpiryBucket(key: any, expiry: any) {
     if (expiry === 0) return;
     const expiryDate = new Date(Date.now() + expiry * 1000);
     const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
@@ -173,7 +173,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  expireBucket(bucket) {
+  expireBucket(bucket: any) {
     if (!this.#expiryBucket.has(bucket)) return;
     for (const key of this.#expiryBucket.get(bucket)) {
       try {
@@ -222,7 +222,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  delete(key) {
+  delete(key: any) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.delete(key);
@@ -261,8 +261,9 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  #_callRules(value) {
+  #_callRules(value: any) {
     const rules = Object.values(BaseCacheManager.rules);
+    // @ts-expect-error TS(2571): Object is of type 'unknown'.
     for (const rule of rules)
       if (rule.structure === this.#structureType) rule.store(value);
   }
@@ -275,11 +276,13 @@ class BaseCacheManager {
    * @method
    * @async
    */
-  async #_callFetches(id) {
+  async #_callFetches(id: any) {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
+      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (rule.structure === this.#structureType)
+        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         fetchValue = await rule.retrieve(id, this);
       if (fetchValue) return fetchValue;
     }
@@ -303,7 +306,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  forEach(callback) {
+  forEach(callback: any) {
     return this.#cache.forEach(callback);
   }
 
@@ -315,7 +318,7 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  has(key) {
+  has(key: any) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.has(key);
@@ -328,7 +331,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

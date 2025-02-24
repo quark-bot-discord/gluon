@@ -10,6 +10,16 @@ import CommandOption from "./commandOptionBuilder.js";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
  */
 class Command {
+  contexts: any;
+  defaultLocale: any;
+  default_member_permissions: any;
+  description: any;
+  description_localizations: any;
+  name: any;
+  name_localizations: any;
+  nsfw: any;
+  options: any;
+  type: any;
   /**
    * Creates the structure for a command.
    */
@@ -29,7 +39,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setName(name) {
+  setName(name: any) {
     if (!name) throw new TypeError("GLUON: Command name must be provided.");
 
     if (typeof name == "object") {
@@ -49,7 +59,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
    */
-  setType(type) {
+  setType(type: any) {
     if (typeof type != "number")
       throw new TypeError("GLUON: Command type must be a number.");
 
@@ -64,7 +74,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setDescription(description) {
+  setDescription(description: any) {
     if (!description)
       throw new TypeError("GLUON: Command description must be provided.");
 
@@ -84,7 +94,7 @@ class Command {
    * @param {String} permissions The permissions required to be able to use this command.
    * @returns {Command}
    */
-  setDefaultMemberPermissions(permissions) {
+  setDefaultMemberPermissions(permissions: any) {
     if (typeof permissions !== "string")
       throw new TypeError(
         "GLUON: Command default permission must be a string.",
@@ -100,7 +110,7 @@ class Command {
    * @param {Boolean} nsfw Whether this command is NSFW.
    * @returns {Command}
    */
-  setNsfw(nsfw) {
+  setNsfw(nsfw: any) {
     if (typeof nsfw !== "boolean")
       throw new TypeError("GLUON: Command nsfw must be a boolean.");
 
@@ -114,7 +124,7 @@ class Command {
    * @param {CommandOption} option Adds an option to the command.
    * @returns {Command}
    */
-  addOption(option) {
+  addOption(option: any) {
     if (!option) throw new TypeError("GLUON: Command option must be provided.");
 
     if (!(option instanceof CommandOption))
@@ -133,7 +143,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale) {
+  setDefaultLocale(locale: any) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     if (typeof locale !== "string")
@@ -149,8 +159,10 @@ class Command {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.name)
@@ -235,7 +247,7 @@ class Command {
         throw new TypeError("GLUON: Command options must be an array.");
       if (
         this.options &&
-        !this.options.every((o) => o instanceof CommandOption)
+        !this.options.every((o: any) => o instanceof CommandOption)
       )
         throw new TypeError(
           "GLUON: Command options must be an array of CommandOption instances.",

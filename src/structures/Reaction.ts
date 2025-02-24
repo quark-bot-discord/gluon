@@ -21,7 +21,7 @@ class Reaction {
    * @param {String} options.guildId The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
-  constructor(client, data, { guildId } = {}) {
+  constructor(client: any, data: any, { guildId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -58,7 +58,7 @@ class Reaction {
      * @type {Array<BigInt>}
      * @private
      */
-    this.#_reacted = data._reacted?.map((r) => BigInt(r)) || [];
+    this.#_reacted = data._reacted?.map((r: any) => BigInt(r)) || [];
     if (!Array.isArray(data._reacted) && data.count) this.#count = data.count;
 
     /**
@@ -87,7 +87,7 @@ class Reaction {
    * @public
    */
   get reacted() {
-    return this.#_reacted.map((userId) => {
+    return this.#_reacted.map((userId: any) => {
       const member = this.guild.members.get(String(userId));
 
       if (member) return member;
@@ -102,7 +102,7 @@ class Reaction {
    * @public
    */
   get reactedIds() {
-    return this.#_reacted.map((r) => String(r));
+    return this.#_reacted.map((r: any) => String(r));
   }
 
   /**
@@ -152,7 +152,7 @@ class Reaction {
    * @public
    * @method
    */
-  _addReactor(userId) {
+  _addReactor(userId: any) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -171,11 +171,11 @@ class Reaction {
    * @public
    * @method
    */
-  _removeReactor(userId) {
+  _removeReactor(userId: any) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    this.#_reacted = this.#_reacted.filter((r) => r !== BigInt(userId));
+    this.#_reacted = this.#_reacted.filter((r: any) => r !== BigInt(userId));
 
     if (this.#count) this.#count--;
   }
@@ -203,7 +203,7 @@ class Reaction {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

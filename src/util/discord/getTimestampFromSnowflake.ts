@@ -3,7 +3,7 @@
  * @param {String} snowflake The snowflake (or id).
  * @returns {Number}
  */
-function getTimestamp(snowflake) {
+function getTimestamp(snowflake: string): number {
   if (!snowflake) throw new TypeError("GLUON: Snowflake must be provided.");
   if (typeof snowflake !== "string")
     throw new TypeError("GLUON: Snowflake must be a string.");

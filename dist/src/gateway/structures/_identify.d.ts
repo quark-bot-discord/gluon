@@ -1,4 +1,3 @@
-export default _identify;
 /**
  * Creates an identify payload for the gateway.
  * @param {String} token The authorization token.
@@ -6,5 +5,9 @@ export default _identify;
  * @param {Number} intents The intents to use.
  * @returns {Buffer}
  */
-declare function _identify(token: string, shard: Array<number>, intents: number): Buffer;
-//# sourceMappingURL=_identify.d.ts.map
+declare function _identify(
+  token: any,
+  shard: any,
+  intents: any,
+): Buffer<ArrayBufferLike>;
+export default _identify;

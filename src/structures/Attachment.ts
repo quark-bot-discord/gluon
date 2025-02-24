@@ -22,7 +22,7 @@ class Attachment {
    * @param {Object} options Additional options for the attachment.
    * @param {String} options.channelId The ID of the channel that this attachment belongs to.
    */
-  constructor(client, data, { channelId } = {}) {
+  constructor(client: any, data: any, { channelId }: any = {}) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -67,8 +67,11 @@ class Attachment {
       this.#_urlData = {};
 
       const urlParams = new URL(data.url).searchParams;
+      // @ts-expect-error TS(2339): Property 'ex' does not exist on type '{}'.
       this.#_urlData.ex = BigInt(`0x${urlParams.get("ex")}`);
+      // @ts-expect-error TS(2339): Property 'is' does not exist on type '{}'.
       this.#_urlData.is = BigInt(`0x${urlParams.get("is")}`);
+      // @ts-expect-error TS(2339): Property 'hm' does not exist on type '{}'.
       this.#_urlData.hm = BigInt(`0x${urlParams.get("hm")}`);
     }
 
@@ -122,8 +125,11 @@ class Attachment {
     const url = new URL(
       `${CDN_BASE_URL}/attachments/${this.channelId}/${this.id}/${this.name}`,
     );
+    // @ts-expect-error TS(2339): Property 'ex' does not exist on type '{}'.
     url.searchParams.append("ex", this.#_urlData.ex.toString(16));
+    // @ts-expect-error TS(2339): Property 'is' does not exist on type '{}'.
     url.searchParams.append("is", this.#_urlData.is.toString(16));
+    // @ts-expect-error TS(2339): Property 'hm' does not exist on type '{}'.
     url.searchParams.append("hm", this.#_urlData.hm.toString(16));
 
     return url.href;
@@ -145,6 +151,7 @@ class Attachment {
    * @public
    */
   async fetchData() {
+    // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     const res = await fetch(this.url);
     return res.arrayBuffer();
   }
@@ -172,7 +179,7 @@ class Attachment {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
         return {

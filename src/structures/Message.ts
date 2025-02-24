@@ -63,9 +63,9 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/channel#message-object}
    */
   constructor(
-    client,
-    data,
-    { channelId, guildId, nocache = false, ignoreExisting = false } = {
+    client: any,
+    data: any,
+    { channelId, guildId, nocache = false, ignoreExisting = false }: any = {
       nocache: false,
       ignoreExisting: false,
     },
@@ -136,6 +136,7 @@ class Message {
        * @private
        */
       this.#author = new User(this.#_client, data.author, {
+        // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
         nocache: !data.webhook_id || nocache,
         noDbStore: true,
       });
@@ -216,7 +217,7 @@ class Message {
        * @type {Embed[]}
        * @private
        */
-      if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
+      if (data.embeds) this.#embeds = data.embeds.map((e: any) => new Embed(e));
       else if (existing && existing.embeds != undefined)
         this.#embeds = existing.embeds;
       else if (this.#embeds == undefined) this.#embeds = [];
@@ -280,8 +281,10 @@ class Message {
        */
       this.#reference = {};
       if (data.referenced_message)
+        // @ts-expect-error TS(2339): Property 'message_id' does not exist on type '{}'.
         this.#reference.message_id = BigInt(data.referenced_message.id);
       else if (existing && existing.reference?.messageId)
+        // @ts-expect-error TS(2339): Property 'message_id' does not exist on type '{}'.
         this.#reference.message_id = existing.reference.messageId;
     }
 
@@ -367,6 +370,7 @@ class Message {
       this.#_attributes !== 0 &&
       this.channel?._cacheOptions.attributeCaching !== false;
     const referencePresent =
+      // @ts-expect-error TS(2532): Object is possibly 'undefined'.
       this.#reference.message_id &&
       this.channel?._cacheOptions.referenceCaching !== false;
     const webhookPresent =
@@ -620,8 +624,10 @@ class Message {
    */
   get reference() {
     return {
+      // @ts-expect-error TS(2532): Object is possibly 'undefined'.
       messageId: this.#reference.message_id
-        ? String(this.#reference.message_id)
+        ? // @ts-expect-error TS(2532): Object is possibly 'undefined'.
+          String(this.#reference.message_id)
         : undefined,
     };
   }
@@ -768,7 +774,7 @@ class Message {
    * @static
    * @method
    */
-  static getUrl(guildId, channelId, messageId) {
+  static getUrl(guildId: any, channelId: any, messageId: any) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
@@ -792,7 +798,13 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  reply({ content, embeds, components, files, suppressMentions = false } = {}) {
+  reply({
+    content,
+    embeds,
+    components,
+    files,
+    suppressMentions = false,
+  }: any = {}) {
     return Message.send(this.#_client, this.channelId, this.guildId, {
       content,
       reference: {
@@ -870,7 +882,7 @@ class Message {
    * @public
    * @async
    */
-  delete({ reason } = {}) {
+  delete({ reason }: any = {}) {
     return Message.delete(
       this.#_client,
       this.guildId,
@@ -891,9 +903,9 @@ class Message {
    * @method
    */
   static shouldCache(
-    gluonCacheOptions,
-    guildCacheOptions,
-    channelCacheOptions,
+    gluonCacheOptions: any,
+    guildCacheOptions: any,
+    channelCacheOptions: any,
   ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
@@ -931,9 +943,9 @@ class Message {
    * @throws {TypeError}
    */
   static async send(
-    client,
-    channelId,
-    guildId,
+    client: any,
+    channelId: any,
+    guildId: any,
     {
       content,
       embeds,
@@ -941,7 +953,7 @@ class Message {
       files,
       reference,
       suppressMentions = false,
-    } = {
+    }: any = {
       suppressMentions: false,
     },
   ) {
@@ -971,15 +983,22 @@ class Message {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     if (content) body.content = content;
 
+    // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     if (embeds && embeds.length !== 0) body.embeds = embeds;
+    // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
     if (components) body.components = components;
+    // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     if (files) body.files = files;
     if (suppressMentions === true) {
+      // @ts-expect-error TS(2339): Property 'allowed_mentions' does not exist on type... Remove this comment to see the full error message
       body.allowed_mentions = {};
+      // @ts-expect-error TS(2339): Property 'allowed_mentions' does not exist on type... Remove this comment to see the full error message
       body.allowed_mentions.parse = [];
     }
+    // @ts-expect-error TS(2339): Property 'message_reference' does not exist on typ... Remove this comment to see the full error message
     if (reference) body.message_reference = reference;
 
     const data = await client.request.makeRequest(
@@ -1009,11 +1028,11 @@ class Message {
    * @returns {Promise<Message>}
    */
   static async edit(
-    client,
-    channelId,
-    messageId,
-    guildId,
-    { content, embeds, components, attachments, files } = {},
+    client: any,
+    channelId: any,
+    messageId: any,
+    guildId: any,
+    { content, embeds, components, attachments, files }: any = {},
   ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1040,10 +1059,15 @@ class Message {
 
     const body = {};
 
+    // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     body.content = content;
+    // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     body.embeds = embeds;
+    // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
     body.components = components;
+    // @ts-expect-error TS(2339): Property 'attachments' does not exist on type '{}'... Remove this comment to see the full error message
     body.attachments = attachments;
+    // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     body.files = files;
 
     const data = await client.request.makeRequest(
@@ -1069,7 +1093,7 @@ class Message {
    * @method
    * @throws {TypeError}
    */
-  static getHashName(guildId, channelId, messageId) {
+  static getHashName(guildId: any, channelId: any, messageId: any) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
@@ -1092,7 +1116,13 @@ class Message {
    * @method
    * @throws {TypeError}
    */
-  static decrypt(client, data, guildId, channelId, messageId) {
+  static decrypt(
+    client: any,
+    data: any,
+    guildId: any,
+    channelId: any,
+    messageId: any,
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
@@ -1137,7 +1167,7 @@ class Message {
     attachments,
     flags,
     reference,
-  } = {}) {
+  }: any = {}) {
     if (!content && !embeds && !components && !files)
       throw new Error(
         "GLUON: Must provide content, embeds, components or files",
@@ -1214,7 +1244,13 @@ class Message {
    * @async
    * @throws {TypeError}
    */
-  static async delete(client, guildId, channelId, messageId, { reason } = {}) {
+  static async delete(
+    client: any,
+    guildId: any,
+    channelId: any,
+    messageId: any,
+    { reason }: any = {},
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -1240,6 +1276,7 @@ class Message {
 
     const body = {};
 
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
 
     await client.request.makeRequest(
@@ -1282,7 +1319,8 @@ class Message {
    * @public
    * @method
    */
-  toJSON(format) {
+  // @ts-expect-error TS(7023): 'toJSON' implicitly has return type 'any' because ... Remove this comment to see the full error message
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
@@ -1292,8 +1330,8 @@ class Message {
           member: this.member?.toJSON(format),
           content: this.content,
           _attributes: this.#_attributes,
-          attachments: this.attachments.map((a) => a.toJSON(format)),
-          embeds: this.embeds.map((e) => e.toJSON(format)),
+          attachments: this.attachments.map((a: any) => a.toJSON(format)),
+          embeds: this.embeds.map((e: any) => e.toJSON(format)),
           edited_timestamp: this.editedTimestamp
             ? this.editedTimestamp * 1000
             : null,
@@ -1309,7 +1347,7 @@ class Message {
                   : undefined,
               }
             : undefined,
-          sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
+          sticker_items: this.stickerItems.map((s: any) => s.toJSON(format)),
           messageReactions: this.reactions.toJSON(format),
         };
       }
@@ -1322,8 +1360,8 @@ class Message {
           member: this.member?.toJSON(format),
           content: this.content,
           pinned: this.pinned,
-          attachments: this.attachments.map((a) => a.toJSON(format)),
-          embeds: this.embeds.map((e) => e.toJSON(format)),
+          attachments: this.attachments.map((a: any) => a.toJSON(format)),
+          embeds: this.embeds.map((e: any) => e.toJSON(format)),
           edited_timestamp: this.editedTimestamp
             ? this.editedTimestamp * 1000
             : null,
@@ -1339,7 +1377,7 @@ class Message {
                   : undefined,
               }
             : undefined,
-          sticker_items: this.stickerItems?.map((s) => s.toJSON(format)),
+          sticker_items: this.stickerItems?.map((s: any) => s.toJSON(format)),
           reactions: this.reactions?.toJSON(format),
           mention_everyone: this.mentionEveryone,
           mention_roles: this.mentionRoles ? [""] : [],

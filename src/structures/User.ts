@@ -21,6 +21,7 @@ class User {
   #global_name;
   #discriminator;
   #_cached;
+  // @ts-expect-error TS(7008): Member '#overrideAvatar' implicitly has an 'any' t... Remove this comment to see the full error message
   #overrideAvatar;
   /**
    * Creates a structure for a user.
@@ -31,8 +32,8 @@ class User {
    * @see {@link https://discord.com/developers/docs/resources/user#user-object}
    */
   constructor(
-    client,
-    data,
+    client: any,
+    data: any,
     { nocache = false } = {
       nocache: false,
     },
@@ -132,7 +133,7 @@ class User {
    * @method
    * @returns {void}
    */
-  overrideAvatarURL(url) {
+  overrideAvatarURL(url: any) {
     this.#overrideAvatar = url;
   }
 
@@ -304,7 +305,7 @@ class User {
    * @static
    * @method
    */
-  static getMention(id) {
+  static getMention(id: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: User id must be a string.");
     return `<@${id}>`;
@@ -319,7 +320,7 @@ class User {
    * @static
    * @method
    */
-  static getAvatarUrl(id, hash) {
+  static getAvatarUrl(id: any, hash: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: User id must be a string.");
     if (hash && typeof hash !== "string")
@@ -341,7 +342,7 @@ class User {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions) {
+  static shouldCache(gluonCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -373,7 +374,7 @@ class User {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
         return {

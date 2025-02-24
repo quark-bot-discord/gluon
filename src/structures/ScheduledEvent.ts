@@ -35,7 +35,11 @@ class ScheduledEvent {
    * @param {String} options.guildId The ID of the guild that this event belongs to.
    * @param {Boolean?} [options.nocache] Whether this event should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -281,6 +285,7 @@ class ScheduledEvent {
    * @private
    */
   get #_formattedImageHash() {
+    // @ts-expect-error TS(2531): Object is possibly 'null'.
     let formattedHash = this.#_image.toString(16);
 
     while (formattedHash.length != 32)
@@ -401,7 +406,7 @@ class ScheduledEvent {
    * @static
    * @method
    */
-  static getImageUrl(id, hash) {
+  static getImageUrl(id: any, hash: any) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Event id must be a string.");
     if (hash && typeof hash !== "string")
@@ -422,7 +427,7 @@ class ScheduledEvent {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -459,7 +464,7 @@ class ScheduledEvent {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
@@ -471,6 +476,7 @@ class ScheduledEvent {
           name: this.name,
           description: this.description,
           creator_id: this.creatorId ?? undefined,
+          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           creator: this.creator.toJSON(format),
           scheduled_start_time: this.scheduledStartTime * 1000,
           scheduled_end_time: this.scheduledEndTime

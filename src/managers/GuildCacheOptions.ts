@@ -6,7 +6,7 @@ import {
 class GuildCacheOptions {
   #_cache_options;
 
-  constructor(cache_options) {
+  constructor(cache_options: any) {
     /**
      * The cache options for this guild.
      * @type {Number}
@@ -22,7 +22,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMessageCaching(option) {
+  setMessageCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Message caching must be a boolean");
 
@@ -40,7 +40,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setFileCaching(option) {
+  setFileCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: File caching must be a boolean");
 
@@ -57,7 +57,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setVoiceStateCaching(option) {
+  setVoiceStateCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Voice state caching must be a boolean");
 
@@ -74,7 +74,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMemberCaching(option) {
+  setMemberCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Member caching must be a boolean");
 
@@ -91,7 +91,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setRoleCaching(option) {
+  setRoleCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Role caching must be a boolean");
 
@@ -108,7 +108,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setChannelCaching(option) {
+  setChannelCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Channel caching must be a boolean");
 
@@ -125,7 +125,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setEmojiCaching(option) {
+  setEmojiCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Emoji caching must be a boolean");
 
@@ -142,7 +142,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setThreadCaching(option) {
+  setThreadCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Thread caching must be a boolean");
 
@@ -159,7 +159,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setInviteCaching(option) {
+  setInviteCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Invite caching must be a boolean");
 
@@ -176,7 +176,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setScheduledEventCaching(option) {
+  setScheduledEventCaching(option: any) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Scheduled event caching must be a boolean");
 
@@ -192,6 +192,7 @@ class GuildCacheOptions {
    * @readonly
    * @public
    */
+  // @ts-expect-error TS(2300): Duplicate identifier 'messageCaching'.
   get messageCaching() {
     return (
       (this.#_cache_options & GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
@@ -218,6 +219,7 @@ class GuildCacheOptions {
    * @readonly
    * @public
    */
+  // @ts-expect-error TS(2300): Duplicate identifier 'messageCaching'.
   get messageCaching() {
     return (
       (this.#_cache_options & GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
@@ -348,7 +350,7 @@ class GuildCacheOptions {
    * @public
    * @method
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

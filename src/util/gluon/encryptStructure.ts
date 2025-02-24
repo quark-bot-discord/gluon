@@ -8,7 +8,7 @@ import getKeyIv from "./getKeyIv.js";
  * @param {...String} encryptionKeys The encryption keys to use.
  * @returns {String}
  */
-function encryptStructure(structure, ...encryptionKeys) {
+function encryptStructure(structure: any, ...encryptionKeys: any[]) {
   if (!structure) throw new TypeError("GLUON: Structure must be provided.");
 
   if (!(structure instanceof Object))

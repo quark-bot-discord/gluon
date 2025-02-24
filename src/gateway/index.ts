@@ -1,4 +1,5 @@
 /* eslint-disable class-methods-use-this */
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'ws'.... Remove this comment to see the full error message
 import WebSocket from "ws";
 import erlpack from "erlpack";
 import ZlibSync from "zlib-sync";
@@ -16,28 +17,40 @@ import _resume from "./structures/_resume.js";
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
 class Shard {
+  shard: any;
+  terminateSocketTimeout: any;
+  zlib: any;
   #token;
   #_client;
+  // @ts-expect-error TS(7008): Member '#_sessionId' implicitly has an 'any' type.
   #_sessionId;
+  // @ts-expect-error TS(7008): Member '#_s' implicitly has an 'any' type.
   #_s;
   #resuming;
+  // @ts-expect-error TS(7008): Member '#heartbeatSetInterval' implicitly has an '... Remove this comment to see the full error message
   #heartbeatSetInterval;
+  // @ts-expect-error TS(7008): Member '#heartbeatInterval' implicitly has an 'any... Remove this comment to see the full error message
   #heartbeatInterval;
   #waitingForHeartbeatACK;
+  // @ts-expect-error TS(7008): Member '#monitorOpened' implicitly has an 'any' ty... Remove this comment to see the full error message
   #monitorOpened;
   #ws;
+  // @ts-expect-error TS(7008): Member '#resumeGatewayUrl' implicitly has an 'any'... Remove this comment to see the full error message
   #resumeGatewayUrl;
   #retries;
   #halted;
+  // @ts-expect-error TS(7008): Member '#lastReconnect' implicitly has an 'any' ty... Remove this comment to see the full error message
   #lastReconnect;
+  // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
   #latencyMs;
+  // @ts-expect-error TS(7008): Member '#lastHeartbeatTimestamp' implicitly has an... Remove this comment to see the full error message
   #lastHeartbeatTimestamp;
   #eventHandler;
   constructor(
-    client,
-    token,
-    url,
-    shardId,
+    client: any,
+    token: any,
+    url: any,
+    shardId: any,
     sessionId = null,
     sequence = null,
     resumeGatewayUrl = null,
@@ -76,7 +89,7 @@ class Shard {
     this.#addListeners();
   }
 
-  #handleIncoming(data) {
+  #handleIncoming(data: any) {
     if (this.#halted === true) return;
 
     if (!data) return;
@@ -89,8 +102,10 @@ class Shard {
       // Dispatch
       case 0: {
         try {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           this.#eventHandler[data.t]
-            ? this.#eventHandler[data.t](data.d)
+            ? // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+              this.#eventHandler[data.t](data.d)
             : null;
         } catch (error) {
           this.#_client._emitDebug(
@@ -202,7 +217,7 @@ class Shard {
     return Math.random();
   }
 
-  updatePresence(name, type, status, afk, since) {
+  updatePresence(name: any, type: any, status: any, afk: any, since: any) {
     if (this.#ws.readyState != WebSocket.OPEN) return;
 
     this.#ws.send(_updatePresence(name, type, status, afk, since));
@@ -310,7 +325,7 @@ class Shard {
       clearTimeout(this.#monitorOpened);
     });
 
-    this.#ws.once("close", (data) => {
+    this.#ws.once("close", (data: any) => {
       this.#_client._emitDebug(
         data < 2000 ? GLUON_DEBUG_LEVELS.INFO : GLUON_DEBUG_LEVELS.ERROR,
         `Websocket closed with code ${data}`,
@@ -359,7 +374,7 @@ class Shard {
       else process.exit(1);
     });
 
-    this.#ws.on("message", (data) => {
+    this.#ws.on("message", (data: any) => {
       /* Made with the help of https://github.com/abalabahaha/eris/blob/69f812c43cd8d9591d2ca455f7c8b672267a2ff6/lib/gateway/Shard.js#L2156 */
 
       if (data instanceof ArrayBuffer) data = Buffer.from(data);
@@ -374,7 +389,7 @@ class Shard {
       } else this.zlib.push(data, false);
     });
 
-    this.#ws.on("error", (data) => {
+    this.#ws.on("error", (data: any) => {
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.ERROR,
         data?.stack?.toString(),
@@ -411,14 +426,14 @@ class Shard {
   /**
    * @param {String} id
    */
-  set sessionId(id) {
+  set sessionId(id: any) {
     this.#_sessionId = id;
   }
 
   /**
    * @param {String} url
    */
-  set resumeGatewayUrl(url) {
+  set resumeGatewayUrl(url: any) {
     this.#resumeGatewayUrl = url;
   }
 }

@@ -23,7 +23,11 @@ class Thread extends Channel {
    * @param {Boolean?} [options.nocache] Whether this thread should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(
+    client: any,
+    data: any,
+    { guildId, nocache = false }: any = { nocache: false },
+  ) {
     super(client, data, { guildId });
 
     if (!(client instanceof Client))
@@ -125,7 +129,7 @@ class Thread extends Channel {
    * @method
    * @override
    */
-  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -163,7 +167,7 @@ class Thread extends Channel {
    * @method
    * @override
    */
-  toJSON(format) {
+  toJSON(format: any) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

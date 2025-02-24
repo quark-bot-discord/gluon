@@ -1,13 +1,12 @@
-export default BetterRequestHandler;
 declare class BetterRequestHandler {
-    constructor(client: any, token: any);
-    /**
-     * The latency of the request handler.
-     * @type {Number}
-     * @readonly
-     */
-    readonly get latency(): number;
-    makeRequest(request: any, params: any, body: any): Promise<any>;
-    #private;
+  #private;
+  constructor(client: any, token: any);
+  /**
+   * The latency of the request handler.
+   * @type {Number}
+   * @readonly
+   */
+  get latency(): any;
+  makeRequest(request: any, params: any, body: any): Promise<any>;
 }
-//# sourceMappingURL=betterRequestHandler.d.ts.map
+export default BetterRequestHandler;

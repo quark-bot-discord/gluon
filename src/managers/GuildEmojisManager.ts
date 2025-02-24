@@ -15,7 +15,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildEmojisManager });
 
     if (!(client instanceof Client))
@@ -47,7 +47,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(emojiId) {
+  async fetch(emojiId: any) {
     if (typeof emojiId !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
@@ -70,7 +70,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  static async fetchEmoji(client, guildId, emojiId) {
+  static async fetchEmoji(client: any, guildId: any, emojiId: any) {
     if (!(client instanceof Client)) {
       throw new TypeError("GLUON: Client must be a Client instance.");
     }
@@ -103,7 +103,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @static
    * @throws {TypeError}
    */
-  static getEmoji(client, guildId, emojiId) {
+  static getEmoji(client: any, guildId: any, emojiId: any) {
     if (!(client instanceof Client))
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -123,7 +123,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, emoji) {
+  set(id: any, emoji: any) {
     if (!(emoji instanceof Emoji))
       throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
     return super.set(id, emoji);

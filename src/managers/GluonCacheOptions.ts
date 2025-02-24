@@ -21,7 +21,7 @@ class GluonCacheOptions {
     cacheEmojis,
     cacheInvites,
     cacheScheduledEvents,
-  } = {}) {
+  }: any = {}) {
     this.#_cache_options = 0;
 
     this.#userTTL = DEFAULT_USER_EXPIRY_SECONDS;
@@ -50,7 +50,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMessages(value) {
+  setCacheMessages(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache messages must be a boolean.");
 
@@ -82,7 +82,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheUsers(value) {
+  setCacheUsers(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache users must be a boolean.");
 
@@ -113,7 +113,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMembers(value) {
+  setCacheMembers(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache members must be a boolean.");
 
@@ -144,7 +144,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheChannels(value) {
+  setCacheChannels(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache channels must be a boolean.");
 
@@ -176,7 +176,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheGuilds(value) {
+  setCacheGuilds(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache guilds must be a boolean.");
 
@@ -207,7 +207,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheRoles(value) {
+  setCacheRoles(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache roles must be a boolean.");
 
@@ -238,7 +238,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheVoiceStates(value) {
+  setCacheVoiceStates(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache voice states must be a boolean.");
 
@@ -270,7 +270,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheEmojis(value) {
+  setCacheEmojis(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache emojis must be a boolean.");
 
@@ -301,7 +301,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheInvites(value) {
+  setCacheInvites(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache invites must be a boolean.");
 
@@ -332,7 +332,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheScheduledEvents(value) {
+  setCacheScheduledEvents(value: any) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache scheduled events must be a boolean.");
 
@@ -364,7 +364,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setUserTTL(seconds) {
+  setUserTTL(seconds: any) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");
 
@@ -391,7 +391,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setMessageTTL(seconds) {
+  setMessageTTL(seconds: any) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: Message TTL must be a number.");
 

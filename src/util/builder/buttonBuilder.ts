@@ -12,6 +12,13 @@ import isValidUrl from "../general/isValidUrl.js";
  * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}
  */
 class Button {
+  custom_id: any;
+  disabled: any;
+  emoji: any;
+  label: any;
+  style: any;
+  type: any;
+  url: any;
   /**
    * Creates a button.
    */
@@ -24,7 +31,7 @@ class Button {
    * @param {String} label The text to display on the button.
    * @returns {Button}
    */
-  setLabel(label) {
+  setLabel(label: any) {
     if (!label) throw new TypeError("GLUON: Button label must be provided.");
 
     this.label =
@@ -40,7 +47,7 @@ class Button {
    * @param {String} emoji The emoji to display on the button. For a custom emoji, it should be in the format "<:bitcoin:844240546246950922>".
    * @returns {Button}
    */
-  setEmoji(emoji) {
+  setEmoji(emoji: any) {
     this.emoji = resolveEmoji(emoji);
 
     if (!this.emoji)
@@ -55,7 +62,7 @@ class Button {
    * @returns {Button}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles}
    */
-  setStyle(style) {
+  setStyle(style: any) {
     if (!style) throw new TypeError("GLUON: Button style must be provided.");
 
     this.style = style;
@@ -69,7 +76,7 @@ class Button {
    * @returns {Button}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
-  setCustomID(id) {
+  setCustomID(id: any) {
     if (!id)
       throw new TypeError(
         "GLUON: Button custom id must be provided for non-link buttons.",
@@ -90,7 +97,7 @@ class Button {
    * @param {String} url The url for a link button.
    * @returns {Button}
    */
-  setURL(url) {
+  setURL(url: any) {
     this.url = url;
 
     return this;
@@ -101,7 +108,7 @@ class Button {
    * @param {Boolean} disabled Whether this button should be displayed as disabled.
    * @returns {Button}
    */
-  setDisabled(disabled) {
+  setDisabled(disabled: any) {
     this.disabled = disabled;
 
     return this;
@@ -112,8 +119,10 @@ class Button {
    * @returns {Object}
    */
   toJSON(
-    format,
-    { suppressValidation = false } = { suppressValidation: false },
+    format: number,
+    { suppressValidation = false }: { suppressValidation: boolean } = {
+      suppressValidation: false,
+    },
   ) {
     if (suppressValidation !== true) {
       if (!this.label)

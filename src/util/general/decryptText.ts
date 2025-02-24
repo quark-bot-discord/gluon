@@ -9,7 +9,7 @@ import { createDecipheriv } from "crypto";
  * @returns {String}
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
-function decryptText(text, key, iv) {
+function decryptText(text: any, key: any, iv: any) {
   if (typeof text !== "string")
     throw new TypeError("GLUON: Text to decrypt must be a string.");
   if (typeof key !== "string")

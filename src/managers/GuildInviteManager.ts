@@ -16,7 +16,7 @@ class GuildInviteManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
-  constructor(client, guild) {
+  constructor(client: any, guild: any) {
     super(client, { structureType: GuildInviteManager });
 
     if (!(client instanceof Client))
@@ -63,7 +63,7 @@ class GuildInviteManager extends BaseCacheManager {
     this.clear();
 
     return data.map(
-      (raw) => new Invite(this.#_client, raw, { guildId: this.#guild.id }),
+      (raw: any) => new Invite(this.#_client, raw, { guildId: this.#guild.id }),
     );
   }
 
@@ -77,7 +77,7 @@ class GuildInviteManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(code, invite) {
+  set(code: any, invite: any) {
     if (!(invite instanceof Invite))
       throw new TypeError("GLUON: Invite must be an instance of Invite.");
     return super.set(code, invite);
