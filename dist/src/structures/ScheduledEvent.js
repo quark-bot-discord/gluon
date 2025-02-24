@@ -68,7 +68,6 @@ import {
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import Client from "../Client.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -97,8 +96,8 @@ class ScheduledEvent {
     _ScheduledEvent__attributes.set(this, void 0);
     _ScheduledEvent_location.set(this, void 0);
     _ScheduledEvent_description.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

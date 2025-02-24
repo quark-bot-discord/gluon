@@ -6,7 +6,6 @@ import {
 } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
-import Client from "../Client.js";
 
 /**
  * Represents a Discord user.
@@ -38,8 +37,8 @@ class User {
       nocache: false,
     },
   ) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof nocache !== "boolean")

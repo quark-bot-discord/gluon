@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _SlashCommand_data, _SlashCommand_options;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
@@ -66,8 +65,8 @@ class SlashCommand extends Interaction {
     super(client, data);
     _SlashCommand_data.set(this, void 0);
     _SlashCommand_options.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     /**

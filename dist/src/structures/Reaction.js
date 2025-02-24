@@ -48,7 +48,6 @@ var _Reaction__client,
   _Reaction__reacted,
   _Reaction_initial_reactor,
   _Reaction_count;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
 import util from "util";
@@ -71,8 +70,8 @@ class Reaction {
     _Reaction__reacted.set(this, void 0);
     _Reaction_initial_reactor.set(this, void 0);
     _Reaction_count.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

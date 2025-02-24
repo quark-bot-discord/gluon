@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import Client from "../Client.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import {
@@ -36,7 +35,7 @@ class Attachment implements AttachmentType {
       | AttachmentDiscordJSON,
     { channelId }: { channelId: Snowflake },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

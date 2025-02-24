@@ -15,7 +15,6 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import Client from "../Client.js";
 import GuildManager from "../managers/GuildManager.js";
 
 /**
@@ -51,7 +50,7 @@ class Member {
       nocache: false,
     },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -695,7 +694,7 @@ class Member {
    * @returns {Member}
    */
   static decrypt(client: any, data: any, guildId: any, userId: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
       throw new TypeError("GLUON: Data must be a string.");

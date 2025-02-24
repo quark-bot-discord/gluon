@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _Thread__client, _Thread__owner_id, _Thread__parent_id;
-import Client from "../Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
@@ -69,8 +68,8 @@ class Thread extends Channel {
     _Thread__client.set(this, void 0);
     _Thread__owner_id.set(this, void 0);
     _Thread__parent_id.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

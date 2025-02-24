@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
@@ -35,7 +34,7 @@ class AuditLog {
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
   constructor(client: any, data: any, { users, guildId }: any = {}) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

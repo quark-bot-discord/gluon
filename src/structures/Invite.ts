@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import {
   GLUON_DEBUG_LEVELS,
   INVITE_BASE_URL,
@@ -35,7 +34,7 @@ class Invite {
     data: any,
     { guildId, nocache = false }: any = { nocache: false },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

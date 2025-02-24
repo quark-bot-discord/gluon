@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _Sticker__client, _Sticker__id, _Sticker_name, _Sticker_format_type;
-import Client from "../Client.js";
 import {
   STICKER_FORMATS,
   CDN_BASE_URL,
@@ -66,7 +65,7 @@ class Sticker {
     _Sticker__id.set(this, void 0);
     _Sticker_name.set(this, void 0);
     _Sticker_format_type.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

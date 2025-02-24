@@ -59,7 +59,6 @@ var _AuditLog__client,
   _AuditLog_special_type,
   _AuditLog_status,
   _AuditLog_changes;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
@@ -94,7 +93,7 @@ class AuditLog {
     _AuditLog_special_type.set(this, void 0);
     _AuditLog_status.set(this, void 0);
     _AuditLog_changes.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

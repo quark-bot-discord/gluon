@@ -50,7 +50,6 @@ var _VoiceState__client,
   _VoiceState__user_id,
   _VoiceState_joined,
   _VoiceState_request_to_speak_timestamp;
-import Client from "../Client.js";
 import {
   GLUON_CACHING_OPTIONS,
   GLUON_DEBUG_LEVELS,
@@ -81,8 +80,8 @@ class VoiceState {
     _VoiceState__user_id.set(this, void 0);
     _VoiceState_joined.set(this, void 0);
     _VoiceState_request_to_speak_timestamp.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

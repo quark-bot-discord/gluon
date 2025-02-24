@@ -49,7 +49,6 @@ var _Attachment__client,
   _Attachment_name,
   _Attachment_size;
 import fetch from "node-fetch";
-import Client from "../Client.js";
 import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 /**
@@ -67,7 +66,7 @@ class Attachment {
     _Attachment__urlData.set(this, void 0);
     _Attachment_name.set(this, void 0);
     _Attachment_size.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

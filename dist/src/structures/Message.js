@@ -85,7 +85,6 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import Client from "../Client.js";
 import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
@@ -131,8 +130,8 @@ class Message {
     _Message_message_snapshots.set(this, void 0);
     _Message_edited_timestamp.set(this, void 0);
     _Message_flags.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof channelId !== "string")
@@ -1169,7 +1168,7 @@ class Message {
       suppressMentions: false,
     },
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
@@ -1237,7 +1236,7 @@ class Message {
     guildId,
     { content, embeds, components, attachments, files } = {},
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID is not a string.");
@@ -1312,7 +1311,7 @@ class Message {
    * @throws {TypeError}
    */
   static decrypt(client, data, guildId, channelId, messageId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
       throw new TypeError("GLUON: Data must be a string.");
@@ -1421,7 +1420,7 @@ class Message {
    * @throws {TypeError}
    */
   static async delete(client, guildId, channelId, messageId, { reason } = {}) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");

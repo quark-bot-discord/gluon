@@ -72,7 +72,6 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import Client from "../Client.js";
 import GuildManager from "../managers/GuildManager.js";
 /**
  * Represents a guild member.
@@ -108,7 +107,7 @@ class Member {
     _Member__avatar.set(this, void 0);
     _Member__roles.set(this, void 0);
     _Member_user.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -753,7 +752,7 @@ class Member {
    * @returns {Member}
    */
   static decrypt(client, data, guildId, userId) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
       throw new TypeError("GLUON: Data must be a string.");

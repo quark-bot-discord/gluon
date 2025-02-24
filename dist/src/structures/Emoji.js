@@ -47,7 +47,6 @@ var _Emoji__client,
   _Emoji_name,
   _Emoji__attributes,
   _Emoji__guild_id;
-import Client from "../Client.js";
 import {
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
@@ -75,7 +74,7 @@ class Emoji {
     _Emoji_name.set(this, void 0);
     _Emoji__attributes.set(this, void 0);
     _Emoji__guild_id.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

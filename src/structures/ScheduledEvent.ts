@@ -7,7 +7,6 @@ import {
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import Client from "../Client.js";
 
 /**
  * Represents an scheduled event.
@@ -40,8 +39,8 @@ class ScheduledEvent {
     data: any,
     { guildId, nocache = false }: any = { nocache: false },
   ) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

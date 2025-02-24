@@ -43,7 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _ButtonClick__client, _ButtonClick_custom_id, _ButtonClick_message;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
@@ -67,7 +66,7 @@ class ButtonClick extends Interaction {
     _ButtonClick__client.set(this, void 0);
     _ButtonClick_custom_id.set(this, void 0);
     _ButtonClick_message.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

@@ -47,7 +47,6 @@ var _PermissionOverwrite__client,
   _PermissionOverwrite_type,
   _PermissionOverwrite_allow,
   _PermissionOverwrite_deny;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 class PermissionOverwrite {
@@ -62,7 +61,7 @@ class PermissionOverwrite {
     _PermissionOverwrite_type.set(this, void 0);
     _PermissionOverwrite_allow.set(this, void 0);
     _PermissionOverwrite_deny.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

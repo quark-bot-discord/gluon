@@ -1,5 +1,4 @@
 import ClientType from "src/interfaces/Client.js";
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
@@ -26,8 +25,8 @@ class OptionSelect extends Interaction {
   constructor(client: any, data: any, { channelId, guildId }: any) {
     super(client, data);
 
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof channelId !== "string")

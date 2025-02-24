@@ -4,8 +4,6 @@ import TextInput from "../util/builder/textInputBuilder.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
-import Client from "../Client.js";
-import { CommandChoice } from "../util.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -26,7 +24,7 @@ class Interaction {
    * @param {Object} data The interaction data from Discord.
    */
   constructor(client: any, data: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -389,7 +387,7 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   static async delete(client: any, interactionToken: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
@@ -442,7 +440,7 @@ class Interaction {
     interactionToken: any,
     { content, files, embeds, components }: any = {},
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");

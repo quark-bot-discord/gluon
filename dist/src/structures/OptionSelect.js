@@ -46,7 +46,6 @@ var _OptionSelect__client,
   _OptionSelect_custom_id,
   _OptionSelect_message,
   _OptionSelect_values;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
@@ -71,8 +70,8 @@ class OptionSelect extends Interaction {
     _OptionSelect_custom_id.set(this, void 0);
     _OptionSelect_message.set(this, void 0);
     _OptionSelect_values.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof channelId !== "string")

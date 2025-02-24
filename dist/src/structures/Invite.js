@@ -50,7 +50,6 @@ var _Invite__client,
   _Invite_expires,
   _Invite_inviter,
   _Invite_max_uses;
-import Client from "../Client.js";
 import {
   GLUON_DEBUG_LEVELS,
   INVITE_BASE_URL,
@@ -82,7 +81,7 @@ class Invite {
     _Invite_expires.set(this, void 0);
     _Invite_inviter.set(this, void 0);
     _Invite_max_uses.set(this, void 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

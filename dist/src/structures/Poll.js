@@ -50,7 +50,6 @@ var _Poll__client,
   _Poll_allow_multiselect,
   _Poll_layout_type,
   _Poll_results;
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
@@ -72,8 +71,8 @@ class Poll {
     _Poll_allow_multiselect.set(this, void 0);
     _Poll_layout_type.set(this, void 0);
     _Poll_results.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

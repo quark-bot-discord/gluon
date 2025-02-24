@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import {
   GLUON_CACHING_OPTIONS,
   GLUON_DEBUG_LEVELS,
@@ -34,8 +33,8 @@ class VoiceState {
     data: any,
     { guildId, nocache = false }: any = { nocache: false },
   ) {
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

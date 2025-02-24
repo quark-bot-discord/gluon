@@ -54,7 +54,6 @@ var _Role_instances,
   _Role__attributes,
   _Role_tags,
   _Role__formattedIconHash_get;
-import Client from "../Client.js";
 import {
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
@@ -88,8 +87,8 @@ class Role {
     _Role_permissions.set(this, void 0);
     _Role__attributes.set(this, void 0);
     _Role_tags.set(this, void 0);
-    if (!(client instanceof Client))
-      throw new TypeError("GLUON: Client must be an instance of Client");
+    if (!client)
+      throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
     if (typeof guildId !== "string")

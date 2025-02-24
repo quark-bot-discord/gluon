@@ -1,4 +1,3 @@
-import Client from "../Client.js";
 import {
   STICKER_FORMATS,
   CDN_BASE_URL,
@@ -22,7 +21,7 @@ class Sticker {
    * @param {Object} data Sticker data from Discord.
    */
   constructor(client: any, data: any) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

@@ -1,5 +1,4 @@
 import ClientType from "src/interfaces/Client.js";
-import Client from "../Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
@@ -25,7 +24,7 @@ class ButtonClick extends Interaction {
   constructor(client: any, data: any, { guildId, channelId }: any = {}) {
     super(client, data);
 
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");

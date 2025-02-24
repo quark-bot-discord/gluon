@@ -299,7 +299,7 @@ describe("Interaction", function () {
     it("should throw an error if client is not an instance of Client", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      await expect(Interaction.edit({})).to.be.rejectedWith(
+      await expect(Interaction.edit(null)).to.be.rejectedWith(
         Error,
         "GLUON: Client must be an instance of Client",
       );

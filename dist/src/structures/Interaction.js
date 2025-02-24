@@ -56,7 +56,6 @@ import TextInput from "../util/builder/textInputBuilder.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
-import Client from "../Client.js";
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
@@ -76,7 +75,7 @@ class Interaction {
     _Interaction_token.set(this, void 0);
     _Interaction_member.set(this, void 0);
     _Interaction__responses_sent.set(this, 0);
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
       throw new TypeError("GLUON: Data must be an object");
@@ -457,7 +456,7 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   static async delete(client, interactionToken) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
@@ -511,7 +510,7 @@ class Interaction {
     interactionToken,
     { content, files, embeds, components } = {},
   ) {
-    if (!(client instanceof Client))
+    if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
