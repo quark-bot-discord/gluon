@@ -1,5 +1,5 @@
-import { CHANNEL_TYPES, TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import { PermissionsBitfield, Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
 
 export interface ChannelType {
@@ -10,7 +10,7 @@ export interface ChannelType {
   readonly id: Snowflake;
   readonly guildId: Snowflake;
   readonly parentId: Snowflake | null;
-  readonly type: (typeof CHANNEL_TYPES)[keyof typeof CHANNEL_TYPES];
+  readonly type: ChannelTypes;
   readonly name: string;
   readonly topic: string;
   readonly permissionOverwrites: Array<ChannelOverwriteObject>;
@@ -80,6 +80,20 @@ export enum ChannelOverwriteType {
 export interface ChannelOverwriteObject {
   id: Snowflake;
   type: ChannelOverwriteObject;
-  allow: string;
-  deny: string;
+  allow: PermissionsBitfield;
+  deny: PermissionsBitfield;
+}
+
+export enum ChannelTypes {
+  GUILD_TEXT = 0,
+  GUILD_VOICE = 2,
+  GUILD_CATEGORY = 4,
+  GUILD_NEWS = 5,
+  GUILD_NEWS_THREAD = 10,
+  GUILD_PUBLIC_THREAD = 11,
+  GUILD_PRIVATE_THREAD = 12,
+  GUILD_STAGE_VOICE = 13,
+  GUILD_DIRECTORY = 14,
+  GUILD_FORUM = 15,
+  GUILD_MEDIA = 16,
 }

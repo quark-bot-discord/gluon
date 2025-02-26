@@ -36,6 +36,9 @@ import {
   GuildType,
 } from "./interfaces/Guild.js";
 import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { ChannelType } from "./interfaces/Channel.js";
+import { AuditLogRaw } from "./interfaces/AuditLog.js";
 
 /**
  * Represents a Discord guild.
@@ -1117,7 +1120,10 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async ban(user_id: any, { reason, seconds }: any = {}) {
+  async ban(
+    user_id: Snowflake,
+    { reason, seconds }: { reason?: string; seconds?: number } = {},
+  ) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1164,7 +1170,7 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async unban(user_id: any, { reason }: any = {}) {
+  async unban(user_id: Snowflake, { reason }: { reason?: string } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1202,7 +1208,7 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async kick(user_id: any, { reason }: any = {}) {
+  async kick(user_id: Snowflake, { reason }: { reason?: string } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS)
     )
@@ -1241,7 +1247,11 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async removeMemberRole(user_id: any, role_id: any, { reason }: any = {}) {
+  async removeMemberRole(
+    user_id: Snowflake,
+    role_id: Snowflake,
+    { reason }: { reason?: string } = {},
+  ) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
@@ -1285,7 +1295,19 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async fetchAuditLogs({ limit, type, user_id, before, after }: any = {}) {
+  async fetchAuditLogs({
+    limit,
+    type,
+    user_id,
+    before,
+    after,
+  }: {
+    limit?: number;
+    type?: number;
+    user_id?: Snowflake;
+    before?: string;
+    after?: string;
+  } = {}) {
     if (
       !checkPermission(
         (await this.me()).permissions,
@@ -1339,11 +1361,9 @@ class Guild implements GuildType {
 
     if (
       type &&
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       AUDIT_LOG_TYPES[type] &&
       data &&
       data.audit_log_entries[0] &&
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
       data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type]
     )
       return null;
@@ -1351,7 +1371,7 @@ class Guild implements GuildType {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e: any) =>
+      (e: AuditLogRaw) =>
         new AuditLog(this.#_client, e, {
           users: data.users,
           guildId: this.id,
@@ -1405,7 +1425,7 @@ class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  async fetchBan(user_id: any) {
+  async fetchBan(user_id: Snowflake) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
     )
@@ -1474,7 +1494,7 @@ class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static async deleteWebhook(client: ClientType, webhookId: any) {
+  static async deleteWebhook(client: ClientType, webhookId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1497,7 +1517,7 @@ class Guild implements GuildType {
    */
   static createWebhook(
     client: ClientType,
-    channelId: any,
+    channelId: Snowflake,
     { name = NAME } = { name: NAME },
   ) {
     if (!client)
@@ -1530,8 +1550,8 @@ class Guild implements GuildType {
    */
   static modifyWebhook(
     client: ClientType,
-    webhookId: any,
-    { channelId }: any = {},
+    webhookId: Snowflake,
+    { channelId }: { channelId: Snowflake },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1559,7 +1579,7 @@ class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: ClientType, webhookId: any) {
+  static fetchWebhook(client: ClientType, webhookId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1587,7 +1607,7 @@ class Guild implements GuildType {
    */
   static async postWebhook(
     client: ClientType,
-    { id, token }: any,
+    { id, token }: { id: Snowflake; token: string },
     { content, embeds, components, files }: any = {},
   ) {
     if (!client)
@@ -1622,7 +1642,7 @@ class Guild implements GuildType {
    * @static
    * @method
    */
-  static getIcon(id: any, hash: any) {
+  static getIcon(id: Snowflake, hash: string) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Guild id must be a string.");
     if (hash && typeof hash !== "string")
@@ -1646,7 +1666,7 @@ class Guild implements GuildType {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
-    this.#channels.forEach((c: any) => c.messages?._intervalCallback());
+    this.#channels.forEach((c: ChannelType) => c.messages?._intervalCallback());
   }
 
   /**

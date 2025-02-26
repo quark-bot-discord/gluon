@@ -4,26 +4,29 @@ import TextInput from "../util/builder/textInputBuilder.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
+import ClientType from "src/interfaces/Client.js";
+import { InteractionRaw, InteractionType } from "./interfaces/Interaction.js";
+import { GuildMemberManager } from "src/structures.js";
 
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
  */
-class Interaction {
+class Interaction implements InteractionType {
   #_client;
   #_id;
   #type;
   #_guild_id;
   #_channel_id;
   #token;
-  #member;
+  #_member_id;
   #_responses_sent = 0;
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: any, data: any) {
+  constructor(client: ClientType, data: InteractionRaw) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -65,16 +68,18 @@ class Interaction {
      */
     this.#_channel_id = BigInt(data.channel_id);
 
-    if (data.member)
+    if (data.member) {
       /**
        * The member that triggered the interaction, if it was run in a guild.
        * @type {Member?}
        * @private
        */
-      this.#member = new Member(this.#_client, data.member, {
+      this.#_member_id = BigInt(data.member.user.id);
+      new Member(this.#_client, data.member, {
         userId: data.member.user.id,
         guildId: data.guild_id,
       });
+    }
 
     /**
      * The interaction token, needed to respond to it.
@@ -168,7 +173,13 @@ class Interaction {
    * @public
    */
   get member() {
-    return this.#member;
+    return this.#_member_id
+      ? GuildMemberManager.getMember(
+          this.#_client,
+          this.#_guild_id,
+          this.#_member_id,
+        )
+      : undefined;
   }
 
   /**
@@ -178,7 +189,7 @@ class Interaction {
    * @public
    */
   get memberId() {
-    return this.member?.id || null;
+    return this.#_member_id ? String(this.#_member_id) : undefined;
   }
 
   /**
@@ -386,7 +397,7 @@ class Interaction {
    * @static
    * @throws {Error | TypeError}
    */
-  static async delete(client: any, interactionToken: any) {
+  static async delete(client: ClientType, interactionToken: string) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
@@ -436,8 +447,8 @@ class Interaction {
    * @throws {Error | TypeError}
    */
   static async edit(
-    client: any,
-    interactionToken: any,
+    client: ClientType,
+    interactionToken: string,
     { content, files, embeds, components }: any = {},
   ) {
     if (!client)
@@ -489,7 +500,7 @@ class Interaction {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -500,7 +511,6 @@ class Interaction {
           type: this.type,
           guild_id: this.guildId,
           channel_id: this.channelId,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           member: this.member.toJSON(format),
         };
       }

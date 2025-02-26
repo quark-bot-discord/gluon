@@ -58,7 +58,7 @@ class ButtonClick extends Interaction implements ButtonClickType {
      * @type {Message}
      * @private
      */
-    this.#message = new Message(this.#_client as ClientType, data.message, {
+    this.#message = new Message(this.#_client, data.message, {
       channelId,
       guildId,
     });

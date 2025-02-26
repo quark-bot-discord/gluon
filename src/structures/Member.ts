@@ -16,12 +16,21 @@ import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import GuildManager from "../managers/GuildManager.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import {
+  MemberCacheJSON,
+  MemberDiscordJSON,
+  MemberRaw,
+  MemberStorageJSON,
+  MemberType,
+} from "./interfaces/Member.js";
 
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
  */
-class Member {
+class Member implements MemberType {
   #_client;
   #_guild_id;
   #_id;
@@ -44,11 +53,14 @@ class Member {
    * @param {Boolean?} [options.nocache] Whether this member should be cached.
    */
   constructor(
-    client: any,
-    data: any,
-    { userId, guildId, user, nocache = false }: any = {
-      nocache: false,
-    },
+    client: ClientType,
+    data: MemberRaw | MemberStorageJSON | MemberCacheJSON | MemberDiscordJSON,
+    {
+      userId,
+      guildId,
+      user,
+      nocache = false,
+    }: { userId: Snowflake; guildId: Snowflake; user?: any; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -460,7 +472,7 @@ class Member {
    * @static
    * @method
    */
-  static getMention(userId: any) {
+  static getMention(userId: Snowflake) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
     return `<@${userId}>`;
@@ -476,7 +488,7 @@ class Member {
    * @static
    * @method
    */
-  static getAvatarUrl(id: any, guildId: any, hash: any) {
+  static getAvatarUrl(id: Snowflake, guildId: Snowflake, hash?: string | null) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Member id must be a string.");
     if (typeof guildId !== "string")
@@ -501,7 +513,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async addRole(role_id: any, { reason }: any = {}) {
+  async addRole(role_id: Snowflake, { reason }: { reason?: string } = {}) {
     await Member.addRole(this.#_client, this.guildId, this.id, role_id, {
       reason,
     });
@@ -518,7 +530,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async removeRole(role_id: any, { reason }: any = {}) {
+  async removeRole(role_id: Snowflake, { reason }: { reason?: string } = {}) {
     await Member.removeRole(this.#_client, this.guildId, this.id, role_id, {
       reason,
     });
@@ -535,7 +547,10 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async timeoutAdd(timeout_until: any, { reason }: any = {}) {
+  async timeoutAdd(
+    timeout_until: UnixTimestamp,
+    { reason }: { reason?: string } = {},
+  ) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -577,7 +592,7 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async timeoutRemove({ reason }: any = {}) {
+  async timeoutRemove({ reason }: { reason?: string } = {}) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -615,7 +630,10 @@ class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  async massUpdateRoles(roles: any, { reason }: any = {}) {
+  async massUpdateRoles(
+    roles: Snowflake[],
+    { reason }: { reason?: string } = {},
+  ) {
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -677,7 +695,7 @@ class Member {
    * @param {String} memberId The id of the member.
    * @returns {String}
    */
-  static getHashName(guildId: any, memberId: any) {
+  static getHashName(guildId: Snowflake, memberId: Snowflake) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof memberId !== "string")
@@ -693,7 +711,12 @@ class Member {
    * @param {String} userId The id of the member.
    * @returns {Member}
    */
-  static decrypt(client: any, data: any, guildId: any, userId: any) {
+  static decrypt(
+    client: ClientType,
+    data: any,
+    guildId: Snowflake,
+    userId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "string")
@@ -723,11 +746,11 @@ class Member {
    * @throws {TypeError}
    */
   static async addRole(
-    client: any,
-    guildId: any,
-    userId: any,
-    roleId: any,
-    { reason }: any = {},
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+    roleId: Snowflake,
+    { reason }: { reason?: string } = {},
   ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
@@ -773,11 +796,11 @@ class Member {
    * @throws {TypeError}
    */
   static async removeRole(
-    client: any,
-    guildId: any,
-    userId: any,
-    roleId: any,
-    { reason }: any = {},
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+    roleId: Snowflake,
+    { reason }: { reason?: string } = {},
   ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
@@ -841,7 +864,7 @@ class Member {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

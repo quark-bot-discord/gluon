@@ -1,5 +1,9 @@
-import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+import { LOCALES, TO_JSON_TYPES_ENUM } from "src/constants.js";
+import {
+  ISO8601Timestamp,
+  PermissionsBitfield,
+  Snowflake,
+} from "src/interfaces/gluon.js";
 
 export interface GuildType {
   readonly id: string;
@@ -11,25 +15,25 @@ export interface GuildType {
   readonly emojis: any;
   readonly invites: any;
   readonly _originalIconHash: string | null;
-  readonly premiumTier: number | null;
+  readonly premiumTier: GuildPremiumTier | null;
   readonly rawSystemChannelFlags: number;
   readonly premiumProgressBarEnabled: boolean;
-  readonly rawDefaultMessageNotifications: number | null;
-  readonly rawExplicitContentFilter: number | null;
-  readonly rawVerificationLevel: number | null;
-  readonly rawNsfwLevel: number | null;
-  readonly rawMfaLevel: number | null;
-  readonly systemChannelId: string | null;
-  readonly rulesChannelId: string | null;
+  readonly rawDefaultMessageNotifications: GuildDefaultMessageNotificationLevels | null;
+  readonly rawExplicitContentFilter: GuildExplicitContentFilterLevels | null;
+  readonly rawVerificationLevel: GuildVerificationLevels | null;
+  readonly rawNsfwLevel: GuildNsfwLevels | null;
+  readonly rawMfaLevel: GuildMfaLevels | null;
+  readonly systemChannelId: Snowflake | null;
+  readonly rulesChannelId: Snowflake | null;
   readonly systemChannel: any;
   readonly rulesChannel: any;
-  readonly preferredLocale: string;
+  readonly preferredLocale: LOCALES;
   readonly premiumSubscriptionCount: number;
   readonly _cacheOptions: any;
   fetchAuditLogs(options?: any): Promise<any>;
   fetchInvites(): Promise<any>;
   fetchChannels(): Promise<any>;
-  fetchBan(userId: string): Promise<any>;
+  fetchBan(userId: Snowflake): Promise<any>;
   leave(): Promise<void>;
   calculateMessageCacheCount(): number;
   calculateMemberCacheCount(): number;
@@ -48,8 +52,8 @@ export interface GuildStorageJSON {
   joined_at: number;
   unavailable: boolean;
   member_count: number;
-  premium_tier: number | null;
-  preferred_locale: string;
+  premium_tier: GuildPremiumTier | null;
+  preferred_locale: LOCALES;
   _cache_options: any;
   _attributes: any;
   system_channel_id: Snowflake | null;
@@ -71,8 +75,8 @@ export interface GuildCacheJSON {
   joined_at: number;
   unavailable: boolean;
   member_count: number;
-  premium_tier: number | null;
-  preferred_locale: string;
+  premium_tier: GuildPremiumTier | null;
+  preferred_locale: LOCALES;
   _cache_options: any;
   _attributes: any;
   system_channel_id: Snowflake | null;
@@ -92,7 +96,7 @@ export interface GuildDiscordJSON {
   icon: string | null;
   owner_id: Snowflake;
   joined_at: string;
-  premium_tier: number | null;
+  premium_tier: GuildPremiumTier | null;
   unavailable: boolean;
   member_count: number;
   preferred_locale: string;
@@ -101,11 +105,11 @@ export interface GuildDiscordJSON {
   rules_channel_id: Snowflake | null;
   premium_subscription_count: number;
   premium_progress_bar_enabled: boolean;
-  default_message_notifications: number | null;
-  explicit_content_filter: number | null;
-  verification_level: number | null;
-  nsfw_level: number | null;
-  mfa_level: number | null;
+  default_message_notifications: GuildDefaultMessageNotificationLevels | null;
+  explicit_content_filter: GuildExplicitContentFilterLevels | null;
+  verification_level: GuildVerificationLevels | null;
+  nsfw_level: GuildNsfwLevels | null;
+  mfa_level: GuildMfaLevels | null;
   members: any;
   channels: any;
   voice_states: any;
@@ -123,19 +127,19 @@ export interface GuildRaw {
   discovery_splash: string | null;
   owner?: boolean;
   owner_id: Snowflake;
-  permissions?: string;
+  permissions?: PermissionsBitfield;
   region?: string;
   afk_channel_id: Snowflake | null;
   afk_timeout: number;
   widget_enabled?: boolean;
   widget_channel_id: Snowflake | null;
-  verification_level: number;
-  default_message_notifications: number;
-  explicit_content_filter: number;
-  roles: any;
-  emojis: any;
-  features: any;
-  mfa_level: number;
+  verification_level: GuildVerificationLevels;
+  default_message_notifications: GuildDefaultMessageNotificationLevels;
+  explicit_content_filter: GuildExplicitContentFilterLevels;
+  roles: any[];
+  emojis: any[];
+  features: GuildFeatures[];
+  mfa_level: GuildMfaLevels;
   application_id: Snowflake | null;
   system_channel_id: Snowflake | null;
   system_channel_flags: number;
@@ -145,20 +149,20 @@ export interface GuildRaw {
   vanity_url_code: string | null;
   description: string | null;
   banner: string | null;
-  premium_tier: number;
+  premium_tier: GuildPremiumTier;
   premium_subscription_count?: number;
-  preferred_locale: string;
+  preferred_locale: LOCALES;
   public_updates_channel_id: Snowflake | null;
   max_video_channel_users?: number;
   max_stage_video_channel_users?: number;
   approximate_member_count?: number;
   approximate_presence_count?: number;
-  welcome_screen?: any;
-  nsfw_level: number;
+  welcome_screen?: GuildWelcomeScreen;
+  nsfw_level: GuildNsfwLevels;
   stickers: any;
   premium_progress_bar_enabled: boolean;
   safety_alerts_channel_id: Snowflake | null;
-  incidents_data: any | null;
+  incidents_data: GuildIncidentData[] | null;
 }
 
 export interface GuildRawGateway extends GuildRaw {
@@ -175,3 +179,85 @@ export interface GuildRawGateway extends GuildRaw {
   guild_scheduled_events: any;
   soundboard_sounds: any;
 }
+
+export interface GuildWelcomeScreen {
+  description: string | null;
+  welcome_channels: GuildWelcomeScreenChannel[];
+}
+
+export interface GuildWelcomeScreenChannel {
+  channel_id: Snowflake;
+  description: string;
+  emoji_id: Snowflake | null;
+  emoji_name: string | null;
+}
+
+export interface GuildIncidentData {
+  invites_disabled_until: ISO8601Timestamp | null;
+  dms_disabled_until: ISO8601Timestamp | null;
+  dm_spam_detected_at: ISO8601Timestamp | null;
+  raid_detected_at: ISO8601Timestamp | null;
+}
+
+export enum GuildVerificationLevels {
+  NONE = 0,
+  LOW = 1,
+  MEDIUM = 2,
+  HIGH = 3,
+  VERY_HIGH = 4,
+}
+export enum GuildDefaultMessageNotificationLevels {
+  ALL_MESSAGES = 0,
+  ONLY_MENTIONS = 1,
+}
+export enum GuildExplicitContentFilterLevels {
+  DISABLED = 0,
+  MEMBERS_WITHOUT_ROLES = 1,
+  ALL_MEMBERS = 2,
+}
+export enum GuildMfaLevels {
+  NONE = 0,
+  ELEVATED = 1,
+}
+export enum GuildNsfwLevels {
+  DEFAULT = 0,
+  EXPLICIT = 1,
+  SAFE = 2,
+  AGE_RESTRICTED = 3,
+}
+export enum GuildPremiumTier {
+  NONE = 0,
+  TIER_1 = 1,
+  TIER_2 = 2,
+  TIER_3 = 3,
+}
+export type GuildFeatures =
+  | "ANIMATED_BANNER"
+  | "ANIMATED_ICON"
+  | "APPLICATION_COMMAND_PERMISSIONS_V2"
+  | "AUTO_MODERATION"
+  | "BANNER"
+  | "COMMUNITY"
+  | "CREATOR_MONETIZABLE_PROVISIONAL"
+  | "CREATOR_STORE_PAGE"
+  | "DEVELOPER_SUPPORT_SERVER"
+  | "DISCOVERABLE"
+  | "FEATURABLE"
+  | "INVITES_DISABLED"
+  | "INVITE_SPLASH"
+  | "MEMBER_VERIFICATION_GATE_ENABLED"
+  | "MORE_SOUNDBOARD"
+  | "MORE_STICKERS"
+  | "NEWS"
+  | "PARTNERED"
+  | "PREVIEW_ENABLED"
+  | "RAID_ALERTS_DISABLED"
+  | "ROLE_ICONS"
+  | "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE"
+  | "ROLE_SUBSCRIPTIONS_ENABLED"
+  | "SOUNDBOARD"
+  | "TICKETED_EVENTS_ENABLED"
+  | "VANITY_URL"
+  | "VERIFIED"
+  | "VIP_REGIONS"
+  | "WELCOME_SCREEN_ENABLED";

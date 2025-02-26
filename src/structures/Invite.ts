@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import {
   GLUON_DEBUG_LEVELS,
   INVITE_BASE_URL,
@@ -7,11 +8,20 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  InviteCacheJSON,
+  InviteDiscordJSON,
+  InviteMetadataRaw,
+  InviteRaw,
+  InviteStorageJSON,
+  InviteType,
+} from "./interfaces/Invite.js";
 
 /**
  * Represents a guild invite.
  */
-class Invite {
+class Invite implements InviteType {
   #_client;
   #_guild_id;
   #_code;
@@ -19,6 +29,7 @@ class Invite {
   #uses;
   #expires;
   #inviter;
+  #_inviter_id;
   #max_uses;
   /**
    * Creates the structure for an invite.
@@ -30,9 +41,14 @@ class Invite {
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | InviteRaw
+      | InviteMetadataRaw
+      | InviteCacheJSON
+      | InviteDiscordJSON
+      | InviteStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -72,7 +88,7 @@ class Invite {
     if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
     else if (data.channel_id) this.#_channel_id = BigInt(data.channel_id);
 
-    if (data.inviter)
+    if (data.inviter) {
       /**
        * The user who created the invite.
        * @type {User?}
@@ -80,6 +96,9 @@ class Invite {
        */
       // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       this.#inviter = new User(this.#_client, data.inviter, { nocache });
+
+      this.#_inviter_id = BigInt(data.inviter.id);
+    }
 
     if (typeof data.uses == "number")
       /**
@@ -226,6 +245,10 @@ class Invite {
     return this.#inviter;
   }
 
+  get inviterId() {
+    return String(this.#_inviter_id);
+  }
+
   /**
    * The URL of the invite.
    * @type {String}
@@ -254,7 +277,7 @@ class Invite {
    * @static
    * @method
    */
-  static getUrl(code: any) {
+  static getUrl(code: string) {
     if (typeof code != "string")
       throw new TypeError("GLUON: Invalid invite code.");
     return `${INVITE_BASE_URL}/${code}`;
@@ -306,7 +329,7 @@ class Invite {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
