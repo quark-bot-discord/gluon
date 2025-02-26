@@ -7,23 +7,32 @@ import {
   UnixMillisecondsTimestamp,
   UnixTimestamp,
 } from "src/interfaces/gluon.js";
+import {
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserRaw,
+  UserStorageJSON,
+  UserType,
+} from "./User.js";
+import { GuildType } from "./Guild.js";
+import { RoleType } from "./Role.js";
 
 export interface MemberType {
   readonly id: Snowflake;
   readonly guildId: Snowflake;
-  readonly guild: any;
+  readonly guild: GuildType | null;
   readonly nick: string;
   readonly joinedAt?: UnixTimestamp;
-  readonly timeoutUntil?: UnixTimestamp;
+  readonly timeoutUntil: UnixTimestamp | null;
   readonly flags: number;
-  readonly roles: any[];
+  readonly roles: RoleType[] | null;
   readonly highestRolePosition: number;
-  readonly permissions: PermissionsBitfield;
+  readonly permissions: PermissionsBitfield | null;
   readonly rejoined: boolean;
-  readonly user: any;
-  readonly _originalAvatarHash: string;
-  readonly displayAvatarURL: string;
-  readonly displayAvatarURLNoFallback: string;
+  readonly user: UserType;
+  readonly _originalAvatarHash: string | null;
+  readonly displayAvatarURL: string | null;
+  readonly displayAvatarURLNoFallback: string | null;
   readonly pending: boolean;
   readonly avatarIsAnimated: boolean;
   readonly mention: string;
@@ -74,7 +83,7 @@ export interface MemberType {
 }
 
 export interface MemberStorageJSON {
-  user: any;
+  user: UserStorageJSON;
   nick: string | null;
   joined_at?: UnixMillisecondsTimestamp;
   avatar: string | null;
@@ -86,7 +95,7 @@ export interface MemberStorageJSON {
 }
 
 export interface MemberCacheJSON {
-  user: any;
+  user: UserCacheJSON;
   nick: string | null;
   joined_at?: UnixMillisecondsTimestamp;
   avatar: string | null;
@@ -98,7 +107,7 @@ export interface MemberCacheJSON {
 }
 
 export interface MemberDiscordJSON {
-  user: any;
+  user: UserDiscordJSON;
   nick: string | null;
   joined_at?: ISO8601Timestamp;
   avatar: string | null;
@@ -110,7 +119,7 @@ export interface MemberDiscordJSON {
 }
 
 export interface MemberRaw {
-  user?: any;
+  user?: UserRaw;
   nick?: string;
   avatar?: string;
   roles: Snowflake[];

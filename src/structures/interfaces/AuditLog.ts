@@ -1,6 +1,9 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
+import { UserType } from "./User.js";
+import { TextChannelType } from "./TextChannel.js";
+import { VoiceChannelType } from "./VoiceChannel.js";
 
 export interface AuditLogType {
   readonly id: Snowflake;
@@ -9,16 +12,16 @@ export interface AuditLogType {
   readonly targetId: Snowflake | null;
   readonly channelId: Snowflake | null;
   readonly guild: GuildType | null;
-  readonly channel: TextChannel | VoiceChannel | null;
-  readonly target: User | null;
+  readonly channel: TextChannelType | VoiceChannelType | null;
+  readonly target: UserType | null;
   readonly executorId: Snowflake | null;
-  readonly executor: User | null;
+  readonly executor: UserType | null;
   readonly reason: string | null;
   readonly count?: number;
   readonly deleteMemberDays?: number;
   readonly membersRemoved?: number;
   readonly specialId: Snowflake | null;
-  readonly specialType?: 0 | 1;
+  readonly specialType?: AuditLogOptionTypes;
   readonly status: string | null;
   readonly changes?: AuditLogChanges;
   toString(): string;
@@ -40,7 +43,7 @@ export interface AuditLogStorageJSON {
     delete_member_days?: number;
     members_removed?: number;
     id?: Snowflake;
-    type?: 0 | 1;
+    type?: AuditLogOptionTypes;
     status?: string;
   };
   changes?: AuditLogChanges;

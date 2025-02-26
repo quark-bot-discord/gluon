@@ -54,8 +54,8 @@ export interface GuildStorageJSON {
   member_count: number;
   premium_tier: GuildPremiumTier | null;
   preferred_locale: LOCALES;
-  _cache_options: any;
-  _attributes: any;
+  _cache_options: number;
+  _attributes: number;
   system_channel_id: Snowflake | null;
   rules_channel_id: Snowflake | null;
   premium_subscription_count: number;
@@ -77,8 +77,8 @@ export interface GuildCacheJSON {
   member_count: number;
   premium_tier: GuildPremiumTier | null;
   preferred_locale: LOCALES;
-  _cache_options: any;
-  _attributes: any;
+  _cache_options: number;
+  _attributes: number;
   system_channel_id: Snowflake | null;
   rules_channel_id: Snowflake | null;
   premium_subscription_count: number;

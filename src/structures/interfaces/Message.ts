@@ -5,14 +5,41 @@ import {
   UnixMillisecondsTimestamp,
 } from "src/interfaces/gluon.js";
 import { MemberDiscordJSON, MemberStorageJSON } from "./Member.js";
+import {
+  PollCacheJSON,
+  PollDiscordJSON,
+  PollRaw,
+  PollStorageJSON,
+  PollType,
+} from "./Poll.js";
+import {
+  ReactionCacheJSON,
+  ReactionDiscordJSON,
+  ReactionRaw,
+  ReactionStorageJSON,
+  ReactionType,
+} from "./Reaction.js";
+import {
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserRaw,
+  UserStorageJSON,
+} from "./User.js";
+import {
+  AttachmentCacheJSON,
+  AttachmentDiscordJSON,
+  AttachmentRaw,
+  AttachmentStorageJSON,
+} from "./Attachment.js";
+import { ThreadRaw } from "./Thread.js";
 
 export interface MessageType {
   readonly id: Snowflake;
   readonly guildId: Snowflake | null;
   readonly channelId: Snowflake;
   readonly content: string | null;
-  readonly poll: any | null;
-  readonly reactions: any;
+  readonly poll: PollType | null;
+  readonly reactions: ReactionType[];
   readonly embeds: Array<any>;
   readonly reference: {
     messageId: Snowflake | null;
@@ -55,60 +82,60 @@ export interface MessageType {
 
 export interface MessageStorageJSON {
   id: Snowflake;
-  author: any;
+  author: UserStorageJSON;
   member: MemberStorageJSON | null;
   content: string;
   _attributes: number;
-  attachments: Array<any>;
+  attachments: AttachmentStorageJSON[];
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
-  poll: any;
+  poll: PollStorageJSON | null;
   message_snapshots: Array<any> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
   sticker_items: Array<any>;
-  messageReactions: any;
+  messageReactions: ReactionStorageJSON[];
 }
 
 export interface MessageCacheJSON {
   id: Snowflake;
-  author: any;
+  author: UserCacheJSON;
   member: MemberStorageJSON | null;
   content: string;
   _attributes: number;
-  attachments: Array<any>;
+  attachments: AttachmentCacheJSON[];
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
-  poll: any;
+  poll: PollCacheJSON | null;
   message_snapshots: Array<any> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
   sticker_items: Array<any>;
-  messageReactions: any;
+  messageReactions: ReactionCacheJSON[];
 }
 
 export interface MessageDiscordJSON {
   id: Snowflake;
   channel_id: Snowflake;
-  author: any;
+  author: UserDiscordJSON;
   member: MemberDiscordJSON | null;
   content: string;
   pinned: boolean;
-  attachments: Array<any>;
+  attachments: AttachmentDiscordJSON[];
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
-  poll: any;
+  poll: PollDiscordJSON | null;
   message_snapshots: Array<any> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
   sticker_items: Array<any>;
-  reactions: any;
+  reactions: ReactionDiscordJSON[];
   mention_everyone: boolean;
   mention_roles: Array<string>;
   mentions: Array<string>;
@@ -117,18 +144,18 @@ export interface MessageDiscordJSON {
 export interface MessageRaw {
   id: Snowflake;
   channel_id: Snowflake;
-  author: any;
+  author: UserRaw;
   content: string;
   timestamp: ISO8601Timestamp;
   edited_timestamp: ISO8601Timestamp | null;
   tts: boolean;
   mention_everyone: boolean;
-  mentions: Array<any>;
+  mentions: UserRaw[];
   mention_roles: Array<Snowflake>;
   mention_channels: Array<MessageChannelMentionObject>;
-  attachments: Array<any>;
+  attachments: AttachmentRaw[];
   embeds: Array<any>;
-  reactions?: Array<any>;
+  reactions?: ReactionRaw[];
   nonce?: number | string;
   pinned: boolean;
   webhook_id?: Snowflake;
@@ -142,14 +169,14 @@ export interface MessageRaw {
   referenced_message?: any; // message object
   interaction_metadata?: any; // message interaction metadata object
   interaction?: any; // message interaction object
-  thread?: any; // channel object
+  thread?: ThreadRaw;
   components?: Array<any>;
   sticker_items?: Array<any>;
   stickers?: Array<any>; // deprecated
   position?: number;
   role_subscription_data?: any; // role subscription data object
   resolved?: any; // resolved data
-  poll?: any;
+  poll?: PollRaw;
   call?: any; // message call object
 }
 

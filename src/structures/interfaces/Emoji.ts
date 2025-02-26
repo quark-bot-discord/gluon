@@ -1,6 +1,7 @@
 import { Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import { UserRaw } from "./User.js";
 
 export interface EmojiType {
   readonly requireColons: boolean;
@@ -44,7 +45,7 @@ export interface EmojiRaw {
   id: Snowflake | null;
   name: string | null;
   roles?: Snowflake[];
-  user?: any;
+  user?: UserRaw;
   require_colons?: boolean;
   managed?: boolean;
   animated?: boolean;

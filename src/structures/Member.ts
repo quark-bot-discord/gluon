@@ -25,6 +25,7 @@ import {
   MemberStorageJSON,
   MemberType,
 } from "./interfaces/Member.js";
+import { UserType } from "./interfaces/User.js";
 
 /**
  * Represents a guild member.
@@ -60,7 +61,12 @@ class Member implements MemberType {
       guildId,
       user,
       nocache = false,
-    }: { userId: Snowflake; guildId: Snowflake; user?: any; nocache?: boolean },
+    }: {
+      userId: Snowflake;
+      guildId: Snowflake;
+      user?: UserType;
+      nocache?: boolean;
+    },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -104,7 +110,6 @@ class Member implements MemberType {
        * @type {User?}
        * @private
        */
-      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       this.#user = new User(this.#_client, data.user, { nocache });
     else if (existing?.user) this.#user = existing.user;
     else if (user) this.#user = user;
@@ -155,11 +160,16 @@ class Member implements MemberType {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.pending !== undefined && data.pending == true)
+    if ("pending" in data && data.pending !== undefined && data.pending == true)
       this.#_attributes |= 0b1 << 0;
-    else if (data.pending === undefined && existing && existing.pending == true)
+    else if (
+      "pending" in data &&
+      data.pending === undefined &&
+      existing &&
+      existing.pending == true
+    )
       this.#_attributes |= 0b1 << 0;
 
     if (data.avatar && data.avatar.startsWith("a_") == true)
@@ -270,7 +280,7 @@ class Member implements MemberType {
    * @public
    */
   get timeoutUntil() {
-    return this.#communication_disabled_until;
+    return this.#communication_disabled_until ?? null;
   }
 
   /**
@@ -713,7 +723,7 @@ class Member implements MemberType {
    */
   static decrypt(
     client: ClientType,
-    data: any,
+    data: string,
     guildId: Snowflake,
     userId: Snowflake,
   ) {

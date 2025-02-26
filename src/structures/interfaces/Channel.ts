@@ -12,6 +12,14 @@ import {
   PermissionOverwriteStorageJSON,
   PermissionOverwriteType,
 } from "./PermissionOverwrite.js";
+import {
+  ThreadAutoArchiveDuration,
+  ThreadRawMember,
+  ThreadRawMetadata,
+  ThreadType,
+} from "./Thread.js";
+import { TextChannelType } from "./TextChannel.js";
+import { VoiceChannelType } from "./VoiceChannel.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -107,18 +115,18 @@ export interface ChannelRaw {
   video_quality_mode?: number;
   message_count?: number;
   member_count?: number;
-  thread_metadata?: any;
-  member?: any;
-  default_auto_archive_duration?: number;
+  thread_metadata?: ThreadRawMetadata;
+  member?: ThreadRawMember;
+  default_auto_archive_duration?: ThreadAutoArchiveDuration;
   permissions?: PermissionsBitfield;
   flags?: number;
   total_message_sent?: number;
-  available_tags?: any[];
+  available_tags?: ForumTagRaw[];
   applied_tags?: Snowflake[];
-  default_reaction_emoji?: any | null;
+  default_reaction_emoji?: DefaultReactionRaw | null;
   default_thread_rate_limit_per_user?: number;
-  default_sort_order?: number;
-  default_forum_layout?: number;
+  default_sort_order?: ChannelSortOrderTypes;
+  default_forum_layout?: ForumLayoutTypes;
 }
 
 export enum ChannelOverwriteType {
@@ -156,3 +164,29 @@ export type ChannelsCategory = ChannelTypes.GUILD_CATEGORY;
 export type ChannelsOther = ChannelTypes.GUILD_DIRECTORY;
 
 export type ChannelsForum = ChannelTypes.GUILD_FORUM | ChannelTypes.GUILD_MEDIA;
+
+export type AllChannelTypes = TextChannelType | VoiceChannelType | ThreadType;
+
+export type AllChannelTypesNoThreads = TextChannelType | VoiceChannelType;
+
+export interface ForumTagRaw extends DefaultReactionRaw {
+  id: Snowflake;
+  name: string;
+  moderated: boolean;
+}
+
+export interface DefaultReactionRaw {
+  emoji_id: Snowflake | null;
+  emoji_name: string | null;
+}
+
+export enum ChannelSortOrderTypes {
+  LATEST_ACTIVITY = 0,
+  CREATION_DATE = 1,
+}
+
+export enum ForumLayoutTypes {
+  NOT_SET = 0,
+  LIST_VIEW = 1,
+  GALLERY_VIEW = 2,
+}

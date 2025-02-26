@@ -1,5 +1,6 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { UserRaw } from "./User.js";
 
 export interface StickerType {
   readonly id: Snowflake;
@@ -41,7 +42,7 @@ export interface StickerRaw {
   format_type: StickerFormatTypes;
   available?: boolean;
   guild_id?: Snowflake;
-  user?: any;
+  user?: UserRaw;
   sort_value?: number;
 }
 

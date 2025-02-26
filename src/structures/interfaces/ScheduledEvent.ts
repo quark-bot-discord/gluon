@@ -6,13 +6,20 @@ import {
 } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import {
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserRaw,
+  UserStorageJSON,
+  UserType,
+} from "./User.js";
 
 export interface ScheduledEventType {
   readonly id: Snowflake;
   readonly guildId: Snowflake;
   readonly name: string;
   readonly creatorId: Snowflake | null;
-  readonly creator: User | null;
+  readonly creator: UserType | null;
   readonly description: string;
   readonly _originalImageHash: string | null;
   readonly displayImageURL: string | null;
@@ -38,7 +45,7 @@ export interface ScheduledEventStorageJSON {
   name: string;
   description?: string;
   creator_id?: Snowflake;
-  creator: User | null;
+  creator: UserStorageJSON | null;
   scheduled_start_time: UnixMillisecondsTimestamp;
   scheduled_end_time: UnixMillisecondsTimestamp | null;
   image: string | null;
@@ -56,7 +63,7 @@ export interface ScheduledEventCacheJSON {
   name: string;
   description?: string;
   creator_id?: Snowflake;
-  creator: User | null;
+  creator: UserCacheJSON | null;
   scheduled_start_time: UnixMillisecondsTimestamp;
   scheduled_end_time: UnixMillisecondsTimestamp | null;
   image: string | null;
@@ -74,7 +81,7 @@ export interface ScheduledEventDiscordJSON {
   name: string;
   description?: string;
   creator_id?: Snowflake;
-  creator: User | null;
+  creator: UserDiscordJSON | null;
   scheduled_start_time: UnixMillisecondsTimestamp;
   scheduled_end_time: UnixMillisecondsTimestamp | null;
   image: string | null;
@@ -102,7 +109,7 @@ export interface ScheduledEventRaw {
   entity_metadata: {
     location?: string;
   } | null;
-  creator?: any;
+  creator?: UserRaw;
   user_count?: number;
   image?: string | null;
   recurrence_rule: ScheduledEventRawRecurrenceRule | null;

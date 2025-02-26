@@ -6,6 +6,7 @@ import {
 } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import { EmojiRaw } from "./Emoji.js";
 
 export interface PollType {
   readonly guildId: Snowflake;
@@ -60,7 +61,7 @@ export interface PollRaw {
 }
 
 export interface PollRawMedia {
-  emoji?: any;
+  emoji?: EmojiRaw;
   text?: string;
 }
 

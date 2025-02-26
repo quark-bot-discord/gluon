@@ -46,14 +46,16 @@ export interface OptionSelectDiscordJSON extends InteractionDiscordJSON {
 
 export interface OptionSelectRaw extends InteractionRaw {
   type: InteractionTypes.COMPONENT;
-  data: {
-    custom_id: string;
-    values?: Array<any>;
-    component_type:
-      | COMPONENT_TYPES.CHANNEL_SELECT_MENU
-      | COMPONENT_TYPES.USER_SELECT_MENU
-      | COMPONENT_TYPES.ROLE_SELECT_MENU
-      | COMPONENT_TYPES.MENTIONABLE_SELECT_MENU
-      | COMPONENT_TYPES.SELECT_MENU;
-  };
+  data: OptionSelectRawData;
+}
+
+export interface OptionSelectRawData {
+  custom_id: string;
+  values?: Array<any>;
+  component_type:
+    | COMPONENT_TYPES.CHANNEL_SELECT_MENU
+    | COMPONENT_TYPES.USER_SELECT_MENU
+    | COMPONENT_TYPES.ROLE_SELECT_MENU
+    | COMPONENT_TYPES.MENTIONABLE_SELECT_MENU
+    | COMPONENT_TYPES.SELECT_MENU;
 }

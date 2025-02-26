@@ -86,7 +86,8 @@ class Invite implements InviteType {
      * @private
      */
     if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
-    else if (data.channel_id) this.#_channel_id = BigInt(data.channel_id);
+    else if ("channel_id" in data && data.channel_id)
+      this.#_channel_id = BigInt(data.channel_id);
 
     if (data.inviter) {
       /**
@@ -94,7 +95,6 @@ class Invite implements InviteType {
        * @type {User?}
        * @private
        */
-      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       this.#inviter = new User(this.#_client, data.inviter, { nocache });
 
       this.#_inviter_id = BigInt(data.inviter.id);
