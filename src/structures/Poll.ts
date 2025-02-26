@@ -2,8 +2,17 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
+import {
+  PollCacheJSON,
+  PollDiscordJSON,
+  PollRaw,
+  PollStorageJSON,
+  PollType,
+} from "./interfaces/Poll.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
-class Poll {
+class Poll implements PollType {
   #_client;
   #_guild_id;
   #question;
@@ -19,7 +28,11 @@ class Poll {
    * @param {Object} options The additional options for this structure.
    * @param {String} options.guildId The ID of the guild that this poll belongs to.
    */
-  constructor(client: any, data: any, { guildId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data: PollRaw | PollCacheJSON | PollDiscordJSON | PollStorageJSON,
+    { guildId }: { guildId: Snowflake },
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
@@ -205,7 +218,7 @@ class Poll {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

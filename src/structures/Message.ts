@@ -27,8 +27,15 @@ import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
-import { MessageType } from "./interfaces/Message.js";
+import {
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageRaw,
+  MessageStorageJSON,
+  MessageType,
+} from "./interfaces/Message.js";
 import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -65,10 +72,21 @@ class Message implements MessageType {
    */
   constructor(
     client: ClientType,
-    data: any,
-    { channelId, guildId, nocache = false, ignoreExisting = false }: any = {
-      nocache: false,
-      ignoreExisting: false,
+    data:
+      | MessageRaw
+      | MessageStorageJSON
+      | MessageCacheJSON
+      | MessageDiscordJSON,
+    {
+      channelId,
+      guildId,
+      nocache = false,
+      ignoreExisting = false,
+    }: {
+      channelId: Snowflake;
+      guildId: Snowflake;
+      nocache?: boolean;
+      ignoreExisting?: boolean;
     },
   ) {
     if (!client)

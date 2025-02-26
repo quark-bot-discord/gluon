@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import {
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
@@ -6,11 +7,19 @@ import {
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import {
+  RoleCacheJSON,
+  RoleDiscordJSON,
+  RoleRaw,
+  RoleStorageJSON,
+  RoleType,
+} from "./interfaces/Role.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a role belonging to a guild.
  */
-class Role {
+class Role implements RoleType {
   #_client;
   #_guild_id;
   #_id;
@@ -31,9 +40,9 @@ class Role {
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data: RoleRaw | RoleCacheJSON | RoleDiscordJSON | RoleStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -304,7 +313,7 @@ class Role {
    * @static
    * @method
    */
-  static getMention(roleId: any, guildId: any) {
+  static getMention(roleId: Snowflake, guildId: Snowflake) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
     if (typeof guildId !== "string")
@@ -318,7 +327,7 @@ class Role {
    * @param {String?} [hash] The hash of the role's icon.
    * @returns {String}
    */
-  static getIconUrl(id: any, hash: any) {
+  static getIconUrl(id: Snowflake, hash?: string | null) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Role id must be a string.");
     if (hash && typeof hash !== "string")
@@ -376,7 +385,7 @@ class Role {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

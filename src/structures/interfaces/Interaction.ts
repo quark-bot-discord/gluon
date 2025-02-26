@@ -1,17 +1,18 @@
 import { LOCALES, TO_JSON_TYPES_ENUM } from "src/constants.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
+import { MessageRaw } from "./Message.js";
 
 export interface InteractionType {
-  id: Snowflake;
-  token: string;
-  type: InteractionTypes;
-  guildId?: Snowflake;
-  guild?: GuildType | null;
-  channelId?: Snowflake;
-  channel?: any;
-  member?: any;
-  memberId?: Snowflake;
+  readonly id: Snowflake;
+  readonly token: string;
+  readonly type: InteractionTypes;
+  readonly guildId?: Snowflake;
+  readonly guild?: GuildType | null;
+  readonly channelId?: Snowflake;
+  readonly channel?: any;
+  readonly member?: any;
+  readonly memberId?: Snowflake;
   textPrompt(options: any): Promise<void>;
   autocompleteResponse(options: any): Promise<InteractionType>;
   reply(options: any): Promise<InteractionType>;
@@ -61,13 +62,13 @@ export interface InteractionRaw {
   user?: any;
   token: string;
   version: 1;
-  message?: any;
+  message?: MessageRaw;
   app_permissions: string;
   locale?: LOCALES;
   guild_locale?: LOCALES;
   entitlements: Array<any>;
   authorizing_integration_owners: any;
-  context?: any;
+  context?: InteractionContextTypes;
 }
 
 export enum InteractionTypes {
@@ -75,4 +76,10 @@ export enum InteractionTypes {
   COMPONENT = 3,
   APPLICATION_COMMAND_AUTOCOMPLETE = 4,
   MODAL_SUBMIT = 5,
+}
+
+export enum InteractionContextTypes {
+  GUILD = 0,
+  BOT_DM = 1,
+  PRIVATE_CHANNEL = 2,
 }

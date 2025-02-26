@@ -3,16 +3,16 @@ import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 
 export interface EmojiType {
-  requireColons: boolean;
-  managed: boolean;
-  animated: boolean;
-  available: boolean;
-  mention: string;
-  url: string | null;
-  guildId: Snowflake;
-  guild: GuildType | null;
-  id: Snowflake | null;
-  name: string | null;
+  readonly requireColons: boolean;
+  readonly managed: boolean;
+  readonly animated: boolean;
+  readonly available: boolean;
+  readonly mention: string;
+  readonly url: string | null;
+  readonly guildId: Snowflake;
+  readonly guild: GuildType | null;
+  readonly id: Snowflake | null;
+  readonly name: string | null;
   toString(): string;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,

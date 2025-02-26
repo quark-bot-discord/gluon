@@ -1,7 +1,15 @@
+import ClientType from "src/interfaces/Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import {
+  PermissionOverwriteCacheJSON,
+  PermissionOverwriteDiscordJSON,
+  PermissionOverwriteRaw,
+  PermissionOverwriteStorageJSON,
+  PermissionOverwriteType,
+} from "./interfaces/PermissionOverwrite.js";
 
-class PermissionOverwrite {
+class PermissionOverwrite implements PermissionOverwriteType {
   #_client;
   #_id;
   #type;
@@ -12,7 +20,14 @@ class PermissionOverwrite {
    * @param {Client} client The client instance.
    * @param {Object} data The raw permission overwrite data.
    */
-  constructor(client: any, data: any) {
+  constructor(
+    client: ClientType,
+    data:
+      | PermissionOverwriteRaw
+      | PermissionOverwriteCacheJSON
+      | PermissionOverwriteDiscordJSON
+      | PermissionOverwriteStorageJSON,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -113,7 +128,7 @@ class PermissionOverwrite {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

@@ -11,7 +11,7 @@ import {
   CategoryChannelStorageJSON,
   CategoryChannelType,
 } from "./interfaces/CategoryChannel.js";
-import { ChannelOverwriteObject } from "./interfaces/Channel.js";
+import { PermissionOverwriteRaw } from "./interfaces/PermissionOverwrite.js";
 
 class CategoryChannel implements CategoryChannelType {
   #_client;
@@ -115,7 +115,7 @@ class CategoryChannel implements CategoryChannelType {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: ChannelOverwriteObject) =>
+        (p: PermissionOverwriteRaw) =>
           new PermissionOverwrite(this.#_client, p),
       );
     else if (

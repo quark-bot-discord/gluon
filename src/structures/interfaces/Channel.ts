@@ -1,6 +1,17 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { PermissionsBitfield, Snowflake } from "src/interfaces/gluon.js";
+import {
+  ISO8601Timestamp,
+  PermissionsBitfield,
+  Snowflake,
+} from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
+import {
+  PermissionOverwriteCacheJSON,
+  PermissionOverwriteDiscordJSON,
+  PermissionOverwriteRaw,
+  PermissionOverwriteStorageJSON,
+  PermissionOverwriteType,
+} from "./PermissionOverwrite.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -13,7 +24,7 @@ export interface ChannelType {
   readonly type: ChannelTypes;
   readonly name: string;
   readonly topic: string;
-  readonly permissionOverwrites: Array<ChannelOverwriteObject>;
+  readonly permissionOverwrites: Array<PermissionOverwriteType>;
   readonly rateLimitPerUser: number;
   readonly position: number;
   readonly _cacheOptions: ChannelCacheOptions;
@@ -43,7 +54,7 @@ export interface ChannelStorageJSON {
   _attributes: number;
   _cacheOptions: ChannelCacheOptions;
   messages: any;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteStorageJSON[];
 }
 
 export interface ChannelCacheJSON {
@@ -56,7 +67,7 @@ export interface ChannelCacheJSON {
   parent_id: Snowflake | null;
   nsfw: boolean;
   messages: any;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteCacheJSON[];
 }
 
 export interface ChannelDiscordJSON {
@@ -69,19 +80,50 @@ export interface ChannelDiscordJSON {
   parent_id: Snowflake | null;
   nsfw: boolean;
   messages: any;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteDiscordJSON[];
+}
+
+export interface ChannelRaw {
+  id: Snowflake;
+  type: ChannelTypes;
+  guild_id?: Snowflake;
+  position?: number;
+  permission_overwrites?: Array<PermissionOverwriteRaw>;
+  name?: string;
+  topic?: string;
+  nsfw?: boolean;
+  last_message_id?: Snowflake;
+  bitrate?: number;
+  user_limit?: number;
+  rate_limit_per_user?: number;
+  recipients?: any[];
+  icon?: string | null;
+  owner_id?: Snowflake;
+  application_id?: Snowflake;
+  managed?: boolean;
+  parent_id?: Snowflake | null;
+  last_pin_timestamp?: ISO8601Timestamp;
+  rtc_region?: string | null;
+  video_quality_mode?: number;
+  message_count?: number;
+  member_count?: number;
+  thread_metadata?: any;
+  member?: any;
+  default_auto_archive_duration?: number;
+  permissions?: PermissionsBitfield;
+  flags?: number;
+  total_message_sent?: number;
+  available_tags?: any[];
+  applied_tags?: Snowflake[];
+  default_reaction_emoji?: any | null;
+  default_thread_rate_limit_per_user?: number;
+  default_sort_order?: number;
+  default_forum_layout?: number;
 }
 
 export enum ChannelOverwriteType {
   ROLE = 0,
   MEMBER = 1,
-}
-
-export interface ChannelOverwriteObject {
-  id: Snowflake;
-  type: ChannelOverwriteObject;
-  allow: PermissionsBitfield;
-  deny: PermissionsBitfield;
 }
 
 export enum ChannelTypes {

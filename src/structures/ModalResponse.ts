@@ -1,13 +1,18 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
+import {
+  ModalResponseRaw,
+  ModalResponseType,
+} from "./interfaces/ModalResponse.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * Represents when a modal is submitted.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}
  * @extends {Interaction}
  */
-class ModalResponse extends Interaction {
+class ModalResponse extends Interaction implements ModalResponseType {
   #values;
   #custom_id;
   /**
@@ -15,7 +20,7 @@ class ModalResponse extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: any, data: any) {
+  constructor(client: ClientType, data: ModalResponseRaw) {
     super(client, data);
 
     if (!client)
@@ -82,7 +87,7 @@ class ModalResponse extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

@@ -1,6 +1,11 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { ChannelOverwriteObject } from "./Channel.js";
+import {
+  PermissionOverwriteCacheJSON,
+  PermissionOverwriteDiscordJSON,
+  PermissionOverwriteRaw,
+  PermissionOverwriteStorageJSON,
+} from "./PermissionOverwrite.js";
 
 export interface CategoryChannelType {
   readonly nsfw: boolean;
@@ -15,7 +20,7 @@ export interface CategoryChannelCacheJSON {
   name: string;
   type: number;
   nsfw: boolean;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteCacheJSON[];
 }
 
 export interface CategoryChannelDiscordJSON {
@@ -24,7 +29,7 @@ export interface CategoryChannelDiscordJSON {
   name: string;
   type: number;
   nsfw: boolean;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteDiscordJSON[];
 }
 
 export interface CategoryChannelStorageJSON {
@@ -33,7 +38,7 @@ export interface CategoryChannelStorageJSON {
   name: string;
   type: number;
   _attributes: number;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteStorageJSON[];
 }
 
 export interface CategoryChannelRaw {
@@ -42,5 +47,5 @@ export interface CategoryChannelRaw {
   name: string;
   type: number;
   nsfw: boolean;
-  permission_overwrites: ChannelOverwriteObject[];
+  permission_overwrites: PermissionOverwriteRaw[];
 }

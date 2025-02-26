@@ -7,12 +7,21 @@ import {
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  ScheduledEventCacheJSON,
+  ScheduledEventDiscordJSON,
+  ScheduledEventRaw,
+  ScheduledEventStorageJSON,
+  ScheduledEventType,
+} from "./interfaces/ScheduledEvent.js";
 
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
  */
-class ScheduledEvent {
+class ScheduledEvent implements ScheduledEventType {
   #_client;
   #_id;
   #_guild_id;
@@ -35,9 +44,13 @@ class ScheduledEvent {
    * @param {Boolean?} [options.nocache] Whether this event should be cached or not.
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | ScheduledEventRaw
+      | ScheduledEventCacheJSON
+      | ScheduledEventDiscordJSON
+      | ScheduledEventStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -405,7 +418,7 @@ class ScheduledEvent {
    * @static
    * @method
    */
-  static getImageUrl(id: any, hash: any) {
+  static getImageUrl(id: Snowflake, hash?: string | null) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Event id must be a string.");
     if (hash && typeof hash !== "string")
@@ -463,7 +476,7 @@ class ScheduledEvent {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
@@ -480,7 +493,7 @@ class ScheduledEvent {
           scheduled_start_time: this.scheduledStartTime * 1000,
           scheduled_end_time: this.scheduledEndTime
             ? this.scheduledEndTime * 1000
-            : undefined,
+            : null,
           image: this._originalImageHash,
           user_count: this.userCount,
           entity_type: this.#rawEntityType,

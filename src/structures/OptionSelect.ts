@@ -3,13 +3,18 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  OptionSelectRaw,
+  OptionSelectType,
+} from "./interfaces/OptionSelect.js";
 
 /**
  * Represents when an option is selected.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
  * @extends {Interaction}
  */
-class OptionSelect extends Interaction {
+class OptionSelect extends Interaction implements OptionSelectType {
   #_client;
   #custom_id;
   #message;
@@ -22,7 +27,11 @@ class OptionSelect extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client: any, data: any, { channelId, guildId }: any) {
+  constructor(
+    client: ClientType,
+    data: OptionSelectRaw,
+    { channelId, guildId }: { channelId: Snowflake; guildId: Snowflake },
+  ) {
     super(client, data);
 
     if (!client)
@@ -53,7 +62,7 @@ class OptionSelect extends Interaction {
      * @type {Message}
      * @private
      */
-    this.#message = new Message(this.#_client as ClientType, data.message, {
+    this.#message = new Message(this.#_client, data.message, {
       channelId,
       guildId,
     });
@@ -122,7 +131,7 @@ class OptionSelect extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

@@ -11,8 +11,9 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
 import ClientType from "src/interfaces/Client.js";
-import { ChannelOverwriteObject, ChannelType } from "./interfaces/Channel.js";
+import { ChannelType } from "./interfaces/Channel.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { PermissionOverwriteRaw } from "./interfaces/PermissionOverwrite.js";
 
 /**
  * Represents a channel within Discord.
@@ -116,7 +117,7 @@ class Channel implements ChannelType {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: ChannelOverwriteObject) =>
+        (p: PermissionOverwriteRaw) =>
           new PermissionOverwrite(this.#_client, p),
       );
     else if (

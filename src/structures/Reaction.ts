@@ -1,11 +1,20 @@
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
 import util from "util";
+import {
+  ReactionCacheJSON,
+  ReactionDiscordJSON,
+  ReactionRaw,
+  ReactionStorageJSON,
+  ReactionType,
+} from "./interfaces/Reaction.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a reaction belonging to a message.
  */
-class Reaction {
+class Reaction implements ReactionType {
   #_client;
   #_guild_id;
   #emoji;
@@ -20,7 +29,15 @@ class Reaction {
    * @param {String} options.guildId The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
-  constructor(client: any, data: any, { guildId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data:
+      | ReactionRaw
+      | ReactionStorageJSON
+      | ReactionCacheJSON
+      | ReactionDiscordJSON,
+    { guildId }: { guildId: Snowflake },
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof data !== "object")
@@ -86,7 +103,7 @@ class Reaction {
    * @public
    */
   get reacted() {
-    return this.#_reacted.map((userId: any) => {
+    return this.#_reacted.map((userId: bigint) => {
       const member = this.guild.members.get(String(userId));
 
       if (member) return member;
@@ -101,7 +118,7 @@ class Reaction {
    * @public
    */
   get reactedIds() {
-    return this.#_reacted.map((r: any) => String(r));
+    return this.#_reacted.map((r: bigint) => String(r));
   }
 
   /**
@@ -151,7 +168,7 @@ class Reaction {
    * @public
    * @method
    */
-  _addReactor(userId: any) {
+  _addReactor(userId: Snowflake) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -170,11 +187,11 @@ class Reaction {
    * @public
    * @method
    */
-  _removeReactor(userId: any) {
+  _removeReactor(userId: Snowflake) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    this.#_reacted = this.#_reacted.filter((r: any) => r !== BigInt(userId));
+    this.#_reacted = this.#_reacted.filter((r: bigint) => r !== BigInt(userId));
 
     if (this.#count) this.#count--;
   }
@@ -202,7 +219,7 @@ class Reaction {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
