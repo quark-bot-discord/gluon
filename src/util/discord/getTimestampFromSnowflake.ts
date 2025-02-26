@@ -1,9 +1,11 @@
+import { Snowflake } from "src/interfaces/gluon.js";
+
 /**
  * Gives the UNIX timestamp for when the snowflake was created.
  * @param {String} snowflake The snowflake (or id).
  * @returns {Number}
  */
-function getTimestamp(snowflake: string): number {
+function getTimestamp(snowflake: Snowflake): number {
   if (!snowflake) throw new TypeError("GLUON: Snowflake must be provided.");
   if (typeof snowflake !== "string")
     throw new TypeError("GLUON: Snowflake must be a string.");

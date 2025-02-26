@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import {
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
@@ -6,12 +7,20 @@ import {
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  EmojiCacheJSON,
+  EmojiDiscordJSON,
+  EmojiRaw,
+  EmojiStorageJSON,
+  EmojiType,
+} from "./interfaces/Emoji.js";
 
 /**
  * Represents an emoji.
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
  */
-class Emoji {
+class Emoji implements EmojiType {
   #_client;
   #_id;
   #name;
@@ -26,9 +35,9 @@ class Emoji {
    * @param {Boolean?} [options.nocache] Whether this emoji should be cached or not.
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data: EmojiRaw | EmojiCacheJSON | EmojiDiscordJSON | EmojiStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -226,7 +235,7 @@ class Emoji {
    * @static
    * @method
    */
-  static getMention(name: any, id: any, animated: any) {
+  static getMention(name: string, id: Snowflake | null, animated?: boolean) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Emoji name must be a string.");
     if (id && typeof id !== "string")
@@ -246,7 +255,7 @@ class Emoji {
    * @static
    * @method
    */
-  static getUrl(id: any, animated = false) {
+  static getUrl(id: Snowflake, animated: boolean = false) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Emoji id must be a string.");
     if (typeof animated !== "boolean")
@@ -300,7 +309,7 @@ class Emoji {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {

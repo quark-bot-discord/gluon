@@ -1,9 +1,19 @@
+import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  CategoryChannelCacheJSON,
+  CategoryChannelDiscordJSON,
+  CategoryChannelRaw,
+  CategoryChannelStorageJSON,
+  CategoryChannelType,
+} from "./interfaces/CategoryChannel.js";
+import { ChannelOverwriteObject } from "./interfaces/Channel.js";
 
-class CategoryChannel {
+class CategoryChannel implements CategoryChannelType {
   #_client;
   #_id;
   #_guild_id;
@@ -20,9 +30,13 @@ class CategoryChannel {
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | CategoryChannelRaw
+      | CategoryChannelCacheJSON
+      | CategoryChannelDiscordJSON
+      | CategoryChannelStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -81,11 +95,16 @@ class CategoryChannel {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.nsfw !== undefined && data.nsfw == true)
+    if ("nsfw" in data && data.nsfw !== undefined && data.nsfw == true)
       this.#_attributes |= 0b1 << 0;
-    else if (data.nsfw === undefined && existing && existing.nsfw == true)
+    else if (
+      "nsfw" in data &&
+      data.nsfw === undefined &&
+      existing &&
+      existing.nsfw == true
+    )
       this.#_attributes |= 0b1 << 0;
 
     /**
@@ -96,7 +115,8 @@ class CategoryChannel {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: any) => new PermissionOverwrite(this.#_client, p),
+        (p: ChannelOverwriteObject) =>
+          new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -227,10 +247,20 @@ class CategoryChannel {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          name: this.name,
+          type: this.type,
+          _attributes: this.#_attributes,
+          permission_overwrites: this.permissionOverwrites.map((p: any) =>
+            p.toJSON(format),
+          ),
+        };
+      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return {

@@ -11,12 +11,14 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
 import ClientType from "src/interfaces/Client.js";
+import { ChannelOverwriteObject, ChannelType } from "./interfaces/Channel.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
  */
-class Channel {
+class Channel implements ChannelType {
   #_client;
   #_id;
   #_guild_id;
@@ -38,7 +40,11 @@ class Channel {
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-structure}
    */
-  constructor(client: any, data: any, { guildId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data: any,
+    { guildId }: { guildId: Snowflake },
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -110,7 +116,8 @@ class Channel {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: any) => new PermissionOverwrite(this.#_client, p),
+        (p: ChannelOverwriteObject) =>
+          new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -383,7 +390,7 @@ class Channel {
    * @static
    * @method
    */
-  static getMention(channelId: any) {
+  static getMention(channelId: Snowflake) {
     if (!channelId) throw new TypeError("GLUON: No channel ID provided.");
     return `<#${channelId}>`;
   }
@@ -423,7 +430,11 @@ class Channel {
    * @method
    * @throws {TypeError}
    */
-  static async follow(client: any, channelId: any, followChannelId: any) {
+  static async follow(
+    client: ClientType,
+    channelId: Snowflake,
+    followChannelId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
@@ -453,7 +464,7 @@ class Channel {
    * @async
    * @method
    */
-  static fetchWebhooks(client: any, channelId: any) {
+  static fetchWebhooks(client: ClientType, channelId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
@@ -531,7 +542,7 @@ class Channel {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {

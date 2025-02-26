@@ -3,13 +3,15 @@ import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { ButtonClickRaw, ButtonClickType } from "./interfaces/ButtonClick.js";
 
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
  * @extends {Interaction}
  */
-class ButtonClick extends Interaction {
+class ButtonClick extends Interaction implements ButtonClickType {
   #_client;
   #custom_id;
   #message;
@@ -21,7 +23,11 @@ class ButtonClick extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client: any, data: any, { guildId, channelId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data: ButtonClickRaw,
+    { guildId, channelId }: { guildId: Snowflake; channelId: Snowflake },
+  ) {
     super(client, data);
 
     if (!client)
@@ -103,7 +109,7 @@ class ButtonClick extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

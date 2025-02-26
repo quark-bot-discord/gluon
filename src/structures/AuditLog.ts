@@ -1,12 +1,21 @@
+import ClientType from "src/interfaces/Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
+import {
+  AuditLogCacheJSON,
+  AuditLogDiscordJSON,
+  AuditLogRaw,
+  AuditLogStorageJSON,
+  AuditLogType,
+} from "./interfaces/AuditLog.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
  */
-class AuditLog {
+class AuditLog implements AuditLogType {
   #_client;
   #_id;
   #_guild_id;
@@ -33,7 +42,15 @@ class AuditLog {
    * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
-  constructor(client: any, data: any, { users, guildId }: any = {}) {
+  constructor(
+    client: ClientType,
+    data:
+      | AuditLogRaw
+      | AuditLogCacheJSON
+      | AuditLogDiscordJSON
+      | AuditLogStorageJSON,
+    { users, guildId }: { users?: any[]; guildId: Snowflake },
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -69,10 +86,10 @@ class AuditLog {
 
     /**
      * The type of action that occurred.
-     * @type {Number?}
+     * @type {Number}
      * @private
      */
-    if (data.action_type) this.#action_type = data.action_type;
+    this.#action_type = data.action_type;
 
     /**
      * The id of the target user.
@@ -127,29 +144,41 @@ class AuditLog {
         this.#_channel_id = BigInt(data.options.channel_id);
       }
 
-      if (data.options.count)
+      if (data.options.count) {
         /**
          * The count of this type of audit log entry.
          * @type {Number?}
          * @private
          */
-        this.#count = parseInt(data.options.count);
+        this.#count =
+          typeof data.options.count === "number"
+            ? data.options.count
+            : parseInt(data.options.count);
+      }
 
-      if (data.options.delete_member_days)
+      if (data.options.delete_member_days) {
         /**
          * The inactivity period for when members are purged.
          * @type {Number?}
          * @private
          */
-        this.#delete_member_days = parseInt(data.options.delete_member_days);
+        this.#delete_member_days =
+          typeof data.options.delete_member_days === "number"
+            ? data.options.delete_member_days
+            : parseInt(data.options.delete_member_days);
+      }
 
-      if (data.options.members_removed)
+      if (data.options.members_removed) {
         /**
          * The number of members removed for when members are purged.
          * @type {Number?}
          * @private
          */
-        this.#members_removed = parseInt(data.options.members_removed);
+        this.#members_removed =
+          typeof data.options.members_removed === "number"
+            ? data.options.members_removed
+            : parseInt(data.options.members_removed);
+      }
 
       if (data.options.id)
         /**
@@ -159,13 +188,18 @@ class AuditLog {
          */
         this.#special_id = BigInt(data.options.id);
 
-      if (data.options.type)
+      if (data.options.type) {
         /**
          * The type of the overwritten entity - role ("0") or member ("1")
          * @type {Number?}
          * @private
          */
-        this.#special_type = parseInt(data.options.type);
+        this.#special_type = (
+          typeof data.options.type === "number"
+            ? data.options.type
+            : parseInt(data.options.type)
+        ) as 0 | 1;
+      }
 
       if (data.options.status)
         /**
@@ -388,7 +422,7 @@ class AuditLog {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -398,8 +432,8 @@ class AuditLog {
           id: this.id,
           guild_id: this.guildId,
           action_type: this.actionType,
-          target_id: this.targetId ?? undefined,
-          user_id: this.executorId ?? undefined,
+          target_id: this.targetId,
+          user_id: this.executorId,
           reason: this.reason,
           options: {
             channel_id: this.channelId ?? undefined,
