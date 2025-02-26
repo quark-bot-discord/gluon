@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import {
   STICKER_FORMATS,
   CDN_BASE_URL,
@@ -6,11 +7,18 @@ import {
   MEDIA_BASE_URL,
 } from "../constants.js";
 import util from "util";
+import {
+  StickerCacheJSON,
+  StickerDiscordJSON,
+  StickerRaw,
+  StickerStorageJSON,
+  StickerType,
+} from "./interfaces/Sticker.js";
 
 /**
  * Represents an sticker.
  */
-class Sticker {
+class Sticker implements StickerType {
   #_client;
   #_id;
   #name;
@@ -20,7 +28,14 @@ class Sticker {
    * @param {Client} client The client instance.
    * @param {Object} data Sticker data from Discord.
    */
-  constructor(client: any, data: any) {
+  constructor(
+    client: ClientType,
+    data:
+      | StickerRaw
+      | StickerCacheJSON
+      | StickerDiscordJSON
+      | StickerStorageJSON,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -145,7 +160,7 @@ class Sticker {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

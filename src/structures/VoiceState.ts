@@ -1,3 +1,4 @@
+import ClientType from "src/interfaces/Client.js";
 import {
   GLUON_CACHING_OPTIONS,
   GLUON_DEBUG_LEVELS,
@@ -7,11 +8,19 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Member from "./Member.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  VoiceStateCacheJSON,
+  VoiceStateDiscordJSON,
+  VoiceStateRaw,
+  VoiceStateStorageJSON,
+  VoiceStateType,
+} from "./interfaces/VoiceState.js";
 
 /**
  * Represents a voice state.
  */
-class VoiceState {
+class VoiceState implements VoiceStateType {
   #_client;
   #_guild_id;
   #_channel_id;
@@ -29,9 +38,13 @@ class VoiceState {
    * @param {Boolean?} [options.nocache] Whether this voice state should be cached.
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | VoiceStateRaw
+      | VoiceStateCacheJSON
+      | VoiceStateDiscordJSON
+      | VoiceStateStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -296,7 +309,7 @@ class VoiceState {
    * @public
    */
   get requestToSpeakTimestamp() {
-    return this.#request_to_speak_timestamp;
+    return this.#request_to_speak_timestamp ?? null;
   }
 
   /**
@@ -345,7 +358,7 @@ class VoiceState {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
@@ -356,8 +369,9 @@ class VoiceState {
           member: this.member.toJSON(format),
           user_id: this.memberId,
           joined: this.joined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp
+            ? this.requestToSpeakTimestamp * 1000
+            : null,
         };
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -375,8 +389,9 @@ class VoiceState {
           member: this.member,
           user_id: this.memberId,
           joined: this.joined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp
+            ? this.requestToSpeakTimestamp * 1000
+            : null,
         };
       }
     }

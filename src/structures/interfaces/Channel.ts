@@ -50,7 +50,7 @@ export interface ChannelStorageJSON {
   topic: string;
   rate_limit_per_user: number;
   position: number;
-  parent_id: Snowflake | null;
+  parent_id?: Snowflake | null;
   _attributes: number;
   _cacheOptions: ChannelCacheOptions;
   messages: any;
@@ -64,7 +64,7 @@ export interface ChannelCacheJSON {
   topic: string;
   rate_limit_per_user: number;
   position: number;
-  parent_id: Snowflake | null;
+  parent_id?: Snowflake | null;
   nsfw: boolean;
   messages: any;
   permission_overwrites: PermissionOverwriteCacheJSON[];
@@ -77,7 +77,7 @@ export interface ChannelDiscordJSON {
   topic: string;
   rate_limit_per_user: number;
   position: number;
-  parent_id: Snowflake | null;
+  parent_id?: Snowflake | null;
   nsfw: boolean;
   messages: any;
   permission_overwrites: PermissionOverwriteDiscordJSON[];
@@ -139,3 +139,20 @@ export enum ChannelTypes {
   GUILD_FORUM = 15,
   GUILD_MEDIA = 16,
 }
+
+export type ChannelsText = ChannelTypes.GUILD_TEXT | ChannelTypes.GUILD_NEWS;
+
+export type ChannelsVoice =
+  | ChannelTypes.GUILD_VOICE
+  | ChannelTypes.GUILD_STAGE_VOICE;
+
+export type ChannelsThread =
+  | ChannelTypes.GUILD_NEWS_THREAD
+  | ChannelTypes.GUILD_PUBLIC_THREAD
+  | ChannelTypes.GUILD_PRIVATE_THREAD;
+
+export type ChannelsCategory = ChannelTypes.GUILD_CATEGORY;
+
+export type ChannelsOther = ChannelTypes.GUILD_DIRECTORY;
+
+export type ChannelsForum = ChannelTypes.GUILD_FORUM | ChannelTypes.GUILD_MEDIA;

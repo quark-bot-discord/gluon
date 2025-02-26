@@ -8,13 +8,21 @@ import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
 import ClientType from "src/interfaces/Client.js";
+import {
+  TextChannelCacheJSON,
+  TextChannelDiscordJSON,
+  TextChannelRaw,
+  TextChannelStorageJSON,
+  TextChannelType,
+} from "./interfaces/TextChannel.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
  */
-class TextChannel extends Channel {
+class TextChannel extends Channel implements TextChannelType {
   #_client;
   /**
    * Creates the structure for a text channel.
@@ -26,9 +34,13 @@ class TextChannel extends Channel {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | TextChannelRaw
+      | TextChannelCacheJSON
+      | TextChannelDiscordJSON
+      | TextChannelStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     super(client, data, { guildId });
 
@@ -85,7 +97,10 @@ class TextChannel extends Channel {
    * @public
    * @throws {Error | TypeError}
    */
-  async bulkDelete(messages: any, { reason }: any = {}) {
+  async bulkDelete(
+    messages: Snowflake[],
+    { reason }: { reason?: string } = {},
+  ) {
     if (
       !checkPermission(
         this.checkPermission(await this.guild.me()),
@@ -142,7 +157,7 @@ class TextChannel extends Channel {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

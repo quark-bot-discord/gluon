@@ -3,12 +3,20 @@ import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import Channel from "./Channel.js";
 import Message from "./Message.js";
 import util from "util";
+import {
+  VoiceChannelCacheJSON,
+  VoiceChannelDiscordJSON,
+  VoiceChannelRaw,
+  VoiceChannelStorageJSON,
+  VoiceChannelType,
+} from "./interfaces/VoiceChannel.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a voice channel.
  * @extends {Channel}
  */
-class VoiceChannel extends Channel {
+class VoiceChannel extends Channel implements VoiceChannelType {
   #_client;
   #bitrate;
   #user_limit;
@@ -22,9 +30,13 @@ class VoiceChannel extends Channel {
    * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data:
+      | VoiceChannelRaw
+      | VoiceChannelCacheJSON
+      | VoiceChannelDiscordJSON
+      | VoiceChannelStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     super(client, data, { guildId });
 
@@ -156,7 +168,7 @@ class VoiceChannel extends Channel {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

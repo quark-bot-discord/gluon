@@ -5,13 +5,18 @@ import Member from "./Member.js";
 import Role from "./Role.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
+import {
+  SlashCommandRaw,
+  SlashCommandType,
+} from "./interfaces/SlashCommand.js";
+import ClientType from "src/interfaces/Client.js";
 
 /**
  * Represents a slash command.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
  * @extends {Interaction}
  */
-class SlashCommand extends Interaction {
+class SlashCommand extends Interaction implements SlashCommandType {
   #data;
   #options;
   /**
@@ -19,7 +24,7 @@ class SlashCommand extends Interaction {
    * @param {Client} client The client instance.
    * @param {Object} data The raw interaction data from Discord.
    */
-  constructor(client: any, data: any) {
+  constructor(client: ClientType, data: SlashCommandRaw) {
     super(client, data);
 
     if (!client)
@@ -103,7 +108,7 @@ class SlashCommand extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

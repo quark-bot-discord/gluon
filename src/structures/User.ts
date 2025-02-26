@@ -6,12 +6,21 @@ import {
 } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserRaw,
+  UserStorageJSON,
+  UserType,
+} from "./interfaces/User.js";
 
 /**
  * Represents a Discord user.
  * @see {@link https://discord.com/developers/docs/resources/user}
  */
-class User {
+class User implements UserType {
   #_client;
   #_id;
   #_attributes;
@@ -31,9 +40,9 @@ class User {
    * @see {@link https://discord.com/developers/docs/resources/user#user-object}
    */
   constructor(
-    client: any,
-    data: any,
-    { nocache = false } = {
+    client: ClientType,
+    data: UserRaw | UserCacheJSON | UserDiscordJSON | UserStorageJSON,
+    { nocache = false }: { nocache?: boolean } = {
       nocache: false,
     },
   ) {
@@ -132,7 +141,7 @@ class User {
    * @method
    * @returns {void}
    */
-  overrideAvatarURL(url: any) {
+  overrideAvatarURL(url: string) {
     this.#overrideAvatar = url;
   }
 
@@ -304,7 +313,7 @@ class User {
    * @static
    * @method
    */
-  static getMention(id: any) {
+  static getMention(id: Snowflake) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: User id must be a string.");
     return `<@${id}>`;
@@ -319,7 +328,7 @@ class User {
    * @static
    * @method
    */
-  static getAvatarUrl(id: any, hash: any) {
+  static getAvatarUrl(id: Snowflake, hash?: string | null) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: User id must be a string.");
     if (hash && typeof hash !== "string")
@@ -373,7 +382,7 @@ class User {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
         return {
@@ -383,10 +392,19 @@ class User {
           bot: this.bot,
           username: this.username,
           global_name: this.globalName,
-          discriminator: this.discriminator,
+          discriminator: this.#discriminator,
         };
       }
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+        return {
+          id: this.id,
+          avatar: this._originalAvatarHash,
+          _cached: this._cached,
+          bot: this.bot,
+          username: this.username,
+          global_name: this.globalName,
+          discriminator: this.#discriminator,
+        };
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
       default: {
         return {

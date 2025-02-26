@@ -1,15 +1,24 @@
+import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./Channel.js";
 import util from "util";
+import {
+  ThreadCacheJSON,
+  ThreadDiscordJSON,
+  ThreadRaw,
+  ThreadStorageJSON,
+  ThreadType,
+} from "./interfaces/Thread.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
  */
-class Thread extends Channel {
+class Thread extends Channel implements ThreadType {
   #_client;
   #_owner_id;
   #_parent_id;
@@ -23,9 +32,9 @@ class Thread extends Channel {
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
   constructor(
-    client: any,
-    data: any,
-    { guildId, nocache = false }: any = { nocache: false },
+    client: ClientType,
+    data: ThreadRaw | ThreadCacheJSON | ThreadDiscordJSON | ThreadStorageJSON,
+    { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     super(client, data, { guildId });
 
@@ -166,7 +175,7 @@ class Thread extends Channel {
    * @method
    * @override
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
