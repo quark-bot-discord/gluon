@@ -1,6 +1,19 @@
-import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { MessageType } from "./Message.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+import { COMPONENT_TYPES, TO_JSON_TYPES_ENUM } from "src/constants.js";
+import {
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageStorageJSON,
+  MessageType,
+} from "./Message.js";
+import {
+  InteractionCacheJSON,
+  InteractionDiscordJSON,
+  InteractionRaw,
+  InteractionStorageJSON,
+  InteractionType,
+  InteractionTypes,
+} from "./Interaction.js";
+import { ResolvedData, SelectOption } from "./OptionSelect.js";
 
 export interface ButtonClickType extends InteractionType {
   readonly customId: string;
@@ -11,24 +24,35 @@ export interface ButtonClickType extends InteractionType {
   ): ButtonClickStorageJSON | ButtonClickCacheJSON | ButtonClickDiscordJSON;
 }
 
-// export interface ButtonClickStorageJSON {
-//   id: Snowflake;
-//   guild_id: Snowflake;
-//   application_id: Snowflake;
-//   type: InteractionType;
-//   data: InteractionData;
-//   user: User;
-// }
+export interface ButtonClickStorageJSON extends InteractionStorageJSON {
+  data: {
+    custom_id: string;
+  };
+  message: MessageStorageJSON;
+}
 
-export type ButtonClickCacheJSON = InteractionStorageJSON;
+export interface ButtonClickCacheJSON extends InteractionCacheJSON {
+  data: {
+    custom_id: string;
+  };
+  message: MessageCacheJSON;
+}
 
-export type ButtonClickDiscordJSON = InteractionStorageJSON;
+export interface ButtonClickDiscordJSON extends InteractionDiscordJSON {
+  data: {
+    custom_id: string;
+  };
+  message: MessageDiscordJSON;
+}
 
-export interface ButtonClickRaw {
-  //   id: Snowflake;
-  //   guild_id: Snowflake;
-  //   application_id: Snowflake;
-  //   type: InteractionType;
-  //   data: InteractionData;
-  //   user: User;
+export interface ButtonClickRaw extends InteractionRaw {
+  type: InteractionTypes.COMPONENT;
+  data: ButtonClickRawData;
+}
+
+export interface ButtonClickRawData {
+  custom_id: string;
+  component_type: COMPONENT_TYPES.BUTTON;
+  values?: Array<SelectOption>;
+  resolved?: ResolvedData;
 }

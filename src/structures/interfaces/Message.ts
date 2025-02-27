@@ -1,10 +1,16 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import {
   ISO8601Timestamp,
+  PermissionsBitfield,
   Snowflake,
   UnixMillisecondsTimestamp,
 } from "src/interfaces/gluon.js";
-import { MemberDiscordJSON, MemberStorageJSON } from "./Member.js";
+import {
+  MemberCacheJSON,
+  MemberDiscordJSON,
+  MemberRaw,
+  MemberStorageJSON,
+} from "./Member.js";
 import {
   PollCacheJSON,
   PollDiscordJSON,
@@ -32,6 +38,17 @@ import {
   AttachmentStorageJSON,
 } from "./Attachment.js";
 import { ThreadRaw } from "./Thread.js";
+import { InteractionTypes } from "./Interaction.js";
+import { GuildRaw } from "./Guild.js";
+import {
+  StickerCacheJSON,
+  StickerDiscordJSON,
+  StickerRaw,
+  StickerStorageJSON,
+  StickerType,
+  StickerItemRaw,
+} from "./Sticker.js";
+import { ResolvedData } from "./OptionSelect.js";
 
 export interface MessageType {
   readonly id: Snowflake;
@@ -48,8 +65,8 @@ export interface MessageType {
   readonly flagsRaw: number;
   readonly type: number;
   readonly webhookId: Snowflake | null;
-  readonly stickerItems: Array<any>;
-  readonly messageSnapshots: Array<any> | null;
+  readonly stickerItems: Array<StickerType>;
+  readonly messageSnapshots: Array<MessageType> | null;
   readonly url: string;
   readonly hashName: string;
   reply(options?: {
@@ -90,31 +107,31 @@ export interface MessageStorageJSON {
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollStorageJSON | null;
-  message_snapshots: Array<any> | null;
+  message_snapshots: Array<MessageStorageJSON> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
-  sticker_items: Array<any>;
+  sticker_items: Array<StickerStorageJSON>;
   messageReactions: ReactionStorageJSON[];
 }
 
 export interface MessageCacheJSON {
   id: Snowflake;
   author: UserCacheJSON;
-  member: MemberStorageJSON | null;
+  member: MemberCacheJSON | null;
   content: string;
   _attributes: number;
   attachments: AttachmentCacheJSON[];
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollCacheJSON | null;
-  message_snapshots: Array<any> | null;
+  message_snapshots: Array<MessageCacheJSON> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
-  sticker_items: Array<any>;
+  sticker_items: Array<StickerCacheJSON>;
   messageReactions: ReactionCacheJSON[];
 }
 
@@ -129,12 +146,12 @@ export interface MessageDiscordJSON {
   embeds: Array<any>;
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollDiscordJSON | null;
-  message_snapshots: Array<any> | null;
+  message_snapshots: Array<MessageDiscordJSON> | null;
   type: MessageTypes;
   referenced_message: {
     id: Snowflake | null;
   };
-  sticker_items: Array<any>;
+  sticker_items: Array<StickerDiscordJSON>;
   reactions: ReactionDiscordJSON[];
   mention_everyone: boolean;
   mention_roles: Array<string>;
@@ -161,23 +178,35 @@ export interface MessageRaw {
   webhook_id?: Snowflake;
   type: MessageTypes;
   activity?: MessageActivityObject;
-  application?: any; // partial application object
+  application?: ApplicationRaw; // partial application object
   application_id?: Snowflake;
   flags?: number;
-  message_reference?: any; // message reference object
-  message_snapshots?: Array<any>;
-  referenced_message?: any; // message object
-  interaction_metadata?: any; // message interaction metadata object
-  interaction?: any; // message interaction object
+  message_reference?: MessageRawReference;
+  message_snapshots?: Array<MessageRaw>;
+  referenced_message?: MessageRaw; // message object
+  interaction_metadata?: MessageInteractionMetadataObject;
+  interaction?: MessageInteractionStructure;
   thread?: ThreadRaw;
   components?: Array<any>;
-  sticker_items?: Array<any>;
-  stickers?: Array<any>; // deprecated
+  sticker_items?: Array<StickerItemRaw>;
+  stickers?: Array<StickerRaw>; // deprecated
   position?: number;
-  role_subscription_data?: any; // role subscription data object
-  resolved?: any; // resolved data
+  role_subscription_data?: RoleSubscriptionDataRaw;
+  resolved?: ResolvedData;
   poll?: PollRaw;
-  call?: any; // message call object
+  call?: MessageCallRaw;
+}
+
+export interface RoleSubscriptionDataRaw {
+  role_subscription_listing_id: Snowflake;
+  tier_name: string;
+  total_months_subscribed: number;
+  is_renewal: boolean;
+}
+
+export interface MessageCallRaw {
+  participants: Array<Snowflake>;
+  ended_timestamp?: ISO8601Timestamp | null;
 }
 
 export enum MessageTypes {
@@ -230,4 +259,137 @@ export interface MessageChannelMentionObject {
 export interface MessageActivityObject {
   type: number;
   party_id?: string;
+}
+
+export interface MessageInteractionMetadataObject {
+  id: Snowflake;
+  type: InteractionTypes;
+  user: UserRaw;
+  authorizing_integration_owners: unknown;
+  original_response_message_id?: Snowflake;
+  target_user?: UserRaw;
+  target_message_id?: Snowflake;
+}
+
+export interface MessageInteractionStructure {
+  id: Snowflake;
+  type: InteractionTypes;
+  name: string;
+  user: UserRaw;
+  member?: MemberRaw;
+}
+
+export interface MessageRawReference {
+  type?: MessageReferenceTypes;
+  message_id?: Snowflake;
+  channel_id?: Snowflake;
+  guild_id?: Snowflake;
+  fail_if_not_exists?: boolean;
+}
+
+export enum MessageReferenceTypes {
+  DEFAULT = 0,
+  FORWARD = 1,
+}
+
+export interface ApplicationRaw {
+  id: Snowflake;
+  name: string;
+  icon: string | null;
+  description: string;
+  rpc_origins?: Array<string>;
+  bot_public: boolean;
+  bot_require_code_grant: boolean;
+  bot?: UserRaw;
+  terms_of_service_url?: string;
+  privacy_policy_url?: string;
+  owner?: UserRaw;
+  verify_key: string;
+  team: TeamRaw | null;
+  guild_id?: Snowflake;
+  guild?: GuildRaw;
+  primary_sku_id?: Snowflake;
+  slug?: string;
+  cover_image?: string;
+  flags?: number;
+  approximate_guild_count?: number;
+  approximate_user_install_count?: number;
+  redirect_uris?: Array<string>;
+  interactions_endpoint_url?: string | null;
+  role_connections_verification_url?: string | null;
+  event_webhooks_url?: string;
+  event_webhooks_status: ApplicationEventWebhookStatus;
+  event_webhooks_types?: Array<string>;
+  tags?: Array<string>;
+  install_params?: ApplicationInstallParams;
+  integration_types_config?: unknown;
+  custom_install_url?: string;
+}
+
+export interface ApplicationInstallParams {
+  scopes: Array<OAuth2Scopes>;
+  permissions: PermissionsBitfield;
+}
+
+export enum OAuth2Scopes {
+  ACTIVITIES_READ = "activities.read",
+  ACTIVITIES_WRITE = "activities.write",
+  APPLICATIONS_BUILDS_READ = "applications.builds.read",
+  APPLICATIONS_BUILDS_UPLOAD = "applications.builds.upload",
+  APPLICATIONS_COMMANDS = "applications.commands",
+  APPLICATIONS_COMMANDS_UPDATE = "applications.commands.update",
+  APPLICATIONS_COMMANDS_PERMISSIONS_UPDATE = "applications.commands.permissions.update",
+  APPLICATIONS_ENTITLEMENTS = "applications.entitlements",
+  APPLICATIONS_STORE_UPDATE = "applications.store.update",
+  BOT = "bot",
+  CONNECTIONS = "connections",
+  DM_CHANNELS_READ = "dm.channels.read",
+  EMAIL = "email",
+  GDM_JOIN = "gdm.join",
+  GUILD_JOIN = "guilds.join",
+  GUILDS = "guilds",
+  GUILDS_MEMBERS_READ = "guilds.members.read",
+  IDENTIFY = "identify",
+  MESSAGES_READ = "messages.read",
+  RELATIONSHIPS_READ = "relationships.read",
+  RPC = "rpc",
+  ROLE_CONNECTIONS_WRITE = "role_connections.write",
+  RPC_ACTIVITIES_READ = "rpc.activities.read",
+  RPC_ACTIVITIES_WRITE = "rpc.activities.write",
+  RPC_VOICE_READ = "rpc.voice.read",
+  RPC_VOICE_WRITE = "rpc.voice.write",
+  VOICE = "voice",
+  WEBHOOK_INCOMING = "webhook.incoming",
+}
+
+export enum ApplicationEventWebhookStatus {
+  DISABLED = 1,
+  ENABLED = 2,
+  DISABLED_BY_DISCORD = 3,
+}
+
+export interface TeamRaw {
+  icon: string | null;
+  id: Snowflake;
+  members: TeamMemberRaw[];
+  name: string;
+  owner_user_id: Snowflake;
+}
+
+export interface TeamMemberRaw {
+  membership_state: TeamMemberMembershipState;
+  team_id: Snowflake;
+  user: UserRaw;
+  role: TeamMemberRoles;
+}
+
+export enum TeamMemberMembershipState {
+  INVITED = 1,
+  ACCEPTED = 2,
+}
+
+export enum TeamMemberRoles {
+  ADMIN = "admin",
+  DEVELOPER = "developer",
+  READ_ONLY = "read_only",
 }

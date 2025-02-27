@@ -20,6 +20,8 @@ import {
 } from "./Thread.js";
 import { TextChannelType } from "./TextChannel.js";
 import { VoiceChannelType } from "./VoiceChannel.js";
+import { MemberType } from "./Member.js";
+import { UserRaw } from "./User.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -104,7 +106,7 @@ export interface ChannelRaw {
   bitrate?: number;
   user_limit?: number;
   rate_limit_per_user?: number;
-  recipients?: any[];
+  recipients?: UserRaw[];
   icon?: string | null;
   owner_id?: Snowflake;
   application_id?: Snowflake;

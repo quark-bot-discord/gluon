@@ -11,9 +11,19 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
 import ClientType from "src/interfaces/Client.js";
-import { ChannelType } from "./interfaces/Channel.js";
+import {
+  ChannelCacheJSON,
+  ChannelDiscordJSON,
+  ChannelRaw,
+  ChannelStorageJSON,
+  ChannelType,
+} from "./interfaces/Channel.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { PermissionOverwriteRaw } from "./interfaces/PermissionOverwrite.js";
+import {
+  PermissionOverwriteRaw,
+  PermissionOverwriteType,
+} from "./interfaces/PermissionOverwrite.js";
+import { MemberType } from "./interfaces/Member.js";
 
 /**
  * Represents a channel within Discord.
@@ -43,7 +53,11 @@ class Channel implements ChannelType {
    */
   constructor(
     client: ClientType,
-    data: any,
+    data:
+      | ChannelRaw
+      | ChannelStorageJSON
+      | ChannelCacheJSON
+      | ChannelDiscordJSON,
     { guildId }: { guildId: Snowflake },
   ) {
     if (!client)
@@ -176,11 +190,16 @@ class Channel implements ChannelType {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.nsfw !== undefined && data.nsfw == true)
+    if ("nsfw" in data && data.nsfw !== undefined && data.nsfw == true)
       this.#_attributes |= 0b1 << 0;
-    else if (data.nsfw === undefined && existing && existing.nsfw == true)
+    else if (
+      "nsfw" in data &&
+      data.nsfw === undefined &&
+      existing &&
+      existing.nsfw == true
+    )
       this.#_attributes |= 0b1 << 0;
 
     /**
@@ -479,14 +498,14 @@ class Channel implements ChannelType {
    * @param {Member} member The member to check the permissions for.
    * @returns {String}
    */
-  checkPermission(member: any) {
+  checkPermission(member: MemberType) {
     if (!member) throw new TypeError("GLUON: No member provided.");
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member.");
     // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     let overallPermissions = BigInt(member.permissions);
     const everyoneRole = this.permissionOverwrites.find(
-      (p: any) =>
+      (p: PermissionOverwriteType) =>
         p.id === this.guildId && p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
     );
     if (everyoneRole) {
@@ -498,8 +517,8 @@ class Channel implements ChannelType {
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
-        (p: any) =>
-          p.id === (member.roles as any)[i].id &&
+        (p: PermissionOverwriteType) =>
+          p.id === member.roles[i].id &&
           p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
       );
       if (role) {
@@ -510,7 +529,7 @@ class Channel implements ChannelType {
     overallPermissions &= ~overallRoleDenyPermissions;
     overallPermissions |= overallRoleAllowPermissions;
     const memberOverwritePermissions = this.permissionOverwrites.find(
-      (p: any) =>
+      (p: PermissionOverwriteType) =>
         p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
     );
     if (memberOverwritePermissions) {
@@ -558,8 +577,8 @@ class Channel implements ChannelType {
           _attributes: this.#_attributes,
           _cacheOptions: this._cacheOptions.toJSON(format),
           messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map((p: any) =>
-            p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map(
+            (p: PermissionOverwriteType) => p.toJSON(format),
           ),
         };
       }
@@ -575,8 +594,8 @@ class Channel implements ChannelType {
           parent_id: this.parentId ?? undefined,
           nsfw: this.nsfw,
           messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map((p: any) =>
-            p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map(
+            (p: PermissionOverwriteType) => p.toJSON(format),
           ),
         };
       }

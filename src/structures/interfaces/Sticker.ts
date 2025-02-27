@@ -46,6 +46,12 @@ export interface StickerRaw {
   sort_value?: number;
 }
 
+export interface StickerItemRaw {
+  id: Snowflake;
+  name: string;
+  format_type: StickerFormatTypes;
+}
+
 export enum StickerTypes {
   STANDARD = 1,
   GUILD = 2,

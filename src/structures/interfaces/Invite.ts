@@ -4,11 +4,12 @@ import {
   UnixMillisecondsTimestamp,
   UnixTimestamp,
 } from "src/interfaces/gluon.js";
-import { GuildType } from "./Guild.js";
+import { GuildRaw, GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import {
   ChannelCacheJSON,
   ChannelDiscordJSON,
+  ChannelRaw,
   ChannelStorageJSON,
   ChannelType,
 } from "./Channel.js";
@@ -20,6 +21,8 @@ import {
   UserType,
 } from "./User.js";
 import { ScheduledEventRaw } from "./ScheduledEvent.js";
+import { ApplicationRaw } from "./Message.js";
+import { MemberRaw } from "./Member.js";
 
 export interface InviteType {
   readonly channelId: Snowflake | null;
@@ -70,17 +73,24 @@ export interface InviteDiscordJSON {
 export interface InviteRaw {
   type: InviteTypes;
   code: string;
-  guild?: any; // partial guild object
-  channel: any | null; // partial channel object
-  inviter?: UserRaw; // user object
+  guild?: GuildRaw; // partial guild object
+  channel: ChannelRaw | null; // partial channel object
+  inviter?: UserRaw;
   target_type?: InviteTargetTypes;
   target_user?: UserRaw;
-  target_application?: any; // partial application object
+  target_application?: ApplicationRaw; // partial application object
   approximate_presence_count?: number;
   approximate_member_count?: number;
   expires_at?: ISO8601Timestamp | null;
-  stage_instance?: any; // invite stage instance object
-  guild_scheduled_event?: ScheduledEventRaw; // guild scheduled event object
+  stage_instance?: InviteStageInstanceRaw;
+  guild_scheduled_event?: ScheduledEventRaw;
+}
+
+export interface InviteStageInstanceRaw {
+  members: MemberRaw[];
+  participant_count: number;
+  speaker_count: number;
+  topic: string;
 }
 
 export interface InviteMetadataRaw extends InviteRaw {

@@ -3,7 +3,54 @@ import {
   ISO8601Timestamp,
   PermissionsBitfield,
   Snowflake,
+  UnixMillisecondsTimestamp,
 } from "src/interfaces/gluon.js";
+import { StickerRaw } from "./Sticker.js";
+import {
+  RoleCacheJSON,
+  RoleDiscordJSON,
+  RoleRaw,
+  RoleStorageJSON,
+} from "./Role.js";
+import {
+  EmojiCacheJSON,
+  EmojiDiscordJSON,
+  EmojiRaw,
+  EmojiStorageJSON,
+} from "./Emoji.js";
+import {
+  MemberCacheJSON,
+  MemberDiscordJSON,
+  MemberRaw,
+  MemberStorageJSON,
+} from "./Member.js";
+import {
+  VoiceStateCacheJSON,
+  VoiceStateDiscordJSON,
+  VoiceStateRaw,
+  VoiceStateStorageJSON,
+} from "./VoiceState.js";
+import {
+  ChannelCacheJSON,
+  ChannelDiscordJSON,
+  ChannelRaw,
+  ChannelStorageJSON,
+  ChannelType,
+} from "./Channel.js";
+import {
+  InviteCacheJSON,
+  InviteDiscordJSON,
+  InviteRaw,
+  InviteStorageJSON,
+} from "./Invite.js";
+import { ThreadRaw } from "./Thread.js";
+import {
+  ScheduledEventRaw,
+  ScheduledEventRawPrivacyLevels,
+} from "./ScheduledEvent.js";
+import { UserRaw } from "./User.js";
+import { PresenceStatus, PresenceType } from "src/gateway.js";
+import { AuditLogType } from "./AuditLog.js";
 
 export interface GuildType {
   readonly id: string;
@@ -25,15 +72,27 @@ export interface GuildType {
   readonly rawMfaLevel: GuildMfaLevels | null;
   readonly systemChannelId: Snowflake | null;
   readonly rulesChannelId: Snowflake | null;
-  readonly systemChannel: any;
-  readonly rulesChannel: any;
+  readonly systemChannel: ChannelType | null;
+  readonly rulesChannel: ChannelType | null;
   readonly preferredLocale: LOCALES;
   readonly premiumSubscriptionCount: number;
   readonly _cacheOptions: any;
-  fetchAuditLogs(options?: any): Promise<any>;
-  fetchInvites(): Promise<any>;
-  fetchChannels(): Promise<any>;
-  fetchBan(userId: Snowflake): Promise<any>;
+  fetchAuditLogs({
+    limit,
+    type,
+    user_id,
+    before,
+    after,
+  }: {
+    limit?: number;
+    type?: number;
+    user_id?: Snowflake;
+    before?: string;
+    after?: string;
+  }): Promise<AuditLogType[]>;
+  fetchInvites(): Promise<InviteRaw[]>;
+  fetchChannels(): Promise<ChannelRaw[]>;
+  fetchBan(userId: Snowflake): Promise<BanRaw>;
   leave(): Promise<void>;
   calculateMessageCacheCount(): number;
   calculateMemberCacheCount(): number;
@@ -59,12 +118,12 @@ export interface GuildStorageJSON {
   system_channel_id: Snowflake | null;
   rules_channel_id: Snowflake | null;
   premium_subscription_count: number;
-  members: any;
-  channels: any;
-  voice_states: any;
-  roles: any;
-  emojis: any;
-  invites: any;
+  members: MemberStorageJSON[];
+  channels: ChannelStorageJSON[];
+  voice_states: VoiceStateStorageJSON[];
+  roles: RoleStorageJSON[];
+  emojis: EmojiStorageJSON[];
+  invites: InviteStorageJSON[];
 }
 
 export interface GuildCacheJSON {
@@ -82,12 +141,12 @@ export interface GuildCacheJSON {
   system_channel_id: Snowflake | null;
   rules_channel_id: Snowflake | null;
   premium_subscription_count: number;
-  members: any;
-  channels: any;
-  voice_states: any;
-  roles: any;
-  emojis: any;
-  invites: any;
+  members: MemberCacheJSON[];
+  channels: ChannelCacheJSON[];
+  voice_states: VoiceStateCacheJSON[];
+  roles: RoleCacheJSON[];
+  emojis: EmojiCacheJSON[];
+  invites: InviteCacheJSON[];
 }
 
 export interface GuildDiscordJSON {
@@ -110,12 +169,12 @@ export interface GuildDiscordJSON {
   verification_level: GuildVerificationLevels | null;
   nsfw_level: GuildNsfwLevels | null;
   mfa_level: GuildMfaLevels | null;
-  members: any;
-  channels: any;
-  voice_states: any;
-  roles: any;
-  emojis: any;
-  invites: any;
+  members: MemberDiscordJSON[];
+  channels: ChannelDiscordJSON[];
+  voice_states: VoiceStateDiscordJSON[];
+  roles: RoleDiscordJSON[];
+  emojis: EmojiDiscordJSON[];
+  invites: InviteDiscordJSON[];
 }
 
 export interface GuildRaw {
@@ -136,8 +195,8 @@ export interface GuildRaw {
   verification_level: GuildVerificationLevels;
   default_message_notifications: GuildDefaultMessageNotificationLevels;
   explicit_content_filter: GuildExplicitContentFilterLevels;
-  roles: any[];
-  emojis: any[];
+  roles: RoleRaw[];
+  emojis: EmojiRaw[];
   features: GuildFeatures[];
   mfa_level: GuildMfaLevels;
   application_id: Snowflake | null;
@@ -159,25 +218,110 @@ export interface GuildRaw {
   approximate_presence_count?: number;
   welcome_screen?: GuildWelcomeScreen;
   nsfw_level: GuildNsfwLevels;
-  stickers: any;
+  stickers?: StickerRaw[];
   premium_progress_bar_enabled: boolean;
   safety_alerts_channel_id: Snowflake | null;
   incidents_data: GuildIncidentData[] | null;
 }
 
 export interface GuildRawGateway extends GuildRaw {
-  joined_at: string;
+  joined_at: ISO8601Timestamp;
   large: boolean;
   unavailable?: boolean;
   member_count: number;
-  voice_states: any;
-  members: any;
-  channels: any;
-  threads: any;
-  presences: any;
-  stage_instances: any;
-  guild_scheduled_events: any;
-  soundboard_sounds: any;
+  voice_states: VoiceStateRaw[];
+  members: MemberRaw[];
+  channels: ChannelRaw[];
+  threads: ThreadRaw[];
+  presences: PresenceUpdateRaw[];
+  stage_instances: StageInstanceRaw[];
+  guild_scheduled_events: ScheduledEventRaw[];
+  soundboard_sounds: SoundboardSoundRaw[];
+}
+
+export interface BanRaw {
+  reason: string | null;
+  user: UserRaw;
+}
+
+export interface SoundboardSoundRaw {
+  name: string;
+  sound_id: Snowflake;
+  volume: number;
+  emoji_id: Snowflake | null;
+  emoji_name: string | null;
+  guild_id?: Snowflake;
+  available: boolean;
+  user?: UserRaw;
+}
+
+export interface StageInstanceRaw {
+  id: Snowflake;
+  guild_id: Snowflake;
+  channel_id: Snowflake;
+  topic: string;
+  privacy_level: ScheduledEventRawPrivacyLevels;
+  discoverable_disabled: boolean;
+}
+
+export interface PresenceUpdateRaw {
+  user: UserRaw;
+  guild_id: Snowflake;
+  status: PresenceStatus;
+  activities: ActivityRaw[];
+  client_status: ClientStatusRaw;
+}
+
+export interface ClientStatusRaw {
+  desktop?: string;
+  mobile?: string;
+  web?: string;
+}
+
+export interface ActivityRaw {
+  name: string;
+  type: PresenceType;
+  url?: string | null;
+  created_at: number;
+  timestamps?: ActivityTimestamps;
+  application_id?: Snowflake;
+  details?: string | null;
+  state?: string | null;
+  emoji?: EmojiRaw | null;
+  party?: ActivityParty;
+  assets?: ActivityAssets;
+  secrets?: ActivitySecrets;
+  instance?: boolean;
+  flags?: number;
+  buttons?: ActivityButton[];
+}
+
+export interface ActivityButton {
+  label: string;
+  url: string;
+}
+
+export interface ActivitySecrets {
+  join?: string;
+  spectate?: string;
+  match?: string;
+}
+
+export interface ActivityAssets {
+  large_image?: string;
+  large_text?: string;
+  small_image?: string;
+  small_text?: string;
+}
+
+export interface ActivityParty {
+  id?: string;
+  size?: [number, number];
+}
+
+export interface ActivityTimestamps {
+  start?: UnixMillisecondsTimestamp;
+  end?: UnixMillisecondsTimestamp;
 }
 
 export interface GuildWelcomeScreen {

@@ -5,11 +5,13 @@ import util from "util";
 import {
   AuditLogCacheJSON,
   AuditLogDiscordJSON,
+  AuditLogOptionTypes,
   AuditLogRaw,
   AuditLogStorageJSON,
   AuditLogType,
 } from "./interfaces/AuditLog.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { UserRaw } from "./interfaces/User.js";
 
 /**
  * Represents an audit log entry.
@@ -49,7 +51,7 @@ class AuditLog implements AuditLogType {
       | AuditLogCacheJSON
       | AuditLogDiscordJSON
       | AuditLogStorageJSON,
-    { users, guildId }: { users?: any[]; guildId: Snowflake },
+    { users, guildId }: { users?: UserRaw[]; guildId: Snowflake },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -99,7 +101,9 @@ class AuditLog implements AuditLogType {
     this.#_target_id = data.target_id ? BigInt(data.target_id) : null;
 
     if (users && users.length != 0 && this.#_target_id) {
-      const user = users.find((u: any) => u.id == this.#_target_id);
+      const user = users.find(
+        (u: UserRaw) => u.id === String(this.#_target_id),
+      );
       if (user)
         /**
          * The resolved target user.
@@ -117,7 +121,9 @@ class AuditLog implements AuditLogType {
     this.#_executor_id = data.user_id ? BigInt(data.user_id) : null;
 
     if (users && users.length != 0 && this.#_executor_id) {
-      const user = users.find((u: any) => u.id == this.#_executor_id);
+      const user = users.find(
+        (u: UserRaw) => u.id === String(this.#_executor_id),
+      );
       if (user)
         /**
          * The resolved executor user.
@@ -296,7 +302,7 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get target() {
-    return this.#target;
+    return this.#target ?? null;
   }
 
   /**
@@ -316,7 +322,7 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get executor() {
-    return this.#executor;
+    return this.#executor ?? null;
   }
 
   /**
@@ -376,7 +382,7 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get specialType() {
-    return this.#special_type;
+    return String(this.#special_type) as AuditLogOptionTypes;
   }
 
   /**

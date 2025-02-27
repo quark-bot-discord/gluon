@@ -16,7 +16,7 @@ import { Snowflake } from "src/interfaces/gluon.js";
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
  */
 class Attachment implements AttachmentType {
-  #_client;
+  // #_client;
   #_id;
   #_channel_id;
   #_urlData;
@@ -47,7 +47,7 @@ class Attachment implements AttachmentType {
      * @type {Client}
      * @private
      */
-    this.#_client = client;
+    // this.#_client = client;
 
     /**
      * The id of the attachment.

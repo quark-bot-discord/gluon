@@ -22,19 +22,19 @@ export interface EmojiType {
 
 export interface EmojiStorageJSON {
   id: Snowflake | null;
-  name: string;
+  name: string | null;
   _attributes: number;
 }
 
 export interface EmojiCacheJSON {
   id: Snowflake | null;
-  name: string;
+  name: string | null;
   _attributes: number;
 }
 
 export interface EmojiDiscordJSON {
   id: Snowflake | null;
-  name: string;
+  name: string | null;
   animated: boolean;
   managed: boolean;
   require_colons: boolean;

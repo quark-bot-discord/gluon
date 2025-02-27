@@ -4,6 +4,7 @@ import { GuildType } from "./Guild.js";
 import {
   EmojiCacheJSON,
   EmojiDiscordJSON,
+  EmojiRaw,
   EmojiStorageJSON,
   EmojiType,
 } from "./Emoji.js";
@@ -46,7 +47,7 @@ export interface ReactionRaw {
   count_details: ReactionRawCountDetails;
   me: boolean;
   me_burst: boolean;
-  emoji: any; // partial emoji
+  emoji: EmojiRaw; // partial emoji
   burst_colors: string[];
 }
 

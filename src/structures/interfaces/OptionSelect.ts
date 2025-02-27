@@ -10,9 +10,17 @@ import {
 import {
   MessageCacheJSON,
   MessageDiscordJSON,
+  MessageRaw,
   MessageStorageJSON,
   MessageType,
 } from "./Message.js";
+import { EmojiRaw } from "./Emoji.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { UserRaw } from "./User.js";
+import { MemberRaw } from "./Member.js";
+import { RoleRaw } from "./Role.js";
+import { ChannelRaw } from "./Channel.js";
+import { AttachmentRaw } from "./Attachment.js";
 
 export interface OptionSelectType extends InteractionType {
   readonly customId: string;
@@ -51,11 +59,29 @@ export interface OptionSelectRaw extends InteractionRaw {
 
 export interface OptionSelectRawData {
   custom_id: string;
-  values?: Array<any>;
+  values?: Array<SelectOption>;
   component_type:
     | COMPONENT_TYPES.CHANNEL_SELECT_MENU
     | COMPONENT_TYPES.USER_SELECT_MENU
     | COMPONENT_TYPES.ROLE_SELECT_MENU
     | COMPONENT_TYPES.MENTIONABLE_SELECT_MENU
     | COMPONENT_TYPES.SELECT_MENU;
+  resolved?: ResolvedData;
+}
+
+export interface SelectOption {
+  label: string;
+  value: string;
+  description?: string;
+  emoji?: EmojiRaw;
+  default?: boolean;
+}
+
+export interface ResolvedData {
+  users?: Record<Snowflake, UserRaw>;
+  members?: Record<Snowflake, MemberRaw>;
+  roles?: Record<Snowflake, RoleRaw>;
+  channels?: Record<Snowflake, ChannelRaw>;
+  messages?: Record<Snowflake, MessageRaw>;
+  attachments?: Record<Snowflake, AttachmentRaw>;
 }

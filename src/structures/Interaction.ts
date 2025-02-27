@@ -204,7 +204,15 @@ class Interaction implements InteractionType {
    * @method
    * @throws {Error | TypeError}
    */
-  async textPrompt({ title, customId, textInputModal }: any = {}) {
+  async textPrompt({
+    title,
+    customId,
+    textInputModal,
+  }: {
+    title: string;
+    customId: string;
+    textInputModal: any;
+  }) {
     if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
 

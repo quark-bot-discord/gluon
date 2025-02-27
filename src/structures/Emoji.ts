@@ -74,21 +74,27 @@ class Emoji implements EmojiType {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.require_colons !== undefined && data.require_colons === true)
+    if ("require_colons" in data && data.require_colons === true)
       this.#_attributes |= 0b1 << 0;
-    else if (data.require_colons === undefined) this.#_attributes |= 0b1 << 0;
+    else if ("require_colons" in data && data.require_colons === undefined)
+      this.#_attributes |= 0b1 << 0;
 
-    if (data.managed !== undefined && data.managed === true)
+    if ("managed" in data && data.managed === true)
       this.#_attributes |= 0b1 << 1;
 
-    if (data.animated !== undefined && data.animated === true)
+    if ("animated" in data && data.animated === true)
       this.#_attributes |= 0b1 << 2;
 
-    if (data.available !== undefined && data.available === true)
+    if (
+      "available" in data &&
+      data.available !== undefined &&
+      data.available === true
+    )
       this.#_attributes |= 0b1 << 3;
-    else if (data.available === undefined) this.#_attributes |= 0b1 << 3;
+    else if ("available" in data && data.available === undefined)
+      this.#_attributes |= 0b1 << 3;
 
     /**
      * The id of the guild that this emoji belongs to.
@@ -151,7 +157,7 @@ class Emoji implements EmojiType {
    * @param {Number} attributes The attributes of the emoji.
    * @returns {Boolean}
    */
-  static isAnimated(attributes: any) {
+  static isAnimated(attributes: number) {
     return (attributes & (0b1 << 2)) == 0b1 << 2;
   }
 
