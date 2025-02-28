@@ -15,6 +15,8 @@ import {
   EmojiStorageJSON,
   EmojiType,
 } from "./interfaces/Emoji.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 /**
  * Represents an emoji.
@@ -278,7 +280,10 @@ class Emoji implements EmojiType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",

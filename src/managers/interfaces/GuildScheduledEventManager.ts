@@ -28,6 +28,8 @@ export interface GuildScheduledEventManagerType extends BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  list(): Promise<ScheduledEventType[]>;
+  fetch(key: Snowflake): Promise<ScheduledEventType | null>;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
   ):

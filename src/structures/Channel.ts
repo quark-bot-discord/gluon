@@ -24,6 +24,8 @@ import {
   PermissionOverwriteType,
 } from "./interfaces/PermissionOverwrite.js";
 import { MemberType } from "./interfaces/Member.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 /**
  * Represents a channel within Discord.
@@ -424,7 +426,10 @@ class Channel implements ChannelType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",

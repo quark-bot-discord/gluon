@@ -28,6 +28,7 @@ export interface UserManagerType extends BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  fetch(key: Snowflake): Promise<UserType | null>;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
   ): UserCacheJSON[] | UserDiscordJSON[] | UserStorageJSON[];

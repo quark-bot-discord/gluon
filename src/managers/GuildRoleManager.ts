@@ -59,7 +59,7 @@ class GuildRoleManager
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
-    const cachedRole = await this.get(roleId);
+    const cachedRole = this.get(roleId);
     if (cachedRole) return cachedRole;
 
     const data = await this.#_client.request.makeRequest("getRoles", [
@@ -69,7 +69,7 @@ class GuildRoleManager
     for (let i = 0; i < data.length; i++) {
       const role = new Role(this.#_client, data[i], {
         guildId: this.#guild.id,
-      });
+      }) as RoleType;
       if (role.id == roleId) matchedRole = role;
     }
 

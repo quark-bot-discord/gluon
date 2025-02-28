@@ -11,7 +11,10 @@ import {
   CategoryChannelStorageJSON,
   CategoryChannelType,
 } from "./interfaces/CategoryChannel.js";
-import { PermissionOverwriteRaw } from "./interfaces/PermissionOverwrite.js";
+import {
+  PermissionOverwriteRaw,
+  PermissionOverwriteType,
+} from "./interfaces/PermissionOverwrite.js";
 
 class CategoryChannel implements CategoryChannelType {
   #_client;
@@ -256,8 +259,8 @@ class CategoryChannel implements CategoryChannelType {
           name: this.name,
           type: this.type,
           _attributes: this.#_attributes,
-          permission_overwrites: this.permissionOverwrites.map((p: any) =>
-            p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map(
+            (p: PermissionOverwriteType) => p.toJSON(format),
           ),
         };
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
@@ -269,8 +272,8 @@ class CategoryChannel implements CategoryChannelType {
           name: this.name,
           type: this.type,
           nsfw: this.nsfw,
-          permission_overwrites: this.permissionOverwrites.map((p: any) =>
-            p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map(
+            (p: PermissionOverwriteType) => p.toJSON(format),
           ),
         };
       }

@@ -27,6 +27,7 @@ export interface GuildInviteManagerType extends BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: string): boolean;
+  fetch(key: string): Promise<InviteType | null>;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
   ): InviteCacheJSON[] | InviteStorageJSON[] | InviteDiscordJSON[];

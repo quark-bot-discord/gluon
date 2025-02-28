@@ -1,7 +1,7 @@
 import {
-  AUDIT_LOG_TYPES,
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
+  LOCALES,
   NAME,
   PERMISSIONS,
   TO_JSON_TYPES_ENUM,
@@ -36,37 +36,47 @@ import {
   GuildType,
 } from "./interfaces/Guild.js";
 import ClientType from "src/interfaces/Client.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { ChannelType } from "./interfaces/Channel.js";
-import { AuditLogRaw } from "./interfaces/AuditLog.js";
+import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import { AnyChannelType } from "./interfaces/Channel.js";
+import { AuditLogRaw, AuditLogTypes } from "./interfaces/AuditLog.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+import { GuildMemberManagerType } from "src/managers/interfaces/GuildMemberManager.js";
+import { GuildChannelsManagerType } from "src/managers/interfaces/GuildChannelsManager.js";
+import { GuildVoiceStatesManagerType } from "src/managers/interfaces/GuildVoiceStatesManager.js";
+import { GuildRoleManagerType } from "src/managers/interfaces/GuildRoleManager.js";
+import { GuildEmojisManagerType } from "src/managers/interfaces/GuildEmojisManager.js";
+import { GuildInviteManagerType } from "src/managers/interfaces/GuildInviteManager.js";
+import { GuildScheduledEventManagerType } from "src/managers/interfaces/GuildScheduledEventManager.js";
+import { TextChannelType } from "./interfaces/TextChannel.js";
 
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
  */
 class Guild implements GuildType {
-  #_client;
-  #_id;
-  #unavailable;
-  #name;
-  #description;
-  #_icon;
-  #_owner_id;
-  #joined_at;
-  #member_count;
-  #system_channel_id;
-  #rules_channel_id;
-  #preferred_locale;
-  #_attributes;
-  #premium_subscription_count;
-  #_cacheOptions;
-  #members;
-  #channels;
-  #voice_states;
-  #roles;
-  #emojis;
-  #invites;
-  #scheduled_events;
+  #_client: ClientType;
+  #_id: bigint;
+  #unavailable: boolean = true;
+  #name: string = "Unknown";
+  #description: string | null = null;
+  #_icon: bigint | null = null;
+  #_owner_id: bigint = BigInt(0);
+  #joined_at: UnixTimestamp | null = null;
+  #member_count: number = 0;
+  #system_channel_id: bigint | null = null;
+  #rules_channel_id: bigint | null = null;
+  #preferred_locale: LOCALES = LOCALES.ENGLISH_US;
+  #_attributes: number = 0;
+  #premium_subscription_count: number = 0;
+  #_cacheOptions: GuildCacheOptionsType = new GuildCacheOptions(0);
+  #members: GuildMemberManagerType;
+  #channels: GuildChannelsManagerType;
+  #voice_states: GuildVoiceStatesManagerType;
+  #roles: GuildRoleManagerType;
+  #emojis: GuildEmojisManagerType;
+  #invites: GuildInviteManagerType;
+  #scheduled_events: GuildScheduledEventManagerType;
   /**
    * Creates the structure for a guild.
    * @param {Client} client The client instance.
@@ -126,7 +136,7 @@ class Guild implements GuildType {
       return;
     }
 
-    const existing = this.#_client.guilds.get(data.id) || null;
+    const existing = (this.#_client.guilds.get(data.id) as GuildType) || null;
 
     // needed for join/leave logging
     /**
@@ -135,33 +145,35 @@ class Guild implements GuildType {
      * @private
      */
     this.#name = data.name;
-    if (this.#name === undefined && existing && existing.name)
-      this.#name = existing.name;
-    else if (!this.#name) this.#name = null;
 
     /**
      * The description of the guild.
      * @type {String?}
      * @private
      */
-    if ("description" in data) {
-      this.#description = data.description;
-    }
-    if (this.#description === undefined && existing && existing.description)
-      this.#description = existing.description;
-    else if (!this.#description) this.#description = null;
+    this.#description =
+      "description" in data
+        ? data.description
+        : (existing?.description ?? null);
 
     /**
      * The guild icon hash.
      * @type {BigInt?}
      * @private
      */
-    if (data.icon !== undefined)
+    if (data.icon !== undefined) {
       this.#_icon = data.icon
         ? BigInt(`0x${data.icon.replace("a_", "")}`)
         : null;
-    else if (data.icon === undefined && existing && existing._icon)
-      this.#_icon = existing._icon;
+    } else if (
+      data.icon === undefined &&
+      existing &&
+      existing._originalIconHash
+    ) {
+      this.#_icon = existing._originalIconHash
+        ? BigInt(`0x${existing._originalIconHash.replace("a_", "")}`)
+        : null;
+    }
 
     /**
      * The id of the guild owner.
@@ -170,14 +182,15 @@ class Guild implements GuildType {
      */
     this.#_owner_id = BigInt(data.owner_id);
 
-    if ("joined_at" in data && data.joined_at)
-      /**
-       * UNIX (seconds) timestamp for when the bot user was added to this guild.
-       * @type {Number?}
-       * @private
-       */
-      this.#joined_at = (new Date(data.joined_at).getTime() / 1000) | 0;
-    else if (existing?.joinedAt) this.#joined_at = existing.joinedAt;
+    /**
+     * UNIX (seconds) timestamp for when the bot user was added to this guild.
+     * @type {Number?}
+     * @private
+     */
+    this.#joined_at =
+      "joined_at" in data && data.joined_at
+        ? (new Date(data.joined_at).getTime() / 1000) | 0
+        : (existing?.joinedAt ?? null);
 
     if ("member_count" in data)
       /**
@@ -186,7 +199,7 @@ class Guild implements GuildType {
        * @private
        */
       this.#member_count = data.member_count;
-    else if (existing?.memberCount) this.#member_count = existing.member_count;
+    else if (existing?.memberCount) this.#member_count = existing.memberCount;
     else this.#member_count = 2;
 
     /**
@@ -206,7 +219,7 @@ class Guild implements GuildType {
      */
     this.#members = existing
       ? existing.members
-      : new GuildMemberManager(this.#_client, this);
+      : new GuildMemberManager(this.#_client, this as GuildType);
 
     /**
      * The channel manager of this guild.
@@ -215,7 +228,7 @@ class Guild implements GuildType {
      */
     this.#channels = existing
       ? existing.channels
-      : new GuildChannelsManager(this.#_client, this);
+      : new GuildChannelsManager(this.#_client, this as GuildType);
 
     /**
      * The role manager of this guild.
@@ -224,11 +237,11 @@ class Guild implements GuildType {
      */
     this.#roles = existing
       ? existing.roles
-      : new GuildRoleManager(this.#_client, this);
+      : new GuildRoleManager(this.#_client, this as GuildType);
 
     this.#scheduled_events = existing
       ? existing.scheduledEvents
-      : new GuildScheduledEventManager(this.#_client, this);
+      : new GuildScheduledEventManager(this.#_client, this as GuildType);
 
     /**
      * The emoji manager of this guild.
@@ -237,7 +250,7 @@ class Guild implements GuildType {
      */
     this.#emojis = existing
       ? existing.emojis
-      : new GuildEmojisManager(this.#_client, this);
+      : new GuildEmojisManager(this.#_client, this as GuildType);
 
     /**
      * The invite manager of this guild.
@@ -246,7 +259,7 @@ class Guild implements GuildType {
      */
     this.#invites = existing
       ? existing.invites
-      : new GuildInviteManager(this.#_client, this);
+      : new GuildInviteManager(this.#_client, this as GuildType);
 
     /**
      * The system channel id of the guild.
@@ -305,12 +318,12 @@ class Guild implements GuildType {
 
     if (
       ("mfa_level" in data && typeof data.mfa_level == "number") ||
-      (existing && typeof existing.mfaLevel == "number")
+      (existing && typeof existing.rawMfaLevel == "number")
     ) {
       const mfaLevel =
         "mfa_level" in data && typeof data.mfa_level == "number"
           ? data.mfa_level
-          : existing.mfaLevel;
+          : existing.rawMfaLevel;
       switch (mfaLevel) {
         case 0:
           // none
@@ -328,13 +341,13 @@ class Guild implements GuildType {
     if (
       ("verification_level" in data &&
         typeof data.verification_level == "number") ||
-      (existing && typeof existing.verificationLevel == "number")
+      (existing && typeof existing.rawVerificationLevel == "number")
     ) {
       const verificationLevel =
         "verification_level" in data &&
         typeof data.verification_level == "number"
           ? data.verification_level
-          : existing.verificationLevel;
+          : existing.rawVerificationLevel;
       switch (verificationLevel) {
         case 0:
           // none
@@ -364,13 +377,13 @@ class Guild implements GuildType {
     if (
       ("default_message_notifications" in data &&
         typeof data.default_message_notifications == "number") ||
-      (existing && typeof existing.defaultMessageNotifications == "number")
+      (existing && typeof existing.rawDefaultMessageNotifications == "number")
     ) {
       const defaultMessageNotifications =
         "default_message_notifications" in data &&
         typeof data.default_message_notifications == "number"
           ? data.default_message_notifications
-          : existing.defaultMessageNotifications;
+          : existing.rawDefaultMessageNotifications;
       switch (defaultMessageNotifications) {
         case 0:
           // all messages
@@ -388,13 +401,13 @@ class Guild implements GuildType {
     if (
       ("explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number") ||
-      (existing && typeof existing.explicitContentFilter == "number")
+      (existing && typeof existing.rawExplicitContentFilter == "number")
     ) {
       const explicitContentFilter =
         "explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number"
           ? data.explicit_content_filter
-          : existing.explicitContentFilter;
+          : existing.rawExplicitContentFilter;
       switch (explicitContentFilter) {
         case 0:
           // disabled
@@ -415,12 +428,12 @@ class Guild implements GuildType {
 
     if (
       ("nsfw_level" in data && typeof data.nsfw_level == "number") ||
-      (existing && typeof existing.nsfwLevel == "number")
+      (existing && typeof existing.rawNsfwLevel == "number")
     ) {
       const nsfwLevel =
         "nsfw_level" in data && typeof data.nsfw_level == "number"
           ? data.nsfw_level
-          : existing.nsfwLevel;
+          : existing.rawNsfwLevel;
       switch (nsfwLevel) {
         case 0:
           // default
@@ -492,9 +505,6 @@ class Guild implements GuildType {
      * @private
      */
     this.#preferred_locale = data.preferred_locale;
-    if (!this.#preferred_locale && existing && existing.preferredLocale)
-      this.#preferred_locale = existing.preferredLocale;
-    else if (!this.#preferred_locale) this.#preferred_locale = null;
 
     /**
      * The cache options for this guild.
@@ -712,7 +722,8 @@ class Guild implements GuildType {
   get mfaLevel() {
     if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "NONE";
     else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7) return "ELEVATED";
-    else return null;
+
+    throw new Error("GLUON: Unknown MFA level");
   }
 
   /**
@@ -741,7 +752,8 @@ class Guild implements GuildType {
     else if ((this.#_attributes & (0b1 << 10)) == 0b1 << 10) return "MEDIUM";
     else if ((this.#_attributes & (0b1 << 11)) == 0b1 << 11) return "HIGH";
     else if ((this.#_attributes & (0b1 << 12)) == 0b1 << 12) return "VERY_HIGH";
-    else return null;
+
+    throw new Error("GLUON: Unknown verification level");
   }
 
   /**
@@ -771,7 +783,8 @@ class Guild implements GuildType {
     if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return "ALL_MESSAGES";
     else if ((this.#_attributes & (0b1 << 14)) == 0b1 << 14)
       return "ONLY_MENTIONS";
-    else return null;
+
+    throw new Error("GLUON: Unknown default message notification level");
   }
 
   /**
@@ -800,7 +813,8 @@ class Guild implements GuildType {
       return "MEMBERS_WITHOUT_ROLES";
     else if ((this.#_attributes & (0b1 << 17)) == 0b1 << 17)
       return "ALL_MEMBERS";
-    else return null;
+
+    throw new Error("GLUON: Unknown explicit content filter level");
   }
 
   /**
@@ -830,7 +844,8 @@ class Guild implements GuildType {
     else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20) return "SAFE";
     else if ((this.#_attributes & (0b1 << 21)) == 0b1 << 21)
       return "AGE_RESTRICTED";
-    else return null;
+
+    throw new Error("GLUON: Unknown NSFW level");
   }
 
   /**
@@ -859,7 +874,8 @@ class Guild implements GuildType {
     else if ((this.#_attributes & (0b1 << 23)) == 0b1 << 23) return 1;
     else if ((this.#_attributes & (0b1 << 24)) == 0b1 << 24) return 2;
     else if ((this.#_attributes & (0b1 << 25)) == 0b1 << 25) return 3;
-    else return null;
+
+    throw new Error("GLUON: Unknown premium tier");
   }
 
   /**
@@ -919,7 +935,7 @@ class Guild implements GuildType {
    * @public
    */
   get joinedAt() {
-    return this.#joined_at;
+    return this.#joined_at ?? undefined;
   }
 
   /**
@@ -950,7 +966,7 @@ class Guild implements GuildType {
    */
   get systemChannel() {
     return this.systemChannelId
-      ? this.channels.get(this.systemChannelId)
+      ? (this.channels.get(this.systemChannelId) as TextChannelType)
       : null;
   }
 
@@ -971,7 +987,9 @@ class Guild implements GuildType {
    * @public
    */
   get rulesChannel() {
-    return this.rulesChannelId ? this.channels.get(this.rulesChannelId) : null;
+    return this.rulesChannelId
+      ? (this.channels.get(this.rulesChannelId) as TextChannelType)
+      : null;
   }
 
   /**
@@ -996,7 +1014,6 @@ class Guild implements GuildType {
 
   /**
    * The cache options for this guild.
-   * @type {GuildCacheOptions}
    * @readonly
    * @public
    */
@@ -1303,10 +1320,10 @@ class Guild implements GuildType {
     after,
   }: {
     limit?: number;
-    type?: number;
+    type?: AuditLogTypes;
     user_id?: Snowflake;
-    before?: string;
-    after?: string;
+    before?: Snowflake;
+    after?: Snowflake;
   } = {}) {
     if (
       !checkPermission(
@@ -1342,7 +1359,7 @@ class Guild implements GuildType {
     else body.limit = 1;
 
     // @ts-expect-error TS(2339): Property 'action_type' does not exist on type '{}'... Remove this comment to see the full error message
-    if (type) body.action_type = AUDIT_LOG_TYPES[type];
+    if (type) body.action_type = type;
 
     // @ts-expect-error TS(2339): Property 'user_id' does not exist on type '{}'.
     if (user_id) body.user_id = user_id;
@@ -1361,10 +1378,9 @@ class Guild implements GuildType {
 
     if (
       type &&
-      AUDIT_LOG_TYPES[type] &&
       data &&
       data.audit_log_entries[0] &&
-      data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type]
+      data.audit_log_entries[0].action_type != type
     )
       return null;
 
@@ -1642,7 +1658,7 @@ class Guild implements GuildType {
    * @static
    * @method
    */
-  static getIcon(id: Snowflake, hash: string) {
+  static getIcon(id: Snowflake, hash?: string | null) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Guild id must be a string.");
     if (hash && typeof hash !== "string")
@@ -1666,7 +1682,9 @@ class Guild implements GuildType {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
-    this.#channels.forEach((c: ChannelType) => c.messages?._intervalCallback());
+    this.#channels.forEach((c: AnyChannelType) =>
+      c.messages?._intervalCallback(),
+    );
   }
 
   /**
@@ -1677,7 +1695,7 @@ class Guild implements GuildType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any) {
+  static shouldCache(gluonCacheOptions: GluonCacheOptionsType) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -1716,7 +1734,7 @@ class Guild implements GuildType {
           name: this.name,
           icon: this._originalIconHash,
           owner_id: this.ownerId,
-          joined_at: this.joinedAt * 1000,
+          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
           unavailable: this.unavailable,
           member_count: this.memberCount,
           premium_tier: this.premiumTier,
@@ -1741,7 +1759,9 @@ class Guild implements GuildType {
           name: this.name,
           icon: this._originalIconHash,
           owner_id: this.ownerId,
-          joined_at: new Date(this.joinedAt * 1000).toISOString(),
+          joined_at: this.joinedAt
+            ? new Date(this.joinedAt * 1000).toISOString()
+            : undefined,
           premium_tier: this.premiumTier,
           unavailable: this.unavailable,
           member_count: this.memberCount,

@@ -28,6 +28,9 @@ export interface GuildMemberManagerType extends BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  fetch(key: Snowflake): Promise<MemberType | null>;
+  search(query: string): Promise<MemberType[]>;
+  fetch(key: Snowflake): Promise<MemberType | null>;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
   ): MemberCacheJSON[] | MemberStorageJSON[] | MemberDiscordJSON[];

@@ -199,11 +199,7 @@ class GuildMemberManager
    * @throws {TypeError}
    * @static
    */
-  static async search(
-    client: ClientType,
-    guildId: Snowflake,
-    query: Snowflake,
-  ) {
+  static async search(client: ClientType, guildId: Snowflake, query: string) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -231,7 +227,7 @@ class GuildMemberManager
         new Member(client, data[i], {
           userId: data[i].user.id,
           guildId,
-        }),
+        }) as MemberType,
       );
 
     return members;

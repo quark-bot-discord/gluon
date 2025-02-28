@@ -28,6 +28,7 @@ export interface GuildRoleManagerType extends BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: string): boolean;
+  fetch(key: Snowflake): Promise<RoleType | null>;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
   ): RoleStorageJSON[] | RoleCacheJSON[] | RoleDiscordJSON[];

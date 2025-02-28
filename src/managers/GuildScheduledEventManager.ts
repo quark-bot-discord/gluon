@@ -57,7 +57,7 @@ class GuildScheduledEventManager
       eventsList.push(
         new ScheduledEvent(this.#_client, data[i], {
           guildId: this.#guild.id,
-        }),
+        }) as ScheduledEventType,
       );
 
     return eventsList;
@@ -76,7 +76,7 @@ class GuildScheduledEventManager
     if (typeof scheduledEventId !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 
-    const cachedEvent = await this.get(scheduledEventId);
+    const cachedEvent = this.get(scheduledEventId);
     if (cachedEvent) return cachedEvent;
 
     const data = await this.#_client.request.makeRequest(
@@ -86,7 +86,7 @@ class GuildScheduledEventManager
 
     return new ScheduledEvent(this.#_client, data, {
       guildId: this.#guild.id,
-    });
+    }) as ScheduledEventType;
   }
 
   /**

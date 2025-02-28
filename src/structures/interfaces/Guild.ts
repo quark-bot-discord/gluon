@@ -4,6 +4,7 @@ import {
   PermissionsBitfield,
   Snowflake,
   UnixMillisecondsTimestamp,
+  UnixTimestamp,
 } from "src/interfaces/gluon.js";
 import { StickerRaw } from "./Sticker.js";
 import {
@@ -23,6 +24,7 @@ import {
   MemberDiscordJSON,
   MemberRaw,
   MemberStorageJSON,
+  MemberType,
 } from "./Member.js";
 import {
   VoiceStateCacheJSON,
@@ -31,11 +33,11 @@ import {
   VoiceStateStorageJSON,
 } from "./VoiceState.js";
 import {
+  AnyChannelType,
   ChannelCacheJSON,
   ChannelDiscordJSON,
   ChannelRaw,
   ChannelStorageJSON,
-  ChannelType,
 } from "./Channel.js";
 import {
   InviteCacheJSON,
@@ -57,18 +59,32 @@ import { GuildChannelsManagerType } from "src/managers/interfaces/GuildChannelsM
 import { GuildRoleManagerType } from "src/managers/interfaces/GuildRoleManager.js";
 import { GuildEmojisManagerType } from "src/managers/interfaces/GuildEmojisManager.js";
 import { GuildInviteManagerType } from "src/managers/interfaces/GuildInviteManager.js";
+import { GuildScheduledEventManagerType } from "src/managers/interfaces/GuildScheduledEventManager.js";
+import { GuildVoiceStatesManagerType } from "src/managers/interfaces/GuildVoiceStatesManager.js";
+import { TextChannelType } from "./TextChannel.js";
 
 export interface GuildType {
   readonly id: string;
   readonly name: string;
+  readonly description: string | null;
   readonly unavailable: boolean;
   readonly members: GuildMemberManagerType;
   readonly channels: GuildChannelsManagerType;
   readonly roles: GuildRoleManagerType;
   readonly emojis: GuildEmojisManagerType;
   readonly invites: GuildInviteManagerType;
+  readonly scheduledEvents: GuildScheduledEventManagerType;
+  readonly voiceStates: GuildVoiceStatesManagerType;
   readonly _originalIconHash: string | null;
-  readonly premiumTier: GuildPremiumTier | null;
+  readonly memberCount: number;
+  readonly ownerId: Snowflake;
+  readonly joinedAt?: UnixTimestamp;
+  readonly mfaLevel: keyof typeof GuildMfaLevels | null;
+  readonly verificationLevel: keyof typeof GuildVerificationLevels;
+  readonly defaultMessageNotifications: keyof typeof GuildDefaultMessageNotificationLevels;
+  readonly explicitContentFilter: keyof typeof GuildExplicitContentFilterLevels;
+  readonly nsfwLevel: keyof typeof GuildNsfwLevels;
+  readonly premiumTier: GuildPremiumTier;
   readonly rawSystemChannelFlags: number;
   readonly premiumProgressBarEnabled: boolean;
   readonly rawDefaultMessageNotifications: GuildDefaultMessageNotificationLevels | null;
@@ -78,8 +94,8 @@ export interface GuildType {
   readonly rawMfaLevel: GuildMfaLevels | null;
   readonly systemChannelId: Snowflake | null;
   readonly rulesChannelId: Snowflake | null;
-  readonly systemChannel: ChannelType | null;
-  readonly rulesChannel: ChannelType | null;
+  readonly systemChannel: TextChannelType | null;
+  readonly rulesChannel: TextChannelType | null;
   readonly preferredLocale: LOCALES;
   readonly premiumSubscriptionCount: number;
   readonly _cacheOptions: GuildCacheOptionsType;
@@ -97,11 +113,12 @@ export interface GuildType {
     after?: string;
   }): Promise<AuditLogType[]>;
   fetchInvites(): Promise<InviteRaw[]>;
-  fetchChannels(): Promise<ChannelRaw[]>;
+  fetchChannels(): Promise<AnyChannelType[]>;
   fetchBan(userId: Snowflake): Promise<BanRaw>;
   leave(): Promise<void>;
   calculateMessageCacheCount(): number;
   calculateMemberCacheCount(): number;
+  me(): Promise<MemberType>;
   _intervalCallback(): void;
   toString(): string;
   toJSON(
@@ -114,10 +131,10 @@ export interface GuildStorageJSON {
   name: string;
   icon: string | null;
   owner_id: Snowflake;
-  joined_at: number;
+  joined_at?: number;
   unavailable: boolean;
   member_count: number;
-  premium_tier: GuildPremiumTier | null;
+  premium_tier: GuildPremiumTier;
   preferred_locale: LOCALES;
   _cache_options: number;
   _attributes: number;
@@ -137,10 +154,10 @@ export interface GuildCacheJSON {
   name: string;
   icon: string | null;
   owner_id: Snowflake;
-  joined_at: number;
+  joined_at?: number;
   unavailable: boolean;
   member_count: number;
-  premium_tier: GuildPremiumTier | null;
+  premium_tier: GuildPremiumTier;
   preferred_locale: LOCALES;
   _cache_options: number;
   _attributes: number;
@@ -160,11 +177,11 @@ export interface GuildDiscordJSON {
   name: string;
   icon: string | null;
   owner_id: Snowflake;
-  joined_at: string;
-  premium_tier: GuildPremiumTier | null;
+  joined_at?: string;
+  premium_tier: GuildPremiumTier;
   unavailable: boolean;
   member_count: number;
-  preferred_locale: string;
+  preferred_locale: LOCALES;
   system_channel_flags: number;
   system_channel_id: Snowflake | null;
   rules_channel_id: Snowflake | null;
