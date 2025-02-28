@@ -2,12 +2,13 @@ import {
   GLUON_CHANNEL_CACHING_OPTIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
+import { ChannelCacheOptionsType } from "./interfaces/ChannelCacheOptions.js";
 
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.
  */
-class ChannelCacheOptions {
+class ChannelCacheOptions implements ChannelCacheOptionsType {
   #_cache_options;
 
   /**
@@ -16,7 +17,7 @@ class ChannelCacheOptions {
    * @public
    * @constructor
    */
-  constructor(cache_options: any) {
+  constructor(cache_options: number) {
     /**
      * The cache options for this channel.
      * @type {Number}
@@ -43,7 +44,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setMessageCaching(option: any) {
+  setMessageCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -60,7 +61,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setFileCaching(option: any) {
+  setFileCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -77,7 +78,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setContentCaching(option: any) {
+  setContentCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -94,7 +95,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setPollCaching(option: any) {
+  setPollCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -111,7 +112,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setReactionCaching(option: any) {
+  setReactionCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -128,7 +129,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setEmbedCaching(option: any) {
+  setEmbedCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -145,7 +146,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setAttributeCaching(option: any) {
+  setAttributeCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -162,7 +163,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setReferenceCaching(option: any) {
+  setReferenceCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -179,7 +180,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setStickerCaching(option: any) {
+  setStickerCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -196,7 +197,7 @@ class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setWebhookCaching(option: any) {
+  setWebhookCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Setting must be a boolean");
 
@@ -368,7 +369,7 @@ class ChannelCacheOptions {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:

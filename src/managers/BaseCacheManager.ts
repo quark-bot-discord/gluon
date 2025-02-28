@@ -1,10 +1,12 @@
 import hashjs from "hash.js";
 import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
+import ClientType from "src/interfaces/Client.js";
+import { BaseCacheManagerType } from "./interfaces/BaseCacheManager.js";
 
 /**
  * The base cache manager for all cache managers.
  */
-class BaseCacheManager {
+class BaseCacheManager implements BaseCacheManagerType {
   #cache;
   #expiryBucket;
   #structureType;
@@ -19,7 +21,7 @@ class BaseCacheManager {
    * @public
    * @constructor
    */
-  constructor(client: any, { structureType }: any = {}) {
+  constructor(client: ClientType, { structureType }: any = {}) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!structureType)
@@ -30,7 +32,7 @@ class BaseCacheManager {
      * @type {Map<String, Object>}
      * @private
      */
-    this.#cache = new Map();
+    this.#cache = new Map() as Map<string, unknown>;
 
     /**
      * The expiry bucket for this manager.
@@ -64,7 +66,7 @@ class BaseCacheManager {
    * @private
    * @method
    */
-  #getHash(key: any) {
+  #getHash(key: string) {
     return hashjs.sha256().update(key).digest("hex");
   }
 
@@ -75,7 +77,7 @@ class BaseCacheManager {
    * @private
    * @method
    */
-  #getKey(key: any) {
+  #getKey(key: string) {
     return `${this.#keyPrefix}${this.#getHash(key)}`;
   }
 
@@ -89,7 +91,7 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  get(key: any) {
+  get(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.#cache.get(key);
@@ -106,7 +108,7 @@ class BaseCacheManager {
    * @throws {TypeError}
    * @async
    */
-  fetchFromRules(key: any) {
+  fetchFromRules(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#_callFetches(key);
@@ -121,7 +123,7 @@ class BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  async fetchWithRules(key: any) {
+  async fetchWithRules(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     const value = this.get(key);
@@ -134,18 +136,18 @@ class BaseCacheManager {
    * @param {String} key The key to set.
    * @param {Object} value The value to set.
    * @param {Number} expiry The expiry time in seconds.
-   * @returns {Object} The value that was set.
+   * @returns {void} The value that was set.
    * @public
    * @method
    * @throws {TypeError}
    */
-  set(key: any, value: any, expiry = 0) {
+  set(key: string, value: unknown, expiry = 0) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     if (typeof expiry !== "number")
       throw new TypeError("GLUON: Expiry must be a number.");
     this.#addToExpiryBucket(key, expiry);
-    return this.#cache.set(key, value);
+    this.#cache.set(key, value);
   }
 
   /**
@@ -156,7 +158,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  #addToExpiryBucket(key: any, expiry: any) {
+  #addToExpiryBucket(key: string, expiry: number) {
     if (expiry === 0) return;
     const expiryDate = new Date(Date.now() + expiry * 1000);
     const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
@@ -172,7 +174,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  expireBucket(bucket: any) {
+  expireBucket(bucket: string) {
     if (!this.#expiryBucket.has(bucket)) return;
     for (const key of this.#expiryBucket.get(bucket)) {
       try {
@@ -221,7 +223,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  delete(key: any) {
+  delete(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.delete(key);
@@ -260,7 +262,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  #_callRules(value: any) {
+  #_callRules(value: unknown) {
     const rules = Object.values(BaseCacheManager.rules);
     for (const rule of rules)
       if ((rule as any).structure === this.#structureType)
@@ -275,7 +277,7 @@ class BaseCacheManager {
    * @method
    * @async
    */
-  async #_callFetches(id: any) {
+  async #_callFetches(id: string) {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
@@ -305,7 +307,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  forEach(callback: any) {
+  forEach(callback) {
     return this.#cache.forEach(callback);
   }
 
@@ -317,7 +319,7 @@ class BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  has(key: any) {
+  has(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.has(key);
@@ -330,7 +332,7 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

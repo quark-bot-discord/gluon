@@ -1,11 +1,19 @@
+import ClientType from "src/interfaces/Client.js";
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { EmojiType } from "src/structures/interfaces/Emoji.js";
+import { GuildEmojisManagerType } from "./interfaces/GuildEmojisManager.js";
 
 /**
  * Manages all emojis within a guild.
  */
-class GuildEmojisManager extends BaseCacheManager {
+class GuildEmojisManager
+  extends BaseCacheManager
+  implements GuildEmojisManagerType
+{
   #_client;
   #guild;
   static identifier = "emojis";
@@ -14,7 +22,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this emoji manager belongs to.
    */
-  constructor(client: any, guild: any) {
+  constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildEmojisManager });
 
     if (!client)
@@ -46,7 +54,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(emojiId: any) {
+  async fetch(emojiId: Snowflake) {
     if (typeof emojiId !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
 
@@ -69,7 +77,11 @@ class GuildEmojisManager extends BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  static async fetchEmoji(client: any, guildId: any, emojiId: any) {
+  static async fetchEmoji(
+    client: ClientType,
+    guildId: Snowflake,
+    emojiId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string") {
@@ -101,7 +113,7 @@ class GuildEmojisManager extends BaseCacheManager {
    * @static
    * @throws {TypeError}
    */
-  static getEmoji(client: any, guildId: any, emojiId: any) {
+  static getEmoji(client: ClientType, guildId: Snowflake, emojiId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -121,10 +133,14 @@ class GuildEmojisManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, emoji: any) {
+  set(id: Snowflake, emoji: EmojiType) {
     if (!(emoji instanceof Emoji))
       throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
     return super.set(id, emoji);
+  }
+
+  get(key: Snowflake) {
+    return super.get(key) as EmojiType;
   }
 }
 

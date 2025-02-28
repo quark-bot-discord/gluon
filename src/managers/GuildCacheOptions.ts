@@ -2,11 +2,12 @@ import {
   GLUON_GUILD_CACHING_OPTIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
+import { GuildCacheOptionsType } from "./interfaces/GuildCacheOptions.js";
 
-class GuildCacheOptions {
+class GuildCacheOptions implements GuildCacheOptionsType {
   #_cache_options;
 
-  constructor(cache_options: any) {
+  constructor(cache_options: number) {
     /**
      * The cache options for this guild.
      * @type {Number}
@@ -22,7 +23,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMessageCaching(option: any) {
+  setMessageCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Message caching must be a boolean");
 
@@ -40,7 +41,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setFileCaching(option: any) {
+  setFileCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: File caching must be a boolean");
 
@@ -48,6 +49,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.FILES;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.FILES;
+    return this;
   }
 
   /**
@@ -57,7 +59,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setVoiceStateCaching(option: any) {
+  setVoiceStateCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Voice state caching must be a boolean");
 
@@ -65,6 +67,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES;
+    return this;
   }
 
   /**
@@ -74,7 +77,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMemberCaching(option: any) {
+  setMemberCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Member caching must be a boolean");
 
@@ -82,6 +85,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.MEMBERS;
+    return this;
   }
 
   /**
@@ -91,7 +95,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setRoleCaching(option: any) {
+  setRoleCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Role caching must be a boolean");
 
@@ -99,6 +103,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.ROLES;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.ROLES;
+    return this;
   }
 
   /**
@@ -108,7 +113,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setChannelCaching(option: any) {
+  setChannelCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Channel caching must be a boolean");
 
@@ -116,6 +121,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.CHANNELS;
+    return this;
   }
 
   /**
@@ -125,7 +131,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setEmojiCaching(option: any) {
+  setEmojiCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Emoji caching must be a boolean");
 
@@ -133,6 +139,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.EMOJIS;
+    return this;
   }
 
   /**
@@ -142,7 +149,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setThreadCaching(option: any) {
+  setThreadCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Thread caching must be a boolean");
 
@@ -150,6 +157,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.THREADS;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.THREADS;
+    return this;
   }
 
   /**
@@ -159,7 +167,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setInviteCaching(option: any) {
+  setInviteCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Invite caching must be a boolean");
 
@@ -167,6 +175,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.INVITES;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.INVITES;
+    return this;
   }
 
   /**
@@ -176,7 +185,7 @@ class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setScheduledEventCaching(option: any) {
+  setScheduledEventCaching(option: boolean) {
     if (typeof option !== "boolean")
       throw new TypeError("GLUON: Scheduled event caching must be a boolean");
 
@@ -184,6 +193,7 @@ class GuildCacheOptions {
       this.#_cache_options |= GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS;
     else if (option === false)
       this.#_cache_options &= ~GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS;
+    return this;
   }
 
   /**
@@ -350,7 +360,7 @@ class GuildCacheOptions {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:

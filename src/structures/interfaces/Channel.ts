@@ -22,6 +22,11 @@ import { TextChannelType } from "./TextChannel.js";
 import { VoiceChannelType } from "./VoiceChannel.js";
 import { MemberType } from "./Member.js";
 import { UserRaw } from "./User.js";
+import {
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageStorageJSON,
+} from "./Message.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -63,7 +68,7 @@ export interface ChannelStorageJSON {
   parent_id?: Snowflake | null;
   _attributes: number;
   _cacheOptions: ChannelCacheOptions;
-  messages: any;
+  messages: MessageStorageJSON[];
   permission_overwrites: PermissionOverwriteStorageJSON[];
 }
 
@@ -76,7 +81,7 @@ export interface ChannelCacheJSON {
   position: number;
   parent_id?: Snowflake | null;
   nsfw: boolean;
-  messages: any;
+  messages: MessageCacheJSON[];
   permission_overwrites: PermissionOverwriteCacheJSON[];
 }
 
@@ -89,7 +94,7 @@ export interface ChannelDiscordJSON {
   position: number;
   parent_id?: Snowflake | null;
   nsfw: boolean;
-  messages: any;
+  messages: MessageDiscordJSON[];
   permission_overwrites: PermissionOverwriteDiscordJSON[];
 }
 

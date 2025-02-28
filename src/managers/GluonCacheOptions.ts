@@ -3,8 +3,9 @@ import {
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
 } from "../constants.js";
+import { GluonCacheOptionsType } from "./interfaces/GluonCacheOptions.js";
 
-class GluonCacheOptions {
+class GluonCacheOptions implements GluonCacheOptionsType {
   #_cache_options;
   #userTTL;
   #messageTTL;
@@ -21,7 +22,20 @@ class GluonCacheOptions {
     cacheEmojis,
     cacheInvites,
     cacheScheduledEvents,
-  }: any = {}) {
+  }: {
+    userTTL?: number;
+    messageTTL?: number;
+    cacheMessages?: boolean;
+    cacheUsers?: boolean;
+    cacheMembers?: boolean;
+    cacheChannels?: boolean;
+    cacheGuilds?: boolean;
+    cacheRoles?: boolean;
+    cacheVoiceStates?: boolean;
+    cacheEmojis?: boolean;
+    cacheInvites?: boolean;
+    cacheScheduledEvents?: boolean;
+  } = {}) {
     this.#_cache_options = 0;
 
     this.#userTTL = DEFAULT_USER_EXPIRY_SECONDS;
@@ -50,7 +64,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMessages(value: any) {
+  setCacheMessages(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache messages must be a boolean.");
 
@@ -82,7 +96,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheUsers(value: any) {
+  setCacheUsers(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache users must be a boolean.");
 
@@ -113,7 +127,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMembers(value: any) {
+  setCacheMembers(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache members must be a boolean.");
 
@@ -144,7 +158,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheChannels(value: any) {
+  setCacheChannels(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache channels must be a boolean.");
 
@@ -176,7 +190,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheGuilds(value: any) {
+  setCacheGuilds(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache guilds must be a boolean.");
 
@@ -207,7 +221,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheRoles(value: any) {
+  setCacheRoles(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache roles must be a boolean.");
 
@@ -238,7 +252,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheVoiceStates(value: any) {
+  setCacheVoiceStates(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache voice states must be a boolean.");
 
@@ -270,7 +284,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheEmojis(value: any) {
+  setCacheEmojis(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache emojis must be a boolean.");
 
@@ -301,7 +315,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheInvites(value: any) {
+  setCacheInvites(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache invites must be a boolean.");
 
@@ -332,7 +346,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheScheduledEvents(value: any) {
+  setCacheScheduledEvents(value: boolean) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache scheduled events must be a boolean.");
 
@@ -364,7 +378,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setUserTTL(seconds: any) {
+  setUserTTL(seconds: number) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");
 
@@ -391,7 +405,7 @@ class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setMessageTTL(seconds: any) {
+  setMessageTTL(seconds: number) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: Message TTL must be a number.");
 

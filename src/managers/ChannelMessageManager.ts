@@ -4,11 +4,19 @@ import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildChannelsManager from "./GuildChannelsManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { ChannelType } from "src/structures/interfaces/Channel.js";
+import { ChannelMessageManagerType } from "./interfaces/ChannelMessageManager.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { MessageType } from "src/structures/interfaces/Message.js";
 
 /**
  * Manages all messages within a channel.
  */
-class ChannelMessageManager extends BaseCacheManager {
+class ChannelMessageManager
+  extends BaseCacheManager
+  implements ChannelMessageManagerType
+{
   #_client;
   #channel;
   #guild;
@@ -22,7 +30,7 @@ class ChannelMessageManager extends BaseCacheManager {
    * @constructor
    * @public
    */
-  constructor(client: any, guild: any, channel: any) {
+  constructor(client: ClientType, guild: GuildType, channel: ChannelType) {
     super(client, { structureType: ChannelMessageManager });
 
     if (!client)
@@ -71,6 +79,10 @@ class ChannelMessageManager extends BaseCacheManager {
    */
   get channel() {
     return this.#channel;
+  }
+
+  get(key: Snowflake) {
+    return super.get(key) as MessageType | null;
   }
 
   /**
@@ -150,10 +162,10 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, message: any) {
+  set(id: Snowflake, message: MessageType) {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
-    return super.set(id, message, this.#_client._cacheOptions.messageTTL);
+    super.set(id, message, this.#_client._cacheOptions.messageTTL);
   }
 
   /**
@@ -167,7 +179,11 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client: any, guildId: any, channelId: any) {
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -189,7 +205,12 @@ class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getMessage(client: any, guildId: any, channelId: any, messageId: any) {
+  static getMessage(
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -220,10 +241,10 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static async fetchMessage(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -298,10 +319,20 @@ class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static async fetchMessages(
-    client: any,
-    guildId: any,
-    channelId: any,
-    { around, before, after, limit }: any = {},
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    {
+      around,
+      before,
+      after,
+      limit,
+    }: {
+      around?: Snowflake;
+      before?: Snowflake;
+      after?: Snowflake;
+      limit?: number;
+    } = {},
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -406,11 +437,11 @@ class ChannelMessageManager extends BaseCacheManager {
    * @static
    */
   static async purgeChannelMessages(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messages: any,
-    { reason }: any = {},
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messages: Snowflake[],
+    { reason }: { reason?: string } = {},
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");

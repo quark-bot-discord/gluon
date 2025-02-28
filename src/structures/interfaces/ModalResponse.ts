@@ -1,4 +1,4 @@
-import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import { COMPONENT_TYPES, TO_JSON_TYPES_ENUM } from "src/constants.js";
 import {
   InteractionCacheJSON,
   InteractionDiscordJSON,
@@ -7,6 +7,7 @@ import {
   InteractionType,
   InteractionTypes,
 } from "./Interaction.js";
+import { ResolvedData, SelectOption } from "./OptionSelect.js";
 
 export interface ModalResponseType extends InteractionType {
   readonly customId: string;
@@ -41,7 +42,14 @@ export interface ModalResponseDiscordJSON extends InteractionDiscordJSON {
 
 export interface ModalResponseRawData {
   custom_id: string;
-  components: Array<any>;
+  components: Array<ModalResponseComponents>;
+}
+
+export interface ModalResponseComponents {
+  custom_id: string;
+  values?: Array<SelectOption>;
+  component_type: COMPONENT_TYPES;
+  resolved?: ResolvedData;
 }
 
 export interface ModalResponseRaw extends InteractionRaw {
