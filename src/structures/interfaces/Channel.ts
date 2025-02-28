@@ -27,6 +27,9 @@ import {
   MessageDiscordJSON,
   MessageStorageJSON,
 } from "./Message.js";
+import { ChannelCacheOptionsType } from "src/managers/interfaces/ChannelCacheOptions.js";
+import { ChannelMessageManagerType } from "src/managers/interfaces/ChannelMessageManager.js";
+import { CategoryChannelType } from "./CategoryChannel.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -42,8 +45,8 @@ export interface ChannelType {
   readonly permissionOverwrites: Array<PermissionOverwriteType>;
   readonly rateLimitPerUser: number;
   readonly position: number;
-  readonly _cacheOptions: ChannelCacheOptions;
-  readonly messages: ChannelMessageManager;
+  readonly _cacheOptions: ChannelCacheOptionsType;
+  readonly messages: ChannelMessageManagerType;
   send(options?: {
     content?: string;
     components?: any;
@@ -67,7 +70,7 @@ export interface ChannelStorageJSON {
   position: number;
   parent_id?: Snowflake | null;
   _attributes: number;
-  _cacheOptions: ChannelCacheOptions;
+  _cacheOptions: number;
   messages: MessageStorageJSON[];
   permission_overwrites: PermissionOverwriteStorageJSON[];
 }
@@ -173,6 +176,8 @@ export type ChannelsOther = ChannelTypes.GUILD_DIRECTORY;
 export type ChannelsForum = ChannelTypes.GUILD_FORUM | ChannelTypes.GUILD_MEDIA;
 
 export type AllChannelTypes = TextChannelType | VoiceChannelType | ThreadType;
+
+export type AnyChannelType = AllChannelTypes | CategoryChannelType;
 
 export type AllChannelTypesNoThreads = TextChannelType | VoiceChannelType;
 

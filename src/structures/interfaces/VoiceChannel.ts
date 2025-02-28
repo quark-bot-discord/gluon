@@ -13,7 +13,7 @@ export interface VoiceChannelType {
   readonly rtcRegion: string;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): VoiceChannelCacheJSON | VoiceChannelDiscordJSON | VoiceChannelStorageJSON;
 }
 

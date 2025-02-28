@@ -8,10 +8,11 @@ import {
   EmojiStorageJSON,
   EmojiType,
 } from "./Emoji.js";
+import { MemberType } from "./Member.js";
 
 export interface ReactionType {
   count: number;
-  reacted: any[];
+  reacted: (MemberType | Snowflake)[];
   reactedIds: Snowflake[];
   guildId: Snowflake;
   guild: GuildType | null;

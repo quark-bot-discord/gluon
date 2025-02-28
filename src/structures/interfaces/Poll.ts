@@ -7,48 +7,54 @@ import {
 import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
 import { EmojiRaw } from "./Emoji.js";
+import { MessagePollManager } from "src/structures.js";
+import {
+  MessagePollManagerCacheJSON,
+  MessagePollManagerDiscordJSON,
+  MessagePollManagerStorageJSON,
+} from "src/managers/interfaces/MessagePollManager.js";
 
 export interface PollType {
   readonly guildId: Snowflake;
   readonly guild: GuildType | null;
   readonly question: string;
-  readonly answers: any[];
+  readonly answers: PollAnswer[];
   readonly expiry: UnixTimestamp;
   readonly allowMultiselect: boolean;
   readonly layoutType: keyof typeof PollLayoutTypes | null;
   readonly rawLayoutType: PollLayoutTypes;
-  readonly _results: any;
+  readonly _results: MessagePollManager;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): PollCacheJSON | PollDiscordJSON | PollStorageJSON;
 }
 
 export interface PollCacheJSON {
   question: PollRawMedia;
-  answers: any[];
+  answers: PollRawAnswer[];
   expiry: UnixMillisecondsTimestamp | null;
   allow_multiselect: boolean;
   layout_type: PollLayoutTypes;
-  _results: any;
+  _results: MessagePollManagerCacheJSON;
 }
 
 export interface PollDiscordJSON {
   question: PollRawMedia;
-  answers: any[];
+  answers: PollRawAnswer[];
   expiry: ISO8601Timestamp | null;
   allow_multiselect: boolean;
   layout_type: PollLayoutTypes;
-  results: any;
+  results: MessagePollManagerDiscordJSON;
 }
 
 export interface PollStorageJSON {
   question: PollRawMedia;
-  answers: any[];
+  answers: PollRawAnswer[];
   expiry: UnixTimestamp | null;
   allow_multiselect: boolean;
   layout_type: PollLayoutTypes;
-  _results: any;
+  _results: MessagePollManagerStorageJSON;
 }
 
 export interface PollRaw {
@@ -83,4 +89,10 @@ export interface PollRawAnswerCount {
 
 export enum PollLayoutTypes {
   DEFAULT = 1,
+}
+
+export interface PollAnswer {
+  answerId: number;
+  answer: string;
+  result: Snowflake[];
 }

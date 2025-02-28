@@ -6,7 +6,10 @@ import {
   VoiceStateStorageJSON,
   VoiceStateType,
 } from "src/structures/interfaces/VoiceState.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 
 export interface GuildVoiceStatesManagerType extends BaseCacheManagerType {
   get(key: Snowflake): VoiceStateType | null;
@@ -15,7 +18,7 @@ export interface GuildVoiceStatesManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: VoiceStateType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "voicestates" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,6 +29,6 @@ export interface GuildVoiceStatesManagerType extends BaseCacheManagerType {
   ): void;
   has(key: Snowflake): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): VoiceStateCacheJSON[] | VoiceStateDiscordJSON[] | VoiceStateStorageJSON[];
 }

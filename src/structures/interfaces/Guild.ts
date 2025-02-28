@@ -51,16 +51,22 @@ import {
 import { UserRaw } from "./User.js";
 import { PresenceStatus, PresenceType } from "src/gateway.js";
 import { AuditLogType } from "./AuditLog.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+import { GuildMemberManagerType } from "src/managers/interfaces/GuildMemberManager.js";
+import { GuildChannelsManagerType } from "src/managers/interfaces/GuildChannelsManager.js";
+import { GuildRoleManagerType } from "src/managers/interfaces/GuildRoleManager.js";
+import { GuildEmojisManagerType } from "src/managers/interfaces/GuildEmojisManager.js";
+import { GuildInviteManagerType } from "src/managers/interfaces/GuildInviteManager.js";
 
 export interface GuildType {
   readonly id: string;
   readonly name: string;
   readonly unavailable: boolean;
-  readonly members: any;
-  readonly channels: any;
-  readonly roles: any;
-  readonly emojis: any;
-  readonly invites: any;
+  readonly members: GuildMemberManagerType;
+  readonly channels: GuildChannelsManagerType;
+  readonly roles: GuildRoleManagerType;
+  readonly emojis: GuildEmojisManagerType;
+  readonly invites: GuildInviteManagerType;
   readonly _originalIconHash: string | null;
   readonly premiumTier: GuildPremiumTier | null;
   readonly rawSystemChannelFlags: number;
@@ -76,7 +82,7 @@ export interface GuildType {
   readonly rulesChannel: ChannelType | null;
   readonly preferredLocale: LOCALES;
   readonly premiumSubscriptionCount: number;
-  readonly _cacheOptions: any;
+  readonly _cacheOptions: GuildCacheOptionsType;
   fetchAuditLogs({
     limit,
     type,

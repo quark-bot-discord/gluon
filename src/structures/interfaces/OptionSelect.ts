@@ -28,7 +28,7 @@ export interface OptionSelectType extends InteractionType {
   readonly values: Array<any>;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): OptionSelectStorageJSON | OptionSelectCacheJSON | OptionSelectDiscordJSON;
 }
 

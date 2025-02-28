@@ -6,7 +6,10 @@ import {
   GuildStorageJSON,
   GuildType,
 } from "src/structures/interfaces/Guild.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 
 export interface GuildManagerType extends BaseCacheManagerType {
   get(key: Snowflake): GuildType | null;
@@ -15,7 +18,7 @@ export interface GuildManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: GuildType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "guilds" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,6 +29,6 @@ export interface GuildManagerType extends BaseCacheManagerType {
   ): void;
   has(key: Snowflake): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): GuildStorageJSON[] | GuildCacheJSON[] | GuildDiscordJSON[];
 }

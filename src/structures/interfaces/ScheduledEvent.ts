@@ -32,7 +32,7 @@ export interface ScheduledEventType {
   readonly location: string | null;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ):
     | ScheduledEventCacheJSON
     | ScheduledEventStorageJSON

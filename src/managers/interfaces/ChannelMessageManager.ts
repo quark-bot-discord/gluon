@@ -5,7 +5,10 @@ import {
   MessageStorageJSON,
   MessageType,
 } from "src/structures/interfaces/Message.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 
 export interface ChannelMessageManagerType extends BaseCacheManagerType {
@@ -15,7 +18,7 @@ export interface ChannelMessageManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: MessageType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "messages" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,6 +29,6 @@ export interface ChannelMessageManagerType extends BaseCacheManagerType {
   ): void;
   has(key: Snowflake): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): MessageDiscordJSON[] | MessageStorageJSON[] | MessageCacheJSON[];
 }

@@ -10,7 +10,7 @@ export interface MessageReactionManagerType {
   _addReaction(userId: Snowflake, emoji: Snowflake | string, data: any): void;
   _removeReaction(userId: Snowflake, emoji: Snowflake | string): void;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ):
     | MessageReactionManagerCacheJSON
     | MessageReactionManagerStorageJSON

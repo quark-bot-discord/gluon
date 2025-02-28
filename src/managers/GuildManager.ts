@@ -4,13 +4,15 @@ import BaseCacheManager from "./BaseCacheManager.js";
 import { GuildManagerType } from "./interfaces/GuildManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "src/structures/interfaces/Guild.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all guilds belonging to this client.
  */
 class GuildManager extends BaseCacheManager implements GuildManagerType {
-  #_client;
-  static identifier = "guilds";
+  // eslint-disable-next-line no-unused-private-class-members
+  #_client; // keep just for standardization
+  static identifier = "guilds" as StructureIdentifiers;
   /**
    * Creates a guild manager.
    * @param {Client} client The client instance.

@@ -17,7 +17,7 @@ export interface BaseCacheManagerType {
     ) => void,
   ): void;
   has(key: string): boolean;
-  toJSON(format: TO_JSON_TYPES_ENUM): unknown;
+  toJSON(format?: TO_JSON_TYPES_ENUM): unknown;
 }
 
 export type StructureIdentifiers =
@@ -31,3 +31,7 @@ export type StructureIdentifiers =
   | "events"
   | "voicestates"
   | "users";
+
+export interface StaticManagerType {
+  identifier: StructureIdentifiers;
+}

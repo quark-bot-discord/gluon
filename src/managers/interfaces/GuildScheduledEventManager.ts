@@ -6,7 +6,10 @@ import {
   ScheduledEventStorageJSON,
   ScheduledEventType,
 } from "src/structures/interfaces/ScheduledEvent.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 
 export interface GuildScheduledEventManagerType extends BaseCacheManagerType {
   get(key: Snowflake): ScheduledEventType | null;
@@ -15,7 +18,7 @@ export interface GuildScheduledEventManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: ScheduledEventType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "events" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,7 +29,7 @@ export interface GuildScheduledEventManagerType extends BaseCacheManagerType {
   ): void;
   has(key: Snowflake): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ):
     | ScheduledEventCacheJSON[]
     | ScheduledEventStorageJSON[]

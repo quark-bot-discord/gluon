@@ -1,7 +1,10 @@
 import hashjs from "hash.js";
 import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
 import ClientType from "src/interfaces/Client.js";
-import { BaseCacheManagerType } from "./interfaces/BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StaticManagerType,
+} from "./interfaces/BaseCacheManager.js";
 
 /**
  * The base cache manager for all cache managers.
@@ -21,7 +24,14 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @public
    * @constructor
    */
-  constructor(client: ClientType, { structureType }: any = {}) {
+  constructor(
+    client: ClientType,
+    {
+      structureType,
+    }: {
+      structureType: StaticManagerType;
+    },
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!structureType)
@@ -307,8 +317,8 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @public
    * @method
    */
-  forEach(callback) {
-    return this.#cache.forEach(callback);
+  forEach(callbackfn) {
+    return this.#cache.forEach(callbackfn);
   }
 
   /**

@@ -8,7 +8,7 @@ export interface PermissionOverwriteType {
   readonly type: PermissionOverwriteTypes;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ):
     | PermissionOverwriteStorageJSON
     | PermissionOverwriteCacheJSON

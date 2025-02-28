@@ -13,8 +13,12 @@ import { VoiceChannelType } from "src/structures/interfaces/VoiceChannel.js";
 import { TextChannelType } from "src/structures/interfaces/TextChannel.js";
 import { ThreadType } from "src/structures/interfaces/Thread.js";
 import { CategoryChannelType } from "src/structures/interfaces/CategoryChannel.js";
-import { ChannelType } from "src/structures/interfaces/Channel.js";
+import {
+  AnyChannelType,
+  ChannelType,
+} from "src/structures/interfaces/Channel.js";
 import { GuildChannelsManagerType } from "./interfaces/GuildChannelsManager.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all channels within a guild.
@@ -25,7 +29,7 @@ class GuildChannelsManager
 {
   #_client;
   #guild;
-  static identifier = "channels";
+  static identifier = "channels" as StructureIdentifiers;
   /**
    * Creates a guild channel manager.
    * @param {Client} client The client instance.
@@ -55,6 +59,18 @@ class GuildChannelsManager
   }
 
   /**
+   * Gets a channel from the cache.
+   * @param {String} id The ID of the channel to get.
+   * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | Channel | null}
+   * @public
+   * @method
+   * @override
+   */
+  get(id: Snowflake): AnyChannelType | null {
+    return super.get(id) as AnyChannelType | null;
+  }
+
+  /**
    * Fetches a particular channel belonging to this guild.
    * @param {String} channel_id The id of the channel to fetch.
    * @returns {Promise<VoiceChannel | Thread | TextChannel>} The fetched channel.
@@ -67,12 +83,14 @@ class GuildChannelsManager
     if (typeof channel_id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
 
-    const cachedChannel = this.get(channel_id);
+    const cachedChannel = this.get(channel_id) as AnyChannelType | null;
     if (cachedChannel) return cachedChannel;
 
     const data = await this.#_client.request.makeRequest("getChannel", [
       channel_id,
     ]);
+
+    if (!data) return null;
 
     return cacheChannel(this.#_client, data, this.#guild.id);
   }

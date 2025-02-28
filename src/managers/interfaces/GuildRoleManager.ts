@@ -6,7 +6,10 @@ import {
   RoleStorageJSON,
   RoleType,
 } from "src/structures/interfaces/Role.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 
 export interface GuildRoleManagerType extends BaseCacheManagerType {
   get(key: Snowflake): RoleType | null;
@@ -15,7 +18,7 @@ export interface GuildRoleManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: RoleType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "roles" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,6 +29,6 @@ export interface GuildRoleManagerType extends BaseCacheManagerType {
   ): void;
   has(key: string): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): RoleStorageJSON[] | RoleCacheJSON[] | RoleDiscordJSON[];
 }

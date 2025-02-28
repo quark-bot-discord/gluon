@@ -17,7 +17,7 @@ export interface TextChannelType {
   ): Promise<void>;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): TextChannelCacheJSON | TextChannelDiscordJSON | TextChannelStorageJSON;
 }
 

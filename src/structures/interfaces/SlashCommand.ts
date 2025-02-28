@@ -8,13 +8,14 @@ import {
   InteractionTypes,
 } from "./Interaction.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { ResolvedData } from "./OptionSelect.js";
 
 export interface SlashCommandType extends InteractionType {
   readonly data: SlashCommandRawData;
   readonly options: SlashCommandRawDataOption[];
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): SlashCommandStorageJSON | SlashCommandCacheJSON | SlashCommandDiscordJSON;
 }
 
@@ -42,7 +43,7 @@ export interface SlashCommandRawData {
   id: Snowflake;
   name: string;
   type: SlashCommandTypes;
-  resolved?: any;
+  resolved?: ResolvedData;
   options?: SlashCommandRawDataOption[];
   guild_id?: Snowflake;
   target_id?: Snowflake;

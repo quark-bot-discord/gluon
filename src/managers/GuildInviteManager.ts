@@ -6,6 +6,7 @@ import BaseCacheManager from "./BaseCacheManager.js";
 import { GuildInviteManagerType } from "./interfaces/GuildInviteManager.js";
 import { GuildType } from "src/structures/interfaces/Guild.js";
 import { InviteRaw, InviteType } from "src/structures/interfaces/Invite.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all invites within a guild.
@@ -16,7 +17,7 @@ class GuildInviteManager
 {
   #_client;
   #guild;
-  static identifier = "invites";
+  static identifier = "invites" as StructureIdentifiers;
   /**
    * Creates a guild invite manager.
    * @param {Client} client The client instance.

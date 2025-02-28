@@ -9,6 +9,7 @@ import { ChannelType } from "src/structures/interfaces/Channel.js";
 import { ChannelMessageManagerType } from "./interfaces/ChannelMessageManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { MessageType } from "src/structures/interfaces/Message.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all messages within a channel.
@@ -20,7 +21,7 @@ class ChannelMessageManager
   #_client;
   #channel;
   #guild;
-  static identifier = "messages";
+  static identifier = "messages" as StructureIdentifiers;
   /**
    * Creates a channel message manager.
    * @param {Client} client The client instance.

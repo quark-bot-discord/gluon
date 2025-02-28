@@ -10,7 +10,7 @@ export interface StickerType {
   readonly previewImageURL: string | null;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): StickerCacheJSON | StickerStorageJSON | StickerDiscordJSON;
 }
 

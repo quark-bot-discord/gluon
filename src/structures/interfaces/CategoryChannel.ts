@@ -11,7 +11,12 @@ export interface CategoryChannelType {
   readonly nsfw: boolean;
   readonly mention: string;
   toString(): string;
-  toJSON(format: TO_JSON_TYPES_ENUM): CategoryChannelCacheJSON;
+  toJSON(
+    format?: TO_JSON_TYPES_ENUM,
+  ):
+    | CategoryChannelCacheJSON
+    | CategoryChannelDiscordJSON
+    | CategoryChannelStorageJSON;
 }
 
 export interface CategoryChannelCacheJSON {

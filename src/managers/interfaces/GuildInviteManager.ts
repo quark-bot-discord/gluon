@@ -1,5 +1,8 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 import {
   InviteCacheJSON,
   InviteDiscordJSON,
@@ -14,7 +17,7 @@ export interface GuildInviteManagerType extends BaseCacheManagerType {
   set(key: string, value: InviteType, expiry: number): void;
   delete(key: string): boolean;
   clear(): void;
-  _intervalCallback(): { i: "invites" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -25,6 +28,6 @@ export interface GuildInviteManagerType extends BaseCacheManagerType {
   ): void;
   has(key: string): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): InviteCacheJSON[] | InviteStorageJSON[] | InviteDiscordJSON[];
 }

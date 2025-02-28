@@ -22,5 +22,5 @@ export interface GuildCacheOptionsType {
   inviteCaching: boolean;
   scheduledEventCaching: boolean;
   toString(): string;
-  toJSON(format: TO_JSON_TYPES_ENUM): number;
+  toJSON(format?: TO_JSON_TYPES_ENUM): number;
 }

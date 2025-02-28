@@ -4,13 +4,14 @@ import BaseCacheManager from "./BaseCacheManager.js";
 import { UserManagerType } from "./interfaces/UserManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { UserType } from "src/structures/interfaces/User.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all the users belonging to a client.
  */
 class UserManager extends BaseCacheManager implements UserManagerType {
   #_client;
-  static identifier = "users";
+  static identifier = "users" as StructureIdentifiers;
   /**
    * Creates a user manager.
    * @param {Client} client The client instance.

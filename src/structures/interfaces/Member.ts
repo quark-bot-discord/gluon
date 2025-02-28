@@ -16,6 +16,8 @@ import {
 } from "./User.js";
 import { GuildType } from "./Guild.js";
 import { RoleType } from "./Role.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 export interface MemberType {
   readonly id: Snowflake;
@@ -53,7 +55,10 @@ export interface MemberType {
     roles: string[],
     { reason }: { reason?: string },
   ): Promise<void>;
-  shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   getHashName(guildId: Snowflake, memberId: Snowflake): string;
   decrypt(
     client: ClientType,
@@ -78,7 +83,7 @@ export interface MemberType {
   encrypt(): string;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): MemberStorageJSON | MemberCacheJSON | MemberDiscordJSON;
 }
 

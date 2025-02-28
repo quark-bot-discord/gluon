@@ -19,7 +19,7 @@ export interface UserType {
   readonly toString: () => string;
   readonly overrideAvatarURL: (url: string) => void;
   readonly toJSON: (
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ) => UserStorageJSON | UserCacheJSON | UserDiscordJSON;
 }
 

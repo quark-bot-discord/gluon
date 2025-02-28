@@ -5,6 +5,7 @@ import { GuildScheduledEventManagerType } from "./interfaces/GuildScheduledEvent
 import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { ScheduledEventType } from "src/structures/interfaces/ScheduledEvent.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 class GuildScheduledEventManager
   extends BaseCacheManager
@@ -12,7 +13,7 @@ class GuildScheduledEventManager
 {
   #_client;
   #guild;
-  static identifier = "events";
+  static identifier = "events" as StructureIdentifiers;
   constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildScheduledEventManager });
 

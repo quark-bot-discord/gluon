@@ -6,6 +6,7 @@ import {
   PollCacheJSON,
   PollDiscordJSON,
   PollRaw,
+  PollRawAnswer,
   PollStorageJSON,
   PollType,
 } from "./interfaces/Poll.js";
@@ -135,7 +136,7 @@ class Poll implements PollType {
    */
   get answers() {
     if (!this.#answers) return [];
-    return this.#answers.map((a: any) => {
+    return this.#answers.map((a: PollRawAnswer) => {
       return {
         answerId: a.answer_id,
         answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,

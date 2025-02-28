@@ -5,6 +5,7 @@ import { GuildMemberManagerType } from "./interfaces/GuildMemberManager.js";
 import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { MemberType } from "src/structures/interfaces/Member.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all members belonging to this guild.
@@ -15,7 +16,7 @@ class GuildMemberManager
 {
   #_client;
   #guild;
-  static identifier = "members";
+  static identifier = "members" as StructureIdentifiers;
   /**
    * Creates a member manager.
    * @param {Client} client The client instance.

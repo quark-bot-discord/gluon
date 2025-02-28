@@ -6,6 +6,7 @@ import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { EmojiType } from "src/structures/interfaces/Emoji.js";
 import { GuildEmojisManagerType } from "./interfaces/GuildEmojisManager.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all emojis within a guild.
@@ -16,7 +17,7 @@ class GuildEmojisManager
 {
   #_client;
   #guild;
-  static identifier = "emojis";
+  static identifier = "emojis" as StructureIdentifiers;
   /**
    * Creates a guild emoji manager.
    * @param {Client} client The client instance.

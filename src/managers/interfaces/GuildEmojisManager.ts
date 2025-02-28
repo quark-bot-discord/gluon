@@ -1,5 +1,8 @@
 import { Snowflake } from "src/interfaces/gluon.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 import {
   EmojiCacheJSON,
   EmojiDiscordJSON,
@@ -16,7 +19,7 @@ export interface GuildEmojisManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: EmojiType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "emojis" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -27,6 +30,6 @@ export interface GuildEmojisManagerType extends BaseCacheManagerType {
   ): void;
   has(key: string): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): EmojiStorageJSON[] | EmojiDiscordJSON[] | EmojiCacheJSON[];
 }

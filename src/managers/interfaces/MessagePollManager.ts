@@ -5,9 +5,9 @@ import { PollRawAnswerCount } from "src/structures/interfaces/Poll.js";
 export interface MessagePollManagerType {
   _addVote(user_id: Snowflake, answer_id: number): void;
   _removeVote(user_id: Snowflake, answer_id: number): void;
-  getResult(answerId: number): string[];
+  getResult(answerId: number): Snowflake[];
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ):
     | MessagePollManagerStorageJSON
     | MessagePollManagerCacheJSON

@@ -42,7 +42,7 @@ export interface InteractionType {
   edit(options: any): Promise<InteractionType>;
   toString(): string;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): InteractionStorageJSON | InteractionCacheJSON | InteractionDiscordJSON;
 }
 

@@ -6,6 +6,7 @@ import { GuildRoleManagerType } from "./interfaces/GuildRoleManager.js";
 import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { RoleRaw, RoleType } from "src/structures/interfaces/Role.js";
+import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
 
 /**
  * Manages all roles belonging to a guild.
@@ -16,7 +17,7 @@ class GuildRoleManager
 {
   #_client;
   #guild;
-  static identifier = "roles";
+  static identifier = "roles" as StructureIdentifiers;
   /**
    * Creates a role manager.
    * @param {Client} client The client instance.

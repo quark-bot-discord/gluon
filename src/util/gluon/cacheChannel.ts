@@ -1,8 +1,13 @@
-import { CHANNEL_TYPES } from "../../constants.js";
+import ClientType from "src/interfaces/Client.js";
 import CategoryChannel from "../../structures/CategoryChannel.js";
 import TextChannel from "../../structures/TextChannel.js";
 import Thread from "../../structures/Thread.js";
 import VoiceChannel from "../../structures/VoiceChannel.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  AnyChannelType,
+  ChannelTypes,
+} from "src/structures/interfaces/Channel.js";
 
 /**
  * Automatically determines the channel type and caches the channel appropriately.
@@ -12,20 +17,25 @@ import VoiceChannel from "../../structures/VoiceChannel.js";
  * @param {Boolean?} nocache Whether the channel should be cached.
  * @returns {VoiceChannel | Thread | TextChannel}
  */
-function cacheChannel(client: any, data: any, guildId: any, nocache = false) {
+function cacheChannel(
+  client: ClientType,
+  data: any,
+  guildId: Snowflake,
+  nocache = false,
+): AnyChannelType {
   switch (data.type) {
-    case CHANNEL_TYPES.GUILD_VOICE:
-    case CHANNEL_TYPES.GUILD_STAGE_VOICE: {
+    case ChannelTypes.GUILD_VOICE:
+    case ChannelTypes.GUILD_STAGE_VOICE: {
       return new VoiceChannel(client, data, { guildId, nocache });
     }
 
-    case CHANNEL_TYPES.GUILD_NEWS_THREAD:
-    case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
-    case CHANNEL_TYPES.GUILD_PRIVATE_THREAD: {
+    case ChannelTypes.GUILD_NEWS_THREAD:
+    case ChannelTypes.GUILD_PUBLIC_THREAD:
+    case ChannelTypes.GUILD_PRIVATE_THREAD: {
       return new Thread(client, data, { guildId, nocache });
     }
 
-    case CHANNEL_TYPES.GUILD_CATEGORY: {
+    case ChannelTypes.GUILD_CATEGORY: {
       return new CategoryChannel(client, data, { guildId, nocache });
     }
 

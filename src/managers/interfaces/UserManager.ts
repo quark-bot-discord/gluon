@@ -1,5 +1,8 @@
 import { Snowflake } from "src/interfaces/gluon.js";
-import { BaseCacheManagerType } from "./BaseCacheManager.js";
+import {
+  BaseCacheManagerType,
+  StructureIdentifiers,
+} from "./BaseCacheManager.js";
 import {
   UserCacheJSON,
   UserDiscordJSON,
@@ -15,7 +18,7 @@ export interface UserManagerType extends BaseCacheManagerType {
   set(key: Snowflake, value: UserType, expiry: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
-  _intervalCallback(): { i: "users" };
+  _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
     callbackfn: (
@@ -26,6 +29,6 @@ export interface UserManagerType extends BaseCacheManagerType {
   ): void;
   has(key: Snowflake): boolean;
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: TO_JSON_TYPES_ENUM,
   ): UserCacheJSON[] | UserDiscordJSON[] | UserStorageJSON[];
 }
