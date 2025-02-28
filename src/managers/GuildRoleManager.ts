@@ -1,11 +1,19 @@
+import ClientType from "src/interfaces/Client.js";
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
+import { GuildRoleManagerType } from "./interfaces/GuildRoleManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { RoleRaw, RoleType } from "src/structures/interfaces/Role.js";
 
 /**
  * Manages all roles belonging to a guild.
  */
-class GuildRoleManager extends BaseCacheManager {
+class GuildRoleManager
+  extends BaseCacheManager
+  implements GuildRoleManagerType
+{
   #_client;
   #guild;
   static identifier = "roles";
@@ -14,7 +22,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this role manager belongs to.
    */
-  constructor(client: any, guild: any) {
+  constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildRoleManager });
 
     if (!client)
@@ -46,7 +54,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(roleId: any) {
+  async fetch(roleId: Snowflake) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
 
@@ -77,10 +85,14 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, role: any) {
+  set(id: Snowflake, role: RoleType) {
     if (!(role instanceof Role))
       throw new TypeError("GLUON: Role must be an instance of Role.");
     return super.set(id, role);
+  }
+
+  get(id: Snowflake) {
+    return super.get(id) as RoleType | null;
   }
 
   /**
@@ -94,7 +106,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getRole(client: any, guildId: any, roleId: any) {
+  static getRole(client: ClientType, guildId: Snowflake, roleId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -114,7 +126,7 @@ class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client: any, guildId: any) {
+  static getCacheManager(client: ClientType, guildId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -133,7 +145,11 @@ class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async fetchRole(client: any, guildId: any, roleId: any) {
+  static async fetchRole(
+    client: ClientType,
+    guildId: Snowflake,
+    roleId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -155,7 +171,7 @@ class GuildRoleManager extends BaseCacheManager {
     const data = await client.request.makeRequest("getRoles", [guildId]);
 
     if (!roleId)
-      return data.map((role: any) => new Role(client, role, { guildId }));
+      return data.map((role: RoleRaw) => new Role(client, role, { guildId }));
 
     let matchedRole;
     for (let i = 0; i < data.length; i++) {

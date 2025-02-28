@@ -140,7 +140,7 @@ class GuildEmojisManager
   }
 
   get(key: Snowflake) {
-    return super.get(key) as EmojiType;
+    return super.get(key) as EmojiType | null;
   }
 }
 

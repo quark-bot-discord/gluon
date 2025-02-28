@@ -1,10 +1,18 @@
+import ClientType from "src/interfaces/Client.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { GuildMemberManagerType } from "./interfaces/GuildMemberManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { MemberType } from "src/structures/interfaces/Member.js";
 
 /**
  * Manages all members belonging to this guild.
  */
-class GuildMemberManager extends BaseCacheManager {
+class GuildMemberManager
+  extends BaseCacheManager
+  implements GuildMemberManagerType
+{
   #_client;
   #guild;
   static identifier = "members";
@@ -13,7 +21,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this member manager belongs to.
    */
-  constructor(client: any, guild: any) {
+  constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildMemberManager });
 
     if (!client)
@@ -55,7 +63,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(user_id: any) {
+  fetch(user_id: Snowflake) {
     return GuildMemberManager.fetchMember(
       this.#_client,
       this.#guild.id,
@@ -72,7 +80,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  search(query: any) {
+  search(query: string) {
     if (typeof query !== "string")
       throw new TypeError("GLUON: Query must be a string.");
 
@@ -89,10 +97,14 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, member: any) {
+  set(id: Snowflake, member: MemberType) {
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member instance.");
     return super.set(id, member);
+  }
+
+  get(id: Snowflake) {
+    return super.get(id) as MemberType | null;
   }
 
   /**
@@ -101,7 +113,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @param {String} guildId The ID of the guild.
    * @returns {GuildMemberManager}
    */
-  static getCacheManager(client: any, guildId: any) {
+  static getCacheManager(client: ClientType, guildId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -121,7 +133,11 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async fetchMember(client: any, guildId: any, userId: any) {
+  static async fetchMember(
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -157,7 +173,7 @@ class GuildMemberManager extends BaseCacheManager {
    * @static
    * @throws {TypeError}
    */
-  static getMember(client: any, guildId: any, userId: any) {
+  static getMember(client: ClientType, guildId: Snowflake, userId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -182,7 +198,11 @@ class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static async search(client: any, guildId: any, query: any) {
+  static async search(
+    client: ClientType,
+    guildId: Snowflake,
+    query: Snowflake,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")

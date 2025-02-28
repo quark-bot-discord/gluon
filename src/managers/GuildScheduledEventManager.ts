@@ -1,11 +1,19 @@
+import ClientType from "src/interfaces/Client.js";
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { GuildScheduledEventManagerType } from "./interfaces/GuildScheduledEventManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { ScheduledEventType } from "src/structures/interfaces/ScheduledEvent.js";
 
-class GuildScheduledEventManager extends BaseCacheManager {
+class GuildScheduledEventManager
+  extends BaseCacheManager
+  implements GuildScheduledEventManagerType
+{
   #_client;
   #guild;
   static identifier = "events";
-  constructor(client: any, guild: any) {
+  constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildScheduledEventManager });
 
     if (!client)
@@ -63,7 +71,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(scheduledEventId: any) {
+  async fetch(scheduledEventId: Snowflake) {
     if (typeof scheduledEventId !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
 
@@ -90,10 +98,14 @@ class GuildScheduledEventManager extends BaseCacheManager {
    * @method
    * @override
    */
-  set(id: any, event: any) {
+  set(id: Snowflake, event: ScheduledEventType) {
     if (!(event instanceof ScheduledEvent))
       throw new TypeError("GLUON: Event must be a ScheduledEvent instance.");
     return super.set(id, event);
+  }
+
+  get(id: Snowflake) {
+    return super.get(id) as ScheduledEventType | null;
   }
 }
 

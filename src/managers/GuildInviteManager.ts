@@ -1,12 +1,19 @@
+import ClientType from "src/interfaces/Client.js";
 import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { GuildInviteManagerType } from "./interfaces/GuildInviteManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { InviteRaw, InviteType } from "src/structures/interfaces/Invite.js";
 
 /**
  * Manages all invites within a guild.
  */
-class GuildInviteManager extends BaseCacheManager {
+class GuildInviteManager
+  extends BaseCacheManager
+  implements GuildInviteManagerType
+{
   #_client;
   #guild;
   static identifier = "invites";
@@ -15,7 +22,7 @@ class GuildInviteManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this invite manager belongs to.
    */
-  constructor(client: any, guild: any) {
+  constructor(client: ClientType, guild: GuildType) {
     super(client, { structureType: GuildInviteManager });
 
     if (!client)
@@ -62,7 +69,8 @@ class GuildInviteManager extends BaseCacheManager {
     this.clear();
 
     return data.map(
-      (raw: any) => new Invite(this.#_client, raw, { guildId: this.#guild.id }),
+      (raw: InviteRaw) =>
+        new Invite(this.#_client, raw, { guildId: this.#guild.id }),
     );
   }
 
@@ -76,10 +84,14 @@ class GuildInviteManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(code: any, invite: any) {
+  set(code: string, invite: InviteType) {
     if (!(invite instanceof Invite))
       throw new TypeError("GLUON: Invite must be an instance of Invite.");
     return super.set(code, invite);
+  }
+
+  get(code: string) {
+    return super.get(code) as InviteType | null;
   }
 }
 

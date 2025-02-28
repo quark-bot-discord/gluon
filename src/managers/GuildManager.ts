@@ -1,17 +1,21 @@
+import ClientType from "src/interfaces/Client.js";
 import Guild from "../structures/Guild.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { GuildManagerType } from "./interfaces/GuildManager.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
 
 /**
  * Manages all guilds belonging to this client.
  */
-class GuildManager extends BaseCacheManager {
+class GuildManager extends BaseCacheManager implements GuildManagerType {
   #_client;
   static identifier = "guilds";
   /**
    * Creates a guild manager.
    * @param {Client} client The client instance.
    */
-  constructor(client: any) {
+  constructor(client: ClientType) {
     super(client, { structureType: GuildManager });
 
     if (!client)
@@ -35,10 +39,14 @@ class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, guild: any) {
+  set(id: Snowflake, guild: GuildType) {
     if (!(guild instanceof Guild))
       throw new TypeError("GLUON: Guild must be an instance of Guild.");
     return super.set(id, guild);
+  }
+
+  get(id: Snowflake) {
+    return super.get(id) as GuildType | null;
   }
 
   /**
@@ -46,7 +54,7 @@ class GuildManager extends BaseCacheManager {
    * @param {Client} client The client instance.
    * @returns {GuildManager}
    */
-  static getCacheManager(client: any) {
+  static getCacheManager(client: ClientType) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     return client.guilds;
@@ -62,7 +70,7 @@ class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static getGuild(client: any, guildId: any) {
+  static getGuild(client: ClientType, guildId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")

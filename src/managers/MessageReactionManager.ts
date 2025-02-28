@@ -1,18 +1,37 @@
+import ClientType from "src/interfaces/Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
+import {
+  MessageReactionManagerCacheJSON,
+  MessageReactionManagerStorageJSON,
+  MessageReactionManagerType,
+} from "./interfaces/MessageReactionManager.js";
+import { GuildType } from "src/structures/interfaces/Guild.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  ReactionCacheJSON,
+  ReactionStorageJSON,
+  ReactionType,
+} from "src/structures/interfaces/Reaction.js";
 
 /**
  * Manages the reactions of a message.
  */
-class MessageReactionManager {
+class MessageReactionManager implements MessageReactionManagerType {
   #_client;
   #guild;
-  #cache: { [key: string]: Reaction };
+  #cache: { [key: string]: ReactionType };
   /**
    * Creates a message reaction manager.
    * @param {Object} existingReactions Existing reactions for a message.
    */
-  constructor(client: any, guild: any, existingReactions = {}) {
+  constructor(
+    client: ClientType,
+    guild: GuildType,
+    existingReactions:
+      | MessageReactionManagerCacheJSON
+      | MessageReactionManagerStorageJSON = {},
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (!guild) throw new TypeError("GLUON: Guild must be provided.");
@@ -38,7 +57,7 @@ class MessageReactionManager {
      * @type {Object}
      * @private
      */
-    this.#cache = {};
+    this.#cache = {} as { [key: string]: ReactionType };
 
     for (const [messageReaction, messageReactionValue] of Object.entries(
       existingReactions,
@@ -59,7 +78,7 @@ class MessageReactionManager {
    * @public
    * @method
    */
-  _addReaction(userId: any, emoji: any, data: any) {
+  _addReaction(userId: Snowflake, emoji: Snowflake | string, data: any) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -85,7 +104,7 @@ class MessageReactionManager {
    * @public
    * @method
    */
-  _removeReaction(userId: any, emoji: any) {
+  _removeReaction(userId: Snowflake, emoji: Snowflake | string) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -106,13 +125,17 @@ class MessageReactionManager {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
-        const messageReactions: { [key: string]: Reaction } = {};
+        const messageReactions: {
+          [key: string]: ReactionCacheJSON | ReactionStorageJSON;
+        } = {};
         for (const [reaction, reactionData] of Object.entries(this.#cache))
-          messageReactions[reaction] = (reactionData as any).toJSON(format);
+          messageReactions[reaction] = (reactionData as ReactionType).toJSON(
+            format,
+          );
         return messageReactions;
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:

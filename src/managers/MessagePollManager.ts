@@ -1,16 +1,28 @@
+import ClientType from "src/interfaces/Client.js";
 import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import {
+  MessagePollManagerCacheJSON,
+  MessagePollManagerStorageJSON,
+  MessagePollManagerType,
+} from "./interfaces/MessagePollManager.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 
 /**
  * Manages a poll for a message.
  */
-class MessagePollManager {
+class MessagePollManager implements MessagePollManagerType {
   #_client;
   #cache;
   /**
    * Creates a message poll manager.
    * @param {Object} existingResponses Existing responses for a poll.
    */
-  constructor(client: any, existingResponses = {}) {
+  constructor(
+    client: ClientType,
+    existingResponses:
+      | MessagePollManagerCacheJSON
+      | MessagePollManagerStorageJSON = {},
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof existingResponses !== "object")
@@ -28,12 +40,12 @@ class MessagePollManager {
      * @type {Map<String, Array<BigInt>>}
      * @private
      */
-    this.#cache = new Map();
+    this.#cache = new Map() as Map<string, bigint[]>;
 
     for (const [answer, answerValue] of Object.entries(existingResponses))
       this.#cache.set(
         String(answer),
-        answerValue.map((v: any) => BigInt(v)),
+        answerValue.map((v: Snowflake) => BigInt(v)),
       );
   }
 
@@ -45,7 +57,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  _addVote(user_id: any, answer_id: any) {
+  _addVote(user_id: Snowflake, answer_id: number) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -67,7 +79,7 @@ class MessagePollManager {
    * @public
    * @method
    */
-  _removeVote(user_id: any, answer_id: any) {
+  _removeVote(user_id: Snowflake, answer_id: number) {
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -79,7 +91,7 @@ class MessagePollManager {
     if (currentUserList)
       this.#cache.set(
         String(answer_id),
-        currentUserList.filter((x: any) => x !== BigInt(user_id)),
+        currentUserList.filter((x: bigint) => x !== BigInt(user_id)),
       );
   }
 
@@ -88,10 +100,12 @@ class MessagePollManager {
    * @param {Number} answerId The ID of the answer to get the result for.
    * @returns {Array<String>}
    */
-  getResult(answerId: any) {
+  getResult(answerId: number) {
     if (typeof answerId !== "number")
       throw new TypeError("GLUON: Answer ID must be a number.");
-    return this.#cache.get(String(answerId))?.map((v: any) => String(v)) ?? [];
+    return (
+      this.#cache.get(String(answerId))?.map((v: bigint) => String(v)) ?? []
+    );
   }
 
   /**
@@ -101,13 +115,13 @@ class MessagePollManager {
    * @public
    * @method
    */
-  toJSON(format: any) {
+  toJSON(format: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
-        const pollResponses: { [key: string]: string[] } = {};
+        const pollResponses: { [key: string]: Snowflake[] } = {};
         for (const [key, values] of this.#cache)
-          pollResponses[key] = values.map((v: any) => String(v));
+          pollResponses[key] = values.map((v: bigint) => String(v));
         return pollResponses;
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:

@@ -1,17 +1,21 @@
+import ClientType from "src/interfaces/Client.js";
 import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { UserManagerType } from "./interfaces/UserManager.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { UserType } from "src/structures/interfaces/User.js";
 
 /**
  * Manages all the users belonging to a client.
  */
-class UserManager extends BaseCacheManager {
+class UserManager extends BaseCacheManager implements UserManagerType {
   #_client;
   static identifier = "users";
   /**
    * Creates a user manager.
    * @param {Client} client The client instance.
    */
-  constructor(client: any) {
+  constructor(client: ClientType) {
     super(client, { structureType: UserManager });
 
     if (!client)
@@ -34,7 +38,7 @@ class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(userId: any) {
+  fetch(userId: Snowflake) {
     return UserManager.fetchUser(this.#_client, userId);
   }
 
@@ -48,10 +52,14 @@ class UserManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, user: any) {
+  set(id: Snowflake, user: UserType) {
     if (!(user instanceof User))
       throw new TypeError("GLUON: User must be an instance of User.");
     return super.set(id, user);
+  }
+
+  get(id: Snowflake) {
+    return super.get(id) as UserType | null;
   }
 
   /**
@@ -64,7 +72,7 @@ class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  static async fetchUser(client: any, userId: any) {
+  static async fetchUser(client: ClientType, userId: Snowflake) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
