@@ -72,13 +72,13 @@ class Guild implements GuildType {
   #_attributes: number = 0;
   #premium_subscription_count: number = 0;
   #_cacheOptions: GuildCacheOptionsType = new GuildCacheOptions(0);
-  #members: GuildMemberManagerType;
-  #channels: GuildChannelsManagerType;
-  #voice_states: GuildVoiceStatesManagerType;
-  #roles: GuildRoleManagerType;
-  #emojis: GuildEmojisManagerType;
-  #invites: GuildInviteManagerType;
-  #scheduled_events: GuildScheduledEventManagerType;
+  #members!: GuildMemberManagerType;
+  #channels!: GuildChannelsManagerType;
+  #voice_states!: GuildVoiceStatesManagerType;
+  #roles!: GuildRoleManagerType;
+  #emojis!: GuildEmojisManagerType;
+  #invites!: GuildInviteManagerType;
+  #scheduled_events!: GuildScheduledEventManagerType;
   /**
    * Creates the structure for a guild.
    * @param {Client} client The client instance.
@@ -538,12 +538,16 @@ class Guild implements GuildType {
       Member.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ===
         true
     )
-      for (let i = 0; i < data.members.length; i++)
-        new Member(this.#_client, data.members[i], {
-          userId: data.members[i].user.id,
-          guildId: data.id,
-          nocache,
-        });
+      for (let i = 0; i < data.members.length; i++) {
+        const member = data.members[i];
+        if (member && member.user && typeof member.user.id === "string") {
+          new Member(this.#_client, member, {
+            userId: member.user.id,
+            guildId: data.id,
+            nocache,
+          });
+        }
+      }
 
     if (
       "channels" in data &&
@@ -1657,7 +1661,7 @@ class Guild implements GuildType {
     // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     if (embeds) body.embeds = embeds;
     // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
-    if (components) body.components;
+    if (components) body.components = components;
     // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     if (files) body.files = files;
 
@@ -1738,7 +1742,7 @@ class Guild implements GuildType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

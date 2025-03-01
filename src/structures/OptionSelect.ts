@@ -8,7 +8,6 @@ import {
   OptionSelectRaw,
   OptionSelectType,
 } from "./interfaces/OptionSelect.js";
-import { MessageType } from "./interfaces/Message.js";
 
 /**
  * Represents when an option is selected.
@@ -66,7 +65,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
     this.#message = new Message(this.#_client, data.message, {
       channelId,
       guildId,
-    }) as MessageType;
+    });
 
     /**
      * The values selected from the select menu.

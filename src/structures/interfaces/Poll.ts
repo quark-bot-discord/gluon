@@ -19,7 +19,7 @@ export interface PollType {
   readonly guild: GuildType | null;
   readonly question: string;
   readonly answers: PollAnswer[];
-  readonly expiry: UnixTimestamp;
+  readonly expiry: UnixTimestamp | null;
   readonly allowMultiselect: boolean;
   readonly layoutType: keyof typeof PollLayoutTypes | null;
   readonly rawLayoutType: PollLayoutTypes;

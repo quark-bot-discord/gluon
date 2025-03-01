@@ -1,8 +1,6 @@
 import { PermissionsBitfield, Snowflake } from "src/interfaces/gluon.js";
 import { GuildType } from "./Guild.js";
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 export interface RoleType {
   readonly id: Snowflake;
@@ -17,14 +15,8 @@ export interface RoleType {
   readonly color: number;
   readonly position: number;
   readonly permissions: PermissionsBitfield;
-  readonly tags: RoleRawTags;
+  readonly tags?: RoleRawTags;
   readonly mention: string;
-  getMention(roleId: Snowflake, guildId: Snowflake): string;
-  getIconUrl(id: Snowflake, hash?: string | null): string | null;
-  shouldCache(
-    gluonCacheOptions: GluonCacheOptionsType,
-    guildCacheOptions: GuildCacheOptionsType,
-  ): boolean;
   toString(): string;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,

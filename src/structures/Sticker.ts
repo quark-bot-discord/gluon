@@ -1,6 +1,5 @@
 import ClientType from "src/interfaces/Client.js";
 import {
-  STICKER_FORMATS,
   CDN_BASE_URL,
   STICKER_FORMATS_ENUM,
   TO_JSON_TYPES_ENUM,
@@ -19,7 +18,7 @@ import {
  * Represents an sticker.
  */
 class Sticker implements StickerType {
-  #_client;
+  // #_client;
   #_id;
   #name;
   #format_type;
@@ -46,7 +45,7 @@ class Sticker implements StickerType {
      * @type {Client}
      * @private
      */
-    this.#_client = client;
+    // this.#_client = client;
 
     /**
      * The id of the sticker.
@@ -97,7 +96,17 @@ class Sticker implements StickerType {
    * @public
    */
   get format() {
-    return STICKER_FORMATS[this.formatType];
+    switch (this.formatType) {
+      case STICKER_FORMATS_ENUM.PNG:
+        return "PNG";
+      case STICKER_FORMATS_ENUM.APNG:
+        return "APNG";
+      case STICKER_FORMATS_ENUM.LOTTIE:
+        return "LOTTIE";
+      case STICKER_FORMATS_ENUM.GIF:
+        return "GIF";
+    }
+    throw new TypeError("GLUON: Invalid sticker format");
   }
 
   /**

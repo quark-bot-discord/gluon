@@ -12,6 +12,11 @@ import {
 } from "./interfaces/Poll.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  MessagePollManagerCacheJSON,
+  MessagePollManagerDiscordJSON,
+  MessagePollManagerStorageJSON,
+} from "src/managers/interfaces/MessagePollManager.js";
 
 class Poll implements PollType {
   #_client;
@@ -74,7 +79,9 @@ class Poll implements PollType {
      * @type {Number}
      * @private
      */
-    this.#expiry = (new Date(data.expiry).getTime() / 1000) | 0;
+    this.#expiry = data.expiry
+      ? (new Date(data.expiry).getTime() / 1000) | 0
+      : null;
 
     /**
      * Whether the poll allows multiselect.
@@ -95,7 +102,10 @@ class Poll implements PollType {
      * @type {MessagePollManager}
      * @private
      */
-    this.#results = new MessagePollManager(this.#_client, data._results);
+    this.#results = new MessagePollManager(
+      this.#_client,
+      "_results" in data ? data._results : undefined,
+    );
   }
 
   /**
@@ -125,7 +135,7 @@ class Poll implements PollType {
    * @public
    */
   get question() {
-    return `${this.#question.emoji ? `${Emoji.getMention(this.#question.emoji.name, this.#question.emoji.id, this.#question.emoji.animated)} ` : ""}${this.#question.text ? this.#question.text : ""}`;
+    return `${this.#question.emoji ? `${Emoji.getMention(this.#question.emoji.name as string /** name only not provided with reactions */, this.#question.emoji.id, this.#question.emoji.animated)} ` : ""}${this.#question.text ? this.#question.text : ""}`;
   }
 
   /**
@@ -139,7 +149,7 @@ class Poll implements PollType {
     return this.#answers.map((a: PollRawAnswer) => {
       return {
         answerId: a.answer_id,
-        answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
+        answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name as string /** name only not provided with reactions */, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
         result: this._results.getResult(a.answer_id),
       };
     });
@@ -219,7 +229,9 @@ class Poll implements PollType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: TO_JSON_TYPES_ENUM,
+  ): PollCacheJSON | PollDiscordJSON | PollStorageJSON {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
@@ -229,7 +241,9 @@ class Poll implements PollType {
           expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
           layout_type: this.rawLayoutType,
-          _results: this._results.toJSON(format),
+          _results: this._results.toJSON(format) as
+            | MessagePollManagerCacheJSON
+            | MessagePollManagerStorageJSON,
         };
       }
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
@@ -242,7 +256,9 @@ class Poll implements PollType {
             : null,
           allow_multiselect: this.allowMultiselect,
           layout_type: this.rawLayoutType,
-          results: this._results.toJSON(format),
+          results: this._results.toJSON(
+            format,
+          ) as MessagePollManagerDiscordJSON,
         };
       }
     }

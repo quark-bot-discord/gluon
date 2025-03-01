@@ -29,6 +29,7 @@ import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions
 import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
 import { FileUpload } from "src/util.js";
 import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { ChannelMessageManagerType } from "src/managers/interfaces/ChannelMessageManager.js";
 
 /**
  * Represents a channel within Discord.
@@ -46,7 +47,7 @@ class Channel implements ChannelType {
   #_parent_id;
   #_attributes;
   #_cacheOptions;
-  #messages;
+  #messages!: ChannelMessageManagerType;
   #position;
   /**
    * Creates the base structure for a channel.

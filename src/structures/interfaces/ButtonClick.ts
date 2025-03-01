@@ -2,6 +2,7 @@ import { COMPONENT_TYPES, TO_JSON_TYPES_ENUM } from "src/constants.js";
 import {
   MessageCacheJSON,
   MessageDiscordJSON,
+  MessageRaw,
   MessageStorageJSON,
   MessageType,
 } from "./Message.js";
@@ -48,6 +49,7 @@ export interface ButtonClickDiscordJSON extends InteractionDiscordJSON {
 export interface ButtonClickRaw extends InteractionRaw {
   type: InteractionTypes.COMPONENT;
   data: ButtonClickRawData;
+  message: MessageRaw;
 }
 
 export interface ButtonClickRawData {

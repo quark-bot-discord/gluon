@@ -33,38 +33,43 @@ import {
   MessageRaw,
   MessageStorageJSON,
   MessageType,
+  MessageTypes,
 } from "./interfaces/Message.js";
 import ClientType from "src/interfaces/Client.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
 import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
 import { AttachmentType } from "./interfaces/Attachment.js";
 import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
 import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 import { ChannelCacheOptionsType } from "src/managers/interfaces/ChannelCacheOptions.js";
+import { PollType } from "./interfaces/Poll.js";
+import { MessageReactionManagerType } from "src/managers/interfaces/MessageReactionManager.js";
+import { UserType } from "./interfaces/User.js";
+import { StickerType } from "./interfaces/Sticker.js";
 
 /**
  * A message belonging to a channel within a guild.
  */
 class Message implements MessageType {
-  #_client;
-  #_guild_id;
-  #_channel_id;
-  #_id;
-  #author;
-  #attachments;
+  #_client: ClientType;
+  #_guild_id: bigint;
+  #_channel_id: bigint;
+  #_id: bigint;
+  #author: UserType | undefined;
+  #attachments: AttachmentType[];
   #content;
-  #poll;
-  #reactions;
-  #embeds;
-  #_attributes;
+  #poll: PollType | undefined;
+  #reactions: MessageReactionManagerType | undefined;
+  #embeds: EmbedBuilderType[] | undefined;
+  #_attributes!: number;
   #reference;
-  #type;
-  #webhook_id;
-  #sticker_items;
+  #type: MessageTypes;
+  #webhook_id: bigint | undefined;
+  #sticker_items: StickerType[] | undefined;
   #message_snapshots;
-  #edited_timestamp;
-  #flags;
+  #edited_timestamp: UnixTimestamp | undefined;
+  #flags: number;
   /**
    * Creates the structure for a message.
    * @param {Client} client The client instance.

@@ -58,11 +58,22 @@ import {
   MessageReactionManagerDiscordJSON,
   MessageReactionManagerStorageJSON,
 } from "src/managers/interfaces/MessageReactionManager.js";
+import { AllChannelTypes } from "./Channel.js";
 
 export interface MessageType {
   readonly id: Snowflake;
   readonly guildId: Snowflake | null;
   readonly channelId: Snowflake;
+  readonly channel: AllChannelTypes;
+  readonly author: UserCacheJSON;
+  readonly member: MemberCacheJSON | null;
+  readonly timestamp: UnixMillisecondsTimestamp;
+  readonly editedTimestamp: UnixMillisecondsTimestamp | null;
+  readonly mentionEveryone: boolean;
+  // readonly mentions: Array<UserCacheJSON>;
+  // readonly mentionRoles: Array<Snowflake>;
+  // readonly mentionChannels: Array<MessageChannelMentionObject>;
+  readonly attachments: Array<AttachmentType>;
   readonly content: string | null;
   readonly poll: PollType | null;
   readonly reactions: ReactionType[];

@@ -69,11 +69,11 @@ class GuildRoleManager
     for (let i = 0; i < data.length; i++) {
       const role = new Role(this.#_client, data[i], {
         guildId: this.#guild.id,
-      }) as RoleType;
+      });
       if (role.id == roleId) matchedRole = role;
     }
 
-    return matchedRole;
+    return matchedRole ?? null;
   }
 
   /**

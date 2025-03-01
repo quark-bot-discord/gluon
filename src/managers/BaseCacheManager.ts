@@ -342,7 +342,7 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

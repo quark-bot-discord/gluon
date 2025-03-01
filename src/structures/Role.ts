@@ -15,6 +15,8 @@ import {
   RoleType,
 } from "./interfaces/Role.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
 
 /**
  * Represents a role belonging to a guild.
@@ -114,13 +116,15 @@ class Role implements RoleType {
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.hoist == true) this.#_attributes |= 0b1 << 0;
+    if ("hoist" in data && data.hoist == true) this.#_attributes |= 0b1 << 0;
 
-    if (data.managed == true) this.#_attributes |= 0b1 << 1;
+    if ("managed" in data && data.managed == true)
+      this.#_attributes |= 0b1 << 1;
 
-    if (data.mentionable == true) this.#_attributes |= 0b1 << 2;
+    if ("mentionable" in data && data.mentionable == true)
+      this.#_attributes |= 0b1 << 2;
 
     if (data.tags) this.#tags = data.tags;
 
@@ -348,7 +352,10 @@ class Role implements RoleType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",

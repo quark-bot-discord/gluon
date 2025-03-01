@@ -208,7 +208,6 @@ export const PERMISSIONS = {
   SEND_VOICE_MESSAGES: String(1n << 46n),
   SEND_POLLS: String(1n << 49n),
 };
-export const STICKER_FORMATS = [null, "PNG", "APNG", "LOTTIE"];
 export const STICKER_FORMATS_ENUM = {
   PNG: 1,
   APNG: 2,

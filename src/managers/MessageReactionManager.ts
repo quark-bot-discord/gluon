@@ -125,7 +125,7 @@ class MessageReactionManager implements MessageReactionManagerType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
