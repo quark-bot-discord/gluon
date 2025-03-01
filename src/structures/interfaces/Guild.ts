@@ -177,7 +177,7 @@ export interface GuildDiscordJSON {
   name: string;
   icon: string | null;
   owner_id: Snowflake;
-  joined_at?: string;
+  joined_at?: ISO8601Timestamp;
   premium_tier: GuildPremiumTier;
   unavailable: boolean;
   member_count: number;

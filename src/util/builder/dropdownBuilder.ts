@@ -1,26 +1,36 @@
+import { ChannelTypes } from "src/structures/interfaces/Channel.js";
 import {
-  CHANNEL_TYPES,
   COMPONENT_TYPES,
   LIMITS,
   SELECT_MENU_TYPES,
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
 import DropdownOption from "./dropdownOption.js";
+import {
+  DropdownBuilderType,
+  DropdownDefaultOption,
+} from "./interfaces/dropdownBuilder.js";
+import { DropdownOptionBuilderType } from "./interfaces/dropdownOption.js";
 
 /**
  * Helps to create a dropdown message component.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menus}
  */
-class Dropdown {
-  channel_types: any;
-  custom_id: any;
-  default_values: any;
-  disabled: any;
-  max_values: any;
-  min_values: any;
-  options: any;
-  placeholder: any;
-  type: any;
+class Dropdown implements DropdownBuilderType {
+  channel_types: Array<ChannelTypes> | undefined;
+  custom_id: string | undefined;
+  default_values: DropdownDefaultOption[];
+  disabled: boolean | undefined;
+  max_values: number | undefined;
+  min_values: number | undefined;
+  options: DropdownOptionBuilderType[];
+  placeholder: string | undefined;
+  type:
+    | COMPONENT_TYPES.SELECT_MENU
+    | COMPONENT_TYPES.USER_SELECT_MENU
+    | COMPONENT_TYPES.ROLE_SELECT_MENU
+    | COMPONENT_TYPES.MENTIONABLE_SELECT_MENU
+    | COMPONENT_TYPES.CHANNEL_SELECT_MENU;
   /**
    * Creates a dropdown component.
    */
@@ -36,7 +46,14 @@ class Dropdown {
    * @returns {Dropdown}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#component-object-component-types}
    */
-  setType(type: any) {
+  setType(
+    type:
+      | COMPONENT_TYPES.SELECT_MENU
+      | COMPONENT_TYPES.USER_SELECT_MENU
+      | COMPONENT_TYPES.ROLE_SELECT_MENU
+      | COMPONENT_TYPES.MENTIONABLE_SELECT_MENU
+      | COMPONENT_TYPES.CHANNEL_SELECT_MENU,
+  ) {
     if (typeof type != "number")
       throw new TypeError("GLUON: Dropdown type must be a number.");
 
@@ -51,7 +68,7 @@ class Dropdown {
    * @returns {Dropdown}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
-  setCustomID(id: any) {
+  setCustomID(id: string) {
     if (!id) throw new TypeError("GLUON: Dropdown custom id must be provided.");
 
     if (id.length > LIMITS.MAX_DROPDOWN_CUSTOM_ID)
@@ -69,7 +86,7 @@ class Dropdown {
    * @param {DropdownOption} option Adds an option to the dropdown.
    * @returns {Dropdown}
    */
-  addOption(option: any) {
+  addOption(option: DropdownOptionBuilderType) {
     if (!option)
       throw new TypeError("GLUON: Dropdown option must be provided.");
 
@@ -89,7 +106,7 @@ class Dropdown {
    * @returns {Dropdown}
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
-  addChannelTypes(channelTypes: any) {
+  addChannelTypes(channelTypes: Array<ChannelTypes>) {
     if (!channelTypes)
       throw new TypeError("GLUON: Dropdown channel types must be provided.");
 
@@ -106,7 +123,7 @@ class Dropdown {
    * @param {String} placeholder Placeholder text if nothing is selected.
    * @returns {Dropdown}
    */
-  setPlaceholder(placeholder: any) {
+  setPlaceholder(placeholder: string) {
     if (!placeholder)
       throw new TypeError("GLUON: Dropdown placeholder must be provided.");
 
@@ -123,7 +140,7 @@ class Dropdown {
    * @param {Number} value The minimum number value that the user may enter.
    * @returns {Dropdown}
    */
-  setMinValue(value: any) {
+  setMinValue(value: number) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown min value must be a number.");
 
@@ -145,7 +162,7 @@ class Dropdown {
    * @param {Number} value The maximum number value that the user may enter.
    * @returns {Dropdown}
    */
-  setMaxValue(value: any) {
+  setMaxValue(value: number) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Dropdown max value must be a number.");
 
@@ -167,7 +184,7 @@ class Dropdown {
    * @param {Boolean} disabled Whether this dropdown should be displayed as disabled.
    * @returns {Dropdown}
    */
-  setDisabled(isDisabled: any) {
+  setDisabled(isDisabled: boolean) {
     if (typeof isDisabled != "boolean")
       throw new TypeError("GLUON: Dropdown disabled must be a boolean.");
 
@@ -181,7 +198,7 @@ class Dropdown {
    * @param {Object} option The default option to add to the dropdown.
    * @returns {Dropdown}
    */
-  addDefaultOption(option: any) {
+  addDefaultOption(option: DropdownDefaultOption) {
     if (!option)
       throw new TypeError("GLUON: Dropdown option must be provided.");
 
@@ -192,7 +209,8 @@ class Dropdown {
 
     if (
       !this.default_values.every(
-        (o: any) => o.id !== undefined && o.type !== undefined,
+        (o: DropdownDefaultOption) =>
+          o.id !== undefined && o.type !== undefined,
       )
     )
       throw new TypeError(
@@ -209,7 +227,7 @@ class Dropdown {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -242,7 +260,9 @@ class Dropdown {
         );
       if (
         this.options &&
-        !this.options.every((o: any) => o instanceof DropdownOption)
+        !this.options.every(
+          (o: DropdownOptionBuilderType) => o instanceof DropdownOption,
+        )
       )
         throw new TypeError(
           "GLUON: Dropdown options must be an array of DropdownOption.",
@@ -253,19 +273,19 @@ class Dropdown {
         throw new TypeError("GLUON: Dropdown channel types must be an array.");
       if (
         this.channel_types &&
-        !this.channel_types.every((c: any) => typeof c === "number")
+        !this.channel_types.every((c: ChannelTypes) => typeof c === "number")
       )
         throw new TypeError(
           "GLUON: Dropdown channel types must be an array of numbers.",
         );
       if (
         this.channel_types &&
-        !this.channel_types.every((c: any) =>
-          Object.values(CHANNEL_TYPES).includes(c),
+        !this.channel_types.every((c: ChannelTypes) =>
+          Object.values(ChannelTypes).includes(c),
         )
       )
         throw new TypeError(
-          `GLUON: Dropdown channel types must be one of ${Object.values(CHANNEL_TYPES).join(", ")}.`,
+          `GLUON: Dropdown channel types must be one of ${Object.values(ChannelTypes).join(", ")}.`,
         );
       if (this.placeholder && typeof this.placeholder !== "string")
         throw new TypeError("GLUON: Dropdown placeholder must be a string.");
@@ -335,8 +355,10 @@ class Dropdown {
       default: {
         return {
           type: this.type,
-          custom_id: this.custom_id,
-          options: this.options?.map((o: any) => o.toJSON(format)),
+          custom_id: this.custom_id as string, // only valid because of the validation above
+          options: this.options?.map((o: DropdownOptionBuilderType) =>
+            o.toJSON(format),
+          ),
           channel_types: this.channel_types,
           default_values: this.default_values,
           placeholder: this.placeholder,

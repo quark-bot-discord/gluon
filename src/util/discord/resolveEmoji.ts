@@ -1,10 +1,11 @@
-/* eslint-disable quotes */
+import { ResolvedEmoji } from "./interfaces/resolveEmoji.js";
+
 /**
  * Gives a valid Discord emoji structure when given an emoji mention.
  * @param {String} text Emoji mention. e.g. <:bitcoin:844240546246950922>
  * @returns {Object}
  */
-function resolveEmoji(text: any) {
+function resolveEmoji(text: string): ResolvedEmoji | null {
   if (typeof text !== "string")
     throw new TypeError("GLUON: The emoji must be a string.");
 

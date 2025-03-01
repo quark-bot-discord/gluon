@@ -22,7 +22,7 @@ export interface AuditLogType {
   readonly membersRemoved?: number;
   readonly specialId: Snowflake | null;
   readonly specialType?: AuditLogOptionTypes;
-  readonly status: string | null;
+  readonly status?: string;
   readonly changes?: AuditLogChanges;
   toString(): string;
   toJSON(
@@ -72,6 +72,7 @@ export interface AuditLogRaw {
     role_name?: string;
     type?: AuditLogOptionTypes;
     integration_type?: string;
+    status?: string;
   };
   reason: string | null;
 }

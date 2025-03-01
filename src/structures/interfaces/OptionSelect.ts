@@ -25,7 +25,7 @@ import { AttachmentRaw } from "./Attachment.js";
 export interface OptionSelectType extends InteractionType {
   readonly customId: string;
   readonly message: MessageType;
-  readonly values: Array<any>;
+  readonly values: Array<SelectOption>;
   toString(): string;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
@@ -34,20 +34,20 @@ export interface OptionSelectType extends InteractionType {
 
 export interface OptionSelectStorageJSON extends InteractionStorageJSON {
   custom_id: string;
-  values: Array<any>;
+  values: Array<SelectOption>;
   message: MessageStorageJSON;
 }
 
 export interface OptionSelectCacheJSON extends InteractionCacheJSON {
   custom_id: string;
-  values: Array<any>;
+  values: Array<SelectOption>;
   message: MessageCacheJSON;
 }
 
 export interface OptionSelectDiscordJSON extends InteractionDiscordJSON {
   data: {
     custom_id: string;
-    values: Array<any>;
+    values: Array<SelectOption>;
   };
   message: MessageDiscordJSON;
 }
@@ -55,11 +55,12 @@ export interface OptionSelectDiscordJSON extends InteractionDiscordJSON {
 export interface OptionSelectRaw extends InteractionRaw {
   type: InteractionTypes.COMPONENT;
   data: OptionSelectRawData;
+  message: MessageRaw;
 }
 
 export interface OptionSelectRawData {
   custom_id: string;
-  values?: Array<SelectOption>;
+  values: Array<SelectOption>;
   component_type:
     | COMPONENT_TYPES.CHANNEL_SELECT_MENU
     | COMPONENT_TYPES.USER_SELECT_MENU

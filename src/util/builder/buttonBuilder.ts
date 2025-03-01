@@ -4,21 +4,23 @@ import {
   LIMITS,
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import { ResolvedEmoji } from "../discord/interfaces/resolveEmoji.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
+import { ButtonBuilderType, ButtonStyles } from "./interfaces/buttonBuilder.js";
 
 /**
  * Helps to construct a button for a message.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}
  */
-class Button {
-  custom_id: any;
-  disabled: any;
-  emoji: any;
-  label: any;
-  style: any;
-  type: any;
-  url: any;
+class Button implements ButtonBuilderType {
+  custom_id: string | undefined;
+  disabled: boolean | undefined;
+  emoji: ResolvedEmoji | undefined;
+  label: string | undefined;
+  style: ButtonStyles = BUTTON_STYLES.PRIMARY;
+  type: COMPONENT_TYPES.BUTTON;
+  url: string | undefined;
   /**
    * Creates a button.
    */
@@ -31,7 +33,7 @@ class Button {
    * @param {String} label The text to display on the button.
    * @returns {Button}
    */
-  setLabel(label: any) {
+  setLabel(label: string) {
     if (!label) throw new TypeError("GLUON: Button label must be provided.");
 
     this.label =
@@ -47,8 +49,8 @@ class Button {
    * @param {String} emoji The emoji to display on the button. For a custom emoji, it should be in the format "<:bitcoin:844240546246950922>".
    * @returns {Button}
    */
-  setEmoji(emoji: any) {
-    this.emoji = resolveEmoji(emoji);
+  setEmoji(emoji: string) {
+    this.emoji = resolveEmoji(emoji) ?? undefined;
 
     if (!this.emoji)
       throw new TypeError("GLUON: Button emoji must be provided.");
@@ -62,7 +64,7 @@ class Button {
    * @returns {Button}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles}
    */
-  setStyle(style: any) {
+  setStyle(style: ButtonStyles) {
     if (!style) throw new TypeError("GLUON: Button style must be provided.");
 
     this.style = style;
@@ -76,7 +78,7 @@ class Button {
    * @returns {Button}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
-  setCustomID(id: any) {
+  setCustomID(id: string) {
     if (!id)
       throw new TypeError(
         "GLUON: Button custom id must be provided for non-link buttons.",
@@ -97,7 +99,7 @@ class Button {
    * @param {String} url The url for a link button.
    * @returns {Button}
    */
-  setURL(url: any) {
+  setURL(url: string) {
     this.url = url;
 
     return this;
@@ -108,7 +110,7 @@ class Button {
    * @param {Boolean} disabled Whether this button should be displayed as disabled.
    * @returns {Button}
    */
-  setDisabled(disabled: any) {
+  setDisabled(disabled: boolean) {
     this.disabled = disabled;
 
     return this;
@@ -119,7 +121,7 @@ class Button {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },

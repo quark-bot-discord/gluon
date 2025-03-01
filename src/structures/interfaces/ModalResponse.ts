@@ -7,11 +7,11 @@ import {
   InteractionType,
   InteractionTypes,
 } from "./Interaction.js";
-import { ResolvedData, SelectOption } from "./OptionSelect.js";
+import { MessageRaw } from "./Message.js";
 
 export interface ModalResponseType extends InteractionType {
   readonly customId: string;
-  readonly values: Array<Object>;
+  readonly values: Array<ModalResponseComponentsComponents>;
   toString(): string;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,
@@ -22,12 +22,12 @@ export interface ModalResponseType extends InteractionType {
 }
 
 export interface ModalResponseStorageJSON extends InteractionStorageJSON {
-  values: Array<Object>;
+  values: Array<ModalResponseComponentsComponents>;
   custom_id: string;
 }
 
 export interface ModalResponseCacheJSON extends InteractionCacheJSON {
-  values: Array<Object>;
+  values: Array<ModalResponseComponentsComponents>;
   custom_id: string;
 }
 
@@ -35,7 +35,7 @@ export interface ModalResponseDiscordJSON extends InteractionDiscordJSON {
   data: {
     custom_id: string;
     components: Array<{
-      components: Array<Object>;
+      components: Array<ModalResponseComponentsComponents>;
     }>;
   };
 }
@@ -46,13 +46,30 @@ export interface ModalResponseRawData {
 }
 
 export interface ModalResponseComponents {
+  title: string;
   custom_id: string;
-  values?: Array<SelectOption>;
-  component_type: COMPONENT_TYPES;
-  resolved?: ResolvedData;
+  components: Array<ModalResponseComponentsComponents>;
+}
+
+export interface ModalResponseComponentsComponents {
+  custom_id: string;
+  type: COMPONENT_TYPES.TEXT_INPUT;
+  style: TextInputStyles;
+  label: string;
+  min_length?: number;
+  max_length?: number;
+  required?: boolean;
+  placeholder?: string;
+  value?: string;
+}
+
+export enum TextInputStyles {
+  SHORT = 1,
+  PARAGRAPH = 2,
 }
 
 export interface ModalResponseRaw extends InteractionRaw {
   type: InteractionTypes.MODAL_SUBMIT;
   data: ModalResponseRawData;
+  message: MessageRaw;
 }

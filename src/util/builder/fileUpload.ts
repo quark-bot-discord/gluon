@@ -1,20 +1,18 @@
+import { Stream } from "stream";
 import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { FileUploadType } from "./interfaces/fileUpload.js";
 
-class FileUpload {
-  // @ts-expect-error TS(7008): Member '#name' implicitly has an 'any' type.
-  #name;
-  // @ts-expect-error TS(7008): Member '#stream' implicitly has an 'any' type.
-  #stream;
-  // @ts-expect-error TS(7008): Member '#path' implicitly has an 'any' type.
-  #path;
-  // @ts-expect-error TS(7008): Member '#size' implicitly has an 'any' type.
-  #size;
+class FileUpload implements FileUploadType {
+  #name: string | undefined;
+  #stream: Stream | undefined;
+  #path: string | undefined;
+  #size: number | undefined;
   /**
    * The name of the file.
    * @param {String} name The name of the file.
    * @returns {FileUpload}
    */
-  setName(name: any) {
+  setName(name: string) {
     if (!name) throw new TypeError("GLUON: File name must be provided.");
     if (typeof name !== "string")
       throw new TypeError("GLUON: File name must be a string.");
@@ -31,7 +29,7 @@ class FileUpload {
    * @param {Stream} stream The stream of the file.
    * @returns {FileUpload}
    */
-  setStream(stream: any) {
+  setStream(stream: Stream) {
     if (!stream) throw new TypeError("GLUON: File stream must be provided.");
     this.#stream = stream;
     return this;
@@ -42,7 +40,7 @@ class FileUpload {
    * @param {String} path The path of the file.
    * @returns {FileUpload}
    */
-  setPath(path: any) {
+  setPath(path: string) {
     if (!path) throw new TypeError("GLUON: File path must be provided.");
     if (typeof path !== "string")
       throw new TypeError("GLUON: File path must be a string.");
@@ -55,7 +53,7 @@ class FileUpload {
    * @param {Number} size The size of the file.
    * @returns {FileUpload}
    */
-  setSize(size: any) {
+  setSize(size: number) {
     if (!size) throw new TypeError("GLUON: File size must be provided.");
     if (typeof size !== "number")
       throw new TypeError("GLUON: File size must be a number.");
@@ -100,7 +98,7 @@ class FileUpload {
   }
 
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -112,8 +110,8 @@ class FileUpload {
         throw new TypeError("GLUON: File stream or path must be provided.");
     }
     const commonProperties = {
-      name: this.#name,
-      size: this.#size,
+      name: this.#name as string, // only valid because of the above check
+      size: this.#size as number, // only valid because of the above check
     };
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:

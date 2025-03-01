@@ -15,6 +15,11 @@ import { OptionSelectRawData } from "./OptionSelect.js";
 import { SlashCommandRawData } from "./SlashCommand.js";
 import { AllChannelTypes, ChannelRaw } from "./Channel.js";
 import { ButtonClickRawData } from "./ButtonClick.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
+import { CommandChoiceBuilderType } from "src/util/builder/interfaces/commandChoiceBuilder.js";
+import { TextInputBuilderType } from "src/util/builder/interfaces/textInputBuilder.js";
 
 export interface InteractionType {
   readonly id: Snowflake;
@@ -33,13 +38,26 @@ export interface InteractionType {
   }: {
     title: string;
     customId: string;
-    textInputModal: any;
+    textInputModal: TextInputBuilderType;
   }): Promise<void>;
-  autocompleteResponse(options: any): Promise<InteractionType>;
-  reply(options: any): Promise<InteractionType>;
+  autocompleteResponse(options: {
+    choices: CommandChoiceBuilderType[];
+  }): Promise<void>;
+  reply(options: {
+    content: string;
+    files?: FileUploadType[];
+    embeds?: EmbedBuilderType[];
+    components?: MessageComponentsType;
+    quiet?: boolean;
+  }): Promise<InteractionType>;
   acknowledge(): Promise<InteractionType>;
   delete(): Promise<InteractionType>;
-  edit(options: any): Promise<InteractionType>;
+  edit(options: {
+    content: string;
+    files: FileUploadType[];
+    embeds: EmbedBuilderType[];
+    components: MessageComponentsType;
+  }): Promise<InteractionType>;
   toString(): string;
   toJSON(
     format?: TO_JSON_TYPES_ENUM,

@@ -1,22 +1,24 @@
 import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { ResolvedEmoji } from "../discord/interfaces/resolveEmoji.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
+import { DropdownOptionBuilderType } from "./interfaces/dropdownOption.js";
 
 /**
  * Helps to create a dropdown option.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
  */
-class DropdownOption {
-  default: any;
-  description: any;
-  emoji: any;
-  label: any;
-  value: any;
+class DropdownOption implements DropdownOptionBuilderType {
+  default: boolean | undefined;
+  description: string | undefined;
+  emoji: ResolvedEmoji | undefined;
+  label: string | undefined;
+  value: string | undefined;
   /**
    * Sets the label.
    * @param {String} label Sets the label.
    * @returns {DropdownOption}
    */
-  setLabel(label: any) {
+  setLabel(label: string) {
     if (!label)
       throw new TypeError("GLUON: Dropdown option label must be provided.");
 
@@ -33,7 +35,7 @@ class DropdownOption {
    * @param {String} value Sets the value.
    * @returns {DropdownOption}
    */
-  setValue(value: any) {
+  setValue(value: string) {
     if (!value)
       throw new TypeError("GLUON: Dropdown option value must be provided.");
 
@@ -52,7 +54,7 @@ class DropdownOption {
    * @param {String} description Sets the description.
    * @returns {DropdownOption}
    */
-  setDescription(description: any) {
+  setDescription(description: string) {
     if (!description)
       throw new TypeError(
         "GLUON: Dropdown option description must be provided.",
@@ -71,8 +73,8 @@ class DropdownOption {
    * @param {String} emoji The emoji to display on the dropdown option. For a custom emoji, it should be in the format "<:bitcoin:844240546246950922>".
    * @returns {DropdownOption}
    */
-  setEmoji(emoji: any) {
-    this.emoji = resolveEmoji(emoji);
+  setEmoji(emoji: string) {
+    this.emoji = resolveEmoji(emoji) ?? undefined;
 
     if (!this.emoji)
       throw new TypeError("GLUON: Dropdown option emoji must be provided.");
@@ -85,7 +87,7 @@ class DropdownOption {
    * @param {Boolean} isDefault Whether this option should be selected by default.
    * @returns {DropdownOption}
    */
-  setDefault(isDefault: any) {
+  setDefault(isDefault: boolean) {
     this.default = isDefault;
 
     return this;
@@ -96,7 +98,7 @@ class DropdownOption {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -141,8 +143,8 @@ class DropdownOption {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       default: {
         return {
-          label: this.label,
-          value: this.value,
+          label: this.label as string, // only valid because of the validation above
+          value: this.value as string, // only valid because of the validation above
           description: this.description,
           emoji: this.emoji,
           default: this.default,

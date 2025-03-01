@@ -26,10 +26,14 @@ import {
   MessageCacheJSON,
   MessageDiscordJSON,
   MessageStorageJSON,
+  MessageType,
 } from "./Message.js";
 import { ChannelCacheOptionsType } from "src/managers/interfaces/ChannelCacheOptions.js";
 import { ChannelMessageManagerType } from "src/managers/interfaces/ChannelMessageManager.js";
 import { CategoryChannelType } from "./CategoryChannel.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
 
 export interface ChannelType {
   readonly mention: string;
@@ -47,11 +51,11 @@ export interface ChannelType {
   readonly position: number;
   readonly _cacheOptions: ChannelCacheOptionsType;
   readonly messages: ChannelMessageManagerType;
-  send(options?: {
+  send(options: {
     content?: string;
-    components?: any;
-    files?: any;
-    embeds?: any;
+    components?: MessageComponentsType;
+    files?: FileUploadType[];
+    embeds?: EmbedBuilderType[];
     suppressMentions?: boolean;
   }): Promise<MessageType>;
   checkPermission(member: MemberType): string;

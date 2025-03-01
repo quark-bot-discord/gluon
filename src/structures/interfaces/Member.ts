@@ -1,5 +1,4 @@
 import { TO_JSON_TYPES_ENUM } from "src/constants.js";
-import ClientType from "src/interfaces/Client.js";
 import {
   ISO8601Timestamp,
   PermissionsBitfield,
@@ -16,8 +15,6 @@ import {
 } from "./User.js";
 import { GuildType } from "./Guild.js";
 import { RoleType } from "./Role.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 export interface MemberType {
   readonly id: Snowflake;
@@ -39,8 +36,6 @@ export interface MemberType {
   readonly avatarIsAnimated: boolean;
   readonly mention: string;
   readonly hashName: string;
-  getMention(userId: Snowflake): string;
-  getAvatarUrl(id: Snowflake, guildId: Snowflake, hash?: string | null): string;
   addRole(role_id: Snowflake, { reason }: { reason?: string }): Promise<void>;
   removeRole(
     role_id: Snowflake,
@@ -55,31 +50,8 @@ export interface MemberType {
     roles: string[],
     { reason }: { reason?: string },
   ): Promise<void>;
-  shouldCache(
-    gluonCacheOptions: GluonCacheOptionsType,
-    guildCacheOptions: GuildCacheOptionsType,
-  ): boolean;
-  getHashName(guildId: Snowflake, memberId: Snowflake): string;
-  decrypt(
-    client: ClientType,
-    data: string,
-    guildId: Snowflake,
-    userId: Snowflake,
-  ): MemberType;
-  addRole(
-    client: ClientType,
-    guildId: Snowflake,
-    userId: Snowflake,
-    roleId: Snowflake,
-    { reason }: { reason?: string },
-  ): Promise<void>;
-  removeRole(
-    client: ClientType,
-    guildId: Snowflake,
-    userId: Snowflake,
-    roleId: Snowflake,
-    { reason }: { reason?: string },
-  ): Promise<void>;
+  addRole(roleId: Snowflake, { reason }: { reason?: string }): Promise<void>;
+  removeRole(roleId: Snowflake, { reason }: { reason?: string }): Promise<void>;
   encrypt(): string;
   toString(): string;
   toJSON(

@@ -180,6 +180,9 @@ class Emoji implements EmojiType {
    * @public
    */
   get mention() {
+    if (!this.name) {
+      throw new Error("GLUON: Emoji name is required to mention the emoji.");
+    }
     return Emoji.getMention(this.name, this.id, this.animated);
   }
 
@@ -320,7 +323,7 @@ class Emoji implements EmojiType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {

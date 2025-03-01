@@ -95,7 +95,16 @@ class ChannelMessageManager
    * @method
    * @throws {TypeError | Error}
    */
-  async fetch(options: any) {
+  async fetch(
+    options:
+      | {
+          around?: Snowflake;
+          before?: Snowflake;
+          after?: Snowflake;
+          limit?: number;
+        }
+      | Snowflake,
+  ) {
     if (
       !checkPermission(
         (await this.#guild.me()).permissions,
@@ -147,7 +156,7 @@ class ChannelMessageManager
       messages.push(
         new Message(this.#_client as ClientType, data[i], {
           channelId: data[i].channel_id,
-          guildId: this.#channel.guild.id,
+          guildId: this.#channel.guildId,
         }),
       );
     return messages;

@@ -115,7 +115,7 @@ class User implements UserType {
      * @type {Number}
      * @private
      */
-    if (data._cached) this.#_cached = data._cached;
+    if ("_cached" in data) this.#_cached = data._cached;
     else this.#_cached = (new Date().getTime() / 1000) | 0;
 
     const shouldCache = User.shouldCache(this.#_client._cacheOptions);
@@ -350,7 +350,7 @@ class User implements UserType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any) {
+  static shouldCache(gluonCacheOptions: GluonCacheOptions) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -382,7 +382,7 @@ class User implements UserType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
         return {

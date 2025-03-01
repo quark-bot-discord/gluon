@@ -1,4 +1,4 @@
-import { TO_JSON_TYPES_ENUM } from "src/constants.js";
+import { MESSAGE_FLAGS, TO_JSON_TYPES_ENUM } from "src/constants.js";
 import {
   ISO8601Timestamp,
   PermissionsBitfield,
@@ -18,13 +18,7 @@ import {
   PollStorageJSON,
   PollType,
 } from "./Poll.js";
-import {
-  ReactionCacheJSON,
-  ReactionDiscordJSON,
-  ReactionRaw,
-  ReactionStorageJSON,
-  ReactionType,
-} from "./Reaction.js";
+import { ReactionRaw, ReactionType } from "./Reaction.js";
 import {
   UserCacheJSON,
   UserDiscordJSON,
@@ -36,6 +30,7 @@ import {
   AttachmentDiscordJSON,
   AttachmentRaw,
   AttachmentStorageJSON,
+  AttachmentType,
 } from "./Attachment.js";
 import { ThreadRaw } from "./Thread.js";
 import { InteractionTypes } from "./Interaction.js";
@@ -49,6 +44,20 @@ import {
   StickerItemRaw,
 } from "./Sticker.js";
 import { ResolvedData } from "./OptionSelect.js";
+import {
+  EmbedBuilderCacheJSON,
+  EmbedBuilderDiscordJSON,
+  EmbedBuilderStorageJSON,
+  EmbedBuilderType,
+  EmbedRaw,
+} from "src/util/builder/interfaces/embedBuilder.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
+import {
+  MessageReactionManagerCacheJSON,
+  MessageReactionManagerDiscordJSON,
+  MessageReactionManagerStorageJSON,
+} from "src/managers/interfaces/MessageReactionManager.js";
 
 export interface MessageType {
   readonly id: Snowflake;
@@ -57,11 +66,11 @@ export interface MessageType {
   readonly content: string | null;
   readonly poll: PollType | null;
   readonly reactions: ReactionType[];
-  readonly embeds: Array<any>;
+  readonly embeds: Array<EmbedBuilderType>;
   readonly reference: {
     messageId: Snowflake | null;
   };
-  readonly flags: Array<string>;
+  readonly flags: Array<keyof typeof MESSAGE_FLAGS>;
   readonly flagsRaw: number;
   readonly type: number;
   readonly webhookId: Snowflake | null;
@@ -69,26 +78,20 @@ export interface MessageType {
   readonly messageSnapshots: Array<MessageType> | null;
   readonly url: string;
   readonly hashName: string;
-  reply(options?: {
+  reply(options: {
     content?: string;
-    embeds?: Array<any>;
-    components?: any;
-    files?: Array<any>;
+    embeds?: EmbedBuilderType[];
+    components?: MessageComponentsType;
+    files?: FileUploadType[];
     suppressMentions?: boolean;
-  }): Promise<any>;
+  }): Promise<MessageType>;
   edit(options?: {
-    components?: any;
-    files?: Array<any>;
+    components?: MessageComponentsType;
+    files?: FileUploadType[];
     content?: string;
-    embeds?: Array<any>;
-    attachments?: Array<any>;
-    flags?: number;
-    reference?: {
-      messageId: Snowflake | null;
-      channelId: Snowflake;
-      guildId: Snowflake;
-    };
-  }): Promise<any>;
+    embeds?: EmbedBuilderType[];
+    attachments?: AttachmentType[];
+  }): Promise<MessageType>;
   delete(options?: { reason?: string }): Promise<void>;
   encrypt(): string;
   toString(): string;
@@ -104,7 +107,7 @@ export interface MessageStorageJSON {
   content: string;
   _attributes: number;
   attachments: AttachmentStorageJSON[];
-  embeds: Array<any>;
+  embeds: EmbedBuilderStorageJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollStorageJSON | null;
   message_snapshots: Array<MessageStorageJSON> | null;
@@ -113,7 +116,7 @@ export interface MessageStorageJSON {
     id: Snowflake | null;
   };
   sticker_items: Array<StickerStorageJSON>;
-  messageReactions: ReactionStorageJSON[];
+  messageReactions: MessageReactionManagerStorageJSON;
 }
 
 export interface MessageCacheJSON {
@@ -123,7 +126,7 @@ export interface MessageCacheJSON {
   content: string;
   _attributes: number;
   attachments: AttachmentCacheJSON[];
-  embeds: Array<any>;
+  embeds: EmbedBuilderCacheJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollCacheJSON | null;
   message_snapshots: Array<MessageCacheJSON> | null;
@@ -132,7 +135,7 @@ export interface MessageCacheJSON {
     id: Snowflake | null;
   };
   sticker_items: Array<StickerCacheJSON>;
-  messageReactions: ReactionCacheJSON[];
+  messageReactions: MessageReactionManagerCacheJSON;
 }
 
 export interface MessageDiscordJSON {
@@ -143,7 +146,7 @@ export interface MessageDiscordJSON {
   content: string;
   pinned: boolean;
   attachments: AttachmentDiscordJSON[];
-  embeds: Array<any>;
+  embeds: EmbedBuilderDiscordJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollDiscordJSON | null;
   message_snapshots: Array<MessageDiscordJSON> | null;
@@ -152,7 +155,7 @@ export interface MessageDiscordJSON {
     id: Snowflake | null;
   };
   sticker_items: Array<StickerDiscordJSON>;
-  reactions: ReactionDiscordJSON[];
+  reactions: MessageReactionManagerDiscordJSON;
   mention_everyone: boolean;
   mention_roles: Array<string>;
   mentions: Array<string>;
@@ -171,7 +174,7 @@ export interface MessageRaw {
   mention_roles: Array<Snowflake>;
   mention_channels: Array<MessageChannelMentionObject>;
   attachments: AttachmentRaw[];
-  embeds: Array<any>;
+  embeds: Array<EmbedRaw>;
   reactions?: ReactionRaw[];
   nonce?: number | string;
   pinned: boolean;
@@ -187,7 +190,6 @@ export interface MessageRaw {
   interaction_metadata?: MessageInteractionMetadataObject;
   interaction?: MessageInteractionStructure;
   thread?: ThreadRaw;
-  components?: Array<any>;
   sticker_items?: Array<StickerItemRaw>;
   stickers?: Array<StickerRaw>; // deprecated
   position?: number;

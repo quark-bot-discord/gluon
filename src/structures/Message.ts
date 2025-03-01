@@ -36,6 +36,12 @@ import {
 } from "./interfaces/Message.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { AttachmentType } from "./interfaces/Attachment.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+import { ChannelCacheOptionsType } from "src/managers/interfaces/ChannelCacheOptions.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -157,11 +163,10 @@ class Message implements MessageType {
       this.#author = new User(this.#_client, data.author, {
         // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
         nocache: !data.webhook_id || nocache,
-        noDbStore: true,
       });
     else if (existing?.author) this.#author = existing.author;
 
-    if (data.member) {
+    if ("member" in data && data.member) {
       new Member(this.#_client, data.member, {
         userId: data.author.id,
         guildId,
@@ -222,7 +227,7 @@ class Message implements MessageType {
          * @private
          */
         this.#reactions = existing.reactions;
-      else
+      else if ("messageReactions" in data)
         this.#reactions = new MessageReactionManager(
           this.#_client,
           this.guild,
@@ -236,7 +241,7 @@ class Message implements MessageType {
        * @type {Embed[]}
        * @private
        */
-      if (data.embeds) this.#embeds = data.embeds.map((e: any) => new Embed(e));
+      if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
       else if (existing && existing.embeds != undefined)
         this.#embeds = existing.embeds;
       else if (this.#embeds == undefined) this.#embeds = [];
@@ -248,47 +253,39 @@ class Message implements MessageType {
        * @type {Number}
        * @private
        */
-      this.#_attributes = data._attributes || 0;
+      this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-      if (data.mentions && data.mentions.length != 0)
+      if ("mentions" in data && data.mentions.length != 0)
         this.#_attributes |= 0b1 << 0;
-      else if (
-        data.mentions == undefined &&
-        existing &&
-        existing.mentions == true
-      )
+      else if (!("mentions" in data) && existing && existing.mentions == true)
         this.#_attributes |= 0b1 << 0;
 
-      if (data.mention_roles && data.mention_roles.length != 0)
+      if ("mention_roles" in data && data.mention_roles.length != 0)
         this.#_attributes |= 0b1 << 1;
       else if (
-        data.mention_roles == undefined &&
+        !("mention_roles" in data) &&
         existing &&
         existing.mentionRoles == true
       )
         this.#_attributes |= 0b1 << 1;
 
-      if (data.mention_everyone != undefined && data.mention_everyone == true)
+      if ("mention_everyone" in data && data.mention_everyone == true)
         this.#_attributes |= 0b1 << 2;
       else if (
-        data.mention_everyone == undefined &&
+        !("mention_everyone" in data) &&
         existing &&
         existing.mentionEveryone == true
       )
         this.#_attributes |= 0b1 << 2;
 
-      if (data.pinned != undefined && data.pinned == true)
+      if ("pinned" in data && data.pinned == true)
         this.#_attributes |= 0b1 << 3;
-      else if (data.pinned == undefined && existing && existing.pinned == true)
+      else if (!("pinned" in data) && existing && existing.pinned == true)
         this.#_attributes |= 0b1 << 3;
 
-      if (data.mirrored != undefined && data.mirrored == true)
+      if ("mirrored" in data && data.mirrored == true)
         this.#_attributes |= 0b1 << 4;
-      else if (
-        data.mirrored == undefined &&
-        existing &&
-        existing.mirrored == true
-      )
+      else if (!("mirrored" in data) && existing && existing.mirrored == true)
         this.#_attributes |= 0b1 << 4;
     }
 
@@ -312,7 +309,10 @@ class Message implements MessageType {
      * @type {Number}
      * @private
      */
-    this.#flags = data.flags;
+    this.#flags = "flags" in data ? data.flags : null;
+    if (existing && existing.flags != undefined && this.#flags == null)
+      this.#flags = existing.flags;
+    else if (this.#flags == null) this.#flags = 0;
 
     /**
      * The type of message.
@@ -333,7 +333,8 @@ class Message implements MessageType {
        * @type {BigInt?}
        * @private
        */
-      if (data.webhook_id) this.#webhook_id = BigInt(data.webhook_id);
+      if ("webhook_id" in data && data.webhook_id)
+        this.#webhook_id = BigInt(data.webhook_id);
       else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
     }
 
@@ -700,7 +701,7 @@ class Message implements MessageType {
       MESSAGE_FLAGS.IS_VOICE_MESSAGE
     )
       flags.push("IS_VOICE_MESSAGE");
-    return flags;
+    return flags as Array<keyof typeof MESSAGE_FLAGS>;
   }
 
   /**
@@ -793,7 +794,11 @@ class Message implements MessageType {
    * @static
    * @method
    */
-  static getUrl(guildId: any, channelId: any, messageId: any) {
+  static getUrl(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+  ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
@@ -823,7 +828,13 @@ class Message implements MessageType {
     components,
     files,
     suppressMentions = false,
-  }: any = {}) {
+  }: {
+    content?: string;
+    embeds?: EmbedBuilderType[];
+    components?: MessageComponents;
+    files?: FileUploadType[];
+    suppressMentions?: boolean;
+  }) {
     return Message.send(this.#_client, this.channelId, this.guildId, {
       content,
       reference: {
@@ -858,35 +869,19 @@ class Message implements MessageType {
    * @async
    * @throws {Error | TypeError}
    */
-  edit(
-    options: {
-      components?: any;
-      files?: any[] | undefined;
-      content?: string | undefined;
-      embeds?: any[] | undefined;
-      attachments?: any[] | undefined;
-      flags?: number | undefined;
-      reference?:
-        | {
-            messageId: string | null;
-            channelId: string;
-            guildId: string;
-          }
-        | undefined;
-    } = {},
-  ) {
+  edit(options: {
+    components?: MessageComponents | undefined;
+    files?: FileUploadType[] | undefined;
+    content?: string | undefined;
+    embeds?: EmbedBuilderType[] | undefined;
+    attachments?: AttachmentType[] | undefined;
+  }) {
     const {
       components = undefined,
       files = [],
       content = this.content,
       embeds = this.embeds,
       attachments = this.attachments,
-      flags = this.flagsRaw,
-      reference = {
-        messageId: this.reference.messageId,
-        channelId: this.channelId,
-        guildId: this.guildId,
-      },
     } = options;
     return Message.edit(this.#_client, this.channelId, this.id, this.guildId, {
       content,
@@ -894,8 +889,6 @@ class Message implements MessageType {
       files,
       embeds,
       attachments,
-      flags,
-      reference,
     });
   }
 
@@ -908,7 +901,7 @@ class Message implements MessageType {
    * @public
    * @async
    */
-  delete({ reason }: any = {}) {
+  delete({ reason }: { reason?: string } = {}) {
     return Message.delete(
       this.#_client,
       this.guildId,
@@ -929,9 +922,9 @@ class Message implements MessageType {
    * @method
    */
   static shouldCache(
-    gluonCacheOptions: any,
-    guildCacheOptions: any,
-    channelCacheOptions: any,
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+    channelCacheOptions: ChannelCacheOptionsType,
   ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
@@ -970,8 +963,8 @@ class Message implements MessageType {
    */
   static async send(
     client: ClientType,
-    channelId: any,
-    guildId: any,
+    channelId: Snowflake,
+    guildId: Snowflake,
     {
       content,
       embeds,
@@ -979,8 +972,17 @@ class Message implements MessageType {
       files,
       reference,
       suppressMentions = false,
-    }: any = {
-      suppressMentions: false,
+    }: {
+      content?: string;
+      embeds?: EmbedBuilderType[];
+      components?: MessageComponents;
+      files?: FileUploadType[];
+      reference?: {
+        message_id: Snowflake;
+        channel_id: Snowflake;
+        guild_id: Snowflake;
+      };
+      suppressMentions?: boolean;
     },
   ) {
     if (!client)
@@ -1055,10 +1057,22 @@ class Message implements MessageType {
    */
   static async edit(
     client: ClientType,
-    channelId: any,
-    messageId: any,
-    guildId: any,
-    { content, embeds, components, attachments, files }: any = {},
+    channelId: Snowflake,
+    messageId: Snowflake,
+    guildId: Snowflake,
+    {
+      content,
+      embeds,
+      components,
+      attachments,
+      files,
+    }: {
+      content?: string;
+      embeds?: EmbedBuilderType[];
+      components?: MessageComponents;
+      attachments?: AttachmentType[];
+      files?: FileUploadType[];
+    },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1119,7 +1133,11 @@ class Message implements MessageType {
    * @method
    * @throws {TypeError}
    */
-  static getHashName(guildId: any, channelId: any, messageId: any) {
+  static getHashName(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+  ) {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
@@ -1144,10 +1162,10 @@ class Message implements MessageType {
    */
   static decrypt(
     client: ClientType,
-    data: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
+    data: string,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1193,7 +1211,19 @@ class Message implements MessageType {
     attachments,
     flags,
     reference,
-  }: any = {}) {
+  }: {
+    content?: string;
+    embeds?: EmbedBuilderType[];
+    components?: MessageComponents;
+    files?: FileUploadType[];
+    attachments?: AttachmentType[];
+    flags?: number;
+    reference?: {
+      message_id: Snowflake;
+      channel_id: Snowflake;
+      guild_id: Snowflake;
+    };
+  } = {}) {
     if (!content && !embeds && !components && !files)
       throw new Error(
         "GLUON: Must provide content, embeds, components or files",
@@ -1271,11 +1301,11 @@ class Message implements MessageType {
    * @throws {TypeError}
    */
   static async delete(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
-    { reason }: any = {},
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+    { reason }: { reason?: string } = {},
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1345,7 +1375,7 @@ class Message implements MessageType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

@@ -26,6 +26,9 @@ import {
 import { MemberType } from "./interfaces/Member.js";
 import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
 import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
+import { FileUpload } from "src/util.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
 
 /**
  * Represents a channel within Discord.
@@ -238,12 +241,20 @@ class Channel implements ChannelType {
    * @async
    * @throws {Error | TypeError}
    */
-  send(
-    { content, components, files, embeds, suppressMentions = false }: any = {
-      suppressMentions: false,
-    },
-  ) {
-    return Message.send(this.#_client as ClientType, this.id, this.guildId, {
+  send({
+    content,
+    components,
+    files,
+    embeds,
+    suppressMentions = false,
+  }: {
+    content: string;
+    components: MessageComponentsType;
+    files: FileUpload[];
+    embeds: EmbedBuilderType[];
+    suppressMentions: boolean;
+  }) {
+    return Message.send(this.#_client, this.id, this.guildId, {
       content,
       components,
       files,
@@ -567,7 +578,7 @@ class Channel implements ChannelType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {

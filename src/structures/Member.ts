@@ -26,6 +26,8 @@ import {
   MemberType,
 } from "./interfaces/Member.js";
 import { UserType } from "./interfaces/User.js";
+import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
 
 /**
  * Represents a guild member.
@@ -685,7 +687,10 @@ class Member implements MemberType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",

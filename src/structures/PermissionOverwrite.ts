@@ -10,7 +10,7 @@ import {
 } from "./interfaces/PermissionOverwrite.js";
 
 class PermissionOverwrite implements PermissionOverwriteType {
-  #_client;
+  // #_client;
   #_id;
   #type;
   #allow;
@@ -38,7 +38,7 @@ class PermissionOverwrite implements PermissionOverwriteType {
      * @type {Client}
      * @private
      */
-    this.#_client = client;
+    // this.#_client = client;
     /**
      * The id of the overwrite.
      * @type {BigInt}

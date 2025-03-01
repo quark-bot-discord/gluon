@@ -1,24 +1,26 @@
+import { TextInputStyles } from "src/structures/interfaces/ModalResponse.js";
 import {
   COMPONENT_TYPES,
   LIMITS,
   TEXT_INPUT_STYLES,
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import { TextInputBuilderType } from "./interfaces/textInputBuilder.js";
 
 /**
  * Helps to construct a text input interaction.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-structure}
  */
-class TextInput {
-  custom_id: any;
-  label: any;
-  max_length: any;
-  min_length: any;
-  placeholder: any;
-  required: any;
-  style: any;
-  type: any;
-  value: any;
+class TextInput implements TextInputBuilderType {
+  custom_id: string | undefined;
+  label: string | undefined;
+  max_length: number | undefined;
+  min_length: number | undefined;
+  placeholder: string | undefined;
+  required: boolean | undefined;
+  style: TextInputStyles | undefined;
+  type: COMPONENT_TYPES.TEXT_INPUT;
+  value: string | undefined;
   /**
    * Creates a text input.
    */
@@ -31,7 +33,7 @@ class TextInput {
    * @param {String} label The text to display as a label to the input.
    * @returns {TextInput}
    */
-  setLabel(label: any) {
+  setLabel(label: string) {
     if (!label)
       throw new TypeError("GLUON: Text input label must be provided.");
 
@@ -49,7 +51,7 @@ class TextInput {
    * @returns {TextInput}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles}
    */
-  setStyle(style: any) {
+  setStyle(style: TextInputStyles) {
     if (!style)
       throw new TypeError("GLUON: Text input style must be provided.");
 
@@ -64,7 +66,7 @@ class TextInput {
    * @returns {TextInput}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#custom-id}
    */
-  setCustomID(id: any) {
+  setCustomID(id: string) {
     if (!id)
       throw new TypeError("GLUON: Text input custom id must be provided.");
 
@@ -83,7 +85,7 @@ class TextInput {
    * @param {String} value The value to pre-fill the text input with.
    * @returns {TextInput}
    */
-  setValue(value: any) {
+  setValue(value: string) {
     if (!value)
       throw new TypeError("GLUON: Text input value must be provided.");
 
@@ -100,7 +102,7 @@ class TextInput {
    * @param {String} placeholder Placeholder text for the text input.
    * @returns {TextInput}
    */
-  setPlaceholder(placeholder: any) {
+  setPlaceholder(placeholder: string) {
     if (!placeholder)
       throw new TypeError("GLUON: Text input placeholder must be provided.");
 
@@ -117,7 +119,7 @@ class TextInput {
    * @param {Number} length Minimum user input length.
    * @returns {TextInput}
    */
-  setMinLength(length: any) {
+  setMinLength(length: number) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Text input min length must be a number.");
 
@@ -131,7 +133,7 @@ class TextInput {
    * @param {Number} length Maximum user input length.
    * @returns {TextInput}
    */
-  setMaxLength(length: any) {
+  setMaxLength(length: number) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Text input max length must be a number.");
 
@@ -145,8 +147,8 @@ class TextInput {
    * @returns {Object}
    */
   toJSON(
-    format: number,
-    { suppressValidation = false }: { suppressValidation: boolean } = {
+    format: TO_JSON_TYPES_ENUM,
+    { suppressValidation = false }: { suppressValidation?: boolean } = {
       suppressValidation: false,
     },
   ) {
@@ -221,9 +223,9 @@ class TextInput {
       default: {
         return {
           type: this.type,
-          label: this.label,
-          style: this.style,
-          custom_id: this.custom_id,
+          label: this.label as string, // valid due to validation above
+          style: this.style as TextInputStyles, // valid due to validation above
+          custom_id: this.custom_id as string, // valid due to validation above
           value: this.value,
           placeholder: this.placeholder,
           min_length: this.min_length,

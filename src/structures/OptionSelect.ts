@@ -8,6 +8,7 @@ import {
   OptionSelectRaw,
   OptionSelectType,
 } from "./interfaces/OptionSelect.js";
+import { MessageType } from "./interfaces/Message.js";
 
 /**
  * Represents when an option is selected.
@@ -65,7 +66,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
     this.#message = new Message(this.#_client, data.message, {
       channelId,
       guildId,
-    });
+    }) as MessageType;
 
     /**
      * The values selected from the select menu.
@@ -131,7 +132,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {

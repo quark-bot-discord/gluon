@@ -59,7 +59,7 @@ class Reaction implements ReactionType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (data.emoji.mention)
+    if ("mention" in data.emoji)
       /**
        * The emoji used for the reaction.
        * @type {Emoji}
@@ -74,7 +74,10 @@ class Reaction implements ReactionType {
      * @type {Array<BigInt>}
      * @private
      */
-    this.#_reacted = data._reacted?.map((r: any) => BigInt(r)) || [];
+    this.#_reacted =
+      "_reacted" in data && Array.isArray(data._reacted)
+        ? data._reacted.map((r) => BigInt(r))
+        : [];
     if (!Array.isArray(data._reacted) && data.count) this.#count = data.count;
 
     /**
@@ -82,7 +85,7 @@ class Reaction implements ReactionType {
      * @type {BigInt?}
      * @private
      */
-    if (data.initial_reactor)
+    if ("initial_reactor" in data && data.initial_reactor)
       this.#initial_reactor = BigInt(data.initial_reactor);
   }
 

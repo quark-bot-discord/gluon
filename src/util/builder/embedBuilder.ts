@@ -1,6 +1,22 @@
+import {
+  UnixMillisecondsTimestamp,
+  UnixTimestamp,
+} from "src/interfaces/gluon.js";
 import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
+import {
+  EmbedAuthor,
+  EmbedBuilderCacheJSON,
+  EmbedBuilderDiscordJSON,
+  EmbedBuilderStorageJSON,
+  EmbedBuilderType,
+  EmbedField,
+  EmbedFooter,
+  EmbedMedia,
+  EmbedMediaVideo,
+  EmbedRaw,
+} from "./interfaces/embedBuilder.js";
 
 /**
  * Represents an author in an embed.
@@ -35,83 +51,83 @@ import isValidUrl from "../general/isValidUrl.js";
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
-class Embed {
+class Embed implements EmbedBuilderType {
   /**
    * The title of the embed.
    * @type {String}
    * @public
    */
-  title: any;
+  title: string | undefined;
 
   /**
    * The description of the embed.
    * @type {String}
    * @public
    */
-  description: any;
+  description: string | undefined;
 
   /**
    * The url of the embed.
    * @type {String}
    * @public
    */
-  url: any;
+  url: string | undefined;
 
   /**
    * The timestamp of the embed.
    * @type {Number}
    * @public
    */
-  timestamp: any;
+  timestamp: UnixMillisecondsTimestamp | undefined;
 
   /**
    * The color of the embed.
    * @type {Number}
    * @public
    */
-  color: any;
+  color: number | undefined;
 
   /**
    * The footer of the embed.
    * @type {EmbedFooter}
    * @public
    */
-  footer: any;
+  footer: EmbedFooter | undefined;
 
   /**
    * The author of the embed.
    * @type {EmbedAuthor}
    * @public
    */
-  author: any;
+  author: EmbedAuthor | undefined;
 
   /**
    * The fields of the embed.
    * @type {Array<EmbedField>}
    * @public
    */
-  fields: any;
+  fields: Array<EmbedField>;
 
   /**
    * The image of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  image: any;
+  image: EmbedMedia | undefined;
 
   /**
    * The thumbnail of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  thumbnail: any;
+  thumbnail: EmbedMedia | undefined;
 
   /**
    * The video of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  video: any;
+  video: EmbedMediaVideo | undefined;
 
   /**
    * Creates an embed structure.
@@ -140,7 +156,13 @@ class Embed {
    * @param {String?} [data.video.url] The video url.
    * @constructor
    */
-  constructor(data?: any) {
+  constructor(
+    data?:
+      | EmbedRaw
+      | EmbedBuilderCacheJSON
+      | EmbedBuilderDiscordJSON
+      | EmbedBuilderStorageJSON,
+  ) {
     this.fields = [];
     if (data) {
       if (data.title) this.setTitle(data.title);
@@ -153,12 +175,12 @@ class Embed {
       if (data.author)
         this.setAuthor(data.author.name, data.author.url, data.author.icon_url);
       if (data.fields && Array.isArray(data.fields))
-        data.fields.map((field: any) =>
+        data.fields.map((field) =>
           this.addField(field.name, field.value, field.inline),
         );
       if (data.image) this.setImage(data.image.url);
       if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
-      if (data.video) this.setVideo(data.video.url);
+      if (data.video && data.video.url) this.setVideo(data.video.url);
     }
   }
 
@@ -170,7 +192,7 @@ class Embed {
    * @method
    * @public
    */
-  setTitle(title: any) {
+  setTitle(title: string) {
     if (!title || typeof title !== "string")
       throw new TypeError("GLUON: Embed title must be provided.");
 
@@ -190,7 +212,7 @@ class Embed {
    * @method
    * @public
    */
-  setDescription(text: any) {
+  setDescription(text: string) {
     if (!text || typeof text !== "string")
       throw new TypeError("GLUON: Embed description must be provided.");
 
@@ -210,7 +232,7 @@ class Embed {
    * @method
    * @public
    */
-  setURL(url: any) {
+  setURL(url: string) {
     if (!url || typeof url !== "string")
       throw new TypeError("GLUON: Embed url must be provided.");
 
@@ -226,7 +248,7 @@ class Embed {
    * @method
    * @public
    */
-  setTimestamp(timestamp?: any) {
+  setTimestamp(timestamp?: UnixTimestamp) {
     if (timestamp) this.timestamp = timestamp * 1000;
     else this.timestamp = Date.now();
 
@@ -241,7 +263,7 @@ class Embed {
    * @method
    * @public
    */
-  setColor(color: any) {
+  setColor(color: string | number) {
     if (!color) throw new TypeError("GLUON: Embed color must be provided.");
 
     if (typeof color === "string") {
@@ -261,7 +283,7 @@ class Embed {
    * @method
    * @public
    */
-  setThumbnail(url: any) {
+  setThumbnail(url: string) {
     if (!url || typeof url !== "string")
       throw new TypeError("GLUON: Embed thumbnail url must be provided.");
 
@@ -281,7 +303,7 @@ class Embed {
    * @method
    * @public
    */
-  setFooter(text: any, icon?: any) {
+  setFooter(text: string, icon?: string | null) {
     if (!text || typeof text !== "string")
       throw new TypeError("GLUON: Embed footer text must be provided.");
 
@@ -306,17 +328,17 @@ class Embed {
    * @method
    * @public
    */
-  setAuthor(name: any, url: any, icon_url: any) {
+  setAuthor(name: string, url?: string | null, icon_url?: string | null) {
     if (!name || typeof name !== "string")
       throw new TypeError("GLUON: Embed author name must be provided.");
 
-    this.author = {};
-
-    if (name)
-      this.author.name =
+    this.author = {
+      name:
         name && name.length > LIMITS.MAX_EMBED_AUTHOR_NAME
           ? `${name.substring(0, LIMITS.MAX_EMBED_AUTHOR_NAME - 3)}...`
-          : name;
+          : name,
+    };
+
     if (url) this.author.url = url;
     if (icon_url) this.author.icon_url = icon_url;
 
@@ -333,7 +355,7 @@ class Embed {
    * @method
    * @public
    */
-  addField(name: any, value: any, inline = false) {
+  addField(name: string, value: string, inline = false) {
     if (this.fields.length >= LIMITS.MAX_EMBED_FIELDS)
       throw new RangeError(
         `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
@@ -371,7 +393,7 @@ class Embed {
    * @method
    * @public
    */
-  setImage(url: any) {
+  setImage(url: string) {
     if (!url && typeof url !== "string")
       throw new TypeError("GLUON: Embed image url must be a string.");
 
@@ -389,7 +411,7 @@ class Embed {
    * @method
    * @public
    */
-  setVideo(url: any) {
+  setVideo(url: string) {
     if (!url || typeof url !== "string")
       throw new TypeError("GLUON: Embed video url must be a string.");
 
@@ -453,7 +475,7 @@ class Embed {
    * @public
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -550,7 +572,6 @@ class Embed {
         );
       if (
         !this.fields.every(
-          // @ts-expect-error TS(7006): Parameter 'field' implicitly has an 'any' type.
           (field) =>
             typeof field === "object" &&
             typeof field.name === "string" &&

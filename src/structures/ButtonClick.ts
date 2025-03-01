@@ -109,7 +109,7 @@ class ButtonClick extends Interaction implements ButtonClickType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
@@ -120,7 +120,7 @@ class ButtonClick extends Interaction implements ButtonClickType {
           data: {
             custom_id: this.customId,
           },
-          message: this.message,
+          message: this.message.toJSON(format),
         };
       }
     }

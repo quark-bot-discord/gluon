@@ -3,13 +3,19 @@ import {
   LIMITS,
   TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import { ActionRowBuilderType } from "./interfaces/actionRowBuilder.js";
+import { ButtonBuilderType } from "./interfaces/buttonBuilder.js";
+import { DropdownBuilderType } from "./interfaces/dropdownBuilder.js";
+import { TextInputBuilderType } from "./interfaces/textInputBuilder.js";
 
 /**
  * Helps to construct an action row for a message.
  */
-class ActionRow {
-  components: any;
-  type: any;
+class ActionRow implements ActionRowBuilderType {
+  components: Array<
+    DropdownBuilderType | ButtonBuilderType | TextInputBuilderType
+  >;
+  type: COMPONENT_TYPES.ACTION_ROW;
   /**
    * Creates an action row.
    */
@@ -23,7 +29,9 @@ class ActionRow {
    * @param {Button | Dropdown} component A component to add to the action row.
    * @returns {ActionRow}
    */
-  addComponent(component: any) {
+  addComponent(
+    component: DropdownBuilderType | ButtonBuilderType | TextInputBuilderType,
+  ) {
     this.components.push(component);
 
     return this;
@@ -34,7 +42,7 @@ class ActionRow {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -56,7 +64,9 @@ class ActionRow {
       default: {
         return {
           type: this.type,
-          components: this.components,
+          components: this.components.map((component) =>
+            component.toJSON(format, { suppressValidation }),
+          ),
         };
       }
     }

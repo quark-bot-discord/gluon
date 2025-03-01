@@ -37,7 +37,6 @@ import {
 } from "./interfaces/Guild.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import { AnyChannelType } from "./interfaces/Channel.js";
 import { AuditLogRaw, AuditLogTypes } from "./interfaces/AuditLog.js";
 import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
 import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
@@ -49,6 +48,9 @@ import { GuildEmojisManagerType } from "src/managers/interfaces/GuildEmojisManag
 import { GuildInviteManagerType } from "src/managers/interfaces/GuildInviteManager.js";
 import { GuildScheduledEventManagerType } from "src/managers/interfaces/GuildScheduledEventManager.js";
 import { TextChannelType } from "./interfaces/TextChannel.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
 
 /**
  * Represents a Discord guild.
@@ -1122,7 +1124,10 @@ class Guild implements GuildType {
 
     if (cached) return cached;
 
-    return this.members.fetch(this.#_client.user.id);
+    const fetched = await this.members.fetch(this.#_client.user.id);
+
+    if (!fetched) throw new Error("GLUON: ME NOT FOUND");
+    return fetched;
   }
 
   /**
@@ -1624,7 +1629,17 @@ class Guild implements GuildType {
   static async postWebhook(
     client: ClientType,
     { id, token }: { id: Snowflake; token: string },
-    { content, embeds, components, files }: any = {},
+    {
+      content,
+      embeds,
+      components,
+      files,
+    }: {
+      content?: string;
+      embeds?: EmbedBuilderType[];
+      components?: MessageComponentsType;
+      files?: FileUploadType[];
+    } = {},
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1682,9 +1697,7 @@ class Guild implements GuildType {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
-    this.#channels.forEach((c: AnyChannelType) =>
-      c.messages?._intervalCallback(),
-    );
+    this.#channels.forEach((c) => c.messages?._intervalCallback());
   }
 
   /**

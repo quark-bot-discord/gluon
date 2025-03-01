@@ -1,19 +1,23 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { LIMITS, LOCALES, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import {
+  CommandChoiceBuilderType,
+  CommandChoiceNameLocalizations,
+} from "./interfaces/commandChoiceBuilder.js";
 
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}
  */
-class CommandChoice {
-  defaultLocale: any;
-  name: any;
-  name_localizations: any;
-  value: any;
+class CommandChoice implements CommandChoiceBuilderType {
+  defaultLocale: LOCALES;
+  name: string | undefined;
+  name_localizations: CommandChoiceNameLocalizations = {};
+  value: string | undefined;
   /**
    * Creates a choice for a command.
    */
   constructor() {
-    this.defaultLocale = "en-US";
+    this.defaultLocale = LOCALES.ENGLISH_US;
   }
 
   /**
@@ -21,7 +25,7 @@ class CommandChoice {
    * @param {String | Object} name Sets the name of the choice, or an object of names for localisation.
    * @returns {CommandChoice}
    */
-  setName(name: any) {
+  setName(name: string | CommandChoiceNameLocalizations) {
     if (!name)
       throw new TypeError("GLUON: Command choice name must be provided.");
 
@@ -40,7 +44,9 @@ class CommandChoice {
 
       this.name = name[this.defaultLocale];
 
-      delete name[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = name;
+      this.name_localizations = rest;
 
       this.name_localizations = name;
     } else {
@@ -60,7 +66,7 @@ class CommandChoice {
    * @param {String} value Value of the choice.
    * @returns {CommandChoice}
    */
-  setValue(value: any) {
+  setValue(value: string) {
     if (!value)
       throw new TypeError("GLUON: Command choice value must be provided.");
 
@@ -80,7 +86,7 @@ class CommandChoice {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale: any) {
+  setDefaultLocale(locale: LOCALES) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -93,7 +99,7 @@ class CommandChoice {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format: TO_JSON_TYPES_ENUM,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -150,9 +156,9 @@ class CommandChoice {
       case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
       default: {
         return {
-          name: this.name,
+          name: this.name as string, // only valid due to validation above
           name_localizations: this.name_localizations,
-          value: this.value,
+          value: this.value as string, // only valid due to validation above
         };
       }
     }

@@ -7,6 +7,11 @@ import Message from "./Message.js";
 import ClientType from "src/interfaces/Client.js";
 import { InteractionRaw, InteractionType } from "./interfaces/Interaction.js";
 import { GuildMemberManager } from "src/structures.js";
+import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
+import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
+import { CommandChoiceBuilderType } from "src/util/builder/interfaces/commandChoiceBuilder.js";
+import { TextInputBuilderType } from "src/util/builder/interfaces/textInputBuilder.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -59,16 +64,16 @@ class Interaction implements InteractionType {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = BigInt(data.guild_id);
+    this.#_guild_id = data.guild_id ? BigInt(data.guild_id) : undefined;
 
     /**
      * The id of the channel that this interaction belongs to.
      * @type {BigInt}
      * @private
      */
-    this.#_channel_id = BigInt(data.channel_id);
+    this.#_channel_id = data.channel_id ? BigInt(data.channel_id) : undefined;
 
-    if (data.member) {
+    if (data.member && data.guild_id && data.member.user) {
       /**
        * The member that triggered the interaction, if it was run in a guild.
        * @type {Member?}
@@ -173,12 +178,8 @@ class Interaction implements InteractionType {
    * @public
    */
   get member() {
-    return this.#_member_id
-      ? GuildMemberManager.getMember(
-          this.#_client,
-          this.#_guild_id,
-          this.#_member_id,
-        )
+    return this.memberId
+      ? GuildMemberManager.getMember(this.#_client, this.guildId, this.memberId)
       : undefined;
   }
 
@@ -211,7 +212,7 @@ class Interaction implements InteractionType {
   }: {
     title: string;
     customId: string;
-    textInputModal: any;
+    textInputModal: TextInputBuilderType;
   }) {
     if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
@@ -258,7 +259,11 @@ class Interaction implements InteractionType {
    * @method
    * @throws {Error}
    */
-  async autocompleteResponse({ choices }: any = {}) {
+  async autocompleteResponse({
+    choices,
+  }: {
+    choices: CommandChoiceBuilderType[];
+  }) {
     if (!choices || !Array.isArray(choices))
       throw new Error("GLUON: No choices provided.");
 
@@ -292,7 +297,19 @@ class Interaction implements InteractionType {
    * @async
    * @method
    */
-  async reply({ content, files, embeds, components, quiet }: any = {}) {
+  async reply({
+    content,
+    files,
+    embeds,
+    components,
+    quiet,
+  }: {
+    content: string;
+    files: FileUploadType[];
+    embeds: EmbedBuilderType[];
+    components: MessageComponentsType;
+    quiet: boolean;
+  }) {
     if (!content && !files && !embeds && !components)
       throw new Error(
         "GLUON: No content, files, embed, or components provided.",
@@ -430,7 +447,17 @@ class Interaction implements InteractionType {
    * @method
    * @throws {Error | TypeError}
    */
-  async edit({ content, files, embeds, components }: any = {}) {
+  async edit({
+    content,
+    files,
+    embeds,
+    components,
+  }: {
+    content: string;
+    files: FileUploadType[];
+    embeds: EmbedBuilderType[];
+    components: MessageComponentsType;
+  }) {
     return Interaction.edit(this.#_client, this.#token, {
       content,
       files,
@@ -457,7 +484,17 @@ class Interaction implements InteractionType {
   static async edit(
     client: ClientType,
     interactionToken: string,
-    { content, files, embeds, components }: any = {},
+    {
+      content,
+      files,
+      embeds,
+      components,
+    }: {
+      content: string;
+      files: FileUploadType[];
+      embeds: EmbedBuilderType[];
+      components: MessageComponentsType;
+    },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -508,7 +545,7 @@ class Interaction implements InteractionType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: TO_JSON_TYPES_ENUM) {
     switch (format) {
       case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
       case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
