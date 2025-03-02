@@ -627,7 +627,7 @@ export interface InviteCacheJSON {
   channel: ChannelCacheJSON | null;
   inviter?: UserCacheJSON;
   uses: number;
-  expires: ISO8601Timestamp | undefined;
+  expires: UnixMillisecondsTimestamp | undefined;
   max_uses: number;
 }
 
@@ -1031,7 +1031,7 @@ export class Reaction {
   public readonly reactedIds: Snowflake[];
   public readonly guildId: Snowflake;
   public readonly guild: Guild | null;
-  public readonly emoji: Emoji;
+  public readonly emoji?: Emoji;
   public readonly initialReactor: Snowflake | null;
   _addReactor(userId: Snowflake): void;
   _removeReactor(userId: Snowflake): void;
@@ -1132,7 +1132,7 @@ export class ScheduledEvent {
   readonly name: string;
   readonly creatorId: Snowflake | null;
   readonly creator: User | null;
-  readonly description: string;
+  readonly description: string | null;
   readonly _originalImageHash: string | null;
   readonly displayImageURL: string | null;
   readonly entityType: GuildScheduledEventEntityType;
@@ -1194,8 +1194,8 @@ export interface ScheduledEventDiscordJSON {
   description?: string;
   creator_id?: Snowflake;
   creator: UserDiscordJSON | null;
-  scheduled_start_time: UnixMillisecondsTimestamp;
-  scheduled_end_time: UnixMillisecondsTimestamp | null;
+  scheduled_start_time: ISO8601Timestamp;
+  scheduled_end_time: ISO8601Timestamp | null;
   image: string | null;
   user_count: number;
   entity_type: GuildScheduledEventEntityType;
@@ -1352,6 +1352,7 @@ export class User {
 export interface UserStorageJSON {
   id: Snowflake;
   avatar: string | null;
+  _cached: UnixTimestamp;
   bot: boolean;
   username: string;
   global_name: string | null;

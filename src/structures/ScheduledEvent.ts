@@ -18,6 +18,9 @@ import {
   JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
 } from "../../typings/index.d.js";
 
 /**
@@ -193,13 +196,16 @@ class ScheduledEvent implements ScheduledEventType {
         break;
     }
 
-    if (this.entityType == GuildScheduledEventEntityType.External)
+    if (this.entityType == GuildScheduledEventEntityType.External) {
       /**
        * The location of the event.
        * @type {String?}
        * @private
        */
-      this.#location = data.entity_metadata?.location ?? data.location;
+      this.#location =
+        data.entity_metadata?.location ??
+        ("location" in data ? data.location : undefined);
+    }
 
     const shouldCache = ScheduledEvent.shouldCache(
       this.#_client._cacheOptions,
@@ -267,7 +273,7 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get creator() {
-    return this.#creator;
+    return this.#creator ?? null;
   }
 
   /**
@@ -277,7 +283,7 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get description() {
-    return this.#description;
+    return this.#description ?? null;
   }
 
   /**
@@ -403,7 +409,7 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get location() {
-    return this.#location;
+    return (this.#location as string) ?? null;
   }
 
   /**
@@ -476,20 +482,19 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    * @method
    */
-  toJSON(format: JsonTypes) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
-      case JsonTypes.STORAGE_FORMAT:
-      case JsonTypes.DISCORD_FORMAT:
-      default: {
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           guild_id: this.guildId,
           name: this.name,
-          description: this.description,
+          description: this.description ?? undefined,
           creator_id: this.creatorId ?? undefined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          creator: this.creator.toJSON(format),
+          creator: this.creator?.toJSON(format) as
+            | UserCacheJSON
+            | UserStorageJSON,
           scheduled_start_time: this.scheduledStartTime * 1000,
           scheduled_end_time: this.scheduledEndTime
             ? this.scheduledEndTime * 1000
@@ -499,7 +504,31 @@ class ScheduledEvent implements ScheduledEventType {
           entity_type: this.entityType,
           status: this.status,
           entity_metadata: {
-            location: this.location,
+            location: this.location as string,
+          },
+        };
+      }
+      case JsonTypes.DISCORD_FORMAT:
+      default: {
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          name: this.name,
+          description: this.description ?? undefined,
+          creator_id: this.creatorId ?? undefined,
+          creator: this.creator?.toJSON(format) as UserDiscordJSON,
+          scheduled_start_time: new Date(
+            this.scheduledStartTime * 1000,
+          ).toISOString(),
+          scheduled_end_time: this.scheduledEndTime
+            ? new Date(this.scheduledEndTime * 1000).toISOString()
+            : null,
+          image: this._originalImageHash,
+          user_count: this.userCount,
+          entity_type: this.entityType,
+          status: this.status,
+          entity_metadata: {
+            location: this.location as string,
           },
         };
       }

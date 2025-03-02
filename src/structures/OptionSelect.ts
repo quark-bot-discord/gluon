@@ -10,6 +10,9 @@ import {
   OptionSelectDiscordJSON,
   OptionSelectStorageJSON,
   JsonTypes,
+  MessageCacheJSON,
+  MessageStorageJSON,
+  MessageDiscordJSON,
 } from "../../typings/index.d.js";
 
 /**
@@ -143,7 +146,9 @@ class OptionSelect extends Interaction implements OptionSelectType {
         return {
           ...super.toJSON(format),
           custom_id: this.customId,
-          message: this.message.toJSON(format),
+          message: this.message.toJSON(format) as
+            | MessageCacheJSON
+            | MessageStorageJSON,
           values: this.values,
         };
       }
@@ -155,7 +160,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
             custom_id: this.customId,
             values: this.values,
           },
-          message: this.message.toJSON(format),
+          message: this.message.toJSON(format) as MessageDiscordJSON,
         };
       }
     }

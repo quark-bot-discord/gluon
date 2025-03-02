@@ -67,14 +67,14 @@ class Reaction implements ReactionType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if ("mention" in data.emoji)
+    if ("emoji" in data && "mention" in data.emoji)
       /**
        * The emoji used for the reaction.
        * @type {Emoji}
        * @private
        */
       this.#emoji = data.emoji as EmojiType;
-    else
+    else if ("emoji" in data)
       this.#emoji = new Emoji(client, data.emoji, { guildId, nocache: true });
 
     /**
@@ -236,7 +236,9 @@ class Reaction implements ReactionType {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {
         return {
-          emoji: this.emoji.toJSON(format) as EmojiStorageJSON | EmojiCacheJSON,
+          emoji: this.emoji?.toJSON(format) as
+            | EmojiStorageJSON
+            | EmojiCacheJSON,
           _reacted: this.reactedIds,
           initial_reactor: this.initialReactor ?? undefined,
         };
@@ -244,7 +246,7 @@ class Reaction implements ReactionType {
       case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
-          emoji: this.emoji.toJSON(format) as EmojiDiscordJSON,
+          emoji: this.emoji?.toJSON(format) as EmojiDiscordJSON,
           count: this.count,
         };
       }
