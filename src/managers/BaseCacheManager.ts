@@ -1,10 +1,11 @@
-import hashjs from "hash.js";
-import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
+// import hashjs from "hash.js";
+// import { GLUON_VERSION, NAME } from "../constants.js";
 import ClientType from "src/interfaces/Client.js";
 import {
-  BaseCacheManagerType,
+  BaseCacheManager as BaseCacheManagerType,
+  JsonTypes,
   StaticManagerType,
-} from "./interfaces/BaseCacheManager.js";
+} from "../../typings/index.d.js";
 
 /**
  * The base cache manager for all cache managers.
@@ -65,9 +66,9 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @readonly
    * @private
    */
-  get #keyPrefix() {
-    return `${NAME.toLowerCase()}.caches.${this.#structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
-  }
+  // get #keyPrefix() {
+  //   return `${NAME.toLowerCase()}.caches.${this.#structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
+  // }
 
   /**
    * Creates a hash of the key.
@@ -76,9 +77,9 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @private
    * @method
    */
-  #getHash(key: string) {
-    return hashjs.sha256().update(key).digest("hex");
-  }
+  // #getHash(key: string) {
+  //   return hashjs.sha256().update(key).digest("hex");
+  // }
 
   /**
    * Wraps the key with the key prefix and hashes it.
@@ -87,9 +88,9 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @private
    * @method
    */
-  #getKey(key: string) {
-    return `${this.#keyPrefix}${this.#getHash(key)}`;
-  }
+  // #getKey(key: string) {
+  //   return `${this.#keyPrefix}${this.#getHash(key)}`;
+  // }
 
   /**
    * Gets a value from the cache.
@@ -342,11 +343,11 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return [...this.#cache.values()].map((value) => value.toJSON(format));
       }

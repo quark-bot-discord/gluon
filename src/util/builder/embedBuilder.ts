@@ -2,56 +2,31 @@ import {
   UnixMillisecondsTimestamp,
   UnixTimestamp,
 } from "src/interfaces/gluon.js";
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
 import {
-  EmbedAuthor,
+  JsonTypes,
   EmbedBuilderCacheJSON,
   EmbedBuilderDiscordJSON,
   EmbedBuilderStorageJSON,
-  EmbedBuilderType,
-  EmbedField,
-  EmbedFooter,
-  EmbedMedia,
-  EmbedMediaVideo,
-  EmbedRaw,
-} from "./interfaces/embedBuilder.js";
-
-/**
- * Represents an author in an embed.
- * @typedef {Object} EmbedAuthor
- * @property {String} name The author name.
- * @property {String} [url] The author url.
- * @property {String} [icon_url] The author icon url.
- */
-
-/**
- * Represents an embed field.
- * @typedef {Object} EmbedField
- * @property {String} name The field name.
- * @property {String} value The field value.
- * @property {Boolean} inline Whether the field should be inline.
- */
-
-/**
- * Represents an embed footer.
- * @typedef {Object} EmbedFooter
- * @property {String} text The footer text.
- * @property {String} [icon_url] The footer icon url.
- */
-
-/**
- * Represents embed media.
- * @typedef {Object} EmbedMedia
- * @property {String} url The media url.
- */
+  Embed as EmbedType,
+} from "typings/index.js";
+import {
+  APIEmbed,
+  APIEmbedAuthor,
+  APIEmbedField,
+  APIEmbedFooter,
+  APIEmbedImage,
+  APIEmbedThumbnail,
+  APIEmbedVideo,
+} from "discord-api-types/v10";
 
 /**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
-class Embed implements EmbedBuilderType {
+class Embed implements EmbedType {
   /**
    * The title of the embed.
    * @type {String}
@@ -92,42 +67,42 @@ class Embed implements EmbedBuilderType {
    * @type {EmbedFooter}
    * @public
    */
-  footer: EmbedFooter | undefined;
+  footer: APIEmbedFooter | undefined;
 
   /**
    * The author of the embed.
    * @type {EmbedAuthor}
    * @public
    */
-  author: EmbedAuthor | undefined;
+  author: APIEmbedAuthor | undefined;
 
   /**
    * The fields of the embed.
    * @type {Array<EmbedField>}
    * @public
    */
-  fields: Array<EmbedField>;
+  fields: Array<APIEmbedField>;
 
   /**
    * The image of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  image: EmbedMedia | undefined;
+  image: APIEmbedImage | undefined;
 
   /**
    * The thumbnail of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  thumbnail: EmbedMedia | undefined;
+  thumbnail: APIEmbedThumbnail | undefined;
 
   /**
    * The video of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  video: EmbedMediaVideo | undefined;
+  video: APIEmbedVideo | undefined;
 
   /**
    * Creates an embed structure.
@@ -158,7 +133,7 @@ class Embed implements EmbedBuilderType {
    */
   constructor(
     data?:
-      | EmbedRaw
+      | APIEmbed
       | EmbedBuilderCacheJSON
       | EmbedBuilderDiscordJSON
       | EmbedBuilderStorageJSON,
@@ -475,7 +450,7 @@ class Embed implements EmbedBuilderType {
    * @public
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -606,8 +581,8 @@ class Embed implements EmbedBuilderType {
         throw new TypeError("GLUON: Embed video url must be a valid url.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           title: this.title,
           description: this.description,
@@ -622,7 +597,7 @@ class Embed implements EmbedBuilderType {
           video: this.video,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           title: this.title,

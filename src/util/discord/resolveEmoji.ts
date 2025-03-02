@@ -1,4 +1,4 @@
-import { ResolvedEmoji } from "./interfaces/resolveEmoji.js";
+import { ResolvedEmoji } from "typings/index.js";
 
 /**
  * Gives a valid Discord emoji structure when given an emoji mention.

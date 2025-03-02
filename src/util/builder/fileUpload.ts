@@ -1,6 +1,6 @@
 import { Stream } from "stream";
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
-import { FileUploadType } from "./interfaces/fileUpload.js";
+import { LIMITS } from "../../constants.js";
+import { FileUpload as FileUploadType, JsonTypes } from "typings/index.d.js";
 
 class FileUpload implements FileUploadType {
   #name: string | undefined;
@@ -98,7 +98,7 @@ class FileUpload implements FileUploadType {
   }
 
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -114,9 +114,9 @@ class FileUpload implements FileUploadType {
       size: this.#size as number, // only valid because of the above check
     };
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         if (this.#stream)
           return {

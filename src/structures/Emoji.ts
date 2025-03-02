@@ -1,22 +1,18 @@
 import ClientType from "src/interfaces/Client.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  Emoji as EmojiType,
   EmojiCacheJSON,
   EmojiDiscordJSON,
-  EmojiRaw,
   EmojiStorageJSON,
-  EmojiType,
-} from "./interfaces/Emoji.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+  JsonTypes,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIEmoji, Snowflake } from "discord-api-types/v10";
 
 /**
  * Represents an emoji.
@@ -38,7 +34,7 @@ class Emoji implements EmojiType {
    */
   constructor(
     client: ClientType,
-    data: EmojiRaw | EmojiCacheJSON | EmojiDiscordJSON | EmojiStorageJSON,
+    data: APIEmoji | EmojiCacheJSON | EmojiDiscordJSON | EmojiStorageJSON,
     { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
@@ -323,17 +319,19 @@ class Emoji implements EmojiType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): EmojiCacheJSON | EmojiDiscordJSON | EmojiStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
           _attributes: this.#_attributes,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

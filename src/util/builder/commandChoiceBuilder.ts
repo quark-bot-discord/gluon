@@ -1,15 +1,17 @@
-import { LIMITS, LOCALES, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { Locale } from "discord-api-types/v10";
+import { LIMITS } from "../../constants.js";
 import {
-  CommandChoiceBuilderType,
+  CommandChoiceBuilder as CommandChoiceBuilderType,
   CommandChoiceNameLocalizations,
-} from "./interfaces/commandChoiceBuilder.js";
+  JsonTypes,
+} from "typings/index.js";
 
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}
  */
 class CommandChoice implements CommandChoiceBuilderType {
-  defaultLocale: LOCALES;
+  defaultLocale: Locale;
   name: string | undefined;
   name_localizations: CommandChoiceNameLocalizations = {};
   value: string | undefined;
@@ -17,7 +19,7 @@ class CommandChoice implements CommandChoiceBuilderType {
    * Creates a choice for a command.
    */
   constructor() {
-    this.defaultLocale = LOCALES.ENGLISH_US;
+    this.defaultLocale = Locale.EnglishUS;
   }
 
   /**
@@ -86,7 +88,7 @@ class CommandChoice implements CommandChoiceBuilderType {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale: LOCALES) {
+  setDefaultLocale(locale: Locale) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -99,7 +101,7 @@ class CommandChoice implements CommandChoiceBuilderType {
    * @returns {Object}
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -151,9 +153,9 @@ class CommandChoice implements CommandChoiceBuilderType {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           name: this.name as string, // only valid due to validation above

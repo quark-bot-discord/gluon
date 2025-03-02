@@ -1,28 +1,29 @@
-import {
-  GLUON_DEBUG_LEVELS,
-  PERMISSIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS, PERMISSIONS } from "../constants.js";
+import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
 import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  TextChannel as TextChannelType,
   TextChannelCacheJSON,
   TextChannelDiscordJSON,
-  TextChannelRaw,
   TextChannelStorageJSON,
-  TextChannelType,
-} from "./interfaces/TextChannel.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+  JsonTypes,
+} from "../../typings/index.d.js";
+import {
+  APIGuildTextChannel,
+  ChannelType,
+  GuildTextChannelType,
+} from "discord-api-types/v10";
 
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
  */
-class TextChannel extends Channel implements TextChannelType {
+class TextChannel extends GuildChannel implements TextChannelType {
   #_client;
   /**
    * Creates the structure for a text channel.
@@ -36,7 +37,9 @@ class TextChannel extends Channel implements TextChannelType {
   constructor(
     client: ClientType,
     data:
-      | TextChannelRaw
+      | APIGuildTextChannel<GuildTextChannelType>
+      | APIGuildTextChannel<ChannelType.GuildForum>
+      | APIGuildTextChannel<ChannelType.GuildMedia>
       | TextChannelCacheJSON
       | TextChannelDiscordJSON
       | TextChannelStorageJSON,
@@ -60,7 +63,7 @@ class TextChannel extends Channel implements TextChannelType {
      */
     this.#_client = client;
 
-    const shouldCache = Channel.shouldCache(
+    const shouldCache = GuildChannel.shouldCache(
       this.#_client._cacheOptions,
       this.guild._cacheOptions,
     );
@@ -78,7 +81,7 @@ class TextChannel extends Channel implements TextChannelType {
       );
     }
 
-    if (data.messages)
+    if ("messages" in data && data.messages)
       for (let i = 0; i < data.messages.length; i++)
         new Message(this.#_client as ClientType, data.messages[i], {
           channelId: this.id,
@@ -157,11 +160,11 @@ class TextChannel extends Channel implements TextChannelType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

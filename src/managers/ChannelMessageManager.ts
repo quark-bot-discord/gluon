@@ -4,12 +4,14 @@ import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildChannelsManager from "./GuildChannelsManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
-import { ChannelType } from "src/structures/interfaces/Channel.js";
-import { ChannelMessageManagerType } from "./interfaces/ChannelMessageManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { MessageType } from "src/structures/interfaces/Message.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  ChannelMessageManager as ChannelMessageManagerType,
+  StructureIdentifiers,
+  Message as MessageType,
+  Guild as GuildType,
+  GuildChannel as GuildChannelType,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 
 /**
  * Manages all messages within a channel.
@@ -31,7 +33,7 @@ class ChannelMessageManager
    * @constructor
    * @public
    */
-  constructor(client: ClientType, guild: GuildType, channel: ChannelType) {
+  constructor(client: ClientType, guild: GuildType, channel: GuildChannelType) {
     super(client, { structureType: ChannelMessageManager });
 
     if (!client)

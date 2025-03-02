@@ -2,11 +2,14 @@ import ClientType from "src/interfaces/Client.js";
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
-import { GuildRoleManagerType } from "./interfaces/GuildRoleManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { RoleRaw, RoleType } from "src/structures/interfaces/Role.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  GuildRoleManager as GuildRoleManagerType,
+  Guild as GuildType,
+  Role as RoleType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { APIRole } from "discord-api-types/v10";
 
 /**
  * Manages all roles belonging to a guild.
@@ -169,10 +172,11 @@ class GuildRoleManager
       if (cachedRoles && cachedRoles.length !== 0) return cachedRoles;
     }
 
-    const data = await client.request.makeRequest("getRoles", [guildId]);
+    const data = (await client.request.makeRequest("getRoles", [
+      guildId,
+    ])) as APIRole[];
 
-    if (!roleId)
-      return data.map((role: RoleRaw) => new Role(client, role, { guildId }));
+    if (!roleId) return data.map((role) => new Role(client, role, { guildId }));
 
     let matchedRole;
     for (let i = 0; i < data.length; i++) {

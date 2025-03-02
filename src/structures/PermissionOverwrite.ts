@@ -1,13 +1,13 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import { APIOverwrite } from "discord-api-types/v10";
 import {
+  JsonTypes,
   PermissionOverwriteCacheJSON,
   PermissionOverwriteDiscordJSON,
-  PermissionOverwriteRaw,
   PermissionOverwriteStorageJSON,
-  PermissionOverwriteType,
-} from "./interfaces/PermissionOverwrite.js";
+  PermissionOverwrite as PermissionOverwriteType,
+} from "../../typings/index.d.js";
 
 class PermissionOverwrite implements PermissionOverwriteType {
   // #_client;
@@ -23,7 +23,7 @@ class PermissionOverwrite implements PermissionOverwriteType {
   constructor(
     client: ClientType,
     data:
-      | PermissionOverwriteRaw
+      | APIOverwrite
       | PermissionOverwriteCacheJSON
       | PermissionOverwriteDiscordJSON
       | PermissionOverwriteStorageJSON,
@@ -128,11 +128,11 @@ class PermissionOverwrite implements PermissionOverwriteType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

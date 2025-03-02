@@ -3,7 +3,7 @@ import {
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
 } from "../constants.js";
-import { GluonCacheOptionsType } from "./interfaces/GluonCacheOptions.js";
+import { GluonCacheOptions as GluonCacheOptionsType } from "../../typings/index.d.js";
 
 class GluonCacheOptions implements GluonCacheOptionsType {
   #_cache_options;

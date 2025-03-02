@@ -1,21 +1,18 @@
 import ClientType from "src/interfaces/Client.js";
-import {
-  GLUON_CACHING_OPTIONS,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
-import GluonCacheOptions from "../managers/GluonCacheOptions.js";
-import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import { GLUON_CACHING_OPTIONS, GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  JsonTypes,
   VoiceStateCacheJSON,
   VoiceStateDiscordJSON,
-  VoiceStateRaw,
   VoiceStateStorageJSON,
-  VoiceStateType,
-} from "./interfaces/VoiceState.js";
+  VoiceState as VoiceStateType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIVoiceState } from "discord-api-types/v10";
 
 /**
  * Represents a voice state.
@@ -40,7 +37,7 @@ class VoiceState implements VoiceStateType {
   constructor(
     client: ClientType,
     data:
-      | VoiceStateRaw
+      | APIVoiceState
       | VoiceStateCacheJSON
       | VoiceStateDiscordJSON
       | VoiceStateStorageJSON,
@@ -81,28 +78,33 @@ class VoiceState implements VoiceStateType {
      * @type {BigInt}
      * @private
      */
-    this.#_channel_id = BigInt(data.channel_id);
+    this.#_channel_id = data.channel_id ? BigInt(data.channel_id) : null;
 
     /**
      * The attributes of the voice state.
      * @type {Number}
      * @private
      */
-    this.#_attributes = data._attributes ?? 0;
+    this.#_attributes = "_attributes" in data ? data._attributes : 0;
 
-    if (data.deaf == true) this.#_attributes |= 0b1 << 0;
+    if ("deaf" in data && data.deaf == true) this.#_attributes |= 0b1 << 0;
 
-    if (data.mute == true) this.#_attributes |= 0b1 << 1;
+    if ("mute" in data && data.mute == true) this.#_attributes |= 0b1 << 1;
 
-    if (data.self_deaf == true) this.#_attributes |= 0b1 << 2;
+    if ("self_deaf" in data && data.self_deaf == true)
+      this.#_attributes |= 0b1 << 2;
 
-    if (data.self_mute == true) this.#_attributes |= 0b1 << 3;
+    if ("self_mute" in data && data.self_mute == true)
+      this.#_attributes |= 0b1 << 3;
 
-    if (data.self_stream == true) this.#_attributes |= 0b1 << 4;
+    if ("self_stream" in data && data.self_stream == true)
+      this.#_attributes |= 0b1 << 4;
 
-    if (data.self_video == true) this.#_attributes |= 0b1 << 5;
+    if ("self_video" in data && data.self_video == true)
+      this.#_attributes |= 0b1 << 5;
 
-    if (data.suppress == true) this.#_attributes |= 0b1 << 6;
+    if ("suppress" in data && data.suppress == true)
+      this.#_attributes |= 0b1 << 6;
 
     if (data.member)
       /**
@@ -112,7 +114,7 @@ class VoiceState implements VoiceStateType {
        */
       this.#member = new Member(this.#_client, data.member, {
         userId: data.user_id,
-        guildId: data.guild_id,
+        guildId,
         nocache,
       });
     else this.#member = this.guild?.members.get(data.user_id) || null;
@@ -129,7 +131,8 @@ class VoiceState implements VoiceStateType {
      * @type {Number}
      * @private
      */
-    if (typeof data.joined == "number") this.#joined = data.joined;
+    if ("joined" in data && typeof data.joined === "number")
+      this.#joined = data.joined;
     else if (existing && typeof existing.joined == "number")
       this.#joined = existing.joined;
     else this.#joined = (Date.now() / 1000) | 0;
@@ -321,15 +324,10 @@ class VoiceState implements VoiceStateType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
-    if (!(gluonCacheOptions instanceof GluonCacheOptions))
-      throw new TypeError(
-        "GLUON: Gluon cache options must be a GluonCacheOptions.",
-      );
-    if (!(guildCacheOptions instanceof GuildCacheOptions))
-      throw new TypeError(
-        "GLUON: Guild cache options must be a GuildCacheOptions.",
-      );
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (gluonCacheOptions.cacheVoiceStates === false) return false;
     if (guildCacheOptions.voiceStateCaching === false) return false;
     return true;
@@ -358,10 +356,10 @@ class VoiceState implements VoiceStateType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           guild_id: this.guildId,
           channel_id: this.channelId,
@@ -374,7 +372,7 @@ class VoiceState implements VoiceStateType {
             : null,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           guild_id: this.guildId,

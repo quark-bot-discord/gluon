@@ -1,15 +1,18 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
-import {
-  SlashCommandRaw,
-  SlashCommandType,
-} from "./interfaces/SlashCommand.js";
 import ClientType from "src/interfaces/Client.js";
+import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
+import {
+  SlashCommand as SlashCommandType,
+  SlashCommandCacheJSON,
+  SlashCommandDiscordJSON,
+  SlashCommandStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 /**
  * Represents a slash command.
@@ -24,7 +27,10 @@ class SlashCommand extends Interaction implements SlashCommandType {
    * @param {Client} client The client instance.
    * @param {Object} data The raw interaction data from Discord.
    */
-  constructor(client: ClientType, data: SlashCommandRaw) {
+  constructor(
+    client: ClientType,
+    data: APIChatInputApplicationCommandGuildInteraction,
+  ) {
     super(client, data);
 
     if (!client)
@@ -108,11 +114,13 @@ class SlashCommand extends Interaction implements SlashCommandType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): SlashCommandCacheJSON | SlashCommandStorageJSON | SlashCommandDiscordJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

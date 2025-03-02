@@ -1,17 +1,20 @@
 import ClientType from "src/interfaces/Client.js";
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
-import Channel from "./Channel.js";
+import Channel from "./GuildChannel.js";
 import util from "util";
 import {
+  Thread as ThreadType,
   ThreadCacheJSON,
   ThreadDiscordJSON,
-  ThreadRaw,
   ThreadStorageJSON,
-  ThreadType,
-} from "./interfaces/Thread.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+  JsonTypes,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
+import { APIThreadChannel } from "discord-api-types/v10";
 
 /**
  * Represents a thread within Discord.
@@ -33,7 +36,11 @@ class Thread extends Channel implements ThreadType {
    */
   constructor(
     client: ClientType,
-    data: ThreadRaw | ThreadCacheJSON | ThreadDiscordJSON | ThreadStorageJSON,
+    data:
+      | APIThreadChannel
+      | ThreadCacheJSON
+      | ThreadDiscordJSON
+      | ThreadStorageJSON,
     { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     super(client, data, { guildId });
@@ -59,21 +66,25 @@ class Thread extends Channel implements ThreadType {
      * @type {BigInt}
      * @private
      */
-    this.#_owner_id = BigInt(data.owner_id);
+    this.#_owner_id = data.owner_id ? BigInt(data.owner_id) : null;
 
     /**
      * The ID of the text channel that this thread belongs to.
      * @type {BigInt}
      * @private
      */
-    this.#_parent_id = BigInt(data.parent_id);
+    this.#_parent_id = data.parent_id ? BigInt(data.parent_id) : null;
 
     const shouldCache = Thread.shouldCache(
       this.#_client._cacheOptions,
       this.guild._cacheOptions,
     );
 
-    if (nocache === false && data.archived !== true && shouldCache) {
+    if (
+      nocache === false &&
+      (!("archived" in data) || data.archived !== true) &&
+      shouldCache
+    ) {
       this.guild.channels.set(data.id, this);
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
@@ -82,7 +93,7 @@ class Thread extends Channel implements ThreadType {
     } else {
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${data.archived} ${shouldCache})`,
+        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
       );
     }
   }
@@ -137,7 +148,10 @@ class Thread extends Channel implements ThreadType {
    * @method
    * @override
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -175,11 +189,11 @@ class Thread extends Channel implements ThreadType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

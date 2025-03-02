@@ -1,18 +1,14 @@
 import ClientType from "src/interfaces/Client.js";
-import {
-  CDN_BASE_URL,
-  STICKER_FORMATS_ENUM,
-  TO_JSON_TYPES_ENUM,
-  MEDIA_BASE_URL,
-} from "../constants.js";
+import { CDN_BASE_URL, MEDIA_BASE_URL } from "../constants.js";
 import util from "util";
+import { APISticker, StickerFormatType } from "discord-api-types/v10";
 import {
+  Sticker as StickerType,
   StickerCacheJSON,
   StickerDiscordJSON,
-  StickerRaw,
   StickerStorageJSON,
-  StickerType,
-} from "./interfaces/Sticker.js";
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 /**
  * Represents an sticker.
@@ -30,7 +26,7 @@ class Sticker implements StickerType {
   constructor(
     client: ClientType,
     data:
-      | StickerRaw
+      | APISticker
       | StickerCacheJSON
       | StickerDiscordJSON
       | StickerStorageJSON,
@@ -96,26 +92,6 @@ class Sticker implements StickerType {
    * @public
    */
   get format() {
-    switch (this.formatType) {
-      case STICKER_FORMATS_ENUM.PNG:
-        return "PNG";
-      case STICKER_FORMATS_ENUM.APNG:
-        return "APNG";
-      case STICKER_FORMATS_ENUM.LOTTIE:
-        return "LOTTIE";
-      case STICKER_FORMATS_ENUM.GIF:
-        return "GIF";
-    }
-    throw new TypeError("GLUON: Invalid sticker format");
-  }
-
-  /**
-   * The format type of the sticker.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get formatType() {
     return this.#format_type;
   }
 
@@ -128,15 +104,15 @@ class Sticker implements StickerType {
   get previewImageURL() {
     let cdnImageFormat;
 
-    switch (this.formatType) {
-      case STICKER_FORMATS_ENUM.LOTTIE: {
+    switch (this.format) {
+      case StickerFormatType.Lottie: {
         return null;
       }
-      case STICKER_FORMATS_ENUM.GIF: {
+      case StickerFormatType.GIF: {
         return `${MEDIA_BASE_URL}/stickers/${this.id}.gif`;
       }
-      case STICKER_FORMATS_ENUM.PNG:
-      case STICKER_FORMATS_ENUM.APNG:
+      case StickerFormatType.PNG:
+      case StickerFormatType.APNG:
       default: {
         cdnImageFormat = "png";
         break;
@@ -169,16 +145,16 @@ class Sticker implements StickerType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           name: this.name,
-          format_type: this.formatType,
+          format_type: this.format,
         };
       }
     }

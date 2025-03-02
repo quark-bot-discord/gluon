@@ -1,15 +1,15 @@
 import fetch from "node-fetch";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { APIAttachment, Snowflake } from "discord-api-types/v10";
 import {
+  Attachment as AttachmentType,
   AttachmentCacheJSON,
   AttachmentDiscordJSON,
-  AttachmentRaw,
   AttachmentStorageJSON,
-  AttachmentType,
-} from "./interfaces/Attachment.js";
-import ClientType from "src/interfaces/Client.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 /**
  * Represents an attachment.
@@ -29,7 +29,7 @@ class Attachment implements AttachmentType {
   constructor(
     client: ClientType,
     data:
-      | AttachmentRaw
+      | APIAttachment
       | AttachmentStorageJSON
       | AttachmentCacheJSON
       | AttachmentDiscordJSON,
@@ -149,7 +149,7 @@ class Attachment implements AttachmentType {
    * @public
    */
   get channelId() {
-    return this.#_channel_id ? String(this.#_channel_id) : null;
+    return String(this.#_channel_id);
   }
 
   /**
@@ -181,17 +181,19 @@ class Attachment implements AttachmentType {
   /**
    * Returns the JSON representation of this structure.
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): AttachmentStorageJSON | AttachmentDiscordJSON | AttachmentCacheJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           filename: this.name,
           size: this.size,
         };
       }
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

@@ -4,9 +4,7 @@ import Attachment from "./Attachment.js";
 import {
   PERMISSIONS,
   BASE_URL,
-  TO_JSON_TYPES_ENUM,
   LIMITS,
-  MESSAGE_FLAGS,
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -23,48 +21,61 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
   MessageCacheJSON,
   MessageDiscordJSON,
-  MessageRaw,
   MessageStorageJSON,
-  MessageType,
-  MessageTypes,
-} from "./interfaces/Message.js";
-import ClientType from "src/interfaces/Client.js";
-import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
-import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
-import { AttachmentType } from "./interfaces/Attachment.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
-import { ChannelCacheOptionsType } from "src/managers/interfaces/ChannelCacheOptions.js";
-import { PollType } from "./interfaces/Poll.js";
-import { MessageReactionManagerType } from "src/managers/interfaces/MessageReactionManager.js";
-import { UserType } from "./interfaces/User.js";
-import { StickerType } from "./interfaces/Sticker.js";
+  Message as MessageTypeClass,
+  Attachment as AttachmentType,
+  JsonTypes,
+  AttachmentStorageJSON,
+  AttachmentCacheJSON,
+  AttachmentDiscordJSON,
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserStorageJSON,
+  Sticker as StickerType,
+  PollCacheJSON,
+  PollDiscordJSON,
+  PollStorageJSON,
+  Poll as PollType,
+  MessageReactionManagerCacheJSON,
+  MessageReactionManagerDiscordJSON,
+  MessageReactionManagerStorageJSON,
+  MessageReactionManager as MessageReactionManagerType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  ChannelCacheOptions as ChannelCacheOptionsType,
+  EmbedBuilderCacheJSON,
+  EmbedBuilderDiscordJSON,
+  EmbedBuilderStorageJSON,
+  Embed as EmbedType,
+  FileUpload,
+} from "../../typings/index.d.js";
+import { APIMessage, MessageType } from "discord-api-types/v10";
 
 /**
  * A message belonging to a channel within a guild.
  */
-class Message implements MessageType {
+class Message implements MessageTypeClass {
   #_client: ClientType;
   #_guild_id: bigint;
   #_channel_id: bigint;
   #_id: bigint;
-  #author: UserType | undefined;
+  #author!: User;
   #attachments: AttachmentType[];
   #content;
   #poll: PollType | undefined;
   #reactions: MessageReactionManagerType | undefined;
-  #embeds: EmbedBuilderType[] | undefined;
+  #embeds: EmbedType[] | undefined;
   #_attributes!: number;
   #reference;
-  #type: MessageTypes;
+  #type: MessageType;
   #webhook_id: bigint | undefined;
   #sticker_items: StickerType[] | undefined;
   #message_snapshots;
@@ -84,7 +95,7 @@ class Message implements MessageType {
   constructor(
     client: ClientType,
     data:
-      | MessageRaw
+      | APIMessage
       | MessageStorageJSON
       | MessageCacheJSON
       | MessageDiscordJSON,
@@ -170,6 +181,9 @@ class Message implements MessageType {
         nocache: !data.webhook_id || nocache,
       });
     else if (existing?.author) this.#author = existing.author;
+    else {
+      throw new Error("GLUON: Message author is missing.");
+    }
 
     if ("member" in data && data.member) {
       new Member(this.#_client, data.member, {
@@ -314,10 +328,9 @@ class Message implements MessageType {
      * @type {Number}
      * @private
      */
-    this.#flags = "flags" in data ? data.flags : null;
-    if (existing && existing.flags != undefined && this.#flags == null)
+    this.#flags = "flags" in data ? (data.flags ?? 0) : 0;
+    if (existing && existing.flags != undefined && this.#flags === 0)
       this.#flags = existing.flags;
-    else if (this.#flags == null) this.#flags = 0;
 
     /**
      * The type of message.
@@ -389,6 +402,7 @@ class Message implements MessageType {
     const reactionsPresent =
       this.#reactions && this.channel?._cacheOptions.reactionCaching !== false;
     const embedsPresent =
+      this.#embeds &&
       this.#embeds.length !== 0 &&
       this.channel?._cacheOptions.embedCaching !== false;
     const attributesPresent =
@@ -401,6 +415,7 @@ class Message implements MessageType {
     const webhookPresent =
       this.#webhook_id && this.channel?._cacheOptions.webhookCaching !== false;
     const stickerPresent =
+      this.#sticker_items &&
       this.#sticker_items.length !== 0 &&
       this.channel?._cacheOptions.stickerCaching !== false;
     const snapshotsPresent =
@@ -441,7 +456,7 @@ class Message implements MessageType {
    * @public
    */
   get editedTimestamp() {
-    return this.#edited_timestamp;
+    return this.#edited_timestamp ?? null;
   }
 
   /**
@@ -618,7 +633,7 @@ class Message implements MessageType {
    * @public
    */
   get poll() {
-    return this.#poll;
+    return this.#poll ?? null;
   }
 
   /**
@@ -628,6 +643,9 @@ class Message implements MessageType {
    * @public
    */
   get reactions() {
+    if (!this.#reactions) {
+      throw new Error("GLUON: Message reactions are missing.");
+    }
     return this.#reactions;
   }
 
@@ -638,6 +656,9 @@ class Message implements MessageType {
    * @public
    */
   get embeds() {
+    if (!this.#embeds) {
+      throw new Error("GLUON: Message embeds are missing.");
+    }
     return this.#embeds;
   }
 
@@ -665,57 +686,6 @@ class Message implements MessageType {
    * @see {@link https://discord.com/developers/docs/resources/message#message-object-message-flags}
    */
   get flags() {
-    const flags = [];
-    if ((this.#flags & MESSAGE_FLAGS.CROSSPOSTED) === MESSAGE_FLAGS.CROSSPOSTED)
-      flags.push("CROSSPOSTED");
-    if (
-      (this.#flags & MESSAGE_FLAGS.IS_CROSSPOST) ===
-      MESSAGE_FLAGS.IS_CROSSPOST
-    )
-      flags.push("IS_CROSSPOST");
-    if (
-      (this.#flags & MESSAGE_FLAGS.SUPPRESS_EMBEDS) ===
-      MESSAGE_FLAGS.SUPPRESS_EMBEDS
-    )
-      flags.push("SUPPRESS_EMBEDS");
-    if (
-      (this.#flags & MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED) ===
-      MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED
-    )
-      flags.push("SOURCE_MESSAGE_DELETED");
-    if ((this.#flags & MESSAGE_FLAGS.URGENT) === MESSAGE_FLAGS.URGENT)
-      flags.push("URGENT");
-    if ((this.#flags & MESSAGE_FLAGS.HAS_THREAD) === MESSAGE_FLAGS.HAS_THREAD)
-      flags.push("HAS_THREAD");
-    if ((this.#flags & MESSAGE_FLAGS.EPHEMERAL) === MESSAGE_FLAGS.EPHEMERAL)
-      flags.push("EPHEMERAL");
-    if ((this.#flags & MESSAGE_FLAGS.LOADING) === MESSAGE_FLAGS.LOADING)
-      flags.push("LOADING");
-    if (
-      (this.#flags & MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD) ===
-      MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD
-    )
-      flags.push("FAILED_TO_MENTION_SOME_ROLES_IN_THREAD");
-    if (
-      (this.#flags & MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS) ===
-      MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS
-    )
-      flags.push("SUPPRESS_NOTIFICATIONS");
-    if (
-      (this.#flags & MESSAGE_FLAGS.IS_VOICE_MESSAGE) ===
-      MESSAGE_FLAGS.IS_VOICE_MESSAGE
-    )
-      flags.push("IS_VOICE_MESSAGE");
-    return flags as Array<keyof typeof MESSAGE_FLAGS>;
-  }
-
-  /**
-   * The raw flags of the message.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get flagsRaw() {
     return this.#flags;
   }
 
@@ -746,6 +716,9 @@ class Message implements MessageType {
    * @public
    */
   get stickerItems() {
+    if (!this.#sticker_items) {
+      throw new Error("GLUON: Sticker items are missing.");
+    }
     return this.#sticker_items;
   }
 
@@ -835,9 +808,9 @@ class Message implements MessageType {
     suppressMentions = false,
   }: {
     content?: string;
-    embeds?: EmbedBuilderType[];
+    embeds?: Embed[];
     components?: MessageComponents;
-    files?: FileUploadType[];
+    files?: FileUpload[];
     suppressMentions?: boolean;
   }) {
     return Message.send(this.#_client, this.channelId, this.guildId, {
@@ -876,10 +849,10 @@ class Message implements MessageType {
    */
   edit(options: {
     components?: MessageComponents | undefined;
-    files?: FileUploadType[] | undefined;
+    files?: FileUpload[] | undefined;
     content?: string | undefined;
-    embeds?: EmbedBuilderType[] | undefined;
-    attachments?: AttachmentType[] | undefined;
+    embeds?: Embed[] | undefined;
+    attachments?: Attachment[] | undefined;
   }) {
     const {
       components = undefined,
@@ -979,9 +952,9 @@ class Message implements MessageType {
       suppressMentions = false,
     }: {
       content?: string;
-      embeds?: EmbedBuilderType[];
+      embeds?: EmbedType[];
       components?: MessageComponents;
-      files?: FileUploadType[];
+      files?: FileUpload[];
       reference?: {
         message_id: Snowflake;
         channel_id: Snowflake;
@@ -1073,10 +1046,10 @@ class Message implements MessageType {
       files,
     }: {
       content?: string;
-      embeds?: EmbedBuilderType[];
+      embeds?: EmbedType[];
       components?: MessageComponents;
       attachments?: AttachmentType[];
-      files?: FileUploadType[];
+      files?: FileUpload[];
     },
   ) {
     if (!client)
@@ -1218,9 +1191,9 @@ class Message implements MessageType {
     reference,
   }: {
     content?: string;
-    embeds?: EmbedBuilderType[];
+    embeds?: EmbedType[];
     components?: MessageComponents;
-    files?: FileUploadType[];
+    files?: FileUpload[];
     attachments?: AttachmentType[];
     flags?: number;
     reference?: {
@@ -1255,12 +1228,6 @@ class Message implements MessageType {
 
     if (components && !(components instanceof MessageComponents))
       throw new TypeError("GLUON: Components must be an array of components.");
-
-    if (
-      files &&
-      (!Array.isArray(files) || !files.every((f) => f instanceof FileUpload))
-    )
-      throw new TypeError("GLUON: Files must be an array of files.");
 
     if (files && files.length > LIMITS.MAX_MESSAGE_FILES)
       throw new RangeError(`GLUON: Files exceeds ${LIMITS.MAX_MESSAGE_FILES}.`);
@@ -1380,65 +1347,80 @@ class Message implements MessageType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): MessageCacheJSON | MessageStorageJSON | MessageDiscordJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
-          author: this.author?.toJSON(format),
+          author: this.author?.toJSON(format) as
+            | UserStorageJSON
+            | UserCacheJSON,
           member: this.member?.toJSON(format),
           content: this.content,
           _attributes: this.#_attributes,
-          attachments: this.attachments.map((a: any) => a.toJSON(format)),
-          embeds: this.embeds.map((e: any) => e.toJSON(format)),
+          attachments: this.attachments.map((a) => a.toJSON(format)) as
+            | AttachmentStorageJSON[]
+            | AttachmentCacheJSON[],
+          embeds: this.embeds.map((e) => e.toJSON(format)) as
+            | EmbedBuilderStorageJSON[]
+            | EmbedBuilderCacheJSON[],
           edited_timestamp: this.editedTimestamp
             ? this.editedTimestamp * 1000
             : null,
-          poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots?.map((m: any) =>
+          poll: this.poll?.toJSON(format) as
+            | PollStorageJSON
+            | PollCacheJSON
+            | null,
+          message_snapshots: this.messageSnapshots?.map((m) =>
             m.toJSON(format),
-          ),
+          ) as MessageStorageJSON[] | MessageCacheJSON[],
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
-                id: this.reference.messageId
-                  ? this.reference.messageId
-                  : undefined,
+                id: this.reference.messageId ? this.reference.messageId : null,
               }
             : undefined,
-          sticker_items: this.stickerItems.map((s: any) => s.toJSON(format)),
-          messageReactions: this.reactions.toJSON(format),
+          sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
+          messageReactions: this.reactions.toJSON(format) as
+            | MessageReactionManagerStorageJSON
+            | MessageReactionManagerCacheJSON,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           channel_id: this.channelId,
-          author: this.author?.toJSON(format),
+          author: this.author?.toJSON(format) as UserDiscordJSON,
           member: this.member?.toJSON(format),
           content: this.content,
           pinned: this.pinned,
-          attachments: this.attachments.map((a: any) => a.toJSON(format)),
-          embeds: this.embeds.map((e: any) => e.toJSON(format)),
+          attachments: this.attachments.map((a) =>
+            a.toJSON(format),
+          ) as AttachmentDiscordJSON[],
+          embeds: this.embeds.map((e) =>
+            e.toJSON(format),
+          ) as EmbedBuilderDiscordJSON[],
           edited_timestamp: this.editedTimestamp
             ? this.editedTimestamp * 1000
             : null,
-          poll: this.poll?.toJSON(format),
-          message_snapshots: this.messageSnapshots?.map((m: any) =>
+          poll: this.poll?.toJSON(format) as PollDiscordJSON | null,
+          message_snapshots: this.messageSnapshots?.map((m) =>
             m.toJSON(format),
-          ),
+          ) as MessageDiscordJSON[],
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
-                id: this.reference.messageId
-                  ? this.reference.messageId
-                  : undefined,
+                id: this.reference.messageId ? this.reference.messageId : null,
               }
             : undefined,
-          sticker_items: this.stickerItems?.map((s: any) => s.toJSON(format)),
-          reactions: this.reactions?.toJSON(format),
+          sticker_items: this.stickerItems?.map((s) => s.toJSON(format)),
+          reactions: this.reactions?.toJSON(
+            format,
+          ) as MessageReactionManagerDiscordJSON,
           mention_everyone: this.mentionEveryone,
           mention_roles: this.mentionRoles ? [""] : [],
           mentions: this.mentions ? [""] : [],

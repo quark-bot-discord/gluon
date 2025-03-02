@@ -1,22 +1,23 @@
 import ClientType from "src/interfaces/Client.js";
-import {
-  GLUON_DEBUG_LEVELS,
-  INVITE_BASE_URL,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { GLUON_DEBUG_LEVELS, INVITE_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  Invite as InviteType,
   InviteCacheJSON,
   InviteDiscordJSON,
-  InviteMetadataRaw,
-  InviteRaw,
   InviteStorageJSON,
-  InviteType,
-} from "./interfaces/Invite.js";
+  JsonTypes,
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIExtendedInvite } from "discord-api-types/v10";
 
 /**
  * Represents a guild invite.
@@ -43,8 +44,7 @@ class Invite implements InviteType {
   constructor(
     client: ClientType,
     data:
-      | InviteRaw
-      | InviteMetadataRaw
+      | APIExtendedInvite
       | InviteCacheJSON
       | InviteDiscordJSON
       | InviteStorageJSON,
@@ -86,8 +86,6 @@ class Invite implements InviteType {
      * @private
      */
     if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
-    else if ("channel_id" in data && data.channel_id)
-      this.#_channel_id = BigInt(data.channel_id);
 
     if (data.inviter) {
       /**
@@ -100,24 +98,24 @@ class Invite implements InviteType {
       this.#_inviter_id = BigInt(data.inviter.id);
     }
 
-    if (typeof data.uses == "number")
-      /**
-       * The number of times the invite has been used.
-       * @type {Number?}
-       * @private
-       */
-      this.#uses = data.uses;
+    /**
+     * The number of times the invite has been used.
+     * @type {Number?}
+     * @private
+     */
+    this.#uses = data.uses;
 
-    if (data.expires_at)
+    if ("expires_at" in data && data.expires_at)
       /**
        * The UNIX timestamp of when the invite expires.
        * @type {Number?}
        * @private
        */
       this.#expires = (new Date(data.expires_at).getTime() / 1000) | 0;
-    else if (typeof data.expires == "number")
+    else if ("expires" in data && typeof data.expires == "number")
       this.#expires = data.expires / 1000;
     else if (
+      "max_age" in data &&
       typeof data.max_age == "number" &&
       data.max_age != 0 &&
       data.created_at
@@ -125,13 +123,12 @@ class Invite implements InviteType {
       this.#expires =
         ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age;
 
-    if (typeof data.max_uses == "number")
-      /**
-       * The maximum number of uses allowed for the invite.
-       * @type {Number?}
-       * @private
-       */
-      this.#max_uses = data.max_uses;
+    /**
+     * The maximum number of uses allowed for the invite.
+     * @type {Number?}
+     * @private
+     */
+    this.#max_uses = data.max_uses;
 
     const shouldCache = Invite.shouldCache(
       this.#_client._cacheOptions,
@@ -292,7 +289,10 @@ class Invite implements InviteType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -329,25 +329,27 @@ class Invite implements InviteType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           code: this.code,
           channel: this.channel?.toJSON(format),
-          inviter: this.inviter?.toJSON(format),
+          inviter: this.inviter?.toJSON(format) as
+            | UserCacheJSON
+            | UserStorageJSON,
           uses: this.uses,
           expires: this.expires ? this.expires * 1000 : undefined,
           max_uses: this.maxUses,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           code: this.code,
           channel: this.channel?.toJSON(format),
-          inviter: this.inviter?.toJSON(format),
+          inviter: this.inviter?.toJSON(format) as UserDiscordJSON,
           uses: this.uses,
           expires_at: this.expires
             ? new Date(this.expires * 1000).toISOString()

@@ -1,11 +1,11 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
-import {
-  ModalResponseRaw,
-  ModalResponseType,
-} from "./interfaces/ModalResponse.js";
 import ClientType from "src/interfaces/Client.js";
+import {
+  JsonTypes,
+  ModalResponse as ModalResponseType,
+} from "../../typings/index.d.js";
+import { APIModalSubmitInteraction } from "discord-api-types/v10";
 
 /**
  * Represents when a modal is submitted.
@@ -20,7 +20,7 @@ class ModalResponse extends Interaction implements ModalResponseType {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: ClientType, data: ModalResponseRaw) {
+  constructor(client: ClientType, data: APIModalSubmitInteraction) {
     super(client, data);
 
     if (!client)
@@ -87,17 +87,17 @@ class ModalResponse extends Interaction implements ModalResponseType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           ...super.toJSON(format),
           values: this.values,
           custom_id: this.customId,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

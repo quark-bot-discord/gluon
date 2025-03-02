@@ -1,10 +1,18 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { ButtonClickRaw, ButtonClickType } from "./interfaces/ButtonClick.js";
+import {
+  ButtonClickCacheJSON,
+  ButtonClickDiscordJSON,
+  ButtonClickStorageJSON,
+  ButtonClick as ButtonClickType,
+  JsonTypes,
+} from "../../typings/index.d.js";
+import {
+  APIMessageComponentGuildInteraction,
+  Snowflake,
+} from "discord-api-types/v10";
 
 /**
  * Represents when a button is clicked.
@@ -25,7 +33,7 @@ class ButtonClick extends Interaction implements ButtonClickType {
    */
   constructor(
     client: ClientType,
-    data: ButtonClickRaw,
+    data: APIMessageComponentGuildInteraction,
     { guildId, channelId }: { guildId: Snowflake; channelId: Snowflake },
   ) {
     super(client, data);
@@ -109,11 +117,13 @@ class ButtonClick extends Interaction implements ButtonClickType {
    * @method
    * @override
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): ButtonClickCacheJSON | ButtonClickDiscordJSON | ButtonClickStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

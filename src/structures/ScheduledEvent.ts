@@ -1,21 +1,24 @@
 import User from "./User.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  APIGuildScheduledEvent,
+  GuildScheduledEventEntityType,
+  GuildScheduledEventStatus,
+} from "discord-api-types/v10";
+import {
+  ScheduledEvent as ScheduledEventType,
   ScheduledEventCacheJSON,
   ScheduledEventDiscordJSON,
-  ScheduledEventRaw,
   ScheduledEventStorageJSON,
-  ScheduledEventType,
-} from "./interfaces/ScheduledEvent.js";
+  JsonTypes,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
 
 /**
  * Represents an scheduled event.
@@ -46,7 +49,7 @@ class ScheduledEvent implements ScheduledEventType {
   constructor(
     client: ClientType,
     data:
-      | ScheduledEventRaw
+      | APIGuildScheduledEvent
       | ScheduledEventCacheJSON
       | ScheduledEventDiscordJSON
       | ScheduledEventStorageJSON,
@@ -190,13 +193,13 @@ class ScheduledEvent implements ScheduledEventType {
         break;
     }
 
-    if (this.entityType == "EXTERNAL")
+    if (this.entityType == GuildScheduledEventEntityType.External)
       /**
        * The location of the event.
        * @type {String?}
        * @private
        */
-      this.#location = data.location ?? data.entity_metadata.location;
+      this.#location = data.entity_metadata?.location ?? data.location;
 
     const shouldCache = ScheduledEvent.shouldCache(
       this.#_client._cacheOptions,
@@ -324,17 +327,14 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get entityType() {
-    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) return "STAGE_INSTANCE";
-    else if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1) return "VOICE";
-    else if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2) return "EXTERNAL";
-    else return "UNKNOWN";
-  }
+    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0)
+      return GuildScheduledEventEntityType.StageInstance;
+    else if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1)
+      return GuildScheduledEventEntityType.Voice;
+    else if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2)
+      return GuildScheduledEventEntityType.External;
 
-  get #rawEntityType() {
-    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) return 1;
-    else if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1) return 2;
-    else if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2) return 3;
-    else return 0;
+    throw new Error("GLUON: Unknown entity type.");
   }
 
   /**
@@ -344,19 +344,16 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get status() {
-    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3) return "SCHEDULED";
-    else if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4) return "ACTIVE";
-    else if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5) return "COMPLETED";
-    else if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "CANCELED";
-    else return "UNKNOWN";
-  }
+    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3)
+      return GuildScheduledEventStatus.Scheduled;
+    else if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4)
+      return GuildScheduledEventStatus.Active;
+    else if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5)
+      return GuildScheduledEventStatus.Completed;
+    else if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6)
+      return GuildScheduledEventStatus.Canceled;
 
-  get #rawStatus() {
-    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3) return 1;
-    else if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4) return 2;
-    else if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5) return 3;
-    else if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return 4;
-    else return 0;
+    throw new Error("GLUON: Unknown status.");
   }
 
   /**
@@ -386,7 +383,7 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get scheduledEndTime() {
-    return this.#scheduled_end_time;
+    return this.#scheduled_end_time ?? null;
   }
 
   /**
@@ -439,7 +436,10 @@ class ScheduledEvent implements ScheduledEventType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any) {
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
     if (!(gluonCacheOptions instanceof GluonCacheOptions))
       throw new TypeError(
         "GLUON: Gluon cache options must be a GluonCacheOptions.",
@@ -476,11 +476,11 @@ class ScheduledEvent implements ScheduledEventType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
@@ -496,8 +496,8 @@ class ScheduledEvent implements ScheduledEventType {
             : null,
           image: this._originalImageHash,
           user_count: this.userCount,
-          entity_type: this.#rawEntityType,
-          status: this.#rawStatus,
+          entity_type: this.entityType,
+          status: this.status,
           entity_metadata: {
             location: this.location,
           },

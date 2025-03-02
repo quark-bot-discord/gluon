@@ -2,7 +2,7 @@ import {
   GLUON_GUILD_CACHING_OPTIONS,
   TO_JSON_TYPES_ENUM,
 } from "../constants.js";
-import { GuildCacheOptionsType } from "./interfaces/GuildCacheOptions.js";
+import { GuildCacheOptions as GuildCacheOptionsType } from "../../typings/index.d.js";
 
 class GuildCacheOptions implements GuildCacheOptionsType {
   #_cache_options;

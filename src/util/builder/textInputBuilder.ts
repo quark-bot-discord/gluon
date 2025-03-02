@@ -1,11 +1,9 @@
-import { TextInputStyles } from "src/structures/interfaces/ModalResponse.js";
+import { ComponentType, TextInputStyle } from "discord-api-types/v10";
+import { LIMITS, TEXT_INPUT_STYLES } from "../../constants.js";
 import {
-  COMPONENT_TYPES,
-  LIMITS,
-  TEXT_INPUT_STYLES,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
-import { TextInputBuilderType } from "./interfaces/textInputBuilder.js";
+  JsonTypes,
+  TextInputBuilder as TextInputBuilderType,
+} from "typings/index.js";
 
 /**
  * Helps to construct a text input interaction.
@@ -18,14 +16,14 @@ class TextInput implements TextInputBuilderType {
   min_length: number | undefined;
   placeholder: string | undefined;
   required: boolean | undefined;
-  style: TextInputStyles | undefined;
-  type: COMPONENT_TYPES.TEXT_INPUT;
+  style: TextInputStyle | undefined;
+  type: ComponentType.TextInput;
   value: string | undefined;
   /**
    * Creates a text input.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.TEXT_INPUT;
+    this.type = ComponentType.TextInput;
   }
 
   /**
@@ -51,7 +49,7 @@ class TextInput implements TextInputBuilderType {
    * @returns {TextInput}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles}
    */
-  setStyle(style: TextInputStyles) {
+  setStyle(style: TextInputStyle) {
     if (!style)
       throw new TypeError("GLUON: Text input style must be provided.");
 
@@ -147,7 +145,7 @@ class TextInput implements TextInputBuilderType {
    * @returns {Object}
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation?: boolean } = {
       suppressValidation: false,
     },
@@ -155,9 +153,9 @@ class TextInput implements TextInputBuilderType {
     if (suppressValidation !== true) {
       if (!this.type)
         throw new TypeError("GLUON: Text input type must be provided.");
-      if (this.type !== COMPONENT_TYPES.TEXT_INPUT)
+      if (this.type !== ComponentType.TextInput)
         throw new TypeError(
-          `GLUON: Text input type must be ${COMPONENT_TYPES.TEXT_INPUT}.`,
+          `GLUON: Text input type must be ${ComponentType.TextInput}.`,
         );
       if (!this.label)
         throw new TypeError("GLUON: Text input label must be provided.");
@@ -217,14 +215,14 @@ class TextInput implements TextInputBuilderType {
         throw new TypeError("GLUON: Text input required must be a boolean.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           type: this.type,
           label: this.label as string, // valid due to validation above
-          style: this.style as TextInputStyles, // valid due to validation above
+          style: this.style as TextInputStyle, // valid due to validation above
           custom_id: this.custom_id as string, // valid due to validation above
           value: this.value,
           placeholder: this.placeholder,

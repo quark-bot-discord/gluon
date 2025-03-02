@@ -1,20 +1,17 @@
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { APIUser } from "discord-api-types/v10";
 import {
+  JsonTypes,
   UserCacheJSON,
   UserDiscordJSON,
-  UserRaw,
   UserStorageJSON,
-  UserType,
-} from "./interfaces/User.js";
+  User as UserType,
+} from "../../typings/index.d.js";
 
 /**
  * Represents a Discord user.
@@ -41,7 +38,7 @@ class User implements UserType {
    */
   constructor(
     client: ClientType,
-    data: UserRaw | UserCacheJSON | UserDiscordJSON | UserStorageJSON,
+    data: APIUser | UserCacheJSON | UserDiscordJSON | UserStorageJSON,
     { nocache = false }: { nocache?: boolean } = {
       nocache: false,
     },
@@ -382,9 +379,9 @@ class User implements UserType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT: {
         return {
           id: this.id,
           avatar: this._originalAvatarHash,
@@ -395,7 +392,7 @@ class User implements UserType {
           discriminator: this.#discriminator,
         };
       }
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
         return {
           id: this.id,
           avatar: this._originalAvatarHash,
@@ -405,7 +402,7 @@ class User implements UserType {
           global_name: this.globalName,
           discriminator: this.#discriminator,
         };
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

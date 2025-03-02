@@ -1,12 +1,12 @@
 import {
-  COMPONENT_TYPES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
-import { ActionRowBuilderType } from "./interfaces/actionRowBuilder.js";
-import { ButtonBuilderType } from "./interfaces/buttonBuilder.js";
-import { DropdownBuilderType } from "./interfaces/dropdownBuilder.js";
-import { TextInputBuilderType } from "./interfaces/textInputBuilder.js";
+  JsonTypes,
+  ActionRowBuilder as ActionRowBuilderType,
+  ButtonBuilder as ButtonBuilderType,
+  DropdownBuilder as DropdownBuilderType,
+  TextInputBuilder as TextInputBuilderType,
+} from "typings/index.js";
+import { LIMITS } from "../../constants.js";
+import { ComponentType } from "discord-api-types/v10";
 
 /**
  * Helps to construct an action row for a message.
@@ -15,12 +15,12 @@ class ActionRow implements ActionRowBuilderType {
   components: Array<
     DropdownBuilderType | ButtonBuilderType | TextInputBuilderType
   >;
-  type: COMPONENT_TYPES.ACTION_ROW;
+  type: ComponentType.ActionRow;
   /**
    * Creates an action row.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.ACTION_ROW;
+    this.type = ComponentType.ActionRow;
     this.components = [];
   }
 
@@ -42,7 +42,7 @@ class ActionRow implements ActionRowBuilderType {
    * @returns {Object}
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -52,15 +52,15 @@ class ActionRow implements ActionRowBuilderType {
         throw new RangeError(
           `GLUON: Action rows must have less than ${LIMITS.MAX_ACTION_ROW_BUTTONS} buttons.`,
         );
-      if (this.type !== COMPONENT_TYPES.ACTION_ROW)
+      if (this.type !== ComponentType.ActionRow)
         throw new TypeError(
-          `GLUON: Action row type must be set to 'ACTION_ROW' (${COMPONENT_TYPES.ACTION_ROW}).`,
+          `GLUON: Action row type must be set to 'ACTION_ROW' (${ComponentType.ActionRow}).`,
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           type: this.type,

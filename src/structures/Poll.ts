@@ -1,22 +1,19 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
-import {
-  PollCacheJSON,
-  PollDiscordJSON,
-  PollRaw,
-  PollRawAnswer,
-  PollStorageJSON,
-  PollType,
-} from "./interfaces/Poll.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  Poll as PollType,
+  PollCacheJSON,
+  PollDiscordJSON,
+  PollStorageJSON,
+  JsonTypes,
   MessagePollManagerCacheJSON,
   MessagePollManagerDiscordJSON,
   MessagePollManagerStorageJSON,
-} from "src/managers/interfaces/MessagePollManager.js";
+} from "../../typings/index.d.js";
+import { APIPoll } from "discord-api-types/v10";
 
 class Poll implements PollType {
   #_client;
@@ -36,7 +33,7 @@ class Poll implements PollType {
    */
   constructor(
     client: ClientType,
-    data: PollRaw | PollCacheJSON | PollDiscordJSON | PollStorageJSON,
+    data: APIPoll | PollCacheJSON | PollDiscordJSON | PollStorageJSON,
     { guildId }: { guildId: Snowflake },
   ) {
     if (!client)
@@ -146,7 +143,7 @@ class Poll implements PollType {
    */
   get answers() {
     if (!this.#answers) return [];
-    return this.#answers.map((a: PollRawAnswer) => {
+    return this.#answers.map((a) => {
       return {
         answerId: a.answer_id,
         answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name as string /** name only not provided with reactions */, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
@@ -182,17 +179,6 @@ class Poll implements PollType {
    * @public
    */
   get layoutType() {
-    if (this.#layout_type === 1) return "DEFAULT";
-    else return null;
-  }
-
-  /**
-   * The raw layout type of the poll.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get rawLayoutType() {
     return this.#layout_type;
   }
 
@@ -230,23 +216,23 @@ class Poll implements PollType {
    * @method
    */
   toJSON(
-    format?: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
   ): PollCacheJSON | PollDiscordJSON | PollStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           question: this.#question,
           answers: this.#answers,
           expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
-          layout_type: this.rawLayoutType,
+          layout_type: this.layoutType,
           _results: this._results.toJSON(format) as
             | MessagePollManagerCacheJSON
             | MessagePollManagerStorageJSON,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           question: this.#question,
@@ -255,7 +241,7 @@ class Poll implements PollType {
             ? new Date(this.expiry * 1000).toISOString()
             : null,
           allow_multiselect: this.allowMultiselect,
-          layout_type: this.rawLayoutType,
+          layout_type: this.layoutType,
           results: this._results.toJSON(
             format,
           ) as MessagePollManagerDiscordJSON,

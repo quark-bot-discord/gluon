@@ -1,11 +1,13 @@
 import ClientType from "src/interfaces/Client.js";
 import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { GuildMemberManagerType } from "./interfaces/GuildMemberManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { MemberType } from "src/structures/interfaces/Member.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  GuildMemberManager as GuildMemberManagerType,
+  Guild as GuildType,
+  Member as MemberType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 
 /**
  * Manages all members belonging to this guild.

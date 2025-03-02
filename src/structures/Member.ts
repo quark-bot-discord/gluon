@@ -1,7 +1,6 @@
 import {
   PERMISSIONS,
   MEMBER_FLAGS,
-  TO_JSON_TYPES_ENUM,
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
@@ -19,15 +18,16 @@ import GuildManager from "../managers/GuildManager.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
+  Member as MemberType,
   MemberCacheJSON,
   MemberDiscordJSON,
-  MemberRaw,
   MemberStorageJSON,
-  MemberType,
-} from "./interfaces/Member.js";
-import { UserType } from "./interfaces/User.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
+  JsonTypes,
+  User as UserType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIGuildMember } from "discord-api-types/v10";
 
 /**
  * Represents a guild member.
@@ -57,7 +57,11 @@ class Member implements MemberType {
    */
   constructor(
     client: ClientType,
-    data: MemberRaw | MemberStorageJSON | MemberCacheJSON | MemberDiscordJSON,
+    data:
+      | APIGuildMember
+      | MemberStorageJSON
+      | MemberCacheJSON
+      | MemberDiscordJSON,
     {
       userId,
       guildId,
@@ -879,10 +883,10 @@ class Member implements MemberType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           user: this.user.toJSON(format),
           nick: this.nick,
@@ -901,7 +905,7 @@ class Member implements MemberType {
           _attributes: this.#_attributes,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           user: this.user.toJSON(format),

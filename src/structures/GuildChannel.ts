@@ -1,7 +1,4 @@
-import {
-  PERMISSION_OVERWRITE_TYPES,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { PERMISSION_OVERWRITE_TYPES } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import Message from "./Message.js";
@@ -11,44 +8,50 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
 import ClientType from "src/interfaces/Client.js";
-import {
-  ChannelCacheJSON,
-  ChannelDiscordJSON,
-  ChannelRaw,
-  ChannelStorageJSON,
-  ChannelType,
-} from "./interfaces/Channel.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
-  PermissionOverwriteRaw,
-  PermissionOverwriteType,
-} from "./interfaces/PermissionOverwrite.js";
-import { MemberType } from "./interfaces/Member.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
-import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
 import { FileUpload } from "src/util.js";
-import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
-import { ChannelMessageManagerType } from "src/managers/interfaces/ChannelMessageManager.js";
+import {
+  APIGuildTextChannel,
+  APIGuildVoiceChannel,
+  ChannelType,
+  GuildTextChannelType,
+} from "discord-api-types/v10";
+import {
+  GuildChannel as GuildChannelType,
+  GuildChannelCacheJSON,
+  GuildChannelDiscordJSON,
+  GuildChannelStorageJSON,
+  PermissionOverwrite as PermissionOverwriteType,
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageStorageJSON,
+  Member as MemberType,
+  JsonTypes,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  ChannelMessageManager as ChannelMessageManagerType,
+  Embed,
+  MessageComponents as MessageComponentsType,
+} from "../../typings/index.js";
 
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
  */
-class Channel implements ChannelType {
-  #_client;
-  #_id;
-  #_guild_id;
-  #type;
-  #name;
-  #topic;
-  #permission_overwrites;
-  #rate_limit_per_user;
-  #_parent_id;
-  #_attributes;
-  #_cacheOptions;
+class GuildChannel implements GuildChannelType {
+  #_client: ClientType;
+  #_id: bigint;
+  #_guild_id: bigint;
+  #type: ChannelType;
+  #name!: string;
+  #topic: string | undefined;
+  #permission_overwrites: PermissionOverwriteType[] = [];
+  #rate_limit_per_user: number | undefined;
+  #_parent_id: bigint | undefined;
+  #_attributes: number;
+  #_cacheOptions: ChannelCacheOptions;
   #messages!: ChannelMessageManagerType;
-  #position;
+  #position: number | undefined;
   /**
    * Creates the base structure for a channel.
    * @param {Client} client The client instance.
@@ -60,10 +63,13 @@ class Channel implements ChannelType {
   constructor(
     client: ClientType,
     data:
-      | ChannelRaw
-      | ChannelStorageJSON
-      | ChannelCacheJSON
-      | ChannelDiscordJSON,
+      | APIGuildTextChannel<GuildTextChannelType>
+      | APIGuildTextChannel<ChannelType.GuildForum>
+      | APIGuildTextChannel<ChannelType.GuildMedia>
+      | APIGuildVoiceChannel
+      | GuildChannelStorageJSON
+      | GuildChannelCacheJSON
+      | GuildChannelDiscordJSON,
     { guildId }: { guildId: Snowflake },
   ) {
     if (!client)
@@ -108,21 +114,17 @@ class Channel implements ChannelType {
      * @type {String}
      * @private
      */
-    if (typeof data.name == "string") this.#name = data.name;
-    else if (
-      typeof data.name != "string" &&
-      existing &&
-      typeof existing.name == "string"
-    )
-      this.#name = existing.name;
+    data.name = data.name ?? existing?.name;
 
     /**
      * The topic of the channel.
      * @type {String?}
      * @private
      */
-    if (typeof data.topic == "string") this.#topic = data.topic;
+    if ("topic" in data && typeof data.topic == "string")
+      this.#topic = data.topic;
     else if (
+      "topic" in data &&
       typeof data.topic != "string" &&
       existing &&
       typeof existing.topic == "string"
@@ -137,8 +139,7 @@ class Channel implements ChannelType {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: PermissionOverwriteRaw) =>
-          new PermissionOverwrite(this.#_client, p),
+        (p) => new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -215,7 +216,9 @@ class Channel implements ChannelType {
      */
     this.#_cacheOptions = existing?._cacheOptions
       ? existing._cacheOptions
-      : new ChannelCacheOptions(data._cacheOptions);
+      : new ChannelCacheOptions(
+          "_cacheOptions" in data ? data._cacheOptions : undefined,
+        );
 
     /**
      * The message manager for this channel.
@@ -252,7 +255,7 @@ class Channel implements ChannelType {
     content: string;
     components: MessageComponentsType;
     files: FileUpload[];
-    embeds: EmbedBuilderType[];
+    embeds: Embed[];
     suppressMentions: boolean;
   }) {
     return Message.send(this.#_client, this.id, this.guildId, {
@@ -271,7 +274,7 @@ class Channel implements ChannelType {
    * @public
    */
   get mention() {
-    return Channel.getMention(this.id);
+    return GuildChannel.getMention(this.id);
   }
 
   /**
@@ -363,7 +366,7 @@ class Channel implements ChannelType {
    * @public
    */
   get topic() {
-    return this.#topic;
+    return this.#topic ?? null;
   }
 
   /**
@@ -534,7 +537,8 @@ class Channel implements ChannelType {
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     for (let i = 0; i < member.roles.length; i++) {
       const role = this.permissionOverwrites.find(
-        (p: PermissionOverwriteType) =>
+        (p) =>
+          // @ts-expect-error TS(2531): Object is possibly 'null'.
           p.id === member.roles[i].id &&
           p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
       );
@@ -579,40 +583,44 @@ class Channel implements ChannelType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): GuildChannelStorageJSON | GuildChannelCacheJSON | GuildChannelDiscordJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           id: this.id,
           type: this.type,
           name: this.name,
-          topic: this.topic,
+          topic: this.topic ?? undefined,
           rate_limit_per_user: this.rateLimitPerUser,
           position: this.position,
           parent_id: this.parentId ?? undefined,
           _attributes: this.#_attributes,
           _cacheOptions: this._cacheOptions.toJSON(format),
-          messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map(
-            (p: PermissionOverwriteType) => p.toJSON(format),
+          messages: this.messages.toJSON(format) as
+            | MessageStorageJSON[]
+            | MessageCacheJSON[],
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
           ),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           type: this.type,
           name: this.name,
-          topic: this.topic,
+          topic: this.topic ?? undefined,
           rate_limit_per_user: this.rateLimitPerUser,
           position: this.position,
           parent_id: this.parentId ?? undefined,
           nsfw: this.nsfw,
-          messages: this.messages.toJSON(format),
-          permission_overwrites: this.permissionOverwrites.map(
-            (p: PermissionOverwriteType) => p.toJSON(format),
+          messages: this.messages.toJSON(format) as MessageDiscordJSON[],
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
           ),
         };
       }
@@ -620,4 +628,4 @@ class Channel implements ChannelType {
   }
 }
 
-export default Channel;
+export default GuildChannel;

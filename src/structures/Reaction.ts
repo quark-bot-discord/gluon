@@ -1,15 +1,22 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
 import util from "util";
-import {
-  ReactionCacheJSON,
-  ReactionDiscordJSON,
-  ReactionRaw,
-  ReactionStorageJSON,
-  ReactionType,
-} from "./interfaces/Reaction.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  EmojiCacheJSON,
+  EmojiDiscordJSON,
+  EmojiStorageJSON,
+  Emoji as EmojiType,
+  JsonTypes,
+  ReactionCacheJSON,
+  ReactionDiscordJSON,
+  ReactionStorageJSON,
+  Reaction as ReactionType,
+} from "../../typings/index.d.js";
+import {
+  APIReaction,
+  GatewayMessageReactionAddDispatch,
+} from "discord-api-types/v10";
 
 /**
  * Represents a reaction belonging to a message.
@@ -20,7 +27,7 @@ class Reaction implements ReactionType {
   #emoji;
   #_reacted;
   #initial_reactor;
-  #count;
+  #count: number | undefined;
   /**
    * Creates the structure for a reaction.
    * @param {Client} client The client instance.
@@ -32,10 +39,11 @@ class Reaction implements ReactionType {
   constructor(
     client: ClientType,
     data:
-      | ReactionRaw
+      | APIReaction
       | ReactionStorageJSON
       | ReactionCacheJSON
-      | ReactionDiscordJSON,
+      | ReactionDiscordJSON
+      | GatewayMessageReactionAddDispatch,
     { guildId }: { guildId: Snowflake },
   ) {
     if (!client)
@@ -65,7 +73,7 @@ class Reaction implements ReactionType {
        * @type {Emoji}
        * @private
        */
-      this.#emoji = data.emoji;
+      this.#emoji = data.emoji as EmojiType;
     else
       this.#emoji = new Emoji(client, data.emoji, { guildId, nocache: true });
 
@@ -78,7 +86,8 @@ class Reaction implements ReactionType {
       "_reacted" in data && Array.isArray(data._reacted)
         ? data._reacted.map((r) => BigInt(r))
         : [];
-    if (!Array.isArray(data._reacted) && data.count) this.#count = data.count;
+    if ("_reacted" in data && !Array.isArray(data._reacted) && "count" in data)
+      this.#count = data.count as number;
 
     /**
      * The user who added the first reaction.
@@ -222,20 +231,20 @@ class Reaction implements ReactionType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
-          emoji: this.emoji.toJSON(format),
+          emoji: this.emoji.toJSON(format) as EmojiStorageJSON | EmojiCacheJSON,
           _reacted: this.reactedIds,
           initial_reactor: this.initialReactor ?? undefined,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
-          emoji: this.emoji.toJSON(format),
+          emoji: this.emoji.toJSON(format) as EmojiDiscordJSON,
           count: this.count,
         };
       }

@@ -1,18 +1,18 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
-import {
-  MessageReactionManagerCacheJSON,
-  MessageReactionManagerStorageJSON,
-  MessageReactionManagerType,
-} from "./interfaces/MessageReactionManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  MessageReactionManager as MessageReactionManagerType,
+  Guild as GuildType,
+  Reaction as ReactionType,
+  MessageReactionManagerCacheJSON,
+  MessageReactionManagerStorageJSON,
+  JsonTypes,
   ReactionCacheJSON,
   ReactionStorageJSON,
-  ReactionType,
-} from "src/structures/interfaces/Reaction.js";
+  ReactionDiscordJSON,
+} from "../../typings/index.d.js";
+import { GatewayMessageReactionAddDispatch } from "discord-api-types/v10";
 
 /**
  * Manages the reactions of a message.
@@ -78,7 +78,11 @@ class MessageReactionManager implements MessageReactionManagerType {
    * @public
    * @method
    */
-  _addReaction(userId: Snowflake, emoji: Snowflake | string, data: any) {
+  _addReaction(
+    userId: Snowflake,
+    emoji: Snowflake | string,
+    data: GatewayMessageReactionAddDispatch,
+  ) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
@@ -114,7 +118,11 @@ class MessageReactionManager implements MessageReactionManagerType {
     if (this.#cache[emoji]) {
       this.#cache[emoji]._removeReactor(userId);
 
-      if (this.#cache[emoji].count == 0) delete this.#cache[emoji];
+      if (this.#cache[emoji].count == 0) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [emoji]: _, ...rest } = this.#cache;
+        this.#cache = rest;
+      }
     }
   }
 
@@ -125,23 +133,23 @@ class MessageReactionManager implements MessageReactionManagerType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         const messageReactions: {
           [key: string]: ReactionCacheJSON | ReactionStorageJSON;
         } = {};
         for (const [reaction, reactionData] of Object.entries(this.#cache))
-          messageReactions[reaction] = (reactionData as ReactionType).toJSON(
-            format,
-          );
+          messageReactions[reaction] = reactionData.toJSON(format) as
+            | ReactionCacheJSON
+            | ReactionStorageJSON;
         return messageReactions;
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
-        return Array.from(Object.values(this.#cache)).map((o) =>
-          o.toJSON(format),
+        return Array.from(Object.values(this.#cache)).map(
+          (o) => o.toJSON(format) as ReactionDiscordJSON,
         );
       }
     }

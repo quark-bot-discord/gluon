@@ -1,24 +1,14 @@
 import ClientType from "src/interfaces/Client.js";
-import CategoryChannel from "../structures/CategoryChannel.js";
-import Channel from "../structures/Channel.js";
-import TextChannel from "../structures/TextChannel.js";
-import Thread from "../structures/Thread.js";
-import VoiceChannel from "../structures/VoiceChannel.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { VoiceChannelType } from "src/structures/interfaces/VoiceChannel.js";
-import { TextChannelType } from "src/structures/interfaces/TextChannel.js";
-import { ThreadType } from "src/structures/interfaces/Thread.js";
-import { CategoryChannelType } from "src/structures/interfaces/CategoryChannel.js";
 import {
-  AnyChannelType,
-  ChannelType,
-} from "src/structures/interfaces/Channel.js";
-import { GuildChannelsManagerType } from "./interfaces/GuildChannelsManager.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+  GuildChannelsManager as GuildChannelsManagerType,
+  Guild as GuildType,
+  AllChannels,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 
 /**
  * Manages all channels within a guild.
@@ -66,8 +56,8 @@ class GuildChannelsManager
    * @method
    * @override
    */
-  get(id: Snowflake): AnyChannelType | null {
-    return super.get(id) as AnyChannelType | null;
+  get(id: Snowflake): AllChannels | null {
+    return super.get(id) as AllChannels | null;
   }
 
   /**
@@ -83,7 +73,7 @@ class GuildChannelsManager
     if (typeof channel_id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
 
-    const cachedChannel = this.get(channel_id) as AnyChannelType | null;
+    const cachedChannel = this.get(channel_id) as AllChannels | null;
     if (cachedChannel) return cachedChannel;
 
     const data = await this.#_client.request.makeRequest("getChannel", [
@@ -105,28 +95,8 @@ class GuildChannelsManager
    * @throws {TypeError}
    * @override
    */
-  set(
-    id: Snowflake,
-    channel:
-      | VoiceChannelType
-      | TextChannelType
-      | ThreadType
-      | CategoryChannelType
-      | ChannelType,
-  ) {
-    if (
-      !(
-        channel instanceof VoiceChannel ||
-        channel instanceof TextChannel ||
-        channel instanceof Thread ||
-        channel instanceof CategoryChannel ||
-        channel instanceof Channel
-      )
-    )
-      throw new TypeError(
-        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel, Channel or Thread instance.",
-      );
-    return super.set(id, channel);
+  set(id: Snowflake, channel: AllChannels, expiry?: number) {
+    return super.set(id, channel, expiry);
   }
 
   /**

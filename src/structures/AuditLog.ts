@@ -1,17 +1,19 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
 import {
   AuditLogCacheJSON,
   AuditLogDiscordJSON,
-  AuditLogOptionTypes,
-  AuditLogRaw,
   AuditLogStorageJSON,
-  AuditLogType,
-} from "./interfaces/AuditLog.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { UserRaw } from "./interfaces/User.js";
+  AuditLog as AuditLogType,
+  JsonTypes,
+} from "../../typings/index.d.js";
+import {
+  APIAuditLogEntry,
+  APIUser,
+  AuditLogOptionsType,
+  Snowflake,
+} from "discord-api-types/v10";
 
 /**
  * Represents an audit log entry.
@@ -47,11 +49,11 @@ class AuditLog implements AuditLogType {
   constructor(
     client: ClientType,
     data:
-      | AuditLogRaw
+      | APIAuditLogEntry
       | AuditLogCacheJSON
       | AuditLogDiscordJSON
       | AuditLogStorageJSON,
-    { users, guildId }: { users?: UserRaw[]; guildId: Snowflake },
+    { users, guildId }: { users?: APIUser[]; guildId: Snowflake },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -101,9 +103,7 @@ class AuditLog implements AuditLogType {
     this.#_target_id = data.target_id ? BigInt(data.target_id) : null;
 
     if (users && users.length != 0 && this.#_target_id) {
-      const user = users.find(
-        (u: UserRaw) => u.id === String(this.#_target_id),
-      );
+      const user = users.find((u) => u.id === String(this.#_target_id));
       if (user)
         /**
          * The resolved target user.
@@ -121,9 +121,7 @@ class AuditLog implements AuditLogType {
     this.#_executor_id = data.user_id ? BigInt(data.user_id) : null;
 
     if (users && users.length != 0 && this.#_executor_id) {
-      const user = users.find(
-        (u: UserRaw) => u.id === String(this.#_executor_id),
-      );
+      const user = users.find((u) => u.id === String(this.#_executor_id));
       if (user)
         /**
          * The resolved executor user.
@@ -207,13 +205,14 @@ class AuditLog implements AuditLogType {
         ) as 0 | 1;
       }
 
-      if (data.options.status)
+      if ("status" in data.options && data.options.status) {
         /**
          * The new voice channel status.
          * @type {String?}
          * @private
          */
         this.#status = data.options.status;
+      }
     }
 
     if (data.changes)
@@ -382,7 +381,7 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get specialType() {
-    return String(this.#special_type) as AuditLogOptionTypes;
+    return String(this.#special_type) as AuditLogOptionsType;
   }
 
   /**
@@ -428,11 +427,13 @@ class AuditLog implements AuditLogType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): AuditLogStorageJSON | AuditLogDiscordJSON | AuditLogCacheJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
       default: {
         return {
           id: this.id,

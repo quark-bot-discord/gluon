@@ -1,17 +1,26 @@
 import ActionRow from "../util/builder/actionRowBuilder.js";
 import Member from "./Member.js";
 import TextInput from "../util/builder/textInputBuilder.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
 import ClientType from "src/interfaces/Client.js";
-import { InteractionRaw, InteractionType } from "./interfaces/Interaction.js";
 import { GuildMemberManager } from "src/structures.js";
-import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
-import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
-import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
-import { CommandChoiceBuilderType } from "src/util/builder/interfaces/commandChoiceBuilder.js";
-import { TextInputBuilderType } from "src/util/builder/interfaces/textInputBuilder.js";
+import {
+  Interaction as InteractionType,
+  InteractionCacheJSON,
+  InteractionDiscordJSON,
+  InteractionStorageJSON,
+  JsonTypes,
+  FileUpload,
+  Embed,
+  MessageComponents as MessageComponentsType,
+  TextInputBuilder as TextInputBuilderType,
+  CommandChoiceBuilder as CommandChoiceBuilderType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildInteraction,
+  APIMessageComponentGuildInteraction,
+} from "discord-api-types/v10";
 
 /**
  * Represents an interaction received over the gateway.
@@ -31,7 +40,10 @@ class Interaction implements InteractionType {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: ClientType, data: InteractionRaw) {
+  constructor(
+    client: ClientType,
+    data: APIGuildInteraction | APIMessageComponentGuildInteraction,
+  ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -64,7 +76,7 @@ class Interaction implements InteractionType {
      * @type {BigInt}
      * @private
      */
-    this.#_guild_id = data.guild_id ? BigInt(data.guild_id) : undefined;
+    this.#_guild_id = BigInt(data.guild_id);
 
     /**
      * The id of the channel that this interaction belongs to.
@@ -73,18 +85,16 @@ class Interaction implements InteractionType {
      */
     this.#_channel_id = data.channel_id ? BigInt(data.channel_id) : undefined;
 
-    if (data.member && data.guild_id && data.member.user) {
-      /**
-       * The member that triggered the interaction, if it was run in a guild.
-       * @type {Member?}
-       * @private
-       */
-      this.#_member_id = BigInt(data.member.user.id);
-      new Member(this.#_client, data.member, {
-        userId: data.member.user.id,
-        guildId: data.guild_id,
-      });
-    }
+    /**
+     * The member that triggered the interaction, if it was run in a guild.
+     * @type {Member?}
+     * @private
+     */
+    this.#_member_id = BigInt(data.member.user.id);
+    new Member(this.#_client, data.member, {
+      userId: data.member.user.id,
+      guildId: data.guild_id,
+    });
 
     /**
      * The interaction token, needed to respond to it.
@@ -190,7 +200,7 @@ class Interaction implements InteractionType {
    * @public
    */
   get memberId() {
-    return this.#_member_id ? String(this.#_member_id) : undefined;
+    return String(this.#_member_id);
   }
 
   /**
@@ -305,8 +315,8 @@ class Interaction implements InteractionType {
     quiet,
   }: {
     content: string;
-    files: FileUploadType[];
-    embeds: EmbedBuilderType[];
+    files: FileUpload[];
+    embeds: Embed[];
     components: MessageComponentsType;
     quiet: boolean;
   }) {
@@ -454,8 +464,8 @@ class Interaction implements InteractionType {
     components,
   }: {
     content: string;
-    files: FileUploadType[];
-    embeds: EmbedBuilderType[];
+    files: FileUpload[];
+    embeds: Embed[];
     components: MessageComponentsType;
   }) {
     return Interaction.edit(this.#_client, this.#token, {
@@ -491,8 +501,8 @@ class Interaction implements InteractionType {
       components,
     }: {
       content: string;
-      files: FileUploadType[];
-      embeds: EmbedBuilderType[];
+      files: FileUpload[];
+      embeds: Embed[];
       components: MessageComponentsType;
     },
   ) {
@@ -545,11 +555,13 @@ class Interaction implements InteractionType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): InteractionCacheJSON | InteractionDiscordJSON | InteractionStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           id: this.id,

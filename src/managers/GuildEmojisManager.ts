@@ -2,11 +2,13 @@ import ClientType from "src/interfaces/Client.js";
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { EmojiType } from "src/structures/interfaces/Emoji.js";
-import { GuildEmojisManagerType } from "./interfaces/GuildEmojisManager.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  GuildEmojisManager as GuildEmojisManagerType,
+  StructureIdentifiers,
+  Emoji as EmojiType,
+  Guild as GuildType,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 
 /**
  * Manages all emojis within a guild.

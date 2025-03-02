@@ -1,11 +1,12 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import {
-  MessagePollManagerCacheJSON,
-  MessagePollManagerStorageJSON,
-  MessagePollManagerType,
-} from "./interfaces/MessagePollManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  JsonTypes,
+  MessagePollManagerCacheJSON,
+  MessagePollManagerDiscordJSON,
+  MessagePollManagerStorageJSON,
+  MessagePollManager as MessagePollManagerType,
+} from "../../typings/index.d.js";
 
 /**
  * Manages a poll for a message.
@@ -115,16 +116,21 @@ class MessagePollManager implements MessagePollManagerType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | MessagePollManagerCacheJSON
+    | MessagePollManagerStorageJSON
+    | MessagePollManagerDiscordJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         const pollResponses: { [key: string]: Snowflake[] } = {};
         for (const [key, values] of this.#cache)
           pollResponses[key] = values.map((v: bigint) => String(v));
         return pollResponses;
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         const counts = [];
         for (const [key, values] of this.#cache)

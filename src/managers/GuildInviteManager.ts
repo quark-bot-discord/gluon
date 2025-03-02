@@ -3,10 +3,13 @@ import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { GuildInviteManagerType } from "./interfaces/GuildInviteManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
-import { InviteRaw, InviteType } from "src/structures/interfaces/Invite.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  GuildInviteManager as GuildInviteManagerType,
+  Guild as GuildType,
+  Invite as InviteType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { APIExtendedInvite } from "discord-api-types/v10";
 
 /**
  * Manages all invites within a guild.
@@ -63,15 +66,14 @@ class GuildInviteManager
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
 
-    const data = await this.#_client.request.makeRequest("getGuildInvites", [
+    const data = (await this.#_client.request.makeRequest("getGuildInvites", [
       this.#guild.id,
-    ]);
+    ])) as APIExtendedInvite[];
 
     this.clear();
 
     return data.map(
-      (raw: InviteRaw) =>
-        new Invite(this.#_client, raw, { guildId: this.#guild.id }),
+      (raw) => new Invite(this.#_client, raw, { guildId: this.#guild.id }),
     );
   }
 

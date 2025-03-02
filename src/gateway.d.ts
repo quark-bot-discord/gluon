@@ -1,3 +1,8 @@
+import { Snowflake } from "./interfaces/gluon.ts";
+import { EmojiRaw } from "./structures/interfaces/Emoji.ts";
+import { MemberRaw } from "./structures/interfaces/Member.ts";
+import { ReactionRawCountDetails } from "./structures/interfaces/Reaction.ts";
+
 export interface Heartbeat {
   op: GatewayOpcode.HEARTBEAT;
   d: number | null;
@@ -77,4 +82,17 @@ export enum GatewayOpcode {
   INVALID_SESSION = 9,
   HELLO = 10,
   HEARTBEAT_ACK = 11,
+}
+
+export interface GatewayMessageReactionAddRaw {
+  user_id: Snowflake;
+  channel_id: Snowflake;
+  message_id: Snowflake;
+  guild_id?: Snowflake;
+  member?: MemberRaw;
+  emoji: EmojiRaw;
+  message_author_id?: Snowflake;
+  burst: boolean;
+  burst_colors?: string[];
+  type: ReactionRawCountDetails;
 }

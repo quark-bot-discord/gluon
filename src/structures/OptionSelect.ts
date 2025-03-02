@@ -1,13 +1,16 @@
 import ClientType from "src/interfaces/Client.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
+import { APIMessageComponentSelectMenuInteraction } from "discord-api-types/v10";
 import {
-  OptionSelectRaw,
-  OptionSelectType,
-} from "./interfaces/OptionSelect.js";
+  OptionSelect as OptionSelectType,
+  OptionSelectCacheJSON,
+  OptionSelectDiscordJSON,
+  OptionSelectStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 /**
  * Represents when an option is selected.
@@ -29,7 +32,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
    */
   constructor(
     client: ClientType,
-    data: OptionSelectRaw,
+    data: APIMessageComponentSelectMenuInteraction,
     { channelId, guildId }: { channelId: Snowflake; guildId: Snowflake },
   ) {
     super(client, data);
@@ -131,10 +134,12 @@ class OptionSelect extends Interaction implements OptionSelectType {
    * @method
    * @override
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): OptionSelectCacheJSON | OptionSelectDiscordJSON | OptionSelectStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           ...super.toJSON(format),
           custom_id: this.customId,
@@ -142,7 +147,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
           values: this.values,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

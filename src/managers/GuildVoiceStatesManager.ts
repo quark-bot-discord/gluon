@@ -1,19 +1,19 @@
 import ClientType from "src/interfaces/Client.js";
 import VoiceState from "../structures/VoiceState.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import {
-  BaseCacheManagerType,
-  StructureIdentifiers,
-} from "./interfaces/BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { VoiceStateType } from "src/structures/interfaces/VoiceState.js";
+import {
+  GuildVoiceStatesManager as GuildVoiceStatesManagerType,
+  StructureIdentifiers,
+  VoiceState as VoiceStateType,
+} from "../../typings/index.d.js";
 
 /**
  * Manages all voice states belonging to a guild.
  */
 class GuildVoiceStatesManager
   extends BaseCacheManager
-  implements BaseCacheManagerType
+  implements GuildVoiceStatesManagerType
 {
   static identifier = "voicestates" as StructureIdentifiers;
   constructor(client: ClientType) {

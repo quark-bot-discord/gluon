@@ -1,10 +1,8 @@
 import {
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
-  LOCALES,
   NAME,
   PERMISSIONS,
-  TO_JSON_TYPES_ENUM,
 } from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildEmojisManager from "../managers/GuildEmojisManager.js";
@@ -23,34 +21,59 @@ import Role from "./Role.js";
 import Thread from "./Thread.js";
 import VoiceState from "./VoiceState.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
-import Channel from "./Channel.js";
+import Channel from "./GuildChannel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Message from "./Message.js";
-import {
-  GuildCacheJSON,
-  GuildDiscordJSON,
-  GuildRaw,
-  GuildRawGateway,
-  GuildStorageJSON,
-  GuildType,
-} from "./interfaces/Guild.js";
 import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import { AuditLogRaw, AuditLogTypes } from "./interfaces/AuditLog.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
-import { GuildMemberManagerType } from "src/managers/interfaces/GuildMemberManager.js";
-import { GuildChannelsManagerType } from "src/managers/interfaces/GuildChannelsManager.js";
-import { GuildVoiceStatesManagerType } from "src/managers/interfaces/GuildVoiceStatesManager.js";
-import { GuildRoleManagerType } from "src/managers/interfaces/GuildRoleManager.js";
-import { GuildEmojisManagerType } from "src/managers/interfaces/GuildEmojisManager.js";
-import { GuildInviteManagerType } from "src/managers/interfaces/GuildInviteManager.js";
-import { GuildScheduledEventManagerType } from "src/managers/interfaces/GuildScheduledEventManager.js";
-import { TextChannelType } from "./interfaces/TextChannel.js";
-import { EmbedBuilderType } from "src/util/builder/interfaces/embedBuilder.js";
-import { MessageComponentsType } from "src/util/builder/interfaces/messageComponents.js";
-import { FileUploadType } from "src/util/builder/interfaces/fileUpload.js";
+import {
+  APIAuditLog,
+  AuditLogEvent,
+  GatewayGuildCreateDispatchData,
+  GuildDefaultMessageNotifications,
+  GuildExplicitContentFilter,
+  GuildMFALevel,
+  GuildNSFWLevel,
+  GuildPremiumTier,
+  GuildVerificationLevel,
+  Locale,
+} from "discord-api-types/v10";
+import {
+  Guild as GuildType,
+  GuildCacheJSON,
+  GuildDiscordJSON,
+  GuildStorageJSON,
+  JsonTypes,
+  TextChannel as TextChannelType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GuildMemberManager as GuildMemberManagerType,
+  GuildChannelsManager as GuildChannelsManagerType,
+  GuildVoiceStatesManager as GuildVoiceStatesManagerType,
+  GuildRoleManager as GuildRoleManagerType,
+  GuildEmojisManager as GuildEmojisManagerType,
+  GuildInviteManager as GuildInviteManagerType,
+  GuildScheduledEventManager as GuildScheduledEventManagerType,
+  Embed,
+  FileUpload,
+  MessageComponents as MessageComponentsType,
+  MemberDiscordJSON,
+  VoiceStateDiscordJSON,
+  RoleDiscordJSON,
+  EmojiDiscordJSON,
+  InviteDiscordJSON,
+  InviteCacheJSON,
+  InviteStorageJSON,
+  EmojiCacheJSON,
+  EmojiStorageJSON,
+  RoleCacheJSON,
+  RoleStorageJSON,
+  VoiceStateCacheJSON,
+  VoiceStateStorageJSON,
+  MemberStorageJSON,
+  MemberCacheJSON,
+} from "../../typings/index.d.js";
 
 /**
  * Represents a Discord guild.
@@ -68,7 +91,7 @@ class Guild implements GuildType {
   #member_count: number = 0;
   #system_channel_id: bigint | null = null;
   #rules_channel_id: bigint | null = null;
-  #preferred_locale: LOCALES = LOCALES.ENGLISH_US;
+  #preferred_locale: Locale = Locale.EnglishUS;
   #_attributes: number = 0;
   #premium_subscription_count: number = 0;
   #_cacheOptions: GuildCacheOptionsType = new GuildCacheOptions(0);
@@ -90,8 +113,7 @@ class Guild implements GuildType {
   constructor(
     client: ClientType,
     data:
-      | GuildRaw
-      | GuildRawGateway
+      | GatewayGuildCreateDispatchData
       | GuildCacheJSON
       | GuildStorageJSON
       | GuildDiscordJSON,
@@ -221,7 +243,7 @@ class Guild implements GuildType {
      */
     this.#members = existing
       ? existing.members
-      : new GuildMemberManager(this.#_client, this as GuildType);
+      : new GuildMemberManager(this.#_client, this);
 
     /**
      * The channel manager of this guild.
@@ -230,7 +252,7 @@ class Guild implements GuildType {
      */
     this.#channels = existing
       ? existing.channels
-      : new GuildChannelsManager(this.#_client, this as GuildType);
+      : new GuildChannelsManager(this.#_client, this);
 
     /**
      * The role manager of this guild.
@@ -239,11 +261,11 @@ class Guild implements GuildType {
      */
     this.#roles = existing
       ? existing.roles
-      : new GuildRoleManager(this.#_client, this as GuildType);
+      : new GuildRoleManager(this.#_client, this);
 
     this.#scheduled_events = existing
       ? existing.scheduledEvents
-      : new GuildScheduledEventManager(this.#_client, this as GuildType);
+      : new GuildScheduledEventManager(this.#_client, this);
 
     /**
      * The emoji manager of this guild.
@@ -252,7 +274,7 @@ class Guild implements GuildType {
      */
     this.#emojis = existing
       ? existing.emojis
-      : new GuildEmojisManager(this.#_client, this as GuildType);
+      : new GuildEmojisManager(this.#_client, this);
 
     /**
      * The invite manager of this guild.
@@ -261,7 +283,7 @@ class Guild implements GuildType {
      */
     this.#invites = existing
       ? existing.invites
-      : new GuildInviteManager(this.#_client, this as GuildType);
+      : new GuildInviteManager(this.#_client, this);
 
     /**
      * The system channel id of the guild.
@@ -320,12 +342,12 @@ class Guild implements GuildType {
 
     if (
       ("mfa_level" in data && typeof data.mfa_level == "number") ||
-      (existing && typeof existing.rawMfaLevel == "number")
+      (existing && typeof existing.mfaLevel == "number")
     ) {
       const mfaLevel =
         "mfa_level" in data && typeof data.mfa_level == "number"
           ? data.mfa_level
-          : existing.rawMfaLevel;
+          : existing.mfaLevel;
       switch (mfaLevel) {
         case 0:
           // none
@@ -343,13 +365,13 @@ class Guild implements GuildType {
     if (
       ("verification_level" in data &&
         typeof data.verification_level == "number") ||
-      (existing && typeof existing.rawVerificationLevel == "number")
+      (existing && typeof existing.verificationLevel == "number")
     ) {
       const verificationLevel =
         "verification_level" in data &&
         typeof data.verification_level == "number"
           ? data.verification_level
-          : existing.rawVerificationLevel;
+          : existing.verificationLevel;
       switch (verificationLevel) {
         case 0:
           // none
@@ -379,13 +401,13 @@ class Guild implements GuildType {
     if (
       ("default_message_notifications" in data &&
         typeof data.default_message_notifications == "number") ||
-      (existing && typeof existing.rawDefaultMessageNotifications == "number")
+      (existing && typeof existing.defaultMessageNotifications == "number")
     ) {
       const defaultMessageNotifications =
         "default_message_notifications" in data &&
         typeof data.default_message_notifications == "number"
           ? data.default_message_notifications
-          : existing.rawDefaultMessageNotifications;
+          : existing.defaultMessageNotifications;
       switch (defaultMessageNotifications) {
         case 0:
           // all messages
@@ -403,13 +425,13 @@ class Guild implements GuildType {
     if (
       ("explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number") ||
-      (existing && typeof existing.rawExplicitContentFilter == "number")
+      (existing && typeof existing.explicitContentFilter == "number")
     ) {
       const explicitContentFilter =
         "explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number"
           ? data.explicit_content_filter
-          : existing.rawExplicitContentFilter;
+          : existing.explicitContentFilter;
       switch (explicitContentFilter) {
         case 0:
           // disabled
@@ -430,12 +452,12 @@ class Guild implements GuildType {
 
     if (
       ("nsfw_level" in data && typeof data.nsfw_level == "number") ||
-      (existing && typeof existing.rawNsfwLevel == "number")
+      (existing && typeof existing.nsfwLevel == "number")
     ) {
       const nsfwLevel =
         "nsfw_level" in data && typeof data.nsfw_level == "number"
           ? data.nsfw_level
-          : existing.rawNsfwLevel;
+          : existing.nsfwLevel;
       switch (nsfwLevel) {
         case 0:
           // default
@@ -680,32 +702,6 @@ class Guild implements GuildType {
    * @public
    */
   get systemChannelFlags() {
-    const flags = [];
-
-    if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0)
-      flags.push("SUPPRESS_JOIN_NOTIFICATIONS");
-    if ((this.#_attributes & (0b1 << 1)) == 0b1 << 1)
-      flags.push("SUPPRESS_PREMIUM_SUBSCRIPTIONS");
-    if ((this.#_attributes & (0b1 << 2)) == 0b1 << 2)
-      flags.push("SUPPRESS_GUILD_REMINDER_NOTIFICATIONS");
-    if ((this.#_attributes & (0b1 << 3)) == 0b1 << 3)
-      flags.push("SUPPRESS_JOIN_NOTIFICATION_REPLIES");
-    if ((this.#_attributes & (0b1 << 4)) == 0b1 << 4)
-      flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS");
-    if ((this.#_attributes & (0b1 << 5)) == 0b1 << 5)
-      flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES");
-
-    return flags;
-  }
-
-  /**
-   * Raw system channel flags.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawSystemChannelFlags() {
     let rawFlags = 0;
 
     if ((this.#_attributes & (0b1 << 0)) == 0b1 << 0) rawFlags |= 0b1 << 0;
@@ -726,23 +722,11 @@ class Guild implements GuildType {
    * @public
    */
   get mfaLevel() {
-    if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return "NONE";
-    else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7) return "ELEVATED";
+    if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return GuildMFALevel.None;
+    else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7)
+      return GuildMFALevel.Elevated;
 
     throw new Error("GLUON: Unknown MFA level");
-  }
-
-  /**
-   * Server MFA level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawMfaLevel() {
-    if ((this.#_attributes & (0b1 << 6)) == 0b1 << 6) return 0;
-    else if ((this.#_attributes & (0b1 << 7)) == 0b1 << 7) return 1;
-    else return null;
   }
 
   /**
@@ -753,29 +737,18 @@ class Guild implements GuildType {
    * @public
    */
   get verificationLevel() {
-    if ((this.#_attributes & (0b1 << 8)) == 0b1 << 8) return "NONE";
-    else if ((this.#_attributes & (0b1 << 9)) == 0b1 << 9) return "LOW";
-    else if ((this.#_attributes & (0b1 << 10)) == 0b1 << 10) return "MEDIUM";
-    else if ((this.#_attributes & (0b1 << 11)) == 0b1 << 11) return "HIGH";
-    else if ((this.#_attributes & (0b1 << 12)) == 0b1 << 12) return "VERY_HIGH";
+    if ((this.#_attributes & (0b1 << 8)) == 0b1 << 8)
+      return GuildVerificationLevel.None;
+    else if ((this.#_attributes & (0b1 << 9)) == 0b1 << 9)
+      return GuildVerificationLevel.Low;
+    else if ((this.#_attributes & (0b1 << 10)) == 0b1 << 10)
+      return GuildVerificationLevel.Medium;
+    else if ((this.#_attributes & (0b1 << 11)) == 0b1 << 11)
+      return GuildVerificationLevel.High;
+    else if ((this.#_attributes & (0b1 << 12)) == 0b1 << 12)
+      return GuildVerificationLevel.VeryHigh;
 
     throw new Error("GLUON: Unknown verification level");
-  }
-
-  /**
-   * Server verification level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawVerificationLevel() {
-    if ((this.#_attributes & (0b1 << 8)) == 0b1 << 8) return 0;
-    else if ((this.#_attributes & (0b1 << 9)) == 0b1 << 9) return 1;
-    else if ((this.#_attributes & (0b1 << 10)) == 0b1 << 10) return 2;
-    else if ((this.#_attributes & (0b1 << 11)) == 0b1 << 11) return 3;
-    else if ((this.#_attributes & (0b1 << 12)) == 0b1 << 12) return 4;
-    else return null;
   }
 
   /**
@@ -786,24 +759,12 @@ class Guild implements GuildType {
    * @public
    */
   get defaultMessageNotifications() {
-    if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return "ALL_MESSAGES";
+    if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13)
+      return GuildDefaultMessageNotifications.AllMessages;
     else if ((this.#_attributes & (0b1 << 14)) == 0b1 << 14)
-      return "ONLY_MENTIONS";
+      return GuildDefaultMessageNotifications.OnlyMentions;
 
     throw new Error("GLUON: Unknown default message notification level");
-  }
-
-  /**
-   * Default notification setting.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawDefaultMessageNotifications() {
-    if ((this.#_attributes & (0b1 << 13)) == 0b1 << 13) return 0;
-    else if ((this.#_attributes & (0b1 << 14)) == 0b1 << 14) return 1;
-    else return null;
   }
 
   /**
@@ -814,27 +775,14 @@ class Guild implements GuildType {
    * @public
    */
   get explicitContentFilter() {
-    if ((this.#_attributes & (0b1 << 15)) == 0b1 << 15) return "DISABLED";
+    if ((this.#_attributes & (0b1 << 15)) == 0b1 << 15)
+      return GuildExplicitContentFilter.Disabled;
     else if ((this.#_attributes & (0b1 << 16)) == 0b1 << 16)
-      return "MEMBERS_WITHOUT_ROLES";
+      return GuildExplicitContentFilter.MembersWithoutRoles;
     else if ((this.#_attributes & (0b1 << 17)) == 0b1 << 17)
-      return "ALL_MEMBERS";
+      return GuildExplicitContentFilter.AllMembers;
 
     throw new Error("GLUON: Unknown explicit content filter level");
-  }
-
-  /**
-   * Explicit content filter level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawExplicitContentFilter() {
-    if ((this.#_attributes & (0b1 << 15)) == 0b1 << 15) return 0;
-    else if ((this.#_attributes & (0b1 << 16)) == 0b1 << 16) return 1;
-    else if ((this.#_attributes & (0b1 << 17)) == 0b1 << 17) return 2;
-    else return null;
   }
 
   /**
@@ -845,28 +793,16 @@ class Guild implements GuildType {
    * @public
    */
   get nsfwLevel() {
-    if ((this.#_attributes & (0b1 << 18)) == 0b1 << 18) return "DEFAULT";
-    else if ((this.#_attributes & (0b1 << 19)) == 0b1 << 19) return "EXPLICIT";
-    else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20) return "SAFE";
+    if ((this.#_attributes & (0b1 << 18)) == 0b1 << 18)
+      return GuildNSFWLevel.Default;
+    else if ((this.#_attributes & (0b1 << 19)) == 0b1 << 19)
+      return GuildNSFWLevel.Explicit;
+    else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20)
+      return GuildNSFWLevel.Safe;
     else if ((this.#_attributes & (0b1 << 21)) == 0b1 << 21)
-      return "AGE_RESTRICTED";
+      return GuildNSFWLevel.AgeRestricted;
 
     throw new Error("GLUON: Unknown NSFW level");
-  }
-
-  /**
-   * Server NSFW level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawNsfwLevel() {
-    if ((this.#_attributes & (0b1 << 18)) == 0b1 << 18) return 0;
-    else if ((this.#_attributes & (0b1 << 19)) == 0b1 << 19) return 1;
-    else if ((this.#_attributes & (0b1 << 20)) == 0b1 << 20) return 2;
-    else if ((this.#_attributes & (0b1 << 21)) == 0b1 << 21) return 3;
-    else return null;
   }
 
   /**
@@ -876,10 +812,14 @@ class Guild implements GuildType {
    * @public
    */
   get premiumTier() {
-    if ((this.#_attributes & (0b1 << 22)) == 0b1 << 22) return 0;
-    else if ((this.#_attributes & (0b1 << 23)) == 0b1 << 23) return 1;
-    else if ((this.#_attributes & (0b1 << 24)) == 0b1 << 24) return 2;
-    else if ((this.#_attributes & (0b1 << 25)) == 0b1 << 25) return 3;
+    if ((this.#_attributes & (0b1 << 22)) == 0b1 << 22)
+      return GuildPremiumTier.None;
+    else if ((this.#_attributes & (0b1 << 23)) == 0b1 << 23)
+      return GuildPremiumTier.Tier1;
+    else if ((this.#_attributes & (0b1 << 24)) == 0b1 << 24)
+      return GuildPremiumTier.Tier2;
+    else if ((this.#_attributes & (0b1 << 25)) == 0b1 << 25)
+      return GuildPremiumTier.Tier3;
 
     throw new Error("GLUON: Unknown premium tier");
   }
@@ -1329,7 +1269,7 @@ class Guild implements GuildType {
     after,
   }: {
     limit?: number;
-    type?: AuditLogTypes;
+    type?: AuditLogEvent;
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
@@ -1379,11 +1319,11 @@ class Guild implements GuildType {
     // @ts-expect-error TS(2339): Property 'after' does not exist on type '{}'.
     if (after) body.after = after;
 
-    const data = await this.#_client.request.makeRequest(
+    const data = (await this.#_client.request.makeRequest(
       "getGuildAuditLog",
       [this.id],
       body,
-    );
+    )) as APIAuditLog;
 
     if (
       type &&
@@ -1396,7 +1336,7 @@ class Guild implements GuildType {
     if (!data || data.audit_log_entries.length == 0) return null;
 
     return data.audit_log_entries.map(
-      (e: AuditLogRaw) =>
+      (e) =>
         new AuditLog(this.#_client, e, {
           users: data.users,
           guildId: this.id,
@@ -1640,9 +1580,9 @@ class Guild implements GuildType {
       files,
     }: {
       content?: string;
-      embeds?: EmbedBuilderType[];
+      embeds?: Embed[];
       components?: MessageComponentsType;
-      files?: FileUploadType[];
+      files?: FileUpload[];
     } = {},
   ) {
     if (!client)
@@ -1701,7 +1641,11 @@ class Guild implements GuildType {
     this.#scheduled_events._intervalCallback();
     this.#emojis._intervalCallback();
     this.#invites._intervalCallback();
-    this.#channels.forEach((c) => c.messages?._intervalCallback());
+    this.#channels.forEach((c) => {
+      if ("messages" in c) {
+        c.messages._intervalCallback();
+      }
+    });
   }
 
   /**
@@ -1742,10 +1686,12 @@ class Guild implements GuildType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ): GuildStorageJSON | GuildCacheJSON | GuildDiscordJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
@@ -1756,20 +1702,30 @@ class Guild implements GuildType {
           member_count: this.memberCount,
           premium_tier: this.premiumTier,
           preferred_locale: this.preferredLocale,
-          _cache_options: this._cacheOptions,
+          _cache_options: this._cacheOptions.toJSON(format),
           _attributes: this.#_attributes,
           system_channel_id: this.systemChannelId ?? null,
           rules_channel_id: this.rulesChannelId ?? null,
           premium_subscription_count: this.premiumSubscriptionCount,
-          members: this.members.toJSON(format),
+          members: this.members.toJSON(format) as
+            | MemberStorageJSON[]
+            | MemberCacheJSON[],
           channels: this.channels.toJSON(format),
-          voice_states: this.voiceStates.toJSON(format),
-          roles: this.roles.toJSON(format),
-          emojis: this.emojis.toJSON(format),
-          invites: this.invites.toJSON(format),
+          voice_states: this.voiceStates.toJSON(format) as
+            | VoiceStateCacheJSON[]
+            | VoiceStateStorageJSON[],
+          roles: this.roles.toJSON(format) as
+            | RoleCacheJSON[]
+            | RoleStorageJSON[],
+          emojis: this.emojis.toJSON(format) as
+            | EmojiCacheJSON[]
+            | EmojiStorageJSON[],
+          invites: this.invites.toJSON(format) as
+            | InviteCacheJSON[]
+            | InviteStorageJSON[],
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
@@ -1783,22 +1739,24 @@ class Guild implements GuildType {
           unavailable: this.unavailable,
           member_count: this.memberCount,
           preferred_locale: this.preferredLocale,
-          system_channel_flags: this.rawSystemChannelFlags,
+          system_channel_flags: this.systemChannelFlags,
           system_channel_id: this.systemChannelId ?? null,
           rules_channel_id: this.rulesChannelId ?? null,
           premium_subscription_count: this.premiumSubscriptionCount,
           premium_progress_bar_enabled: this.premiumProgressBarEnabled,
-          default_message_notifications: this.rawDefaultMessageNotifications,
-          explicit_content_filter: this.rawExplicitContentFilter,
-          verification_level: this.rawVerificationLevel,
-          nsfw_level: this.rawNsfwLevel,
-          mfa_level: this.rawMfaLevel,
-          members: this.members.toJSON(format),
+          default_message_notifications: this.defaultMessageNotifications,
+          explicit_content_filter: this.explicitContentFilter,
+          verification_level: this.verificationLevel,
+          nsfw_level: this.nsfwLevel,
+          mfa_level: this.mfaLevel,
+          members: this.members.toJSON(format) as MemberDiscordJSON[],
           channels: this.channels.toJSON(format),
-          voice_states: this.voiceStates.toJSON(format),
-          roles: this.roles.toJSON(format),
-          emojis: this.emojis.toJSON(format),
-          invites: this.invites.toJSON(format),
+          voice_states: this.voiceStates.toJSON(
+            format,
+          ) as VoiceStateDiscordJSON[],
+          roles: this.roles.toJSON(format) as RoleDiscordJSON[],
+          emojis: this.emojis.toJSON(format) as EmojiDiscordJSON[],
+          invites: this.invites.toJSON(format) as InviteDiscordJSON[],
         };
       }
     }

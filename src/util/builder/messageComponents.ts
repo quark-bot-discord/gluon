@@ -1,6 +1,9 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
-import { ActionRowBuilderType } from "./interfaces/actionRowBuilder.js";
-import { MessageComponentsType } from "./interfaces/messageComponents.js";
+import { LIMITS } from "../../constants.js";
+import {
+  MessageComponents as MessageComponentsType,
+  ActionRowBuilder as ActionRowBuilderType,
+  JsonTypes,
+} from "typings/index.d.js";
 
 /**
  * Structure for message components.
@@ -36,11 +39,11 @@ class MessageComponents implements MessageComponentsType {
    * Returns the correct Discord format for message components.
    * @returns {Object}
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return this.actionRows.map((a) => a.toJSON(format));
       }

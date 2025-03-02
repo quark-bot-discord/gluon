@@ -1,13 +1,12 @@
 import {
-  COMPONENT_TYPES,
-  BUTTON_STYLES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
-import { ResolvedEmoji } from "../discord/interfaces/resolveEmoji.js";
+  JsonTypes,
+  ResolvedEmoji,
+  ButtonBuilder as ButtonBuilderType,
+} from "typings/index.js";
+import { BUTTON_STYLES, LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
-import { ButtonBuilderType, ButtonStyles } from "./interfaces/buttonBuilder.js";
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 
 /**
  * Helps to construct a button for a message.
@@ -18,14 +17,14 @@ class Button implements ButtonBuilderType {
   disabled: boolean | undefined;
   emoji: ResolvedEmoji | undefined;
   label: string | undefined;
-  style: ButtonStyles = BUTTON_STYLES.PRIMARY;
-  type: COMPONENT_TYPES.BUTTON;
+  style: ButtonStyle = ButtonStyle.Primary;
+  type: ComponentType.Button = ComponentType.Button;
   url: string | undefined;
   /**
    * Creates a button.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.BUTTON;
+    this.type = ComponentType.Button;
   }
 
   /**
@@ -64,7 +63,7 @@ class Button implements ButtonBuilderType {
    * @returns {Button}
    * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-styles}
    */
-  setStyle(style: ButtonStyles) {
+  setStyle(style: ButtonStyle) {
     if (!style) throw new TypeError("GLUON: Button style must be provided.");
 
     this.style = style;
@@ -121,7 +120,7 @@ class Button implements ButtonBuilderType {
    * @returns {Object}
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -157,7 +156,7 @@ class Button implements ButtonBuilderType {
         throw new TypeError(
           "GLUON: Button emoji must not be provided for link buttons.",
         );
-      if (this.type !== COMPONENT_TYPES.BUTTON)
+      if (this.type !== ComponentType.Button)
         throw new TypeError("GLUON: Button type must be set to 'BUTTON'.");
       if (this.emoji && typeof this.emoji !== "object")
         throw new TypeError("GLUON: Button emoji must be an object.");
@@ -178,9 +177,9 @@ class Button implements ButtonBuilderType {
         throw new TypeError("GLUON: Button disabled must be a boolean.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           type: this.type,

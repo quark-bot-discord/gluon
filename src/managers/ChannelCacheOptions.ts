@@ -1,8 +1,8 @@
+import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
 import {
-  GLUON_CHANNEL_CACHING_OPTIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
-import { ChannelCacheOptionsType } from "./interfaces/ChannelCacheOptions.js";
+  ChannelCacheOptions as ChannelCacheOptionsType,
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 /**
  * Represents the cache options for a channel.
@@ -17,7 +17,7 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    * @public
    * @constructor
    */
-  constructor(cache_options: number) {
+  constructor(cache_options?: number) {
     /**
      * The cache options for this channel.
      * @type {Number}
@@ -369,11 +369,11 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return this.#_cache_options;
       }

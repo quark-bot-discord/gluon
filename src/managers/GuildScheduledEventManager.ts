@@ -1,11 +1,14 @@
 import ClientType from "src/interfaces/Client.js";
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { GuildScheduledEventManagerType } from "./interfaces/GuildScheduledEventManager.js";
-import { GuildType } from "src/structures/interfaces/Guild.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { ScheduledEventType } from "src/structures/interfaces/ScheduledEvent.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  ScheduledEvent as ScheduledEventType,
+  StructureIdentifiers,
+  Guild as GuildType,
+  GuildScheduledEventManager as GuildScheduledEventManagerType,
+} from "../../typings/index.d.js";
+import { APIGuildScheduledEvent } from "discord-api-types/v10";
 
 class GuildScheduledEventManager
   extends BaseCacheManager
@@ -46,10 +49,10 @@ class GuildScheduledEventManager
    * @throws {Error}
    */
   async list() {
-    const data = await this.#_client.request.makeRequest(
+    const data = (await this.#_client.request.makeRequest(
       "getListGuildScheduledEvents",
       [this.#guild.id],
-    );
+    )) as APIGuildScheduledEvent[];
 
     const eventsList = [];
 
@@ -79,10 +82,14 @@ class GuildScheduledEventManager
     const cachedEvent = this.get(scheduledEventId);
     if (cachedEvent) return cachedEvent;
 
-    const data = await this.#_client.request.makeRequest(
+    const data = (await this.#_client.request.makeRequest(
       "getGuildScheduledEvent",
       [this.#guild.id, scheduledEventId],
-    );
+    )) as APIGuildScheduledEvent;
+
+    if (!data) {
+      return null;
+    }
 
     return new ScheduledEvent(this.#_client, data, {
       guildId: this.#guild.id,

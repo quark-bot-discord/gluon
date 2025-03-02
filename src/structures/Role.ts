@@ -1,22 +1,19 @@
 import ClientType from "src/interfaces/Client.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { APIRole } from "discord-api-types/v10";
 import {
+  JsonTypes,
   RoleCacheJSON,
   RoleDiscordJSON,
-  RoleRaw,
   RoleStorageJSON,
-  RoleType,
-} from "./interfaces/Role.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { GuildCacheOptionsType } from "src/managers/interfaces/GuildCacheOptions.js";
-import { GluonCacheOptionsType } from "src/managers/interfaces/GluonCacheOptions.js";
+  Role as RoleType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.js";
 
 /**
  * Represents a role belonging to a guild.
@@ -43,7 +40,7 @@ class Role implements RoleType {
    */
   constructor(
     client: ClientType,
-    data: RoleRaw | RoleCacheJSON | RoleDiscordJSON | RoleStorageJSON,
+    data: APIRole | RoleCacheJSON | RoleDiscordJSON | RoleStorageJSON,
     { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
@@ -392,10 +389,10 @@ class Role implements RoleType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
@@ -407,7 +404,7 @@ class Role implements RoleType {
           tags: this.tags,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

@@ -1,10 +1,12 @@
 import ClientType from "src/interfaces/Client.js";
 import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { UserManagerType } from "./interfaces/UserManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { UserType } from "src/structures/interfaces/User.js";
-import { StructureIdentifiers } from "./interfaces/BaseCacheManager.js";
+import {
+  UserManager as UserManagerType,
+  User as UserType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 
 /**
  * Manages all the users belonging to a client.

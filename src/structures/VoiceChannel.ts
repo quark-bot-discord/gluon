@@ -1,22 +1,26 @@
 import ClientType from "src/interfaces/Client.js";
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
+import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  JsonTypes,
   VoiceChannelCacheJSON,
   VoiceChannelDiscordJSON,
-  VoiceChannelRaw,
   VoiceChannelStorageJSON,
-  VoiceChannelType,
-} from "./interfaces/VoiceChannel.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+  VoiceChannel as VoiceChannelType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildStageVoiceChannel,
+  APIGuildVoiceChannel,
+} from "discord-api-types/v10";
 
 /**
  * Represents a voice channel.
  * @extends {Channel}
  */
-class VoiceChannel extends Channel implements VoiceChannelType {
+class VoiceChannel extends GuildChannel implements VoiceChannelType {
   #_client;
   #bitrate;
   #user_limit;
@@ -32,7 +36,8 @@ class VoiceChannel extends Channel implements VoiceChannelType {
   constructor(
     client: ClientType,
     data:
-      | VoiceChannelRaw
+      | APIGuildVoiceChannel
+      | APIGuildStageVoiceChannel
       | VoiceChannelCacheJSON
       | VoiceChannelDiscordJSON
       | VoiceChannelStorageJSON,
@@ -88,7 +93,7 @@ class VoiceChannel extends Channel implements VoiceChannelType {
     else if (existing && typeof existing.rtcRegion == "string")
       this.#rtc_region = existing.rtcRegion;
 
-    const shouldCache = Channel.shouldCache(
+    const shouldCache = GuildChannel.shouldCache(
       this.#_client._cacheOptions,
       this.guild._cacheOptions,
     );
@@ -106,12 +111,14 @@ class VoiceChannel extends Channel implements VoiceChannelType {
       );
     }
 
-    if (data.messages)
-      for (let i = 0; i < data.messages.length; i++)
+    if ("messages" in data && data.messages) {
+      for (let i = 0; i < data.messages.length; i++) {
         new Message(this.#_client as ClientType, data.messages[i], {
           channelId: this.id,
           guildId,
         });
+      }
+    }
   }
 
   /**
@@ -168,11 +175,11 @@ class VoiceChannel extends Channel implements VoiceChannelType {
    * @method
    * @override
    */
-  toJSON(format: TO_JSON_TYPES_ENUM) {
+  toJSON(format: JsonTypes) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

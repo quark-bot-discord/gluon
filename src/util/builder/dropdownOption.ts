@@ -1,7 +1,10 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
-import { ResolvedEmoji } from "../discord/interfaces/resolveEmoji.js";
+import {
+  JsonTypes,
+  DropdownOptionBuilder as DropdownOptionBuilderType,
+  ResolvedEmoji,
+} from "typings/index.js";
+import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
-import { DropdownOptionBuilderType } from "./interfaces/dropdownOption.js";
 
 /**
  * Helps to create a dropdown option.
@@ -98,7 +101,7 @@ class DropdownOption implements DropdownOptionBuilderType {
    * @returns {Object}
    */
   toJSON(
-    format: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -138,9 +141,9 @@ class DropdownOption implements DropdownOptionBuilderType {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           label: this.label as string, // only valid because of the validation above

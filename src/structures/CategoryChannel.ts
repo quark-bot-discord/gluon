@@ -1,29 +1,26 @@
 import ClientType from "src/interfaces/Client.js";
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
+import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
+import { APIGuildCategoryChannel, Snowflake } from "discord-api-types/v10";
 import {
   CategoryChannelCacheJSON,
   CategoryChannelDiscordJSON,
-  CategoryChannelRaw,
   CategoryChannelStorageJSON,
-  CategoryChannelType,
-} from "./interfaces/CategoryChannel.js";
-import {
-  PermissionOverwriteRaw,
-  PermissionOverwriteType,
-} from "./interfaces/PermissionOverwrite.js";
+  CategoryChannel as CategoryChannelType,
+  PermissionOverwrite as PermissionOverwriteType,
+  JsonTypes,
+} from "../../typings/index.d.js";
 
 class CategoryChannel implements CategoryChannelType {
-  #_client;
-  #_id;
-  #_guild_id;
-  #type;
-  #name;
-  #_attributes;
-  #permission_overwrites;
+  #_client: ClientType;
+  #_id: bigint;
+  #_guild_id: bigint;
+  #type: number;
+  #name: string | undefined;
+  #_attributes: number;
+  #permission_overwrites: Array<PermissionOverwriteType> = [];
   /**
    * Creates the structure for a category channel.
    * @param {Client} client The client instance.
@@ -35,7 +32,7 @@ class CategoryChannel implements CategoryChannelType {
   constructor(
     client: ClientType,
     data:
-      | CategoryChannelRaw
+      | APIGuildCategoryChannel
       | CategoryChannelCacheJSON
       | CategoryChannelDiscordJSON
       | CategoryChannelStorageJSON,
@@ -118,8 +115,7 @@ class CategoryChannel implements CategoryChannelType {
      */
     if (data.permission_overwrites && Array.isArray(data.permission_overwrites))
       this.#permission_overwrites = data.permission_overwrites.map(
-        (p: PermissionOverwriteRaw) =>
-          new PermissionOverwrite(this.#_client, p),
+        (p) => new PermissionOverwrite(this.#_client, p),
       );
     else if (
       !data.permission_overwrites &&
@@ -250,21 +246,26 @@ class CategoryChannel implements CategoryChannelType {
    * @public
    * @method
    */
-  toJSON(format?: TO_JSON_TYPES_ENUM) {
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | CategoryChannelCacheJSON
+    | CategoryChannelDiscordJSON
+    | CategoryChannelStorageJSON {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
         return {
           id: this.id,
           guild_id: this.guildId,
           name: this.name,
           type: this.type,
           _attributes: this.#_attributes,
-          permission_overwrites: this.permissionOverwrites.map(
-            (p: PermissionOverwriteType) => p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
           ),
         };
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
@@ -272,8 +273,8 @@ class CategoryChannel implements CategoryChannelType {
           name: this.name,
           type: this.type,
           nsfw: this.nsfw,
-          permission_overwrites: this.permissionOverwrites.map(
-            (p: PermissionOverwriteType) => p.toJSON(format),
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
           ),
         };
       }
