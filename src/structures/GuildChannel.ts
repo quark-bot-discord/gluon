@@ -7,7 +7,6 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { FileUpload } from "src/util.js";
 import {
@@ -32,6 +31,7 @@ import {
   ChannelMessageManager as ChannelMessageManagerType,
   Embed,
   MessageComponents as MessageComponentsType,
+  Client as ClientType,
 } from "../../typings/index.js";
 
 /**

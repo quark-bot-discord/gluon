@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Invite from "../structures/Invite.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
@@ -6,6 +5,7 @@ import {
   Guild as GuildType,
   Invite as InviteType,
   StructureIdentifiers,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Manages all invites within a guild.

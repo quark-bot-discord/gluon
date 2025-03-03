@@ -1,3 +1,10 @@
+import {
+  GatewayMessageDeleteBulkDispatchData,
+  GatewayMessageDeleteDispatchData,
+  GatewayMessageReactionRemoveDispatchData,
+  GatewayMessageUpdateDispatchData,
+} from "discord-api-types/v10";
+import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v9";
 declare class EventHandler {
   #private;
   constructor(client: any, ws: any);
@@ -28,9 +35,9 @@ declare class EventHandler {
   VOICE_STATE_UPDATE(data: any): void;
   VOICE_CHANNEL_STATUS_UPDATE(data: any): void;
   MESSAGE_CREATE(data: any): void;
-  MESSAGE_UPDATE(data: any): void;
-  MESSAGE_DELETE(data: any): void;
-  MESSAGE_DELETE_BULK(data: any): void;
+  MESSAGE_UPDATE(data: GatewayMessageUpdateDispatchData): void;
+  MESSAGE_DELETE(data: GatewayMessageDeleteDispatchData): void;
+  MESSAGE_DELETE_BULK(data: GatewayMessageDeleteBulkDispatchData): void;
   INTERACTION_CREATE(data: any): void;
   GUILD_AUDIT_LOG_ENTRY_CREATE(data: any): void;
   ENTITLEMENT_CREATE(data: any): void;
@@ -49,7 +56,7 @@ declare class EventHandler {
   WEBHOOKS_UPDATE(data: any): void;
   MESSAGE_POLL_VOTE_ADD(data: any): void;
   MESSAGE_POLL_VOTE_REMOVE(data: any): void;
-  MESSAGE_REACTION_ADD(data: any): void;
-  MESSAGE_REACTION_REMOVE(data: any): void;
+  MESSAGE_REACTION_ADD(data: GatewayMessageReactionAddDispatchData): void;
+  MESSAGE_REACTION_REMOVE(data: GatewayMessageReactionRemoveDispatchData): void;
 }
 export default EventHandler;

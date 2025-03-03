@@ -24,7 +24,6 @@ import decryptStructure from "../util/gluon/decryptStructure.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
   MessageCacheJSON,
@@ -56,6 +55,7 @@ import {
   EmbedBuilderStorageJSON,
   Embed as EmbedType,
   FileUpload,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIMessage, MessageType } from "discord-api-types/v10";
 

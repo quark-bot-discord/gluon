@@ -1,6 +1,5 @@
 import Emoji from "./Emoji.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   EmojiCacheJSON,
@@ -12,6 +11,7 @@ import {
   ReactionDiscordJSON,
   ReactionStorageJSON,
   Reaction as ReactionType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIReaction,

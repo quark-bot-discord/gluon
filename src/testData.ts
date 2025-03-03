@@ -1159,25 +1159,15 @@ export const TEST_GUILDS = {
   },
   NO_CACHES_ENABLED: (client: any) => {
     const guild = new Guild(client, TEST_DATA.GUILD as any);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setChannelCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setThreadCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setEmojiCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setRoleCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMessageCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setFileCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setMemberCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setVoiceStateCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setScheduledEventCaching(false);
-    // @ts-expect-error TS(2532): Object is possibly 'undefined'.
     guild._cacheOptions.setInviteCaching(false);
     return guild;
   },

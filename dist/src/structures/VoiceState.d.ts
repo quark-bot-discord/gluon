@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
@@ -9,6 +8,7 @@ import {
   VoiceState as VoiceStateType,
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIVoiceState } from "discord-api-types/v10";
 /**

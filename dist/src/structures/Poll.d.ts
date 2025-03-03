@@ -1,6 +1,5 @@
 import MessagePollManager from "../managers/MessagePollManager.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   Poll as PollType,
@@ -8,6 +7,7 @@ import {
   PollDiscordJSON,
   PollStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIPoll } from "discord-api-types/v10";
 declare class Poll implements PollType {

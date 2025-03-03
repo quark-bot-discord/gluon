@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -8,6 +7,7 @@ import {
   Guild as GuildType,
   Invite as InviteType,
   StructureIdentifiers,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIExtendedInvite } from "discord-api-types/v10";
 

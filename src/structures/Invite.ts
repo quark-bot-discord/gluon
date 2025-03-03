@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS, INVITE_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
@@ -16,6 +15,7 @@ import {
   UserDiscordJSON,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIExtendedInvite } from "discord-api-types/v10";
 

@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
@@ -16,6 +15,7 @@ import {
   MessageCacheJSON,
   MessageStorageJSON,
   MessageDiscordJSON,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

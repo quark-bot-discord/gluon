@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import GuildChannel from "./GuildChannel.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -8,6 +7,7 @@ import {
   VoiceChannelDiscordJSON,
   VoiceChannelStorageJSON,
   VoiceChannel as VoiceChannelType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildStageVoiceChannel,

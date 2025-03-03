@@ -72,6 +72,7 @@ import {
   UnixMillisecondsTimestamp,
   UnixTimestamp,
 } from "src/interfaces/gluon.ts";
+import { TypedEmitter } from "tiny-typed-emitter";
 
 export enum JsonTypes {
   DISCORD_FORMAT = 1, // default
@@ -527,7 +528,7 @@ export class Interaction {
   public readonly token: string;
   public readonly type: InteractionTypes;
   public readonly guildId: Snowflake;
-  public readonly guild?: GuildType | null;
+  public readonly guild?: Guild | null;
   public readonly channelId?: Snowflake;
   public readonly channel?: AllChannelTypes | null;
   public readonly member?: MemberType | null;
@@ -1138,7 +1139,7 @@ export class ScheduledEvent {
   readonly displayImageURL: string | null;
   readonly entityType: GuildScheduledEventEntityType;
   readonly status: GuildScheduledEventStatus;
-  readonly guild: GuildType | null;
+  readonly guild: Guild | null;
   readonly scheduledStartTime: UnixTimestamp;
   readonly scheduledEndTime: UnixTimestamp | null;
   readonly userCount: number;
@@ -2028,7 +2029,7 @@ export interface CommandChoiceBuilder {
   setDefaultLocale(locale: string): CommandChoiceBuilder;
   toJSON(
     format?: JsonTypes,
-    { suppressValidation }: { suppressValidation: boolean },
+    { suppressValidation }?: { suppressValidation: boolean },
   ):
     | CommandChoiceBuilderStorageJSON
     | CommandChoiceBuilderDiscordJSON
@@ -2054,6 +2055,14 @@ export interface CommandChoiceBuilderCacheJSON {
 }
 
 export interface CommandChoiceNameLocalizations {
+  [key: string]: string;
+}
+
+export interface CommandOptionNameLocalizations {
+  [key: string]: string;
+}
+
+export interface CommandOptionDescriptionLocalizations {
   [key: string]: string;
 }
 
@@ -2453,4 +2462,205 @@ export interface EndpointIndexItem {
   majorParams: number[];
   useHeaders?: string[];
   mockResponse: ({ params }: any) => HttpResponse;
+}
+
+export interface ClientOptions {
+  cacheMessages?: boolean;
+  cacheUsers?: boolean;
+  cacheMembers?: boolean;
+  cacheChannels?: boolean;
+  cacheGuilds?: boolean;
+  cacheVoiceStates?: boolean;
+  cacheRoles?: boolean;
+  cacheScheduledEvents?: boolean;
+  cacheEmojis?: boolean;
+  cacheInvites?: boolean;
+  defaultMessageExpiry?: number;
+  defaultUserExpiry?: number;
+  intents: number;
+  totalShards?: number;
+  shardIds?: number[];
+  sessionData?: object;
+  initCache?: object;
+  softRestartFunction?: Function;
+}
+
+export class Client extends TypedEmitter<{
+  ready: (shardGuilds: string[]) => void;
+  resumed: () => void;
+  guildCreate: (guild: Guild) => void;
+  guildDelete: (guild: Guild) => void;
+  guildUpdate: (oldGuild: Guild, newGuild: Guild) => void;
+  messageCreate: (message: Message) => void;
+  messageUpdate: (oldMessage: Message | null, newMessage: Message) => void;
+  messageDelete: (message: Message) => void;
+  messageDeleteBulk: (messages: Message[]) => void;
+  guildAuditLogEntryCreate: (auditLog: object) => void;
+  guildBanAdd: (bannedUser: any) => void;
+  guildBanRemove: (unbannedUser: any) => void;
+  guildMemberAdd: (member: any) => void;
+  guildMemberUpdate: (oldMember: any, newMember: any) => void;
+  guildMemberRemove: (member: any) => void;
+  buttonClick: (interaction: any) => void;
+  menuSelect: (interaction: any) => void;
+  modalResponse: (interaction: any) => void;
+  slashCommand: (interaction: any) => void;
+  slashCommandAutocomplete: (interaction: any) => void;
+  voiceStateUpdate: (oldVoiceState: any, newVoiceState: any) => void;
+  voiceChannelStatusUpdate: (data: object) => void;
+  channelCreate: (channel: object) => void;
+  channelUpdate: (oldChannel: object, newChannel: object) => void;
+  channelDelete: (channel: object) => void;
+  channelPinsUpdate: (data: object) => void;
+  threadCreate: (thread: object) => void;
+  threadUpdate: (oldThread: object, newThread: object) => void;
+  threadDelete: (thread: object) => void;
+  threadListSync: (threads: object[]) => void;
+  inviteCreate: (invite: any) => void;
+  inviteDelete: (data: object, invite: any) => void;
+  roleCreate: (role: any) => void;
+  roleUpdate: (oldRole: any, newRole: any) => void;
+  roleDelete: (role: any) => void;
+  emojiCreate: (emoji: any) => void;
+  emojiUpdate: (oldEmoji: any, newEmoji: any) => void;
+  emojiDelete: (emoji: any) => void;
+  entitlementCreate: (entitlement: object) => void;
+  entitlementUpdate: (entitlement: object) => void;
+  entitlementDelete: (entitlement: object) => void;
+  guildScheduledEventCreate: (scheduledEvent: any) => void;
+  guildScheduledEventUpdate: (
+    oldScheduledEvent: any,
+    newScheduledEvent: any,
+  ) => void;
+  guildScheduledEventDelete: (scheduledEvent: any) => void;
+  guildScheduledEventUserAdd: (data: object, user: any) => void;
+  guildScheduledEventUserRemove: (data: object, user: any) => void;
+  initialised: () => void;
+  messagePollVoteAdd: (data: object) => void;
+  messagePollVoteRemove: (data: object) => void;
+  messageReactionAdd: (data: object) => void;
+  messageReactionRemove: (data: object) => void;
+  webhooksUpdate: (data: object) => void;
+}> {
+  request: any;
+  user: any | null;
+  constructor(options: ClientOptions);
+  get shardIds(): number[];
+  get totalShards(): number;
+  get intents(): number;
+  get users(): any;
+  get guilds(): any;
+  get sessionData(): object;
+  softRestartFunction(): void;
+  halt(): void;
+  checkProcess(): object;
+  _emitDebug(status: number, message: string): void;
+  getCacheCounts(): object;
+  get _cacheOptions(): any;
+  get _defaultGuildCacheOptions(): any;
+  getMemberCount(): number;
+  bundleCache(): object[];
+  registerCommands(commands: any[]): Promise<object[]>;
+  fetchEmojis(): Promise<object[]>;
+  createEmoji(emoji: { name: string; image: string }): Promise<void>;
+  setStatus(status: {
+    name: string;
+    type?: number;
+    status?: string;
+    afk?: boolean;
+    since?: number;
+  }): void;
+  login(token: string): void;
+}
+
+export interface CommandOptionBuilder {
+  autocomplete: boolean;
+  channel_types?: ChannelType[];
+  choices: CommandChoiceBuilderType[];
+  defaultLocale: Locale;
+  description?: string;
+  description_localizations?: CommandOptionDescriptionLocalizations;
+  max_length?: number;
+  max_value?: number;
+  min_length?: number;
+  min_value?: number;
+  name?: string;
+  name_localizations?: CommandOptionNameLocalizations;
+  options: CommandOptionBuilder[];
+  required?: boolean;
+  type?: ApplicationCommandOptionType;
+
+  setName(name: string | CommandOptionNameLocalizations): CommandOption;
+  setType(type: ApplicationCommandOptionType): CommandOption;
+  setDescription(
+    description: string | CommandOptionDescriptionLocalizations,
+  ): CommandOption;
+  setRequired(isRequired: boolean): CommandOption;
+  addChoice(choice: CommandChoiceBuilderType): CommandOption;
+  addOption(option: CommandOptionBuilder): CommandOption;
+  setChannelTypes(channelTypes: ChannelType[]): CommandOption;
+  setMinValue(value: number): CommandOption;
+  setMaxValue(value: number): CommandOption;
+  setMinLength(length: number): CommandOption;
+  setMaxLength(length: number): CommandOption;
+  setAutocomplete(autocomplete: boolean): CommandOption;
+  setDefaultLocale(locale: Locale): CommandOption;
+  toJSON(
+    format?: JsonTypes,
+    options?: { suppressValidation: boolean },
+  ):
+    | CommandOptionStorageJSON
+    | CommandOptionCacheJSON
+    | CommandOptionDiscordJSON;
+}
+
+export interface CommandOptionStorageJSON {
+  name: string;
+  name_localizations?: CommandOptionNameLocalizations;
+  type: ApplicationCommandOptionType;
+  description: string;
+  description_localizations?: CommandOptionDescriptionLocalizations;
+  required?: boolean;
+  choices: CommandChoiceBuilderType[];
+  options: CommandOptionStorageJSON[];
+  channel_types?: ChannelType[];
+  min_value?: number;
+  max_value?: number;
+  min_length?: number;
+  max_length?: number;
+  autocomplete: boolean;
+}
+
+export interface CommandOptionCacheJSON {
+  name: string;
+  name_localizations?: CommandOptionNameLocalizations;
+  type: ApplicationCommandOptionType;
+  description: string;
+  description_localizations?: CommandOptionDescriptionLocalizations;
+  required?: boolean;
+  choices: CommandChoiceBuilderType[];
+  options: CommandOptionCacheJSON[];
+  channel_types?: ChannelType[];
+  min_value?: number;
+  max_value?: number;
+  min_length?: number;
+  max_length?: number;
+  autocomplete: boolean;
+}
+
+export interface CommandOptionDiscordJSON {
+  name: string;
+  name_localizations?: CommandOptionNameLocalizations;
+  type: ApplicationCommandOptionType;
+  description: string;
+  description_localizations?: CommandOptionDescriptionLocalizations;
+  required?: boolean;
+  choices: CommandChoiceBuilderType[];
+  options: CommandOptionDiscordJSON[];
+  channel_types?: ChannelType[];
+  min_value?: number;
+  max_value?: number;
+  min_length?: number;
+  max_length?: number;
+  autocomplete: boolean;
 }

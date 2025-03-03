@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import User from "./User.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -13,6 +12,7 @@ import {
   UserDiscordJSON,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIExtendedInvite } from "discord-api-types/v10";
 /**

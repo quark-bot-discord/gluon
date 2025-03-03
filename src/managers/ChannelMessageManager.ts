@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -10,6 +9,7 @@ import {
   Message as MessageType,
   Guild as GuildType,
   GuildChannel as GuildChannelType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 

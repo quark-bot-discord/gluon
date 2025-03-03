@@ -1,11 +1,6 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-import {
-  EVENTS,
-  INTERACTION_TYPES,
-  COMPONENT_TYPES,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { EVENTS, GLUON_DEBUG_LEVELS } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
 import Emoji from "../structures/Emoji.js";
@@ -28,6 +23,16 @@ import GuildMemberManager from "../managers/GuildMemberManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
+import {
+  ComponentType,
+  GatewayMessageDeleteBulkDispatchData,
+  GatewayMessageDeleteDispatchData,
+  GatewayMessageReactionRemoveDispatchData,
+  GatewayMessageUpdateDispatchData,
+  InteractionType,
+} from "discord-api-types/v10";
+import { Message as MessageType } from "typings/index.d.js";
+import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v9";
 
 class EventHandler {
   #_client;
@@ -325,7 +330,6 @@ class EventHandler {
       );
       if (member) guild?.members.delete(data.user.id);
       else {
-        // @ts-expect-error TS(2322): Type 'true' is not assignable to type 'false'.
         const user = new User(this.#_client, data.user, { nocache: true });
         member = new Member(
           this.#_client,
@@ -483,58 +487,83 @@ class EventHandler {
     this.#_client.emit(EVENTS.MESSAGE_CREATE, message);
   }
 
-  MESSAGE_UPDATE(data: any) {
+  MESSAGE_UPDATE(data: GatewayMessageUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_UPDATE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.id).then((oldMessage: any) => {
-      const newMessage = new Message(this.#_client, data, {
-        channelId: data.channel_id,
-        guildId: data.guild_id,
-      });
+    cacheManager
+      .fetchWithRules(data.id)
+      .then((oldMessage: MessageType | null) => {
+        const newMessage = new Message(this.#_client, data, {
+          channelId: data.channel_id,
+          guildId: data.guild_id as string, // valid as we check for guild_id above
+        });
 
-      if (
-        !(
-          !newMessage.editedTimestamp ||
-          newMessage.editedTimestamp * 1000 + 2000 < Date.now()
-        )
-      ) {
-        this.#_client.emit(EVENTS.MESSAGE_EDIT, oldMessage, newMessage);
-      }
-      this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
-    });
+        if (
+          !(
+            !newMessage.editedTimestamp ||
+            newMessage.editedTimestamp * 1000 + 2000 < Date.now()
+          )
+        ) {
+          this.#_client.emit(EVENTS.MESSAGE_EDIT, oldMessage, newMessage);
+        }
+        this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+
+        return newMessage;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
+      });
   }
 
-  MESSAGE_DELETE(data: any) {
+  MESSAGE_DELETE(data: GatewayMessageDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_DELETE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.id).then((message: any) => {
-      this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
-    });
+    cacheManager
+      .fetchWithRules(data.id)
+      .then((message: MessageType | null) => {
+        this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
+        return message;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
+      });
   }
 
-  MESSAGE_DELETE_BULK(data: any) {
+  MESSAGE_DELETE_BULK(data: GatewayMessageDeleteBulkDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
+
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
@@ -546,12 +575,16 @@ class EventHandler {
     for (let i = 0; i < data.ids.length; i++)
       messages.push(cacheManager.fetchWithRules(data.ids[i]));
 
-    Promise.all(messages).then((m) =>
-      this.#_client.emit(
-        EVENTS.MESSAGE_DELETE_BULK,
-        m.filter((a) => a != null),
-      ),
-    );
+    Promise.all(messages)
+      .then((m) =>
+        this.#_client.emit(
+          EVENTS.MESSAGE_DELETE_BULK,
+          m.filter((a) => a != null),
+        ),
+      )
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
   }
 
   INTERACTION_CREATE(data: any) {
@@ -563,9 +596,9 @@ class EventHandler {
     if (!data.guild_id) return;
 
     switch (data.type) {
-      case INTERACTION_TYPES.COMPONENT: {
+      case InteractionType.MessageComponent: {
         switch (data.data.component_type) {
-          case COMPONENT_TYPES.BUTTON: {
+          case ComponentType.Button: {
             const componentInteraction = new ButtonClick(this.#_client, data, {
               guildId: data.guild_id,
               channelId: data.channel_id,
@@ -576,11 +609,11 @@ class EventHandler {
             break;
           }
 
-          case COMPONENT_TYPES.SELECT_MENU:
-          case COMPONENT_TYPES.USER_SELECT_MENU:
-          case COMPONENT_TYPES.ROLE_SELECT_MENU:
-          case COMPONENT_TYPES.MENTIONABLE_SELECT_MENU:
-          case COMPONENT_TYPES.CHANNEL_SELECT_MENU: {
+          case ComponentType.StringSelect:
+          case ComponentType.UserSelect:
+          case ComponentType.RoleSelect:
+          case ComponentType.MentionableSelect:
+          case ComponentType.ChannelSelect: {
             const componentInteraction = new OptionSelect(this.#_client, data, {
               guildId: data.guild_id,
               channelId: data.channel_id,
@@ -598,7 +631,7 @@ class EventHandler {
         break;
       }
 
-      case INTERACTION_TYPES.COMMAND: {
+      case InteractionType.ApplicationCommand: {
         const commandInteraction = new SlashCommand(this.#_client, data);
 
         this.#_client.emit(EVENTS.SLASH_COMMAND, commandInteraction);
@@ -606,7 +639,7 @@ class EventHandler {
         break;
       }
 
-      case INTERACTION_TYPES.MODAL_SUBMIT: {
+      case InteractionType.ModalSubmit: {
         const componentInteraction = new ModalResponse(this.#_client, data);
 
         this.#_client.emit(EVENTS.MODAL_RESPONSE, componentInteraction);
@@ -614,7 +647,7 @@ class EventHandler {
         break;
       }
 
-      case INTERACTION_TYPES.APPLICATION_COMMAND_AUTOCOMPLETE: {
+      case InteractionType.ApplicationCommandAutocomplete: {
         const commandInteraction = new SlashCommand(this.#_client, data);
 
         this.#_client.emit(
@@ -960,63 +993,85 @@ class EventHandler {
     });
   }
 
-  MESSAGE_REACTION_ADD(data: any) {
+  MESSAGE_REACTION_ADD(data: GatewayMessageReactionAddDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
-      if (message) {
-        message.reactions._addReaction(
-          data.user_id,
-          data.emoji.id ? data.emoji.id : data.emoji.name,
-          data,
-        );
-      }
-      const finalData = data;
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message: MessageType | null) => {
+        if (message) {
+          message.reactions._addReaction(
+            data.user_id,
+            (data.emoji.id ? data.emoji.id : data.emoji.name) as string, // valid because one of them will always be present
+            data,
+          );
+        }
+        const finalData = data;
 
-      finalData.emoji = new Emoji(this.#_client, data.emoji, {
-        guildId: data.guild_id,
+        finalData.emoji = new Emoji(this.#_client, data.emoji, {
+          guildId: data.guild_id as string, // valid as we check for guild_id above
+        });
+
+        this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
+
+        return finalData;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
       });
-
-      this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
-    });
   }
 
-  MESSAGE_REACTION_REMOVE(data: any) {
+  MESSAGE_REACTION_REMOVE(data: GatewayMessageReactionRemoveDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
-      if (message) {
-        message.reactions._removeReaction(
-          data.user_id,
-          data.emoji.id ? data.emoji.id : data.emoji.name,
-        );
-      }
-      const finalData = data;
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message: MessageType | null) => {
+        if (message) {
+          message.reactions._removeReaction(
+            data.user_id,
+            (data.emoji.id ? data.emoji.id : data.emoji.name) as string, // valid because one of them will always be present
+          );
+        }
+        const finalData = data;
 
-      finalData.emoji = new Emoji(this.#_client, data.emoji, {
-        guildId: data.guild_id,
+        finalData.emoji = new Emoji(this.#_client, data.emoji, {
+          guildId: data.guild_id as string, // valid as we check for guild_id above
+        });
+
+        this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
+
+        return finalData;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
       });
-
-      this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
-    });
   }
 }
 

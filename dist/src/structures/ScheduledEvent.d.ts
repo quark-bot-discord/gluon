@@ -1,6 +1,5 @@
 import User from "./User.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildScheduledEvent,
@@ -18,6 +17,7 @@ import {
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Represents an scheduled event.

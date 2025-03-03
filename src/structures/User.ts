@@ -2,7 +2,6 @@ import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { APIUser } from "discord-api-types/v10";
 import {
@@ -11,6 +10,7 @@ import {
   UserDiscordJSON,
   UserStorageJSON,
   User as UserType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

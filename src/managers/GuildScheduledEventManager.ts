@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -7,6 +6,7 @@ import {
   StructureIdentifiers,
   Guild as GuildType,
   GuildScheduledEventManager as GuildScheduledEventManagerType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIGuildScheduledEvent } from "discord-api-types/v10";
 

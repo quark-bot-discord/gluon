@@ -3,7 +3,6 @@ import Attachment from "./Attachment.js";
 import Embed from "../util/builder/embedBuilder.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   MessageCacheJSON,
@@ -20,6 +19,7 @@ import {
   ChannelCacheOptions as ChannelCacheOptionsType,
   Embed as EmbedType,
   FileUpload,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIMessage, MessageType } from "discord-api-types/v10";
 /**

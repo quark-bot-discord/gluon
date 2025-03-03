@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
@@ -11,6 +10,7 @@ import {
   MessageCacheJSON,
   MessageDiscordJSON,
   MessageStorageJSON,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIMessageComponentGuildInteraction,

@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
@@ -10,6 +9,7 @@ import {
   CategoryChannelStorageJSON,
   CategoryChannel as CategoryChannelType,
   PermissionOverwrite as PermissionOverwriteType,
+  Client as ClientType,
   JsonTypes,
 } from "../../typings/index.d.js";
 

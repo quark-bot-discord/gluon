@@ -3,7 +3,6 @@ import Member from "./Member.js";
 import TextInput from "../util/builder/textInputBuilder.js";
 import util from "util";
 import Message from "./Message.js";
-import ClientType from "src/interfaces/Client.js";
 import { GuildMemberManager } from "src/structures.js";
 import {
   Interaction as InteractionType,
@@ -16,6 +15,7 @@ import {
   MessageComponents as MessageComponentsType,
   TextInputBuilder as TextInputBuilderType,
   CommandChoiceBuilder as CommandChoiceBuilderType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildInteraction,

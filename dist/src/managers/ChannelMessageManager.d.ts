@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Message from "../structures/Message.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
@@ -7,6 +6,7 @@ import {
   Message as MessageType,
   Guild as GuildType,
   GuildChannel as GuildChannelType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 /**

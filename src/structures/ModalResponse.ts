@@ -1,12 +1,12 @@
 import Interaction from "./Interaction.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import {
   JsonTypes,
   ModalResponseCacheJSON,
   ModalResponseDiscordJSON,
   ModalResponseStorageJSON,
   ModalResponse as ModalResponseType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildInteraction,

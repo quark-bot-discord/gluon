@@ -3,7 +3,6 @@ import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   TextChannel as TextChannelType,
@@ -11,6 +10,7 @@ import {
   TextChannelDiscordJSON,
   TextChannelStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildTextChannel,

@@ -4,7 +4,6 @@ import Member from "./Member.js";
 import Role from "./Role.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
-import ClientType from "src/interfaces/Client.js";
 import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
 import {
   SlashCommand as SlashCommandType,
@@ -12,6 +11,7 @@ import {
   SlashCommandDiscordJSON,
   SlashCommandStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

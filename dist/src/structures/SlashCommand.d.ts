@@ -1,6 +1,5 @@
 import Interaction from "./Interaction.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
 import {
   SlashCommand as SlashCommandType,
@@ -8,6 +7,7 @@ import {
   SlashCommandDiscordJSON,
   SlashCommandStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Represents a slash command.

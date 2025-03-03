@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { CDN_BASE_URL, MEDIA_BASE_URL } from "../constants.js";
 import util from "util";
 import { APISticker, StickerFormatType } from "discord-api-types/v10";
@@ -8,6 +7,7 @@ import {
   StickerDiscordJSON,
   StickerStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

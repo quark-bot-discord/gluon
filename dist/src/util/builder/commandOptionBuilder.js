@@ -1,9 +1,10 @@
+import { Locale } from "discord-api-types/v10";
 import {
   APPLICATION_COMMAND_TYPES,
   COMMAND_NAME_REGEX,
   LIMITS,
-  TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
@@ -13,9 +14,12 @@ class CommandOption {
    * Creates an option for a command.
    */
   constructor() {
+    this.autocomplete = false;
     this.choices = [];
     this.options = [];
-    this.defaultLocale = "en-US";
+    this.choices = [];
+    this.options = [];
+    this.defaultLocale = Locale.EnglishUS;
   }
   /**
    * Sets the name of the option.
@@ -35,7 +39,9 @@ class CommandOption {
           `GLUON: Command option name must be less than ${LIMITS.MAX_COMMAND_OPTION_NAME} characters.`,
         );
       this.name = name[this.defaultLocale];
-      delete name[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = name;
+      this.name_localizations = rest;
       this.name_localizations = name;
     } else {
       if (name.length > LIMITS.MAX_COMMAND_OPTION_NAME)
@@ -82,7 +88,9 @@ class CommandOption {
           `GLUON: Command option description must be less than ${LIMITS.MAX_COMMAND_OPTION_DESCRIPTION} characters.`,
         );
       this.description = description[this.defaultLocale];
-      delete description[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = description;
+      this.description_localizations = rest;
       this.description_localizations = description;
     } else {
       if (description.length > LIMITS.MAX_COMMAND_OPTION_DESCRIPTION)
@@ -385,19 +393,23 @@ class CommandOption {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
-          name: this.name,
+          name: this.name, // only valid due to validation above
           name_localizations: this.name_localizations,
-          type: this.type,
-          description: this.description,
+          type: this.type, // only valid due to validation above
+          description: this.description, // only valid due to validation above
           description_localizations: this.description_localizations,
           required: this.required,
-          choices: this.choices,
-          options: this.options,
+          choices: this.choices
+            ? this.choices.map((c) => c.toJSON(format))
+            : [],
+          options: this.options
+            ? this.options.map((o) => o.toJSON(format))
+            : [],
           channel_types: this.channel_types,
           min_value: this.min_value,
           max_value: this.max_value,

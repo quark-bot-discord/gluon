@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import util from "util";
 import { APIGuildCategoryChannel, Snowflake } from "discord-api-types/v10";
 import {
@@ -7,6 +6,7 @@ import {
   CategoryChannelStorageJSON,
   CategoryChannel as CategoryChannelType,
   PermissionOverwrite as PermissionOverwriteType,
+  Client as ClientType,
   JsonTypes,
 } from "../../typings/index.d.js";
 declare class CategoryChannel implements CategoryChannelType {

@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import util from "util";
 import { APIOverwrite } from "discord-api-types/v10";
 import {
@@ -7,6 +6,7 @@ import {
   PermissionOverwriteDiscordJSON,
   PermissionOverwriteStorageJSON,
   PermissionOverwrite as PermissionOverwriteType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 class PermissionOverwrite implements PermissionOverwriteType {

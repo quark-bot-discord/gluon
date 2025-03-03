@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import CategoryChannel from "../../structures/CategoryChannel.js";
 import TextChannel from "../../structures/TextChannel.js";
 import Thread from "../../structures/Thread.js";
@@ -11,7 +10,7 @@ import {
   APIThreadChannel,
   ChannelType,
 } from "discord-api-types/v10";
-import { AllChannels } from "typings/index.js";
+import { AllChannels, Client as ClientType } from "typings/index.js";
 
 /**
  * Automatically determines the channel type and caches the channel appropriately.

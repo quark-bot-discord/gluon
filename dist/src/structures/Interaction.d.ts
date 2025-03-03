@@ -1,5 +1,4 @@
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import {
   Interaction as InteractionType,
   InteractionCacheJSON,
@@ -11,6 +10,7 @@ import {
   MessageComponents as MessageComponentsType,
   TextInputBuilder as TextInputBuilderType,
   CommandChoiceBuilder as CommandChoiceBuilderType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildInteraction,

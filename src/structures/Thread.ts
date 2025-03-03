@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
@@ -12,6 +11,7 @@ import {
   JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 import { APIThreadChannel } from "discord-api-types/v10";

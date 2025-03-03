@@ -1,11 +1,11 @@
 // import hashjs from "hash.js";
 // import { GLUON_VERSION, NAME } from "../constants.js";
-import ClientType from "src/interfaces/Client.js";
 import {
   BaseCacheManager as BaseCacheManagerType,
   GluonCacheRuleSetStructure,
   JsonTypes,
   StaticManagerType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

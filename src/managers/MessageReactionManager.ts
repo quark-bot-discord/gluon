@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Reaction from "../structures/Reaction.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
@@ -11,6 +10,7 @@ import {
   ReactionCacheJSON,
   ReactionStorageJSON,
   ReactionDiscordJSON,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { GatewayMessageReactionAddDispatch } from "discord-api-types/v10";
 

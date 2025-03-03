@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildCategoryChannel,
@@ -6,7 +5,7 @@ import {
   APIGuildVoiceChannel,
   APIThreadChannel,
 } from "discord-api-types/v10";
-import { AllChannels } from "typings/index.js";
+import { AllChannels, Client as ClientType } from "typings/index.js";
 /**
  * Automatically determines the channel type and caches the channel appropriately.
  * @param {Client} client The client instance.

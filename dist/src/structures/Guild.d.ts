@@ -1,6 +1,5 @@
 import AuditLog from "./AuditLog.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   AuditLogEvent,
@@ -32,6 +31,7 @@ import {
   Embed,
   FileUpload,
   MessageComponents as MessageComponentsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Represents a Discord guild.

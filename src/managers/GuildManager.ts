@@ -1,10 +1,10 @@
-import ClientType from "src/interfaces/Client.js";
 import Guild from "../structures/Guild.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   GuildManager as GuildManagerType,
   Guild as GuildType,
   StructureIdentifiers,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 

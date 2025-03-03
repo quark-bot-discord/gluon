@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   JsonTypes,
@@ -6,6 +5,7 @@ import {
   MessagePollManagerDiscordJSON,
   MessagePollManagerStorageJSON,
   MessagePollManager as MessagePollManagerType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Manages a poll for a message.

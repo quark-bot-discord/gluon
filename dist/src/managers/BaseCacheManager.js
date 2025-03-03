@@ -51,6 +51,8 @@ var _BaseCacheManager_instances,
   _BaseCacheManager_clearStaleBuckets,
   _BaseCacheManager__callRules,
   _BaseCacheManager__callFetches;
+// import hashjs from "hash.js";
+// import { GLUON_VERSION, NAME } from "../constants.js";
 import { JsonTypes } from "../../typings/index.d.js";
 /**
  * The base cache manager for all cache managers.

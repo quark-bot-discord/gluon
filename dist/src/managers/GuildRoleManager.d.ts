@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -7,6 +6,7 @@ import {
   Guild as GuildType,
   Role as RoleType,
   StructureIdentifiers,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Manages all roles belonging to a guild.

@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import Channel from "./GuildChannel.js";
 import util from "util";
 import {
@@ -9,6 +8,7 @@ import {
   JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 import { APIThreadChannel } from "discord-api-types/v10";

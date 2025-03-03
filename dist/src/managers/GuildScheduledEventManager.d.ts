@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
@@ -6,6 +5,7 @@ import {
   StructureIdentifiers,
   Guild as GuildType,
   GuildScheduledEventManager as GuildScheduledEventManagerType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 declare class GuildScheduledEventManager
   extends BaseCacheManager

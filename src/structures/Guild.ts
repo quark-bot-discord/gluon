@@ -25,7 +25,6 @@ import Channel from "./GuildChannel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Message from "./Message.js";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
   APIAuditLog,
@@ -73,6 +72,7 @@ import {
   VoiceStateStorageJSON,
   MemberStorageJSON,
   MemberCacheJSON,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

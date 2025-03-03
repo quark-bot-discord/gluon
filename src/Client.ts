@@ -1,17 +1,14 @@
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
 import {
-  CHANNEL_TYPES,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_POLLING_TIME,
   GLUON_DEBUG_LEVELS,
   NAME,
-  TO_JSON_TYPES_ENUM,
 } from "./constants.js";
 
 import EventsEmitter from "events";
 import hash from "hash.js";
-import { TypedEmitter } from "tiny-typed-emitter";
 
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import Shard from "./gateway/index.js";
@@ -28,68 +25,16 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
-import ClientType from "./interfaces/Client.js";
+import { ChannelType } from "discord-api-types/v10";
+import {
+  JsonTypes,
+  Client as ClientType,
+  User as UserType,
+} from "typings/index.js";
 
-/**
- * A client user, which is able to handle multiple shards.
- * @extends {TypedEmitter<{
- *  "ready": (shardGuilds: String[]) => void
- *  "resumed": () => void
- *  "guildCreate": (guild: Guild) => void
- *  "guildDelete": (guild: Guild) => void
- *  "guildUpdate": (oldGuild: Guild, newGuild: Guild) => void
- *  "messageCreate": (message: Message) => void
- *  "messageUpdate": (oldMessage: Message, newMessage: Message) => void
- *  "messageDelete": (message: Message) => void
- *  "messageDeleteBulk": (messages: Message[]) => void
- *  "guildAuditLogEntryCreate": (auditLog: AuditLog) => void
- *  "guildBanAdd": (bannedUser: User) => void
- *  "guildBanRemove": (unbannedUser: User) => void
- *  "guildMemberAdd": (member: Member) => void
- *  "guildMemberUpdate": (oldMember: Member, newMember: Member) => void
- *  "guildMemberRemove": (member: Member) => void
- *  "buttonClick": (interaction: ButtonClick) => void
- *  "menuSelect": (interaction: OptionSelect) => void
- *  "modalResponse": (interaction: ModalResponse) => void
- *  "slashCommand": (interaction: SlashCommand) => void
- *  "slashCommandAutocomplete": (interaction: SlashCommand) => void
- *  "voiceStateUpdate": (oldVoiceState: VoiceState, newVoiceState: VoiceState) => void
- *  "voiceChannelStatusUpdate": (data: Object) => void
- *  "channelCreate": (channel: TextChannel | VoiceChannel | CategoryChannel) => void
- *  "channelUpdate": (oldChannel: TextChannel | VoiceChannel | CategoryChannel, newChannel: TextChannel | VoiceChannel | CategoryChannel) => void
- *  "channelDelete": (channel: TextChannel | VoiceChannel | CategoryChannel) => void
- *  "channelPinsUpdate": (data: Object) => void
- *  "threadCreate": (thread: Thread) => void
- *  "threadUpdate": (oldThread: Thread, newThread: Thread)
- *  "threadDelete": (thread: Thread) => void
- *  "threadListSync": (threads: Thread[]) => void
- *  "inviteCreate": (invite: Invite) => void
- *  "inviteDelete": (data: Object, invite: Invite) => void
- *  "roleCreate": (role: Role) => void
- *  "roleUpdate": (oldRole: Role, newRole: Role) => void
- *  "roleDelete": (role: Role) => void
- *  "emojiCreate": (emoji: Emoji) => void
- *  "emojiUpdate": (oldEmoji: Emoji, newEmoji: Emoji) => void
- *  "emojiDelete": (emoji: Emoji) => void
- *  "entitlementCreate": (entitlement: Object) => void
- *  "entitlementUpdate": (entitlement: Object) => void
- *  "entitlementDelete": (entitlement: Object) => void
- *  "guildScheduledEventCreate": (scheduledEvent: ScheduledEvent) => void
- *  "guildScheduledEventUpdate": (oldScheduledEvent: ScheduledEvent, newScheduledEvent: ScheduledEvent) => void
- *  "guildScheduledEventDelete": (scheduledEvent: ScheduledEvent) => void
- *  "guildScheduledEventUserAdd": (data: Object, user: User) => void
- *  "guildScheduledEventUserRemove": (data: Object, user: User) => void
- *  "initialised": () => void
- *  "messagePollVoteAdd": (data: Object) => void
- *  "messagePollVoteRemove": (data: Object) => void
- *  "messageReactionAdd": (data: Object) => void
- *  "messageReactionRemove": (data: Object) => void
- *  "webhooksUpdate": (data: Object) => void
- * }>}
- */
-class Client extends EventsEmitter {
+class Client extends EventsEmitter implements ClientType {
   request: any;
-  user: any;
+  user: UserType;
   // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
   #token;
   #intents;
@@ -465,12 +410,12 @@ class Client extends EventsEmitter {
     this.guilds.forEach((guild: any) => {
       guild.channels.forEach((channel: any) => {
         switch (channel.type) {
-          case CHANNEL_TYPES.GUILD_NEWS_THREAD:
-          case CHANNEL_TYPES.GUILD_PUBLIC_THREAD:
-          case CHANNEL_TYPES.GUILD_PRIVATE_THREAD:
-          case CHANNEL_TYPES.GUILD_TEXT:
-          case CHANNEL_TYPES.GUILD_NEWS:
-          case CHANNEL_TYPES.GUILD_FORUM: {
+          case ChannelType.AnnouncementThread:
+          case ChannelType.PublicThread:
+          case ChannelType.PrivateThread:
+          case ChannelType.GuildText:
+          case ChannelType.GuildAnnouncement:
+          case ChannelType.GuildForum: {
             totalMessages += channel.messages.size;
             break;
           }
@@ -545,7 +490,7 @@ class Client extends EventsEmitter {
    * @method
    */
   bundleCache() {
-    return this.guilds.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT);
+    return this.guilds.toJSON(JsonTypes.CACHE_FORMAT);
   }
 
   /**

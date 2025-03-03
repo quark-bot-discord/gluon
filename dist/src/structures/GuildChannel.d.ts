@@ -1,7 +1,6 @@
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import Message from "./Message.js";
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { FileUpload } from "src/util.js";
 import {
@@ -23,6 +22,7 @@ import {
   ChannelMessageManager as ChannelMessageManagerType,
   Embed,
   MessageComponents as MessageComponentsType,
+  Client as ClientType,
 } from "../../typings/index.js";
 /**
  * Represents a channel within Discord.

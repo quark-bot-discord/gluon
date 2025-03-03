@@ -1,5 +1,4 @@
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { APIAttachment, Snowflake } from "discord-api-types/v10";
 import {
   Attachment as AttachmentType,
@@ -7,6 +6,7 @@ import {
   AttachmentDiscordJSON,
   AttachmentStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Represents an attachment.

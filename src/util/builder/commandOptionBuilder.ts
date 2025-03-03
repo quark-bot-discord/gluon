@@ -1,30 +1,41 @@
 import {
+  ApplicationCommandOptionType,
+  ChannelType,
+  Locale,
+} from "discord-api-types/v10";
+import {
   APPLICATION_COMMAND_TYPES,
   COMMAND_NAME_REGEX,
   LIMITS,
-  TO_JSON_TYPES_ENUM,
 } from "../../constants.js";
+import {
+  CommandOptionDescriptionLocalizations,
+  CommandOptionNameLocalizations,
+  CommandChoiceBuilder as CommandChoiceBuilderType,
+  JsonTypes,
+  CommandOptionBuilder as CommandOptionBuilderType,
+} from "typings/index.js";
 
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
  */
-class CommandOption {
-  autocomplete: any;
-  channel_types: any;
-  choices: any;
-  defaultLocale: any;
-  description: any;
-  description_localizations: any;
-  max_length: any;
-  max_value: any;
-  min_length: any;
-  min_value: any;
-  name: any;
-  name_localizations: any;
-  options: any;
-  required: any;
-  type: any;
+class CommandOption implements CommandOptionBuilderType {
+  autocomplete: boolean = false;
+  channel_types?: ChannelType[];
+  choices: CommandChoiceBuilderType[] = [];
+  defaultLocale: Locale;
+  description?: string;
+  description_localizations?: CommandOptionDescriptionLocalizations;
+  max_length?: number;
+  max_value?: number;
+  min_length?: number;
+  min_value?: number;
+  name?: string;
+  name_localizations?: CommandOptionNameLocalizations;
+  options: CommandOptionBuilderType[] = [];
+  required?: boolean;
+  type?: ApplicationCommandOptionType;
   /**
    * Creates an option for a command.
    */
@@ -33,7 +44,7 @@ class CommandOption {
 
     this.options = [];
 
-    this.defaultLocale = "en-US";
+    this.defaultLocale = Locale.EnglishUS;
   }
 
   /**
@@ -41,7 +52,7 @@ class CommandOption {
    * @param {String | Object} name Sets the name of the option, or an object of names for localisation.
    * @returns {CommandOption}
    */
-  setName(name: any) {
+  setName(name: string | CommandOptionNameLocalizations) {
     if (!name)
       throw new TypeError("GLUON: Command option name must be provided.");
 
@@ -58,7 +69,9 @@ class CommandOption {
 
       this.name = name[this.defaultLocale];
 
-      delete name[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = name;
+      this.name_localizations = rest;
 
       this.name_localizations = name;
     } else {
@@ -79,7 +92,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
    */
-  setType(type: any) {
+  setType(type: ApplicationCommandOptionType) {
     if (typeof type != "number")
       throw new TypeError("GLUON: Command option type must be a number.");
 
@@ -94,7 +107,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setDescription(description: any) {
+  setDescription(description: string | CommandOptionDescriptionLocalizations) {
     if (!description)
       throw new TypeError(
         "GLUON: Command option description must be provided.",
@@ -116,7 +129,9 @@ class CommandOption {
 
       this.description = description[this.defaultLocale];
 
-      delete description[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = description;
+      this.description_localizations = rest;
 
       this.description_localizations = description;
     } else {
@@ -136,7 +151,7 @@ class CommandOption {
    * @param {Boolean} isRequired Whether the option is required.
    * @returns {CommandOption}
    */
-  setRequired(isRequired: any) {
+  setRequired(isRequired: boolean) {
     if (typeof isRequired != "boolean")
       throw new TypeError(
         "GLUON: Command option required status must be a boolean.",
@@ -152,7 +167,7 @@ class CommandOption {
    * @param {CommandChoice} choice Adds a choice to the option.
    * @returns {CommandOption}
    */
-  addChoice(choice: any) {
+  addChoice(choice: CommandChoiceBuilderType) {
     if (this.choices.length >= LIMITS.MAX_COMMAND_OPTION_CHOICES)
       throw new RangeError(
         `GLUON: Command option choices must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICES}.`,
@@ -171,7 +186,7 @@ class CommandOption {
    * @param {CommandOption} option Adds an option to this option.
    * @returns {CommandOption}
    */
-  addOption(option: any) {
+  addOption(option: CommandOptionBuilderType) {
     if (this.options.length >= LIMITS.MAX_COMMAND_OPTIONS)
       throw new RangeError(
         `GLUON: Command option options must be less than ${LIMITS.MAX_COMMAND_OPTIONS}.`,
@@ -190,7 +205,7 @@ class CommandOption {
    * @returns {CommandOption}
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-types}
    */
-  setChannelTypes(channelTypes: any) {
+  setChannelTypes(channelTypes: ChannelType[]) {
     if (!channelTypes)
       throw new TypeError(
         "GLUON: Command option channel types must be provided.",
@@ -211,7 +226,7 @@ class CommandOption {
    * @param {Number} value The minimum number value that the user may enter.
    * @returns {CommandOption}
    */
-  setMinValue(value: any) {
+  setMinValue(value: number) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option min value must be a number.");
 
@@ -225,7 +240,7 @@ class CommandOption {
    * @param {Number} value The maximum number value that the user may enter.
    * @returns {CommandOption}
    */
-  setMaxValue(value: any) {
+  setMaxValue(value: number) {
     if (typeof value != "number")
       throw new TypeError("GLUON: Command option max value must be a number.");
 
@@ -239,7 +254,7 @@ class CommandOption {
    * @param {Number} length The minimum length that the user may enter.
    * @returns {CommandOption}
    */
-  setMinLength(length: any) {
+  setMinLength(length: number) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option min length must be a number.");
 
@@ -253,7 +268,7 @@ class CommandOption {
    * @param {Number} length The maximum length that the user may enter.
    * @returns {CommandOption}
    */
-  setMaxLength(length: any) {
+  setMaxLength(length: number) {
     if (typeof length != "number")
       throw new TypeError("GLUON: Command option max length must be a number.");
 
@@ -267,7 +282,7 @@ class CommandOption {
    * @param {Boolean} autocomplete Whether autocomplete is enabled for this option.
    * @returns {CommandOption}
    */
-  setAutocomplete(autocomplete: any) {
+  setAutocomplete(autocomplete: boolean) {
     if (typeof autocomplete != "boolean")
       throw new TypeError(
         "GLUON: Command option autocomplete must be a boolean.",
@@ -284,7 +299,7 @@ class CommandOption {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale: any) {
+  setDefaultLocale(locale: Locale) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     this.defaultLocale = locale;
@@ -297,7 +312,7 @@ class CommandOption {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -456,19 +471,23 @@ class CommandOption {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
-          name: this.name,
+          name: this.name as string, // only valid due to validation above
           name_localizations: this.name_localizations,
-          type: this.type,
-          description: this.description,
+          type: this.type as ApplicationCommandOptionType, // only valid due to validation above
+          description: this.description as string, // only valid due to validation above
           description_localizations: this.description_localizations,
           required: this.required,
-          choices: this.choices,
-          options: this.options,
+          choices: this.choices
+            ? this.choices.map((c) => c.toJSON(format))
+            : [],
+          options: this.options
+            ? this.options.map((o) => o.toJSON(format))
+            : [],
           channel_types: this.channel_types,
           min_value: this.min_value,
           max_value: this.max_value,

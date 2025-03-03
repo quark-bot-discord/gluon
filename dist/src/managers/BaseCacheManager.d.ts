@@ -1,9 +1,9 @@
-import ClientType from "src/interfaces/Client.js";
 import {
   BaseCacheManager as BaseCacheManagerType,
   GluonCacheRuleSetStructure,
   JsonTypes,
   StaticManagerType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * The base cache manager for all cache managers.

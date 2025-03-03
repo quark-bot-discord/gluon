@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { GLUON_CACHING_OPTIONS, GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
@@ -11,6 +10,7 @@ import {
   VoiceState as VoiceStateType,
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIVoiceState } from "discord-api-types/v10";
 

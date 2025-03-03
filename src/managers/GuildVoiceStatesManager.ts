@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import VoiceState from "../structures/VoiceState.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -6,6 +5,7 @@ import {
   GuildVoiceStatesManager as GuildVoiceStatesManagerType,
   StructureIdentifiers,
   VoiceState as VoiceStateType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 
 /**

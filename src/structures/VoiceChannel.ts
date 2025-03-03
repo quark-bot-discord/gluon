@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
@@ -10,6 +9,7 @@ import {
   VoiceChannelDiscordJSON,
   VoiceChannelStorageJSON,
   VoiceChannel as VoiceChannelType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildStageVoiceChannel,

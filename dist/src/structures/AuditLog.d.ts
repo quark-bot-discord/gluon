@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import User from "./User.js";
 import util from "util";
 import {
@@ -7,6 +6,7 @@ import {
   AuditLogStorageJSON,
   AuditLog as AuditLogType,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIAuditLogEntry,

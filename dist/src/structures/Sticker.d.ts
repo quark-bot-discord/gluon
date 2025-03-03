@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import util from "util";
 import { APISticker, StickerFormatType } from "discord-api-types/v10";
 import {
@@ -7,6 +6,7 @@ import {
   StickerDiscordJSON,
   StickerStorageJSON,
   JsonTypes,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 /**
  * Represents an sticker.

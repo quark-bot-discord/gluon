@@ -1,5 +1,4 @@
 import util from "util";
-import ClientType from "src/interfaces/Client.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
   Member as MemberType,
@@ -10,6 +9,7 @@ import {
   User as UserType,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import {
   APIGuildMember,

@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
@@ -7,6 +6,7 @@ import {
   Guild as GuildType,
   AllChannels,
   StructureIdentifiers,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
 

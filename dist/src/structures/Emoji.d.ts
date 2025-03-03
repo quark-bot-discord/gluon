@@ -1,4 +1,3 @@
-import ClientType from "src/interfaces/Client.js";
 import util from "util";
 import {
   Emoji as EmojiType,
@@ -8,6 +7,7 @@ import {
   JsonTypes,
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
+  Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIEmoji, Snowflake } from "discord-api-types/v10";
 /**
