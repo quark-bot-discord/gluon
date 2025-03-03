@@ -9,6 +9,12 @@ class GuildVoiceStatesManager extends BaseCacheManager {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Adds a voice state to the cache.
    * @param {String} id The ID of the voice state to cache.
@@ -23,6 +29,9 @@ class GuildVoiceStatesManager extends BaseCacheManager {
     if (!(voiceState instanceof VoiceState))
       throw new TypeError("GLUON: VoiceState must be a VoiceState instance.");
     return super.set(id, voiceState);
+  }
+  get(id) {
+    return super.get(id);
   }
 }
 GuildVoiceStatesManager.identifier = "voicestates";

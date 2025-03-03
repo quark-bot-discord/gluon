@@ -1,16 +1,38 @@
+import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import {
+  GuildChannelsManager as GuildChannelsManagerType,
+  Guild as GuildType,
+  AllChannels,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all channels within a guild.
  */
-declare class GuildChannelsManager extends BaseCacheManager {
+declare class GuildChannelsManager
+  extends BaseCacheManager
+  implements GuildChannelsManagerType
+{
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a guild channel manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this channel manager belongs to.
    */
-  constructor(client: any, guild: any);
+  constructor(client: ClientType, guild: GuildType);
+  /**
+   * Gets a channel from the cache.
+   * @param {String} id The ID of the channel to get.
+   * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | Channel | null}
+   * @public
+   * @method
+   * @override
+   */
+  get(id: Snowflake): AllChannels | null;
+  fetchFromRules(key: string): Promise<AllChannels | null>;
+  fetchWithRules(key: string): Promise<AllChannels | null>;
   /**
    * Fetches a particular channel belonging to this guild.
    * @param {String} channel_id The id of the channel to fetch.
@@ -20,7 +42,7 @@ declare class GuildChannelsManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(channel_id: any): Promise<any>;
+  fetch(channel_id: Snowflake): Promise<AllChannels | null>;
   /**
    * Adds a channel to the cache.
    * @param {String} id The ID of the channel to cache.
@@ -31,7 +53,7 @@ declare class GuildChannelsManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, channel: any): Map<any, any>;
+  set(id: Snowflake, channel: AllChannels, expiry?: number): void;
   /**
    * Returns the channel for a guild.
    * @param {Client} client The client instance.
@@ -39,7 +61,11 @@ declare class GuildChannelsManager extends BaseCacheManager {
    * @param {String} channelId The ID of the channel to get.
    * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
    */
-  static getChannel(client: any, guildId: any, channelId: any): any;
+  static getChannel(
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+  ): any;
   /**
    * Returns the cache manager for a guild.
    * @param {Client} client The client instance.
@@ -50,7 +76,7 @@ declare class GuildChannelsManager extends BaseCacheManager {
    * @static
    * @method
    */
-  static getCacheManager(client: any, guildId: any): any;
+  static getCacheManager(client: ClientType, guildId: Snowflake): any;
   /**
    * Fetches a channel, checking the cache first.
    * @param {Client} client The client instance.
@@ -62,6 +88,10 @@ declare class GuildChannelsManager extends BaseCacheManager {
    * @async
    * @throws {TypeError}
    */
-  static fetchChannel(client: any, guildId: any, channelId: any): Promise<any>;
+  static fetchChannel(
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+  ): Promise<any>;
 }
 export default GuildChannelsManager;

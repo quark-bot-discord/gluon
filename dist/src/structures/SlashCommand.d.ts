@@ -1,32 +1,44 @@
 import Interaction from "./Interaction.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
+import {
+  SlashCommand as SlashCommandType,
+  SlashCommandCacheJSON,
+  SlashCommandDiscordJSON,
+  SlashCommandStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
 /**
  * Represents a slash command.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
  * @extends {Interaction}
  */
-declare class SlashCommand extends Interaction {
+declare class SlashCommand extends Interaction implements SlashCommandType {
   #private;
   /**
    * Creates a slash command interaction structure.
    * @param {Client} client The client instance.
    * @param {Object} data The raw interaction data from Discord.
    */
-  constructor(client: any, data: any);
+  constructor(
+    client: ClientType,
+    data: APIChatInputApplicationCommandGuildInteraction,
+  );
   /**
    * The raw slash command data from Discord.
    * @type {Object?}
    * @readonly
    * @public
    */
-  get data(): any;
+  get data(): import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData;
   /**
    * The options provided with the slash command.
    * @type {Array<Object>}
    * @readonly
    * @public
    */
-  get options(): any;
+  get options(): import("discord-api-types/v10").APIApplicationCommandInteractionDataOption[];
   /**
    * @method
    * @public
@@ -45,37 +57,8 @@ declare class SlashCommand extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any): {
-    id: string;
-    data: any;
-    type: any;
-    guild_id: string;
-    channel_id: string;
-    member:
-      | {
-          user: any;
-          nick: any;
-          joined_at: number | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          _attributes: any;
-          pending?: undefined;
-        }
-      | {
-          user: any;
-          nick: any;
-          joined_at: string | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          pending: boolean;
-          _attributes?: undefined;
-        };
-  };
+  toJSON(
+    format?: JsonTypes,
+  ): SlashCommandCacheJSON | SlashCommandStorageJSON | SlashCommandDiscordJSON;
 }
 export default SlashCommand;

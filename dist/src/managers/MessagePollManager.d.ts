@@ -1,13 +1,27 @@
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  JsonTypes,
+  MessagePollManagerCacheJSON,
+  MessagePollManagerDiscordJSON,
+  MessagePollManagerStorageJSON,
+  MessagePollManager as MessagePollManagerType,
+} from "../../typings/index.d.js";
 /**
  * Manages a poll for a message.
  */
-declare class MessagePollManager {
+declare class MessagePollManager implements MessagePollManagerType {
   #private;
   /**
    * Creates a message poll manager.
    * @param {Object} existingResponses Existing responses for a poll.
    */
-  constructor(client: any, existingResponses?: {});
+  constructor(
+    client: ClientType,
+    existingResponses?:
+      | MessagePollManagerCacheJSON
+      | MessagePollManagerStorageJSON,
+  );
   /**
    * Adds a response to a poll.
    * @param {String} user_id The id of the user who voted.
@@ -16,7 +30,7 @@ declare class MessagePollManager {
    * @public
    * @method
    */
-  _addVote(user_id: any, answer_id: any): void;
+  _addVote(user_id: Snowflake, answer_id: number): void;
   /**
    * Removes a response from a poll.
    * @param {String} user_id The id of the user whose vote was removed.
@@ -25,13 +39,13 @@ declare class MessagePollManager {
    * @public
    * @method
    */
-  _removeVote(user_id: any, answer_id: any): void;
+  _removeVote(user_id: Snowflake, answer_id: number): void;
   /**
    * Returns the result for a given answer.
    * @param {Number} answerId The ID of the answer to get the result for.
    * @returns {Array<String>}
    */
-  getResult(answerId: any): any;
+  getResult(answerId: number): string[];
   /**
    * Returns the JSON representation of this structure.
    * @param {Number} [format] The format to return the data in.
@@ -39,16 +53,11 @@ declare class MessagePollManager {
    * @public
    * @method
    */
-  toJSON(format: any):
-    | {
-        [key: string]: string[];
-      }
-    | {
-        answer_counts: {
-          id: number;
-          count: any;
-          me_voted: any;
-        }[];
-      };
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | MessagePollManagerCacheJSON
+    | MessagePollManagerStorageJSON
+    | MessagePollManagerDiscordJSON;
 }
 export default MessagePollManager;

@@ -5,9 +5,13 @@ import Thread from "../../structures/Thread.js";
 import VoiceChannel from "../../structures/VoiceChannel.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
-  AnyChannelType,
-  ChannelTypes,
-} from "src/structures/interfaces/Channel.js";
+  APIGuildCategoryChannel,
+  APIGuildStageVoiceChannel,
+  APIGuildVoiceChannel,
+  APIThreadChannel,
+  ChannelType,
+} from "discord-api-types/v10";
+import { AllChannels } from "typings/index.js";
 
 /**
  * Automatically determines the channel type and caches the channel appropriately.
@@ -19,23 +23,27 @@ import {
  */
 function cacheChannel(
   client: ClientType,
-  data: any,
+  data:
+    | APIGuildVoiceChannel
+    | APIGuildStageVoiceChannel
+    | APIThreadChannel
+    | APIGuildCategoryChannel,
   guildId: Snowflake,
   nocache = false,
-): AnyChannelType {
+): AllChannels {
   switch (data.type) {
-    case ChannelTypes.GUILD_VOICE:
-    case ChannelTypes.GUILD_STAGE_VOICE: {
+    case ChannelType.GuildVoice:
+    case ChannelType.GuildStageVoice: {
       return new VoiceChannel(client, data, { guildId, nocache });
     }
 
-    case ChannelTypes.GUILD_NEWS_THREAD:
-    case ChannelTypes.GUILD_PUBLIC_THREAD:
-    case ChannelTypes.GUILD_PRIVATE_THREAD: {
+    case ChannelType.AnnouncementThread:
+    case ChannelType.PublicThread:
+    case ChannelType.PrivateThread: {
       return new Thread(client, data, { guildId, nocache });
     }
 
-    case ChannelTypes.GUILD_CATEGORY: {
+    case ChannelType.GuildCategory: {
       return new CategoryChannel(client, data, { guildId, nocache });
     }
 

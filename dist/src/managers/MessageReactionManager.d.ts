@@ -1,14 +1,32 @@
-import Reaction from "../structures/Reaction.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  MessageReactionManager as MessageReactionManagerType,
+  Guild as GuildType,
+  MessageReactionManagerCacheJSON,
+  MessageReactionManagerStorageJSON,
+  JsonTypes,
+  ReactionCacheJSON,
+  ReactionStorageJSON,
+  ReactionDiscordJSON,
+} from "../../typings/index.d.js";
+import { GatewayMessageReactionAddDispatch } from "discord-api-types/v10";
 /**
  * Manages the reactions of a message.
  */
-declare class MessageReactionManager {
+declare class MessageReactionManager implements MessageReactionManagerType {
   #private;
   /**
    * Creates a message reaction manager.
    * @param {Object} existingReactions Existing reactions for a message.
    */
-  constructor(client: any, guild: any, existingReactions?: {});
+  constructor(
+    client: ClientType,
+    guild: GuildType,
+    existingReactions?:
+      | MessageReactionManagerCacheJSON
+      | MessageReactionManagerStorageJSON,
+  );
   /**
    * Adds a reaction to a message.
    * @param {String} userId The id of the user who reacted.
@@ -18,7 +36,11 @@ declare class MessageReactionManager {
    * @public
    * @method
    */
-  _addReaction(userId: any, emoji: any, data: any): void;
+  _addReaction(
+    userId: Snowflake,
+    emoji: Snowflake | string,
+    data: GatewayMessageReactionAddDispatch,
+  ): void;
   /**
    * Removes a reaction from a message.
    * @param {String} userId The id of the user whose reaction was removed.
@@ -27,7 +49,7 @@ declare class MessageReactionManager {
    * @public
    * @method
    */
-  _removeReaction(userId: any, emoji: any): void;
+  _removeReaction(userId: Snowflake, emoji: Snowflake | string): void;
   /**
    * Returns the JSON representation of this structure.
    * @param {Number} [format] The format to return the data in.
@@ -35,23 +57,10 @@ declare class MessageReactionManager {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format?: JsonTypes):
     | {
-        [key: string]: Reaction;
+        [key: string]: ReactionStorageJSON | ReactionCacheJSON;
       }
-    | (
-        | {
-            emoji: any;
-            _reacted: any;
-            initial_reactor: string | undefined;
-            count?: undefined;
-          }
-        | {
-            emoji: any;
-            count: any;
-            _reacted?: undefined;
-            initial_reactor?: undefined;
-          }
-      )[];
+    | ReactionDiscordJSON[];
 }
 export default MessageReactionManager;

@@ -1,14 +1,13 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { APIAttachment, Snowflake } from "discord-api-types/v10";
 import {
+  Attachment as AttachmentType,
   AttachmentCacheJSON,
   AttachmentDiscordJSON,
-  AttachmentRaw,
   AttachmentStorageJSON,
-  AttachmentType,
-} from "./interfaces/Attachment.js";
-import ClientType from "src/interfaces/Client.js";
-import { Snowflake } from "src/interfaces/gluon.js";
+  JsonTypes,
+} from "../../typings/index.d.js";
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
@@ -21,7 +20,7 @@ declare class Attachment implements AttachmentType {
   constructor(
     client: ClientType,
     data:
-      | AttachmentRaw
+      | APIAttachment
       | AttachmentStorageJSON
       | AttachmentCacheJSON
       | AttachmentDiscordJSON,
@@ -60,7 +59,7 @@ declare class Attachment implements AttachmentType {
    * @readonly
    * @public
    */
-  get channelId(): string | null;
+  get channelId(): string;
   /**
    * Fetches the data of the attachment.
    * @public
@@ -79,18 +78,8 @@ declare class Attachment implements AttachmentType {
   /**
    * Returns the JSON representation of this structure.
    */
-  toJSON(format: TO_JSON_TYPES_ENUM):
-    | {
-        id: string;
-        filename: string;
-        size: number;
-        url?: undefined;
-      }
-    | {
-        id: string;
-        filename: string;
-        size: number;
-        url: string | null;
-      };
+  toJSON(
+    format?: JsonTypes,
+  ): AttachmentStorageJSON | AttachmentDiscordJSON | AttachmentCacheJSON;
 }
 export default Attachment;

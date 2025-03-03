@@ -1,12 +1,28 @@
+import ClientType from "src/interfaces/Client.js";
 import util from "util";
-declare class PermissionOverwrite {
+import { APIOverwrite } from "discord-api-types/v10";
+import {
+  JsonTypes,
+  PermissionOverwriteCacheJSON,
+  PermissionOverwriteDiscordJSON,
+  PermissionOverwriteStorageJSON,
+  PermissionOverwrite as PermissionOverwriteType,
+} from "../../typings/index.d.js";
+declare class PermissionOverwrite implements PermissionOverwriteType {
   #private;
   /**
    * Creates the structure for a permission overwrite.
    * @param {Client} client The client instance.
    * @param {Object} data The raw permission overwrite data.
    */
-  constructor(client: any, data: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIOverwrite
+      | PermissionOverwriteCacheJSON
+      | PermissionOverwriteDiscordJSON
+      | PermissionOverwriteStorageJSON,
+  );
   /**
    * The ID of the overwrite.
    * @type {String}
@@ -20,7 +36,7 @@ declare class PermissionOverwrite {
    * @readonly
    * @public
    */
-  get type(): any;
+  get type(): import("discord-api-types/v10").OverwriteType;
   /**
    * The permissions for the overwrite.
    * @type {String}
@@ -52,9 +68,9 @@ declare class PermissionOverwrite {
    * @public
    * @method
    */
-  toJSON(format: any): {
+  toJSON(format: JsonTypes): {
     id: string;
-    type: any;
+    type: import("discord-api-types/v10").OverwriteType;
     allow: string;
     deny: string;
   };

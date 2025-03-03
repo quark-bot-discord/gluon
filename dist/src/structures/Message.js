@@ -66,9 +66,7 @@ import Attachment from "./Attachment.js";
 import {
   PERMISSIONS,
   BASE_URL,
-  TO_JSON_TYPES_ENUM,
   LIMITS,
-  MESSAGE_FLAGS,
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -85,10 +83,10 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import FileUpload from "../util/builder/fileUpload.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildManager from "../managers/GuildManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -107,10 +105,7 @@ class Message {
   constructor(
     client,
     data,
-    { channelId, guildId, nocache = false, ignoreExisting = false } = {
-      nocache: false,
-      ignoreExisting: false,
-    },
+    { channelId, guildId, nocache = false, ignoreExisting = false },
   ) {
     _Message__client.set(this, void 0);
     _Message__guild_id.set(this, void 0);
@@ -206,14 +201,16 @@ class Message {
           {
             // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
             nocache: !data.webhook_id || nocache,
-            noDbStore: true,
           },
         ),
         "f",
       );
     else if (existing?.author)
       __classPrivateFieldSet(this, _Message_author, existing.author, "f");
-    if (data.member) {
+    else {
+      throw new Error("GLUON: Message author is missing.");
+    }
+    if ("member" in data && data.member) {
       new Member(
         __classPrivateFieldGet(this, _Message__client, "f"),
         data.member,
@@ -307,7 +304,7 @@ class Message {
           existing.reactions,
           "f",
         );
-      else
+      else if ("messageReactions" in data)
         __classPrivateFieldSet(
           this,
           _Message_reactions,
@@ -346,28 +343,24 @@ class Message {
       __classPrivateFieldSet(
         this,
         _Message__attributes,
-        data._attributes || 0,
+        "_attributes" in data ? data._attributes : 0,
         "f",
       );
-      if (data.mentions && data.mentions.length != 0)
+      if ("mentions" in data && data.mentions.length != 0)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 0),
           "f",
         );
-      else if (
-        data.mentions == undefined &&
-        existing &&
-        existing.mentions == true
-      )
+      else if (!("mentions" in data) && existing && existing.mentions == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 0),
           "f",
         );
-      if (data.mention_roles && data.mention_roles.length != 0)
+      if ("mention_roles" in data && data.mention_roles.length != 0)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
@@ -375,7 +368,7 @@ class Message {
           "f",
         );
       else if (
-        data.mention_roles == undefined &&
+        !("mention_roles" in data) &&
         existing &&
         existing.mentionRoles == true
       )
@@ -385,7 +378,7 @@ class Message {
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 1),
           "f",
         );
-      if (data.mention_everyone != undefined && data.mention_everyone == true)
+      if ("mention_everyone" in data && data.mention_everyone == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
@@ -393,7 +386,7 @@ class Message {
           "f",
         );
       else if (
-        data.mention_everyone == undefined &&
+        !("mention_everyone" in data) &&
         existing &&
         existing.mentionEveryone == true
       )
@@ -403,32 +396,28 @@ class Message {
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 2),
           "f",
         );
-      if (data.pinned != undefined && data.pinned == true)
+      if ("pinned" in data && data.pinned == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 3),
           "f",
         );
-      else if (data.pinned == undefined && existing && existing.pinned == true)
+      else if (!("pinned" in data) && existing && existing.pinned == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 3),
           "f",
         );
-      if (data.mirrored != undefined && data.mirrored == true)
+      if ("mirrored" in data && data.mirrored == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
           __classPrivateFieldGet(this, _Message__attributes, "f") | (0b1 << 4),
           "f",
         );
-      else if (
-        data.mirrored == undefined &&
-        existing &&
-        existing.mirrored == true
-      )
+      else if (!("mirrored" in data) && existing && existing.mirrored == true)
         __classPrivateFieldSet(
           this,
           _Message__attributes,
@@ -457,7 +446,18 @@ class Message {
      * @type {Number}
      * @private
      */
-    __classPrivateFieldSet(this, _Message_flags, data.flags, "f");
+    __classPrivateFieldSet(
+      this,
+      _Message_flags,
+      "flags" in data ? (data.flags ?? 0) : 0,
+      "f",
+    );
+    if (
+      existing &&
+      existing.flags != undefined &&
+      __classPrivateFieldGet(this, _Message_flags, "f") === 0
+    )
+      __classPrivateFieldSet(this, _Message_flags, existing.flags, "f");
     /**
      * The type of message.
      * @type {Number}
@@ -476,7 +476,7 @@ class Message {
        * @type {BigInt?}
        * @private
        */
-      if (data.webhook_id)
+      if ("webhook_id" in data && data.webhook_id)
         __classPrivateFieldSet(
           this,
           _Message_webhook_id,
@@ -555,6 +555,7 @@ class Message {
       __classPrivateFieldGet(this, _Message_reactions, "f") &&
       this.channel?._cacheOptions.reactionCaching !== false;
     const embedsPresent =
+      __classPrivateFieldGet(this, _Message_embeds, "f") &&
       __classPrivateFieldGet(this, _Message_embeds, "f").length !== 0 &&
       this.channel?._cacheOptions.embedCaching !== false;
     const attributesPresent =
@@ -568,6 +569,7 @@ class Message {
       __classPrivateFieldGet(this, _Message_webhook_id, "f") &&
       this.channel?._cacheOptions.webhookCaching !== false;
     const stickerPresent =
+      __classPrivateFieldGet(this, _Message_sticker_items, "f") &&
       __classPrivateFieldGet(this, _Message_sticker_items, "f").length !== 0 &&
       this.channel?._cacheOptions.stickerCaching !== false;
     const snapshotsPresent =
@@ -606,7 +608,7 @@ class Message {
    * @public
    */
   get editedTimestamp() {
-    return __classPrivateFieldGet(this, _Message_edited_timestamp, "f");
+    return __classPrivateFieldGet(this, _Message_edited_timestamp, "f") ?? null;
   }
   /**
    * The user who sent the message.
@@ -785,7 +787,7 @@ class Message {
    * @public
    */
   get poll() {
-    return __classPrivateFieldGet(this, _Message_poll, "f");
+    return __classPrivateFieldGet(this, _Message_poll, "f") ?? null;
   }
   /**
    * The message reactions.
@@ -794,6 +796,9 @@ class Message {
    * @public
    */
   get reactions() {
+    if (!__classPrivateFieldGet(this, _Message_reactions, "f")) {
+      throw new Error("GLUON: Message reactions are missing.");
+    }
     return __classPrivateFieldGet(this, _Message_reactions, "f");
   }
   /**
@@ -803,6 +808,9 @@ class Message {
    * @public
    */
   get embeds() {
+    if (!__classPrivateFieldGet(this, _Message_embeds, "f")) {
+      throw new Error("GLUON: Message embeds are missing.");
+    }
     return __classPrivateFieldGet(this, _Message_embeds, "f");
   }
   /**
@@ -831,82 +839,6 @@ class Message {
    * @see {@link https://discord.com/developers/docs/resources/message#message-object-message-flags}
    */
   get flags() {
-    const flags = [];
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.CROSSPOSTED) ===
-      MESSAGE_FLAGS.CROSSPOSTED
-    )
-      flags.push("CROSSPOSTED");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.IS_CROSSPOST) ===
-      MESSAGE_FLAGS.IS_CROSSPOST
-    )
-      flags.push("IS_CROSSPOST");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.SUPPRESS_EMBEDS) ===
-      MESSAGE_FLAGS.SUPPRESS_EMBEDS
-    )
-      flags.push("SUPPRESS_EMBEDS");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED) ===
-      MESSAGE_FLAGS.SOURCE_MESSAGE_DELETED
-    )
-      flags.push("SOURCE_MESSAGE_DELETED");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.URGENT) ===
-      MESSAGE_FLAGS.URGENT
-    )
-      flags.push("URGENT");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.HAS_THREAD) ===
-      MESSAGE_FLAGS.HAS_THREAD
-    )
-      flags.push("HAS_THREAD");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.EPHEMERAL) ===
-      MESSAGE_FLAGS.EPHEMERAL
-    )
-      flags.push("EPHEMERAL");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.LOADING) ===
-      MESSAGE_FLAGS.LOADING
-    )
-      flags.push("LOADING");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD) ===
-      MESSAGE_FLAGS.FAILED_TO_MENTION_SOME_ROLES_IN_THREAD
-    )
-      flags.push("FAILED_TO_MENTION_SOME_ROLES_IN_THREAD");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS) ===
-      MESSAGE_FLAGS.SUPPRESS_NOTIFICATIONS
-    )
-      flags.push("SUPPRESS_NOTIFICATIONS");
-    if (
-      (__classPrivateFieldGet(this, _Message_flags, "f") &
-        MESSAGE_FLAGS.IS_VOICE_MESSAGE) ===
-      MESSAGE_FLAGS.IS_VOICE_MESSAGE
-    )
-      flags.push("IS_VOICE_MESSAGE");
-    return flags;
-  }
-  /**
-   * The raw flags of the message.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get flagsRaw() {
     return __classPrivateFieldGet(this, _Message_flags, "f");
   }
   /**
@@ -936,6 +868,9 @@ class Message {
    * @public
    */
   get stickerItems() {
+    if (!__classPrivateFieldGet(this, _Message_sticker_items, "f")) {
+      throw new Error("GLUON: Sticker items are missing.");
+    }
     return __classPrivateFieldGet(this, _Message_sticker_items, "f");
   }
   /**
@@ -1017,7 +952,7 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  reply({ content, embeds, components, files, suppressMentions = false } = {}) {
+  reply({ content, embeds, components, files, suppressMentions = false }) {
     return Message.send(
       __classPrivateFieldGet(this, _Message__client, "f"),
       this.channelId,
@@ -1056,19 +991,13 @@ class Message {
    * @async
    * @throws {Error | TypeError}
    */
-  edit(options = {}) {
+  edit(options) {
     const {
       components = undefined,
       files = [],
       content = this.content,
       embeds = this.embeds,
       attachments = this.attachments,
-      flags = this.flagsRaw,
-      reference = {
-        messageId: this.reference.messageId,
-        channelId: this.channelId,
-        guildId: this.guildId,
-      },
     } = options;
     return Message.edit(
       __classPrivateFieldGet(this, _Message__client, "f"),
@@ -1081,8 +1010,6 @@ class Message {
         files,
         embeds,
         attachments,
-        flags,
-        reference,
       },
     );
   }
@@ -1157,16 +1084,7 @@ class Message {
     client,
     channelId,
     guildId,
-    {
-      content,
-      embeds,
-      components,
-      files,
-      reference,
-      suppressMentions = false,
-    } = {
-      suppressMentions: false,
-    },
+    { content, embeds, components, files, reference, suppressMentions = false },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1234,7 +1152,7 @@ class Message {
     channelId,
     messageId,
     guildId,
-    { content, embeds, components, attachments, files } = {},
+    { content, embeds, components, attachments, files },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -1376,11 +1294,6 @@ class Message {
       );
     if (components && !(components instanceof MessageComponents))
       throw new TypeError("GLUON: Components must be an array of components.");
-    if (
-      files &&
-      (!Array.isArray(files) || !files.every((f) => f instanceof FileUpload))
-    )
-      throw new TypeError("GLUON: Files must be an array of files.");
     if (files && files.length > LIMITS.MAX_MESSAGE_FILES)
       throw new RangeError(`GLUON: Files exceeds ${LIMITS.MAX_MESSAGE_FILES}.`);
     if (
@@ -1500,8 +1413,8 @@ class Message {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           author: this.author?.toJSON(format),
@@ -1520,16 +1433,14 @@ class Message {
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
-                id: this.reference.messageId
-                  ? this.reference.messageId
-                  : undefined,
+                id: this.reference.messageId ? this.reference.messageId : null,
               }
             : undefined,
           sticker_items: this.stickerItems.map((s) => s.toJSON(format)),
           messageReactions: this.reactions.toJSON(format),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
@@ -1550,9 +1461,7 @@ class Message {
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
-                id: this.reference.messageId
-                  ? this.reference.messageId
-                  : undefined,
+                id: this.reference.messageId ? this.reference.messageId : null,
               }
             : undefined,
           sticker_items: this.stickerItems?.map((s) => s.toJSON(format)),

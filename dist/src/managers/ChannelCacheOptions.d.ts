@@ -1,8 +1,12 @@
+import {
+  ChannelCacheOptions as ChannelCacheOptionsType,
+  JsonTypes,
+} from "../../typings/index.d.js";
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.
  */
-declare class ChannelCacheOptions {
+declare class ChannelCacheOptions implements ChannelCacheOptionsType {
   #private;
   /**
    * Creates the cache options for a channel.
@@ -10,7 +14,7 @@ declare class ChannelCacheOptions {
    * @public
    * @constructor
    */
-  constructor(cache_options: any);
+  constructor(cache_options?: number);
   /**
    * Sets whether to cache messages or not.
    * @param {Boolean} option Whether to cache messages or not.
@@ -18,7 +22,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setMessageCaching(option: any): void;
+  setMessageCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -26,7 +30,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setFileCaching(option: any): void;
+  setFileCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -34,7 +38,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setContentCaching(option: any): void;
+  setContentCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -42,7 +46,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setPollCaching(option: any): void;
+  setPollCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -50,7 +54,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setReactionCaching(option: any): void;
+  setReactionCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -58,7 +62,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setEmbedCaching(option: any): void;
+  setEmbedCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -66,7 +70,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setAttributeCaching(option: any): void;
+  setAttributeCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -74,7 +78,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setReferenceCaching(option: any): void;
+  setReferenceCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -82,7 +86,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setStickerCaching(option: any): void;
+  setStickerCaching(option: boolean): void;
   /**
    * Sets whether to cache messages or not
    * @param {Boolean} option The option to set.
@@ -90,7 +94,7 @@ declare class ChannelCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setWebhookCaching(option: any): void;
+  setWebhookCaching(option: boolean): void;
   /**
    * Disables all caching options.
    * @public
@@ -180,6 +184,6 @@ declare class ChannelCacheOptions {
    * @public
    * @method
    */
-  toJSON(format: any): any;
+  toJSON(format: JsonTypes): number;
 }
 export default ChannelCacheOptions;

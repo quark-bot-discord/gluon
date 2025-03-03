@@ -34,7 +34,8 @@ class GuildManager extends BaseCacheManager {
    */
   constructor(client) {
     super(client, { structureType: GuildManager });
-    _GuildManager__client.set(this, void 0);
+    // eslint-disable-next-line no-unused-private-class-members
+    _GuildManager__client.set(this, void 0); // keep just for standardization
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     /**
@@ -58,6 +59,15 @@ class GuildManager extends BaseCacheManager {
     if (!(guild instanceof Guild))
       throw new TypeError("GLUON: Guild must be an instance of Guild.");
     return super.set(id, guild);
+  }
+  get(id) {
+    return super.get(id);
+  }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
   }
   /**
    * Returns the cache manager.

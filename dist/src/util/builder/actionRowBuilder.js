@@ -1,8 +1,6 @@
-import {
-  COMPONENT_TYPES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
+import { LIMITS } from "../../constants.js";
+import { ComponentType } from "discord-api-types/v10";
 /**
  * Helps to construct an action row for a message.
  */
@@ -11,7 +9,7 @@ class ActionRow {
    * Creates an action row.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.ACTION_ROW;
+    this.type = ComponentType.ActionRow;
     this.components = [];
   }
   /**
@@ -38,19 +36,21 @@ class ActionRow {
         throw new RangeError(
           `GLUON: Action rows must have less than ${LIMITS.MAX_ACTION_ROW_BUTTONS} buttons.`,
         );
-      if (this.type !== COMPONENT_TYPES.ACTION_ROW)
+      if (this.type !== ComponentType.ActionRow)
         throw new TypeError(
-          `GLUON: Action row type must be set to 'ACTION_ROW' (${COMPONENT_TYPES.ACTION_ROW}).`,
+          `GLUON: Action row type must be set to 'ACTION_ROW' (${ComponentType.ActionRow}).`,
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           type: this.type,
-          components: this.components,
+          components: this.components.map((component) =>
+            component.toJSON(format, { suppressValidation }),
+          ),
         };
       }
     }

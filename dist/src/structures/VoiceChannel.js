@@ -46,15 +46,16 @@ var _VoiceChannel__client,
   _VoiceChannel_bitrate,
   _VoiceChannel_user_limit,
   _VoiceChannel_rtc_region;
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
+import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a voice channel.
  * @extends {Channel}
  */
-class VoiceChannel extends Channel {
+class VoiceChannel extends GuildChannel {
   /**
    * Creates the structure for a voice channel.
    * @param {Client} client The client instance.
@@ -63,7 +64,7 @@ class VoiceChannel extends Channel {
    * @param {String} options.guildId The id of the guild that the voice channel belongs to.
    * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     super(client, data, { guildId });
     _VoiceChannel__client.set(this, void 0);
     _VoiceChannel_bitrate.set(this, void 0);
@@ -136,7 +137,7 @@ class VoiceChannel extends Channel {
         existing.rtcRegion,
         "f",
       );
-    const shouldCache = Channel.shouldCache(
+    const shouldCache = GuildChannel.shouldCache(
       __classPrivateFieldGet(this, _VoiceChannel__client, "f")._cacheOptions,
       this.guild._cacheOptions,
     );
@@ -152,8 +153,8 @@ class VoiceChannel extends Channel {
         `NO CACHE VOICECHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }
-    if (data.messages)
-      for (let i = 0; i < data.messages.length; i++)
+    if ("messages" in data && data.messages) {
+      for (let i = 0; i < data.messages.length; i++) {
         new Message(
           __classPrivateFieldGet(this, _VoiceChannel__client, "f"),
           data.messages[i],
@@ -162,6 +163,8 @@ class VoiceChannel extends Channel {
             guildId,
           },
         );
+      }
+    }
   }
   /**
    * The bitrate of the channel.
@@ -218,9 +221,9 @@ class VoiceChannel extends Channel {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

@@ -72,6 +72,12 @@ class GuildScheduledEventManager extends BaseCacheManager {
      */
     __classPrivateFieldSet(this, _GuildScheduledEventManager_guild, guild, "f");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Retrieves all scheduled events for this guild.
    * @returns {Promise<Array<ScheduledEvent>>}
@@ -121,7 +127,7 @@ class GuildScheduledEventManager extends BaseCacheManager {
   async fetch(scheduledEventId) {
     if (typeof scheduledEventId !== "string")
       throw new TypeError("GLUON: Scheduled event ID must be a string.");
-    const cachedEvent = await this.get(scheduledEventId);
+    const cachedEvent = this.get(scheduledEventId);
     if (cachedEvent) return cachedEvent;
     const data = await __classPrivateFieldGet(
       this,
@@ -131,6 +137,9 @@ class GuildScheduledEventManager extends BaseCacheManager {
       __classPrivateFieldGet(this, _GuildScheduledEventManager_guild, "f").id,
       scheduledEventId,
     ]);
+    if (!data) {
+      return null;
+    }
     return new ScheduledEvent(
       __classPrivateFieldGet(this, _GuildScheduledEventManager__client, "f"),
       data,
@@ -157,6 +166,9 @@ class GuildScheduledEventManager extends BaseCacheManager {
     if (!(event instanceof ScheduledEvent))
       throw new TypeError("GLUON: Event must be a ScheduledEvent instance.");
     return super.set(id, event);
+  }
+  get(id) {
+    return super.get(id);
   }
 }
 (_GuildScheduledEventManager__client = new WeakMap()),

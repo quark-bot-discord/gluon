@@ -1,7 +1,12 @@
-import CategoryChannel from "../../structures/CategoryChannel.js";
-import TextChannel from "../../structures/TextChannel.js";
-import Thread from "../../structures/Thread.js";
-import VoiceChannel from "../../structures/VoiceChannel.js";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  APIGuildCategoryChannel,
+  APIGuildStageVoiceChannel,
+  APIGuildVoiceChannel,
+  APIThreadChannel,
+} from "discord-api-types/v10";
+import { AllChannels } from "typings/index.js";
 /**
  * Automatically determines the channel type and caches the channel appropriately.
  * @param {Client} client The client instance.
@@ -11,9 +16,13 @@ import VoiceChannel from "../../structures/VoiceChannel.js";
  * @returns {VoiceChannel | Thread | TextChannel}
  */
 declare function cacheChannel(
-  client: any,
-  data: any,
-  guildId: any,
+  client: ClientType,
+  data:
+    | APIGuildVoiceChannel
+    | APIGuildStageVoiceChannel
+    | APIThreadChannel
+    | APIGuildCategoryChannel,
+  guildId: Snowflake,
   nocache?: boolean,
-): CategoryChannel | TextChannel | Thread | VoiceChannel;
+): AllChannels;
 export default cacheChannel;

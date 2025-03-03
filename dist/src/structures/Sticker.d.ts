@@ -1,15 +1,31 @@
+import ClientType from "src/interfaces/Client.js";
 import util from "util";
+import { APISticker, StickerFormatType } from "discord-api-types/v10";
+import {
+  Sticker as StickerType,
+  StickerCacheJSON,
+  StickerDiscordJSON,
+  StickerStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
 /**
  * Represents an sticker.
  */
-declare class Sticker {
+declare class Sticker implements StickerType {
   #private;
   /**
    * Creates the structure for a sticker
    * @param {Client} client The client instance.
    * @param {Object} data Sticker data from Discord.
    */
-  constructor(client: any, data: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APISticker
+      | StickerCacheJSON
+      | StickerDiscordJSON
+      | StickerStorageJSON,
+  );
   /**
    * The ID of the sticker.
    * @type {String}
@@ -23,21 +39,14 @@ declare class Sticker {
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string;
   /**
    * The format of the sticker.
    * @type {String}
    * @readonly
    * @public
    */
-  get format(): string | null;
-  /**
-   * The format type of the sticker.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get formatType(): any;
+  get format(): StickerFormatType;
   /**
    * The URL to an image of the sticker. Returns NULL if image is a LOTTIE file.
    * @type {String?}
@@ -62,10 +71,10 @@ declare class Sticker {
    * @public
    * @method
    */
-  toJSON(format: any): {
+  toJSON(format: JsonTypes): {
     id: string;
-    name: any;
-    format_type: any;
+    name: string;
+    format_type: StickerFormatType;
   };
 }
 export default Sticker;

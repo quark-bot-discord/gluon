@@ -1,8 +1,20 @@
+import ClientType from "src/interfaces/Client.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  JsonTypes,
+  VoiceStateCacheJSON,
+  VoiceStateDiscordJSON,
+  VoiceStateStorageJSON,
+  VoiceState as VoiceStateType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIVoiceState } from "discord-api-types/v10";
 /**
  * Represents a voice state.
  */
-declare class VoiceState {
+declare class VoiceState implements VoiceStateType {
   #private;
   /**
    * Creates the structure for a voice state.
@@ -12,7 +24,21 @@ declare class VoiceState {
    * @param {String} options.guildId The id of the guild that the voice state belongs to.
    * @param {Boolean?} [options.nocache] Whether this voice state should be cached.
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIVoiceState
+      | VoiceStateCacheJSON
+      | VoiceStateDiscordJSON
+      | VoiceStateStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * Is server deafened?
    * @readonly
@@ -117,7 +143,7 @@ declare class VoiceState {
    * @readonly
    * @public
    */
-  get requestToSpeakTimestamp(): number | undefined;
+  get requestToSpeakTimestamp(): number | null;
   /**
    * Determines whether the voice state should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -127,7 +153,10 @@ declare class VoiceState {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public
@@ -145,15 +174,15 @@ declare class VoiceState {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
         guild_id: string;
         channel_id: string;
-        _attributes: any;
+        _attributes: number;
         member: any;
         user_id: string;
         joined: any;
-        request_to_speak_timestamp: number;
+        request_to_speak_timestamp: number | null;
         deaf?: undefined;
         mute?: undefined;
         self_deaf?: undefined;
@@ -175,7 +204,7 @@ declare class VoiceState {
         member: any;
         user_id: string;
         joined: any;
-        request_to_speak_timestamp: number;
+        request_to_speak_timestamp: number | null;
         _attributes?: undefined;
       };
 }

@@ -1,4 +1,6 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { Locale } from "discord-api-types/v10";
+import { LIMITS } from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}
@@ -8,7 +10,8 @@ class CommandChoice {
    * Creates a choice for a command.
    */
   constructor() {
-    this.defaultLocale = "en-US";
+    this.name_localizations = {};
+    this.defaultLocale = Locale.EnglishUS;
   }
   /**
    * Sets the name of the choice.
@@ -30,7 +33,9 @@ class CommandChoice {
           `GLUON: Command choice name must be less than ${LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME} characters.`,
         );
       this.name = name[this.defaultLocale];
-      delete name[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...rest } = name;
+      this.name_localizations = rest;
       this.name_localizations = name;
     } else {
       if (name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
@@ -124,14 +129,14 @@ class CommandChoice {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
-          name: this.name,
+          name: this.name, // only valid due to validation above
           name_localizations: this.name_localizations,
-          value: this.value,
+          value: this.value, // only valid due to validation above
         };
       }
     }

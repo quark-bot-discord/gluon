@@ -84,6 +84,12 @@ class GuildMemberManager extends BaseCacheManager {
   get guild() {
     return __classPrivateFieldGet(this, _GuildMemberManager_guild, "f");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.
@@ -132,6 +138,9 @@ class GuildMemberManager extends BaseCacheManager {
     if (!(member instanceof Member))
       throw new TypeError("GLUON: Member must be a Member instance.");
     return super.set(id, member);
+  }
+  get(id) {
+    return super.get(id);
   }
   /**
    * Returns the cache manager.

@@ -1,24 +1,36 @@
-import Member from "../structures/Member.js";
+import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import {
+  GuildMemberManager as GuildMemberManagerType,
+  Guild as GuildType,
+  Member as MemberType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all members belonging to this guild.
  */
-declare class GuildMemberManager extends BaseCacheManager {
+declare class GuildMemberManager
+  extends BaseCacheManager
+  implements GuildMemberManagerType
+{
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a member manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this member manager belongs to.
    */
-  constructor(client: any, guild: any);
+  constructor(client: ClientType, guild: GuildType);
   /**
    * The guild that this member manager belongs to.
    * @type {Guild}
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): GuildType;
+  fetchFromRules(key: string): Promise<MemberType | null>;
+  fetchWithRules(key: string): Promise<MemberType | null>;
   /**
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.
@@ -28,7 +40,7 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(user_id: any): Promise<any>;
+  fetch(user_id: Snowflake): Promise<any>;
   /**
    * Searches for members via a search query.
    * @param {String} query The search query.
@@ -38,7 +50,7 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  search(query: any): Promise<Member[]>;
+  search(query: string): Promise<MemberType[]>;
   /**
    * Adds a member to the cache.
    * @param {String} id The ID of the member
@@ -49,14 +61,15 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, member: any): Map<any, any>;
+  set(id: Snowflake, member: MemberType): void;
+  get(id: Snowflake): MemberType | null;
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.
    * @param {String} guildId The ID of the guild.
    * @returns {GuildMemberManager}
    */
-  static getCacheManager(client: any, guildId: any): any;
+  static getCacheManager(client: ClientType, guildId: Snowflake): any;
   /**
    * Fetches a member, checking the cache first.
    * @param {Client} client The client instance.
@@ -69,7 +82,11 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static fetchMember(client: any, guildId: any, userId: any): Promise<any>;
+  static fetchMember(
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+  ): Promise<any>;
   /**
    * Gets a member from the cache.
    * @param {Client} client The client instance.
@@ -81,7 +98,11 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @static
    * @throws {TypeError}
    */
-  static getMember(client: any, guildId: any, userId: any): any;
+  static getMember(
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+  ): any;
   /**
    * Searches for members via a search query.
    * @param {Client} client The client instance.
@@ -94,6 +115,10 @@ declare class GuildMemberManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static search(client: any, guildId: any, query: any): Promise<Member[]>;
+  static search(
+    client: ClientType,
+    guildId: Snowflake,
+    query: string,
+  ): Promise<MemberType[]>;
 }
 export default GuildMemberManager;

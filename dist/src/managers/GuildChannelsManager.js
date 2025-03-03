@@ -43,11 +43,6 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildChannelsManager__client, _GuildChannelsManager_guild;
-import CategoryChannel from "../structures/CategoryChannel.js";
-import Channel from "../structures/Channel.js";
-import TextChannel from "../structures/TextChannel.js";
-import Thread from "../structures/Thread.js";
-import VoiceChannel from "../structures/VoiceChannel.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import GuildManager from "./GuildManager.js";
@@ -82,6 +77,23 @@ class GuildChannelsManager extends BaseCacheManager {
     __classPrivateFieldSet(this, _GuildChannelsManager_guild, guild, "f");
   }
   /**
+   * Gets a channel from the cache.
+   * @param {String} id The ID of the channel to get.
+   * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | Channel | null}
+   * @public
+   * @method
+   * @override
+   */
+  get(id) {
+    return super.get(id);
+  }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
+  /**
    * Fetches a particular channel belonging to this guild.
    * @param {String} channel_id The id of the channel to fetch.
    * @returns {Promise<VoiceChannel | Thread | TextChannel>} The fetched channel.
@@ -93,13 +105,14 @@ class GuildChannelsManager extends BaseCacheManager {
   async fetch(channel_id) {
     if (typeof channel_id !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
-    const cachedChannel = (await this.get(channel_id)) || null;
+    const cachedChannel = this.get(channel_id);
     if (cachedChannel) return cachedChannel;
     const data = await __classPrivateFieldGet(
       this,
       _GuildChannelsManager__client,
       "f",
     ).request.makeRequest("getChannel", [channel_id]);
+    if (!data) return null;
     return cacheChannel(
       __classPrivateFieldGet(this, _GuildChannelsManager__client, "f"),
       data,
@@ -116,20 +129,8 @@ class GuildChannelsManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id, channel) {
-    if (
-      !(
-        channel instanceof VoiceChannel ||
-        channel instanceof TextChannel ||
-        channel instanceof Thread ||
-        channel instanceof CategoryChannel ||
-        channel instanceof Channel
-      )
-    )
-      throw new TypeError(
-        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel, Channel or Thread instance.",
-      );
-    return super.set(id, channel);
+  set(id, channel, expiry) {
+    return super.set(id, channel, expiry);
   }
   /**
    * Returns the channel for a guild.

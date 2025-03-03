@@ -59,9 +59,9 @@ var _AuditLog__client,
   _AuditLog_special_type,
   _AuditLog_status,
   _AuditLog_changes;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import User from "./User.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
@@ -75,7 +75,7 @@ class AuditLog {
    * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
-  constructor(client, data, { users, guildId } = {}) {
+  constructor(client, data, { users, guildId }) {
     _AuditLog__client.set(this, void 0);
     _AuditLog__id.set(this, void 0);
     _AuditLog__guild_id.set(this, void 0);
@@ -124,16 +124,10 @@ class AuditLog {
     __classPrivateFieldSet(this, _AuditLog__guild_id, BigInt(guildId), "f");
     /**
      * The type of action that occurred.
-     * @type {Number?}
+     * @type {Number}
      * @private
      */
-    if (data.action_type)
-      __classPrivateFieldSet(
-        this,
-        _AuditLog_action_type,
-        data.action_type,
-        "f",
-      );
+    __classPrivateFieldSet(this, _AuditLog_action_type, data.action_type, "f");
     /**
      * The id of the target user.
      * @type {BigInt?}
@@ -151,7 +145,9 @@ class AuditLog {
       __classPrivateFieldGet(this, _AuditLog__target_id, "f")
     ) {
       const user = users.find(
-        (u) => u.id == __classPrivateFieldGet(this, _AuditLog__target_id, "f"),
+        (u) =>
+          u.id ===
+          String(__classPrivateFieldGet(this, _AuditLog__target_id, "f")),
       );
       if (user)
         /**
@@ -184,7 +180,8 @@ class AuditLog {
     ) {
       const user = users.find(
         (u) =>
-          u.id == __classPrivateFieldGet(this, _AuditLog__executor_id, "f"),
+          u.id ===
+          String(__classPrivateFieldGet(this, _AuditLog__executor_id, "f")),
       );
       if (user)
         /**
@@ -219,7 +216,7 @@ class AuditLog {
           "f",
         );
       }
-      if (data.options.count)
+      if (data.options.count) {
         /**
          * The count of this type of audit log entry.
          * @type {Number?}
@@ -228,10 +225,13 @@ class AuditLog {
         __classPrivateFieldSet(
           this,
           _AuditLog_count,
-          parseInt(data.options.count),
+          typeof data.options.count === "number"
+            ? data.options.count
+            : parseInt(data.options.count),
           "f",
         );
-      if (data.options.delete_member_days)
+      }
+      if (data.options.delete_member_days) {
         /**
          * The inactivity period for when members are purged.
          * @type {Number?}
@@ -240,10 +240,13 @@ class AuditLog {
         __classPrivateFieldSet(
           this,
           _AuditLog_delete_member_days,
-          parseInt(data.options.delete_member_days),
+          typeof data.options.delete_member_days === "number"
+            ? data.options.delete_member_days
+            : parseInt(data.options.delete_member_days),
           "f",
         );
-      if (data.options.members_removed)
+      }
+      if (data.options.members_removed) {
         /**
          * The number of members removed for when members are purged.
          * @type {Number?}
@@ -252,9 +255,12 @@ class AuditLog {
         __classPrivateFieldSet(
           this,
           _AuditLog_members_removed,
-          parseInt(data.options.members_removed),
+          typeof data.options.members_removed === "number"
+            ? data.options.members_removed
+            : parseInt(data.options.members_removed),
           "f",
         );
+      }
       if (data.options.id)
         /**
          * The id of the overwritten entity.
@@ -267,7 +273,7 @@ class AuditLog {
           BigInt(data.options.id),
           "f",
         );
-      if (data.options.type)
+      if (data.options.type) {
         /**
          * The type of the overwritten entity - role ("0") or member ("1")
          * @type {Number?}
@@ -276,10 +282,13 @@ class AuditLog {
         __classPrivateFieldSet(
           this,
           _AuditLog_special_type,
-          parseInt(data.options.type),
+          typeof data.options.type === "number"
+            ? data.options.type
+            : parseInt(data.options.type),
           "f",
         );
-      if (data.options.status)
+      }
+      if ("status" in data.options && data.options.status) {
         /**
          * The new voice channel status.
          * @type {String?}
@@ -291,6 +300,7 @@ class AuditLog {
           data.options.status,
           "f",
         );
+      }
     }
     if (data.changes)
       /**
@@ -378,7 +388,7 @@ class AuditLog {
    * @public
    */
   get target() {
-    return __classPrivateFieldGet(this, _AuditLog_target, "f");
+    return __classPrivateFieldGet(this, _AuditLog_target, "f") ?? null;
   }
   /**
    * The executor user involved with this audit log entry.
@@ -398,7 +408,7 @@ class AuditLog {
    * @public
    */
   get executor() {
-    return __classPrivateFieldGet(this, _AuditLog_executor, "f");
+    return __classPrivateFieldGet(this, _AuditLog_executor, "f") ?? null;
   }
   /**
    * The reason for this audit log entry.
@@ -454,7 +464,7 @@ class AuditLog {
    * @public
    */
   get specialType() {
-    return __classPrivateFieldGet(this, _AuditLog_special_type, "f");
+    return String(__classPrivateFieldGet(this, _AuditLog_special_type, "f"));
   }
   /**
    * The new voice channel status.
@@ -514,16 +524,16 @@ class AuditLog {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
       default: {
         return {
           id: this.id,
           guild_id: this.guildId,
           action_type: this.actionType,
-          target_id: this.targetId ?? undefined,
-          user_id: this.executorId ?? undefined,
+          target_id: this.targetId,
+          user_id: this.executorId,
           reason: this.reason,
           options: {
             channel_id: this.channelId ?? undefined,

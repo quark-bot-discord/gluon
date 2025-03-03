@@ -67,12 +67,10 @@ var _Guild_instances,
   _Guild_scheduled_events,
   _Guild__formattedIconHash_get;
 import {
-  AUDIT_LOG_TYPES,
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
   NAME,
   PERMISSIONS,
-  TO_JSON_TYPES_ENUM,
 } from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildEmojisManager from "../managers/GuildEmojisManager.js";
@@ -91,10 +89,20 @@ import Role from "./Role.js";
 import Thread from "./Thread.js";
 import VoiceState from "./VoiceState.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
-import Channel from "./Channel.js";
+import Channel from "./GuildChannel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Message from "./Message.js";
+import {
+  GuildDefaultMessageNotifications,
+  GuildExplicitContentFilter,
+  GuildMFALevel,
+  GuildNSFWLevel,
+  GuildPremiumTier,
+  GuildVerificationLevel,
+  Locale,
+} from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -112,19 +120,19 @@ class Guild {
     _Guild_instances.add(this);
     _Guild__client.set(this, void 0);
     _Guild__id.set(this, void 0);
-    _Guild_unavailable.set(this, void 0);
-    _Guild_name.set(this, void 0);
-    _Guild_description.set(this, void 0);
-    _Guild__icon.set(this, void 0);
-    _Guild__owner_id.set(this, void 0);
-    _Guild_joined_at.set(this, void 0);
-    _Guild_member_count.set(this, void 0);
-    _Guild_system_channel_id.set(this, void 0);
-    _Guild_rules_channel_id.set(this, void 0);
-    _Guild_preferred_locale.set(this, void 0);
-    _Guild__attributes.set(this, void 0);
-    _Guild_premium_subscription_count.set(this, void 0);
-    _Guild__cacheOptions.set(this, void 0);
+    _Guild_unavailable.set(this, true);
+    _Guild_name.set(this, "Unknown");
+    _Guild_description.set(this, null);
+    _Guild__icon.set(this, null);
+    _Guild__owner_id.set(this, BigInt(0));
+    _Guild_joined_at.set(this, null);
+    _Guild_member_count.set(this, 0);
+    _Guild_system_channel_id.set(this, null);
+    _Guild_rules_channel_id.set(this, null);
+    _Guild_preferred_locale.set(this, Locale.EnglishUS);
+    _Guild__attributes.set(this, 0);
+    _Guild_premium_subscription_count.set(this, 0);
+    _Guild__cacheOptions.set(this, new GuildCacheOptions(0));
     _Guild_members.set(this, void 0);
     _Guild_channels.set(this, void 0);
     _Guild_voice_states.set(this, void 0);
@@ -182,69 +190,64 @@ class Guild {
      * @private
      */
     __classPrivateFieldSet(this, _Guild_name, data.name, "f");
-    if (
-      __classPrivateFieldGet(this, _Guild_name, "f") === undefined &&
-      existing &&
-      existing.name
-    )
-      __classPrivateFieldSet(this, _Guild_name, existing.name, "f");
-    else if (!__classPrivateFieldGet(this, _Guild_name, "f"))
-      __classPrivateFieldSet(this, _Guild_name, null, "f");
     /**
      * The description of the guild.
      * @type {String?}
      * @private
      */
-    if ("description" in data) {
-      __classPrivateFieldSet(this, _Guild_description, data.description, "f");
-    }
-    if (
-      __classPrivateFieldGet(this, _Guild_description, "f") === undefined &&
-      existing &&
-      existing.description
-    )
-      __classPrivateFieldSet(
-        this,
-        _Guild_description,
-        existing.description,
-        "f",
-      );
-    else if (!__classPrivateFieldGet(this, _Guild_description, "f"))
-      __classPrivateFieldSet(this, _Guild_description, null, "f");
+    __classPrivateFieldSet(
+      this,
+      _Guild_description,
+      "description" in data
+        ? data.description
+        : (existing?.description ?? null),
+      "f",
+    );
     /**
      * The guild icon hash.
      * @type {BigInt?}
      * @private
      */
-    if (data.icon !== undefined)
+    if (data.icon !== undefined) {
       __classPrivateFieldSet(
         this,
         _Guild__icon,
         data.icon ? BigInt(`0x${data.icon.replace("a_", "")}`) : null,
         "f",
       );
-    else if (data.icon === undefined && existing && existing._icon)
-      __classPrivateFieldSet(this, _Guild__icon, existing._icon, "f");
+    } else if (
+      data.icon === undefined &&
+      existing &&
+      existing._originalIconHash
+    ) {
+      __classPrivateFieldSet(
+        this,
+        _Guild__icon,
+        existing._originalIconHash
+          ? BigInt(`0x${existing._originalIconHash.replace("a_", "")}`)
+          : null,
+        "f",
+      );
+    }
     /**
      * The id of the guild owner.
      * @type {BigInt}
      * @private
      */
     __classPrivateFieldSet(this, _Guild__owner_id, BigInt(data.owner_id), "f");
-    if ("joined_at" in data && data.joined_at)
-      /**
-       * UNIX (seconds) timestamp for when the bot user was added to this guild.
-       * @type {Number?}
-       * @private
-       */
-      __classPrivateFieldSet(
-        this,
-        _Guild_joined_at,
-        (new Date(data.joined_at).getTime() / 1000) | 0,
-        "f",
-      );
-    else if (existing?.joinedAt)
-      __classPrivateFieldSet(this, _Guild_joined_at, existing.joinedAt, "f");
+    /**
+     * UNIX (seconds) timestamp for when the bot user was added to this guild.
+     * @type {Number?}
+     * @private
+     */
+    __classPrivateFieldSet(
+      this,
+      _Guild_joined_at,
+      "joined_at" in data && data.joined_at
+        ? (new Date(data.joined_at).getTime() / 1000) | 0
+        : (existing?.joinedAt ?? null),
+      "f",
+    );
     if ("member_count" in data)
       /**
        * The member count of this guild.
@@ -256,7 +259,7 @@ class Guild {
       __classPrivateFieldSet(
         this,
         _Guild_member_count,
-        existing.member_count,
+        existing.memberCount,
         "f",
       );
     else __classPrivateFieldSet(this, _Guild_member_count, 2, "f");
@@ -747,19 +750,6 @@ class Guild {
       data.preferred_locale,
       "f",
     );
-    if (
-      !__classPrivateFieldGet(this, _Guild_preferred_locale, "f") &&
-      existing &&
-      existing.preferredLocale
-    )
-      __classPrivateFieldSet(
-        this,
-        _Guild_preferred_locale,
-        existing.preferredLocale,
-        "f",
-      );
-    else if (!__classPrivateFieldGet(this, _Guild_preferred_locale, "f"))
-      __classPrivateFieldSet(this, _Guild_preferred_locale, null, "f");
     /**
      * The cache options for this guild.
      * @type {GuildCacheOptions}
@@ -804,16 +794,20 @@ class Guild {
         this._cacheOptions,
       ) === true
     )
-      for (let i = 0; i < data.members.length; i++)
-        new Member(
-          __classPrivateFieldGet(this, _Guild__client, "f"),
-          data.members[i],
-          {
-            userId: data.members[i].user.id,
-            guildId: data.id,
-            nocache,
-          },
-        );
+      for (let i = 0; i < data.members.length; i++) {
+        const member = data.members[i];
+        if (member && member.user && typeof member.user.id === "string") {
+          new Member(
+            __classPrivateFieldGet(this, _Guild__client, "f"),
+            member,
+            {
+              userId: member.user.id,
+              guildId: data.id,
+              nocache,
+            },
+          );
+        }
+      }
     if (
       "channels" in data &&
       Channel.shouldCache(
@@ -953,47 +947,6 @@ class Guild {
    * @public
    */
   get systemChannelFlags() {
-    const flags = [];
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 0)) ==
-      0b1 << 0
-    )
-      flags.push("SUPPRESS_JOIN_NOTIFICATIONS");
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 1)) ==
-      0b1 << 1
-    )
-      flags.push("SUPPRESS_PREMIUM_SUBSCRIPTIONS");
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 2)) ==
-      0b1 << 2
-    )
-      flags.push("SUPPRESS_GUILD_REMINDER_NOTIFICATIONS");
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 3)) ==
-      0b1 << 3
-    )
-      flags.push("SUPPRESS_JOIN_NOTIFICATION_REPLIES");
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 4)) ==
-      0b1 << 4
-    )
-      flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATIONS");
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 5)) ==
-      0b1 << 5
-    )
-      flags.push("SUPPRESS_ROLE_SUBSCRIPTION_PURCHASE_NOTIFICATION_REPLIES");
-    return flags;
-  }
-  /**
-   * Raw system channel flags.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawSystemChannelFlags() {
     let rawFlags = 0;
     if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 0)) ==
@@ -1039,33 +992,13 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 6)) ==
       0b1 << 6
     )
-      return "NONE";
+      return GuildMFALevel.None;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 7)) ==
       0b1 << 7
     )
-      return "ELEVATED";
-    else return null;
-  }
-  /**
-   * Server MFA level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawMfaLevel() {
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 6)) ==
-      0b1 << 6
-    )
-      return 0;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 7)) ==
-      0b1 << 7
-    )
-      return 1;
-    else return null;
+      return GuildMFALevel.Elevated;
+    throw new Error("GLUON: Unknown MFA level");
   }
   /**
    * Server verification level.
@@ -1079,63 +1012,28 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 8)) ==
       0b1 << 8
     )
-      return "NONE";
+      return GuildVerificationLevel.None;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 9)) ==
       0b1 << 9
     )
-      return "LOW";
+      return GuildVerificationLevel.Low;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 10)) ==
       0b1 << 10
     )
-      return "MEDIUM";
+      return GuildVerificationLevel.Medium;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 11)) ==
       0b1 << 11
     )
-      return "HIGH";
+      return GuildVerificationLevel.High;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 12)) ==
       0b1 << 12
     )
-      return "VERY_HIGH";
-    else return null;
-  }
-  /**
-   * Server verification level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawVerificationLevel() {
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 8)) ==
-      0b1 << 8
-    )
-      return 0;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 9)) ==
-      0b1 << 9
-    )
-      return 1;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 10)) ==
-      0b1 << 10
-    )
-      return 2;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 11)) ==
-      0b1 << 11
-    )
-      return 3;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 12)) ==
-      0b1 << 12
-    )
-      return 4;
-    else return null;
+      return GuildVerificationLevel.VeryHigh;
+    throw new Error("GLUON: Unknown verification level");
   }
   /**
    * Default notification setting.
@@ -1149,33 +1047,13 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 13)) ==
       0b1 << 13
     )
-      return "ALL_MESSAGES";
+      return GuildDefaultMessageNotifications.AllMessages;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 14)) ==
       0b1 << 14
     )
-      return "ONLY_MENTIONS";
-    else return null;
-  }
-  /**
-   * Default notification setting.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawDefaultMessageNotifications() {
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 13)) ==
-      0b1 << 13
-    )
-      return 0;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 14)) ==
-      0b1 << 14
-    )
-      return 1;
-    else return null;
+      return GuildDefaultMessageNotifications.OnlyMentions;
+    throw new Error("GLUON: Unknown default message notification level");
   }
   /**
    * Explicit content filter level.
@@ -1189,43 +1067,18 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 15)) ==
       0b1 << 15
     )
-      return "DISABLED";
+      return GuildExplicitContentFilter.Disabled;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 16)) ==
       0b1 << 16
     )
-      return "MEMBERS_WITHOUT_ROLES";
+      return GuildExplicitContentFilter.MembersWithoutRoles;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 17)) ==
       0b1 << 17
     )
-      return "ALL_MEMBERS";
-    else return null;
-  }
-  /**
-   * Explicit content filter level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawExplicitContentFilter() {
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 15)) ==
-      0b1 << 15
-    )
-      return 0;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 16)) ==
-      0b1 << 16
-    )
-      return 1;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 17)) ==
-      0b1 << 17
-    )
-      return 2;
-    else return null;
+      return GuildExplicitContentFilter.AllMembers;
+    throw new Error("GLUON: Unknown explicit content filter level");
   }
   /**
    * Server NSFW level.
@@ -1239,53 +1092,23 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 18)) ==
       0b1 << 18
     )
-      return "DEFAULT";
+      return GuildNSFWLevel.Default;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 19)) ==
       0b1 << 19
     )
-      return "EXPLICIT";
+      return GuildNSFWLevel.Explicit;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 20)) ==
       0b1 << 20
     )
-      return "SAFE";
+      return GuildNSFWLevel.Safe;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 21)) ==
       0b1 << 21
     )
-      return "AGE_RESTRICTED";
-    else return null;
-  }
-  /**
-   * Server NSFW level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawNsfwLevel() {
-    if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 18)) ==
-      0b1 << 18
-    )
-      return 0;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 19)) ==
-      0b1 << 19
-    )
-      return 1;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 20)) ==
-      0b1 << 20
-    )
-      return 2;
-    else if (
-      (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 21)) ==
-      0b1 << 21
-    )
-      return 3;
-    else return null;
+      return GuildNSFWLevel.AgeRestricted;
+    throw new Error("GLUON: Unknown NSFW level");
   }
   /**
    * Server boost level.
@@ -1298,23 +1121,23 @@ class Guild {
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 22)) ==
       0b1 << 22
     )
-      return 0;
+      return GuildPremiumTier.None;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 23)) ==
       0b1 << 23
     )
-      return 1;
+      return GuildPremiumTier.Tier1;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 24)) ==
       0b1 << 24
     )
-      return 2;
+      return GuildPremiumTier.Tier2;
     else if (
       (__classPrivateFieldGet(this, _Guild__attributes, "f") & (0b1 << 25)) ==
       0b1 << 25
     )
-      return 3;
-    else return null;
+      return GuildPremiumTier.Tier3;
+    throw new Error("GLUON: Unknown premium tier");
   }
   /**
    * Whether the guild has the boost progress bar enabled.
@@ -1371,7 +1194,7 @@ class Guild {
    * @public
    */
   get joinedAt() {
-    return __classPrivateFieldGet(this, _Guild_joined_at, "f");
+    return __classPrivateFieldGet(this, _Guild_joined_at, "f") ?? undefined;
   }
   /**
    * The member count of the guild.
@@ -1444,7 +1267,6 @@ class Guild {
   }
   /**
    * The cache options for this guild.
-   * @type {GuildCacheOptions}
    * @readonly
    * @public
    */
@@ -1555,9 +1377,11 @@ class Guild {
       __classPrivateFieldGet(this, _Guild__client, "f").user.id,
     );
     if (cached) return cached;
-    return this.members.fetch(
+    const fetched = await this.members.fetch(
       __classPrivateFieldGet(this, _Guild__client, "f").user.id,
     );
+    if (!fetched) throw new Error("GLUON: ME NOT FOUND");
+    return fetched;
   }
   /**
    * Bans a user with the given id from the guild.
@@ -1734,7 +1558,7 @@ class Guild {
     // @ts-expect-error TS(2339): Property 'limit' does not exist on type '{}'.
     else body.limit = 1;
     // @ts-expect-error TS(2339): Property 'action_type' does not exist on type '{}'... Remove this comment to see the full error message
-    if (type) body.action_type = AUDIT_LOG_TYPES[type];
+    if (type) body.action_type = type;
     // @ts-expect-error TS(2339): Property 'user_id' does not exist on type '{}'.
     if (user_id) body.user_id = user_id;
     // @ts-expect-error TS(2339): Property 'before' does not exist on type '{}'.
@@ -1748,12 +1572,9 @@ class Guild {
     ).request.makeRequest("getGuildAuditLog", [this.id], body);
     if (
       type &&
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      AUDIT_LOG_TYPES[type] &&
       data &&
       data.audit_log_entries[0] &&
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-      data.audit_log_entries[0].action_type != AUDIT_LOG_TYPES[type]
+      data.audit_log_entries[0].action_type != type
     )
       return null;
     if (!data || data.audit_log_entries.length == 0) return null;
@@ -1931,7 +1752,7 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static modifyWebhook(client, webhookId, { channelId } = {}) {
+  static modifyWebhook(client, webhookId, { channelId }) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
@@ -1997,7 +1818,7 @@ class Guild {
     // @ts-expect-error TS(2339): Property 'embeds' does not exist on type '{}'.
     if (embeds) body.embeds = embeds;
     // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
-    if (components) body.components;
+    if (components) body.components = components;
     // @ts-expect-error TS(2339): Property 'files' does not exist on type '{}'.
     if (files) body.files = files;
     await client.request.makeRequest("postExecuteWebhook", [id, token], body);
@@ -2036,9 +1857,11 @@ class Guild {
     )._intervalCallback();
     __classPrivateFieldGet(this, _Guild_emojis, "f")._intervalCallback();
     __classPrivateFieldGet(this, _Guild_invites, "f")._intervalCallback();
-    __classPrivateFieldGet(this, _Guild_channels, "f").forEach((c) =>
-      c.messages?._intervalCallback(),
-    );
+    __classPrivateFieldGet(this, _Guild_channels, "f").forEach((c) => {
+      if ("messages" in c) {
+        c.messages._intervalCallback();
+      }
+    });
   }
   /**
    * Determines whether the emoji should be cached.
@@ -2112,19 +1935,19 @@ class Guild {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
           icon: this._originalIconHash,
           owner_id: this.ownerId,
-          joined_at: this.joinedAt * 1000,
+          joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
           unavailable: this.unavailable,
           member_count: this.memberCount,
           premium_tier: this.premiumTier,
           preferred_locale: this.preferredLocale,
-          _cache_options: this._cacheOptions,
+          _cache_options: this._cacheOptions.toJSON(format),
           _attributes: __classPrivateFieldGet(this, _Guild__attributes, "f"),
           system_channel_id: this.systemChannelId ?? null,
           rules_channel_id: this.rulesChannelId ?? null,
@@ -2137,28 +1960,30 @@ class Guild {
           invites: this.invites.toJSON(format),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           name: this.name,
           icon: this._originalIconHash,
           owner_id: this.ownerId,
-          joined_at: new Date(this.joinedAt * 1000).toISOString(),
+          joined_at: this.joinedAt
+            ? new Date(this.joinedAt * 1000).toISOString()
+            : undefined,
           premium_tier: this.premiumTier,
           unavailable: this.unavailable,
           member_count: this.memberCount,
           preferred_locale: this.preferredLocale,
-          system_channel_flags: this.rawSystemChannelFlags,
+          system_channel_flags: this.systemChannelFlags,
           system_channel_id: this.systemChannelId ?? null,
           rules_channel_id: this.rulesChannelId ?? null,
           premium_subscription_count: this.premiumSubscriptionCount,
           premium_progress_bar_enabled: this.premiumProgressBarEnabled,
-          default_message_notifications: this.rawDefaultMessageNotifications,
-          explicit_content_filter: this.rawExplicitContentFilter,
-          verification_level: this.rawVerificationLevel,
-          nsfw_level: this.rawNsfwLevel,
-          mfa_level: this.rawMfaLevel,
+          default_message_notifications: this.defaultMessageNotifications,
+          explicit_content_filter: this.explicitContentFilter,
+          verification_level: this.verificationLevel,
+          nsfw_level: this.nsfwLevel,
+          mfa_level: this.mfaLevel,
           members: this.members.toJSON(format),
           channels: this.channels.toJSON(format),
           voice_states: this.voiceStates.toJSON(format),

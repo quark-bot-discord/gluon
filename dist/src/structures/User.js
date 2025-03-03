@@ -54,13 +54,10 @@ var _User_instances,
   _User_overrideAvatar,
   _User__formattedAvatarHash_get;
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a Discord user.
  * @see {@link https://discord.com/developers/docs/resources/user}
@@ -170,7 +167,7 @@ class User {
      * @type {Number}
      * @private
      */
-    if (data._cached)
+    if ("_cached" in data)
       __classPrivateFieldSet(this, _User__cached, data._cached, "f");
     else
       __classPrivateFieldSet(
@@ -436,7 +433,7 @@ class User {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT: {
         return {
           id: this.id,
           avatar: this._originalAvatarHash,
@@ -444,11 +441,20 @@ class User {
           bot: this.bot,
           username: this.username,
           global_name: this.globalName,
-          discriminator: this.discriminator,
+          discriminator: __classPrivateFieldGet(this, _User_discriminator, "f"),
         };
       }
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+        return {
+          id: this.id,
+          avatar: this._originalAvatarHash,
+          _cached: this._cached,
+          bot: this.bot,
+          username: this.username,
+          global_name: this.globalName,
+          discriminator: __classPrivateFieldGet(this, _User_discriminator, "f"),
+        };
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

@@ -43,10 +43,10 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _ButtonClick__client, _ButtonClick_custom_id, _ButtonClick_message;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
@@ -61,7 +61,7 @@ class ButtonClick extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client, data, { guildId, channelId } = {}) {
+  constructor(client, data, { guildId, channelId }) {
     super(client, data);
     _ButtonClick__client.set(this, void 0);
     _ButtonClick_custom_id.set(this, void 0);
@@ -156,16 +156,26 @@ class ButtonClick extends Interaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
+        return {
+          ...super.toJSON(format),
+          data: {
+            custom_id: this.customId,
+          },
+          message: this.message.toJSON(format),
+          member: this.member ? this.member.toJSON(format) : null,
+        };
+      }
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),
           data: {
             custom_id: this.customId,
           },
-          message: this.message,
+          message: this.message.toJSON(format),
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

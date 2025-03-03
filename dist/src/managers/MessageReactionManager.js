@@ -45,8 +45,8 @@ var __classPrivateFieldGet =
 var _MessageReactionManager__client,
   _MessageReactionManager_guild,
   _MessageReactionManager_cache;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Reaction from "../structures/Reaction.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Manages the reactions of a message.
  */
@@ -156,10 +156,15 @@ class MessageReactionManager {
       if (
         __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[emoji]
           .count == 0
-      )
-        delete __classPrivateFieldGet(this, _MessageReactionManager_cache, "f")[
-          emoji
-        ];
+      ) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [emoji]: _, ...rest } = __classPrivateFieldGet(
+          this,
+          _MessageReactionManager_cache,
+          "f",
+        );
+        __classPrivateFieldSet(this, _MessageReactionManager_cache, rest, "f");
+      }
     }
   }
   /**
@@ -171,8 +176,8 @@ class MessageReactionManager {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         const messageReactions = {};
         for (const [reaction, reactionData] of Object.entries(
           __classPrivateFieldGet(this, _MessageReactionManager_cache, "f"),
@@ -180,7 +185,7 @@ class MessageReactionManager {
           messageReactions[reaction] = reactionData.toJSON(format);
         return messageReactions;
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return Array.from(
           Object.values(

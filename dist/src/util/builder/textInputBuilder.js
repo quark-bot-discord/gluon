@@ -1,9 +1,6 @@
-import {
-  COMPONENT_TYPES,
-  LIMITS,
-  TEXT_INPUT_STYLES,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { ComponentType } from "discord-api-types/v10";
+import { LIMITS, TEXT_INPUT_STYLES } from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
 /**
  * Helps to construct a text input interaction.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-structure}
@@ -13,7 +10,7 @@ class TextInput {
    * Creates a text input.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.TEXT_INPUT;
+    this.type = ComponentType.TextInput;
   }
   /**
    * Sets the text on the input label.
@@ -120,9 +117,9 @@ class TextInput {
     if (suppressValidation !== true) {
       if (!this.type)
         throw new TypeError("GLUON: Text input type must be provided.");
-      if (this.type !== COMPONENT_TYPES.TEXT_INPUT)
+      if (this.type !== ComponentType.TextInput)
         throw new TypeError(
-          `GLUON: Text input type must be ${COMPONENT_TYPES.TEXT_INPUT}.`,
+          `GLUON: Text input type must be ${ComponentType.TextInput}.`,
         );
       if (!this.label)
         throw new TypeError("GLUON: Text input label must be provided.");
@@ -180,15 +177,15 @@ class TextInput {
         throw new TypeError("GLUON: Text input required must be a boolean.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           type: this.type,
-          label: this.label,
-          style: this.style,
-          custom_id: this.custom_id,
+          label: this.label, // valid due to validation above
+          style: this.style, // valid due to validation above
+          custom_id: this.custom_id, // valid due to validation above
           value: this.value,
           placeholder: this.placeholder,
           min_length: this.min_length,

@@ -65,6 +65,12 @@ class UserManager extends BaseCacheManager {
      */
     __classPrivateFieldSet(this, _UserManager__client, client, "f");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Fetches a particular user.
    * @param {String} userId The id of the user to fetch.
@@ -94,6 +100,9 @@ class UserManager extends BaseCacheManager {
     if (!(user instanceof User))
       throw new TypeError("GLUON: User must be an instance of User.");
     return super.set(id, user);
+  }
+  get(id) {
+    return super.get(id);
   }
   /**
    * Fetches a particular user.

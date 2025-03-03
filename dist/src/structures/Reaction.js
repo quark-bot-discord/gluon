@@ -48,9 +48,9 @@ var _Reaction__client,
   _Reaction__reacted,
   _Reaction_initial_reactor,
   _Reaction_count;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Emoji from "./Emoji.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a reaction belonging to a message.
  */
@@ -63,7 +63,7 @@ class Reaction {
    * @param {String} options.guildId The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
-  constructor(client, data, { guildId } = {}) {
+  constructor(client, data, { guildId }) {
     _Reaction__client.set(this, void 0);
     _Reaction__guild_id.set(this, void 0);
     _Reaction_emoji.set(this, void 0);
@@ -88,14 +88,14 @@ class Reaction {
      * @private
      */
     __classPrivateFieldSet(this, _Reaction__guild_id, BigInt(guildId), "f");
-    if (data.emoji.mention)
+    if ("emoji" in data && "mention" in data.emoji)
       /**
        * The emoji used for the reaction.
        * @type {Emoji}
        * @private
        */
       __classPrivateFieldSet(this, _Reaction_emoji, data.emoji, "f");
-    else
+    else if ("emoji" in data)
       __classPrivateFieldSet(
         this,
         _Reaction_emoji,
@@ -110,17 +110,19 @@ class Reaction {
     __classPrivateFieldSet(
       this,
       _Reaction__reacted,
-      data._reacted?.map((r) => BigInt(r)) || [],
+      "_reacted" in data && Array.isArray(data._reacted)
+        ? data._reacted.map((r) => BigInt(r))
+        : [],
       "f",
     );
-    if (!Array.isArray(data._reacted) && data.count)
+    if ("_reacted" in data && !Array.isArray(data._reacted) && "count" in data)
       __classPrivateFieldSet(this, _Reaction_count, data.count, "f");
     /**
      * The user who added the first reaction.
      * @type {BigInt?}
      * @private
      */
-    if (data.initial_reactor)
+    if ("initial_reactor" in data && data.initial_reactor)
       __classPrivateFieldSet(
         this,
         _Reaction_initial_reactor,
@@ -294,18 +296,18 @@ class Reaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
-          emoji: this.emoji.toJSON(format),
+          emoji: this.emoji?.toJSON(format),
           _reacted: this.reactedIds,
           initial_reactor: this.initialReactor ?? undefined,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
-          emoji: this.emoji.toJSON(format),
+          emoji: this.emoji?.toJSON(format),
           count: this.count,
         };
       }

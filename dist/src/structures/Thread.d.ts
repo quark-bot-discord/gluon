@@ -1,11 +1,23 @@
-import Channel from "./Channel.js";
+import ClientType from "src/interfaces/Client.js";
+import Channel from "./GuildChannel.js";
 import util from "util";
+import {
+  Thread as ThreadType,
+  ThreadCacheJSON,
+  ThreadDiscordJSON,
+  ThreadStorageJSON,
+  JsonTypes,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
+import { APIThreadChannel } from "discord-api-types/v10";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
  */
-declare class Thread extends Channel {
+declare class Thread extends Channel implements ThreadType {
   #private;
   /**
    * Creates the structure for a thread.
@@ -16,7 +28,21 @@ declare class Thread extends Channel {
    * @param {Boolean?} [options.nocache] Whether this thread should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIThreadChannel
+      | ThreadCacheJSON
+      | ThreadDiscordJSON
+      | ThreadStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The ID of the member who created this thread.
    * @type {String}
@@ -55,7 +81,10 @@ declare class Thread extends Channel {
    * @method
    * @override
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public
@@ -74,36 +103,46 @@ declare class Thread extends Channel {
    * @method
    * @override
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
         owner_id: string;
         parent_id: string;
-        id: string;
-        type: any;
-        name: any;
-        topic: any;
-        rate_limit_per_user: any;
-        position: any;
-        _attributes: any;
-        _cacheOptions: any;
-        messages: any;
-        permission_overwrites: any;
-        nsfw?: undefined;
+        id: Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
+        nsfw: boolean;
+        messages: import("../../typings/index.d.js").MessageCacheJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteCacheJSON[];
       }
     | {
         owner_id: string;
         parent_id: string;
-        id: string;
-        type: any;
-        name: any;
-        topic: any;
-        rate_limit_per_user: any;
-        position: any;
+        id: Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
         nsfw: boolean;
-        messages: any;
-        permission_overwrites: any;
-        _attributes?: undefined;
-        _cacheOptions?: undefined;
+        messages: import("../../typings/index.d.js").MessageDiscordJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteDiscordJSON[];
+      }
+    | {
+        owner_id: string;
+        parent_id: string;
+        id: Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
+        _attributes: number;
+        _cacheOptions: number;
+        messages: import("../../typings/index.d.js").MessageStorageJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteStorageJSON[];
       };
 }
 export default Thread;

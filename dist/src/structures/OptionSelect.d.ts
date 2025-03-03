@@ -1,12 +1,25 @@
+import ClientType from "src/interfaces/Client.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  APIMessageComponentGuildInteraction,
+  APIMessageComponentSelectMenuInteraction,
+} from "discord-api-types/v10";
+import {
+  OptionSelect as OptionSelectType,
+  OptionSelectCacheJSON,
+  OptionSelectDiscordJSON,
+  OptionSelectStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
 /**
  * Represents when an option is selected.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
  * @extends {Interaction}
  */
-declare class OptionSelect extends Interaction {
+declare class OptionSelect extends Interaction implements OptionSelectType {
   #private;
   /**
    * Creates an option selected interaction structure.
@@ -16,14 +29,25 @@ declare class OptionSelect extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client: any, data: any, { channelId, guildId }: any);
+  constructor(
+    client: ClientType,
+    data: APIMessageComponentSelectMenuInteraction &
+      APIMessageComponentGuildInteraction,
+    {
+      channelId,
+      guildId,
+    }: {
+      channelId: Snowflake;
+      guildId: Snowflake;
+    },
+  );
   /**
    * The custom id of the select menu.
    * @type {String}
    * @readonly
    * @public
    */
-  get customId(): any;
+  get customId(): string;
   /**
    * The message which the option belongs to.
    * @type {Message}
@@ -38,7 +62,7 @@ declare class OptionSelect extends Interaction {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}
    * @public
    */
-  get values(): any;
+  get values(): string[];
   /**
    * @method
    * @public
@@ -57,180 +81,8 @@ declare class OptionSelect extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any):
-    | {
-        custom_id: any;
-        message:
-          | {
-              id: string;
-              author: any;
-              member: any;
-              content: any;
-              _attributes: any;
-              attachments: any;
-              embeds: any;
-              edited_timestamp: number | null;
-              poll: any;
-              message_snapshots: any[] | undefined;
-              type: any;
-              referenced_message:
-                | {
-                    id: string | undefined;
-                  }
-                | undefined;
-              sticker_items: any;
-              messageReactions: any;
-              channel_id?: undefined;
-              pinned?: undefined;
-              reactions?: undefined;
-              mention_everyone?: undefined;
-              mention_roles?: undefined;
-              mentions?: undefined;
-            }
-          | {
-              id: string;
-              channel_id: string;
-              author: any;
-              member: any;
-              content: any;
-              pinned: boolean;
-              attachments: any;
-              embeds: any;
-              edited_timestamp: number | null;
-              poll: any;
-              message_snapshots: any[] | undefined;
-              type: any;
-              referenced_message:
-                | {
-                    id: string | undefined;
-                  }
-                | undefined;
-              sticker_items: any;
-              reactions: any;
-              mention_everyone: boolean;
-              mention_roles: string[];
-              mentions: string[];
-              _attributes?: undefined;
-              messageReactions?: undefined;
-            };
-        values: any;
-        id: string;
-        type: any;
-        guild_id: string;
-        channel_id: string;
-        member:
-          | {
-              user: any;
-              nick: any;
-              joined_at: number | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              _attributes: any;
-              pending?: undefined;
-            }
-          | {
-              user: any;
-              nick: any;
-              joined_at: string | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              pending: boolean;
-              _attributes?: undefined;
-            };
-      }
-    | {
-        data: {
-          custom_id: any;
-          values: any;
-        };
-        message:
-          | {
-              id: string;
-              author: any;
-              member: any;
-              content: any;
-              _attributes: any;
-              attachments: any;
-              embeds: any;
-              edited_timestamp: number | null;
-              poll: any;
-              message_snapshots: any[] | undefined;
-              type: any;
-              referenced_message:
-                | {
-                    id: string | undefined;
-                  }
-                | undefined;
-              sticker_items: any;
-              messageReactions: any;
-              channel_id?: undefined;
-              pinned?: undefined;
-              reactions?: undefined;
-              mention_everyone?: undefined;
-              mention_roles?: undefined;
-              mentions?: undefined;
-            }
-          | {
-              id: string;
-              channel_id: string;
-              author: any;
-              member: any;
-              content: any;
-              pinned: boolean;
-              attachments: any;
-              embeds: any;
-              edited_timestamp: number | null;
-              poll: any;
-              message_snapshots: any[] | undefined;
-              type: any;
-              referenced_message:
-                | {
-                    id: string | undefined;
-                  }
-                | undefined;
-              sticker_items: any;
-              reactions: any;
-              mention_everyone: boolean;
-              mention_roles: string[];
-              mentions: string[];
-              _attributes?: undefined;
-              messageReactions?: undefined;
-            };
-        id: string;
-        type: any;
-        guild_id: string;
-        channel_id: string;
-        member:
-          | {
-              user: any;
-              nick: any;
-              joined_at: number | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              _attributes: any;
-              pending?: undefined;
-            }
-          | {
-              user: any;
-              nick: any;
-              joined_at: string | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              pending: boolean;
-              _attributes?: undefined;
-            };
-      };
+  toJSON(
+    format?: JsonTypes,
+  ): OptionSelectCacheJSON | OptionSelectDiscordJSON | OptionSelectStorageJSON;
 }
 export default OptionSelect;

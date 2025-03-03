@@ -137,6 +137,15 @@ class GuildInviteManager extends BaseCacheManager {
       throw new TypeError("GLUON: Invite must be an instance of Invite.");
     return super.set(code, invite);
   }
+  get(code) {
+    return super.get(code);
+  }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
 }
 (_GuildInviteManager__client = new WeakMap()),
   (_GuildInviteManager_guild = new WeakMap());

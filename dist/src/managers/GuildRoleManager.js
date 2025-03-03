@@ -76,6 +76,12 @@ class GuildRoleManager extends BaseCacheManager {
      */
     __classPrivateFieldSet(this, _GuildRoleManager_guild, guild, "f");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Fetches a role that belongs to this guild.
    * @param {String} roleId The id of the role to fetch.
@@ -88,7 +94,7 @@ class GuildRoleManager extends BaseCacheManager {
   async fetch(roleId) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
-    const cachedRole = await this.get(roleId);
+    const cachedRole = this.get(roleId);
     if (cachedRole) return cachedRole;
     const data = await __classPrivateFieldGet(
       this,
@@ -109,7 +115,7 @@ class GuildRoleManager extends BaseCacheManager {
       );
       if (role.id == roleId) matchedRole = role;
     }
-    return matchedRole;
+    return matchedRole ?? null;
   }
   /**
    * Adds a role to the cache.
@@ -125,6 +131,9 @@ class GuildRoleManager extends BaseCacheManager {
     if (!(role instanceof Role))
       throw new TypeError("GLUON: Role must be an instance of Role.");
     return super.set(id, role);
+  }
+  get(id) {
+    return super.get(id);
   }
   /**
    * Returns a role from the cache.

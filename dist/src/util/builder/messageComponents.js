@@ -1,4 +1,5 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
+import { JsonTypes } from "typings/index.d.js";
 /**
  * Structure for message components.
  */
@@ -29,9 +30,9 @@ class MessageComponents {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return this.actionRows.map((a) => a.toJSON(format));
       }

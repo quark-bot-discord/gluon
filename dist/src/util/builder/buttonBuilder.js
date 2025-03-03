@@ -1,11 +1,8 @@
-import {
-  COMPONENT_TYPES,
-  BUTTON_STYLES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
+import { BUTTON_STYLES, LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 /**
  * Helps to construct a button for a message.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}
@@ -15,7 +12,9 @@ class Button {
    * Creates a button.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.BUTTON;
+    this.style = ButtonStyle.Primary;
+    this.type = ComponentType.Button;
+    this.type = ComponentType.Button;
   }
   /**
    * Sets the text on the button.
@@ -36,7 +35,7 @@ class Button {
    * @returns {Button}
    */
   setEmoji(emoji) {
-    this.emoji = resolveEmoji(emoji);
+    this.emoji = resolveEmoji(emoji) ?? undefined;
     if (!this.emoji)
       throw new TypeError("GLUON: Button emoji must be provided.");
     return this;
@@ -129,7 +128,7 @@ class Button {
         throw new TypeError(
           "GLUON: Button emoji must not be provided for link buttons.",
         );
-      if (this.type !== COMPONENT_TYPES.BUTTON)
+      if (this.type !== ComponentType.Button)
         throw new TypeError("GLUON: Button type must be set to 'BUTTON'.");
       if (this.emoji && typeof this.emoji !== "object")
         throw new TypeError("GLUON: Button emoji must be an object.");
@@ -150,9 +149,9 @@ class Button {
         throw new TypeError("GLUON: Button disabled must be a boolean.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           type: this.type,

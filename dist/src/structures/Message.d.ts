@@ -1,11 +1,31 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import User from "./User.js";
+import Attachment from "./Attachment.js";
+import Embed from "../util/builder/embedBuilder.js";
 import util from "util";
-import { MessageType } from "./interfaces/Message.js";
+import MessageComponents from "../util/builder/messageComponents.js";
 import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageStorageJSON,
+  Message as MessageTypeClass,
+  Attachment as AttachmentType,
+  JsonTypes,
+  Sticker as StickerType,
+  Poll as PollType,
+  MessageReactionManager as MessageReactionManagerType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  ChannelCacheOptions as ChannelCacheOptionsType,
+  Embed as EmbedType,
+  FileUpload,
+} from "../../typings/index.d.js";
+import { APIMessage, MessageType } from "discord-api-types/v10";
 /**
  * A message belonging to a channel within a guild.
  */
-declare class Message implements MessageType {
+declare class Message implements MessageTypeClass {
   #private;
   /**
    * Creates the structure for a message.
@@ -20,8 +40,22 @@ declare class Message implements MessageType {
    */
   constructor(
     client: ClientType,
-    data: any,
-    { channelId, guildId, nocache, ignoreExisting }?: any,
+    data:
+      | APIMessage
+      | MessageStorageJSON
+      | MessageCacheJSON
+      | MessageDiscordJSON,
+    {
+      channelId,
+      guildId,
+      nocache,
+      ignoreExisting,
+    }: {
+      channelId: Snowflake;
+      guildId: Snowflake;
+      nocache?: boolean;
+      ignoreExisting?: boolean;
+    },
   );
   /**
    * The timestamp for when this message was last edited.
@@ -29,21 +63,21 @@ declare class Message implements MessageType {
    * @readonly
    * @public
    */
-  get editedTimestamp(): any;
+  get editedTimestamp(): number | null;
   /**
    * The user who sent the message.
    * @type {User}
    * @readonly
    * @public
    */
-  get author(): any;
+  get author(): User;
   /**
    * The id of the user who sent the message.
    * @type {String}
    * @readonly
    * @public
    */
-  get authorId(): any;
+  get authorId(): string;
   /**
    * The member who sent the message.
    * @type {Member?}
@@ -134,7 +168,7 @@ declare class Message implements MessageType {
    * @readonly
    * @public
    */
-  get attachments(): any;
+  get attachments(): AttachmentType[];
   /**
    * The message content.
    * @type {String?}
@@ -148,21 +182,21 @@ declare class Message implements MessageType {
    * @readonly
    * @public
    */
-  get poll(): any;
+  get poll(): PollType | null;
   /**
    * The message reactions.
    * @type {MessageReactionManager}
    * @readonly
    * @public
    */
-  get reactions(): any;
+  get reactions(): MessageReactionManagerType;
   /**
    * The message embeds.
    * @type {Array<Embed>}
    * @readonly
    * @public
    */
-  get embeds(): any;
+  get embeds(): EmbedType[];
   /**
    * The message that this message references.
    * @type {Object}
@@ -179,21 +213,14 @@ declare class Message implements MessageType {
    * @public
    * @see {@link https://discord.com/developers/docs/resources/message#message-object-message-flags}
    */
-  get flags(): string[];
-  /**
-   * The raw flags of the message.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get flagsRaw(): any;
+  get flags(): number;
   /**
    * The type of message.
    * @type {Number}
    * @readonly
    * @public
    */
-  get type(): any;
+  get type(): MessageType;
   /**
    * The id of the webhook this message is from.
    * @type {String?}
@@ -207,7 +234,7 @@ declare class Message implements MessageType {
    * @readonly
    * @public
    */
-  get stickerItems(): any;
+  get stickerItems(): StickerType[];
   /**
    * The snapshot data about the message.
    * @type {Array<Message>?}
@@ -239,7 +266,11 @@ declare class Message implements MessageType {
    * @static
    * @method
    */
-  static getUrl(guildId: any, channelId: any, messageId: any): string;
+  static getUrl(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+  ): string;
   /**
    * Replies to the message.
    * @param {Object?} [options] Embeds, components and files to attach to the message.
@@ -260,7 +291,13 @@ declare class Message implements MessageType {
     components,
     files,
     suppressMentions,
-  }?: any): Promise<Message>;
+  }: {
+    content?: string;
+    embeds?: Embed[];
+    components?: MessageComponents;
+    files?: FileUpload[];
+    suppressMentions?: boolean;
+  }): Promise<Message>;
   /**
    * Edits the message, assuming it is sent by the client user.
    * @param {Object?} [options] Content, embeds and components to attach to the message.
@@ -281,20 +318,12 @@ declare class Message implements MessageType {
    * @async
    * @throws {Error | TypeError}
    */
-  edit(options?: {
-    components?: any;
-    files?: any[] | undefined;
+  edit(options: {
+    components?: MessageComponents | undefined;
+    files?: FileUpload[] | undefined;
     content?: string | undefined;
-    embeds?: any[] | undefined;
-    attachments?: any[] | undefined;
-    flags?: number | undefined;
-    reference?:
-      | {
-          messageId: string | null;
-          channelId: string;
-          guildId: string;
-        }
-      | undefined;
+    embeds?: Embed[] | undefined;
+    attachments?: Attachment[] | undefined;
   }): Promise<Message>;
   /**
    * Deletes the message.
@@ -305,7 +334,7 @@ declare class Message implements MessageType {
    * @public
    * @async
    */
-  delete({ reason }?: any): Promise<void>;
+  delete({ reason }?: { reason?: string }): Promise<void>;
   /**
    * Determines whether the message should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -317,9 +346,9 @@ declare class Message implements MessageType {
    * @method
    */
   static shouldCache(
-    gluonCacheOptions: any,
-    guildCacheOptions: any,
-    channelCacheOptions: any,
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+    channelCacheOptions: ChannelCacheOptionsType,
   ): boolean;
   /**
    * Posts a message to the specified channel.
@@ -340,9 +369,27 @@ declare class Message implements MessageType {
    */
   static send(
     client: ClientType,
-    channelId: any,
-    guildId: any,
-    { content, embeds, components, files, reference, suppressMentions }?: any,
+    channelId: Snowflake,
+    guildId: Snowflake,
+    {
+      content,
+      embeds,
+      components,
+      files,
+      reference,
+      suppressMentions,
+    }: {
+      content?: string;
+      embeds?: EmbedType[];
+      components?: MessageComponents;
+      files?: FileUpload[];
+      reference?: {
+        message_id: Snowflake;
+        channel_id: Snowflake;
+        guild_id: Snowflake;
+      };
+      suppressMentions?: boolean;
+    },
   ): Promise<Message>;
   /**
    * Edits a message.
@@ -360,10 +407,22 @@ declare class Message implements MessageType {
    */
   static edit(
     client: ClientType,
-    channelId: any,
-    messageId: any,
-    guildId: any,
-    { content, embeds, components, attachments, files }?: any,
+    channelId: Snowflake,
+    messageId: Snowflake,
+    guildId: Snowflake,
+    {
+      content,
+      embeds,
+      components,
+      attachments,
+      files,
+    }: {
+      content?: string;
+      embeds?: EmbedType[];
+      components?: MessageComponents;
+      attachments?: AttachmentType[];
+      files?: FileUpload[];
+    },
   ): Promise<Message>;
   /**
    * Returns the hash name for the message.
@@ -376,7 +435,11 @@ declare class Message implements MessageType {
    * @method
    * @throws {TypeError}
    */
-  static getHashName(guildId: any, channelId: any, messageId: any): string;
+  static getHashName(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+  ): string;
   /**
    * Decrypts a message.
    * @param {Client} client The client instance.
@@ -392,10 +455,10 @@ declare class Message implements MessageType {
    */
   static decrypt(
     client: ClientType,
-    data: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
+    data: string,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
   ): Message;
   /**
    * Validates the message content, embeds, components and files.
@@ -424,7 +487,19 @@ declare class Message implements MessageType {
     attachments,
     flags,
     reference,
-  }?: any): void;
+  }?: {
+    content?: string;
+    embeds?: EmbedType[];
+    components?: MessageComponents;
+    files?: FileUpload[];
+    attachments?: AttachmentType[];
+    flags?: number;
+    reference?: {
+      message_id: Snowflake;
+      channel_id: Snowflake;
+      guild_id: Snowflake;
+    };
+  }): void;
   /**
    * Deletes one message.
    * @param {Client} client The client instance.
@@ -439,11 +514,15 @@ declare class Message implements MessageType {
    * @throws {TypeError}
    */
   static delete(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
-    { reason }?: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
   ): Promise<void>;
   /**
    * Encrypts the message.
@@ -469,58 +548,8 @@ declare class Message implements MessageType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM):
-    | {
-        id: string;
-        author: any;
-        member: any;
-        content: any;
-        _attributes: any;
-        attachments: any;
-        embeds: any;
-        edited_timestamp: number | null;
-        poll: any;
-        message_snapshots: any[] | undefined;
-        type: any;
-        referenced_message:
-          | {
-              id: string | undefined;
-            }
-          | undefined;
-        sticker_items: any;
-        messageReactions: any;
-        channel_id?: undefined;
-        pinned?: undefined;
-        reactions?: undefined;
-        mention_everyone?: undefined;
-        mention_roles?: undefined;
-        mentions?: undefined;
-      }
-    | {
-        id: string;
-        channel_id: string;
-        author: any;
-        member: any;
-        content: any;
-        pinned: boolean;
-        attachments: any;
-        embeds: any;
-        edited_timestamp: number | null;
-        poll: any;
-        message_snapshots: any[] | undefined;
-        type: any;
-        referenced_message:
-          | {
-              id: string | undefined;
-            }
-          | undefined;
-        sticker_items: any;
-        reactions: any;
-        mention_everyone: boolean;
-        mention_roles: string[];
-        mentions: string[];
-        _attributes?: undefined;
-        messageReactions?: undefined;
-      };
+  toJSON(
+    format?: JsonTypes,
+  ): MessageCacheJSON | MessageStorageJSON | MessageDiscordJSON;
 }
 export default Message;

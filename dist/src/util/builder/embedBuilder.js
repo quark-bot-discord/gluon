@@ -1,31 +1,7 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
-/**
- * Represents an author in an embed.
- * @typedef {Object} EmbedAuthor
- * @property {String} name The author name.
- * @property {String} [url] The author url.
- * @property {String} [icon_url] The author icon url.
- */
-/**
- * Represents an embed field.
- * @typedef {Object} EmbedField
- * @property {String} name The field name.
- * @property {String} value The field value.
- * @property {Boolean} inline Whether the field should be inline.
- */
-/**
- * Represents an embed footer.
- * @typedef {Object} EmbedFooter
- * @property {String} text The footer text.
- * @property {String} [icon_url] The footer icon url.
- */
-/**
- * Represents embed media.
- * @typedef {Object} EmbedMedia
- * @property {String} url The media url.
- */
+import { JsonTypes } from "typings/index.js";
 /**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
@@ -76,7 +52,7 @@ class Embed {
         );
       if (data.image) this.setImage(data.image.url);
       if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
-      if (data.video) this.setVideo(data.video.url);
+      if (data.video && data.video.url) this.setVideo(data.video.url);
     }
   }
   /**
@@ -205,12 +181,12 @@ class Embed {
   setAuthor(name, url, icon_url) {
     if (!name || typeof name !== "string")
       throw new TypeError("GLUON: Embed author name must be provided.");
-    this.author = {};
-    if (name)
-      this.author.name =
+    this.author = {
+      name:
         name && name.length > LIMITS.MAX_EMBED_AUTHOR_NAME
           ? `${name.substring(0, LIMITS.MAX_EMBED_AUTHOR_NAME - 3)}...`
-          : name;
+          : name,
+    };
     if (url) this.author.url = url;
     if (icon_url) this.author.icon_url = icon_url;
     return this;
@@ -422,7 +398,6 @@ class Embed {
         );
       if (
         !this.fields.every(
-          // @ts-expect-error TS(7006): Parameter 'field' implicitly has an 'any' type.
           (field) =>
             typeof field === "object" &&
             typeof field.name === "string" &&
@@ -457,8 +432,8 @@ class Embed {
         throw new TypeError("GLUON: Embed video url must be a valid url.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           title: this.title,
           description: this.description,
@@ -473,7 +448,7 @@ class Embed {
           video: this.video,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           title: this.title,

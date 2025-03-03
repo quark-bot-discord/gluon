@@ -16,7 +16,7 @@ export { default as PermissionOverwrite } from "./structures/PermissionOverwrite
 export { default as Reaction } from "./structures/Reaction.js";
 export { default as Member } from "./structures/Member.js";
 export { default as Poll } from "./structures/Poll.js";
-export { default as Channel } from "./structures/Channel.js";
+export { default as Channel } from "./structures/GuildChannel.js";
 export { default as SlashCommand } from "./structures/SlashCommand.js";
 export { default as Interaction } from "./structures/Interaction.js";
 export { default as VoiceState } from "./structures/VoiceState.js";

@@ -50,15 +50,10 @@ var _VoiceState__client,
   _VoiceState__user_id,
   _VoiceState_joined,
   _VoiceState_request_to_speak_timestamp;
-import {
-  GLUON_CACHING_OPTIONS,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
-import GluonCacheOptions from "../managers/GluonCacheOptions.js";
-import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import { GLUON_CACHING_OPTIONS, GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a voice state.
  */
@@ -71,7 +66,7 @@ class VoiceState {
    * @param {String} options.guildId The id of the guild that the voice state belongs to.
    * @param {Boolean?} [options.nocache] Whether this voice state should be cached.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _VoiceState__client.set(this, void 0);
     _VoiceState__guild_id.set(this, void 0);
     _VoiceState__channel_id.set(this, void 0);
@@ -113,7 +108,7 @@ class VoiceState {
     __classPrivateFieldSet(
       this,
       _VoiceState__channel_id,
-      BigInt(data.channel_id),
+      data.channel_id ? BigInt(data.channel_id) : null,
       "f",
     );
     /**
@@ -124,52 +119,52 @@ class VoiceState {
     __classPrivateFieldSet(
       this,
       _VoiceState__attributes,
-      data._attributes ?? 0,
+      "_attributes" in data ? data._attributes : 0,
       "f",
     );
-    if (data.deaf == true)
+    if ("deaf" in data && data.deaf == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 0),
         "f",
       );
-    if (data.mute == true)
+    if ("mute" in data && data.mute == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 1),
         "f",
       );
-    if (data.self_deaf == true)
+    if ("self_deaf" in data && data.self_deaf == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 2),
         "f",
       );
-    if (data.self_mute == true)
+    if ("self_mute" in data && data.self_mute == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 3),
         "f",
       );
-    if (data.self_stream == true)
+    if ("self_stream" in data && data.self_stream == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 4),
         "f",
       );
-    if (data.self_video == true)
+    if ("self_video" in data && data.self_video == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
         __classPrivateFieldGet(this, _VoiceState__attributes, "f") | (0b1 << 5),
         "f",
       );
-    if (data.suppress == true)
+    if ("suppress" in data && data.suppress == true)
       __classPrivateFieldSet(
         this,
         _VoiceState__attributes,
@@ -190,7 +185,7 @@ class VoiceState {
           data.member,
           {
             userId: data.user_id,
-            guildId: data.guild_id,
+            guildId,
             nocache,
           },
         ),
@@ -219,7 +214,7 @@ class VoiceState {
      * @type {Number}
      * @private
      */
-    if (typeof data.joined == "number")
+    if ("joined" in data && typeof data.joined === "number")
       __classPrivateFieldSet(this, _VoiceState_joined, data.joined, "f");
     else if (existing && typeof existing.joined == "number")
       __classPrivateFieldSet(this, _VoiceState_joined, existing.joined, "f");
@@ -424,10 +419,12 @@ class VoiceState {
    * @public
    */
   get requestToSpeakTimestamp() {
-    return __classPrivateFieldGet(
-      this,
-      _VoiceState_request_to_speak_timestamp,
-      "f",
+    return (
+      __classPrivateFieldGet(
+        this,
+        _VoiceState_request_to_speak_timestamp,
+        "f",
+      ) ?? null
     );
   }
   /**
@@ -440,14 +437,6 @@ class VoiceState {
    * @method
    */
   static shouldCache(gluonCacheOptions, guildCacheOptions) {
-    if (!(gluonCacheOptions instanceof GluonCacheOptions))
-      throw new TypeError(
-        "GLUON: Gluon cache options must be a GluonCacheOptions.",
-      );
-    if (!(guildCacheOptions instanceof GuildCacheOptions))
-      throw new TypeError(
-        "GLUON: Guild cache options must be a GuildCacheOptions.",
-      );
     if (gluonCacheOptions.cacheVoiceStates === false) return false;
     if (guildCacheOptions.voiceStateCaching === false) return false;
     return true;
@@ -483,8 +472,8 @@ class VoiceState {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           guild_id: this.guildId,
           channel_id: this.channelId,
@@ -496,11 +485,12 @@ class VoiceState {
           member: this.member.toJSON(format),
           user_id: this.memberId,
           joined: this.joined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp
+            ? this.requestToSpeakTimestamp * 1000
+            : null,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           guild_id: this.guildId,
@@ -515,8 +505,9 @@ class VoiceState {
           member: this.member,
           user_id: this.memberId,
           joined: this.joined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          request_to_speak_timestamp: this.requestToSpeakTimestamp * 1000,
+          request_to_speak_timestamp: this.requestToSpeakTimestamp
+            ? this.requestToSpeakTimestamp * 1000
+            : null,
         };
       }
     }

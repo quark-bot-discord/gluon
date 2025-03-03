@@ -1,8 +1,20 @@
+import ClientType from "src/interfaces/Client.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { APIRole } from "discord-api-types/v10";
+import {
+  JsonTypes,
+  RoleCacheJSON,
+  RoleDiscordJSON,
+  RoleStorageJSON,
+  Role as RoleType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.js";
 /**
  * Represents a role belonging to a guild.
  */
-declare class Role {
+declare class Role implements RoleType {
   #private;
   /**
    * Creates the structure for a role.
@@ -13,7 +25,17 @@ declare class Role {
    * @param {Boolean?} [options.nocache] Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data: APIRole | RoleCacheJSON | RoleDiscordJSON | RoleStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The ID of the role.
    * @type {String}
@@ -76,21 +98,21 @@ declare class Role {
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string;
   /**
    * The color of the role.
    * @type {Number}
    * @readonly
    * @public
    */
-  get color(): any;
+  get color(): number;
   /**
    * The position of the role.
    * @type {Number}
    * @readonly
    * @public
    */
-  get position(): any;
+  get position(): number;
   /**
    * The permissions for the role.
    * @type {String}
@@ -104,7 +126,7 @@ declare class Role {
    * @readonly
    * @public
    */
-  get tags(): any;
+  get tags(): import("discord-api-types/v10").APIRoleTags | undefined;
   /**
    * Returns a mention for the role.
    * @type {String}
@@ -121,14 +143,14 @@ declare class Role {
    * @static
    * @method
    */
-  static getMention(roleId: any, guildId: any): string;
+  static getMention(roleId: Snowflake, guildId: Snowflake): string;
   /**
    * Returns the URL of the role's icon.
    * @param {String} id The ID of the role.
    * @param {String?} [hash] The hash of the role's icon.
    * @returns {String}
    */
-  static getIconUrl(id: any, hash: any): string | null;
+  static getIconUrl(id: Snowflake, hash?: string | null): string | null;
   /**
    * Determines whether the role should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -138,7 +160,10 @@ declare class Role {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public
@@ -156,28 +181,28 @@ declare class Role {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
         id: string;
-        name: any;
-        color: any;
-        position: any;
+        name: string;
+        color: number;
+        position: number;
         permissions: string;
         icon: string | null;
-        _attributes: any;
-        tags: any;
+        _attributes: number;
+        tags: import("discord-api-types/v10").APIRoleTags | undefined;
         hoist?: undefined;
         managed?: undefined;
         mentionable?: undefined;
       }
     | {
         id: string;
-        name: any;
-        color: any;
-        position: any;
+        name: string;
+        color: number;
+        position: number;
         permissions: string;
         icon: string | null;
-        tags: any;
+        tags: import("discord-api-types/v10").APIRoleTags | undefined;
         hoist: boolean;
         managed: boolean;
         mentionable: boolean;

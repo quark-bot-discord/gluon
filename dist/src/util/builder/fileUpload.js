@@ -43,16 +43,13 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _FileUpload_name, _FileUpload_stream, _FileUpload_path, _FileUpload_size;
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
+import { JsonTypes } from "typings/index.d.js";
 class FileUpload {
   constructor() {
-    // @ts-expect-error TS(7008): Member '#name' implicitly has an 'any' type.
     _FileUpload_name.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#stream' implicitly has an 'any' type.
     _FileUpload_stream.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#path' implicitly has an 'any' type.
     _FileUpload_path.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#size' implicitly has an 'any' type.
     _FileUpload_size.set(this, void 0);
   }
   /**
@@ -153,13 +150,13 @@ class FileUpload {
         throw new TypeError("GLUON: File stream or path must be provided.");
     }
     const commonProperties = {
-      name: __classPrivateFieldGet(this, _FileUpload_name, "f"),
-      size: __classPrivateFieldGet(this, _FileUpload_size, "f"),
+      name: __classPrivateFieldGet(this, _FileUpload_name, "f"), // only valid because of the above check
+      size: __classPrivateFieldGet(this, _FileUpload_size, "f"), // only valid because of the above check
     };
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         if (__classPrivateFieldGet(this, _FileUpload_stream, "f"))
           return {

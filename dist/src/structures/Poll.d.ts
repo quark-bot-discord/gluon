@@ -1,6 +1,16 @@
 import MessagePollManager from "../managers/MessagePollManager.js";
 import util from "util";
-declare class Poll {
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  Poll as PollType,
+  PollCacheJSON,
+  PollDiscordJSON,
+  PollStorageJSON,
+  JsonTypes,
+} from "../../typings/index.d.js";
+import { APIPoll } from "discord-api-types/v10";
+declare class Poll implements PollType {
   #private;
   /**
    * Creates the structure for a poll.
@@ -9,7 +19,15 @@ declare class Poll {
    * @param {Object} options The additional options for this structure.
    * @param {String} options.guildId The ID of the guild that this poll belongs to.
    */
-  constructor(client: any, data: any, { guildId }?: any);
+  constructor(
+    client: ClientType,
+    data: APIPoll | PollCacheJSON | PollDiscordJSON | PollStorageJSON,
+    {
+      guildId,
+    }: {
+      guildId: Snowflake;
+    },
+  );
   /**
    * The ID of the guild that this poll belongs to.
    * @type {String}
@@ -37,35 +55,32 @@ declare class Poll {
    * @readonly
    * @public
    */
-  get answers(): any;
+  get answers(): {
+    answerId: number;
+    answer: string;
+    result: string[];
+  }[];
   /**
    * The UNIX timestamp of the expiry time for the poll.
    * @type {Number}
    * @readonly
    * @public
    */
-  get expiry(): number;
+  get expiry(): number | null;
   /**
    * Whether the poll allows multiselect.
    * @type {Boolean}
    * @readonly
    * @public
    */
-  get allowMultiselect(): any;
+  get allowMultiselect(): boolean;
   /**
    * The layout type of the poll.
    * @type {String}
    * @readonly
    * @public
    */
-  get layoutType(): "DEFAULT" | null;
-  /**
-   * The raw layout type of the poll.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get rawLayoutType(): any;
+  get layoutType(): import("discord-api-types/v10").PollLayoutType;
   /**
    * The poll responses.
    * @type {MessagePollManager}
@@ -90,44 +105,6 @@ declare class Poll {
    * @public
    * @method
    */
-  toJSON(format: any):
-    | {
-        question: any;
-        answers: any;
-        expiry: number | null;
-        allow_multiselect: any;
-        layout_type: any;
-        _results:
-          | {
-              [key: string]: string[];
-            }
-          | {
-              answer_counts: {
-                id: number;
-                count: any;
-                me_voted: any;
-              }[];
-            };
-        results?: undefined;
-      }
-    | {
-        question: any;
-        answers: any;
-        expiry: string | null;
-        allow_multiselect: any;
-        layout_type: any;
-        results:
-          | {
-              [key: string]: string[];
-            }
-          | {
-              answer_counts: {
-                id: number;
-                count: any;
-                me_voted: any;
-              }[];
-            };
-        _results?: undefined;
-      };
+  toJSON(format?: JsonTypes): PollCacheJSON | PollDiscordJSON | PollStorageJSON;
 }
 export default Poll;

@@ -15,6 +15,7 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
+import { EndpointIndexItem } from "typings/index.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -32,7 +33,7 @@ class BetterRequestHandler {
   #localRatelimitCache;
   // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
   #latencyMs;
-  constructor(client: any, token: any) {
+  constructor(client: any, token: string) {
     this.#_client = client;
 
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
@@ -163,18 +164,21 @@ class BetterRequestHandler {
     }
   }
 
-  async makeRequest(request: any, params: any, body: any) {
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    const actualRequest = this.#endpoints[request];
+  async makeRequest(
+    request: keyof typeof endpoints,
+    params: string[],
+    body: any,
+  ) {
+    const actualRequest = this.#endpoints[request] as EndpointIndexItem;
 
     const toHash =
       actualRequest.method +
       actualRequest.path(
-        params
-          ? params.map((v: any, i: any) =>
-              actualRequest.majorParams.includes(i) ? v : null,
+        ...(params
+          ? params.map((v: string, i: number) =>
+              String(actualRequest.majorParams.includes(i) ? v : null),
             )
-          : [],
+          : []),
       );
     const hash = hashjs.sha256().update(toHash).digest("hex");
 
@@ -193,7 +197,6 @@ class BetterRequestHandler {
     while (retries--)
       try {
         const _stack = new Error().stack;
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const result = await this.#queues[hash].push({
           hash,
           request,
@@ -201,7 +204,6 @@ class BetterRequestHandler {
           body,
           _stack,
         });
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (this.#queues[hash].idle()) delete this.#queues[hash];
         return result;
       } catch (error) {

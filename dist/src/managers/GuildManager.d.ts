@@ -1,15 +1,25 @@
+import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import {
+  GuildManager as GuildManagerType,
+  Guild as GuildType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all guilds belonging to this client.
  */
-declare class GuildManager extends BaseCacheManager {
+declare class GuildManager
+  extends BaseCacheManager
+  implements GuildManagerType
+{
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a guild manager.
    * @param {Client} client The client instance.
    */
-  constructor(client: any);
+  constructor(client: ClientType);
   /**
    * Adds a guild to the cache.
    * @param {String} id The ID of the guild to cache
@@ -20,13 +30,16 @@ declare class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, guild: any): Map<any, any>;
+  set(id: Snowflake, guild: GuildType): void;
+  get(id: Snowflake): GuildType | null;
+  fetchFromRules(key: string): Promise<GuildType | null>;
+  fetchWithRules(key: string): Promise<GuildType | null>;
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.
    * @returns {GuildManager}
    */
-  static getCacheManager(client: any): any;
+  static getCacheManager(client: ClientType): any;
   /**
    * Gets a guild from the cache.
    * @param {Client} client The client instance.
@@ -37,6 +50,6 @@ declare class GuildManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static getGuild(client: any, guildId: any): any;
+  static getGuild(client: ClientType, guildId: Snowflake): any;
 }
 export default GuildManager;

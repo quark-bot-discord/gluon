@@ -1,10 +1,24 @@
+import ClientType from "src/interfaces/Client.js";
 import User from "./User.js";
 import util from "util";
+import {
+  AuditLogCacheJSON,
+  AuditLogDiscordJSON,
+  AuditLogStorageJSON,
+  AuditLog as AuditLogType,
+  JsonTypes,
+} from "../../typings/index.d.js";
+import {
+  APIAuditLogEntry,
+  APIUser,
+  AuditLogOptionsType,
+  Snowflake,
+} from "discord-api-types/v10";
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
  */
-declare class AuditLog {
+declare class AuditLog implements AuditLogType {
   #private;
   /**
    * Creates a structure for an audit log entry.
@@ -14,7 +28,21 @@ declare class AuditLog {
    * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
-  constructor(client: any, data: any, { users, guildId }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIAuditLogEntry
+      | AuditLogCacheJSON
+      | AuditLogDiscordJSON
+      | AuditLogStorageJSON,
+    {
+      users,
+      guildId,
+    }: {
+      users?: APIUser[];
+      guildId: Snowflake;
+    },
+  );
   /**
    * The id of the audit log entry.
    * @type {String}
@@ -35,7 +63,7 @@ declare class AuditLog {
    * @readonly
    * @public
    */
-  get actionType(): any;
+  get actionType(): number;
   /**
    * The id of the target user.
    * @type {String?}
@@ -70,7 +98,7 @@ declare class AuditLog {
    * @readonly
    * @public
    */
-  get target(): User | undefined;
+  get target(): User | null;
   /**
    * The executor user involved with this audit log entry.
    * @type {String?}
@@ -84,14 +112,14 @@ declare class AuditLog {
    * @readonly
    * @public
    */
-  get executor(): User | undefined;
+  get executor(): User | null;
   /**
    * The reason for this audit log entry.
    * @type {String?}
    * @readonly
    * @public
    */
-  get reason(): any;
+  get reason(): string | null;
   /**
    * The count of this type of audit log entry.
    * @type {Number?}
@@ -126,21 +154,23 @@ declare class AuditLog {
    * @readonly
    * @public
    */
-  get specialType(): number | undefined;
+  get specialType(): AuditLogOptionsType;
   /**
    * The new voice channel status.
    * @type {String?}
    * @readonly
    * @public
    */
-  get status(): any;
+  get status(): string | undefined;
   /**
    * The changes in this audit log entry.
    * @type {Object?}
    * @readonly
    * @public
    */
-  get changes(): any;
+  get changes():
+    | import("discord-api-types/v10").APIAuditLogChange[]
+    | undefined;
   /**
    * @method
    * @public
@@ -158,23 +188,8 @@ declare class AuditLog {
    * @public
    * @method
    */
-  toJSON(format: any): {
-    id: string;
-    guild_id: string;
-    action_type: any;
-    target_id: string | undefined;
-    user_id: string | undefined;
-    reason: any;
-    options: {
-      channel_id: string | undefined;
-      count: number | undefined;
-      delete_member_days: number | undefined;
-      members_removed: number | undefined;
-      id: string | undefined;
-      type: number | undefined;
-      status: any;
-    };
-    changes: any;
-  };
+  toJSON(
+    format?: JsonTypes,
+  ): AuditLogStorageJSON | AuditLogDiscordJSON | AuditLogCacheJSON;
 }
 export default AuditLog;

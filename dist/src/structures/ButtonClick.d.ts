@@ -1,12 +1,24 @@
+import ClientType from "src/interfaces/Client.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import {
+  ButtonClickCacheJSON,
+  ButtonClickDiscordJSON,
+  ButtonClickStorageJSON,
+  ButtonClick as ButtonClickType,
+  JsonTypes,
+} from "../../typings/index.d.js";
+import {
+  APIMessageComponentGuildInteraction,
+  Snowflake,
+} from "discord-api-types/v10";
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
  * @extends {Interaction}
  */
-declare class ButtonClick extends Interaction {
+declare class ButtonClick extends Interaction implements ButtonClickType {
   #private;
   /**
    * Creates a button click interaction structure.
@@ -16,14 +28,24 @@ declare class ButtonClick extends Interaction {
    * @param {String} options.guildId The ID of the guild that this interaction belongs to.
    * @param {String} options.channelId The ID of the channel that this interaction belongs to.
    */
-  constructor(client: any, data: any, { guildId, channelId }?: any);
+  constructor(
+    client: ClientType,
+    data: APIMessageComponentGuildInteraction,
+    {
+      guildId,
+      channelId,
+    }: {
+      guildId: Snowflake;
+      channelId: Snowflake;
+    },
+  );
   /**
    * The custom id of the button.
    * @type {String}
    * @readonly
    * @public
    */
-  get customId(): any;
+  get customId(): string;
   /**
    * The message which the button belongs to.
    * @type {Message}
@@ -50,40 +72,8 @@ declare class ButtonClick extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any): {
-    data: {
-      custom_id: any;
-    };
-    message: Message;
-    id: string;
-    type: any;
-    guild_id: string;
-    channel_id: string;
-    member:
-      | {
-          user: any;
-          nick: any;
-          joined_at: number | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          _attributes: any;
-          pending?: undefined;
-        }
-      | {
-          user: any;
-          nick: any;
-          joined_at: string | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          pending: boolean;
-          _attributes?: undefined;
-        };
-  };
+  toJSON(
+    format?: JsonTypes,
+  ): ButtonClickCacheJSON | ButtonClickDiscordJSON | ButtonClickStorageJSON;
 }
 export default ButtonClick;

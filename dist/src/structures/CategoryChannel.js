@@ -49,10 +49,11 @@ var _CategoryChannel__client,
   _CategoryChannel_name,
   _CategoryChannel__attributes,
   _CategoryChannel_permission_overwrites;
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
+import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 class CategoryChannel {
   /**
    * Creates the structure for a category channel.
@@ -62,14 +63,14 @@ class CategoryChannel {
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _CategoryChannel__client.set(this, void 0);
     _CategoryChannel__id.set(this, void 0);
     _CategoryChannel__guild_id.set(this, void 0);
     _CategoryChannel_type.set(this, void 0);
     _CategoryChannel_name.set(this, void 0);
     _CategoryChannel__attributes.set(this, void 0);
-    _CategoryChannel_permission_overwrites.set(this, void 0);
+    _CategoryChannel_permission_overwrites.set(this, []);
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -129,10 +130,10 @@ class CategoryChannel {
     __classPrivateFieldSet(
       this,
       _CategoryChannel__attributes,
-      data._attributes ?? 0,
+      "_attributes" in data ? data._attributes : 0,
       "f",
     );
-    if (data.nsfw !== undefined && data.nsfw == true)
+    if ("nsfw" in data && data.nsfw !== undefined && data.nsfw == true)
       __classPrivateFieldSet(
         this,
         _CategoryChannel__attributes,
@@ -140,7 +141,12 @@ class CategoryChannel {
           (0b1 << 0),
         "f",
       );
-    else if (data.nsfw === undefined && existing && existing.nsfw == true)
+    else if (
+      "nsfw" in data &&
+      data.nsfw === undefined &&
+      existing &&
+      existing.nsfw == true
+    )
       __classPrivateFieldSet(
         this,
         _CategoryChannel__attributes,
@@ -311,9 +317,23 @@ class CategoryChannel {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          name: this.name,
+          type: this.type,
+          _attributes: __classPrivateFieldGet(
+            this,
+            _CategoryChannel__attributes,
+            "f",
+          ),
+          permission_overwrites: this.permissionOverwrites.map((p) =>
+            p.toJSON(format),
+          ),
+        };
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

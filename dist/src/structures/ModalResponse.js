@@ -43,9 +43,9 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _ModalResponse_values, _ModalResponse_custom_id;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents when a modal is submitted.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}
@@ -132,15 +132,16 @@ class ModalResponse extends Interaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           ...super.toJSON(format),
           values: this.values,
           custom_id: this.customId,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),
@@ -152,6 +153,7 @@ class ModalResponse extends Interaction {
               },
             ],
           },
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

@@ -56,18 +56,17 @@ var _ScheduledEvent_instances,
   _ScheduledEvent__attributes,
   _ScheduledEvent_location,
   _ScheduledEvent_description,
-  _ScheduledEvent__formattedImageHash_get,
-  _ScheduledEvent_rawEntityType_get,
-  _ScheduledEvent_rawStatus_get;
+  _ScheduledEvent__formattedImageHash_get;
 import User from "./User.js";
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import {
+  GuildScheduledEventEntityType,
+  GuildScheduledEventStatus,
+} from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -81,7 +80,7 @@ class ScheduledEvent {
    * @param {String} options.guildId The ID of the guild that this event belongs to.
    * @param {Boolean?} [options.nocache] Whether this event should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _ScheduledEvent_instances.add(this);
     _ScheduledEvent__client.set(this, void 0);
     _ScheduledEvent__id.set(this, void 0);
@@ -303,7 +302,7 @@ class ScheduledEvent {
       default:
         break;
     }
-    if (this.entityType == "EXTERNAL")
+    if (this.entityType == GuildScheduledEventEntityType.External) {
       /**
        * The location of the event.
        * @type {String?}
@@ -312,9 +311,11 @@ class ScheduledEvent {
       __classPrivateFieldSet(
         this,
         _ScheduledEvent_location,
-        data.location ?? data.entity_metadata.location,
+        data.entity_metadata?.location ??
+          ("location" in data ? data.location : undefined),
         "f",
       );
+    }
     const shouldCache = ScheduledEvent.shouldCache(
       __classPrivateFieldGet(this, _ScheduledEvent__client, "f")._cacheOptions,
       this.guild._cacheOptions,
@@ -377,7 +378,7 @@ class ScheduledEvent {
    * @public
    */
   get creator() {
-    return __classPrivateFieldGet(this, _ScheduledEvent_creator, "f");
+    return __classPrivateFieldGet(this, _ScheduledEvent_creator, "f") ?? null;
   }
   /**
    * The description of the event.
@@ -386,7 +387,9 @@ class ScheduledEvent {
    * @public
    */
   get description() {
-    return __classPrivateFieldGet(this, _ScheduledEvent_description, "f");
+    return (
+      __classPrivateFieldGet(this, _ScheduledEvent_description, "f") ?? null
+    );
   }
   /**
    * The hash of the event's image, as it was received from Discord.
@@ -421,20 +424,20 @@ class ScheduledEvent {
         (0b1 << 0)) ==
       0b1 << 0
     )
-      return "STAGE_INSTANCE";
+      return GuildScheduledEventEntityType.StageInstance;
     else if (
       (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
         (0b1 << 1)) ==
       0b1 << 1
     )
-      return "VOICE";
+      return GuildScheduledEventEntityType.Voice;
     else if (
       (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
         (0b1 << 2)) ==
       0b1 << 2
     )
-      return "EXTERNAL";
-    else return "UNKNOWN";
+      return GuildScheduledEventEntityType.External;
+    throw new Error("GLUON: Unknown entity type.");
   }
   /**
    * The status of the event.
@@ -448,26 +451,26 @@ class ScheduledEvent {
         (0b1 << 3)) ==
       0b1 << 3
     )
-      return "SCHEDULED";
+      return GuildScheduledEventStatus.Scheduled;
     else if (
       (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
         (0b1 << 4)) ==
       0b1 << 4
     )
-      return "ACTIVE";
+      return GuildScheduledEventStatus.Active;
     else if (
       (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
         (0b1 << 5)) ==
       0b1 << 5
     )
-      return "COMPLETED";
+      return GuildScheduledEventStatus.Completed;
     else if (
       (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
         (0b1 << 6)) ==
       0b1 << 6
     )
-      return "CANCELED";
-    else return "UNKNOWN";
+      return GuildScheduledEventStatus.Canceled;
+    throw new Error("GLUON: Unknown status.");
   }
   /**
    * The guild that this event belongs to.
@@ -502,10 +505,9 @@ class ScheduledEvent {
    * @public
    */
   get scheduledEndTime() {
-    return __classPrivateFieldGet(
-      this,
-      _ScheduledEvent_scheduled_end_time,
-      "f",
+    return (
+      __classPrivateFieldGet(this, _ScheduledEvent_scheduled_end_time, "f") ??
+      null
     );
   }
   /**
@@ -524,7 +526,7 @@ class ScheduledEvent {
    * @public
    */
   get location() {
-    return __classPrivateFieldGet(this, _ScheduledEvent_location, "f");
+    return __classPrivateFieldGet(this, _ScheduledEvent_location, "f") ?? null;
   }
   /**
    * Returns the URL of the event's image.
@@ -604,55 +606,6 @@ class ScheduledEvent {
         formattedHash = `0${formattedHash}`;
       return formattedHash;
     }),
-  (_ScheduledEvent_rawEntityType_get =
-    function _ScheduledEvent_rawEntityType_get() {
-      if (
-        (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-          (0b1 << 0)) ==
-        0b1 << 0
-      )
-        return 1;
-      else if (
-        (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-          (0b1 << 1)) ==
-        0b1 << 1
-      )
-        return 2;
-      else if (
-        (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-          (0b1 << 2)) ==
-        0b1 << 2
-      )
-        return 3;
-      else return 0;
-    }),
-  (_ScheduledEvent_rawStatus_get = function _ScheduledEvent_rawStatus_get() {
-    if (
-      (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-        (0b1 << 3)) ==
-      0b1 << 3
-    )
-      return 1;
-    else if (
-      (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-        (0b1 << 4)) ==
-      0b1 << 4
-    )
-      return 2;
-    else if (
-      (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-        (0b1 << 5)) ==
-      0b1 << 5
-    )
-      return 3;
-    else if (
-      (__classPrivateFieldGet(this, _ScheduledEvent__attributes, "f") &
-        (0b1 << 6)) ==
-      0b1 << 6
-    )
-      return 4;
-    else return 0;
-  }),
   util.inspect.custom)]() {
     return this.toString();
   }
@@ -665,36 +618,47 @@ class ScheduledEvent {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          guild_id: this.guildId,
+          name: this.name,
+          description: this.description ?? undefined,
+          creator_id: this.creatorId ?? undefined,
+          creator: this.creator?.toJSON(format),
+          scheduled_start_time: this.scheduledStartTime * 1000,
+          scheduled_end_time: this.scheduledEndTime
+            ? this.scheduledEndTime * 1000
+            : null,
+          image: this._originalImageHash,
+          user_count: this.userCount,
+          entity_type: this.entityType,
+          status: this.status,
+          entity_metadata: {
+            location: this.location,
+          },
+        };
+      }
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           guild_id: this.guildId,
           name: this.name,
-          description: this.description,
+          description: this.description ?? undefined,
           creator_id: this.creatorId ?? undefined,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          creator: this.creator.toJSON(format),
-          scheduled_start_time: this.scheduledStartTime * 1000,
+          creator: this.creator?.toJSON(format),
+          scheduled_start_time: new Date(
+            this.scheduledStartTime * 1000,
+          ).toISOString(),
           scheduled_end_time: this.scheduledEndTime
-            ? this.scheduledEndTime * 1000
-            : undefined,
+            ? new Date(this.scheduledEndTime * 1000).toISOString()
+            : null,
           image: this._originalImageHash,
           user_count: this.userCount,
-          entity_type: __classPrivateFieldGet(
-            this,
-            _ScheduledEvent_instances,
-            "a",
-            _ScheduledEvent_rawEntityType_get,
-          ),
-          status: __classPrivateFieldGet(
-            this,
-            _ScheduledEvent_instances,
-            "a",
-            _ScheduledEvent_rawStatus_get,
-          ),
+          entity_type: this.entityType,
+          status: this.status,
           entity_metadata: {
             location: this.location,
           },

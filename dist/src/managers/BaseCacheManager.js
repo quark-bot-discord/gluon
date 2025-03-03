@@ -47,15 +47,11 @@ var _BaseCacheManager_instances,
   _BaseCacheManager_cache,
   _BaseCacheManager_expiryBucket,
   _BaseCacheManager_structureType,
-  _BaseCacheManager_keyPrefix_get,
-  _BaseCacheManager_getHash,
-  _BaseCacheManager_getKey,
   _BaseCacheManager_addToExpiryBucket,
   _BaseCacheManager_clearStaleBuckets,
   _BaseCacheManager__callRules,
   _BaseCacheManager__callFetches;
-import hashjs from "hash.js";
-import { GLUON_VERSION, NAME, TO_JSON_TYPES_ENUM } from "../constants.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * The base cache manager for all cache managers.
  */
@@ -69,7 +65,7 @@ class BaseCacheManager {
    * @public
    * @constructor
    */
-  constructor(client, { structureType } = {}) {
+  constructor(client, { structureType }) {
     _BaseCacheManager_instances.add(this);
     _BaseCacheManager_cache.set(this, void 0);
     _BaseCacheManager_expiryBucket.set(this, void 0);
@@ -107,6 +103,35 @@ class BaseCacheManager {
       "f",
     );
   }
+  /**
+   * The key prefix for the cache.
+   * @type {String}
+   * @readonly
+   * @private
+   */
+  // get #keyPrefix() {
+  //   return `${NAME.toLowerCase()}.caches.${this.#structureType.identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
+  // }
+  /**
+   * Creates a hash of the key.
+   * @param {String} key The key to hash.
+   * @returns {String} The hashed key.
+   * @private
+   * @method
+   */
+  // #getHash(key: string) {
+  //   return hashjs.sha256().update(key).digest("hex");
+  // }
+  /**
+   * Wraps the key with the key prefix and hashes it.
+   * @param {String} key The key.
+   * @returns {String}
+   * @private
+   * @method
+   */
+  // #getKey(key: string) {
+  //   return `${this.#keyPrefix}${this.#getHash(key)}`;
+  // }
   /**
    * Gets a value from the cache.
    * @param {String} key The key to get.
@@ -174,7 +199,7 @@ class BaseCacheManager {
    * @param {String} key The key to set.
    * @param {Object} value The value to set.
    * @param {Number} expiry The expiry time in seconds.
-   * @returns {Object} The value that was set.
+   * @returns {void} The value that was set.
    * @public
    * @method
    * @throws {TypeError}
@@ -190,10 +215,7 @@ class BaseCacheManager {
       "m",
       _BaseCacheManager_addToExpiryBucket,
     ).call(this, key, expiry);
-    return __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").set(
-      key,
-      value,
-    );
+    __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").set(key, value);
   }
   /**
    * Expires a bucket.
@@ -297,9 +319,9 @@ class BaseCacheManager {
    * @public
    * @method
    */
-  forEach(callback) {
+  forEach(callbackfn) {
     return __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").forEach(
-      callback,
+      callbackfn,
     );
   }
   /**
@@ -324,9 +346,9 @@ class BaseCacheManager {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return [
           ...__classPrivateFieldGet(
@@ -344,16 +366,6 @@ class BaseCacheManager {
   (_BaseCacheManager_expiryBucket = new WeakMap()),
   (_BaseCacheManager_structureType = new WeakMap()),
   (_BaseCacheManager_instances = new WeakSet()),
-  (_BaseCacheManager_keyPrefix_get =
-    function _BaseCacheManager_keyPrefix_get() {
-      return `${NAME.toLowerCase()}.caches.${__classPrivateFieldGet(this, _BaseCacheManager_structureType, "f").identifier}.v${GLUON_VERSION.split(".").slice(0, -1).join("_")}.`;
-    }),
-  (_BaseCacheManager_getHash = function _BaseCacheManager_getHash(key) {
-    return hashjs.sha256().update(key).digest("hex");
-  }),
-  (_BaseCacheManager_getKey = function _BaseCacheManager_getKey(key) {
-    return `${__classPrivateFieldGet(this, _BaseCacheManager_instances, "a", _BaseCacheManager_keyPrefix_get)}${__classPrivateFieldGet(this, _BaseCacheManager_instances, "m", _BaseCacheManager_getHash).call(this, key)}`;
-  }),
   (_BaseCacheManager_addToExpiryBucket =
     function _BaseCacheManager_addToExpiryBucket(key, expiry) {
       if (expiry === 0) return;
@@ -402,12 +414,14 @@ class BaseCacheManager {
     }),
   (_BaseCacheManager__callRules = function _BaseCacheManager__callRules(value) {
     const rules = Object.values(_a.rules);
-    for (const rule of rules)
+    for (const rule of rules) {
       if (
         rule.structure ===
         __classPrivateFieldGet(this, _BaseCacheManager_structureType, "f")
-      )
+      ) {
         rule.store(value);
+      }
+    }
   }),
   (_BaseCacheManager__callFetches =
     /**
@@ -422,7 +436,6 @@ class BaseCacheManager {
       const rules = Object.values(_a.rules);
       let fetchValue;
       for (const rule of rules) {
-        // @ts-expect-error TS(2571): Object is of type 'unknown'.
         if (
           rule.structure ===
           __classPrivateFieldGet(this, _BaseCacheManager_structureType, "f")

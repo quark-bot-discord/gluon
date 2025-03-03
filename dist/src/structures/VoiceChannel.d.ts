@@ -1,10 +1,23 @@
-import Channel from "./Channel.js";
+import ClientType from "src/interfaces/Client.js";
+import GuildChannel from "./GuildChannel.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  JsonTypes,
+  VoiceChannelCacheJSON,
+  VoiceChannelDiscordJSON,
+  VoiceChannelStorageJSON,
+  VoiceChannel as VoiceChannelType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildStageVoiceChannel,
+  APIGuildVoiceChannel,
+} from "discord-api-types/v10";
 /**
  * Represents a voice channel.
  * @extends {Channel}
  */
-declare class VoiceChannel extends Channel {
+declare class VoiceChannel extends GuildChannel implements VoiceChannelType {
   #private;
   /**
    * Creates the structure for a voice channel.
@@ -14,7 +27,22 @@ declare class VoiceChannel extends Channel {
    * @param {String} options.guildId The id of the guild that the voice channel belongs to.
    * @param {Boolean?} [options.nocache] Whether the voice channel should be cached.
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIGuildVoiceChannel
+      | APIGuildStageVoiceChannel
+      | VoiceChannelCacheJSON
+      | VoiceChannelDiscordJSON
+      | VoiceChannelStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The bitrate of the channel.
    * @type {Number}
@@ -54,40 +82,52 @@ declare class VoiceChannel extends Channel {
    * @method
    * @override
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
         bitrate: any;
         user_limit: any;
         rtc_region: any;
-        id: string;
-        type: any;
-        name: any;
-        topic: any;
-        rate_limit_per_user: any;
-        position: any;
-        parent_id: string | undefined;
-        _attributes: any;
-        _cacheOptions: any;
-        messages: any;
-        permission_overwrites: any;
-        nsfw?: undefined;
+        id: import("discord-api-types/globals").Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
+        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        nsfw: boolean;
+        messages: import("../../typings/index.d.js").MessageCacheJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteCacheJSON[];
       }
     | {
         bitrate: any;
         user_limit: any;
         rtc_region: any;
-        id: string;
-        type: any;
-        name: any;
-        topic: any;
-        rate_limit_per_user: any;
-        position: any;
-        parent_id: string | undefined;
+        id: import("discord-api-types/globals").Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
+        parent_id?: import("discord-api-types/globals").Snowflake | null;
         nsfw: boolean;
-        messages: any;
-        permission_overwrites: any;
-        _attributes?: undefined;
-        _cacheOptions?: undefined;
+        messages: import("../../typings/index.d.js").MessageDiscordJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteDiscordJSON[];
+      }
+    | {
+        bitrate: any;
+        user_limit: any;
+        rtc_region: any;
+        id: import("discord-api-types/globals").Snowflake;
+        type: import("discord-api-types/v10").ChannelType;
+        name: string;
+        topic?: string;
+        rate_limit_per_user?: number;
+        position?: number;
+        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        _attributes: number;
+        _cacheOptions: number;
+        messages: import("../../typings/index.d.js").MessageStorageJSON[];
+        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteStorageJSON[];
       };
 }
 export default VoiceChannel;

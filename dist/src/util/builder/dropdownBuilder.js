@@ -1,11 +1,7 @@
-import {
-  CHANNEL_TYPES,
-  COMPONENT_TYPES,
-  LIMITS,
-  SELECT_MENU_TYPES,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { LIMITS, SELECT_MENU_TYPES } from "../../constants.js";
 import DropdownOption from "./dropdownOption.js";
+import { ChannelType, ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "typings/index.js";
 /**
  * Helps to create a dropdown message component.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menus}
@@ -15,7 +11,7 @@ class Dropdown {
    * Creates a dropdown component.
    */
   constructor() {
-    this.type = COMPONENT_TYPES.SELECT_MENU;
+    this.type = ComponentType.StringSelect;
     this.options = [];
     this.default_values = [];
   }
@@ -213,12 +209,10 @@ class Dropdown {
         );
       if (
         this.channel_types &&
-        !this.channel_types.every((c) =>
-          Object.values(CHANNEL_TYPES).includes(c),
-        )
+        !this.channel_types.every((c) => Object.values(ChannelType).includes(c))
       )
         throw new TypeError(
-          `GLUON: Dropdown channel types must be one of ${Object.values(CHANNEL_TYPES).join(", ")}.`,
+          `GLUON: Dropdown channel types must be one of ${Object.values(ChannelType).join(", ")}.`,
         );
       if (this.placeholder && typeof this.placeholder !== "string")
         throw new TypeError("GLUON: Dropdown placeholder must be a string.");
@@ -282,13 +276,13 @@ class Dropdown {
         throw new TypeError("GLUON: Dropdown disabled must be a boolean.");
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           type: this.type,
-          custom_id: this.custom_id,
+          custom_id: this.custom_id, // only valid because of the validation above
           options: this.options?.map((o) => o.toJSON(format)),
           channel_types: this.channel_types,
           default_values: this.default_values,

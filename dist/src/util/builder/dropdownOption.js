@@ -1,4 +1,5 @@
-import { LIMITS, TO_JSON_TYPES_ENUM } from "../../constants.js";
+import { JsonTypes } from "typings/index.js";
+import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 /**
  * Helps to create a dropdown option.
@@ -56,7 +57,7 @@ class DropdownOption {
    * @returns {DropdownOption}
    */
   setEmoji(emoji) {
-    this.emoji = resolveEmoji(emoji);
+    this.emoji = resolveEmoji(emoji) ?? undefined;
     if (!this.emoji)
       throw new TypeError("GLUON: Dropdown option emoji must be provided.");
     return this;
@@ -115,13 +116,13 @@ class DropdownOption {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
-          label: this.label,
-          value: this.value,
+          label: this.label, // only valid because of the validation above
+          value: this.value, // only valid because of the validation above
           description: this.description,
           emoji: this.emoji,
           default: this.default,

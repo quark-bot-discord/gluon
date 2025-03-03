@@ -1,11 +1,23 @@
+import ClientType from "src/interfaces/Client.js";
 import Message from "../structures/Message.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import {
+  ChannelMessageManager as ChannelMessageManagerType,
+  StructureIdentifiers,
+  Message as MessageType,
+  Guild as GuildType,
+  GuildChannel as GuildChannelType,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all messages within a channel.
  */
-declare class ChannelMessageManager extends BaseCacheManager {
+declare class ChannelMessageManager
+  extends BaseCacheManager
+  implements ChannelMessageManagerType
+{
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a channel message manager.
    * @param {Client} client The client instance.
@@ -15,20 +27,31 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @constructor
    * @public
    */
-  constructor(client: any, guild: any, channel: any);
+  constructor(client: ClientType, guild: GuildType, channel: GuildChannelType);
   /**
    * The guild that this message manager belongs to.
    * @type {Guild}
    * @readonly
    */
-  get guild(): any;
+  get guild(): GuildType;
   /**
    * The channel that is being managed.
    * @type {TextChannel | VoiceChannel | Thread}
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): GuildChannelType;
+  get(key: Snowflake): MessageType | null;
+  /**
+   * Fetches a message from the cache or from the rules.
+   * @param {Snowflake} key The ID of the message to fetch.
+   * @returns {Promise<Message | null>}
+   * @public
+   * @async
+   * @method
+   */
+  fetchFromRules(key: Snowflake): Promise<MessageType | null>;
+  fetchWithRules(key: Snowflake): Promise<MessageType | null>;
   /**
    * Fetches a collection of messages or a singular message from the channel.
    * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
@@ -38,7 +61,16 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(options: any): Promise<any>;
+  fetch(
+    options:
+      | {
+          around?: Snowflake;
+          before?: Snowflake;
+          after?: Snowflake;
+          limit?: number;
+        }
+      | Snowflake,
+  ): Promise<any>;
   /**
    * Fetches all the pinned messages that belong to the channel.
    * @returns {Promise<Array<Message>>}
@@ -57,7 +89,7 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, message: any): Map<any, any>;
+  set(id: Snowflake, message: MessageType): void;
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.
@@ -69,7 +101,11 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client: any, guildId: any, channelId: any): any;
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+  ): any;
   /**
    * Gets a message from the cache.
    * @param {Client} client The client instance.
@@ -83,10 +119,10 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError}
    */
   static getMessage(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
   ): any;
   /**
    * Fetches a message from the channel.
@@ -102,10 +138,10 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static fetchMessage(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messageId: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messageId: Snowflake,
   ): Promise<any>;
   /**
    * Fetches a collection of messages from the channel.
@@ -125,10 +161,20 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @throws {TypeError | Error}
    */
   static fetchMessages(
-    client: any,
-    guildId: any,
-    channelId: any,
-    { around, before, after, limit }?: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    {
+      around,
+      before,
+      after,
+      limit,
+    }?: {
+      around?: Snowflake;
+      before?: Snowflake;
+      after?: Snowflake;
+      limit?: number;
+    },
   ): Promise<Message[]>;
   /**
    * Bulk deletes channel messages.
@@ -144,11 +190,15 @@ declare class ChannelMessageManager extends BaseCacheManager {
    * @static
    */
   static purgeChannelMessages(
-    client: any,
-    guildId: any,
-    channelId: any,
-    messages: any,
-    { reason }?: any,
+    client: ClientType,
+    guildId: Snowflake,
+    channelId: Snowflake,
+    messages: Snowflake[],
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
   ): Promise<void>;
 }
 export default ChannelMessageManager;

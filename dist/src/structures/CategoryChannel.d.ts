@@ -1,5 +1,15 @@
+import ClientType from "src/interfaces/Client.js";
 import util from "util";
-declare class CategoryChannel {
+import { APIGuildCategoryChannel, Snowflake } from "discord-api-types/v10";
+import {
+  CategoryChannelCacheJSON,
+  CategoryChannelDiscordJSON,
+  CategoryChannelStorageJSON,
+  CategoryChannel as CategoryChannelType,
+  PermissionOverwrite as PermissionOverwriteType,
+  JsonTypes,
+} from "../../typings/index.d.js";
+declare class CategoryChannel implements CategoryChannelType {
   #private;
   /**
    * Creates the structure for a category channel.
@@ -9,7 +19,21 @@ declare class CategoryChannel {
    * @param {String} options.guildId The ID of the guild that this channel belongs to.
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIGuildCategoryChannel
+      | CategoryChannelCacheJSON
+      | CategoryChannelDiscordJSON
+      | CategoryChannelStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The ID of the channel.
    * @type {String}
@@ -37,21 +61,21 @@ declare class CategoryChannel {
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string | undefined;
   /**
    * The type of channel.
    * @type {Number}
    * @readonly
    * @public
    */
-  get type(): any;
+  get type(): number;
   /**
    * The permission overwrites for the channel.
    * @type {Array<PermissionOverwrite>}
    * @readonly
    * @public
    */
-  get permissionOverwrites(): any;
+  get permissionOverwrites(): PermissionOverwriteType[];
   /**
    * Whether the channel is nsfw.
    * @type {Boolean}
@@ -83,13 +107,11 @@ declare class CategoryChannel {
    * @public
    * @method
    */
-  toJSON(format: any): {
-    id: string;
-    guild_id: string;
-    name: any;
-    type: any;
-    nsfw: boolean;
-    permission_overwrites: any;
-  };
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | CategoryChannelCacheJSON
+    | CategoryChannelDiscordJSON
+    | CategoryChannelStorageJSON;
 }
 export default CategoryChannel;

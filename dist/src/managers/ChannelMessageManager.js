@@ -110,6 +110,23 @@ class ChannelMessageManager extends BaseCacheManager {
   get channel() {
     return __classPrivateFieldGet(this, _ChannelMessageManager_channel, "f");
   }
+  get(key) {
+    return super.get(key);
+  }
+  /**
+   * Fetches a message from the cache or from the rules.
+   * @param {Snowflake} key The ID of the message to fetch.
+   * @returns {Promise<Message | null>}
+   * @public
+   * @async
+   * @method
+   */
+  async fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  async fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Fetches a collection of messages or a singular message from the channel.
    * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
@@ -192,7 +209,7 @@ class ChannelMessageManager extends BaseCacheManager {
               this,
               _ChannelMessageManager_channel,
               "f",
-            ).guild.id,
+            ).guildId,
           },
         ),
       );
@@ -211,7 +228,7 @@ class ChannelMessageManager extends BaseCacheManager {
   set(id, message) {
     if (!(message instanceof Message))
       throw new TypeError("GLUON: Message must be a Message instance.");
-    return super.set(
+    super.set(
       id,
       message,
       __classPrivateFieldGet(this, _ChannelMessageManager__client, "f")

@@ -116,6 +116,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.FILES,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache voice states or not.
@@ -143,6 +144,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache members or not.
@@ -170,6 +172,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.MEMBERS,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache roles or not.
@@ -197,6 +200,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.ROLES,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache channels or not.
@@ -224,6 +228,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.CHANNELS,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache emojis or not.
@@ -251,6 +256,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.EMOJIS,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache threads or not.
@@ -278,6 +284,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.THREADS,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache invites or not.
@@ -305,6 +312,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.INVITES,
         "f",
       );
+    return this;
   }
   /**
    * Whether to cache scheduled events or not.
@@ -332,6 +340,7 @@ class GuildCacheOptions {
           ~GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS,
         "f",
       );
+    return this;
   }
   /**
    * Returns whether to cache files or not.

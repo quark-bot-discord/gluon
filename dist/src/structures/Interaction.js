@@ -48,14 +48,15 @@ var _Interaction__client,
   _Interaction__guild_id,
   _Interaction__channel_id,
   _Interaction_token,
-  _Interaction_member,
+  _Interaction__member_id,
   _Interaction__responses_sent;
 import ActionRow from "../util/builder/actionRowBuilder.js";
 import Member from "./Member.js";
 import TextInput from "../util/builder/textInputBuilder.js";
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
 import Message from "./Message.js";
+import { GuildMemberManager } from "src/structures.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
@@ -73,7 +74,7 @@ class Interaction {
     _Interaction__guild_id.set(this, void 0);
     _Interaction__channel_id.set(this, void 0);
     _Interaction_token.set(this, void 0);
-    _Interaction_member.set(this, void 0);
+    _Interaction__member_id.set(this, void 0);
     _Interaction__responses_sent.set(this, 0);
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -117,28 +118,28 @@ class Interaction {
     __classPrivateFieldSet(
       this,
       _Interaction__channel_id,
-      BigInt(data.channel_id),
+      data.channel_id ? BigInt(data.channel_id) : undefined,
       "f",
     );
-    if (data.member)
-      /**
-       * The member that triggered the interaction, if it was run in a guild.
-       * @type {Member?}
-       * @private
-       */
-      __classPrivateFieldSet(
-        this,
-        _Interaction_member,
-        new Member(
-          __classPrivateFieldGet(this, _Interaction__client, "f"),
-          data.member,
-          {
-            userId: data.member.user.id,
-            guildId: data.guild_id,
-          },
-        ),
-        "f",
-      );
+    /**
+     * The member that triggered the interaction, if it was run in a guild.
+     * @type {Member?}
+     * @private
+     */
+    __classPrivateFieldSet(
+      this,
+      _Interaction__member_id,
+      BigInt(data.member.user.id),
+      "f",
+    );
+    new Member(
+      __classPrivateFieldGet(this, _Interaction__client, "f"),
+      data.member,
+      {
+        userId: data.member.user.id,
+        guildId: data.guild_id,
+      },
+    );
     /**
      * The interaction token, needed to respond to it.
      * @type {String}
@@ -226,7 +227,13 @@ class Interaction {
    * @public
    */
   get member() {
-    return __classPrivateFieldGet(this, _Interaction_member, "f");
+    return this.memberId
+      ? GuildMemberManager.getMember(
+          __classPrivateFieldGet(this, _Interaction__client, "f"),
+          this.guildId,
+          this.memberId,
+        )
+      : undefined;
   }
   /**
    * The id of the member that triggered the interaction, if it was run in a guild.
@@ -235,7 +242,7 @@ class Interaction {
    * @public
    */
   get memberId() {
-    return this.member?.id || null;
+    return String(__classPrivateFieldGet(this, _Interaction__member_id, "f"));
   }
   /**
    * Prompts a user to enter text using a modal.
@@ -249,7 +256,7 @@ class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  async textPrompt({ title, customId, textInputModal } = {}) {
+  async textPrompt({ title, customId, textInputModal }) {
     if (typeof title !== "string")
       throw new TypeError("GLUON: No title provided.");
     if (typeof customId !== "string")
@@ -289,7 +296,7 @@ class Interaction {
    * @method
    * @throws {Error}
    */
-  async autocompleteResponse({ choices } = {}) {
+  async autocompleteResponse({ choices }) {
     if (!choices || !Array.isArray(choices))
       throw new Error("GLUON: No choices provided.");
     const body = {};
@@ -322,7 +329,7 @@ class Interaction {
    * @async
    * @method
    */
-  async reply({ content, files, embeds, components, quiet } = {}) {
+  async reply({ content, files, embeds, components, quiet }) {
     var _a, _b;
     if (!content && !files && !embeds && !components)
       throw new Error(
@@ -478,7 +485,7 @@ class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  async edit({ content, files, embeds, components } = {}) {
+  async edit({ content, files, embeds, components }) {
     return Interaction.edit(
       __classPrivateFieldGet(this, _Interaction__client, "f"),
       __classPrivateFieldGet(this, _Interaction_token, "f"),
@@ -508,7 +515,7 @@ class Interaction {
   static async edit(
     client,
     interactionToken,
-    { content, files, embeds, components } = {},
+    { content, files, embeds, components },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -548,7 +555,7 @@ class Interaction {
   (_Interaction__guild_id = new WeakMap()),
   (_Interaction__channel_id = new WeakMap()),
   (_Interaction_token = new WeakMap()),
-  (_Interaction_member = new WeakMap()),
+  (_Interaction__member_id = new WeakMap()),
   (_Interaction__responses_sent = new WeakMap()),
   util.inspect.custom)]() {
     return this.toString();
@@ -562,17 +569,16 @@ class Interaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           id: this.id,
           type: this.type,
           guild_id: this.guildId,
           channel_id: this.channelId,
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
-          member: this.member.toJSON(format),
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

@@ -42,15 +42,11 @@ var __classPrivateFieldGet =
           ? f.value
           : state.get(receiver);
   };
-var _Sticker__client, _Sticker__id, _Sticker_name, _Sticker_format_type;
-import {
-  STICKER_FORMATS,
-  CDN_BASE_URL,
-  STICKER_FORMATS_ENUM,
-  TO_JSON_TYPES_ENUM,
-  MEDIA_BASE_URL,
-} from "../constants.js";
+var _Sticker__id, _Sticker_name, _Sticker_format_type;
+import { CDN_BASE_URL, MEDIA_BASE_URL } from "../constants.js";
 import util from "util";
+import { StickerFormatType } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an sticker.
  */
@@ -61,7 +57,7 @@ class Sticker {
    * @param {Object} data Sticker data from Discord.
    */
   constructor(client, data) {
-    _Sticker__client.set(this, void 0);
+    // #_client;
     _Sticker__id.set(this, void 0);
     _Sticker_name.set(this, void 0);
     _Sticker_format_type.set(this, void 0);
@@ -74,7 +70,7 @@ class Sticker {
      * @type {Client}
      * @private
      */
-    __classPrivateFieldSet(this, _Sticker__client, client, "f");
+    // this.#_client = client;
     /**
      * The id of the sticker.
      * @type {BigInt}
@@ -119,15 +115,6 @@ class Sticker {
    * @public
    */
   get format() {
-    return STICKER_FORMATS[this.formatType];
-  }
-  /**
-   * The format type of the sticker.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get formatType() {
     return __classPrivateFieldGet(this, _Sticker_format_type, "f");
   }
   /**
@@ -138,15 +125,15 @@ class Sticker {
    */
   get previewImageURL() {
     let cdnImageFormat;
-    switch (this.formatType) {
-      case STICKER_FORMATS_ENUM.LOTTIE: {
+    switch (this.format) {
+      case StickerFormatType.Lottie: {
         return null;
       }
-      case STICKER_FORMATS_ENUM.GIF: {
+      case StickerFormatType.GIF: {
         return `${MEDIA_BASE_URL}/stickers/${this.id}.gif`;
       }
-      case STICKER_FORMATS_ENUM.PNG:
-      case STICKER_FORMATS_ENUM.APNG:
+      case StickerFormatType.PNG:
+      case StickerFormatType.APNG:
       default: {
         cdnImageFormat = "png";
         break;
@@ -165,8 +152,7 @@ class Sticker {
    * @method
    * @public
    */
-  [((_Sticker__client = new WeakMap()),
-  (_Sticker__id = new WeakMap()),
+  [((_Sticker__id = new WeakMap()),
   (_Sticker_name = new WeakMap()),
   (_Sticker_format_type = new WeakMap()),
   util.inspect.custom)]() {
@@ -181,14 +167,14 @@ class Sticker {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,
           name: this.name,
-          format_type: this.formatType,
+          format_type: this.format,
         };
       }
     }

@@ -50,10 +50,10 @@ var _Poll__client,
   _Poll_allow_multiselect,
   _Poll_layout_type,
   _Poll_results;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 class Poll {
   /**
    * Creates the structure for a poll.
@@ -62,7 +62,7 @@ class Poll {
    * @param {Object} options The additional options for this structure.
    * @param {String} options.guildId The ID of the guild that this poll belongs to.
    */
-  constructor(client, data, { guildId } = {}) {
+  constructor(client, data, { guildId }) {
     _Poll__client.set(this, void 0);
     _Poll__guild_id.set(this, void 0);
     _Poll_question.set(this, void 0);
@@ -109,7 +109,7 @@ class Poll {
     __classPrivateFieldSet(
       this,
       _Poll_expiry,
-      (new Date(data.expiry).getTime() / 1000) | 0,
+      data.expiry ? (new Date(data.expiry).getTime() / 1000) | 0 : null,
       "f",
     );
     /**
@@ -139,7 +139,7 @@ class Poll {
       _Poll_results,
       new MessagePollManager(
         __classPrivateFieldGet(this, _Poll__client, "f"),
-        data._results,
+        "_results" in data ? data._results : undefined,
       ),
       "f",
     );
@@ -171,7 +171,7 @@ class Poll {
    * @public
    */
   get question() {
-    return `${__classPrivateFieldGet(this, _Poll_question, "f").emoji ? `${Emoji.getMention(__classPrivateFieldGet(this, _Poll_question, "f").emoji.name, __classPrivateFieldGet(this, _Poll_question, "f").emoji.id, __classPrivateFieldGet(this, _Poll_question, "f").emoji.animated)} ` : ""}${__classPrivateFieldGet(this, _Poll_question, "f").text ? __classPrivateFieldGet(this, _Poll_question, "f").text : ""}`;
+    return `${__classPrivateFieldGet(this, _Poll_question, "f").emoji ? `${Emoji.getMention(__classPrivateFieldGet(this, _Poll_question, "f").emoji.name /** name only not provided with reactions */, __classPrivateFieldGet(this, _Poll_question, "f").emoji.id, __classPrivateFieldGet(this, _Poll_question, "f").emoji.animated)} ` : ""}${__classPrivateFieldGet(this, _Poll_question, "f").text ? __classPrivateFieldGet(this, _Poll_question, "f").text : ""}`;
   }
   /**
    * The answers of the poll.
@@ -184,7 +184,7 @@ class Poll {
     return __classPrivateFieldGet(this, _Poll_answers, "f").map((a) => {
       return {
         answerId: a.answer_id,
-        answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
+        answer: `${a.poll_media.emoji ? `${Emoji.getMention(a.poll_media.emoji.name /** name only not provided with reactions */, a.poll_media.emoji.id, a.poll_media.emoji.animated)} ` : ""}${a.poll_media.text}`,
         result: this._results.getResult(a.answer_id),
       };
     });
@@ -214,17 +214,6 @@ class Poll {
    * @public
    */
   get layoutType() {
-    if (__classPrivateFieldGet(this, _Poll_layout_type, "f") === 1)
-      return "DEFAULT";
-    else return null;
-  }
-  /**
-   * The raw layout type of the poll.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
-  get rawLayoutType() {
     return __classPrivateFieldGet(this, _Poll_layout_type, "f");
   }
   /**
@@ -267,18 +256,18 @@ class Poll {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           question: __classPrivateFieldGet(this, _Poll_question, "f"),
           answers: __classPrivateFieldGet(this, _Poll_answers, "f"),
           expiry: this.expiry ? this.expiry * 1000 : null,
           allow_multiselect: this.allowMultiselect,
-          layout_type: this.rawLayoutType,
+          layout_type: this.layoutType,
           _results: this._results.toJSON(format),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           question: __classPrivateFieldGet(this, _Poll_question, "f"),
@@ -287,7 +276,7 @@ class Poll {
             ? new Date(this.expiry * 1000).toISOString()
             : null,
           allow_multiselect: this.allowMultiselect,
-          layout_type: this.rawLayoutType,
+          layout_type: this.layoutType,
           results: this._results.toJSON(format),
         };
       }

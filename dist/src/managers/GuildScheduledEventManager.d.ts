@@ -1,9 +1,21 @@
-import ScheduledEvent from "../structures/ScheduledEvent.js";
+import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-declare class GuildScheduledEventManager extends BaseCacheManager {
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  ScheduledEvent as ScheduledEventType,
+  StructureIdentifiers,
+  Guild as GuildType,
+  GuildScheduledEventManager as GuildScheduledEventManagerType,
+} from "../../typings/index.d.js";
+declare class GuildScheduledEventManager
+  extends BaseCacheManager
+  implements GuildScheduledEventManagerType
+{
   #private;
-  static identifier: string;
-  constructor(client: any, guild: any);
+  static identifier: StructureIdentifiers;
+  constructor(client: ClientType, guild: GuildType);
+  fetchFromRules(key: string): Promise<ScheduledEventType | null>;
+  fetchWithRules(key: string): Promise<ScheduledEventType | null>;
   /**
    * Retrieves all scheduled events for this guild.
    * @returns {Promise<Array<ScheduledEvent>>}
@@ -12,7 +24,7 @@ declare class GuildScheduledEventManager extends BaseCacheManager {
    * @public
    * @throws {Error}
    */
-  list(): Promise<ScheduledEvent[]>;
+  list(): Promise<ScheduledEventType[]>;
   /**
    * Fetches a scheduled event from the API.
    * @param {String} scheduledEventId The ID of the event to fetch.
@@ -22,7 +34,7 @@ declare class GuildScheduledEventManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(scheduledEventId: any): Promise<any>;
+  fetch(scheduledEventId: Snowflake): Promise<ScheduledEventType | null>;
   /**
    * Cache a scheduled event.
    * @param {String} id The ID of the event to cache.
@@ -33,6 +45,7 @@ declare class GuildScheduledEventManager extends BaseCacheManager {
    * @method
    * @override
    */
-  set(id: any, event: any): Map<any, any>;
+  set(id: Snowflake, event: ScheduledEventType): void;
+  get(id: Snowflake): ScheduledEventType | null;
 }
 export default GuildScheduledEventManager;

@@ -76,6 +76,12 @@ class GuildEmojisManager extends BaseCacheManager {
      */
     __classPrivateFieldSet(this, _GuildEmojisManager_guild, guild, "f");
   }
+  fetchFromRules(key) {
+    return super.fetchFromRules(key);
+  }
+  fetchWithRules(key) {
+    return super.fetchWithRules(key);
+  }
   /**
    * Fetches a particular emoji that belongs to this guild.
    * @param {String} emojiId The id of the emoji to fetch.
@@ -157,6 +163,9 @@ class GuildEmojisManager extends BaseCacheManager {
     if (!(emoji instanceof Emoji))
       throw new TypeError("GLUON: Emoji must be an instance of Emoji.");
     return super.set(id, emoji);
+  }
+  get(key) {
+    return super.get(key);
   }
 }
 (_GuildEmojisManager__client = new WeakMap()),

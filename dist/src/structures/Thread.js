@@ -43,11 +43,12 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _Thread__client, _Thread__owner_id, _Thread__parent_id;
-import { GLUON_DEBUG_LEVELS, TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
-import Channel from "./Channel.js";
+import Channel from "./GuildChannel.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
@@ -63,7 +64,7 @@ class Thread extends Channel {
    * @param {Boolean?} [options.nocache] Whether this thread should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-thread-channel}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     super(client, data, { guildId });
     _Thread__client.set(this, void 0);
     _Thread__owner_id.set(this, void 0);
@@ -87,7 +88,12 @@ class Thread extends Channel {
      * @type {BigInt}
      * @private
      */
-    __classPrivateFieldSet(this, _Thread__owner_id, BigInt(data.owner_id), "f");
+    __classPrivateFieldSet(
+      this,
+      _Thread__owner_id,
+      data.owner_id ? BigInt(data.owner_id) : null,
+      "f",
+    );
     /**
      * The ID of the text channel that this thread belongs to.
      * @type {BigInt}
@@ -96,14 +102,18 @@ class Thread extends Channel {
     __classPrivateFieldSet(
       this,
       _Thread__parent_id,
-      BigInt(data.parent_id),
+      data.parent_id ? BigInt(data.parent_id) : null,
       "f",
     );
     const shouldCache = Thread.shouldCache(
       __classPrivateFieldGet(this, _Thread__client, "f")._cacheOptions,
       this.guild._cacheOptions,
     );
-    if (nocache === false && data.archived !== true && shouldCache) {
+    if (
+      nocache === false &&
+      (!("archived" in data) || data.archived !== true) &&
+      shouldCache
+    ) {
       this.guild.channels.set(data.id, this);
       __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
@@ -112,7 +122,7 @@ class Thread extends Channel {
     } else {
       __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
-        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${data.archived} ${shouldCache})`,
+        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
       );
     }
   }
@@ -202,9 +212,9 @@ class Thread extends Channel {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

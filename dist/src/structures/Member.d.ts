@@ -1,9 +1,25 @@
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import {
+  Member as MemberType,
+  MemberCacheJSON,
+  MemberDiscordJSON,
+  MemberStorageJSON,
+  JsonTypes,
+  User as UserType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildMember,
+  APIInteractionDataResolvedGuildMember,
+} from "discord-api-types/v10";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
  */
-declare class Member {
+declare class Member implements MemberType {
   #private;
   /**
    * Creates the structure for a guild member.
@@ -15,7 +31,26 @@ declare class Member {
    * @param {User?} [options.user] A user object for this member.
    * @param {Boolean?} [options.nocache] Whether this member should be cached.
    */
-  constructor(client: any, data: any, { userId, guildId, user, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIGuildMember
+      | APIInteractionDataResolvedGuildMember
+      | MemberStorageJSON
+      | MemberCacheJSON
+      | MemberDiscordJSON,
+    {
+      userId,
+      guildId,
+      user,
+      nocache,
+    }: {
+      userId: Snowflake;
+      guildId: Snowflake;
+      user?: UserType;
+      nocache?: boolean;
+    },
+  );
   /**
    * The id of the member.
    * @type {String}
@@ -157,7 +192,7 @@ declare class Member {
    * @static
    * @method
    */
-  static getMention(userId: any): string;
+  static getMention(userId: Snowflake): string;
   /**
    * Returns the avatar url for the member.
    * @param {String} id The id of the user.
@@ -168,7 +203,11 @@ declare class Member {
    * @static
    * @method
    */
-  static getAvatarUrl(id: any, guildId: any, hash: any): string | null;
+  static getAvatarUrl(
+    id: Snowflake,
+    guildId: Snowflake,
+    hash?: string | null,
+  ): string | null;
   /**
    * Adds a role to the member.
    * @param {String} role_id The id of the role to add to the member.
@@ -180,7 +219,14 @@ declare class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  addRole(role_id: any, { reason }?: any): Promise<void>;
+  addRole(
+    role_id: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Removes a role from the member.
    * @param {String} role_id The id of the role to remove from the member.
@@ -192,7 +238,14 @@ declare class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  removeRole(role_id: any, { reason }?: any): Promise<void>;
+  removeRole(
+    role_id: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Adds a timeout to the member.
    * @param {Number} timeout_until The UNIX timestamp for when the member's timeout should end.
@@ -204,7 +257,14 @@ declare class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  timeoutAdd(timeout_until: any, { reason }?: any): Promise<void>;
+  timeoutAdd(
+    timeout_until: UnixTimestamp,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Removes a timeout from the member.
    * @param {Object?} [options] The options for untiming out the member.
@@ -215,7 +275,7 @@ declare class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  timeoutRemove({ reason }?: any): Promise<void>;
+  timeoutRemove({ reason }?: { reason?: string }): Promise<void>;
   /**
    * Updates the member's roles.
    * @param {Array<String>} roles An array of role ids for the roles the member should be updated with.
@@ -227,7 +287,14 @@ declare class Member {
    * @method
    * @throws {TypeError | Error}
    */
-  massUpdateRoles(roles: any, { reason }?: any): Promise<void>;
+  massUpdateRoles(
+    roles: Snowflake[],
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Determines whether the member should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -237,14 +304,17 @@ declare class Member {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * Returns the hash name for the message.
    * @param {String} guildId The id of the guild that the message belongs to.
    * @param {String} memberId The id of the member.
    * @returns {String}
    */
-  static getHashName(guildId: any, memberId: any): string;
+  static getHashName(guildId: Snowflake, memberId: Snowflake): string;
   /**
    * Decrypts a member.
    * @param {Client} client The client instance.
@@ -253,7 +323,12 @@ declare class Member {
    * @param {String} userId The id of the member.
    * @returns {Member}
    */
-  static decrypt(client: any, data: any, guildId: any, userId: any): Member;
+  static decrypt(
+    client: ClientType,
+    data: string,
+    guildId: Snowflake,
+    userId: Snowflake,
+  ): Member;
   /**
    * Adds a role to a member.
    * @param {Client} client The client instance.
@@ -269,11 +344,15 @@ declare class Member {
    * @throws {TypeError}
    */
   static addRole(
-    client: any,
-    guildId: any,
-    userId: any,
-    roleId: any,
-    { reason }?: any,
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+    roleId: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
   ): Promise<void>;
   /**
    * Removes a role from a member.
@@ -290,11 +369,15 @@ declare class Member {
    * @throws {TypeError}
    */
   static removeRole(
-    client: any,
-    guildId: any,
-    userId: any,
-    roleId: any,
-    { reason }?: any,
+    client: ClientType,
+    guildId: Snowflake,
+    userId: Snowflake,
+    roleId: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
   ): Promise<void>;
   /**
    * Encrypts the member.
@@ -320,7 +403,7 @@ declare class Member {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
         user: any;
         nick: any;
@@ -330,7 +413,7 @@ declare class Member {
         roles: string[] | undefined;
         communication_disabled_until: number | undefined;
         flags: any;
-        _attributes: any;
+        _attributes: number;
         pending?: undefined;
       }
     | {

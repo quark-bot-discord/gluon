@@ -42,15 +42,15 @@ var __classPrivateFieldGet =
           ? f.value
           : state.get(receiver);
   };
-var _Attachment__client,
-  _Attachment__id,
+var _Attachment__id,
   _Attachment__channel_id,
   _Attachment__urlData,
   _Attachment_name,
   _Attachment_size;
 import fetch from "node-fetch";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}
@@ -60,7 +60,7 @@ class Attachment {
    * Creates a structure for an attachment.
    */
   constructor(client, data, { channelId }) {
-    _Attachment__client.set(this, void 0);
+    // #_client;
     _Attachment__id.set(this, void 0);
     _Attachment__channel_id.set(this, void 0);
     _Attachment__urlData.set(this, void 0);
@@ -77,7 +77,7 @@ class Attachment {
      * @type {Client}
      * @private
      */
-    __classPrivateFieldSet(this, _Attachment__client, client, "f");
+    // this.#_client = client;
     /**
      * The id of the attachment.
      * @type {BigInt}
@@ -186,9 +186,7 @@ class Attachment {
    * @public
    */
   get channelId() {
-    return __classPrivateFieldGet(this, _Attachment__channel_id, "f")
-      ? String(__classPrivateFieldGet(this, _Attachment__channel_id, "f"))
-      : null;
+    return String(__classPrivateFieldGet(this, _Attachment__channel_id, "f"));
   }
   /**
    * Fetches the data of the attachment.
@@ -210,8 +208,7 @@ class Attachment {
    * @method
    * @public
    */
-  [((_Attachment__client = new WeakMap()),
-  (_Attachment__id = new WeakMap()),
+  [((_Attachment__id = new WeakMap()),
   (_Attachment__channel_id = new WeakMap()),
   (_Attachment__urlData = new WeakMap()),
   (_Attachment_name = new WeakMap()),
@@ -224,15 +221,15 @@ class Attachment {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           filename: this.name,
           size: this.size,
         };
       }
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

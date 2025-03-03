@@ -1,9 +1,24 @@
+import ClientType from "src/interfaces/Client.js";
 import User from "./User.js";
 import util from "util";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  Invite as InviteType,
+  InviteCacheJSON,
+  InviteDiscordJSON,
+  InviteStorageJSON,
+  JsonTypes,
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+} from "../../typings/index.d.js";
+import { APIExtendedInvite } from "discord-api-types/v10";
 /**
  * Represents a guild invite.
  */
-declare class Invite {
+declare class Invite implements InviteType {
   #private;
   /**
    * Creates the structure for an invite.
@@ -14,7 +29,21 @@ declare class Invite {
    * @param {Boolean?} [options.nocache] Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIExtendedInvite
+      | InviteCacheJSON
+      | InviteDiscordJSON
+      | InviteStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The id of the channel the invite is directed to.
    * @type {String}
@@ -35,14 +64,14 @@ declare class Invite {
    * @readonly
    * @public
    */
-  get id(): any;
+  get id(): string;
   /**
    * The code of the invite.
    * @type {String}
    * @readonly
    * @public
    */
-  get code(): any;
+  get code(): string;
   /**
    * The id of the guild that this invite belongs to.
    * @type {String}
@@ -63,14 +92,14 @@ declare class Invite {
    * @readonly
    * @public
    */
-  get uses(): any;
+  get uses(): number;
   /**
    * The UNIX timestamp of when the invite expires.
    * @type {Number?}
    * @readonly
    * @public
    */
-  get expires(): any;
+  get expires(): number | undefined;
   /**
    * The user who created the invite.
    * @type {User?}
@@ -78,6 +107,7 @@ declare class Invite {
    * @public
    */
   get inviter(): User | undefined;
+  get inviterId(): string;
   /**
    * The URL of the invite.
    * @type {String}
@@ -91,7 +121,7 @@ declare class Invite {
    * @readonly
    * @public
    */
-  get maxUses(): any;
+  get maxUses(): number;
   /**
    * Returns the URL of the invite.
    * @param {String} code The code of the invite.
@@ -100,7 +130,7 @@ declare class Invite {
    * @static
    * @method
    */
-  static getUrl(code: any): string;
+  static getUrl(code: string): string;
   /**
    * Determines whether the invite should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -110,7 +140,10 @@ declare class Invite {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public
@@ -128,61 +161,23 @@ declare class Invite {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
-        code: any;
+        code: string;
         channel: any;
-        inviter:
-          | {
-              id: string;
-              avatar: string | null;
-              _cached: any;
-              bot: boolean;
-              username: any;
-              global_name: any;
-              discriminator: string | null;
-            }
-          | {
-              id: string;
-              avatar: string | null;
-              bot: boolean;
-              username: any;
-              global_name: any;
-              discriminator: string | null;
-              _cached?: undefined;
-            }
-          | undefined;
-        uses: any;
+        inviter: UserCacheJSON | UserStorageJSON;
+        uses: number;
         expires: number | undefined;
-        max_uses: any;
+        max_uses: number;
         expires_at?: undefined;
       }
     | {
-        code: any;
+        code: string;
         channel: any;
-        inviter:
-          | {
-              id: string;
-              avatar: string | null;
-              _cached: any;
-              bot: boolean;
-              username: any;
-              global_name: any;
-              discriminator: string | null;
-            }
-          | {
-              id: string;
-              avatar: string | null;
-              bot: boolean;
-              username: any;
-              global_name: any;
-              discriminator: string | null;
-              _cached?: undefined;
-            }
-          | undefined;
-        uses: any;
+        inviter: UserDiscordJSON;
+        uses: number;
         expires_at: string | undefined;
-        max_uses: any;
+        max_uses: number;
         expires?: undefined;
       };
 }

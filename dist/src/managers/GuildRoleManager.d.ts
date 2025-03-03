@@ -1,16 +1,30 @@
+import ClientType from "src/interfaces/Client.js";
+import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  GuildRoleManager as GuildRoleManagerType,
+  Guild as GuildType,
+  Role as RoleType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
 /**
  * Manages all roles belonging to a guild.
  */
-declare class GuildRoleManager extends BaseCacheManager {
+declare class GuildRoleManager
+  extends BaseCacheManager
+  implements GuildRoleManagerType
+{
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a role manager.
    * @param {Client} client The client instance.
    * @param {Guild} guild The guild that this role manager belongs to.
    */
-  constructor(client: any, guild: any);
+  constructor(client: ClientType, guild: GuildType);
+  fetchFromRules(key: string): Promise<RoleType | null>;
+  fetchWithRules(key: string): Promise<RoleType | null>;
   /**
    * Fetches a role that belongs to this guild.
    * @param {String} roleId The id of the role to fetch.
@@ -20,7 +34,7 @@ declare class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(roleId: any): Promise<any>;
+  fetch(roleId: Snowflake): Promise<Role | RoleType | null>;
   /**
    * Adds a role to the cache.
    * @param {String} id The ID of the role to cache
@@ -31,7 +45,8 @@ declare class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, role: any): Map<any, any>;
+  set(id: Snowflake, role: RoleType): void;
+  get(id: Snowflake): RoleType | null;
   /**
    * Returns a role from the cache.
    * @param {Client} client The client instance.
@@ -43,7 +58,11 @@ declare class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getRole(client: any, guildId: any, roleId: any): any;
+  static getRole(
+    client: ClientType,
+    guildId: Snowflake,
+    roleId: Snowflake,
+  ): any;
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.
@@ -54,7 +73,7 @@ declare class GuildRoleManager extends BaseCacheManager {
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client: any, guildId: any): any;
+  static getCacheManager(client: ClientType, guildId: Snowflake): any;
   /**
    * Fetches a role, checking the cache first.
    * @param {String} guildId The id of the guild the role belongs to.
@@ -66,6 +85,10 @@ declare class GuildRoleManager extends BaseCacheManager {
    * @throws {TypeError}
    * @static
    */
-  static fetchRole(client: any, guildId: any, roleId: any): Promise<any>;
+  static fetchRole(
+    client: ClientType,
+    guildId: Snowflake,
+    roleId: Snowflake,
+  ): Promise<any>;
 }
 export default GuildRoleManager;

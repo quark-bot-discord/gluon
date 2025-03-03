@@ -1,10 +1,29 @@
 import User from "./User.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  APIGuildScheduledEvent,
+  GuildScheduledEventEntityType,
+  GuildScheduledEventStatus,
+} from "discord-api-types/v10";
+import {
+  ScheduledEvent as ScheduledEventType,
+  ScheduledEventCacheJSON,
+  ScheduledEventDiscordJSON,
+  ScheduledEventStorageJSON,
+  JsonTypes,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
+} from "../../typings/index.d.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
  */
-declare class ScheduledEvent {
+declare class ScheduledEvent implements ScheduledEventType {
   #private;
   /**
    * Creates the structure for a scheduled event.
@@ -14,7 +33,21 @@ declare class ScheduledEvent {
    * @param {String} options.guildId The ID of the guild that this event belongs to.
    * @param {Boolean?} [options.nocache] Whether this event should be cached or not.
    */
-  constructor(client: any, data: any, { guildId, nocache }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIGuildScheduledEvent
+      | ScheduledEventCacheJSON
+      | ScheduledEventDiscordJSON
+      | ScheduledEventStorageJSON,
+    {
+      guildId,
+      nocache,
+    }: {
+      guildId: Snowflake;
+      nocache?: boolean;
+    },
+  );
   /**
    * The ID of the event.
    * @type {String}
@@ -35,7 +68,7 @@ declare class ScheduledEvent {
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string;
   /**
    * The ID of the user who created the event.
    * @type {String?}
@@ -49,14 +82,14 @@ declare class ScheduledEvent {
    * @readonly
    * @public
    */
-  get creator(): User | undefined;
+  get creator(): User | null;
   /**
    * The description of the event.
    * @type {String}
    * @readonly
    * @public
    */
-  get description(): any;
+  get description(): string | null;
   /**
    * The hash of the event's image, as it was received from Discord.
    * @readonly
@@ -77,14 +110,14 @@ declare class ScheduledEvent {
    * @type {String}
    * @public
    */
-  get entityType(): "STAGE_INSTANCE" | "VOICE" | "EXTERNAL" | "UNKNOWN";
+  get entityType(): GuildScheduledEventEntityType;
   /**
    * The status of the event.
    * @readonly
    * @type {String}
    * @public
    */
-  get status(): "UNKNOWN" | "SCHEDULED" | "ACTIVE" | "COMPLETED" | "CANCELED";
+  get status(): GuildScheduledEventStatus;
   /**
    * The guild that this event belongs to.
    * @type {Guild?}
@@ -105,21 +138,21 @@ declare class ScheduledEvent {
    * @readonly
    * @public
    */
-  get scheduledEndTime(): number | undefined;
+  get scheduledEndTime(): number | null;
   /**
    * The number of users who have signed up for the event.
    * @type {Number}
    * @readonly
    * @public
    */
-  get userCount(): any;
+  get userCount(): number;
   /**
    * The location of the event.
    * @type {String?}
    * @readonly
    * @public
    */
-  get location(): any;
+  get location(): string;
   /**
    * Returns the URL of the event's image.
    * @param {String} id The id of the event.
@@ -129,7 +162,7 @@ declare class ScheduledEvent {
    * @static
    * @method
    */
-  static getImageUrl(id: any, hash: any): string | null;
+  static getImageUrl(id: Snowflake, hash?: string | null): string | null;
   /**
    * Determines whether the scheduled event should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -139,7 +172,10 @@ declare class ScheduledEvent {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any, guildCacheOptions: any): boolean;
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public
@@ -157,40 +193,40 @@ declare class ScheduledEvent {
    * @public
    * @method
    */
-  toJSON(format: any): {
-    id: string;
-    guild_id: string;
-    name: any;
-    description: any;
-    creator_id: string | undefined;
-    creator:
-      | {
-          id: string;
-          avatar: string | null;
-          _cached: any;
-          bot: boolean;
-          username: any;
-          global_name: any;
-          discriminator: string | null;
-        }
-      | {
-          id: string;
-          avatar: string | null;
-          bot: boolean;
-          username: any;
-          global_name: any;
-          discriminator: string | null;
-          _cached?: undefined;
+  toJSON(format?: JsonTypes):
+    | {
+        id: string;
+        guild_id: string;
+        name: string;
+        description: string | undefined;
+        creator_id: string | undefined;
+        creator: UserCacheJSON | UserStorageJSON;
+        scheduled_start_time: number;
+        scheduled_end_time: number | null;
+        image: string | null;
+        user_count: number;
+        entity_type: GuildScheduledEventEntityType;
+        status: GuildScheduledEventStatus;
+        entity_metadata: {
+          location: string;
         };
-    scheduled_start_time: number;
-    scheduled_end_time: number | undefined;
-    image: string | null;
-    user_count: any;
-    entity_type: number;
-    status: number;
-    entity_metadata: {
-      location: any;
-    };
-  };
+      }
+    | {
+        id: string;
+        guild_id: string;
+        name: string;
+        description: string | undefined;
+        creator_id: string | undefined;
+        creator: UserDiscordJSON;
+        scheduled_start_time: string;
+        scheduled_end_time: string | null;
+        image: string | null;
+        user_count: number;
+        entity_type: GuildScheduledEventEntityType;
+        status: GuildScheduledEventStatus;
+        entity_metadata: {
+          location: string;
+        };
+      };
 }
 export default ScheduledEvent;

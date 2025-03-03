@@ -47,14 +47,11 @@ var _Emoji__client,
   _Emoji_name,
   _Emoji__attributes,
   _Emoji__guild_id;
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents an emoji.
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
@@ -68,7 +65,7 @@ class Emoji {
    * @param {String} options.guildId The id of the guild that the emoji belongs to.
    * @param {Boolean?} [options.nocache] Whether this emoji should be cached or not.
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _Emoji__client.set(this, void 0);
     _Emoji__id.set(this, void 0);
     _Emoji_name.set(this, void 0);
@@ -113,45 +110,49 @@ class Emoji {
     __classPrivateFieldSet(
       this,
       _Emoji__attributes,
-      data._attributes ?? 0,
+      "_attributes" in data ? data._attributes : 0,
       "f",
     );
-    if (data.require_colons !== undefined && data.require_colons === true)
+    if ("require_colons" in data && data.require_colons === true)
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
         __classPrivateFieldGet(this, _Emoji__attributes, "f") | (0b1 << 0),
         "f",
       );
-    else if (data.require_colons === undefined)
+    else if ("require_colons" in data && data.require_colons === undefined)
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
         __classPrivateFieldGet(this, _Emoji__attributes, "f") | (0b1 << 0),
         "f",
       );
-    if (data.managed !== undefined && data.managed === true)
+    if ("managed" in data && data.managed === true)
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
         __classPrivateFieldGet(this, _Emoji__attributes, "f") | (0b1 << 1),
         "f",
       );
-    if (data.animated !== undefined && data.animated === true)
+    if ("animated" in data && data.animated === true)
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
         __classPrivateFieldGet(this, _Emoji__attributes, "f") | (0b1 << 2),
         "f",
       );
-    if (data.available !== undefined && data.available === true)
+    if (
+      "available" in data &&
+      data.available !== undefined &&
+      data.available === true
+    )
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
         __classPrivateFieldGet(this, _Emoji__attributes, "f") | (0b1 << 3),
         "f",
       );
-    else if (data.available === undefined)
+    else if ("available" in data && data.available === undefined)
       __classPrivateFieldSet(
         this,
         _Emoji__attributes,
@@ -245,6 +246,9 @@ class Emoji {
    * @public
    */
   get mention() {
+    if (!this.name) {
+      throw new Error("GLUON: Emoji name is required to mention the emoji.");
+    }
     return Emoji.getMention(this.name, this.id, this.animated);
   }
   /**
@@ -384,15 +388,15 @@ class Emoji {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT: {
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
           _attributes: __classPrivateFieldGet(this, _Emoji__attributes, "f"),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

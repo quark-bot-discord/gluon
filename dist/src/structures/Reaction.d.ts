@@ -1,8 +1,26 @@
+import Emoji from "./Emoji.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import {
+  EmojiCacheJSON,
+  EmojiDiscordJSON,
+  EmojiStorageJSON,
+  Emoji as EmojiType,
+  JsonTypes,
+  ReactionCacheJSON,
+  ReactionDiscordJSON,
+  ReactionStorageJSON,
+  Reaction as ReactionType,
+} from "../../typings/index.d.js";
+import {
+  APIReaction,
+  GatewayMessageReactionAddDispatch,
+} from "discord-api-types/v10";
 /**
  * Represents a reaction belonging to a message.
  */
-declare class Reaction {
+declare class Reaction implements ReactionType {
   #private;
   /**
    * Creates the structure for a reaction.
@@ -12,28 +30,41 @@ declare class Reaction {
    * @param {String} options.guildId The id of the guild that the reaction belongs to.
    * @see {@link https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure}
    */
-  constructor(client: any, data: any, { guildId }?: any);
+  constructor(
+    client: ClientType,
+    data:
+      | APIReaction
+      | ReactionStorageJSON
+      | ReactionCacheJSON
+      | ReactionDiscordJSON
+      | GatewayMessageReactionAddDispatch,
+    {
+      guildId,
+    }: {
+      guildId: Snowflake;
+    },
+  );
   /**
    * The number of reactions to this message.
    * @readonly
    * @type {Number}
    * @public
    */
-  get count(): any;
+  get count(): number;
   /**
    * The member objects of the members who reacted. Returns the user id of the member cannot be found.
    * @readonly
    * @type {Array<Member | String>}
    * @public
    */
-  get reacted(): any;
+  get reacted(): any[];
   /**
    * The user ids of the users who reacted.
    * @readonly
    * @type {Array<String>}
    * @public
    */
-  get reactedIds(): any;
+  get reactedIds(): string[];
   /**
    * The id of the guild that this reaction belongs to.
    * @type {String}
@@ -54,7 +85,7 @@ declare class Reaction {
    * @readonly
    * @public
    */
-  get emoji(): any;
+  get emoji(): Emoji | EmojiType | undefined;
   /**
    * The user who added the first reaction.
    * @type {String?}
@@ -69,7 +100,7 @@ declare class Reaction {
    * @public
    * @method
    */
-  _addReactor(userId: any): void;
+  _addReactor(userId: Snowflake): void;
   /**
    * Removes a user from the list of reactors.
    * @param {String} userId The id of the user to add as a reactor.
@@ -77,7 +108,7 @@ declare class Reaction {
    * @public
    * @method
    */
-  _removeReactor(userId: any): void;
+  _removeReactor(userId: Snowflake): void;
   /**
    * @method
    * @public
@@ -95,16 +126,16 @@ declare class Reaction {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format: JsonTypes):
     | {
-        emoji: any;
-        _reacted: any;
+        emoji: EmojiStorageJSON | EmojiCacheJSON;
+        _reacted: string[];
         initial_reactor: string | undefined;
         count?: undefined;
       }
     | {
-        emoji: any;
-        count: any;
+        emoji: EmojiDiscordJSON;
+        count: number;
         _reacted?: undefined;
         initial_reactor?: undefined;
       };

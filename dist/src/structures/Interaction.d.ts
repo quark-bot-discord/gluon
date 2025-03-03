@@ -1,17 +1,36 @@
-import Member from "./Member.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import {
+  Interaction as InteractionType,
+  InteractionCacheJSON,
+  InteractionDiscordJSON,
+  InteractionStorageJSON,
+  JsonTypes,
+  FileUpload,
+  Embed,
+  MessageComponents as MessageComponentsType,
+  TextInputBuilder as TextInputBuilderType,
+  CommandChoiceBuilder as CommandChoiceBuilderType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildInteraction,
+  APIMessageComponentGuildInteraction,
+} from "discord-api-types/v10";
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
  */
-declare class Interaction {
+declare class Interaction implements InteractionType {
   #private;
   /**
    * Creates the structure for an interaction.
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: any, data: any);
+  constructor(
+    client: ClientType,
+    data: APIGuildInteraction | APIMessageComponentGuildInteraction,
+  );
   /**
    * The id of the interaction.
    * @type {String}
@@ -25,14 +44,18 @@ declare class Interaction {
    * @readonly
    * @public
    */
-  get token(): any;
+  get token(): string;
   /**
    * The type of interaction.
    * @type {Number}
    * @readonly
    * @public
    */
-  get type(): any;
+  get type():
+    | import("discord-api-types/v10").InteractionType.ApplicationCommand
+    | import("discord-api-types/v10").InteractionType.MessageComponent
+    | import("discord-api-types/v10").InteractionType.ApplicationCommandAutocomplete
+    | import("discord-api-types/v10").InteractionType.ModalSubmit;
   /**
    * The id of the guild that this interaction belongs to.
    * @type {String}
@@ -67,14 +90,14 @@ declare class Interaction {
    * @readonly
    * @public
    */
-  get member(): Member | undefined;
+  get member(): any;
   /**
    * The id of the member that triggered the interaction, if it was run in a guild.
    * @type {String?}
    * @readonly
    * @public
    */
-  get memberId(): string | null;
+  get memberId(): string;
   /**
    * Prompts a user to enter text using a modal.
    * @param {Object} options Modal options.
@@ -87,7 +110,15 @@ declare class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  textPrompt({ title, customId, textInputModal }?: any): Promise<void>;
+  textPrompt({
+    title,
+    customId,
+    textInputModal,
+  }: {
+    title: string;
+    customId: string;
+    textInputModal: TextInputBuilderType;
+  }): Promise<void>;
   /**
    * Responds to autocomplete interactions.
    * @param {Object} options Autocompletion options.
@@ -98,7 +129,11 @@ declare class Interaction {
    * @method
    * @throws {Error}
    */
-  autocompleteResponse({ choices }?: any): Promise<void>;
+  autocompleteResponse({
+    choices,
+  }: {
+    choices: CommandChoiceBuilderType[];
+  }): Promise<void>;
   /**
    * Replies to an interaction.
    * @param {Object?} [options] An embed, components, and whether the response should be as an ephemeral message.
@@ -112,7 +147,19 @@ declare class Interaction {
    * @async
    * @method
    */
-  reply({ content, files, embeds, components, quiet }?: any): Promise<this>;
+  reply({
+    content,
+    files,
+    embeds,
+    components,
+    quiet,
+  }: {
+    content: string;
+    files: FileUpload[];
+    embeds: Embed[];
+    components: MessageComponentsType;
+    quiet: boolean;
+  }): Promise<this>;
   /**
    * Silently acknowledges an interaction.
    * @returns {Promise<Interaction>}
@@ -141,7 +188,7 @@ declare class Interaction {
    * @static
    * @throws {Error | TypeError}
    */
-  static delete(client: any, interactionToken: any): Promise<any>;
+  static delete(client: ClientType, interactionToken: string): Promise<any>;
   /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
    * @param {Object?} [options] The new interaction response options.
@@ -155,7 +202,17 @@ declare class Interaction {
    * @method
    * @throws {Error | TypeError}
    */
-  edit({ content, files, embeds, components }?: any): Promise<any>;
+  edit({
+    content,
+    files,
+    embeds,
+    components,
+  }: {
+    content: string;
+    files: FileUpload[];
+    embeds: Embed[];
+    components: MessageComponentsType;
+  }): Promise<any>;
   /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
    * @param {Client} client The client instance.
@@ -172,9 +229,19 @@ declare class Interaction {
    * @throws {Error | TypeError}
    */
   static edit(
-    client: any,
-    interactionToken: any,
-    { content, files, embeds, components }?: any,
+    client: ClientType,
+    interactionToken: string,
+    {
+      content,
+      files,
+      embeds,
+      components,
+    }: {
+      content: string;
+      files: FileUpload[];
+      embeds: Embed[];
+      components: MessageComponentsType;
+    },
   ): Promise<any>;
   /**
    * @method
@@ -193,36 +260,8 @@ declare class Interaction {
    * @public
    * @method
    */
-  toJSON(format: any): {
-    id: string;
-    type: any;
-    guild_id: string;
-    channel_id: string;
-    member:
-      | {
-          user: any;
-          nick: any;
-          joined_at: number | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          _attributes: any;
-          pending?: undefined;
-        }
-      | {
-          user: any;
-          nick: any;
-          joined_at: string | undefined;
-          avatar: string | null;
-          permissions: string;
-          roles: string[] | undefined;
-          communication_disabled_until: number | undefined;
-          flags: any;
-          pending: boolean;
-          _attributes?: undefined;
-        };
-  };
+  toJSON(
+    format?: JsonTypes,
+  ): InteractionCacheJSON | InteractionDiscordJSON | InteractionStorageJSON;
 }
 export default Interaction;

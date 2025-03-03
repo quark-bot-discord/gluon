@@ -1,16 +1,38 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
-import Thread from "./Thread.js";
-import GuildCacheOptions from "../managers/GuildCacheOptions.js";
+import AuditLog from "./AuditLog.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  AuditLogEvent,
+  GatewayGuildCreateDispatchData,
+  GuildDefaultMessageNotifications,
+  GuildExplicitContentFilter,
+  GuildMFALevel,
+  GuildNSFWLevel,
+  GuildPremiumTier,
+  GuildVerificationLevel,
+  Locale,
+} from "discord-api-types/v10";
+import {
+  Guild as GuildType,
   GuildCacheJSON,
   GuildDiscordJSON,
-  GuildRaw,
-  GuildRawGateway,
   GuildStorageJSON,
-  GuildType,
-} from "./interfaces/Guild.js";
-import ClientType from "src/interfaces/Client.js";
+  JsonTypes,
+  TextChannel as TextChannelType,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
+  GuildMemberManager as GuildMemberManagerType,
+  GuildChannelsManager as GuildChannelsManagerType,
+  GuildVoiceStatesManager as GuildVoiceStatesManagerType,
+  GuildRoleManager as GuildRoleManagerType,
+  GuildEmojisManager as GuildEmojisManagerType,
+  GuildInviteManager as GuildInviteManagerType,
+  GuildScheduledEventManager as GuildScheduledEventManagerType,
+  Embed,
+  FileUpload,
+  MessageComponents as MessageComponentsType,
+} from "../../typings/index.d.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -28,8 +50,7 @@ declare class Guild implements GuildType {
   constructor(
     client: ClientType,
     data:
-      | GuildRaw
-      | GuildRawGateway
+      | GatewayGuildCreateDispatchData
       | GuildCacheJSON
       | GuildStorageJSON
       | GuildDiscordJSON,
@@ -66,7 +87,7 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get owner(): any;
+  get owner(): import("../../typings/index.d.js").Member | null;
   /**
    * System channel flags.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
@@ -74,15 +95,7 @@ declare class Guild implements GuildType {
    * @type {String[]}
    * @public
    */
-  get systemChannelFlags(): string[];
-  /**
-   * Raw system channel flags.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawSystemChannelFlags(): number;
+  get systemChannelFlags(): number;
   /**
    * Server MFA level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
@@ -90,15 +103,7 @@ declare class Guild implements GuildType {
    * @type {String}
    * @public
    */
-  get mfaLevel(): "NONE" | "ELEVATED" | null;
-  /**
-   * Server MFA level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawMfaLevel(): 1 | 0 | null;
+  get mfaLevel(): GuildMFALevel;
   /**
    * Server verification level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
@@ -106,21 +111,7 @@ declare class Guild implements GuildType {
    * @type {String}
    * @public
    */
-  get verificationLevel():
-    | "NONE"
-    | "LOW"
-    | "MEDIUM"
-    | "HIGH"
-    | "VERY_HIGH"
-    | null;
-  /**
-   * Server verification level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawVerificationLevel(): 4 | 1 | 0 | 2 | 3 | null;
+  get verificationLevel(): GuildVerificationLevel;
   /**
    * Default notification setting.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
@@ -128,15 +119,7 @@ declare class Guild implements GuildType {
    * @type {String}
    * @public
    */
-  get defaultMessageNotifications(): "ALL_MESSAGES" | "ONLY_MENTIONS" | null;
-  /**
-   * Default notification setting.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawDefaultMessageNotifications(): 1 | 0 | null;
+  get defaultMessageNotifications(): GuildDefaultMessageNotifications;
   /**
    * Explicit content filter level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
@@ -144,19 +127,7 @@ declare class Guild implements GuildType {
    * @type {String}
    * @public
    */
-  get explicitContentFilter():
-    | "DISABLED"
-    | "MEMBERS_WITHOUT_ROLES"
-    | "ALL_MEMBERS"
-    | null;
-  /**
-   * Explicit content filter level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawExplicitContentFilter(): 1 | 0 | 2 | null;
+  get explicitContentFilter(): GuildExplicitContentFilter;
   /**
    * Server NSFW level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
@@ -164,22 +135,14 @@ declare class Guild implements GuildType {
    * @type {String}
    * @public
    */
-  get nsfwLevel(): "DEFAULT" | "EXPLICIT" | "SAFE" | "AGE_RESTRICTED" | null;
-  /**
-   * Server NSFW level.
-   * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
-   * @readonly
-   * @type {Number}
-   * @public
-   */
-  get rawNsfwLevel(): 1 | 0 | 2 | 3 | null;
+  get nsfwLevel(): GuildNSFWLevel;
   /**
    * Server boost level.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
    * @readonly
    * @public
    */
-  get premiumTier(): 1 | 0 | 2 | 3 | null;
+  get premiumTier(): GuildPremiumTier;
   /**
    * Whether the guild has the boost progress bar enabled.
    * @readonly
@@ -200,14 +163,14 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get name(): any;
+  get name(): string;
   /**
    * The description of the guild.
    * @type {String?}
    * @readonly
    * @public
    */
-  get description(): any;
+  get description(): string | null;
   /**
    * The icon hash of the guild.
    * @type {String}
@@ -221,14 +184,14 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get joinedAt(): any;
+  get joinedAt(): number | undefined;
   /**
    * The member count of the guild.
    * @type {Number}
    * @readonly
    * @public
    */
-  get memberCount(): any;
+  get memberCount(): number;
   /**
    * The system channel id of the guild.
    * @type {String?}
@@ -242,7 +205,7 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get systemChannel(): any;
+  get systemChannel(): TextChannelType | null;
   /**
    * The rules channel id of the guild.
    * @type {String?}
@@ -256,77 +219,76 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get rulesChannel(): any;
+  get rulesChannel(): TextChannelType | null;
   /**
    * The preferred locale of the guild.
    * @type {String}
    * @readonly
    * @public
    */
-  get preferredLocale(): any;
+  get preferredLocale(): Locale;
   /**
    * The premium subscription count of the guild.
    * @type {Number}
    * @readonly
    * @public
    */
-  get premiumSubscriptionCount(): any;
+  get premiumSubscriptionCount(): number;
   /**
    * The cache options for this guild.
-   * @type {GuildCacheOptions}
    * @readonly
    * @public
    */
-  get _cacheOptions(): GuildCacheOptions | undefined;
+  get _cacheOptions(): GuildCacheOptionsType;
   /**
    * The members in the guild.
    * @type {GuildMemberManager}
    * @readonly
    * @public
    */
-  get members(): any;
+  get members(): GuildMemberManagerType;
   /**
    * The channels in the guild.
    * @type {GuildChannelsManager}
    * @readonly
    * @public
    */
-  get channels(): any;
+  get channels(): GuildChannelsManagerType;
   /**
    * The voice states in the guild.
    * @type {GuildVoiceStatesManager}
    * @readonly
    * @public
    */
-  get voiceStates(): any;
+  get voiceStates(): GuildVoiceStatesManagerType;
   /**
    * The roles in the guild.
    * @type {GuildRoleManager}
    * @readonly
    * @public
    */
-  get roles(): any;
+  get roles(): GuildRoleManagerType;
   /**
    * The scheduled events in the guild.
    * @type {GuildScheduledEventManager}
    * @readonly
    * @public
    */
-  get scheduledEvents(): any;
+  get scheduledEvents(): GuildScheduledEventManagerType;
   /**
    * The emojis in the guild.
    * @type {GuildEmojisManager}
    * @readonly
    * @public
    */
-  get emojis(): any;
+  get emojis(): GuildEmojisManagerType;
   /**
    * The invites in the guild.
    * @type {GuildInviteManager}
    * @readonly
    * @public
    */
-  get invites(): any;
+  get invites(): GuildInviteManagerType;
   /**
    * Increases the member count of the guild.
    * @method
@@ -347,7 +309,7 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error}
    */
-  me(): Promise<any>;
+  me(): Promise<import("../../typings/index.d.js").Member>;
   /**
    * Bans a user with the given id from the guild.
    * @param {String} user_id The id of the user to ban.
@@ -360,7 +322,16 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  ban(user_id: any, { reason, seconds }?: any): Promise<void>;
+  ban(
+    user_id: Snowflake,
+    {
+      reason,
+      seconds,
+    }?: {
+      reason?: string;
+      seconds?: number;
+    },
+  ): Promise<void>;
   /**
    * Unbans a user with the given id from the guild.
    * @param {String} user_id The id of the user to unban.
@@ -372,7 +343,14 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  unban(user_id: any, { reason }?: any): Promise<void>;
+  unban(
+    user_id: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Kicks a user with the given id from the guild.
    * @param {String} user_id The id of the user to kick.
@@ -384,7 +362,14 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  kick(user_id: any, { reason }?: any): Promise<void>;
+  kick(
+    user_id: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Removes the given role from the given member.
    * @param {String} user_id The id of the user.
@@ -397,7 +382,15 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  removeMemberRole(user_id: any, role_id: any, { reason }?: any): Promise<void>;
+  removeMemberRole(
+    user_id: Snowflake,
+    role_id: Snowflake,
+    {
+      reason,
+    }?: {
+      reason?: string;
+    },
+  ): Promise<void>;
   /**
    * Fetches audit logs.
    * @param {Object?} [options] Audit log fetch options.
@@ -412,7 +405,19 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  fetchAuditLogs({ limit, type, user_id, before, after }?: any): Promise<any>;
+  fetchAuditLogs({
+    limit,
+    type,
+    user_id,
+    before,
+    after,
+  }?: {
+    limit?: number;
+    type?: AuditLogEvent;
+    user_id?: Snowflake;
+    before?: Snowflake;
+    after?: Snowflake;
+  }): Promise<AuditLog[] | null>;
   /**
    * Fetches the guild invites.
    * @returns {Promise<Object[]?>}
@@ -432,10 +437,10 @@ declare class Guild implements GuildType {
    */
   fetchChannels(): Promise<
     (
-      | import("./CategoryChannel.js").default
-      | import("./TextChannel.js").default
-      | Thread
-      | import("./VoiceChannel.js").default
+      | TextChannelType
+      | import("../../typings/index.d.js").VoiceChannel
+      | import("../../typings/index.d.js").Thread
+      | import("../../typings/index.d.js").CategoryChannel
     )[]
   >;
   /**
@@ -447,7 +452,7 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error | TypeError}
    */
-  fetchBan(user_id: any): Promise<any>;
+  fetchBan(user_id: Snowflake): Promise<any>;
   /**
    * Leaves the guild.
    * @returns {Promise<void?>}
@@ -482,7 +487,7 @@ declare class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static deleteWebhook(client: ClientType, webhookId: any): Promise<void>;
+  static deleteWebhook(client: ClientType, webhookId: Snowflake): Promise<void>;
   /**
    * Creates a webhook in the given channel with the name "Gluon".
    * @param {Client} client The client instance.
@@ -498,7 +503,7 @@ declare class Guild implements GuildType {
    */
   static createWebhook(
     client: ClientType,
-    channelId: any,
+    channelId: Snowflake,
     {
       name,
     }?: {
@@ -520,8 +525,12 @@ declare class Guild implements GuildType {
    */
   static modifyWebhook(
     client: ClientType,
-    webhookId: any,
-    { channelId }?: any,
+    webhookId: Snowflake,
+    {
+      channelId,
+    }: {
+      channelId: Snowflake;
+    },
   ): any;
   /**
    * Fetches a webhook by the webhook's id.
@@ -534,7 +543,7 @@ declare class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: ClientType, webhookId: any): any;
+  static fetchWebhook(client: ClientType, webhookId: Snowflake): any;
   /**
    * Posts a webhook with the provided webhook id and token.
    * @param {Client} client The client instance.
@@ -555,8 +564,24 @@ declare class Guild implements GuildType {
    */
   static postWebhook(
     client: ClientType,
-    { id, token }: any,
-    { content, embeds, components, files }?: any,
+    {
+      id,
+      token,
+    }: {
+      id: Snowflake;
+      token: string;
+    },
+    {
+      content,
+      embeds,
+      components,
+      files,
+    }?: {
+      content?: string;
+      embeds?: Embed[];
+      components?: MessageComponentsType;
+      files?: FileUpload[];
+    },
   ): Promise<void>;
   /**
    * Returns the icon URL of the guild.
@@ -567,7 +592,7 @@ declare class Guild implements GuildType {
    * @static
    * @method
    */
-  static getIcon(id: any, hash: any): string | null;
+  static getIcon(id: Snowflake, hash?: string | null): string | null;
   /**
    * @method
    * @public
@@ -581,7 +606,7 @@ declare class Guild implements GuildType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any): boolean;
+  static shouldCache(gluonCacheOptions: GluonCacheOptionsType): boolean;
   /**
    * @method
    * @public
@@ -597,64 +622,8 @@ declare class Guild implements GuildType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM):
-    | {
-        id: string;
-        name: any;
-        icon: string | null;
-        owner_id: string;
-        joined_at: number;
-        unavailable: boolean;
-        member_count: any;
-        premium_tier: number | null;
-        preferred_locale: any;
-        _cache_options: GuildCacheOptions | undefined;
-        _attributes: any;
-        system_channel_id: string | null;
-        rules_channel_id: string | null;
-        premium_subscription_count: any;
-        members: any;
-        channels: any;
-        voice_states: any;
-        roles: any;
-        emojis: any;
-        invites: any;
-        system_channel_flags?: undefined;
-        premium_progress_bar_enabled?: undefined;
-        default_message_notifications?: undefined;
-        explicit_content_filter?: undefined;
-        verification_level?: undefined;
-        nsfw_level?: undefined;
-        mfa_level?: undefined;
-      }
-    | {
-        id: string;
-        name: any;
-        icon: string | null;
-        owner_id: string;
-        joined_at: string;
-        premium_tier: number | null;
-        unavailable: boolean;
-        member_count: any;
-        preferred_locale: any;
-        system_channel_flags: number;
-        system_channel_id: string | null;
-        rules_channel_id: string | null;
-        premium_subscription_count: any;
-        premium_progress_bar_enabled: boolean;
-        default_message_notifications: number | null;
-        explicit_content_filter: number | null;
-        verification_level: number | null;
-        nsfw_level: number | null;
-        mfa_level: number | null;
-        members: any;
-        channels: any;
-        voice_states: any;
-        roles: any;
-        emojis: any;
-        invites: any;
-        _cache_options?: undefined;
-        _attributes?: undefined;
-      };
+  toJSON(
+    format?: JsonTypes,
+  ): GuildStorageJSON | GuildCacheJSON | GuildDiscordJSON;
 }
 export default Guild;

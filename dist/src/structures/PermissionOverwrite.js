@@ -42,13 +42,12 @@ var __classPrivateFieldGet =
           ? f.value
           : state.get(receiver);
   };
-var _PermissionOverwrite__client,
-  _PermissionOverwrite__id,
+var _PermissionOverwrite__id,
   _PermissionOverwrite_type,
   _PermissionOverwrite_allow,
   _PermissionOverwrite_deny;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 class PermissionOverwrite {
   /**
    * Creates the structure for a permission overwrite.
@@ -56,7 +55,7 @@ class PermissionOverwrite {
    * @param {Object} data The raw permission overwrite data.
    */
   constructor(client, data) {
-    _PermissionOverwrite__client.set(this, void 0);
+    // #_client;
     _PermissionOverwrite__id.set(this, void 0);
     _PermissionOverwrite_type.set(this, void 0);
     _PermissionOverwrite_allow.set(this, void 0);
@@ -70,7 +69,7 @@ class PermissionOverwrite {
      * @type {Client}
      * @private
      */
-    __classPrivateFieldSet(this, _PermissionOverwrite__client, client, "f");
+    // this.#_client = client;
     /**
      * The id of the overwrite.
      * @type {BigInt}
@@ -160,8 +159,7 @@ class PermissionOverwrite {
    * @method
    * @public
    */
-  [((_PermissionOverwrite__client = new WeakMap()),
-  (_PermissionOverwrite__id = new WeakMap()),
+  [((_PermissionOverwrite__id = new WeakMap()),
   (_PermissionOverwrite_type = new WeakMap()),
   (_PermissionOverwrite_allow = new WeakMap()),
   (_PermissionOverwrite_deny = new WeakMap()),
@@ -177,9 +175,9 @@ class PermissionOverwrite {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

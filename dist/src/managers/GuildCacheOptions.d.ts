@@ -1,6 +1,8 @@
-declare class GuildCacheOptions {
+import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { GuildCacheOptions as GuildCacheOptionsType } from "../../typings/index.d.js";
+declare class GuildCacheOptions implements GuildCacheOptionsType {
   #private;
-  constructor(cache_options: any);
+  constructor(cache_options: number);
   /**
    * Whether to cache messages or not.
    * @param {Boolean} option Whether to cache messages or not.
@@ -8,7 +10,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMessageCaching(option: any): this;
+  setMessageCaching(option: boolean): this;
   /**
    * Whether to cache files or not.
    * @param {Boolean} option Whether to cache files or not.
@@ -16,7 +18,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setFileCaching(option: any): void;
+  setFileCaching(option: boolean): this;
   /**
    * Whether to cache voice states or not.
    * @param {Boolean} option Whether to cache voice states or not.
@@ -24,7 +26,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setVoiceStateCaching(option: any): void;
+  setVoiceStateCaching(option: boolean): this;
   /**
    * Whether to cache members or not.
    * @param {Boolean} option Whether to cache members or not.
@@ -32,7 +34,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setMemberCaching(option: any): void;
+  setMemberCaching(option: boolean): this;
   /**
    * Whether to cache roles or not.
    * @param {Boolean} option Whether to cache roles or not.
@@ -40,7 +42,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setRoleCaching(option: any): void;
+  setRoleCaching(option: boolean): this;
   /**
    * Whether to cache channels or not.
    * @param {Boolean} option Whether to cache channels or not.
@@ -48,7 +50,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setChannelCaching(option: any): void;
+  setChannelCaching(option: boolean): this;
   /**
    * Whether to cache emojis or not.
    * @param {Boolean} option Whether to cache emojis or not.
@@ -56,7 +58,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setEmojiCaching(option: any): void;
+  setEmojiCaching(option: boolean): this;
   /**
    * Whether to cache threads or not.
    * @param {Boolean} option Whether to cache threads or not.
@@ -64,7 +66,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setThreadCaching(option: any): void;
+  setThreadCaching(option: boolean): this;
   /**
    * Whether to cache invites or not.
    * @param {Boolean} option Whether to cache invites or not.
@@ -72,7 +74,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setInviteCaching(option: any): void;
+  setInviteCaching(option: boolean): this;
   /**
    * Whether to cache scheduled events or not.
    * @param {Boolean} option Whether to cache scheduled events or not.
@@ -80,7 +82,7 @@ declare class GuildCacheOptions {
    * @throws {TypeError}
    * @public
    */
-  setScheduledEventCaching(option: any): void;
+  setScheduledEventCaching(option: boolean): this;
   /**
    * Returns whether to cache files or not.
    * @type {Boolean}
@@ -170,6 +172,6 @@ declare class GuildCacheOptions {
    * @public
    * @method
    */
-  toJSON(format: any): any;
+  toJSON(format: TO_JSON_TYPES_ENUM): number;
 }
 export default GuildCacheOptions;

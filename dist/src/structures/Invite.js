@@ -49,16 +49,14 @@ var _Invite__client,
   _Invite_uses,
   _Invite_expires,
   _Invite_inviter,
+  _Invite__inviter_id,
   _Invite_max_uses;
-import {
-  GLUON_DEBUG_LEVELS,
-  INVITE_BASE_URL,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { GLUON_DEBUG_LEVELS, INVITE_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a guild invite.
  */
@@ -72,7 +70,7 @@ class Invite {
    * @param {Boolean?} [options.nocache] Whether this invite should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/invite#invite-object-invite-structure}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _Invite__client.set(this, void 0);
     _Invite__guild_id.set(this, void 0);
     _Invite__code.set(this, void 0);
@@ -80,6 +78,7 @@ class Invite {
     _Invite_uses.set(this, void 0);
     _Invite_expires.set(this, void 0);
     _Invite_inviter.set(this, void 0);
+    _Invite__inviter_id.set(this, void 0);
     _Invite_max_uses.set(this, void 0);
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -119,20 +118,12 @@ class Invite {
         BigInt(data.channel.id),
         "f",
       );
-    else if (data.channel_id)
-      __classPrivateFieldSet(
-        this,
-        _Invite__channel_id,
-        BigInt(data.channel_id),
-        "f",
-      );
-    if (data.inviter)
+    if (data.inviter) {
       /**
        * The user who created the invite.
        * @type {User?}
        * @private
        */
-      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       __classPrivateFieldSet(
         this,
         _Invite_inviter,
@@ -143,14 +134,20 @@ class Invite {
         ),
         "f",
       );
-    if (typeof data.uses == "number")
-      /**
-       * The number of times the invite has been used.
-       * @type {Number?}
-       * @private
-       */
-      __classPrivateFieldSet(this, _Invite_uses, data.uses, "f");
-    if (data.expires_at)
+      __classPrivateFieldSet(
+        this,
+        _Invite__inviter_id,
+        BigInt(data.inviter.id),
+        "f",
+      );
+    }
+    /**
+     * The number of times the invite has been used.
+     * @type {Number?}
+     * @private
+     */
+    __classPrivateFieldSet(this, _Invite_uses, data.uses, "f");
+    if ("expires_at" in data && data.expires_at)
       /**
        * The UNIX timestamp of when the invite expires.
        * @type {Number?}
@@ -162,9 +159,10 @@ class Invite {
         (new Date(data.expires_at).getTime() / 1000) | 0,
         "f",
       );
-    else if (typeof data.expires == "number")
+    else if ("expires" in data && typeof data.expires == "number")
       __classPrivateFieldSet(this, _Invite_expires, data.expires / 1000, "f");
     else if (
+      "max_age" in data &&
       typeof data.max_age == "number" &&
       data.max_age != 0 &&
       data.created_at
@@ -175,13 +173,12 @@ class Invite {
         ((new Date(data.created_at).getTime() / 1000) | 0) + data.max_age,
         "f",
       );
-    if (typeof data.max_uses == "number")
-      /**
-       * The maximum number of uses allowed for the invite.
-       * @type {Number?}
-       * @private
-       */
-      __classPrivateFieldSet(this, _Invite_max_uses, data.max_uses, "f");
+    /**
+     * The maximum number of uses allowed for the invite.
+     * @type {Number?}
+     * @private
+     */
+    __classPrivateFieldSet(this, _Invite_max_uses, data.max_uses, "f");
     const shouldCache = Invite.shouldCache(
       __classPrivateFieldGet(this, _Invite__client, "f")._cacheOptions,
       this.guild._cacheOptions,
@@ -294,6 +291,9 @@ class Invite {
   get inviter() {
     return __classPrivateFieldGet(this, _Invite_inviter, "f");
   }
+  get inviterId() {
+    return String(__classPrivateFieldGet(this, _Invite__inviter_id, "f"));
+  }
   /**
    * The URL of the invite.
    * @type {String}
@@ -365,6 +365,7 @@ class Invite {
   (_Invite_uses = new WeakMap()),
   (_Invite_expires = new WeakMap()),
   (_Invite_inviter = new WeakMap()),
+  (_Invite__inviter_id = new WeakMap()),
   (_Invite_max_uses = new WeakMap()),
   util.inspect.custom)]() {
     return this.toString();
@@ -378,8 +379,8 @@ class Invite {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           code: this.code,
           channel: this.channel?.toJSON(format),
@@ -389,7 +390,7 @@ class Invite {
           max_uses: this.maxUses,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           code: this.code,

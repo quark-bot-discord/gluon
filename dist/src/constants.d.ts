@@ -84,19 +84,6 @@ export declare const EVENTS: {
   MESSAGE_REACTION_REMOVE: string;
   WEBHOOKS_UPDATE: string;
 };
-export declare const CHANNEL_TYPES: {
-  GUILD_TEXT: number;
-  GUILD_VOICE: number;
-  GUILD_CATEGORY: number;
-  GUILD_NEWS: number;
-  GUILD_NEWS_THREAD: number;
-  GUILD_PUBLIC_THREAD: number;
-  GUILD_PRIVATE_THREAD: number;
-  GUILD_STAGE_VOICE: number;
-  GUILD_DIRECTORY: number;
-  GUILD_FORUM: number;
-  GUILD_MEDIA: number;
-};
 export declare const USER_FLAGS: {
   DISCORD_EMPLOYEE: number;
   DISCORD_PARTNER: number;
@@ -130,81 +117,6 @@ export declare const MESSAGE_FLAGS: {
   FAILED_TO_MENTION_SOME_ROLES_IN_THREAD: number;
   SUPPRESS_NOTIFICATIONS: number;
   IS_VOICE_MESSAGE: number;
-};
-export declare const AUDIT_LOG_TYPES: {
-  GUILD_UPDATE: number;
-  CHANNEL_CREATE: number;
-  CHANNEL_UPDATE: number;
-  CHANNEL_DELETE: number;
-  CHANNEL_OVERWRITE_CREATE: number;
-  CHANNEL_OVERWRITE_UPDATE: number;
-  CHANNEL_OVERWRITE_DELETE: number;
-  MEMBER_KICK: number;
-  MEMBER_PRUNE: number;
-  MEMBER_BAN_ADD: number;
-  MEMBER_BAN_REMOVE: number;
-  MEMBER_UPDATE: number;
-  MEMBER_ROLE_UPDATE: number;
-  MEMBER_MOVE: number;
-  MEMBER_DISCONNECT: number;
-  BOT_ADD: number;
-  ROLE_CREATE: number;
-  ROLE_UPDATE: number;
-  ROLE_DELETE: number;
-  INVITE_CREATE: number;
-  INVITE_UPDATE: number;
-  INVITE_DELETE: number;
-  WEBHOOK_CREATE: number;
-  WEBHOOK_UPDATE: number;
-  WEBHOOK_DELETE: number;
-  EMOJI_CREATE: number;
-  EMOJI_UPDATE: number;
-  EMOJI_DELETE: number;
-  MESSAGE_DELETE: number;
-  MESSAGE_BULK_DELETE: number;
-  MESSAGE_PIN: number;
-  MESSAGE_UNPIN: number;
-  INTEGRATION_CREATE: number;
-  INTEGRATION_UPDATE: number;
-  INTEGRATION_DELETE: number;
-  STAGE_INSTANCE_CREATE: number;
-  STAGE_INSTANCE_UPDATE: number;
-  STAGE_INSTANCE_DELETE: number;
-  STICKER_CREATE: number;
-  STICKER_UPDATE: number;
-  STICKER_DELETE: number;
-  GUILD_SCHEDULED_EVENT_CREATE: number;
-  GUILD_SCHEDULED_EVENT_UPDATE: number;
-  GUILD_SCHEDULED_EVENT_DELETE: number;
-  THREAD_CREATE: number;
-  THREAD_UPDATE: number;
-  THREAD_DELETE: number;
-  APPLICATION_COMMAND_PERMISSION_UPDATE: number;
-  AUTO_MODERATION_RULE_CREATE: number;
-  AUTO_MODERATION_RULE_UPDATE: number;
-  AUTO_MODERATION_RULE_DELETE: number;
-  AUTO_MODERATION_BLOCK_MESSAGE: number;
-  AUTO_MODERATION_FLAG_TO_CHANNEL: number;
-  AUTO_MODERATION_USER_COMMUNICATION_DISABLED: number;
-  CREATOR_MONETIZATION_REQUEST_CREATED: number;
-  CREATOR_MONETIZATION_TERMS_ACCEPTED: number;
-  VOICE_CHANNEL_STATUS_UPDATE: number;
-};
-export declare const INTERACTION_TYPES: {
-  COMMAND: number;
-  COMPONENT: number;
-  APPLICATION_COMMAND_AUTOCOMPLETE: number;
-  MODAL_SUBMIT: number;
-};
-export declare const COMPONENT_TYPES: {
-  ACTION_ROW: number;
-  BUTTON: number;
-  SELECT_MENU: number;
-  TEXT_INPUT: number;
-  USER_SELECT_MENU: number;
-  ROLE_SELECT_MENU: number;
-  MENTIONABLE_SELECT_MENU: number;
-  CHANNEL_SELECT_MENU: number;
 };
 export declare const SELECT_MENU_TYPES: {
   TEXT: number;
@@ -295,7 +207,6 @@ export declare const PERMISSIONS: {
   SEND_VOICE_MESSAGES: string;
   SEND_POLLS: string;
 };
-export declare const STICKER_FORMATS: (string | null)[];
 export declare const STICKER_FORMATS_ENUM: {
   PNG: number;
   APNG: number;
@@ -444,3 +355,47 @@ export declare enum TO_JSON_TYPES_ENUM {
   STORAGE_FORMAT = 3,
 }
 export declare const GLUON_VERSION: string;
+export declare enum LOCALES {
+  INDONESIAN = "id",
+  DANISH = "da",
+  GERMAN = "de",
+  ENGLISH_UK = "en-GB",
+  ENGLISH_US = "en-US",
+  SPANISH = "es-ES",
+  SPANISH_LATAM = "es-419",
+  FRENCH = "fr",
+  CROATIAN = "hr",
+  ITALIAN = "it",
+  LITHUANIAN = "lt",
+  HUNGARIAN = "hu",
+  DUTCH = "nl",
+  NORWEGIAN = "no",
+  POLISH = "pl",
+  PORTUGUESE_BRAZILIAN = "pt-BR",
+  ROMANIAN = "ro",
+  FINNISH = "fi",
+  SWEDISH = "sv-SE",
+  VIETNAMESE = "vi",
+  TURKISH = "tr",
+  CZECH = "cs",
+  GREEK = "el",
+  BULGARIAN = "bg",
+  RUSSIAN = "ru",
+  UKRAINIAN = "uk",
+  HINDI = "hi",
+  THAI = "th",
+  CHINESE_CHINA = "zh-CN",
+  JAPANESE = "ja",
+  CHINESE_TAIWAN = "zh-TW",
+  KOREAN = "ko",
+}
+export declare enum COMPONENT_TYPES {
+  ACTION_ROW = 1,
+  BUTTON = 2,
+  SELECT_MENU = 3,
+  TEXT_INPUT = 4,
+  USER_SELECT_MENU = 5,
+  ROLE_SELECT_MENU = 6,
+  MENTIONABLE_SELECT_MENU = 7,
+  CHANNEL_SELECT_MENU = 8,
+}

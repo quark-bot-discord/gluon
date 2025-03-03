@@ -43,13 +43,13 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _SlashCommand_data, _SlashCommand_options;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a slash command.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
@@ -76,27 +76,38 @@ class SlashCommand extends Interaction {
      * @private
      */
     __classPrivateFieldSet(this, _SlashCommand_data, data.data, "f");
-    if (data.data.resolved?.members)
-      for (const [key, value] of Object.entries(data.data.resolved.members))
+    if (data.data.resolved?.members && data.data.resolved?.users) {
+      for (const [key, value] of Object.entries(data.data.resolved.members)) {
         new Member(client, value, {
           userId: key,
           guildId: data.guild_id,
           user: new User(client, data.data.resolved.users[key]),
         });
-    if (data.data.resolved?.roles)
-      for (const value of Object.values(data.data.resolved.roles))
+      }
+    }
+    if (data.data.resolved?.roles) {
+      for (const value of Object.values(data.data.resolved.roles)) {
         new Role(client, value, {
           guildId: data.guild_id,
         });
-    if (data.data.resolved?.channels)
-      for (const value of Object.values(data.data.resolved.channels))
+      }
+    }
+    if (data.data.resolved?.channels) {
+      for (const value of Object.values(data.data.resolved.channels)) {
         cacheChannel(client, value, data.guild_id);
+      }
+    }
     /**
      * The options provided with the interaction.
      * @type {Array<Object>}
      * @private
      */
-    __classPrivateFieldSet(this, _SlashCommand_options, data.data.options, "f");
+    __classPrivateFieldSet(
+      this,
+      _SlashCommand_options,
+      data.data.options ?? [],
+      "f",
+    );
   }
   /**
    * The raw slash command data from Discord.
@@ -142,9 +153,9 @@ class SlashCommand extends Interaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

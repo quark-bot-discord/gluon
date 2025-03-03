@@ -43,21 +43,18 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _TextChannel__client;
-import {
-  GLUON_DEBUG_LEVELS,
-  PERMISSIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
-import Channel from "./Channel.js";
+import { GLUON_DEBUG_LEVELS, PERMISSIONS } from "../constants.js";
+import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
  */
-class TextChannel extends Channel {
+class TextChannel extends GuildChannel {
   /**
    * Creates the structure for a text channel.
    * @param {Client} client The client instance.
@@ -67,7 +64,7 @@ class TextChannel extends Channel {
    * @param {Boolean?} [options.nocache] Whether this channel should be cached or not.
    * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-example-guild-text-channel}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     super(client, data, { guildId });
     _TextChannel__client.set(this, void 0);
     if (!client)
@@ -84,7 +81,7 @@ class TextChannel extends Channel {
      * @private
      */
     __classPrivateFieldSet(this, _TextChannel__client, client, "f");
-    const shouldCache = Channel.shouldCache(
+    const shouldCache = GuildChannel.shouldCache(
       __classPrivateFieldGet(this, _TextChannel__client, "f")._cacheOptions,
       this.guild._cacheOptions,
     );
@@ -100,7 +97,7 @@ class TextChannel extends Channel {
         `NO CACHE TEXTCHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }
-    if (data.messages)
+    if ("messages" in data && data.messages)
       for (let i = 0; i < data.messages.length; i++)
         new Message(
           __classPrivateFieldGet(this, _TextChannel__client, "f"),
@@ -172,9 +169,9 @@ class TextChannel extends Channel {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),

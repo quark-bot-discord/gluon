@@ -1,32 +1,47 @@
 import Interaction from "./Interaction.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import {
+  JsonTypes,
+  ModalResponseCacheJSON,
+  ModalResponseDiscordJSON,
+  ModalResponseStorageJSON,
+  ModalResponse as ModalResponseType,
+} from "../../typings/index.d.js";
+import {
+  APIGuildInteraction,
+  APIModalSubmitInteraction,
+} from "discord-api-types/v10";
 /**
  * Represents when a modal is submitted.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}
  * @extends {Interaction}
  */
-declare class ModalResponse extends Interaction {
+declare class ModalResponse extends Interaction implements ModalResponseType {
   #private;
   /**
    * Creates a modal submitted interaction structure.
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: any, data: any);
+  constructor(
+    client: ClientType,
+    data: APIModalSubmitInteraction & APIGuildInteraction,
+  );
   /**
    * The custom id of the modal.
    * @type {String}
    * @readonly
    * @public
    */
-  get customId(): any;
+  get customId(): string;
   /**
    * The entered modal values.
    * @type {Array<Object>}
    * @readonly
    * @public
    */
-  get values(): any;
+  get values(): import("discord-api-types/v10").ModalSubmitComponent[];
   /**
    * @method
    * @public
@@ -45,76 +60,11 @@ declare class ModalResponse extends Interaction {
    * @method
    * @override
    */
-  toJSON(format: any):
-    | {
-        values: any;
-        custom_id: any;
-        id: string;
-        type: any;
-        guild_id: string;
-        channel_id: string;
-        member:
-          | {
-              user: any;
-              nick: any;
-              joined_at: number | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              _attributes: any;
-              pending?: undefined;
-            }
-          | {
-              user: any;
-              nick: any;
-              joined_at: string | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              pending: boolean;
-              _attributes?: undefined;
-            };
-      }
-    | {
-        data: {
-          custom_id: any;
-          components: {
-            components: any;
-          }[];
-        };
-        id: string;
-        type: any;
-        guild_id: string;
-        channel_id: string;
-        member:
-          | {
-              user: any;
-              nick: any;
-              joined_at: number | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              _attributes: any;
-              pending?: undefined;
-            }
-          | {
-              user: any;
-              nick: any;
-              joined_at: string | undefined;
-              avatar: string | null;
-              permissions: string;
-              roles: string[] | undefined;
-              communication_disabled_until: number | undefined;
-              flags: any;
-              pending: boolean;
-              _attributes?: undefined;
-            };
-      };
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | ModalResponseStorageJSON
+    | ModalResponseCacheJSON
+    | ModalResponseDiscordJSON;
 }
 export default ModalResponse;

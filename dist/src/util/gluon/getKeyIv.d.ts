@@ -3,7 +3,7 @@
  * @param  {...String} args The arguments to generate the key and iv.
  * @returns {Object}
  */
-declare function getKeyIv(...args: any[]): {
+declare function getKeyIv(...args: string[]): {
   key: string;
   iv: string;
 };

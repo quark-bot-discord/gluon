@@ -1,15 +1,24 @@
+import ClientType from "src/interfaces/Client.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import {
+  UserManager as UserManagerType,
+  User as UserType,
+  StructureIdentifiers,
+} from "../../typings/index.d.js";
+import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all the users belonging to a client.
  */
-declare class UserManager extends BaseCacheManager {
+declare class UserManager extends BaseCacheManager implements UserManagerType {
   #private;
-  static identifier: string;
+  static identifier: StructureIdentifiers;
   /**
    * Creates a user manager.
    * @param {Client} client The client instance.
    */
-  constructor(client: any);
+  constructor(client: ClientType);
+  fetchFromRules(key: string): Promise<UserType | null>;
+  fetchWithRules(key: string): Promise<UserType | null>;
   /**
    * Fetches a particular user.
    * @param {String} userId The id of the user to fetch.
@@ -19,7 +28,7 @@ declare class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(userId: any): Promise<any>;
+  fetch(userId: Snowflake): Promise<any>;
   /**
    * Adds a user to the cache.
    * @param {String} id The ID of the user to cache.
@@ -30,7 +39,8 @@ declare class UserManager extends BaseCacheManager {
    * @throws {TypeError}
    * @override
    */
-  set(id: any, user: any): Map<any, any>;
+  set(id: Snowflake, user: UserType): void;
+  get(id: Snowflake): UserType | null;
   /**
    * Fetches a particular user.
    * @param {Client} client The client instance.
@@ -41,6 +51,6 @@ declare class UserManager extends BaseCacheManager {
    * @method
    * @throws {TypeError | Error}
    */
-  static fetchUser(client: any, userId: any): Promise<any>;
+  static fetchUser(client: ClientType, userId: Snowflake): Promise<any>;
 }
 export default UserManager;

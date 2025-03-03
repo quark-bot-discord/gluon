@@ -66,6 +66,7 @@ import {
   StickerFormatType,
   TextInputStyle,
 } from "discord-api-types/v10";
+import { HttpMethods, HttpResponse } from "msw";
 import {
   ISO8601Timestamp,
   UnixMillisecondsTimestamp,
@@ -2441,3 +2442,15 @@ export type ManagerDataTypes =
   | ScheduledEvent
   | VoiceState
   | User;
+
+export interface EndpointIndex {
+  [key: string]: EndpointIndexItem;
+}
+
+export interface EndpointIndexItem {
+  path: (...args: string[]) => string;
+  method: HttpMethods;
+  majorParams: number[];
+  useHeaders?: string[];
+  mockResponse: ({ params }: any) => HttpResponse;
+}

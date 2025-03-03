@@ -1,9 +1,20 @@
+import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
+import ClientType from "src/interfaces/Client.js";
+import { Snowflake } from "src/interfaces/gluon.js";
+import { APIUser } from "discord-api-types/v10";
+import {
+  JsonTypes,
+  UserCacheJSON,
+  UserDiscordJSON,
+  UserStorageJSON,
+  User as UserType,
+} from "../../typings/index.d.js";
 /**
  * Represents a Discord user.
  * @see {@link https://discord.com/developers/docs/resources/user}
  */
-declare class User {
+declare class User implements UserType {
   #private;
   /**
    * Creates a structure for a user.
@@ -14,12 +25,12 @@ declare class User {
    * @see {@link https://discord.com/developers/docs/resources/user#user-object}
    */
   constructor(
-    client: any,
-    data: any,
+    client: ClientType,
+    data: APIUser | UserCacheJSON | UserDiscordJSON | UserStorageJSON,
     {
       nocache,
     }?: {
-      nocache?: false;
+      nocache?: boolean;
     },
   );
   /**
@@ -29,7 +40,7 @@ declare class User {
    * @method
    * @returns {void}
    */
-  overrideAvatarURL(url: any): void;
+  overrideAvatarURL(url: string): void;
   /**
    * The ID of the user.
    * @type {String}
@@ -43,14 +54,14 @@ declare class User {
    * @readonly
    * @public
    */
-  get username(): any;
+  get username(): string;
   /**
    * The global name of the user.
    * @type {String}
    * @readonly
    * @public
    */
-  get globalName(): any;
+  get globalName(): string | null;
   /**
    * The discriminator of the user.
    * @type {String?}
@@ -64,7 +75,7 @@ declare class User {
    * @readonly
    * @public
    */
-  get _cached(): any;
+  get _cached(): number;
   /**
    * The mention string for the user.
    * @type {String}
@@ -92,7 +103,7 @@ declare class User {
    * @type {String}
    * @public
    */
-  get tag(): any;
+  get tag(): string;
   /**
    * The UNIX (seconds) timestamp of when this user created their Discord account.
    * @readonly
@@ -129,7 +140,7 @@ declare class User {
    * @static
    * @method
    */
-  static getMention(id: any): string;
+  static getMention(id: Snowflake): string;
   /**
    * Returns the URL to the user's avatar.
    * @param {String} id The ID of the user to get the avatar for.
@@ -139,7 +150,7 @@ declare class User {
    * @static
    * @method
    */
-  static getAvatarUrl(id: any, hash: any): string;
+  static getAvatarUrl(id: Snowflake, hash?: string | null): string;
   /**
    * Determines whether the user should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -149,7 +160,7 @@ declare class User {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: any): boolean;
+  static shouldCache(gluonCacheOptions: GluonCacheOptions): boolean;
   /**
    * @method
    * @public
@@ -167,22 +178,22 @@ declare class User {
    * @public
    * @method
    */
-  toJSON(format: any):
+  toJSON(format?: JsonTypes):
     | {
         id: string;
         avatar: string | null;
-        _cached: any;
+        _cached: number;
         bot: boolean;
-        username: any;
-        global_name: any;
-        discriminator: string | null;
+        username: string;
+        global_name: string | null;
+        discriminator: number | undefined;
       }
     | {
         id: string;
         avatar: string | null;
         bot: boolean;
-        username: any;
-        global_name: any;
+        username: string;
+        global_name: string | null;
         discriminator: string | null;
         _cached?: undefined;
       };

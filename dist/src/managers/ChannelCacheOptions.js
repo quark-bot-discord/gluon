@@ -43,10 +43,8 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _ChannelCacheOptions__cache_options;
-import {
-  GLUON_CHANNEL_CACHING_OPTIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.
@@ -520,9 +518,9 @@ class ChannelCacheOptions {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return __classPrivateFieldGet(
           this,

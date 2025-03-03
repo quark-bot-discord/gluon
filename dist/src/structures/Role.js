@@ -54,14 +54,11 @@ var _Role_instances,
   _Role__attributes,
   _Role_tags,
   _Role__formattedIconHash_get;
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a role belonging to a guild.
  */
@@ -75,7 +72,7 @@ class Role {
    * @param {Boolean?} [options.nocache] Whether this role should be cached or not.
    * @see {@link https://discord.com/developers/docs/topics/permissions#role-object-role-structure}
    */
-  constructor(client, data, { guildId, nocache = false } = { nocache: false }) {
+  constructor(client, data, { guildId, nocache = false }) {
     _Role_instances.add(this);
     _Role__client.set(this, void 0);
     _Role__guild_id.set(this, void 0);
@@ -154,22 +151,27 @@ class Role {
      * @type {Number}
      * @private
      */
-    __classPrivateFieldSet(this, _Role__attributes, data._attributes ?? 0, "f");
-    if (data.hoist == true)
+    __classPrivateFieldSet(
+      this,
+      _Role__attributes,
+      "_attributes" in data ? data._attributes : 0,
+      "f",
+    );
+    if ("hoist" in data && data.hoist == true)
       __classPrivateFieldSet(
         this,
         _Role__attributes,
         __classPrivateFieldGet(this, _Role__attributes, "f") | (0b1 << 0),
         "f",
       );
-    if (data.managed == true)
+    if ("managed" in data && data.managed == true)
       __classPrivateFieldSet(
         this,
         _Role__attributes,
         __classPrivateFieldGet(this, _Role__attributes, "f") | (0b1 << 1),
         "f",
       );
-    if (data.mentionable == true)
+    if ("mentionable" in data && data.mentionable == true)
       __classPrivateFieldSet(
         this,
         _Role__attributes,
@@ -433,8 +435,8 @@ class Role {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           id: this.id,
           name: this.name,
@@ -446,7 +448,7 @@ class Role {
           tags: this.tags,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           id: this.id,

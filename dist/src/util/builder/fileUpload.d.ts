@@ -1,55 +1,57 @@
-declare class FileUpload {
+import { Stream } from "stream";
+import { FileUpload as FileUploadType, JsonTypes } from "typings/index.d.js";
+declare class FileUpload implements FileUploadType {
   #private;
   /**
    * The name of the file.
    * @param {String} name The name of the file.
    * @returns {FileUpload}
    */
-  setName(name: any): this;
+  setName(name: string): this;
   /**
    * The stream of the file.
    * @param {Stream} stream The stream of the file.
    * @returns {FileUpload}
    */
-  setStream(stream: any): this;
+  setStream(stream: Stream): this;
   /**
    * The path of the file.
    * @param {String} path The path of the file.
    * @returns {FileUpload}
    */
-  setPath(path: any): this;
+  setPath(path: string): this;
   /**
    * The size of the file.
    * @param {Number} size The size of the file.
    * @returns {FileUpload}
    */
-  setSize(size: any): this;
+  setSize(size: number): this;
   /**
    * The name of the file.
    * @type {String}
    * @readonly
    */
-  get name(): any;
+  get name(): string | undefined;
   /**
    * The stream of the file.
    * @type {Stream}
    * @readonly
    */
-  get stream(): any;
+  get stream(): Stream | undefined;
   /**
    * The path of the file.
    * @type {String}
    * @readonly
    */
-  get attachment(): any;
+  get attachment(): string | undefined;
   /**
    * The size of the file.
    * @type {Number}
    * @readonly
    */
-  get size(): any;
+  get size(): number | undefined;
   toJSON(
-    format: number,
+    format: JsonTypes,
     {
       suppressValidation,
     }?: {
@@ -57,14 +59,14 @@ declare class FileUpload {
     },
   ):
     | {
-        stream: any;
-        name: any;
-        size: any;
+        stream: Stream;
+        name: string;
+        size: number;
       }
     | {
-        attachment: any;
-        name: any;
-        size: any;
+        attachment: string | undefined;
+        name: string;
+        size: number;
       };
 }
 export default FileUpload;

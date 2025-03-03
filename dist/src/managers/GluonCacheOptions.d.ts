@@ -1,4 +1,5 @@
-declare class GluonCacheOptions {
+import { GluonCacheOptions as GluonCacheOptionsType } from "../../typings/index.d.js";
+declare class GluonCacheOptions implements GluonCacheOptionsType {
   #private;
   constructor({
     userTTL,
@@ -13,7 +14,20 @@ declare class GluonCacheOptions {
     cacheEmojis,
     cacheInvites,
     cacheScheduledEvents,
-  }?: any);
+  }?: {
+    userTTL?: number;
+    messageTTL?: number;
+    cacheMessages?: boolean;
+    cacheUsers?: boolean;
+    cacheMembers?: boolean;
+    cacheChannels?: boolean;
+    cacheGuilds?: boolean;
+    cacheRoles?: boolean;
+    cacheVoiceStates?: boolean;
+    cacheEmojis?: boolean;
+    cacheInvites?: boolean;
+    cacheScheduledEvents?: boolean;
+  });
   /**
    * Set whether gluon should cache messages by default.
    * @param {Boolean} value Whether to cache messages or not.
@@ -22,7 +36,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMessages(value: any): this;
+  setCacheMessages(value: boolean): this;
   /**
    * Get whether gluon should cache messages by default.
    * @type {Boolean}
@@ -38,7 +52,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheUsers(value: any): this;
+  setCacheUsers(value: boolean): this;
   /**
    * Get whether gluon should cache users by default.
    * @type {Boolean}
@@ -54,7 +68,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheMembers(value: any): this;
+  setCacheMembers(value: boolean): this;
   /**
    * Get whether gluon should cache members by default.
    * @type {Boolean}
@@ -70,7 +84,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheChannels(value: any): this;
+  setCacheChannels(value: boolean): this;
   /**
    * Get whether gluon should cache channels by default.
    * @type {Boolean}
@@ -86,7 +100,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheGuilds(value: any): this;
+  setCacheGuilds(value: boolean): this;
   /**
    * Get whether gluon should cache guilds by default.
    * @type {Boolean}
@@ -102,7 +116,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheRoles(value: any): this;
+  setCacheRoles(value: boolean): this;
   /**
    * Get whether gluon should cache roles by default.
    * @type {Boolean}
@@ -118,7 +132,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheVoiceStates(value: any): this;
+  setCacheVoiceStates(value: boolean): this;
   /**
    * Get whether gluon should cache voice states by default.
    * @type {Boolean}
@@ -134,7 +148,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheEmojis(value: any): this;
+  setCacheEmojis(value: boolean): this;
   /**
    * Get whether gluon should cache emojis by default.
    * @type {Boolean}
@@ -150,7 +164,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheInvites(value: any): this;
+  setCacheInvites(value: boolean): this;
   /**
    * Get whether gluon should cache invites by default.
    * @type {Boolean}
@@ -166,7 +180,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setCacheScheduledEvents(value: any): this;
+  setCacheScheduledEvents(value: boolean): this;
   /**
    * Get whether gluon should cache scheduled events by default.
    * @type {Boolean}
@@ -182,7 +196,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setUserTTL(seconds: any): this;
+  setUserTTL(seconds: number): this;
   /**
    * Get the default TTL for users in the cache.
    * @type {Number}
@@ -198,7 +212,7 @@ declare class GluonCacheOptions {
    * @throws {TypeError}
    * @method
    */
-  setMessageTTL(seconds: any): this;
+  setMessageTTL(seconds: number): this;
   /**
    * Get the default TTL for messages in the cache.
    * @type {Number}

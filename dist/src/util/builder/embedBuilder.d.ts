@@ -1,99 +1,94 @@
-/**
- * Represents an author in an embed.
- * @typedef {Object} EmbedAuthor
- * @property {String} name The author name.
- * @property {String} [url] The author url.
- * @property {String} [icon_url] The author icon url.
- */
-/**
- * Represents an embed field.
- * @typedef {Object} EmbedField
- * @property {String} name The field name.
- * @property {String} value The field value.
- * @property {Boolean} inline Whether the field should be inline.
- */
-/**
- * Represents an embed footer.
- * @typedef {Object} EmbedFooter
- * @property {String} text The footer text.
- * @property {String} [icon_url] The footer icon url.
- */
-/**
- * Represents embed media.
- * @typedef {Object} EmbedMedia
- * @property {String} url The media url.
- */
+import {
+  UnixMillisecondsTimestamp,
+  UnixTimestamp,
+} from "src/interfaces/gluon.js";
+import {
+  JsonTypes,
+  EmbedBuilderCacheJSON,
+  EmbedBuilderDiscordJSON,
+  EmbedBuilderStorageJSON,
+  Embed as EmbedType,
+} from "typings/index.js";
+import {
+  APIEmbed,
+  APIEmbedAuthor,
+  APIEmbedField,
+  APIEmbedFooter,
+  APIEmbedImage,
+  APIEmbedThumbnail,
+  APIEmbedVideo,
+} from "discord-api-types/v10";
 /**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}
  */
-declare class Embed {
+declare class Embed implements EmbedType {
   /**
    * The title of the embed.
    * @type {String}
    * @public
    */
-  title: any;
+  title: string | undefined;
   /**
    * The description of the embed.
    * @type {String}
    * @public
    */
-  description: any;
+  description: string | undefined;
   /**
    * The url of the embed.
    * @type {String}
    * @public
    */
-  url: any;
+  url: string | undefined;
   /**
    * The timestamp of the embed.
    * @type {Number}
    * @public
    */
-  timestamp: any;
+  timestamp: UnixMillisecondsTimestamp | undefined;
   /**
    * The color of the embed.
    * @type {Number}
    * @public
    */
-  color: any;
+  color: number | undefined;
   /**
    * The footer of the embed.
    * @type {EmbedFooter}
    * @public
    */
-  footer: any;
+  footer: APIEmbedFooter | undefined;
   /**
    * The author of the embed.
    * @type {EmbedAuthor}
    * @public
    */
-  author: any;
+  author: APIEmbedAuthor | undefined;
   /**
    * The fields of the embed.
    * @type {Array<EmbedField>}
    * @public
    */
-  fields: any;
+  fields: Array<APIEmbedField>;
   /**
    * The image of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  image: any;
+  image: APIEmbedImage | undefined;
   /**
    * The thumbnail of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  thumbnail: any;
+  thumbnail: APIEmbedThumbnail | undefined;
   /**
    * The video of the embed.
    * @type {EmbedMedia}
    * @public
    */
-  video: any;
+  video: APIEmbedVideo | undefined;
   /**
    * Creates an embed structure.
    * @param {Object?} [data] The embed data.
@@ -121,7 +116,13 @@ declare class Embed {
    * @param {String?} [data.video.url] The video url.
    * @constructor
    */
-  constructor(data?: any);
+  constructor(
+    data?:
+      | APIEmbed
+      | EmbedBuilderCacheJSON
+      | EmbedBuilderDiscordJSON
+      | EmbedBuilderStorageJSON,
+  );
   /**
    * Sets the title of the embed.
    * @param {String} title The title of the embed.
@@ -130,7 +131,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setTitle(title: any): this;
+  setTitle(title: string): this;
   /**
    * Sets the embed description.
    * @param {String} text The description.
@@ -139,7 +140,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setDescription(text: any): this;
+  setDescription(text: string): this;
   /**
    * Sets the url of the embed.
    * @param {String} url The url.
@@ -148,7 +149,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setURL(url: any): this;
+  setURL(url: string): this;
   /**
    * Sets the timestamp displayed on the embed.
    * @param {Number?} [timestamp] The UNIX timestamp.
@@ -156,7 +157,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setTimestamp(timestamp?: any): this;
+  setTimestamp(timestamp?: UnixTimestamp): this;
   /**
    * Sets the color of the embed.
    * @param {String | Number} color The color.
@@ -165,7 +166,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setColor(color: any): this;
+  setColor(color: string | number): this;
   /**
    * Sets the embed thumbnail image.
    * @param {String} url The url of the thumbnail.
@@ -174,7 +175,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setThumbnail(url: any): this;
+  setThumbnail(url: string): this;
   /**
    * Sets the embed footer.
    * @param {String} text The footer text.
@@ -184,7 +185,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setFooter(text: any, icon?: any): this;
+  setFooter(text: string, icon?: string | null): this;
   /**
    * Sets the embed author info.
    * @param {String?} name The embed author.
@@ -195,7 +196,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setAuthor(name: any, url: any, icon_url: any): this;
+  setAuthor(name: string, url?: string | null, icon_url?: string | null): this;
   /**
    * Adds a field to the embed.
    * @param {String} name Sets the embed field name.
@@ -206,7 +207,7 @@ declare class Embed {
    * @method
    * @public
    */
-  addField(name: any, value: any, inline?: boolean): this;
+  addField(name: string, value: string, inline?: boolean): this;
   /**
    * Sets the embed image url.
    * @param {String} url The image url.
@@ -214,7 +215,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setImage(url: any): this;
+  setImage(url: string): this;
   /**
    * Sets the embed video url.
    * @param {String} url The video url.
@@ -222,7 +223,7 @@ declare class Embed {
    * @method
    * @public
    */
-  setVideo(url: any): this;
+  setVideo(url: string): this;
   /**
    * Returns the character count of the embed.
    * @returns {Number}
@@ -244,24 +245,38 @@ declare class Embed {
    * @public
    */
   toJSON(
-    format: number,
+    format?: JsonTypes,
     {
       suppressValidation,
     }?: {
       suppressValidation: boolean;
     },
-  ): {
-    title: any;
-    description: any;
-    url: any;
-    timestamp: any;
-    color: any;
-    footer: any;
-    author: any;
-    fields: any;
-    image: any;
-    thumbnail: any;
-    video: any;
-  };
+  ):
+    | {
+        title: string | undefined;
+        description: string | undefined;
+        url: string | undefined;
+        timestamp: number | undefined;
+        color: number | undefined;
+        footer: APIEmbedFooter | undefined;
+        author: APIEmbedAuthor | undefined;
+        fields: APIEmbedField[];
+        image: APIEmbedImage | undefined;
+        thumbnail: APIEmbedThumbnail | undefined;
+        video: APIEmbedVideo | undefined;
+      }
+    | {
+        title: string | undefined;
+        description: string | undefined;
+        url: string | undefined;
+        timestamp: string | undefined;
+        color: number | undefined;
+        footer: APIEmbedFooter | undefined;
+        author: APIEmbedAuthor | undefined;
+        fields: APIEmbedField[];
+        image: APIEmbedImage | undefined;
+        thumbnail: APIEmbedThumbnail | undefined;
+        video: APIEmbedVideo | undefined;
+      };
 }
 export default Embed;

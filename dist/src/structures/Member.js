@@ -58,7 +58,6 @@ var _Member_instances,
 import {
   PERMISSIONS,
   MEMBER_FLAGS,
-  TO_JSON_TYPES_ENUM,
   CDN_BASE_URL,
   GLUON_DEBUG_LEVELS,
 } from "../constants.js";
@@ -73,6 +72,7 @@ import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import GuildManager from "../managers/GuildManager.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
@@ -88,13 +88,7 @@ class Member {
    * @param {User?} [options.user] A user object for this member.
    * @param {Boolean?} [options.nocache] Whether this member should be cached.
    */
-  constructor(
-    client,
-    data,
-    { userId, guildId, user, nocache = false } = {
-      nocache: false,
-    },
-  ) {
+  constructor(client, data, { userId, guildId, user, nocache = false }) {
     _Member_instances.add(this);
     _Member__client.set(this, void 0);
     _Member__guild_id.set(this, void 0);
@@ -138,13 +132,12 @@ class Member {
      * @private
      */
     __classPrivateFieldSet(this, _Member__id, BigInt(userId), "f");
-    if (data.user)
+    if ("user" in data && data.user)
       /**
        * The user object for this member.
        * @type {User?}
        * @private
        */
-      // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
       __classPrivateFieldSet(
         this,
         _Member_user,
@@ -221,17 +214,22 @@ class Member {
     __classPrivateFieldSet(
       this,
       _Member__attributes,
-      data._attributes ?? 0,
+      "_attributes" in data ? data._attributes : 0,
       "f",
     );
-    if (data.pending !== undefined && data.pending == true)
+    if ("pending" in data && data.pending !== undefined && data.pending == true)
       __classPrivateFieldSet(
         this,
         _Member__attributes,
         __classPrivateFieldGet(this, _Member__attributes, "f") | (0b1 << 0),
         "f",
       );
-    else if (data.pending === undefined && existing && existing.pending == true)
+    else if (
+      "pending" in data &&
+      data.pending === undefined &&
+      existing &&
+      existing.pending == true
+    )
       __classPrivateFieldSet(
         this,
         _Member__attributes,
@@ -354,10 +352,9 @@ class Member {
    * @public
    */
   get timeoutUntil() {
-    return __classPrivateFieldGet(
-      this,
-      _Member_communication_disabled_until,
-      "f",
+    return (
+      __classPrivateFieldGet(this, _Member_communication_disabled_until, "f") ??
+      null
     );
   }
   /**
@@ -900,8 +897,8 @@ class Member {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           user: this.user.toJSON(format),
           nick: this.nick,
@@ -922,7 +919,7 @@ class Member {
           _attributes: __classPrivateFieldGet(this, _Member__attributes, "f"),
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           user: this.user.toJSON(format),

@@ -46,10 +46,10 @@ var _OptionSelect__client,
   _OptionSelect_custom_id,
   _OptionSelect_message,
   _OptionSelect_values;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Represents when an option is selected.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}
@@ -177,16 +177,17 @@ class OptionSelect extends Interaction {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         return {
           ...super.toJSON(format),
           custom_id: this.customId,
           message: this.message.toJSON(format),
           values: this.values,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
           ...super.toJSON(format),
@@ -195,6 +196,7 @@ class OptionSelect extends Interaction {
             values: this.values,
           },
           message: this.message.toJSON(format),
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

@@ -236,7 +236,6 @@ class BetterRequestHandler {
     return __classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f");
   }
   async makeRequest(request, params, body) {
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const actualRequest = __classPrivateFieldGet(
       this,
       _BetterRequestHandler_endpoints,
@@ -245,11 +244,11 @@ class BetterRequestHandler {
     const toHash =
       actualRequest.method +
       actualRequest.path(
-        params
+        ...(params
           ? params.map((v, i) =>
-              actualRequest.majorParams.includes(i) ? v : null,
+              String(actualRequest.majorParams.includes(i) ? v : null),
             )
-          : [],
+          : []),
       );
     const hash = hashjs.sha256().update(toHash).digest("hex");
     __classPrivateFieldGet(this, _BetterRequestHandler__client, "f")._emitDebug(
@@ -268,7 +267,6 @@ class BetterRequestHandler {
     while (retries--)
       try {
         const _stack = new Error().stack;
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         const result = await __classPrivateFieldGet(
           this,
           _BetterRequestHandler_queues,
@@ -280,7 +278,6 @@ class BetterRequestHandler {
           body,
           _stack,
         });
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (
           __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
             hash

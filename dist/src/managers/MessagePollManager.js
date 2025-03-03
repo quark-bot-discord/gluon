@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _MessagePollManager__client, _MessagePollManager_cache;
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
+import { JsonTypes } from "../../typings/index.d.js";
 /**
  * Manages a poll for a message.
  */
@@ -153,8 +153,8 @@ class MessagePollManager {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT: {
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
         const pollResponses = {};
         for (const [key, values] of __classPrivateFieldGet(
           this,
@@ -164,7 +164,7 @@ class MessagePollManager {
           pollResponses[key] = values.map((v) => String(v));
         return pollResponses;
       }
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         const counts = [];
         for (const [key, values] of __classPrivateFieldGet(

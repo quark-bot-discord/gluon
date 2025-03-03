@@ -1,9 +1,19 @@
+import {
+  JsonTypes,
+  ActionRowBuilder as ActionRowBuilderType,
+  ButtonBuilder as ButtonBuilderType,
+  DropdownBuilder as DropdownBuilderType,
+  TextInputBuilder as TextInputBuilderType,
+} from "typings/index.js";
+import { ComponentType } from "discord-api-types/v10";
 /**
  * Helps to construct an action row for a message.
  */
-declare class ActionRow {
-  components: any;
-  type: any;
+declare class ActionRow implements ActionRowBuilderType {
+  components: Array<
+    DropdownBuilderType | ButtonBuilderType | TextInputBuilderType
+  >;
+  type: ComponentType.ActionRow;
   /**
    * Creates an action row.
    */
@@ -13,21 +23,27 @@ declare class ActionRow {
    * @param {Button | Dropdown} component A component to add to the action row.
    * @returns {ActionRow}
    */
-  addComponent(component: any): this;
+  addComponent(
+    component: DropdownBuilderType | ButtonBuilderType | TextInputBuilderType,
+  ): this;
   /**
    * Returns the correct Discord format for an action row.
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format?: JsonTypes,
     {
       suppressValidation,
     }?: {
       suppressValidation: boolean;
     },
   ): {
-    type: any;
-    components: any;
+    type: ComponentType.ActionRow;
+    components: (
+      | import("typings/index.js").DropdownBuilderCacheJSON
+      | import("typings/index.js").ButtonBuilderCacheJSON
+      | import("typings/index.js").TextInputBuilderCacheJSON
+    )[];
   };
 }
 export default ActionRow;
