@@ -568,7 +568,7 @@ class Interaction implements InteractionType {
           type: this.type,
           guild_id: this.guildId,
           channel_id: this.channelId,
-          member: this.member.toJSON(format),
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

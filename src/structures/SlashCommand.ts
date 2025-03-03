@@ -46,28 +46,34 @@ class SlashCommand extends Interaction implements SlashCommandType {
      */
     this.#data = data.data;
 
-    if (data.data.resolved?.members)
-      for (const [key, value] of Object.entries(data.data.resolved.members))
+    if (data.data.resolved?.members && data.data.resolved?.users) {
+      for (const [key, value] of Object.entries(data.data.resolved.members)) {
         new Member(client, value, {
           userId: key,
           guildId: data.guild_id,
           user: new User(client, data.data.resolved.users[key]),
         });
-    if (data.data.resolved?.roles)
-      for (const value of Object.values(data.data.resolved.roles))
+      }
+    }
+    if (data.data.resolved?.roles) {
+      for (const value of Object.values(data.data.resolved.roles)) {
         new Role(client, value, {
           guildId: data.guild_id,
         });
-    if (data.data.resolved?.channels)
-      for (const value of Object.values(data.data.resolved.channels))
+      }
+    }
+    if (data.data.resolved?.channels) {
+      for (const value of Object.values(data.data.resolved.channels)) {
         cacheChannel(client, value, data.guild_id);
+      }
+    }
 
     /**
      * The options provided with the interaction.
      * @type {Array<Object>}
      * @private
      */
-    this.#options = data.data.options;
+    this.#options = data.data.options ?? [];
   }
 
   /**

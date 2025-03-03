@@ -5,7 +5,7 @@ import hash from "hash.js";
  * @param  {...String} args The arguments to generate the key and iv.
  * @returns {Object}
  */
-function getKeyIv(...args: any[]) {
+function getKeyIv(...args: string[]) {
   if (!args || args.length === 0)
     throw new TypeError("GLUON: At least one argument must be provided.");
   if (!args.every((arg) => typeof arg === "string"))

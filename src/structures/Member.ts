@@ -27,7 +27,10 @@ import {
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
 } from "../../typings/index.d.js";
-import { APIGuildMember } from "discord-api-types/v10";
+import {
+  APIGuildMember,
+  APIInteractionDataResolvedGuildMember,
+} from "discord-api-types/v10";
 
 /**
  * Represents a guild member.
@@ -59,6 +62,7 @@ class Member implements MemberType {
     client: ClientType,
     data:
       | APIGuildMember
+      | APIInteractionDataResolvedGuildMember
       | MemberStorageJSON
       | MemberCacheJSON
       | MemberDiscordJSON,
@@ -110,7 +114,7 @@ class Member implements MemberType {
      */
     this.#_id = BigInt(userId);
 
-    if (data.user)
+    if ("user" in data && data.user)
       /**
        * The user object for this member.
        * @type {User?}

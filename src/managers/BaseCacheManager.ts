@@ -3,6 +3,7 @@
 import ClientType from "src/interfaces/Client.js";
 import {
   BaseCacheManager as BaseCacheManagerType,
+  GluonCacheRuleSetStructure,
   JsonTypes,
   StaticManagerType,
 } from "../../typings/index.d.js";
@@ -14,7 +15,7 @@ class BaseCacheManager implements BaseCacheManagerType {
   #cache;
   #expiryBucket;
   #structureType;
-  static rules = {};
+  static rules: GluonCacheRuleSetStructure = {};
 
   /**
    * Creates a cache manager.
@@ -275,9 +276,11 @@ class BaseCacheManager implements BaseCacheManagerType {
    */
   #_callRules(value: unknown) {
     const rules = Object.values(BaseCacheManager.rules);
-    for (const rule of rules)
-      if ((rule as any).structure === this.#structureType)
-        (rule as any).store(value);
+    for (const rule of rules) {
+      if (rule.structure === this.#structureType) {
+        rule.store(value);
+      }
+    }
   }
 
   /**
@@ -292,7 +295,6 @@ class BaseCacheManager implements BaseCacheManagerType {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
-      // @ts-expect-error TS(2571): Object is of type 'unknown'.
       if (rule.structure === this.#structureType)
         // @ts-expect-error TS(2571): Object is of type 'unknown'.
         fetchValue = await rule.retrieve(id, this);

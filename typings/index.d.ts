@@ -1,8 +1,6 @@
 import { Snowflake } from "discord-api-types/globals";
 import {
-  APIApplicationCommandInteraction,
-  APIApplicationCommandInteractionData,
-  APIApplicationCommandOption,
+  APIApplicationCommandInteractionDataOption,
   APIAttachment,
   APIAuditLogChange,
   APIAuditLogEntry,
@@ -25,6 +23,7 @@ import {
   APIGuildStageVoiceChannel,
   APIGuildTextChannel,
   APIGuildVoiceChannel,
+  APIInteractionDataResolvedGuildMember,
   APIInvite,
   APIMessage,
   APIMessageComponentButtonInteraction,
@@ -645,6 +644,7 @@ export class Member {
     client: any,
     data:
       | APIGuildMember
+      | APIInteractionDataResolvedGuildMember
       | MemberCacheJSON
       | MemberStorageJSON
       | MemberDiscordJSON,
@@ -1211,7 +1211,7 @@ export class SlashCommand extends Interaction {
     data: APIChatInputApplicationCommandGuildInteraction,
   );
   readonly data: APIChatInputApplicationCommandInteractionData;
-  readonly options: APIApplicationCommandOption[];
+  readonly options: APIApplicationCommandInteractionDataOption[];
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -1531,6 +1531,7 @@ export type StructureIdentifiers =
 
 export interface StaticManagerType {
   identifier: StructureIdentifiers;
+  rules: GluonCacheRuleSetStructure;
 }
 
 export class ChannelCacheOptions {
@@ -1640,8 +1641,8 @@ export class GuildChannelsManager extends BaseCacheManager {
   constructor(client: any, guild: Guild);
   get(key: Snowflake): AllChannels | null;
   fetch(key: Snowflake): Promise<AllChannels | null>;
-  fetchFromRules(key: Snowflake): Promise<ChannelType | null>;
-  fetchWithRules(key: Snowflake): Promise<ChannelType | null>;
+  fetchFromRules(key: Snowflake): Promise<AllChannels | null>;
+  fetchWithRules(key: Snowflake): Promise<AllChannels | null>;
   set(key: Snowflake, value: AllChannels, expiry?: number): void;
   delete(key: Snowflake): boolean;
   clear(): void;
@@ -1651,7 +1652,7 @@ export class GuildChannelsManager extends BaseCacheManager {
     callbackfn: (
       value: AllChannels,
       key: Snowflake,
-      map: Map<Snowflake, ChannelType>,
+      map: Map<Snowflake, AllChannels>,
     ) => void,
   ): void;
   has(key: string): boolean;
@@ -2388,4 +2389,43 @@ export interface TextInputBuilderDiscordJSON {
   min_length?: number;
   max_length?: number;
   required?: boolean;
+}
+
+export type DataManagers =
+  | ChannelMessageManager
+  | GuildChannelsManager
+  | GuildEmojisManager
+  | GuildInviteManager
+  | GuildManager
+  | GuildMemberManager
+  | GuildRoleManager
+  | GuildScheduledEventManager
+  | GuildVoiceStatesManager
+  | UserManager;
+
+export interface GluonCacheRuleSetStructure {
+  [key: string]: {
+    store: GluonCacheRuleHandlerFunction;
+    retrieve: GluonCacheRuleRetrieveFunction;
+    structure: StaticManagerType;
+  };
+}
+
+export type GluonCacheRuleHandlerFunction = (value: unknown) => void;
+
+export type GluonCacheRuleRetrieveFunction = (
+  id: string,
+  structure: StaticManagerType,
+) => Promise<unknown>;
+
+export class GluonCacheRule {
+  setName(name: string): GluonCacheRule;
+  setHandlerFunction(
+    handlerFunction: GluonCacheRuleHandlerFunction,
+  ): GluonCacheRule;
+  setRetrieveFunction(
+    retrieveFunction: GluonCacheRuleRetrieveFunction,
+  ): GluonCacheRule;
+  setStructureType(structure: StaticManagerType): GluonCacheRule;
+  applyRule(): void;
 }

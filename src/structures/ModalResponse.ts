@@ -3,9 +3,15 @@ import util from "util";
 import ClientType from "src/interfaces/Client.js";
 import {
   JsonTypes,
+  ModalResponseCacheJSON,
+  ModalResponseDiscordJSON,
+  ModalResponseStorageJSON,
   ModalResponse as ModalResponseType,
 } from "../../typings/index.d.js";
-import { APIModalSubmitInteraction } from "discord-api-types/v10";
+import {
+  APIGuildInteraction,
+  APIModalSubmitInteraction,
+} from "discord-api-types/v10";
 
 /**
  * Represents when a modal is submitted.
@@ -20,7 +26,10 @@ class ModalResponse extends Interaction implements ModalResponseType {
    * @param {Client} client The client instance.
    * @param {Object} data The interaction data from Discord.
    */
-  constructor(client: ClientType, data: APIModalSubmitInteraction) {
+  constructor(
+    client: ClientType,
+    data: APIModalSubmitInteraction & APIGuildInteraction,
+  ) {
     super(client, data);
 
     if (!client)
@@ -87,7 +96,12 @@ class ModalResponse extends Interaction implements ModalResponseType {
    * @method
    * @override
    */
-  toJSON(format?: JsonTypes) {
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | ModalResponseStorageJSON
+    | ModalResponseCacheJSON
+    | ModalResponseDiscordJSON {
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {
@@ -95,6 +109,7 @@ class ModalResponse extends Interaction implements ModalResponseType {
           ...super.toJSON(format),
           values: this.values,
           custom_id: this.customId,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -109,6 +124,7 @@ class ModalResponse extends Interaction implements ModalResponseType {
               },
             ],
           },
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

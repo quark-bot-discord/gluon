@@ -3,7 +3,10 @@ import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import { APIMessageComponentSelectMenuInteraction } from "discord-api-types/v10";
+import {
+  APIMessageComponentGuildInteraction,
+  APIMessageComponentSelectMenuInteraction,
+} from "discord-api-types/v10";
 import {
   OptionSelect as OptionSelectType,
   OptionSelectCacheJSON,
@@ -35,7 +38,8 @@ class OptionSelect extends Interaction implements OptionSelectType {
    */
   constructor(
     client: ClientType,
-    data: APIMessageComponentSelectMenuInteraction,
+    data: APIMessageComponentSelectMenuInteraction &
+      APIMessageComponentGuildInteraction,
     { channelId, guildId }: { channelId: Snowflake; guildId: Snowflake },
   ) {
     super(client, data);
@@ -150,6 +154,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
             | MessageCacheJSON
             | MessageStorageJSON,
           values: this.values,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -161,6 +166,7 @@ class OptionSelect extends Interaction implements OptionSelectType {
             values: this.values,
           },
           message: this.message.toJSON(format) as MessageDiscordJSON,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }

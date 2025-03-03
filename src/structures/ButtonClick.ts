@@ -8,6 +8,9 @@ import {
   ButtonClickStorageJSON,
   ButtonClick as ButtonClickType,
   JsonTypes,
+  MessageCacheJSON,
+  MessageDiscordJSON,
+  MessageStorageJSON,
 } from "../../typings/index.d.js";
 import {
   APIMessageComponentGuildInteraction,
@@ -122,7 +125,18 @@ class ButtonClick extends Interaction implements ButtonClickType {
   ): ButtonClickCacheJSON | ButtonClickDiscordJSON | ButtonClickStorageJSON {
     switch (format) {
       case JsonTypes.STORAGE_FORMAT:
-      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.CACHE_FORMAT: {
+        return {
+          ...super.toJSON(format),
+          data: {
+            custom_id: this.customId,
+          },
+          message: this.message.toJSON(format) as
+            | MessageStorageJSON
+            | MessageCacheJSON,
+          member: this.member ? this.member.toJSON(format) : null,
+        };
+      }
       case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
@@ -130,7 +144,8 @@ class ButtonClick extends Interaction implements ButtonClickType {
           data: {
             custom_id: this.customId,
           },
-          message: this.message.toJSON(format),
+          message: this.message.toJSON(format) as MessageDiscordJSON,
+          member: this.member ? this.member.toJSON(format) : null,
         };
       }
     }
