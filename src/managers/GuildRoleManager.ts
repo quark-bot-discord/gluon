@@ -49,6 +49,14 @@ class GuildRoleManager
     this.#guild = guild;
   }
 
+  fetchFromRules(key: string): Promise<RoleType | null> {
+    return super.fetchFromRules(key) as Promise<RoleType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<RoleType | null> {
+    return super.fetchWithRules(key) as Promise<RoleType | null>;
+  }
+
   /**
    * Fetches a role that belongs to this guild.
    * @param {String} roleId The id of the role to fetch.

@@ -53,6 +53,14 @@ class GuildManager extends BaseCacheManager implements GuildManagerType {
     return super.get(id) as GuildType | null;
   }
 
+  fetchFromRules(key: string): Promise<GuildType | null> {
+    return super.fetchFromRules(key) as Promise<GuildType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<GuildType | null> {
+    return super.fetchWithRules(key) as Promise<GuildType | null>;
+  }
+
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.

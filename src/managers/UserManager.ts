@@ -32,6 +32,14 @@ class UserManager extends BaseCacheManager implements UserManagerType {
     this.#_client = client;
   }
 
+  fetchFromRules(key: string): Promise<UserType | null> {
+    return super.fetchFromRules(key) as Promise<UserType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<UserType | null> {
+    return super.fetchWithRules(key) as Promise<UserType | null>;
+  }
+
   /**
    * Fetches a particular user.
    * @param {String} userId The id of the user to fetch.

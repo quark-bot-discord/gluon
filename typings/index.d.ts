@@ -1498,9 +1498,9 @@ export class BaseCacheManager {
       structureType: StaticManagerType;
     },
   );
-  get(key: string): unknown;
-  fetchFromRules(key: string): Promise<unknown>;
-  fetchWithRules(key: string): Promise<unknown>;
+  get(key: string): unknown | null;
+  fetchFromRules(key: string): Promise<unknown | null>;
+  fetchWithRules(key: string): Promise<unknown | null>;
   set(key: string, value: unknown, expiry: number): void;
   delete(key: string): boolean;
   clear(): void;
@@ -2429,3 +2429,15 @@ export class GluonCacheRule {
   setStructureType(structure: StaticManagerType): GluonCacheRule;
   applyRule(): void;
 }
+
+export type ManagerDataTypes =
+  | Message
+  | AllChannels
+  | Emoji
+  | Invite
+  | Guild
+  | Member
+  | Role
+  | ScheduledEvent
+  | VoiceState
+  | User;

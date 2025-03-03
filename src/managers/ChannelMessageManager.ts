@@ -89,6 +89,22 @@ class ChannelMessageManager
   }
 
   /**
+   * Fetches a message from the cache or from the rules.
+   * @param {Snowflake} key The ID of the message to fetch.
+   * @returns {Promise<Message | null>}
+   * @public
+   * @async
+   * @method
+   */
+  async fetchFromRules(key: Snowflake): Promise<MessageType | null> {
+    return super.fetchFromRules(key) as Promise<MessageType | null>;
+  }
+
+  async fetchWithRules(key: Snowflake): Promise<MessageType | null> {
+    return super.fetchWithRules(key) as Promise<MessageType | null>;
+  }
+
+  /**
    * Fetches a collection of messages or a singular message from the channel.
    * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
    * @returns {Promise<Array<Message>> | Promise<Message>}

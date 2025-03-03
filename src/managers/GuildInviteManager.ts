@@ -96,6 +96,14 @@ class GuildInviteManager
   get(code: string) {
     return super.get(code) as InviteType | null;
   }
+
+  fetchFromRules(key: string): Promise<InviteType | null> {
+    return super.fetchFromRules(key) as Promise<InviteType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<InviteType | null> {
+    return super.fetchWithRules(key) as Promise<InviteType | null>;
+  }
 }
 
 export default GuildInviteManager;

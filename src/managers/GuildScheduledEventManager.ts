@@ -40,6 +40,14 @@ class GuildScheduledEventManager
     this.#guild = guild;
   }
 
+  fetchFromRules(key: string): Promise<ScheduledEventType | null> {
+    return super.fetchFromRules(key) as Promise<ScheduledEventType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<ScheduledEventType | null> {
+    return super.fetchWithRules(key) as Promise<ScheduledEventType | null>;
+  }
+
   /**
    * Retrieves all scheduled events for this guild.
    * @returns {Promise<Array<ScheduledEvent>>}

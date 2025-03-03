@@ -57,6 +57,14 @@ class GuildMemberManager
     return this.#guild;
   }
 
+  fetchFromRules(key: string): Promise<MemberType | null> {
+    return super.fetchFromRules(key) as Promise<MemberType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<MemberType | null> {
+    return super.fetchWithRules(key) as Promise<MemberType | null>;
+  }
+
   /**
    * Fetches a member.
    * @param {String} user_id The id of the member to fetch.

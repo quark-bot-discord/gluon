@@ -138,7 +138,7 @@ class BaseCacheManager implements BaseCacheManagerType {
   async fetchWithRules(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    const value = this.get(key);
+    const value = this.get(key) as unknown | null;
     if (value) return value;
     else return this.#_callFetches(key);
   }
@@ -320,8 +320,14 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @public
    * @method
    */
-  forEach(callbackfn) {
-    return this.#cache.forEach(callbackfn);
+  forEach(callbackfn: unknown) {
+    return this.#cache.forEach(
+      callbackfn as (
+        value: unknown,
+        key: string,
+        map: Map<string, unknown>,
+      ) => void,
+    );
   }
 
   /**

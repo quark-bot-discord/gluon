@@ -60,6 +60,14 @@ class GuildChannelsManager
     return super.get(id) as AllChannels | null;
   }
 
+  fetchFromRules(key: string): Promise<AllChannels | null> {
+    return super.fetchFromRules(key) as Promise<AllChannels | null>;
+  }
+
+  fetchWithRules(key: string): Promise<AllChannels | null> {
+    return super.fetchWithRules(key) as Promise<AllChannels | null>;
+  }
+
   /**
    * Fetches a particular channel belonging to this guild.
    * @param {String} channel_id The id of the channel to fetch.

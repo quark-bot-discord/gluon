@@ -48,6 +48,14 @@ class GuildEmojisManager
     this.#guild = guild;
   }
 
+  fetchFromRules(key: string): Promise<EmojiType | null> {
+    return super.fetchFromRules(key) as Promise<EmojiType | null>;
+  }
+
+  fetchWithRules(key: string): Promise<EmojiType | null> {
+    return super.fetchWithRules(key) as Promise<EmojiType | null>;
+  }
+
   /**
    * Fetches a particular emoji that belongs to this guild.
    * @param {String} emojiId The id of the emoji to fetch.
