@@ -25,13 +25,37 @@ import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
 import {
   ComponentType,
+  GatewayAutoModerationActionExecutionDispatchData,
+  GatewayAutoModerationRuleCreateDispatchData,
+  GatewayAutoModerationRuleDeleteDispatchData,
+  GatewayAutoModerationRuleUpdateDispatchData,
+  GatewayEntitlementCreateDispatchData,
+  GatewayEntitlementDeleteDispatchData,
+  GatewayEntitlementUpdateDispatchData,
+  GatewayGuildAuditLogEntryCreateDispatchData,
+  GatewayGuildBanAddDispatchData,
+  GatewayGuildBanRemoveDispatchData,
+  GatewayGuildEmojisUpdateDispatchData,
+  GatewayGuildMembersChunkDispatchData,
+  GatewayGuildScheduledEventCreateDispatchData,
+  GatewayGuildScheduledEventDeleteDispatchData,
+  GatewayGuildScheduledEventUpdateDispatchData,
+  GatewayGuildScheduledEventUserAddDispatchData,
+  GatewayGuildScheduledEventUserRemoveDispatchData,
+  GatewayInteractionCreateDispatchData,
+  GatewayInviteCreateDispatchData,
+  GatewayInviteDeleteDispatchData,
+  GatewayMessageCreateDispatchData,
   GatewayMessageDeleteBulkDispatchData,
   GatewayMessageDeleteDispatchData,
+  GatewayMessagePollVoteDispatchData,
   GatewayMessageReactionRemoveDispatchData,
   GatewayMessageUpdateDispatchData,
+  GatewayVoiceStateUpdateDispatchData,
+  GatewayWebhooksUpdateDispatchData,
   InteractionType,
 } from "discord-api-types/v10";
-import { Message as MessageType } from "typings/index.d.js";
+import { EmojiDiscordJSON, Message as MessageType } from "typings/index.d.js";
 import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v9";
 
 class EventHandler {
@@ -365,7 +389,7 @@ class EventHandler {
     });
   }
 
-  GUILD_MEMBERS_CHUNK(data: any) {
+  GUILD_MEMBERS_CHUNK(data: GatewayGuildMembersChunkDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBERS_CHUNK ${data.guild_id}`,
@@ -378,7 +402,7 @@ class EventHandler {
       });
   }
 
-  GUILD_BAN_ADD(data: any) {
+  GUILD_BAN_ADD(data: GatewayGuildBanAddDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_BAN_ADD ${data.guild_id}`,
@@ -393,7 +417,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_BAN_ADD, user);
   }
 
-  GUILD_BAN_REMOVE(data: any) {
+  GUILD_BAN_REMOVE(data: GatewayGuildBanRemoveDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_BAN_REMOVE ${data.guild_id}`,
@@ -408,7 +432,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_BAN_REMOVE, user);
   }
 
-  INVITE_CREATE(data: any) {
+  INVITE_CREATE(data: GatewayInviteCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_CREATE ${data.guild_id}`,
@@ -419,11 +443,15 @@ class EventHandler {
     this.#_client.emit(EVENTS.INVITE_CREATE, invite);
   }
 
-  INVITE_DELETE(data: any) {
+  INVITE_DELETE(data: GatewayInviteDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_DELETE ${data.guild_id}`,
     );
+
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     const guild = GuildManager.getGuild(this.#_client, data.guild_id);
 
@@ -439,11 +467,15 @@ class EventHandler {
     this.#_client.emit(EVENTS.INVITE_DELETE, partialInvite, invite);
   }
 
-  VOICE_STATE_UPDATE(data: any) {
+  VOICE_STATE_UPDATE(data: GatewayVoiceStateUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `VOICE_STATE_UPDATE ${data.guild_id}`,
     );
+
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     const oldVoiceState =
       GuildManager.getGuild(this.#_client, data.guild_id)?.voiceStates.get(
@@ -473,11 +505,15 @@ class EventHandler {
     this.#_client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
   }
 
-  MESSAGE_CREATE(data: any) {
+  MESSAGE_CREATE(data: GatewayMessageCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_CREATE ${data.guild_id}`,
     );
+
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     const message = new Message(this.#_client, data, {
       channelId: data.channel_id,
@@ -587,7 +623,7 @@ class EventHandler {
       });
   }
 
-  INTERACTION_CREATE(data: any) {
+  INTERACTION_CREATE(data: GatewayInteractionCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `INTERACTION_CREATE ${data.guild_id}`,
@@ -663,7 +699,9 @@ class EventHandler {
     }
   }
 
-  GUILD_AUDIT_LOG_ENTRY_CREATE(data: any) {
+  GUILD_AUDIT_LOG_ENTRY_CREATE(
+    data: GatewayGuildAuditLogEntryCreateDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
@@ -676,7 +714,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
   }
 
-  ENTITLEMENT_CREATE(data: any) {
+  ENTITLEMENT_CREATE(data: GatewayEntitlementCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_CREATE ${data.user_id}`,
@@ -685,7 +723,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_CREATE, data);
   }
 
-  ENTITLEMENT_UPDATE(data: any) {
+  ENTITLEMENT_UPDATE(data: GatewayEntitlementUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_UPDATE ${data.user_id}`,
@@ -694,7 +732,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
   }
 
-  ENTITLEMENT_DELETE(data: any) {
+  ENTITLEMENT_DELETE(data: GatewayEntitlementDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `ENTITLEMENT_DELETE ${data.user_id}`,
@@ -703,7 +741,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.ENTITLEMENT_DELETE, data);
   }
 
-  GUILD_SCHEDULED_EVENT_CREATE(data: any) {
+  GUILD_SCHEDULED_EVENT_CREATE(
+    data: GatewayGuildScheduledEventCreateDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
@@ -716,7 +756,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
   }
 
-  GUILD_SCHEDULED_EVENT_UPDATE(data: any) {
+  GUILD_SCHEDULED_EVENT_UPDATE(
+    data: GatewayGuildScheduledEventUpdateDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
@@ -737,7 +779,9 @@ class EventHandler {
     );
   }
 
-  GUILD_SCHEDULED_EVENT_DELETE(data: any) {
+  GUILD_SCHEDULED_EVENT_DELETE(
+    data: GatewayGuildScheduledEventDeleteDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
@@ -754,7 +798,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }
 
-  GUILD_SCHEDULED_EVENT_USER_ADD(data: any) {
+  GUILD_SCHEDULED_EVENT_USER_ADD(
+    data: GatewayGuildScheduledEventUserAddDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
@@ -779,7 +825,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
   }
 
-  GUILD_SCHEDULED_EVENT_USER_REMOVE(data: any) {
+  GUILD_SCHEDULED_EVENT_USER_REMOVE(
+    data: GatewayGuildScheduledEventUserRemoveDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
@@ -804,7 +852,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
   }
 
-  AUTO_MODERATION_RULE_CREATE(data: any) {
+  AUTO_MODERATION_RULE_CREATE(
+    data: GatewayAutoModerationRuleCreateDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
@@ -814,7 +864,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_RULE_UPDATE(data: any) {
+  AUTO_MODERATION_RULE_UPDATE(
+    data: GatewayAutoModerationRuleUpdateDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
@@ -824,7 +876,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_RULE_DELETE(data: any) {
+  AUTO_MODERATION_RULE_DELETE(
+    data: GatewayAutoModerationRuleDeleteDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
@@ -834,7 +888,9 @@ class EventHandler {
     this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
   }
 
-  AUTO_MODERATION_ACTION_EXECUTION(data: any) {
+  AUTO_MODERATION_ACTION_EXECUTION(
+    data: GatewayAutoModerationActionExecutionDispatchData,
+  ) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
@@ -844,7 +900,7 @@ class EventHandler {
     this.#_client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
   }
 
-  GUILD_EMOJIS_UPDATE(data: any) {
+  GUILD_EMOJIS_UPDATE(data: GatewayGuildEmojisUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
@@ -855,14 +911,13 @@ class EventHandler {
       data.guild_id,
     )?.emojis;
     const newEmojis = data.emojis.map(
-      (emoji: any) =>
-        new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
+      (emoji) => new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
     );
 
     if (oldEmojis.size < newEmojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
-      const oldIds = oldEmojis.toJSON().map((e: any) => e.id);
+      const oldIds = oldEmojis.toJSON().map((e: EmojiDiscordJSON) => e.id);
 
       for (let i = 0; i < newEmojis.length; i++) {
         let matchingFound = false;
@@ -879,15 +934,13 @@ class EventHandler {
         }
       }
 
-      const addedEmoji = new Emoji(this.#_client, addedEmojiRaw, {
-        guildId: data.guild_id,
-      });
+      const addedEmoji = addedEmojiRaw;
 
       this.#_client.emit(EVENTS.GUILD_EMOJI_CREATE, addedEmoji);
     } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
-      const oldIds = oldEmojis.toJSON().map((e: any) => e.id);
+      const oldIds = oldEmojis.toJSON().map((e: EmojiDiscordJSON) => e.id);
 
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
@@ -919,13 +972,8 @@ class EventHandler {
       let oldEmoji;
 
       for (let i = 0; i < oldEmojisArray.length; i++) {
-        const correspondingNewEmojiRaw = newEmojis.find(
-          (e: any) => e.id == oldEmojisArray[i].id,
-        );
-        const correspondingNewEmoji = new Emoji(
-          this.#_client,
-          correspondingNewEmojiRaw,
-          { guildId: data.guild_id },
+        const correspondingNewEmoji = newEmojis.find(
+          (e) => e.id == oldEmojisArray[i].id,
         );
 
         const differences = deepCompare(
@@ -944,7 +992,7 @@ class EventHandler {
     }
   }
 
-  WEBHOOKS_UPDATE(data: any) {
+  WEBHOOKS_UPDATE(data: GatewayWebhooksUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `WEBHOOKS_UPDATE ${data.guild_id}`,
@@ -953,44 +1001,65 @@ class EventHandler {
     this.#_client.emit(EVENTS.WEBHOOKS_UPDATE, data);
   }
 
-  MESSAGE_POLL_VOTE_ADD(data: any) {
+  MESSAGE_POLL_VOTE_ADD(data: GatewayMessagePollVoteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
-      if (message) {
-        message.poll._results._addVote(data.user_id, data.answer_id);
-      }
-      this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
-    });
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message: MessageType | null) => {
+        if (message) {
+          message.poll._results._addVote(data.user_id, data.answer_id);
+        }
+        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
+        return data;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
+      });
   }
 
-  MESSAGE_POLL_VOTE_REMOVE(data: any) {
+  MESSAGE_POLL_VOTE_REMOVE(data: GatewayMessagePollVoteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const cacheManager = ChannelMessageManager.getCacheManager(
       this.#_client,
       data.guild_id,
       data.channel_id,
     );
 
-    cacheManager.fetchWithRules(data.message_id).then((message: any) => {
-      if (message) {
-        message.poll._results._removeVote(data.user_id, data.answer_id);
-      }
-      this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
-    });
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message: MessageType | null) => {
+        if (message) {
+          message.poll._results._removeVote(data.user_id, data.answer_id);
+        }
+        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
+
+        return data;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching message:", error);
+      });
   }
 
   MESSAGE_REACTION_ADD(data: GatewayMessageReactionAddDispatchData) {

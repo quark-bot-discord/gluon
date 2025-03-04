@@ -2543,7 +2543,7 @@ export class Client extends TypedEmitter<{
   webhooksUpdate: (data: object) => void;
 }> {
   request: any;
-  user: any | null;
+  user: User | null;
   constructor(options: ClientOptions);
   get shardIds(): number[];
   get totalShards(): number;

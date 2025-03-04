@@ -55,6 +55,7 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_queueWorker,
   _BetterRequestHandler_queues,
   _BetterRequestHandler_localRatelimitCache,
+  _BetterRequestHandler_redis,
   _BetterRequestHandler_latencyMs,
   _BetterRequestHandler_handleBucket,
   _BetterRequestHandler_http;
@@ -75,6 +76,7 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
+import redisClient from "src/util/general/redisClient.js";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
   constructor(client, token) {
@@ -91,9 +93,11 @@ class BetterRequestHandler {
     _BetterRequestHandler_queueWorker.set(this, void 0);
     _BetterRequestHandler_queues.set(this, void 0);
     _BetterRequestHandler_localRatelimitCache.set(this, void 0);
+    _BetterRequestHandler_redis.set(this, void 0);
     // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
     _BetterRequestHandler_latencyMs.set(this, void 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
+    __classPrivateFieldSet(this, _BetterRequestHandler_redis, redisClient, "f");
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_requestURL,
@@ -170,7 +174,6 @@ class BetterRequestHandler {
             GLUON_DEBUG_LEVELS.WARN,
             `RATELIMITED ${data.hash} (bucket reset):${bucket.reset} (latency):${__classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")}  (time until retry):${(bucket.reset + __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")) * 1000 - new Date().getTime()} (current time):${(new Date().getTime() / 1000) | 0}`,
           );
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           if (
             __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
               data.hash
@@ -186,16 +189,21 @@ class BetterRequestHandler {
               _BetterRequestHandler__client,
               "f",
             )._emitDebug(GLUON_DEBUG_LEVELS.DANGER, `KILL QUEUE ${data.hash}`);
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
               data.hash
             ].kill();
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            delete __classPrivateFieldGet(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [data.hash]: _, ...rest } = __classPrivateFieldGet(
               this,
               _BetterRequestHandler_queues,
               "f",
-            )[data.hash];
+            );
+            __classPrivateFieldSet(
+              this,
+              _BetterRequestHandler_queues,
+              rest,
+              "f",
+            );
           }
           await sleep(
             (bucket.reset +
@@ -255,43 +263,43 @@ class BetterRequestHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `ADD ${hash} to request queue`,
     );
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    if (!__classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash])
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+    if (
+      !__classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash]
+    ) {
       __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash] =
         FastQ.promise(
           __classPrivateFieldGet(this, _BetterRequestHandler_queueWorker, "f"),
           1,
         );
+    }
     let retries = 5;
-    while (retries--)
-      try {
-        const _stack = new Error().stack;
-        const result = await __classPrivateFieldGet(
+    while (retries--) {
+      const _stack = new Error().stack;
+      const result = await __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler_queues,
+        "f",
+      )[hash].push({
+        hash,
+        request,
+        params,
+        body,
+        _stack,
+      });
+      if (
+        __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+          hash
+        ].idle()
+      ) {
+        const { [hash]: _, ...rest } = __classPrivateFieldGet(
           this,
           _BetterRequestHandler_queues,
           "f",
-        )[hash].push({
-          hash,
-          request,
-          params,
-          body,
-          _stack,
-        });
-        if (
-          __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-            hash
-          ].idle()
-        )
-          delete __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler_queues,
-            "f",
-          )[hash];
-        return result;
-      } catch (error) {
-        throw error;
+        );
+        __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
       }
+      return result;
+    }
     throw new Error("GLUON: Request ran out of retries");
   }
 }
@@ -307,6 +315,7 @@ class BetterRequestHandler {
   (_BetterRequestHandler_queueWorker = new WeakMap()),
   (_BetterRequestHandler_queues = new WeakMap()),
   (_BetterRequestHandler_localRatelimitCache = new WeakMap()),
+  (_BetterRequestHandler_redis = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
   (_BetterRequestHandler_instances = new WeakSet()),
   (_BetterRequestHandler_handleBucket =
@@ -330,19 +339,16 @@ class BetterRequestHandler {
       if (expireFromCache < 0) expireFromCache = 60;
       else if (expireFromCache > 2592000) expireFromCache = 2592000;
       try {
-        if (
-          __classPrivateFieldGet(this, _BetterRequestHandler__client, "f").redis
-        )
-          await __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler__client,
-            "f",
-          ).redis.set(
-            `${NAME.toLowerCase()}.paths.${hash}`,
-            JSON.stringify(bucket),
-            "EX",
-            expireFromCache,
-          );
+        await __classPrivateFieldGet(
+          this,
+          _BetterRequestHandler_redis,
+          "f",
+        ).set(
+          `${NAME.toLowerCase()}.paths.${hash}`,
+          JSON.stringify(bucket),
+          "EX",
+          expireFromCache,
+        );
         __classPrivateFieldGet(
           this,
           _BetterRequestHandler_localRatelimitCache,
@@ -390,7 +396,7 @@ class BetterRequestHandler {
     ) {
       const serialize = (obj) => {
         const str = [];
-        for (let p in obj)
+        for (const p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
             str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
         return str.join("&");
@@ -433,7 +439,9 @@ class BetterRequestHandler {
           if (actualRequest.useHeaders.includes(key)) {
             // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             headers[key] = encodeURIComponent(value);
-            delete body[key];
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [key]: _, ...rest } = body;
+            body = rest;
           }
       let res;
       let e;
@@ -495,7 +503,7 @@ class BetterRequestHandler {
       let json;
       try {
         json = await res.json();
-      } catch (error) {
+      } catch (_) {
         json = null;
       }
       try {

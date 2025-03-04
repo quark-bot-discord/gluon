@@ -15,7 +15,8 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
-import { EndpointIndexItem } from "typings/index.js";
+import { EndpointIndexItem, Client as ClientType } from "typings/index.js";
+import redisClient from "src/util/general/redisClient.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -31,10 +32,13 @@ class BetterRequestHandler {
   #queueWorker;
   #queues;
   #localRatelimitCache;
+  #redis;
   // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
   #latencyMs;
-  constructor(client: any, token: string) {
+  constructor(client: ClientType, token: string) {
     this.#_client = client;
+
+    this.#redis = redisClient;
 
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
 
@@ -78,16 +82,15 @@ class BetterRequestHandler {
             (bucket.reset + this.#latency) * 1000 - new Date().getTime()
           } (current time):${(new Date().getTime() / 1000) | 0}`,
         );
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
         if (this.#queues[data.hash].length() > this.#maxQueueSize) {
           this.#_client._emitDebug(
             GLUON_DEBUG_LEVELS.DANGER,
             `KILL QUEUE ${data.hash}`,
           );
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
           this.#queues[data.hash].kill();
-          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          delete this.#queues[data.hash];
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [data.hash]: _, ...rest } = this.#queues;
+          this.#queues = rest;
         }
         await sleep(
           (bucket.reset + this.#latency) * 1000 -
@@ -104,7 +107,7 @@ class BetterRequestHandler {
       }
     };
 
-    this.#queues = {};
+    this.#queues = {} as { [key: string]: FastQ.queueAsPromised<any> };
   }
 
   /**
@@ -120,7 +123,7 @@ class BetterRequestHandler {
     ratelimitBucket: any,
     ratelimitRemaining: any,
     ratelimitReset: any,
-    hash: any,
+    hash: string,
     retryAfter = 0,
   ) {
     if (!ratelimitBucket) return;
@@ -140,13 +143,12 @@ class BetterRequestHandler {
     else if (expireFromCache > 2592000) expireFromCache = 2592000;
 
     try {
-      if (this.#_client.redis)
-        await this.#_client.redis.set(
-          `${NAME.toLowerCase()}.paths.${hash}`,
-          JSON.stringify(bucket),
-          "EX",
-          expireFromCache,
-        );
+      await this.#redis.set(
+        `${NAME.toLowerCase()}.paths.${hash}`,
+        JSON.stringify(bucket),
+        "EX",
+        expireFromCache,
+      );
 
       this.#localRatelimitCache.set(
         `${NAME.toLowerCase()}.paths.${hash}`,
@@ -187,28 +189,27 @@ class BetterRequestHandler {
       `ADD ${hash} to request queue`,
     );
 
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    if (!this.#queues[hash])
-      // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+    if (!this.#queues[hash]) {
       this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
+    }
 
     let retries = 5;
 
-    while (retries--)
-      try {
-        const _stack = new Error().stack;
-        const result = await this.#queues[hash].push({
-          hash,
-          request,
-          params,
-          body,
-          _stack,
-        });
-        if (this.#queues[hash].idle()) delete this.#queues[hash];
-        return result;
-      } catch (error) {
-        throw error;
+    while (retries--) {
+      const _stack = new Error().stack;
+      const result = await this.#queues[hash].push({
+        hash,
+        request,
+        params,
+        body,
+        _stack,
+      });
+      if (this.#queues[hash].idle()) {
+        const { [hash]: _, ...rest } = this.#queues;
+        this.#queues = rest;
       }
+      return result;
+    }
 
     throw new Error("GLUON: Request ran out of retries");
   }
@@ -233,7 +234,7 @@ class BetterRequestHandler {
     ) {
       const serialize = (obj: any) => {
         const str = [];
-        for (let p in obj)
+        for (const p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
             str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
         return str.join("&");
@@ -275,7 +276,9 @@ class BetterRequestHandler {
           if (actualRequest.useHeaders.includes(key)) {
             // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
             headers[key] = encodeURIComponent(value);
-            delete body[key];
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { [key]: _, ...rest } = body;
+            body = rest;
           }
 
       let res;
@@ -332,7 +335,7 @@ class BetterRequestHandler {
 
       try {
         json = await res.json();
-      } catch (error) {
+      } catch (_) {
         json = null;
       }
 

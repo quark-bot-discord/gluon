@@ -34,7 +34,7 @@ import {
 
 class Client extends EventsEmitter implements ClientType {
   request: any;
-  user: UserType;
+  user: UserType | null;
   // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
   #token;
   #intents;
@@ -43,8 +43,8 @@ class Client extends EventsEmitter implements ClientType {
   #_sessionData;
   // @ts-expect-error TS(7008): Member '#shards' implicitly has an 'any[]' type.
   #shards;
-  #shardIds;
-  #totalShards;
+  #shardIds?: number[];
+  #totalShards?: number;
   #users;
   #guilds;
   #softRestartFunction;
@@ -242,6 +242,11 @@ class Client extends EventsEmitter implements ClientType {
    * @public
    */
   get shardIds() {
+    if (!this.#shardIds) {
+      throw new Error(
+        "GLUON: Shard ids are not set. Please set this value before accessing it or call Client#login before checking this property.",
+      );
+    }
     return this.#shardIds;
   }
 
@@ -252,6 +257,11 @@ class Client extends EventsEmitter implements ClientType {
    * @public
    */
   get totalShards() {
+    if (!this.#totalShards) {
+      throw new Error(
+        "GLUON: Total shards is not set. Please set this value before accessing it or call Client#login before checking this property.",
+      );
+    }
     return this.#totalShards;
   }
 
@@ -334,7 +344,6 @@ class Client extends EventsEmitter implements ClientType {
       guilds: guildIds,
       processId: hash
         .sha256()
-        // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         .update(`${this.shardIds.join("_")}-${this.totalShards}`)
         .digest("hex"),
       restLatency: this.request.latency / 2,
@@ -617,7 +626,7 @@ class Client extends EventsEmitter implements ClientType {
           // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
-        )
+        ) {
           setTimeout(() => {
             for (
               let n = 0;
@@ -647,6 +656,7 @@ class Client extends EventsEmitter implements ClientType {
                 ),
               );
           }, 6000 * i);
+        }
 
         setInterval(async () => {
           this.guilds.forEach((guild: any) => {

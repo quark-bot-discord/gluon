@@ -1,7 +1,8 @@
 import endpoints from "./endpoints.js";
+import { Client as ClientType } from "typings/index.js";
 declare class BetterRequestHandler {
   #private;
-  constructor(client: any, token: string);
+  constructor(client: ClientType, token: string);
   /**
    * The latency of the request handler.
    * @type {Number}

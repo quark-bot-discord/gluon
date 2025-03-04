@@ -357,7 +357,9 @@ class BaseCacheManager implements BaseCacheManagerType {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.DISCORD_FORMAT:
       default: {
-        return [...this.#cache.values()].map((value) => value.toJSON(format));
+        return [...this.#cache.values()].map((value) =>
+          (value as any).toJSON(format),
+        );
       }
     }
   }

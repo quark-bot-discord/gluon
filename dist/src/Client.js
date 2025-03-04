@@ -287,6 +287,11 @@ class Client extends EventsEmitter {
    * @public
    */
   get shardIds() {
+    if (!__classPrivateFieldGet(this, _Client_shardIds, "f")) {
+      throw new Error(
+        "GLUON: Shard ids are not set. Please set this value before accessing it or call Client#login before checking this property.",
+      );
+    }
     return __classPrivateFieldGet(this, _Client_shardIds, "f");
   }
   /**
@@ -296,6 +301,11 @@ class Client extends EventsEmitter {
    * @public
    */
   get totalShards() {
+    if (!__classPrivateFieldGet(this, _Client_totalShards, "f")) {
+      throw new Error(
+        "GLUON: Total shards is not set. Please set this value before accessing it or call Client#login before checking this property.",
+      );
+    }
     return __classPrivateFieldGet(this, _Client_totalShards, "f");
   }
   /**
@@ -382,7 +392,6 @@ class Client extends EventsEmitter {
       guilds: guildIds,
       processId: hash
         .sha256()
-        // @ts-expect-error TS(2532): Object is possibly 'undefined'.
         .update(`${this.shardIds.join("_")}-${this.totalShards}`)
         .digest("hex"),
       restLatency: this.request.latency / 2,
@@ -668,7 +677,7 @@ class Client extends EventsEmitter {
           // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
-        )
+        ) {
           setTimeout(() => {
             for (
               let n = 0;
@@ -703,6 +712,7 @@ class Client extends EventsEmitter {
                 ),
               );
           }, 6000 * i);
+        }
         setInterval(async () => {
           this.guilds.forEach((guild) => {
             guild._intervalCallback();

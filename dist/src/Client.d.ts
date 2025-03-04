@@ -7,7 +7,7 @@ import { Client as ClientType, User as UserType } from "typings/index.js";
 declare class Client extends EventsEmitter implements ClientType {
   #private;
   request: any;
-  user: UserType;
+  user: UserType | null;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -60,14 +60,14 @@ declare class Client extends EventsEmitter implements ClientType {
    * @readonly
    * @public
    */
-  get shardIds(): number[] | undefined;
+  get shardIds(): number[];
   /**
    * The total number of shards that this client is managing.
    * @type {Number}
    * @readonly
    * @public
    */
-  get totalShards(): number | undefined;
+  get totalShards(): number;
   /**
    * The intents that this client is using.
    * @type {Number}
@@ -116,26 +116,7 @@ declare class Client extends EventsEmitter implements ClientType {
    * @method
    * @returns {Object}
    */
-  checkProcess(): {
-    totalShards: number | undefined;
-    shardsManaged: number[] | undefined;
-    shards: never[];
-    guildCount: number;
-    memberCount: number;
-    cacheCounts: {
-      users: number;
-      guilds: number;
-      messages: number;
-      members: number;
-      channels: number;
-      roles: number;
-      emojis: number;
-      voiceStates: number;
-    };
-    guilds: any;
-    processId: string;
-    restLatency: number;
-  };
+  checkProcess(): any;
   /**
    * Outputs a debug message if NODE_ENV=development.
    * @param {Number} status The debug status level.
@@ -151,16 +132,7 @@ declare class Client extends EventsEmitter implements ClientType {
    * @public
    * @method
    */
-  getCacheCounts(): {
-    users: number;
-    guilds: number;
-    messages: number;
-    members: number;
-    channels: number;
-    roles: number;
-    emojis: number;
-    voiceStates: number;
-  };
+  getCacheCounts(): any;
   /**
    * Returns the cache options for this client.
    * @type {GluonCacheOptions}
@@ -188,7 +160,7 @@ declare class Client extends EventsEmitter implements ClientType {
    * @public
    * @method
    */
-  bundleCache(): any[];
+  bundleCache(): any;
   /**
    * Registers commands, overwriting all previous ones.
    * @param {Array<Command>} commands Array of commands to register.
