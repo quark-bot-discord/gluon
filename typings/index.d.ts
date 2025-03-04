@@ -2486,61 +2486,64 @@ export interface ClientOptions {
 }
 
 export class Client extends TypedEmitter<{
-  ready: (shardGuilds: string[]) => void;
-  resumed: () => void;
-  guildCreate: (guild: Guild) => void;
-  guildDelete: (guild: Guild) => void;
-  guildUpdate: (oldGuild: Guild, newGuild: Guild) => void;
-  messageCreate: (message: Message) => void;
-  messageUpdate: (oldMessage: Message | null, newMessage: Message) => void;
-  messageDelete: (message: Message) => void;
-  messageDeleteBulk: (messages: Message[]) => void;
-  guildAuditLogEntryCreate: (auditLog: object) => void;
-  guildBanAdd: (bannedUser: any) => void;
-  guildBanRemove: (unbannedUser: any) => void;
-  guildMemberAdd: (member: any) => void;
-  guildMemberUpdate: (oldMember: any, newMember: any) => void;
-  guildMemberRemove: (member: any) => void;
-  buttonClick: (interaction: any) => void;
-  menuSelect: (interaction: any) => void;
-  modalResponse: (interaction: any) => void;
-  slashCommand: (interaction: any) => void;
-  slashCommandAutocomplete: (interaction: any) => void;
-  voiceStateUpdate: (oldVoiceState: any, newVoiceState: any) => void;
-  voiceChannelStatusUpdate: (data: object) => void;
-  channelCreate: (channel: object) => void;
-  channelUpdate: (oldChannel: object, newChannel: object) => void;
-  channelDelete: (channel: object) => void;
-  channelPinsUpdate: (data: object) => void;
-  threadCreate: (thread: object) => void;
-  threadUpdate: (oldThread: object, newThread: object) => void;
-  threadDelete: (thread: object) => void;
-  threadListSync: (threads: object[]) => void;
-  inviteCreate: (invite: any) => void;
-  inviteDelete: (data: object, invite: any) => void;
-  roleCreate: (role: any) => void;
-  roleUpdate: (oldRole: any, newRole: any) => void;
-  roleDelete: (role: any) => void;
-  emojiCreate: (emoji: any) => void;
-  emojiUpdate: (oldEmoji: any, newEmoji: any) => void;
-  emojiDelete: (emoji: any) => void;
-  entitlementCreate: (entitlement: object) => void;
-  entitlementUpdate: (entitlement: object) => void;
-  entitlementDelete: (entitlement: object) => void;
-  guildScheduledEventCreate: (scheduledEvent: any) => void;
-  guildScheduledEventUpdate: (
+  [Events.READY]: (shardGuilds: string[]) => void;
+  [Events.RESUMED]: () => void;
+  [Events.GUILD_CREATE]: (guild: Guild) => void;
+  [Events.GUILD_DELETE]: (guild: Guild) => void;
+  [Events.GUILD_UPDATE]: (oldGuild: Guild, newGuild: Guild) => void;
+  [Events.MESSAGE_CREATE]: (message: Message) => void;
+  [Events.MESSAGE_UPDATE]: (
+    oldMessage: Message | null,
+    newMessage: Message,
+  ) => void;
+  [Events.MESSAGE_DELETE]: (message: Message) => void;
+  [Events.MESSAGE_DELETE_BULK]: (messages: Message[]) => void;
+  [Events.GUILD_AUDIT_LOG_ENTRY_CREATE]: (auditLog: object) => void;
+  [Events.GUILD_BAN_ADD]: (bannedUser: any) => void;
+  [Events.GUILD_BAN_REMOVE]: (unbannedUser: any) => void;
+  [Events.GUILD_MEMBER_ADD]: (member: any) => void;
+  [Events.GUILD_MEMBER_UPDATE]: (oldMember: any, newMember: any) => void;
+  [Events.GUILD_MEMBER_REMOVE]: (member: any) => void;
+  [Events.BUTTON_CLICK]: (interaction: any) => void;
+  [Events.MENU_SELECT]: (interaction: any) => void;
+  [Events.MODAL_RESPONSE]: (interaction: any) => void;
+  [Events.SLASH_COMMAND]: (interaction: any) => void;
+  [Events.SLASH_COMMAND_AUTOCOMPLETE]: (interaction: any) => void;
+  [Events.VOICE_STATE_UPDATE]: (oldVoiceState: any, newVoiceState: any) => void;
+  [Events.VOICE_CHANNEL_STATUS_UPDATE]: (data: object) => void;
+  [Events.CHANNEL_CREATE]: (channel: object) => void;
+  [Events.CHANNEL_UPDATE]: (oldChannel: object, newChannel: object) => void;
+  [Events.CHANNEL_DELETE]: (channel: object) => void;
+  [Events.CHANNEL_PINS_UPDATE]: (data: object) => void;
+  [Events.THREAD_CREATE]: (thread: object) => void;
+  [Events.THREAD_UPDATE]: (oldThread: object, newThread: object) => void;
+  [Events.THREAD_DELETE]: (thread: object) => void;
+  [Events.THREAD_LIST_SYNC]: (threads: object[]) => void;
+  [Events.INVITE_CREATE]: (invite: any) => void;
+  [Events.INVITE_DELETE]: (data: object, invite: any) => void;
+  [Events.GUILD_ROLE_CREATE]: (role: any) => void;
+  [Events.GUILD_ROLE_UPDATE]: (oldRole: any, newRole: any) => void;
+  [Events.GUILD_ROLE_DELETE]: (role: any) => void;
+  [Events.GUILD_EMOJI_CREATE]: (emoji: any) => void;
+  [Events.GUILD_EMOJI_UPDATE]: (oldEmoji: any, newEmoji: any) => void;
+  [Events.GUILD_EMOJI_DELETE]: (emoji: any) => void;
+  [Events.ENTITLEMENT_CREATE]: (entitlement: object) => void;
+  [Events.ENTITLEMENT_UPDATE]: (entitlement: object) => void;
+  [Events.ENTITLEMENT_DELETE]: (entitlement: object) => void;
+  [Events.GUILD_SCHEDULED_EVENT_CREATE]: (scheduledEvent: any) => void;
+  [Events.GUILD_SCHEDULED_EVENT_UPDATE]: (
     oldScheduledEvent: any,
     newScheduledEvent: any,
   ) => void;
-  guildScheduledEventDelete: (scheduledEvent: any) => void;
-  guildScheduledEventUserAdd: (data: object, user: any) => void;
-  guildScheduledEventUserRemove: (data: object, user: any) => void;
-  initialised: () => void;
-  messagePollVoteAdd: (data: object) => void;
-  messagePollVoteRemove: (data: object) => void;
-  messageReactionAdd: (data: object) => void;
-  messageReactionRemove: (data: object) => void;
-  webhooksUpdate: (data: object) => void;
+  [Events.GUILD_SCHEDULED_EVENT_DELETE]: (scheduledEvent: any) => void;
+  [Events.GUILD_SCHEDULED_EVENT_USER_ADD]: (data: object, user: any) => void;
+  [Events.GUILD_SCHEDULED_EVENT_USER_REMOVE]: (data: object, user: any) => void;
+  [Events.INITIALISED]: () => void;
+  [Events.MESSAGE_POLL_VOTE_ADD]: (data: object) => void;
+  [Events.MESSAGE_POLL_VOTE_REMOVE]: (data: object) => void;
+  [Events.MESSAGE_REACTION_ADD]: (data: object) => void;
+  [Events.MESSAGE_REACTION_REMOVE]: (data: object) => void;
+  [Events.WEBHOOKS_UPDATE]: (data: object) => void;
 }> {
   request: any;
   user: User | null;
@@ -2663,4 +2666,60 @@ export interface CommandOptionDiscordJSON {
   min_length?: number;
   max_length?: number;
   autocomplete: boolean;
+}
+
+export enum Events {
+  READY = "ready",
+  RESUMED = "resumed",
+  GUILD_CREATE = "guildCreate",
+  GUILD_DELETE = "guildDelete",
+  GUILD_UPDATE = "guildUpdate",
+  MESSAGE_CREATE = "messageCreate",
+  MESSAGE_UPDATE = "messageUpdate",
+  MESSAGE_EDIT = "messageEdit",
+  MESSAGE_DELETE = "messageDelete",
+  MESSAGE_DELETE_BULK = "messageDeleteBulk",
+  GUILD_AUDIT_LOG_ENTRY_CREATE = "guildAuditLogEntryCreate",
+  GUILD_BAN_ADD = "guildBanAdd",
+  GUILD_BAN_REMOVE = "guildBanRemove",
+  GUILD_MEMBER_ADD = "guildMemberAdd",
+  GUILD_MEMBER_UPDATE = "guildMemberUpdate",
+  GUILD_MEMBER_REMOVE = "guildMemberRemove",
+  BUTTON_CLICK = "buttonClick",
+  MENU_SELECT = "menuSelect",
+  MODAL_RESPONSE = "modalResponse",
+  SLASH_COMMAND = "slashCommand",
+  SLASH_COMMAND_AUTOCOMPLETE = "slashCommandAutocomplete",
+  VOICE_STATE_UPDATE = "voiceStateUpdate",
+  VOICE_CHANNEL_STATUS_UPDATE = "voiceChannelStatusUpdate",
+  CHANNEL_CREATE = "channelCreate",
+  CHANNEL_UPDATE = "channelUpdate",
+  CHANNEL_DELETE = "channelDelete",
+  CHANNEL_PINS_UPDATE = "channelPinsUpdate",
+  THREAD_CREATE = "threadCreate",
+  THREAD_UPDATE = "threadUpdate",
+  THREAD_DELETE = "threadDelete",
+  THREAD_LIST_SYNC = "threadListSync",
+  INVITE_CREATE = "inviteCreate",
+  INVITE_DELETE = "inviteDelete",
+  GUILD_ROLE_CREATE = "roleCreate",
+  GUILD_ROLE_UPDATE = "roleUpdate",
+  GUILD_ROLE_DELETE = "roleDelete",
+  GUILD_EMOJI_CREATE = "emojiCreate",
+  GUILD_EMOJI_UPDATE = "emojiUpdate",
+  GUILD_EMOJI_DELETE = "emojiDelete",
+  ENTITLEMENT_CREATE = "entitlementCreate",
+  ENTITLEMENT_UPDATE = "entitlementUpdate",
+  ENTITLEMENT_DELETE = "entitlementDelete",
+  GUILD_SCHEDULED_EVENT_CREATE = "guildScheduledEventCreate",
+  GUILD_SCHEDULED_EVENT_UPDATE = "guildScheduledEventUpdate",
+  GUILD_SCHEDULED_EVENT_DELETE = "guildScheduledEventDelete",
+  GUILD_SCHEDULED_EVENT_USER_ADD = "guildScheduledEventUserAdd",
+  GUILD_SCHEDULED_EVENT_USER_REMOVE = "guildScheduledEventUserRemove",
+  INITIALISED = "initialised",
+  MESSAGE_POLL_VOTE_ADD = "messagePollVoteAdd",
+  MESSAGE_POLL_VOTE_REMOVE = "messagePollVoteRemove",
+  MESSAGE_REACTION_ADD = "messageReactionAdd",
+  MESSAGE_REACTION_REMOVE = "messageReactionRemove",
+  WEBHOOKS_UPDATE = "webhooksUpdate",
 }

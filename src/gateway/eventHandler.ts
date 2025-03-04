@@ -1,6 +1,6 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-import { EVENTS, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
 import Emoji from "../structures/Emoji.js";
@@ -29,19 +29,32 @@ import {
   GatewayAutoModerationRuleCreateDispatchData,
   GatewayAutoModerationRuleDeleteDispatchData,
   GatewayAutoModerationRuleUpdateDispatchData,
+  GatewayChannelCreateDispatchData,
+  GatewayChannelDeleteDispatchData,
+  GatewayChannelPinsUpdateDispatchData,
+  GatewayChannelUpdateDispatchData,
   GatewayEntitlementCreateDispatchData,
   GatewayEntitlementDeleteDispatchData,
   GatewayEntitlementUpdateDispatchData,
   GatewayGuildAuditLogEntryCreateDispatchData,
   GatewayGuildBanAddDispatchData,
   GatewayGuildBanRemoveDispatchData,
+  GatewayGuildCreateDispatchData,
+  GatewayGuildDeleteDispatchData,
   GatewayGuildEmojisUpdateDispatchData,
+  GatewayGuildMemberAddDispatchData,
+  GatewayGuildMemberRemoveDispatchData,
   GatewayGuildMembersChunkDispatchData,
+  GatewayGuildMemberUpdateDispatchData,
+  GatewayGuildRoleCreateDispatchData,
+  GatewayGuildRoleDeleteDispatchData,
+  GatewayGuildRoleUpdateDispatchData,
   GatewayGuildScheduledEventCreateDispatchData,
   GatewayGuildScheduledEventDeleteDispatchData,
   GatewayGuildScheduledEventUpdateDispatchData,
   GatewayGuildScheduledEventUserAddDispatchData,
   GatewayGuildScheduledEventUserRemoveDispatchData,
+  GatewayGuildUpdateDispatchData,
   GatewayInteractionCreateDispatchData,
   GatewayInviteCreateDispatchData,
   GatewayInviteDeleteDispatchData,
@@ -51,11 +64,23 @@ import {
   GatewayMessagePollVoteDispatchData,
   GatewayMessageReactionRemoveDispatchData,
   GatewayMessageUpdateDispatchData,
+  GatewayReadyDispatchData,
+  GatewayResumeData,
+  GatewayThreadCreateDispatchData,
+  GatewayThreadDeleteDispatchData,
+  GatewayThreadListSyncDispatchData,
+  GatewayThreadUpdateDispatchData,
   GatewayVoiceStateUpdateDispatchData,
   GatewayWebhooksUpdateDispatchData,
   InteractionType,
 } from "discord-api-types/v10";
-import { EmojiDiscordJSON, Message as MessageType } from "typings/index.d.js";
+import {
+  EmojiDiscordJSON,
+  Message as MessageType,
+  Member as MemberType,
+  Client as ClientType,
+  Events,
+} from "typings/index.d.js";
 import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v9";
 
 class EventHandler {
@@ -65,7 +90,7 @@ class EventHandler {
   #initialGuilds;
   #initialisedSent;
   #asciiArtSent;
-  constructor(client: any, ws: any) {
+  constructor(client: ClientType, ws: any) {
     this.#_client = client;
 
     this.#shard = ws;
@@ -77,7 +102,7 @@ class EventHandler {
     this.#asciiArtSent = false;
   }
 
-  READY(data: any) {
+  READY(data: GatewayReadyDispatchData) {
     this.#shard.sessionId = data.session_id;
 
     this.#shard.resumeGatewayUrl = data.resume_gateway_url;
@@ -90,7 +115,7 @@ class EventHandler {
 
     this.#_client.ready = true;
 
-    this.#initialGuilds = data.guilds.map((g: any) => g.id);
+    this.#initialGuilds = data.guilds.map((g) => g.id);
 
     if (this.#asciiArtSent === false) {
       this.#asciiArtSent = true;
@@ -102,18 +127,18 @@ class EventHandler {
 
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "READY");
 
-    this.#_client.emit(EVENTS.READY, this.#initialGuilds);
+    this.#_client.emit(Events.READY, this.#initialGuilds);
   }
 
-  RESUMED(data: any) {
+  RESUMED(data: GatewayResumeData) {
     this.#shard.resetRetries();
 
     this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "RESUMED");
 
-    this.#_client.emit(EVENTS.RESUMED);
+    this.#_client.emit(Events.RESUMED);
   }
 
-  GUILD_CREATE(data: any) {
+  GUILD_CREATE(data: GatewayGuildCreateDispatchData) {
     let guild;
 
     this.#_client._emitDebug(
@@ -130,16 +155,16 @@ class EventHandler {
     } else guild = new Guild(this.#_client, data);
 
     if (!this.#initialGuilds.includes(data.id))
-      this.#_client.emit(EVENTS.GUILD_CREATE, guild);
+      this.#_client.emit(Events.GUILD_CREATE, guild);
     else this.#initialGuilds.splice(this.#initialGuilds.indexOf(data.id), 1);
 
     if (this.#initialGuilds.length == 0 && this.#initialisedSent == false) {
       this.#initialisedSent = true;
-      this.#_client.emit(EVENTS.INITIALISED);
+      this.#_client.emit(Events.INITIALISED);
     }
   }
 
-  GUILD_UPDATE(data: any) {
+  GUILD_UPDATE(data: GatewayGuildUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_UPDATE ${data.id}`,
@@ -148,10 +173,10 @@ class EventHandler {
     const oldGuild = GuildManager.getGuild(this.#_client, data.id);
     const newGuild = new Guild(this.#_client, data);
 
-    this.#_client.emit(EVENTS.GUILD_UPDATE, oldGuild, newGuild);
+    this.#_client.emit(Events.GUILD_UPDATE, oldGuild, newGuild);
   }
 
-  GUILD_DELETE(data: any) {
+  GUILD_DELETE(data: GatewayGuildDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_DELETE ${data.id}`,
@@ -164,11 +189,11 @@ class EventHandler {
 
       if (!guild) return;
 
-      this.#_client.emit(EVENTS.GUILD_DELETE, guild);
+      this.#_client.emit(Events.GUILD_DELETE, guild);
     }
   }
 
-  GUILD_ROLE_CREATE(data: any) {
+  GUILD_ROLE_CREATE(data: GatewayGuildRoleCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_CREATE ${data.guild_id}`,
@@ -178,10 +203,10 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.GUILD_ROLE_CREATE, role);
+    this.#_client.emit(Events.GUILD_ROLE_CREATE, role);
   }
 
-  GUILD_ROLE_UPDATE(data: any) {
+  GUILD_ROLE_UPDATE(data: GatewayGuildRoleUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_UPDATE ${data.guild_id}`,
@@ -194,10 +219,10 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.GUILD_ROLE_UPDATE, oldRole, newRole);
+    this.#_client.emit(Events.GUILD_ROLE_UPDATE, oldRole, newRole);
   }
 
-  GUILD_ROLE_DELETE(data: any) {
+  GUILD_ROLE_DELETE(data: GatewayGuildRoleDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_ROLE_DELETE ${data.guild_id}`,
@@ -210,10 +235,10 @@ class EventHandler {
       data.role_id,
     );
 
-    this.#_client.emit(EVENTS.GUILD_ROLE_DELETE, role);
+    this.#_client.emit(Events.GUILD_ROLE_DELETE, role);
   }
 
-  CHANNEL_CREATE(data: any) {
+  CHANNEL_CREATE(data: GatewayChannelCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_CREATE ${data.guild_id}`,
@@ -221,10 +246,10 @@ class EventHandler {
 
     const channel = cacheChannel(this.#_client, data, data.guild_id);
 
-    this.#_client.emit(EVENTS.CHANNEL_CREATE, channel);
+    this.#_client.emit(Events.CHANNEL_CREATE, channel);
   }
 
-  CHANNEL_UPDATE(data: any) {
+  CHANNEL_UPDATE(data: GatewayChannelUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_UPDATE ${data.guild_id}`,
@@ -235,10 +260,10 @@ class EventHandler {
       ?.channels.get(data.id);
     const newChannel = cacheChannel(this.#_client, data, data.guild_id, true);
 
-    this.#_client.emit(EVENTS.CHANNEL_UPDATE, oldChannel, newChannel);
+    this.#_client.emit(Events.CHANNEL_UPDATE, oldChannel, newChannel);
   }
 
-  CHANNEL_DELETE(data: any) {
+  CHANNEL_DELETE(data: GatewayChannelDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_DELETE ${data.guild_id}`,
@@ -251,19 +276,19 @@ class EventHandler {
       data.id,
     );
 
-    this.#_client.emit(EVENTS.CHANNEL_DELETE, channel);
+    this.#_client.emit(Events.CHANNEL_DELETE, channel);
   }
 
-  CHANNEL_PINS_UPDATE(data: any) {
+  CHANNEL_PINS_UPDATE(data: GatewayChannelPinsUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
 
-    this.#_client.emit(EVENTS.CHANNEL_PINS_UPDATE, data);
+    this.#_client.emit(Events.CHANNEL_PINS_UPDATE, data);
   }
 
-  THREAD_CREATE(data: any) {
+  THREAD_CREATE(data: GatewayThreadCreateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_CREATE ${data.guild_id}`,
@@ -271,10 +296,10 @@ class EventHandler {
 
     const thread = new Thread(this.#_client, data, { guildId: data.guild_id });
 
-    this.#_client.emit(EVENTS.THREAD_CREATE, thread);
+    this.#_client.emit(Events.THREAD_CREATE, thread);
   }
 
-  THREAD_UPDATE(data: any) {
+  THREAD_UPDATE(data: GatewayThreadUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_UPDATE ${data.guild_id}`,
@@ -287,10 +312,10 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.THREAD_UPDATE, oldThread, newThread);
+    this.#_client.emit(Events.THREAD_UPDATE, oldThread, newThread);
   }
 
-  THREAD_DELETE(data: any) {
+  THREAD_DELETE(data: GatewayThreadDeleteDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_DELETE ${data.guild_id}`,
@@ -303,10 +328,10 @@ class EventHandler {
       data.id,
     );
 
-    this.#_client.emit(EVENTS.THREAD_DELETE, thread);
+    this.#_client.emit(Events.THREAD_DELETE, thread);
   }
 
-  THREAD_LIST_SYNC(data: any) {
+  THREAD_LIST_SYNC(data: GatewayThreadListSyncDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_LIST_SYNC ${data.guild_id}`,
@@ -318,10 +343,10 @@ class EventHandler {
         new Thread(this.#_client, data.threads[i], { guildId: data.guild_id }),
       );
 
-    this.#_client.emit(EVENTS.THREAD_LIST_SYNC, threads);
+    this.#_client.emit(Events.THREAD_LIST_SYNC, threads);
   }
 
-  GUILD_MEMBER_ADD(data: any) {
+  GUILD_MEMBER_ADD(data: GatewayGuildMemberAddDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_ADD ${data.guild_id}`,
@@ -334,10 +359,10 @@ class EventHandler {
 
     member.guild._incrementMemberCount();
 
-    this.#_client.emit(EVENTS.GUILD_MEMBER_ADD, member);
+    this.#_client.emit(Events.GUILD_MEMBER_ADD, member);
   }
 
-  GUILD_MEMBER_REMOVE(data: any) {
+  GUILD_MEMBER_REMOVE(data: GatewayGuildMemberRemoveDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_REMOVE ${data.guild_id}`,
@@ -348,27 +373,38 @@ class EventHandler {
       data.guild_id,
     );
 
-    cacheManager.fetchWithRules(data.user.id).then((member: any) => {
-      const guild = GuildManager.getCacheManager(this.#_client).get(
-        data.guild_id,
-      );
-      if (member) guild?.members.delete(data.user.id);
-      else {
-        const user = new User(this.#_client, data.user, { nocache: true });
-        member = new Member(
-          this.#_client,
-          {},
-          { userId: data.user.id, guildId: data.guild_id, user, nocache: true },
+    cacheManager
+      .fetchWithRules(data.user.id)
+      .then((member: MemberType | null) => {
+        const guild = GuildManager.getCacheManager(this.#_client).get(
+          data.guild_id,
         );
-      }
+        if (member) guild?.members.delete(data.user.id);
+        else {
+          const user = new User(this.#_client, data.user, { nocache: true });
+          member = new Member(
+            this.#_client,
+            {},
+            {
+              userId: data.user.id,
+              guildId: data.guild_id,
+              user,
+              nocache: true,
+            },
+          );
+        }
 
-      member.guild._decrementMemberCount();
+        member.guild._decrementMemberCount();
 
-      this.#_client.emit(EVENTS.GUILD_MEMBER_REMOVE, member);
-    });
+        this.#_client.emit(Events.GUILD_MEMBER_REMOVE, member);
+        return member;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching member:", error);
+      });
   }
 
-  GUILD_MEMBER_UPDATE(data: any) {
+  GUILD_MEMBER_UPDATE(data: GatewayGuildMemberUpdateDispatchData) {
     this.#_client._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_MEMBER_UPDATE ${data.guild_id}`,
@@ -379,14 +415,20 @@ class EventHandler {
       data.guild_id,
     );
 
-    cacheManager.fetchWithRules(data.user.id).then((oldMember: any) => {
-      const newMember = new Member(this.#_client, data, {
-        userId: data.user.id,
-        guildId: data.guild_id,
-      });
+    cacheManager
+      .fetchWithRules(data.user.id)
+      .then((oldMember: MemberType | null) => {
+        const newMember = new Member(this.#_client, data, {
+          userId: data.user.id,
+          guildId: data.guild_id,
+        });
 
-      this.#_client.emit(EVENTS.GUILD_MEMBER_UPDATE, oldMember, newMember);
-    });
+        this.#_client.emit(Events.GUILD_MEMBER_UPDATE, oldMember, newMember);
+        return newMember;
+      })
+      .catch((error: Error) => {
+        console.error("Error fetching member:", error);
+      });
   }
 
   GUILD_MEMBERS_CHUNK(data: GatewayGuildMembersChunkDispatchData) {
@@ -414,7 +456,7 @@ class EventHandler {
     // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
-    this.#_client.emit(EVENTS.GUILD_BAN_ADD, user);
+    this.#_client.emit(Events.GUILD_BAN_ADD, user);
   }
 
   GUILD_BAN_REMOVE(data: GatewayGuildBanRemoveDispatchData) {
@@ -429,7 +471,7 @@ class EventHandler {
     // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
     if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
-    this.#_client.emit(EVENTS.GUILD_BAN_REMOVE, user);
+    this.#_client.emit(Events.GUILD_BAN_REMOVE, user);
   }
 
   INVITE_CREATE(data: GatewayInviteCreateDispatchData) {
@@ -440,7 +482,7 @@ class EventHandler {
 
     const invite = new Invite(this.#_client, data, { guildId: data.guild_id });
 
-    this.#_client.emit(EVENTS.INVITE_CREATE, invite);
+    this.#_client.emit(Events.INVITE_CREATE, invite);
   }
 
   INVITE_DELETE(data: GatewayInviteDeleteDispatchData) {
@@ -464,7 +506,7 @@ class EventHandler {
       nocache: true,
     });
 
-    this.#_client.emit(EVENTS.INVITE_DELETE, partialInvite, invite);
+    this.#_client.emit(Events.INVITE_DELETE, partialInvite, invite);
   }
 
   VOICE_STATE_UPDATE(data: GatewayVoiceStateUpdateDispatchData) {
@@ -493,7 +535,7 @@ class EventHandler {
       );
     }
 
-    this.#_client.emit(EVENTS.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
+    this.#_client.emit(Events.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
   }
 
   VOICE_CHANNEL_STATUS_UPDATE(data: any) {
@@ -502,7 +544,7 @@ class EventHandler {
       `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
 
-    this.#_client.emit(EVENTS.VOICE_CHANNEL_STATUS_UPDATE, data);
+    this.#_client.emit(Events.VOICE_CHANNEL_STATUS_UPDATE, data);
   }
 
   MESSAGE_CREATE(data: GatewayMessageCreateDispatchData) {
@@ -520,7 +562,7 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.MESSAGE_CREATE, message);
+    this.#_client.emit(Events.MESSAGE_CREATE, message);
   }
 
   MESSAGE_UPDATE(data: GatewayMessageUpdateDispatchData) {
@@ -553,9 +595,9 @@ class EventHandler {
             newMessage.editedTimestamp * 1000 + 2000 < Date.now()
           )
         ) {
-          this.#_client.emit(EVENTS.MESSAGE_EDIT, oldMessage, newMessage);
+          this.#_client.emit(Events.MESSAGE_EDIT, oldMessage, newMessage);
         }
-        this.#_client.emit(EVENTS.MESSAGE_UPDATE, oldMessage, newMessage);
+        this.#_client.emit(Events.MESSAGE_UPDATE, oldMessage, newMessage);
 
         return newMessage;
       })
@@ -583,7 +625,7 @@ class EventHandler {
     cacheManager
       .fetchWithRules(data.id)
       .then((message: MessageType | null) => {
-        this.#_client.emit(EVENTS.MESSAGE_DELETE, message);
+        this.#_client.emit(Events.MESSAGE_DELETE, message);
         return message;
       })
       .catch((error: Error) => {
@@ -614,7 +656,7 @@ class EventHandler {
     Promise.all(messages)
       .then((m) =>
         this.#_client.emit(
-          EVENTS.MESSAGE_DELETE_BULK,
+          Events.MESSAGE_DELETE_BULK,
           m.filter((a) => a != null),
         ),
       )
@@ -640,7 +682,7 @@ class EventHandler {
               channelId: data.channel_id,
             });
 
-            this.#_client.emit(EVENTS.BUTTON_CLICK, componentInteraction);
+            this.#_client.emit(Events.BUTTON_CLICK, componentInteraction);
 
             break;
           }
@@ -652,10 +694,10 @@ class EventHandler {
           case ComponentType.ChannelSelect: {
             const componentInteraction = new OptionSelect(this.#_client, data, {
               guildId: data.guild_id,
-              channelId: data.channel_id,
+              channelId: data.channel.id,
             });
 
-            this.#_client.emit(EVENTS.MENU_SELECT, componentInteraction);
+            this.#_client.emit(Events.MENU_SELECT, componentInteraction);
 
             break;
           }
@@ -670,7 +712,7 @@ class EventHandler {
       case InteractionType.ApplicationCommand: {
         const commandInteraction = new SlashCommand(this.#_client, data);
 
-        this.#_client.emit(EVENTS.SLASH_COMMAND, commandInteraction);
+        this.#_client.emit(Events.SLASH_COMMAND, commandInteraction);
 
         break;
       }
@@ -678,7 +720,7 @@ class EventHandler {
       case InteractionType.ModalSubmit: {
         const componentInteraction = new ModalResponse(this.#_client, data);
 
-        this.#_client.emit(EVENTS.MODAL_RESPONSE, componentInteraction);
+        this.#_client.emit(Events.MODAL_RESPONSE, componentInteraction);
 
         break;
       }
@@ -687,7 +729,7 @@ class EventHandler {
         const commandInteraction = new SlashCommand(this.#_client, data);
 
         this.#_client.emit(
-          EVENTS.SLASH_COMMAND_AUTOCOMPLETE,
+          Events.SLASH_COMMAND_AUTOCOMPLETE,
           commandInteraction,
         );
 
@@ -711,7 +753,7 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
+    this.#_client.emit(Events.GUILD_AUDIT_LOG_ENTRY_CREATE, auditLogEntry);
   }
 
   ENTITLEMENT_CREATE(data: GatewayEntitlementCreateDispatchData) {
@@ -720,7 +762,7 @@ class EventHandler {
       `ENTITLEMENT_CREATE ${data.user_id}`,
     );
 
-    this.#_client.emit(EVENTS.ENTITLEMENT_CREATE, data);
+    this.#_client.emit(Events.ENTITLEMENT_CREATE, data);
   }
 
   ENTITLEMENT_UPDATE(data: GatewayEntitlementUpdateDispatchData) {
@@ -729,7 +771,7 @@ class EventHandler {
       `ENTITLEMENT_UPDATE ${data.user_id}`,
     );
 
-    this.#_client.emit(EVENTS.ENTITLEMENT_UPDATE, data);
+    this.#_client.emit(Events.ENTITLEMENT_UPDATE, data);
   }
 
   ENTITLEMENT_DELETE(data: GatewayEntitlementDeleteDispatchData) {
@@ -738,7 +780,7 @@ class EventHandler {
       `ENTITLEMENT_DELETE ${data.user_id}`,
     );
 
-    this.#_client.emit(EVENTS.ENTITLEMENT_DELETE, data);
+    this.#_client.emit(Events.ENTITLEMENT_DELETE, data);
   }
 
   GUILD_SCHEDULED_EVENT_CREATE(
@@ -753,7 +795,7 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
+    this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_CREATE, scheduledEvent);
   }
 
   GUILD_SCHEDULED_EVENT_UPDATE(
@@ -773,7 +815,7 @@ class EventHandler {
     });
 
     this.#_client.emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_UPDATE,
+      Events.GUILD_SCHEDULED_EVENT_UPDATE,
       oldScheduledEvent,
       newScheduledEvent,
     );
@@ -795,7 +837,7 @@ class EventHandler {
       data.id,
     );
 
-    this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
+    this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }
 
   GUILD_SCHEDULED_EVENT_USER_ADD(
@@ -822,7 +864,7 @@ class EventHandler {
 
     const user = this.#_client.users.get(data.user_id) || null;
 
-    this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
+    this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
   }
 
   GUILD_SCHEDULED_EVENT_USER_REMOVE(
@@ -849,7 +891,7 @@ class EventHandler {
 
     const user = this.#_client.users.get(data.user_id) || null;
 
-    this.#_client.emit(EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
+    this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
   }
 
   AUTO_MODERATION_RULE_CREATE(
@@ -861,7 +903,7 @@ class EventHandler {
     );
 
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
-    this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+    this.#_client.emit(Events.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_RULE_UPDATE(
@@ -873,7 +915,7 @@ class EventHandler {
     );
 
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
-    this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+    this.#_client.emit(Events.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_RULE_DELETE(
@@ -885,7 +927,7 @@ class EventHandler {
     );
 
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
-    this.#_client.emit(EVENTS.AUTO_MODERATION_RULE_CREATE, data);
+    this.#_client.emit(Events.AUTO_MODERATION_RULE_CREATE, data);
   }
 
   AUTO_MODERATION_ACTION_EXECUTION(
@@ -897,7 +939,7 @@ class EventHandler {
     );
 
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_ACTION_EXECUTION' does n... Remove this comment to see the full error message
-    this.#_client.emit(EVENTS.AUTO_MODERATION_ACTION_EXECUTION, data);
+    this.#_client.emit(Events.AUTO_MODERATION_ACTION_EXECUTION, data);
   }
 
   GUILD_EMOJIS_UPDATE(data: GatewayGuildEmojisUpdateDispatchData) {
@@ -936,7 +978,7 @@ class EventHandler {
 
       const addedEmoji = addedEmojiRaw;
 
-      this.#_client.emit(EVENTS.GUILD_EMOJI_CREATE, addedEmoji);
+      this.#_client.emit(Events.GUILD_EMOJI_CREATE, addedEmoji);
     } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
@@ -963,7 +1005,7 @@ class EventHandler {
         deletedId,
       );
 
-      this.#_client.emit(EVENTS.GUILD_EMOJI_DELETE, deletedEmoji);
+      this.#_client.emit(Events.GUILD_EMOJI_DELETE, deletedEmoji);
     } else {
       // EMOJI UPDATED
       const oldEmojisArray = oldEmojis.toJSON();
@@ -988,7 +1030,7 @@ class EventHandler {
         }
       }
 
-      this.#_client.emit(EVENTS.GUILD_EMOJI_UPDATE, oldEmoji, newEmoji);
+      this.#_client.emit(Events.GUILD_EMOJI_UPDATE, oldEmoji, newEmoji);
     }
   }
 
@@ -998,7 +1040,7 @@ class EventHandler {
       `WEBHOOKS_UPDATE ${data.guild_id}`,
     );
 
-    this.#_client.emit(EVENTS.WEBHOOKS_UPDATE, data);
+    this.#_client.emit(Events.WEBHOOKS_UPDATE, data);
   }
 
   MESSAGE_POLL_VOTE_ADD(data: GatewayMessagePollVoteDispatchData) {
@@ -1023,7 +1065,7 @@ class EventHandler {
         if (message) {
           message.poll._results._addVote(data.user_id, data.answer_id);
         }
-        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_ADD, data);
+        this.#_client.emit(Events.MESSAGE_POLL_VOTE_ADD, data);
         return data;
       })
       .catch((error: Error) => {
@@ -1053,7 +1095,7 @@ class EventHandler {
         if (message) {
           message.poll._results._removeVote(data.user_id, data.answer_id);
         }
-        this.#_client.emit(EVENTS.MESSAGE_POLL_VOTE_REMOVE, data);
+        this.#_client.emit(Events.MESSAGE_POLL_VOTE_REMOVE, data);
 
         return data;
       })
@@ -1094,7 +1136,7 @@ class EventHandler {
           guildId: data.guild_id as string, // valid as we check for guild_id above
         });
 
-        this.#_client.emit(EVENTS.MESSAGE_REACTION_ADD, finalData);
+        this.#_client.emit(Events.MESSAGE_REACTION_ADD, finalData);
 
         return finalData;
       })
@@ -1134,7 +1176,7 @@ class EventHandler {
           guildId: data.guild_id as string, // valid as we check for guild_id above
         });
 
-        this.#_client.emit(EVENTS.MESSAGE_REACTION_REMOVE, finalData);
+        this.#_client.emit(Events.MESSAGE_REACTION_REMOVE, finalData);
 
         return finalData;
       })
