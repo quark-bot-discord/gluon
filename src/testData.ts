@@ -12,8 +12,10 @@ import {
   APIUser,
   ChannelType,
   EntitlementType,
+  GatewayGuildCreateDispatchData,
   GuildMemberFlags,
   GuildScheduledEventEntityType,
+  GuildSystemChannelFlags,
   InteractionType,
   Locale,
   MessageFlags,
@@ -39,6 +41,7 @@ import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
 import User from "./structures/User.js";
 import VoiceChannel from "./structures/VoiceChannel.js";
+import type { Client as ClientType } from "#typings/index.d.ts";
 
 const BUTTON_CLICK: APIMessageComponentGuildInteraction = {
   id: "123456789012345678",
@@ -706,6 +709,98 @@ const MESSAGE: APIMessage = {
   },
 };
 
+const GUILD: GatewayGuildCreateDispatchData = {
+  hub_type: null,
+  safety_alerts_channel_id: null,
+  incidents_data: null,
+  joined_at: "2021-01-01T00:00:00.000Z",
+  large: false,
+  guild_scheduled_events: [],
+  soundboard_sounds: [],
+  premium_progress_bar_enabled: true,
+  id: "619434557472505857",
+  name: "test-guild",
+  icon: null,
+  splash: null,
+  discovery_splash: null,
+  owner_id: "301655085954367490",
+  region: "us-west",
+  afk_channel_id: null,
+  afk_timeout: 300,
+  verification_level: 0,
+  default_message_notifications: 0,
+  explicit_content_filter: 0,
+  roles: [],
+  emojis: [],
+  features: [],
+  mfa_level: 0,
+  application_id: null,
+  system_channel_id: "123456789112345678",
+  system_channel_flags:
+    GuildSystemChannelFlags.SuppressGuildReminderNotifications,
+  rules_channel_id: "123456788112345679",
+  member_count: 500,
+  voice_states: [],
+  members: [],
+  channels: [],
+  threads: [],
+  presences: [],
+  max_presences: 25000,
+  max_members: 250000,
+  vanity_url_code: null,
+  description: null,
+  banner: null,
+  premium_tier: 1,
+  premium_subscription_count: 9,
+  preferred_locale: Locale.EnglishUS,
+  public_updates_channel_id: null,
+  max_video_channel_users: 0,
+  approximate_member_count: 1,
+  approximate_presence_count: 1,
+  nsfw_level: 0,
+  stage_instances: [],
+  stickers: [],
+  // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
+  threads: [],
+  // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
+  voice_states: [],
+  // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
+  members: [],
+  // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
+  channels: [
+    {
+      id: "123456789012345677",
+      type: 0,
+      guild_id: "619434557472505857",
+      name: "test-channel",
+      position: 0,
+      permission_overwrites: [],
+      rate_limit_per_user: 0,
+      nsfw: false,
+      topic: null,
+      last_message_id: null,
+      parent_id: null,
+      last_pin_timestamp: null,
+    },
+    {
+      id: "123456789012345679",
+      type: 2,
+      guild_id: "619434557472505857",
+      name: "test-channel",
+      position: 0,
+      permission_overwrites: [],
+      rate_limit_per_user: 0,
+      nsfw: false,
+      last_message_id: null,
+      parent_id: null,
+      bitrate: 64000,
+      user_limit: 0,
+    },
+  ],
+  // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
+  threads: [],
+};
+
 export const TEST_DATA = {
   GUILD_ID: "619434557472505857",
   TEXT_CHANNEL: {
@@ -756,95 +851,7 @@ export const TEST_DATA = {
     nsfw: false,
     parent_id: null,
   },
-  GUILD: {
-    id: "619434557472505857",
-    name: "test-guild",
-    icon: null,
-    splash: null,
-    discovery_splash: null,
-    owner_id: "301655085954367490",
-    region: "us-west",
-    afk_channel_id: null,
-    afk_timeout: 0,
-    verification_level: 0,
-    default_message_notifications: 0,
-    explicit_content_filter: 0,
-    roles: [],
-    emojis: [],
-    features: [],
-    mfa_level: 0,
-    application_id: null,
-    system_channel_id: "123456789112345678",
-    system_channel_flags: 0,
-    rules_channel_id: "123456788112345679",
-    joined_at: "2021-01-01T00:00:00.000Z",
-    large: false,
-    unavailable: false,
-    member_count: 500,
-    voice_states: [],
-    members: [],
-    channels: [],
-    threads: [],
-    presences: [],
-    max_presences: 25000,
-    max_members: 250000,
-    vanity_url_code: null,
-    description: null,
-    banner: null,
-    premium_progress_bar_enabled: true,
-    premium_tier: 1,
-    premium_subscription_count: 9,
-    preferred_locale: "en-US",
-    public_updates_channel_id: null,
-    max_video_channel_users: 0,
-    approximate_member_count: 1,
-    approximate_presence_count: 1,
-    welcome_screen: null,
-    nsfw_level: 0,
-    stage_instances: [],
-    stickers: [],
-    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
-    threads: [],
-    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
-    voice_states: [],
-    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
-    members: [],
-    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
-    channels: [
-      {
-        id: "123456789012345677",
-        type: 0,
-        guild_id: "619434557472505857",
-        name: "test-channel",
-        position: 0,
-        permission_overwrites: [],
-        rate_limit_per_user: 0,
-        nsfw: false,
-        topic: null,
-        last_message_id: null,
-        parent_id: null,
-        last_pin_timestamp: null,
-      },
-      {
-        id: "123456789012345679",
-        type: 2,
-        guild_id: "619434557472505857",
-        name: "test-channel",
-        position: 0,
-        permission_overwrites: [],
-        rate_limit_per_user: 0,
-        nsfw: false,
-        topic: null,
-        last_message_id: null,
-        parent_id: null,
-        last_pin_timestamp: null,
-        bitrate: 64000,
-        user_limit: 0,
-      },
-    ],
-    // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
-    threads: [],
-  },
+  GUILD,
   THREAD,
   CHANNEL_ID: "123456789112345678",
   MESSAGE_ID: "123456339012345678",
@@ -1298,6 +1305,8 @@ export const TEST_CLIENTS = {
       cacheScheduledEvents: true,
       cacheInvites: true,
       intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.GUILD_MEMBERS,
+      shardIds: [0],
+      totalShards: 1,
     });
     client.user = new User(client, TEST_DATA.CLIENT_USER);
     client.request = new BetterRequestHandler(client, "TOKEN");
@@ -1316,6 +1325,8 @@ export const TEST_CLIENTS = {
       cacheScheduledEvents: false,
       cacheInvites: false,
       intents: INTENTS.GUILDS | INTENTS.GUILD_MESSAGES | INTENTS.GUILD_MEMBERS,
+      shardIds: [0],
+      totalShards: 1,
     });
     client.user = new User(client, TEST_DATA.CLIENT_USER);
     client.request = new BetterRequestHandler(client, "TOKEN");
@@ -1324,8 +1335,8 @@ export const TEST_CLIENTS = {
 };
 
 export const TEST_GUILDS = {
-  ALL_CACHES_ENABLED: (client: any) => {
-    const guild = new Guild(client, TEST_DATA.GUILD as any);
+  ALL_CACHES_ENABLED: (client: ClientType) => {
+    const guild = new Guild(client, TEST_DATA.GUILD);
     guild._cacheOptions.setChannelCaching(true);
     guild._cacheOptions.setThreadCaching(true);
     guild._cacheOptions.setEmojiCaching(true);
@@ -1338,8 +1349,8 @@ export const TEST_GUILDS = {
     guild._cacheOptions.setInviteCaching(true);
     return guild;
   },
-  NO_CACHES_ENABLED: (client: any) => {
-    const guild = new Guild(client, TEST_DATA.GUILD as any);
+  NO_CACHES_ENABLED: (client: ClientType) => {
+    const guild = new Guild(client, TEST_DATA.GUILD);
     guild._cacheOptions.setChannelCaching(false);
     guild._cacheOptions.setThreadCaching(false);
     guild._cacheOptions.setEmojiCaching(false);
@@ -1355,31 +1366,31 @@ export const TEST_GUILDS = {
 };
 
 export const TEST_CHANNELS = {
-  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
+  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client: any) => {
+  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client: ClientType) => {
     const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
+  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => {
     const channel = new VoiceChannel(client, TEST_DATA.VOICE_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client: any) => {
+  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => {
     const channel = new CategoryChannel(client, TEST_DATA.CATEGORY_CHANNEL, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return channel;
   },
-  THREAD_CHANNEL: (client: any) => {
+  THREAD_CHANNEL: (client: ClientType) => {
     const channel = new Thread(client, TEST_DATA.THREAD, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1388,70 +1399,70 @@ export const TEST_CHANNELS = {
 };
 
 export const TEST_MEMBERS = {
-  CLIENT_MEMBER: (client: any) => {
+  CLIENT_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
       userId: TEST_DATA.CLIENT_MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  THREAD_OWNER_MEMBER: (client: any) => {
+  THREAD_OWNER_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER, {
       userId: TEST_DATA.THREAD.owner_id as string,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  GUILD_OWNER_MEMBER: (client: any) => {
+  GUILD_OWNER_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.GUILD.owner_id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  GENERIC_MEMBER: (client: any) => {
+  GENERIC_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.MEMBER_ID,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  VOICE_STATE_MEMBER: (client: any) => {
+  VOICE_STATE_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       guildId: TEST_DATA.GUILD_ID,
       userId: TEST_DATA.VOICE_STATE.user_id,
     });
     return member;
   },
-  EXECUTOR_MEMBER: (client: any) => {
+  EXECUTOR_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.MEMBER_ADMIN, {
       userId: TEST_DATA.MEMBER_ADMIN.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  TARGET_MEMBER: (client: any) => {
+  TARGET_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.MEMBER, {
       userId: TEST_DATA.MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  CLIENT_MEMBER_1: (client: any) => {
+  CLIENT_MEMBER_1: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.CLIENT_MEMBER_ADMIN, {
       userId: TEST_DATA.CLIENT_MEMBER_ADMIN.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  ROLE_OVERRIDES_MEMBER: (client: any) => {
+  ROLE_OVERRIDES_MEMBER: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER, {
       userId: TEST_DATA.ROLE_OVERRIDES_MEMBER.user.id,
       guildId: TEST_DATA.GUILD_ID,
     });
     return member;
   },
-  ROLE_OVERRIDES_MEMBER_2: (client: any) => {
+  ROLE_OVERRIDES_MEMBER_2: (client: ClientType) => {
     const member = new Member(client, TEST_DATA.ROLE_OVERRIDES_MEMBER_2, {
       userId: TEST_DATA.ROLE_OVERRIDES_MEMBER_2.user.id,
       guildId: TEST_DATA.GUILD_ID,
@@ -1462,7 +1473,7 @@ export const TEST_MEMBERS = {
 
 export const TEST_MESSAGES = {
   GENERIC_MESSAGE: (
-    client: any,
+    client: ClientType,
     { channelId = TEST_DATA.CHANNEL_ID } = { channelId: TEST_DATA.CHANNEL_ID },
   ) => {
     const message = new Message(client, TEST_DATA.MESSAGE, {
@@ -1474,25 +1485,25 @@ export const TEST_MESSAGES = {
 };
 
 export const TEST_ROLES = {
-  GENERIC_ADMIN_ROLE: (client: any) => {
+  GENERIC_ADMIN_ROLE: (client: ClientType) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ADMIN_ROLE_2: (client: any) => {
+  GENERIC_ADMIN_ROLE_2: (client: ClientType) => {
     const role = new Role(client, TEST_DATA.ROLE_ADMIN_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ROLE: (client: any) => {
+  GENERIC_ROLE: (client: ClientType) => {
     const role = new Role(client, TEST_DATA.ROLE_OVERRIDES, {
       guildId: TEST_DATA.GUILD_ID,
     });
     return role;
   },
-  GENERIC_ROLE_2: (client: any) => {
+  GENERIC_ROLE_2: (client: ClientType) => {
     const role = new Role(client, TEST_DATA.ROLE_OVERRIDES_2, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1501,7 +1512,7 @@ export const TEST_ROLES = {
 };
 
 export const TEST_SCHEDULED_EVENTS = {
-  GENERIC_SCHEDULED_EVENT: (client: any) => {
+  GENERIC_SCHEDULED_EVENT: (client: ClientType) => {
     const scheduledEvent = new ScheduledEvent(
       client,
       TEST_DATA.SCHEDULED_EVENT,
@@ -1509,7 +1520,7 @@ export const TEST_SCHEDULED_EVENTS = {
     );
     return scheduledEvent;
   },
-  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client: any) => {
+  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client: ClientType) => {
     const scheduledEvent = new ScheduledEvent(
       client,
       TEST_DATA.SCHEDULED_EVENT_EXTERNAL,
@@ -1520,14 +1531,14 @@ export const TEST_SCHEDULED_EVENTS = {
 };
 
 export const TEST_USERS = {
-  GENERIC_USER: (client: any) => {
+  GENERIC_USER: (client: ClientType) => {
     const user = new User(client, TEST_DATA.USER);
     return user;
   },
 };
 
 export const TEST_EMOJIS = {
-  GENERIC_EMOJI: (client: any) => {
+  GENERIC_EMOJI: (client: ClientType) => {
     const emoji = new Emoji(client, TEST_DATA.EMOJI, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1536,7 +1547,7 @@ export const TEST_EMOJIS = {
 };
 
 export const TEST_INVITES = {
-  GENERIC_INVITE: (client: any) => {
+  GENERIC_INVITE: (client: ClientType) => {
     const invite = new Invite(client, TEST_DATA.INVITE, {
       guildId: TEST_DATA.GUILD_ID,
     });
@@ -1545,15 +1556,15 @@ export const TEST_INVITES = {
 };
 
 export const TEST_INTERACTIONS = {
-  GENERIC_INTERACTION: (client: any) => {
+  GENERIC_INTERACTION: (client: ClientType) => {
     const interaction = new Interaction(client, TEST_DATA.INTERACTION);
     return interaction;
   },
-  SLASH_COMMAND: (client: any) => {
+  SLASH_COMMAND: (client: ClientType) => {
     const interaction = new SlashCommand(client, TEST_DATA.SLASH_COMMAND);
     return interaction;
   },
-  BUTTON_CLICK: (client: any) => {
+  BUTTON_CLICK: (client: ClientType) => {
     const interaction = new ButtonClick(client, TEST_DATA.BUTTON_CLICK, {
       guildId: TEST_DATA.GUILD_ID,
       channelId: TEST_DATA.CHANNEL_ID,
