@@ -25,6 +25,10 @@
       "types": "./dist/src/testData.d.ts",
       "default": "./dist/src/testData.js"
     },
+    "./discord-api-types": {
+      "types": "./dist/typings/discord.d.ts",
+      "default": "./dist/typings/discord.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
