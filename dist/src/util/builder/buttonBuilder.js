@@ -1,8 +1,8 @@
-import { JsonTypes } from "typings/index.js";
 import { BUTTON_STYLES, LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct a button for a message.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}

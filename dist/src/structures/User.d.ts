@@ -1,15 +1,15 @@
-import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { APIUser } from "discord-api-types/v10";
-import {
-  JsonTypes,
+import type {
   UserCacheJSON,
   UserDiscordJSON,
   UserStorageJSON,
   User as UserType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  GluonCacheOptions as GluonCacheOptionsType,
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a Discord user.
  * @see {@link https://discord.com/developers/docs/resources/user}
@@ -160,7 +160,7 @@ declare class User implements UserType {
    * @static
    * @method
    */
-  static shouldCache(gluonCacheOptions: GluonCacheOptions): boolean;
+  static shouldCache(gluonCacheOptions: GluonCacheOptionsType): boolean;
   /**
    * @method
    * @public

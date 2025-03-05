@@ -11,7 +11,7 @@ import {
 import { APIGuildScheduledEvent } from "discord-api-types/v10";
 
 class GuildScheduledEventManager
-  extends BaseCacheManager
+  extends BaseCacheManager<ScheduledEventType>
   implements GuildScheduledEventManagerType
 {
   #_client;

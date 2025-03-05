@@ -13,7 +13,7 @@ import { Snowflake } from "discord-api-types/globals";
  * Manages all messages within a channel.
  */
 declare class ChannelMessageManager
-  extends BaseCacheManager
+  extends BaseCacheManager<MessageType>
   implements ChannelMessageManagerType
 {
   #private;
@@ -70,7 +70,7 @@ declare class ChannelMessageManager
           limit?: number;
         }
       | Snowflake,
-  ): Promise<any>;
+  ): Promise<Message | MessageType | Message[]>;
   /**
    * Fetches all the pinned messages that belong to the channel.
    * @returns {Promise<Array<Message>>}
@@ -105,7 +105,7 @@ declare class ChannelMessageManager
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
-  ): any;
+  ): ChannelMessageManagerType;
   /**
    * Gets a message from the cache.
    * @param {Client} client The client instance.
@@ -123,7 +123,7 @@ declare class ChannelMessageManager
     guildId: Snowflake,
     channelId: Snowflake,
     messageId: Snowflake,
-  ): any;
+  ): MessageType | null;
   /**
    * Fetches a message from the channel.
    * @param {Client} client The client instance.
@@ -142,7 +142,7 @@ declare class ChannelMessageManager
     guildId: Snowflake,
     channelId: Snowflake,
     messageId: Snowflake,
-  ): Promise<any>;
+  ): Promise<Message | MessageType>;
   /**
    * Fetches a collection of messages from the channel.
    * @param {Client} client The client instance.

@@ -1,17 +1,17 @@
 import Interaction from "./Interaction.js";
 import util from "util";
-import {
-  JsonTypes,
+import type {
   ModalResponseCacheJSON,
   ModalResponseDiscordJSON,
   ModalResponseStorageJSON,
   ModalResponse as ModalResponseType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import {
   APIGuildInteraction,
   APIModalSubmitInteraction,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a modal is submitted.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}

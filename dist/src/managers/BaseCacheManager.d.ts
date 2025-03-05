@@ -1,16 +1,16 @@
-import {
+import type {
   BaseCacheManager as BaseCacheManagerType,
   GluonCacheRuleSetStructure,
-  JsonTypes,
   StaticManagerType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * The base cache manager for all cache managers.
  */
-declare class BaseCacheManager implements BaseCacheManagerType {
+declare class BaseCacheManager<T> implements BaseCacheManagerType<T> {
   #private;
-  static rules: GluonCacheRuleSetStructure;
+  static rules: GluonCacheRuleSetStructure<any>;
   /**
    * Creates a cache manager.
    * @param {Client} client The client instance.
@@ -25,7 +25,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
     {
       structureType,
     }: {
-      structureType: StaticManagerType;
+      structureType: StaticManagerType<T>;
     },
   );
   /**
@@ -58,7 +58,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @method
    * @throws {TypeError}
    */
-  get(key: string): {} | null;
+  get(key: string): NonNullable<T> | null;
   /**
    * Fetches a value from the rules cache.
    * @param {String} key The key to fetch.
@@ -68,7 +68,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @throws {TypeError}
    * @async
    */
-  fetchFromRules(key: string): Promise<{} | null>;
+  fetchFromRules(key: string): Promise<T | null>;
   /**
    * Fetches a value from the cache or from the rules cache.
    * @param {String} key The key to fetch.
@@ -78,7 +78,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @async
    * @throws {TypeError}
    */
-  fetchWithRules(key: string): Promise<{} | null>;
+  fetchWithRules(key: string): Promise<T | null>;
   /**
    * Sets a value in the cache.
    * @param {String} key The key to set.
@@ -89,7 +89,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @method
    * @throws {TypeError}
    */
-  set(key: string, value: unknown, expiry?: number): void;
+  set(key: string, value: T, expiry?: number): void;
   /**
    * Expires a bucket.
    * @param {String} bucket The bucket to expire.
@@ -120,7 +120,7 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @method
    */
   _intervalCallback(): {
-    i: import("../../typings/index.d.js").StructureIdentifiers;
+    i: import("../../typings/index.d.ts").StructureIdentifiers;
   };
   /**
    * Returns the size of the cache.
@@ -146,6 +146,13 @@ declare class BaseCacheManager implements BaseCacheManagerType {
    * @throws {TypeError}
    */
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [string, T],
+      index: number,
+      array: [string, T][],
+    ) => unknown,
+  ): T[];
   /**
    * Returns the JSON representation of this structure.
    * @param {Number} [format] The format to return the data in.

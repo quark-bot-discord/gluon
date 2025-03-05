@@ -1,21 +1,24 @@
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import {
+import type {
   ButtonClickCacheJSON,
   ButtonClickDiscordJSON,
   ButtonClickStorageJSON,
   ButtonClick as ButtonClickType,
-  JsonTypes,
   MessageCacheJSON,
   MessageDiscordJSON,
   MessageStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  MemberStorageJSON,
+  MemberCacheJSON,
+  MemberDiscordJSON,
+} from "../../typings/index.d.ts";
 import {
   APIMessageComponentGuildInteraction,
   Snowflake,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents when a button is clicked.
@@ -134,7 +137,11 @@ class ButtonClick extends Interaction implements ButtonClickType {
           message: this.message.toJSON(format) as
             | MessageStorageJSON
             | MessageCacheJSON,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as
+                | MemberStorageJSON
+                | MemberCacheJSON)
+            : null,
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -145,7 +152,9 @@ class ButtonClick extends Interaction implements ButtonClickType {
             custom_id: this.customId,
           },
           message: this.message.toJSON(format) as MessageDiscordJSON,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as MemberDiscordJSON)
+            : null,
         };
       }
     }

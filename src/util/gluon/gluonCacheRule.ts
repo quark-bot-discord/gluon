@@ -1,15 +1,15 @@
-import {
+import type {
   GluonCacheRuleHandlerFunction,
   GluonCacheRuleRetrieveFunction,
   GluonCacheRule as GluonCacheRuleType,
   StaticManagerType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 
-class GluonCacheRule implements GluonCacheRuleType {
-  handlerFunction?: GluonCacheRuleHandlerFunction;
+class GluonCacheRule<T> implements GluonCacheRuleType<T> {
+  handlerFunction?: GluonCacheRuleHandlerFunction<T>;
   name?: string;
-  retrieveFunction?: GluonCacheRuleRetrieveFunction;
-  structureType?: StaticManagerType;
+  retrieveFunction?: GluonCacheRuleRetrieveFunction<T>;
+  structureType?: StaticManagerType<T>;
   /**
    * The name of the rule.
    * @param {String} name What the rule is called.
@@ -33,7 +33,7 @@ class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setHandlerFunction(handlerFunction: GluonCacheRuleHandlerFunction) {
+  setHandlerFunction(handlerFunction: GluonCacheRuleHandlerFunction<T>) {
     if (typeof handlerFunction !== "function")
       throw new TypeError("GLUON: Rule handler function must be a function.");
 
@@ -51,7 +51,7 @@ class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setStructureType(structureType: StaticManagerType) {
+  setStructureType(structureType: StaticManagerType<T>) {
     if (!(structureType instanceof Object))
       throw new TypeError("GLUON: Rule structure type must be a class.");
 
@@ -68,7 +68,7 @@ class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setRetrieveFunction(retrieveFunction: GluonCacheRuleRetrieveFunction) {
+  setRetrieveFunction(retrieveFunction: GluonCacheRuleRetrieveFunction<T>) {
     if (typeof retrieveFunction !== "function")
       throw new TypeError("GLUON: Rule retrieve function must be a function.");
 

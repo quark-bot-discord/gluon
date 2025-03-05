@@ -49,7 +49,9 @@ import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildChannelsManager from "./GuildChannelsManager.js";
+import { ChannelType } from "discord-api-types/v10";
+import getGuild from "#src/util/gluon/getGuild.js";
+import getChannel from "#src/util/gluon/getChannel.js";
 /**
  * Manages all messages within a channel.
  */
@@ -253,7 +255,20 @@ class ChannelMessageManager extends BaseCacheManager {
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
-    return client.guilds.get(guildId).channels.get(channelId).messages;
+    const guild = client.guilds.get(guildId);
+    if (!guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
+    const channel = guild.channels.get(channelId);
+    if (!channel) {
+      throw new Error(`Channel not found in cache: ${channelId}`);
+    }
+    if (channel.type === ChannelType.GuildCategory) {
+      throw new Error(
+        "GLUON: Cannot get message manager for a category channel.",
+      );
+    }
+    return channel.messages;
   }
   /**
    * Gets a message from the cache.
@@ -305,28 +320,17 @@ class ChannelMessageManager extends BaseCacheManager {
       throw new TypeError("GLUON: Channel ID is not a string.");
     if (typeof messageId !== "string")
       throw new TypeError("GLUON: Message ID is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
     if (
-      !checkPermission(
-        (
-          await ChannelMessageManager.getCacheManager(
-            client,
-            guildId,
-            channelId,
-          ).guild.me()
-        ).permissions,
-        PERMISSIONS.VIEW_CHANNEL,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
     )
       throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
     if (
       !checkPermission(
-        (
-          await ChannelMessageManager.getCacheManager(
-            client,
-            guildId,
-            channelId,
-          ).guild.me()
-        ).permissions,
+        (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
     )
@@ -392,28 +396,17 @@ class ChannelMessageManager extends BaseCacheManager {
       throw new RangeError(
         `GLUON: Limit must be between ${LIMITS.MIN_MESSAGES_FETCH_LIMIT} and ${LIMITS.MAX_MESSAGES_FETCH_LIMIT}.`,
       );
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
     if (
-      !checkPermission(
-        (
-          await ChannelMessageManager.getCacheManager(
-            client,
-            guildId,
-            channelId,
-          ).guild.me()
-        ).permissions,
-        PERMISSIONS.VIEW_CHANNEL,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
     )
       throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
     if (
       !checkPermission(
-        (
-          await ChannelMessageManager.getCacheManager(
-            client,
-            guildId,
-            channelId,
-          ).guild.me()
-        ).permissions,
+        (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
     )
@@ -486,19 +479,20 @@ class ChannelMessageManager extends BaseCacheManager {
       );
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+    const channel = getChannel(client, guildId, channelId);
+    if (!channel) {
+      throw new Error(`Channel not found in cache: ${channelId}`);
+    }
+    if (channel.type === ChannelType.GuildCategory) {
+      throw new Error("GLUON: Cannot purge messages in a category channel.");
+    }
+    const guild = channel.guild;
+    if (!guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(
-          await GuildChannelsManager.getChannel(
-            client,
-            guildId,
-            channelId,
-          ).guild.me(),
-        ),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
     )

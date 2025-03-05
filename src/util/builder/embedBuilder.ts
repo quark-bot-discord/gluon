@@ -5,13 +5,12 @@ import {
 import { LIMITS } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
-import {
-  JsonTypes,
+import type {
   EmbedBuilderCacheJSON,
   EmbedBuilderDiscordJSON,
   EmbedBuilderStorageJSON,
   Embed as EmbedType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import {
   APIEmbed,
   APIEmbedAuthor,
@@ -21,6 +20,7 @@ import {
   APIEmbedThumbnail,
   APIEmbedVideo,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to create an embed for a message.

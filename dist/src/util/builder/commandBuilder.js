@@ -1,22 +1,18 @@
-import {
-  APPLICATION_COMMAND_TYPES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { ApplicationCommandType, Locale } from "discord-api-types/v10";
+import { APPLICATION_COMMAND_TYPES, LIMITS } from "../../constants.js";
 import CommandOption from "./commandOptionBuilder.js";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Structure for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
  */
 class Command {
-  /**
-   * Creates the structure for a command.
-   */
   constructor() {
-    this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
     this.contexts = [0];
+    this.defaultLocale = Locale.EnglishUS;
+    this.nsfw = false;
     this.options = [];
-    this.defaultLocale = "en-US";
+    this.type = ApplicationCommandType.ChatInput;
   }
   /**
    * Sets the name of the command.
@@ -28,9 +24,12 @@ class Command {
     if (!name) throw new TypeError("GLUON: Command name must be provided.");
     if (typeof name == "object") {
       this.name = name[this.defaultLocale];
-      delete name[this.defaultLocale];
-      this.name_localizations = name;
-    } else this.name = name;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...localizations } = name;
+      this.name_localizations = localizations;
+    } else {
+      this.name = name;
+    }
     return this;
   }
   /**
@@ -56,7 +55,9 @@ class Command {
       throw new TypeError("GLUON: Command description must be provided.");
     if (typeof description == "object") {
       this.description = description[this.defaultLocale];
-      delete description[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...localizations } = description;
+      this.description_localizations = localizations;
       this.description_localizations = description;
     } else this.description = description;
     return this;
@@ -146,8 +147,10 @@ class Command {
         throw new TypeError("GLUON: Command description must be a string.");
       if (
         this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT &&
-        (this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION ||
-          this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION)
+        ((this.description &&
+          this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION) ||
+          (this.description &&
+            this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION))
       )
         throw new RangeError(
           `GLUON: Command description must be between ${LIMITS.MIN_COMMAND_DESCRIPTION} and ${LIMITS.MAX_COMMAND_DESCRIPTION} characters.`,
@@ -216,9 +219,9 @@ class Command {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           name: this.name,
@@ -228,7 +231,7 @@ class Command {
           description_localizations: this.description_localizations,
           default_member_permissions: this.default_member_permissions,
           nsfw: this.nsfw,
-          options: this.options,
+          options: this.options.map((o) => o.toJSON(format)),
         };
       }
     }

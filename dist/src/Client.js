@@ -52,7 +52,9 @@ var _Client_token,
   _Client_totalShards,
   _Client_users,
   _Client_guilds,
-  _Client_softRestartFunction;
+  _Client_softRestartFunction,
+  _Client_ready,
+  _Client_initialized;
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
 import {
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
@@ -61,7 +63,6 @@ import {
   GLUON_DEBUG_LEVELS,
   NAME,
 } from "./constants.js";
-import EventsEmitter from "events";
 import hash from "hash.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
 import Shard from "./gateway/index.js";
@@ -78,8 +79,9 @@ import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
 import { ChannelType } from "discord-api-types/v10";
-import { JsonTypes } from "typings/index.js";
-class Client extends EventsEmitter {
+import { TypedEmitter } from "tiny-typed-emitter";
+import { JsonTypes } from "../typings/enums.js";
+class Client extends TypedEmitter {
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -125,7 +127,7 @@ class Client extends EventsEmitter {
     sessionData,
     initCache,
     softRestartFunction,
-  } = {}) {
+  }) {
     super();
     // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
     _Client_token.set(this, void 0);
@@ -140,6 +142,8 @@ class Client extends EventsEmitter {
     _Client_users.set(this, void 0);
     _Client_guilds.set(this, void 0);
     _Client_softRestartFunction.set(this, void 0);
+    _Client_ready.set(this, false);
+    _Client_initialized.set(this, false);
     if (typeof cacheMessages !== "boolean")
       throw new TypeError("GLUON: Cache messages is not a boolean.");
     if (typeof cacheUsers !== "boolean")
@@ -353,11 +357,11 @@ class Client extends EventsEmitter {
    * @returns {void}
    */
   softRestartFunction() {
-    __classPrivateFieldGet(this, _Client_softRestartFunction, "f")
-      ? __classPrivateFieldGet(this, _Client_softRestartFunction, "f").call(
-          this,
-        )
-      : process.exit(1);
+    if (__classPrivateFieldGet(this, _Client_softRestartFunction, "f")) {
+      __classPrivateFieldGet(this, _Client_softRestartFunction, "f").call(this);
+    } else {
+      process.exit(1);
+    }
   }
   /**
    * Stops all shards.
@@ -380,7 +384,7 @@ class Client extends EventsEmitter {
    * @returns {Object}
    */
   checkProcess() {
-    let guildIds = [];
+    const guildIds = [];
     this.guilds.forEach((guild) => guildIds.push(guild.id));
     const processInformation = {
       totalShards: this.totalShards,
@@ -518,6 +522,12 @@ class Client extends EventsEmitter {
   get _defaultGuildCacheOptions() {
     return __classPrivateFieldGet(this, _Client__defaultGuildCacheOptions, "f");
   }
+  get initialized() {
+    return __classPrivateFieldGet(this, _Client_initialized, "f");
+  }
+  get ready() {
+    return __classPrivateFieldGet(this, _Client_ready, "f");
+  }
   /**
    * Counts how many members are in all of Quark's servers.
    * @returns {Number}
@@ -559,6 +569,11 @@ class Client extends EventsEmitter {
       throw new TypeError(
         "GLUON: Commands is not an array of Command objects.",
       );
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot register commands before the client is logged in.",
+      );
+    }
     return this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
       [this.user.id],
@@ -573,6 +588,11 @@ class Client extends EventsEmitter {
    * @async
    */
   async fetchEmojis() {
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot fetch emojis before the client is logged in.",
+      );
+    }
     return this.request.makeRequest("getClientEmojis", [this.user.id]);
   }
   /**
@@ -591,10 +611,21 @@ class Client extends EventsEmitter {
       throw new TypeError(`GLUON: Name is not a string. Got ${typeof name}`);
     if (typeof image !== "string")
       throw new TypeError(`GLUON: Image is not a string. Got ${typeof image}`);
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot create emojis before the client is logged in.",
+      );
+    }
     return this.request.makeRequest("postAddClientEmoji", [this.user.id], {
       name,
       image,
     });
+  }
+  setInitialized() {
+    __classPrivateFieldSet(this, _Client_initialized, true, "f");
+  }
+  setReady() {
+    __classPrivateFieldSet(this, _Client_ready, true, "f");
   }
   /**
    * Sets the bot's status across all shards.
@@ -609,7 +640,7 @@ class Client extends EventsEmitter {
    * @method
    * @throws {TypeError}
    */
-  setStatus({ name, type, status, afk, since } = {}) {
+  setStatus({ name, type, status, afk, since }) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Name is not a string.");
     if (typeof type !== "undefined" && typeof type !== "number")
@@ -674,7 +705,6 @@ class Client extends EventsEmitter {
           );
         for (
           let i = 0;
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
         ) {
@@ -695,7 +725,6 @@ class Client extends EventsEmitter {
                         ].resumeGatewayUrl
                       : gatewayInfo.url,
                   ),
-                  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
                   this.shardIds[i],
                   __classPrivateFieldGet(this, _Client__sessionData, "f")
                     ? __classPrivateFieldGet(this, _Client__sessionData, "f")[i]
@@ -719,6 +748,7 @@ class Client extends EventsEmitter {
           });
           this.users._intervalCallback();
         }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
+        return null;
       })
       .catch((error) => {
         this._emitDebug(
@@ -740,6 +770,8 @@ class Client extends EventsEmitter {
   (_Client_totalShards = new WeakMap()),
   (_Client_users = new WeakMap()),
   (_Client_guilds = new WeakMap()),
-  (_Client_softRestartFunction = new WeakMap());
+  (_Client_softRestartFunction = new WeakMap()),
+  (_Client_ready = new WeakMap()),
+  (_Client_initialized = new WeakMap());
 export default Client;
 //# sourceMappingURL=Client.js.map

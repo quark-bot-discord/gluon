@@ -76,7 +76,8 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
-import redisClient from "src/util/general/redisClient.js";
+import redisClient from "#src/util/general/redisClient.js";
+import { Events } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
   constructor(client, token) {
@@ -503,6 +504,7 @@ class BetterRequestHandler {
       let json;
       try {
         json = await res.json();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
         json = null;
       }
@@ -525,7 +527,7 @@ class BetterRequestHandler {
         console.error(error);
       }
       __classPrivateFieldGet(this, _BetterRequestHandler__client, "f").emit(
-        "requestCompleted",
+        Events.REQUEST_COMPLETED,
         {
           status: res.status,
           method: actualRequest.method,

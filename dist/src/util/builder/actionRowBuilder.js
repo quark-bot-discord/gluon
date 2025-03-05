@@ -1,6 +1,6 @@
-import { JsonTypes } from "typings/index.js";
 import { LIMITS } from "../../constants.js";
 import { ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct an action row for a message.
  */

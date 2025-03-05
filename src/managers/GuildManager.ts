@@ -11,7 +11,10 @@ import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all guilds belonging to this client.
  */
-class GuildManager extends BaseCacheManager implements GuildManagerType {
+class GuildManager
+  extends BaseCacheManager<GuildType>
+  implements GuildManagerType
+{
   // eslint-disable-next-line no-unused-private-class-members
   #_client; // keep just for standardization
   static identifier = "guilds" as StructureIdentifiers;

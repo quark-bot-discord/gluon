@@ -4,7 +4,7 @@ import {
   COMMAND_NAME_REGEX,
   LIMITS,
 } from "../../constants.js";
-import { JsonTypes } from "typings/index.js";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}

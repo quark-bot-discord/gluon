@@ -48,7 +48,7 @@ import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
@@ -75,6 +75,9 @@ class TextChannel extends GuildChannel {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for text channel.`);
+    }
     /**
      * The client instance.
      * @type {Client}
@@ -120,6 +123,11 @@ class TextChannel extends GuildChannel {
    * @throws {Error | TypeError}
    */
   async bulkDelete(messages, { reason } = {}) {
+    if (!this.guild) {
+      throw new Error(
+        `GLUON: Guild ${this.guildId} not found for text channel.`,
+      );
+    }
     if (
       !checkPermission(
         this.checkPermission(await this.guild.me()),

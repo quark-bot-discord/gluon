@@ -4,8 +4,9 @@ import {
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
   APIThreadChannel,
+  GatewayChannelCreateDispatchData,
 } from "discord-api-types/v10";
-import { AllChannels, Client as ClientType } from "typings/index.js";
+import type { AllChannels, Client as ClientType } from "typings/index.d.ts";
 /**
  * Automatically determines the channel type and caches the channel appropriately.
  * @param {Client} client The client instance.
@@ -20,7 +21,8 @@ declare function cacheChannel(
     | APIGuildVoiceChannel
     | APIGuildStageVoiceChannel
     | APIThreadChannel
-    | APIGuildCategoryChannel,
+    | APIGuildCategoryChannel
+    | GatewayChannelCreateDispatchData,
   guildId: Snowflake,
   nocache?: boolean,
 ): AllChannels;

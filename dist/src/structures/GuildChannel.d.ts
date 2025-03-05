@@ -1,4 +1,3 @@
-import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import Message from "./Message.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -9,21 +8,22 @@ import {
   ChannelType,
   GuildTextChannelType,
 } from "discord-api-types/v10";
-import {
+import type {
   GuildChannel as GuildChannelType,
   GuildChannelCacheJSON,
   GuildChannelDiscordJSON,
   GuildChannelStorageJSON,
   PermissionOverwrite as PermissionOverwriteType,
   Member as MemberType,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   ChannelMessageManager as ChannelMessageManagerType,
   Embed,
   MessageComponents as MessageComponentsType,
   Client as ClientType,
-} from "../../typings/index.js";
+  ChannelCacheOptions as ChannelCacheOptionsType,
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
@@ -102,14 +102,14 @@ declare class GuildChannel implements GuildChannelType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The parent channel.
    * @type {Channel?}
    * @readonly
    * @public
    */
-  get parent(): any;
+  get parent(): import("../../typings/index.d.ts").AllChannels | null;
   /**
    * The ID of the channel.
    * @type {String}
@@ -179,7 +179,7 @@ declare class GuildChannel implements GuildChannelType {
    * @readonly
    * @public
    */
-  get _cacheOptions(): ChannelCacheOptions;
+  get _cacheOptions(): ChannelCacheOptionsType;
   /**
    * The messages in this channel.
    * @type {ChannelMessageManager}

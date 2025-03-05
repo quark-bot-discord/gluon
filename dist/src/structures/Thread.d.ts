@@ -1,17 +1,19 @@
 import Channel from "./GuildChannel.js";
 import util from "util";
-import {
+import type {
   Thread as ThreadType,
   ThreadCacheJSON,
   ThreadDiscordJSON,
   ThreadStorageJSON,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  TextChannel as TextChannelType,
+  VoiceChannel as VoiceChannelType,
+} from "../../typings/index.d.ts";
 import { Snowflake } from "discord-api-types/globals";
 import { APIThreadChannel } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
@@ -56,7 +58,7 @@ declare class Thread extends Channel implements ThreadType {
    * @readonly
    * @public
    */
-  get owner(): any;
+  get owner(): import("../../typings/index.d.ts").Member | null;
   /**
    * The ID of the text channel that this thread belongs to.
    * @type {String}
@@ -70,7 +72,7 @@ declare class Thread extends Channel implements ThreadType {
    * @readonly
    * @public
    */
-  get parent(): any;
+  get parent(): TextChannelType | VoiceChannelType | null;
   /**
    * Determines whether the thread should be cached.
    * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
@@ -114,8 +116,8 @@ declare class Thread extends Channel implements ThreadType {
         rate_limit_per_user?: number;
         position?: number;
         nsfw: boolean;
-        messages: import("../../typings/index.d.js").MessageCacheJSON[];
-        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteCacheJSON[];
+        messages: import("../../typings/index.d.ts").MessageCacheJSON[];
+        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
     | {
         owner_id: string;
@@ -127,8 +129,8 @@ declare class Thread extends Channel implements ThreadType {
         rate_limit_per_user?: number;
         position?: number;
         nsfw: boolean;
-        messages: import("../../typings/index.d.js").MessageDiscordJSON[];
-        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteDiscordJSON[];
+        messages: import("../../typings/index.d.ts").MessageDiscordJSON[];
+        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteDiscordJSON[];
       }
     | {
         owner_id: string;
@@ -141,8 +143,8 @@ declare class Thread extends Channel implements ThreadType {
         position?: number;
         _attributes: number;
         _cacheOptions: number;
-        messages: import("../../typings/index.d.js").MessageStorageJSON[];
-        permission_overwrites: import("../../typings/index.d.js").PermissionOverwriteStorageJSON[];
+        messages: import("../../typings/index.d.ts").MessageStorageJSON[];
+        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };
 }
 export default Thread;

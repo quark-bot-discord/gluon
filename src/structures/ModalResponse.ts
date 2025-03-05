@@ -1,17 +1,20 @@
 import Interaction from "./Interaction.js";
 import util from "util";
-import {
-  JsonTypes,
+import type {
   ModalResponseCacheJSON,
   ModalResponseDiscordJSON,
   ModalResponseStorageJSON,
   ModalResponse as ModalResponseType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  MemberStorageJSON,
+  MemberCacheJSON,
+  MemberDiscordJSON,
+} from "../../typings/index.d.ts";
 import {
   APIGuildInteraction,
   APIModalSubmitInteraction,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents when a modal is submitted.
@@ -109,7 +112,11 @@ class ModalResponse extends Interaction implements ModalResponseType {
           ...super.toJSON(format),
           values: this.values,
           custom_id: this.customId,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as
+                | MemberStorageJSON
+                | MemberCacheJSON)
+            : null,
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -124,7 +131,9 @@ class ModalResponse extends Interaction implements ModalResponseType {
               },
             ],
           },
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as MemberDiscordJSON)
+            : null,
         };
       }
     }

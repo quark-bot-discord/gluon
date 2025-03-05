@@ -2,18 +2,18 @@ import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   Poll as PollType,
   PollCacheJSON,
   PollDiscordJSON,
   PollStorageJSON,
-  JsonTypes,
   MessagePollManagerCacheJSON,
   MessagePollManagerDiscordJSON,
   MessagePollManagerStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import { APIPoll } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 class Poll implements PollType {
   #_client;

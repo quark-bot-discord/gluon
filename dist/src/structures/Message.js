@@ -83,10 +83,10 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import GuildChannelsManager from "../managers/GuildChannelsManager.js";
-import GuildManager from "../managers/GuildManager.js";
-import GuildMemberManager from "../managers/GuildMemberManager.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
+import getChannel from "#src/util/gluon/getChannel.js";
+import getMember from "#src/util/gluon/getMember.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -149,6 +149,9 @@ class Message {
      * @private
      */
     __classPrivateFieldSet(this, _Message__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
@@ -206,7 +209,15 @@ class Message {
         "f",
       );
     else if (existing?.author)
-      __classPrivateFieldSet(this, _Message_author, existing.author, "f");
+      __classPrivateFieldSet(
+        this,
+        _Message_author,
+        new User(
+          __classPrivateFieldGet(this, _Message__client, "f"),
+          existing.author.toJSON(),
+        ),
+        "f",
+      );
     else {
       throw new Error("GLUON: Message author is missing.");
     }
@@ -487,7 +498,7 @@ class Message {
         __classPrivateFieldSet(
           this,
           _Message_webhook_id,
-          existing.webhookId,
+          BigInt(existing.webhookId),
           "f",
         );
     }
@@ -531,7 +542,9 @@ class Message {
         __classPrivateFieldSet(
           this,
           _Message_message_snapshots,
-          existing.messageSnapshots,
+          existing.messageSnapshots.map((m) =>
+            m.toJSON(JsonTypes.DISCORD_FORMAT),
+          ),
           "f",
         );
     }
@@ -638,7 +651,7 @@ class Message {
     if (!this.author || !this.author.id) {
       return null;
     }
-    return GuildMemberManager.getMember(
+    return getMember(
       __classPrivateFieldGet(this, _Message__client, "f"),
       this.guildId,
       this.authorId,
@@ -742,7 +755,7 @@ class Message {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    return this.guild?.channels.get(this.channelId);
   }
   /**
    * The channel that this message belongs to.
@@ -778,7 +791,7 @@ class Message {
    * @public
    */
   get content() {
-    return __classPrivateFieldGet(this, _Message_content, "f");
+    return __classPrivateFieldGet(this, _Message_content, "f") ?? null;
   }
   /**
    * The message poll.
@@ -880,26 +893,28 @@ class Message {
    * @public
    */
   get messageSnapshots() {
-    return __classPrivateFieldGet(this, _Message_message_snapshots, "f") &&
-      Array.isArray(
-        __classPrivateFieldGet(this, _Message_message_snapshots, "f"),
-      )
-      ? __classPrivateFieldGet(this, _Message_message_snapshots, "f").map(
-          (snapshot) => {
-            snapshot.id = this.id;
-            return new Message(
-              __classPrivateFieldGet(this, _Message__client, "f"),
-              snapshot,
-              {
-                channelId: this.channelId,
-                guildId: this.guildId,
-                nocache: true,
-                ignoreExisting: true,
-              },
-            );
-          },
-        )
-      : null;
+    return [];
+    // return this.#message_snapshots && Array.isArray(this.#message_snapshots)
+    //   ? this.#message_snapshots.map((snapshot) => {
+    //       return new Message(
+    //         this.#_client,
+    //         {
+    //           ...snapshot,
+    //           id: this.id,
+    //           channel_id: this.channelId,
+    //           author: null,
+    //           content: this.content,
+    //           member: null,
+    //         },
+    //         {
+    //           channelId: this.channelId,
+    //           guildId: this.guildId,
+    //           nocache: true,
+    //           ignoreExisting: true,
+    //         },
+    //       );
+    //     })
+    //   : null;
   }
   /**
    * The URL of the message.
@@ -1092,16 +1107,20 @@ class Message {
       throw new TypeError("GLUON: Channel ID is not a string.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} is not cached.`);
+    }
+    const channel = getChannel(client, guildId, channelId);
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${channelId} is not cached.`);
+    }
     Message.sendValidation({ content, embeds, components, files, reference });
     if (typeof suppressMentions !== "boolean")
       throw new TypeError("GLUON: Suppress mentions is not a boolean.");
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -1162,14 +1181,18 @@ class Message {
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof messageId !== "string")
       throw new TypeError("GLUON: Message ID is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} is not cached.`);
+    }
+    const channel = getChannel(client, guildId, channelId);
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${channelId} is not cached.`);
+    }
     Message.sendValidation({ content, embeds, components, attachments, files });
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -1343,13 +1366,17 @@ class Message {
       throw new TypeError("GLUON: Message ID is not a string.");
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GUILD NOT FOUND: ${guildId}`);
+    }
+    const channel = getChannel(client, guildId, channelId);
+    if (!channel) {
+      throw new Error(`CHANNEL NOT FOUND: ${channelId}`);
+    }
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
     )

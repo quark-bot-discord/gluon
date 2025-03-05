@@ -47,9 +47,9 @@ import Interaction from "./Interaction.js";
 import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
-import cacheChannel from "../util/gluon/cacheChannel.js";
+// import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a slash command.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
@@ -92,11 +92,11 @@ class SlashCommand extends Interaction {
         });
       }
     }
-    if (data.data.resolved?.channels) {
-      for (const value of Object.values(data.data.resolved.channels)) {
-        cacheChannel(client, value, data.guild_id);
-      }
-    }
+    // if (data.data.resolved?.channels) {
+    //   for (const value of Object.values(data.data.resolved.channels)) {
+    //     cacheChannel(client, value, data.guild_id);
+    //   }
+    // }
     /**
      * The options provided with the interaction.
      * @type {Array<Object>}

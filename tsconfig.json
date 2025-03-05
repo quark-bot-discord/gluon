@@ -16,8 +16,18 @@
     "checkJs": false, // Check JavaScript files with TypeScript
     "sourceMap": true,
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "typings/*": ["typings/*"],
+      "src/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*", "test/**/*", "index.js", "package.json"],
+  "include": [
+    "src/**/*",
+    "test/**/*",
+    "index.js",
+    "package.json",
+    "typings/**/*"
+  ],
   "exclude": ["node_modules", "dist", "test/setup.js"]
 }

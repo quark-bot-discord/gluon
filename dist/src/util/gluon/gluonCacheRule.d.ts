@@ -1,14 +1,14 @@
-import {
+import type {
   GluonCacheRuleHandlerFunction,
   GluonCacheRuleRetrieveFunction,
   GluonCacheRule as GluonCacheRuleType,
   StaticManagerType,
-} from "typings/index.js";
-declare class GluonCacheRule implements GluonCacheRuleType {
-  handlerFunction?: GluonCacheRuleHandlerFunction;
+} from "typings/index.d.ts";
+declare class GluonCacheRule<T> implements GluonCacheRuleType<T> {
+  handlerFunction?: GluonCacheRuleHandlerFunction<T>;
   name?: string;
-  retrieveFunction?: GluonCacheRuleRetrieveFunction;
-  structureType?: StaticManagerType;
+  retrieveFunction?: GluonCacheRuleRetrieveFunction<T>;
+  structureType?: StaticManagerType<T>;
   /**
    * The name of the rule.
    * @param {String} name What the rule is called.
@@ -24,7 +24,7 @@ declare class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setHandlerFunction(handlerFunction: GluonCacheRuleHandlerFunction): this;
+  setHandlerFunction(handlerFunction: GluonCacheRuleHandlerFunction<T>): this;
   /**
    * Set the type of structure this rule is for.
    * Pass the class of the structure type.
@@ -34,7 +34,7 @@ declare class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setStructureType(structureType: StaticManagerType): this;
+  setStructureType(structureType: StaticManagerType<T>): this;
   /**
    * Set the function which retrieves the data for the structure.
    * @param {Function} retrieveFunction The function that retrieves the data for the structure.
@@ -43,7 +43,9 @@ declare class GluonCacheRule implements GluonCacheRuleType {
    * @method
    * @throws {TypeError}
    */
-  setRetrieveFunction(retrieveFunction: GluonCacheRuleRetrieveFunction): this;
+  setRetrieveFunction(
+    retrieveFunction: GluonCacheRuleRetrieveFunction<T>,
+  ): this;
   /**
    * Apply the rule to the structure type.
    * @returns {void}

@@ -1,3 +1,4 @@
+import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   UserManager as UserManagerType,
@@ -9,7 +10,10 @@ import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all the users belonging to a client.
  */
-declare class UserManager extends BaseCacheManager implements UserManagerType {
+declare class UserManager
+  extends BaseCacheManager<UserType>
+  implements UserManagerType
+{
   #private;
   static identifier: StructureIdentifiers;
   /**
@@ -28,7 +32,7 @@ declare class UserManager extends BaseCacheManager implements UserManagerType {
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(userId: Snowflake): Promise<any>;
+  fetch(userId: Snowflake): Promise<User | UserType>;
   /**
    * Adds a user to the cache.
    * @param {String} id The ID of the user to cache.
@@ -51,6 +55,9 @@ declare class UserManager extends BaseCacheManager implements UserManagerType {
    * @method
    * @throws {TypeError | Error}
    */
-  static fetchUser(client: ClientType, userId: Snowflake): Promise<any>;
+  static fetchUser(
+    client: ClientType,
+    userId: Snowflake,
+  ): Promise<User | UserType>;
 }
 export default UserManager;

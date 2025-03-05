@@ -14,23 +14,27 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import GuildManager from "../managers/GuildManager.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import {
+import type {
   Member as MemberType,
   MemberCacheJSON,
   MemberDiscordJSON,
   MemberStorageJSON,
-  JsonTypes,
   User as UserType,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
+} from "../../typings/index.d.ts";
 import {
   APIGuildMember,
   APIInteractionDataResolvedGuildMember,
+  GatewayGuildMemberUpdateDispatchData,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
  * Represents a guild member.
@@ -65,7 +69,8 @@ class Member implements MemberType {
       | APIInteractionDataResolvedGuildMember
       | MemberStorageJSON
       | MemberCacheJSON
-      | MemberDiscordJSON,
+      | MemberDiscordJSON
+      | GatewayGuildMemberUpdateDispatchData,
     {
       userId,
       guildId,
@@ -104,6 +109,10 @@ class Member implements MemberType {
      * @private
      */
     this.#_guild_id = BigInt(guildId);
+
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
 
     const existing = this.guild?.members.get(userId) || null;
 
@@ -194,8 +203,14 @@ class Member implements MemberType {
       this.#_avatar = data.avatar
         ? BigInt(`0x${data.avatar.replace("a_", "")}`)
         : null;
-    else if (data.avatar === undefined && existing && existing._avatar)
-      this.#_avatar = existing._avatar;
+    else if (
+      data.avatar === undefined &&
+      existing &&
+      existing._originalAvatarHash
+    )
+      this.#_avatar = existing._originalAvatarHash
+        ? BigInt(`0x${existing._originalAvatarHash.replace("a_", "")}`)
+        : null;
 
     /**
      * The roles for this member.
@@ -274,7 +289,7 @@ class Member implements MemberType {
    * @public
    */
   get nick() {
-    return this.#nick;
+    return this.#nick ?? null;
   }
 
   /**
@@ -314,6 +329,10 @@ class Member implements MemberType {
    * @public
    */
   get roles() {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     if (
       Role.shouldCache(
         this.#_client._cacheOptions,
@@ -365,6 +384,10 @@ class Member implements MemberType {
    * @public
    */
   get permissions() {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     if (this.id == this.guild.ownerId) return PERMISSIONS.ADMINISTRATOR;
 
     if (!this.roles) {
@@ -391,7 +414,7 @@ class Member implements MemberType {
    * @public
    */
   get user() {
-    return this.#user;
+    return this.#user ?? undefined;
   }
 
   /**
@@ -432,6 +455,10 @@ class Member implements MemberType {
    * @public
    */
   get displayAvatarURL() {
+    if (!this.user) {
+      throw new Error(`GLUON: User ${this.#_id} cannot be found in cache`);
+    }
+
     return (
       Member.getAvatarUrl(this.id, this.guildId, this._originalAvatarHash) ??
       this.user.displayAvatarURL
@@ -575,6 +602,10 @@ class Member implements MemberType {
     timeout_until: UnixTimestamp,
     { reason }: { reason?: string } = {},
   ) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -617,6 +648,10 @@ class Member implements MemberType {
    * @throws {TypeError | Error}
    */
   async timeoutRemove({ reason }: { reason?: string } = {}) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -658,6 +693,10 @@ class Member implements MemberType {
     roles: Snowflake[],
     { reason }: { reason?: string } = {},
   ) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -788,11 +827,14 @@ class Member implements MemberType {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
 
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
+
     if (
-      !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
@@ -838,11 +880,14 @@ class Member implements MemberType {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
 
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
+
     if (
-      !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
 
@@ -896,7 +941,10 @@ class Member implements MemberType {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {
         return {
-          user: this.user.toJSON(format),
+          user: this.user?.toJSON(format) as
+            | UserCacheJSON
+            | UserStorageJSON
+            | undefined,
           nick: this.nick,
           joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
           avatar: this._originalAvatarHash,
@@ -916,7 +964,7 @@ class Member implements MemberType {
       case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
-          user: this.user.toJSON(format),
+          user: this.user?.toJSON(format) as UserDiscordJSON | undefined,
           nick: this.nick,
           joined_at: this.joinedAt
             ? new Date(this.joinedAt * 1000).toISOString()

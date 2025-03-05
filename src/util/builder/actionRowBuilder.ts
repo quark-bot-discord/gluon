@@ -1,12 +1,12 @@
-import {
-  JsonTypes,
+import type {
   ActionRowBuilder as ActionRowBuilderType,
   ButtonBuilder as ButtonBuilderType,
   DropdownBuilder as DropdownBuilderType,
   TextInputBuilder as TextInputBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import { LIMITS } from "../../constants.js";
 import { ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to construct an action row for a message.

@@ -3,18 +3,18 @@ import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
-  JsonTypes,
+import type {
   VoiceChannelCacheJSON,
   VoiceChannelDiscordJSON,
   VoiceChannelStorageJSON,
   VoiceChannel as VoiceChannelType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import {
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a voice channel.
@@ -54,6 +54,10 @@ class VoiceChannel extends GuildChannel implements VoiceChannelType {
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
 
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for voice channel.`);
+    }
+
     /**
      * The client instance.
      * @type {Client}
@@ -61,7 +65,9 @@ class VoiceChannel extends GuildChannel implements VoiceChannelType {
      */
     this.#_client = client;
 
-    const existing = this.guild?.channels.get(data.id) || null;
+    const existing = this.guild?.channels.get(
+      data.id,
+    ) as VoiceChannelType | null;
 
     if (typeof data.bitrate == "number")
       /**

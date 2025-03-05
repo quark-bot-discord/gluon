@@ -1,5 +1,6 @@
 import { Stream } from "stream";
-import { FileUpload as FileUploadType, JsonTypes } from "typings/index.d.js";
+import type { FileUpload as FileUploadType } from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 declare class FileUpload implements FileUploadType {
   #private;
   /**

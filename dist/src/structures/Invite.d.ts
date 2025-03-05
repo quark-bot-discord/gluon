@@ -1,20 +1,24 @@
 import User from "./User.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   Invite as InviteType,
   InviteCacheJSON,
   InviteDiscordJSON,
   InviteStorageJSON,
-  JsonTypes,
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { APIExtendedInvite } from "discord-api-types/v10";
+} from "../../typings/index.d.ts";
+import {
+  APIExtendedInvite,
+  GatewayInviteCreateDispatchData,
+  GatewayInviteDeleteDispatchData,
+} from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a guild invite.
  */
@@ -35,7 +39,9 @@ declare class Invite implements InviteType {
       | APIExtendedInvite
       | InviteCacheJSON
       | InviteDiscordJSON
-      | InviteStorageJSON,
+      | InviteStorageJSON
+      | GatewayInviteCreateDispatchData
+      | GatewayInviteDeleteDispatchData,
     {
       guildId,
       nocache,
@@ -57,7 +63,7 @@ declare class Invite implements InviteType {
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): import("../../typings/index.d.ts").AllChannels | null;
   /**
    * The code of the invite.
    * @type {String}
@@ -85,14 +91,14 @@ declare class Invite implements InviteType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The number of times the invite has been used.
    * @type {Number?}
    * @readonly
    * @public
    */
-  get uses(): number;
+  get uses(): number | undefined;
   /**
    * The UNIX timestamp of when the invite expires.
    * @type {Number?}
@@ -121,7 +127,7 @@ declare class Invite implements InviteType {
    * @readonly
    * @public
    */
-  get maxUses(): number;
+  get maxUses(): number | undefined;
   /**
    * Returns the URL of the invite.
    * @param {String} code The code of the invite.
@@ -161,23 +167,35 @@ declare class Invite implements InviteType {
    * @public
    * @method
    */
-  toJSON(format: JsonTypes):
+  toJSON(format?: JsonTypes):
     | {
         code: string;
-        channel: any;
+        channel:
+          | import("../../typings/index.d.ts").GuildChannelCacheJSON
+          | import("../../typings/index.d.ts").GuildChannelDiscordJSON
+          | import("../../typings/index.d.ts").GuildChannelStorageJSON
+          | import("../../typings/index.d.ts").CategoryChannelCacheJSON
+          | import("../../typings/index.d.ts").CategoryChannelStorageJSON
+          | undefined;
         inviter: UserCacheJSON | UserStorageJSON;
-        uses: number;
+        uses: number | undefined;
         expires: number | undefined;
-        max_uses: number;
+        max_uses: number | undefined;
         expires_at?: undefined;
       }
     | {
         code: string;
-        channel: any;
+        channel:
+          | import("../../typings/index.d.ts").GuildChannelCacheJSON
+          | import("../../typings/index.d.ts").GuildChannelDiscordJSON
+          | import("../../typings/index.d.ts").GuildChannelStorageJSON
+          | import("../../typings/index.d.ts").CategoryChannelCacheJSON
+          | import("../../typings/index.d.ts").CategoryChannelStorageJSON
+          | undefined;
         inviter: UserDiscordJSON;
-        uses: number;
+        uses: number | undefined;
         expires_at: string | undefined;
-        max_uses: number;
+        max_uses: number | undefined;
         expires?: undefined;
       };
 }

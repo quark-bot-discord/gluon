@@ -51,9 +51,7 @@ var _BaseCacheManager_instances,
   _BaseCacheManager_clearStaleBuckets,
   _BaseCacheManager__callRules,
   _BaseCacheManager__callFetches;
-// import hashjs from "hash.js";
-// import { GLUON_VERSION, NAME } from "../constants.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * The base cache manager for all cache managers.
  */
@@ -339,6 +337,12 @@ class BaseCacheManager {
       throw new TypeError("GLUON: Key must be a string.");
     return __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").has(key);
   }
+  map(callbackfn) {
+    const arr = Array.from(
+      __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").entries(),
+    );
+    return arr.map(callbackfn);
+  }
   /**
    * Returns the JSON representation of this structure.
    * @param {Number} [format] The format to return the data in.
@@ -377,11 +381,12 @@ class BaseCacheManager {
         !__classPrivateFieldGet(this, _BaseCacheManager_expiryBucket, "f").has(
           bucket,
         )
-      )
+      ) {
         __classPrivateFieldGet(this, _BaseCacheManager_expiryBucket, "f").set(
           bucket,
           new Set(),
         );
+      }
       __classPrivateFieldGet(this, _BaseCacheManager_expiryBucket, "f")
         .get(bucket)
         .add(key);

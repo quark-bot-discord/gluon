@@ -1,13 +1,13 @@
 import util from "util";
 import { APIAttachment, Snowflake } from "discord-api-types/v10";
-import {
+import type {
   Attachment as AttachmentType,
   AttachmentCacheJSON,
   AttachmentDiscordJSON,
   AttachmentStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}

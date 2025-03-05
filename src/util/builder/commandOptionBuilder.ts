@@ -8,13 +8,13 @@ import {
   COMMAND_NAME_REGEX,
   LIMITS,
 } from "../../constants.js";
-import {
+import type {
   CommandOptionDescriptionLocalizations,
   CommandOptionNameLocalizations,
   CommandChoiceBuilder as CommandChoiceBuilderType,
-  JsonTypes,
   CommandOptionBuilder as CommandOptionBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to create a choice for a command.

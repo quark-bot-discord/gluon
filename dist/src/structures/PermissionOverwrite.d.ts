@@ -1,13 +1,13 @@
 import util from "util";
 import { APIOverwrite } from "discord-api-types/v10";
-import {
-  JsonTypes,
+import type {
   PermissionOverwriteCacheJSON,
   PermissionOverwriteDiscordJSON,
   PermissionOverwriteStorageJSON,
   PermissionOverwrite as PermissionOverwriteType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 declare class PermissionOverwrite implements PermissionOverwriteType {
   #private;
   /**

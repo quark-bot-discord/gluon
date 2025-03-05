@@ -11,7 +11,7 @@ import { Snowflake } from "discord-api-types/globals";
  * Manages all channels within a guild.
  */
 declare class GuildChannelsManager
-  extends BaseCacheManager
+  extends BaseCacheManager<AllChannels>
   implements GuildChannelsManagerType
 {
   #private;
@@ -65,7 +65,7 @@ declare class GuildChannelsManager
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
-  ): any;
+  ): AllChannels | null;
   /**
    * Returns the cache manager for a guild.
    * @param {Client} client The client instance.
@@ -76,7 +76,10 @@ declare class GuildChannelsManager
    * @static
    * @method
    */
-  static getCacheManager(client: ClientType, guildId: Snowflake): any;
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+  ): GuildChannelsManagerType;
   /**
    * Fetches a channel, checking the cache first.
    * @param {Client} client The client instance.
@@ -92,6 +95,6 @@ declare class GuildChannelsManager
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
-  ): Promise<any>;
+  ): Promise<AllChannels>;
 }
 export default GuildChannelsManager;

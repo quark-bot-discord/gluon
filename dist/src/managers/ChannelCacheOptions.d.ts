@@ -1,7 +1,5 @@
-import {
-  ChannelCacheOptions as ChannelCacheOptionsType,
-  JsonTypes,
-} from "../../typings/index.d.js";
+import type { ChannelCacheOptions as ChannelCacheOptionsType } from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.

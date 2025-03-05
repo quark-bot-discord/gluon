@@ -1,19 +1,20 @@
 import User from "./User.js";
 import util from "util";
-import {
+import type {
   AuditLogCacheJSON,
   AuditLogDiscordJSON,
   AuditLogStorageJSON,
   AuditLog as AuditLogType,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  AllChannels,
+} from "../../typings/index.d.ts";
 import {
   APIAuditLogEntry,
   APIUser,
   AuditLogOptionsType,
   Snowflake,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
@@ -84,14 +85,14 @@ declare class AuditLog implements AuditLogType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The channel involved with this audit log entry.
    * @type {(TextChannel | VoiceChannel)?} The channel involved with this audit log entry.
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): AllChannels | null;
   /**
    * The target user involved with this audit log entry.
    * @type {User?}

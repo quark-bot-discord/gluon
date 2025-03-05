@@ -45,7 +45,7 @@ var __classPrivateFieldGet =
 var _ModalResponse_values, _ModalResponse_custom_id;
 import Interaction from "./Interaction.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a modal is submitted.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-interaction}

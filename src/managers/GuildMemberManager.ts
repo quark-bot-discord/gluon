@@ -8,12 +8,13 @@ import {
   Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
  * Manages all members belonging to this guild.
  */
 class GuildMemberManager
-  extends BaseCacheManager
+  extends BaseCacheManager<MemberType>
   implements GuildMemberManagerType
 {
   #_client;
@@ -129,7 +130,14 @@ class GuildMemberManager
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
-    return client.guilds.get(guildId).members;
+
+    const guild = client.guilds.get(guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+
+    return guild.members;
   }
 
   /**
@@ -156,10 +164,13 @@ class GuildMemberManager
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID is not a string.");
 
-    const cached = GuildMemberManager.getCacheManager(
-      client,
-      guildId,
-    ).guild.members.get(userId);
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+
+    const cached = guild.members.get(userId);
     if (cached) return cached;
 
     const data = await client.request.makeRequest("getGuildMember", [
@@ -191,10 +202,14 @@ class GuildMemberManager
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID is not a string.");
-    return GuildMemberManager.getCacheManager(
-      client,
-      guildId,
-    ).guild.members.get(userId);
+
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+
+    return guild.members.get(userId);
   }
 
   /**

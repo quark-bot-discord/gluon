@@ -15,7 +15,7 @@ import {
   ChannelType,
   GuildTextChannelType,
 } from "discord-api-types/v10";
-import {
+import type {
   GuildChannel as GuildChannelType,
   GuildChannelCacheJSON,
   GuildChannelDiscordJSON,
@@ -25,14 +25,18 @@ import {
   MessageDiscordJSON,
   MessageStorageJSON,
   Member as MemberType,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   ChannelMessageManager as ChannelMessageManagerType,
   Embed,
   MessageComponents as MessageComponentsType,
   Client as ClientType,
-} from "../../typings/index.js";
+  TextChannel as TextChannelType,
+  VoiceChannel as VoiceChannelType,
+  Thread as ThreadType,
+  ChannelCacheOptions as ChannelCacheOptionsType,
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a channel within Discord.
@@ -49,8 +53,8 @@ class GuildChannel implements GuildChannelType {
   #rate_limit_per_user: number | undefined;
   #_parent_id: bigint | undefined;
   #_attributes: number;
-  #_cacheOptions: ChannelCacheOptions;
-  #messages!: ChannelMessageManagerType;
+  #_cacheOptions: ChannelCacheOptionsType;
+  #messages: ChannelMessageManagerType;
   #position: number | undefined;
   /**
    * Creates the base structure for a channel.
@@ -100,6 +104,10 @@ class GuildChannel implements GuildChannelType {
      */
     this.#_guild_id = BigInt(guildId);
 
+    if (!this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
+
     /**
      * The type of channel.
      * @type {Number}
@@ -107,7 +115,11 @@ class GuildChannel implements GuildChannelType {
      */
     this.#type = data.type;
 
-    const existing = this.guild?.channels.get(data.id) || null;
+    const existing = this.guild?.channels.get(data.id) as
+      | TextChannelType
+      | VoiceChannelType
+      | ThreadType
+      | null;
 
     /**
      * The name of the channel.
@@ -127,6 +139,7 @@ class GuildChannel implements GuildChannelType {
       "topic" in data &&
       typeof data.topic != "string" &&
       existing &&
+      "topic" in existing &&
       typeof existing.topic == "string"
     )
       this.#topic = existing.topic;
@@ -158,6 +171,7 @@ class GuildChannel implements GuildChannelType {
     else if (
       typeof data.rate_limit_per_user != "number" &&
       existing &&
+      "rateLimitPerUser" in existing &&
       typeof existing.rateLimitPerUser == "number"
     )
       this.#rate_limit_per_user = existing.rateLimitPerUser;
@@ -188,9 +202,10 @@ class GuildChannel implements GuildChannelType {
       typeof data.parent_id != "string" &&
       data.parent_id === undefined &&
       existing &&
+      "parentId" in existing &&
       typeof existing.parentId == "string"
     )
-      this.#_parent_id = existing.parentId;
+      this.#_parent_id = BigInt(existing.parentId);
 
     /**
      * The attributes of the channel.

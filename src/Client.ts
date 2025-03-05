@@ -7,7 +7,6 @@ import {
   NAME,
 } from "./constants.js";
 
-import EventsEmitter from "events";
 import hash from "hash.js";
 
 import BetterRequestHandler from "./rest/betterRequestHandler.js";
@@ -25,14 +24,26 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
-import { ChannelType } from "discord-api-types/v10";
 import {
-  JsonTypes,
+  APIGatewayBotInfo,
+  ChannelType,
+  Snowflake,
+} from "discord-api-types/v10";
+import {
   Client as ClientType,
   User as UserType,
-} from "typings/index.js";
+  Guild as GuildType,
+  UserManager as UserManagerType,
+  GuildManager as GuildManagerType,
+  AllChannels,
+  CommandBuilder,
+  ClientOptions,
+  ClientEvents,
+} from "../typings/index.d.js";
+import { TypedEmitter } from "tiny-typed-emitter";
+import { JsonTypes } from "../typings/enums.js";
 
-class Client extends EventsEmitter implements ClientType {
+class Client extends TypedEmitter<ClientEvents> implements ClientType {
   request: any;
   user: UserType | null;
   // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
@@ -45,9 +56,11 @@ class Client extends EventsEmitter implements ClientType {
   #shards;
   #shardIds?: number[];
   #totalShards?: number;
-  #users;
-  #guilds;
+  #users: UserManagerType;
+  #guilds: GuildManagerType;
   #softRestartFunction;
+  #ready = false;
+  #initialized = false;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -93,7 +106,7 @@ class Client extends EventsEmitter implements ClientType {
     sessionData,
     initCache,
     softRestartFunction,
-  }: any = {}) {
+  }: ClientOptions) {
     super();
 
     if (typeof cacheMessages !== "boolean")
@@ -312,7 +325,11 @@ class Client extends EventsEmitter implements ClientType {
    * @returns {void}
    */
   softRestartFunction() {
-    this.#softRestartFunction ? this.#softRestartFunction() : process.exit(1);
+    if (this.#softRestartFunction) {
+      this.#softRestartFunction();
+    } else {
+      process.exit(1);
+    }
   }
 
   /**
@@ -332,8 +349,8 @@ class Client extends EventsEmitter implements ClientType {
    * @returns {Object}
    */
   checkProcess() {
-    let guildIds: any = [];
-    this.guilds.forEach((guild: any) => guildIds.push(guild.id));
+    const guildIds: Snowflake[] = [];
+    this.guilds.forEach((guild: GuildType) => guildIds.push(guild.id));
     const processInformation = {
       totalShards: this.totalShards,
       shardsManaged: this.shardIds,
@@ -362,7 +379,7 @@ class Client extends EventsEmitter implements ClientType {
    * @method
    * @public
    */
-  _emitDebug(status: any, message: any) {
+  _emitDebug(status: any, message: string) {
     if (process.env.NODE_ENV !== "development") return;
     // @ts-expect-error TS(2531): Object is possibly 'null'.
     const libName = chalk.magenta.bold(`[${NAME.toUpperCase()}]`);
@@ -416,8 +433,8 @@ class Client extends EventsEmitter implements ClientType {
     let totalEmojis = 0;
     let totalVoiceStates = 0;
 
-    this.guilds.forEach((guild: any) => {
-      guild.channels.forEach((channel: any) => {
+    this.guilds.forEach((guild: GuildType) => {
+      guild.channels.forEach((channel: AllChannels) => {
         switch (channel.type) {
           case ChannelType.AnnouncementThread:
           case ChannelType.PublicThread:
@@ -476,6 +493,14 @@ class Client extends EventsEmitter implements ClientType {
     return this.#_defaultGuildCacheOptions;
   }
 
+  get initialized() {
+    return this.#initialized;
+  }
+
+  get ready() {
+    return this.#ready;
+  }
+
   /**
    * Counts how many members are in all of Quark's servers.
    * @returns {Number}
@@ -485,7 +510,7 @@ class Client extends EventsEmitter implements ClientType {
   getMemberCount() {
     let memberCount = 0;
 
-    this.guilds.forEach((guild: any) => {
+    this.guilds.forEach((guild: GuildType) => {
       memberCount += guild.memberCount;
     });
 
@@ -513,7 +538,7 @@ class Client extends EventsEmitter implements ClientType {
    * @async
    * @throws {TypeError}
    */
-  async registerCommands(commands: any) {
+  async registerCommands(commands: CommandBuilder[]) {
     if (
       !Array.isArray(commands) ||
       !commands.every((c) => c instanceof Command)
@@ -521,6 +546,12 @@ class Client extends EventsEmitter implements ClientType {
       throw new TypeError(
         "GLUON: Commands is not an array of Command objects.",
       );
+
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot register commands before the client is logged in.",
+      );
+    }
 
     return this.request.makeRequest(
       "bulkOverwriteGlobalApplicationCommands",
@@ -537,6 +568,12 @@ class Client extends EventsEmitter implements ClientType {
    * @async
    */
   async fetchEmojis() {
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot fetch emojis before the client is logged in.",
+      );
+    }
+
     return this.request.makeRequest("getClientEmojis", [this.user.id]);
   }
 
@@ -551,16 +588,30 @@ class Client extends EventsEmitter implements ClientType {
    * @async
    * @throws {TypeError}
    */
-  async createEmoji({ name, image }: any) {
+  async createEmoji({ name, image }: { name: string; image: string }) {
     if (typeof name !== "string")
       throw new TypeError(`GLUON: Name is not a string. Got ${typeof name}`);
     if (typeof image !== "string")
       throw new TypeError(`GLUON: Image is not a string. Got ${typeof image}`);
 
+    if (!this.user?.id) {
+      throw new Error(
+        "GLUON: Cannot create emojis before the client is logged in.",
+      );
+    }
+
     return this.request.makeRequest("postAddClientEmoji", [this.user.id], {
       name,
       image,
     });
+  }
+
+  setInitialized(): void {
+    this.#initialized = true;
+  }
+
+  setReady(): void {
+    this.#ready = true;
   }
 
   /**
@@ -576,7 +627,19 @@ class Client extends EventsEmitter implements ClientType {
    * @method
    * @throws {TypeError}
    */
-  setStatus({ name, type, status, afk, since }: any = {}) {
+  setStatus({
+    name,
+    type,
+    status,
+    afk,
+    since,
+  }: {
+    name: string;
+    type?: number;
+    status?: string;
+    afk?: boolean;
+    since?: number;
+  }) {
     if (typeof name !== "string")
       throw new TypeError("GLUON: Name is not a string.");
     if (typeof type !== "undefined" && typeof type !== "number")
@@ -599,7 +662,7 @@ class Client extends EventsEmitter implements ClientType {
    * @method
    * @throws {TypeError}
    */
-  login(token: any) {
+  login(token: string) {
     if (typeof token !== "string")
       throw new TypeError("GLUON: Token is not a string.");
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
@@ -609,7 +672,7 @@ class Client extends EventsEmitter implements ClientType {
 
     this.request
       .makeRequest("getGatewayBot")
-      .then((gatewayInfo: any) => {
+      .then((gatewayInfo: APIGatewayBotInfo) => {
         let remainingSessionStarts = gatewayInfo.session_start_limit.remaining;
 
         if (
@@ -623,7 +686,6 @@ class Client extends EventsEmitter implements ClientType {
 
         for (
           let i = 0;
-          // @ts-expect-error TS(2532): Object is possibly 'undefined'.
           i < this.shardIds.length && remainingSessionStarts !== 0;
           i++, remainingSessionStarts--
         ) {
@@ -642,7 +704,6 @@ class Client extends EventsEmitter implements ClientType {
                       ? this.#_sessionData[i].resumeGatewayUrl
                       : gatewayInfo.url,
                   ),
-                  // @ts-expect-error TS(2532): Object is possibly 'undefined'.
                   this.shardIds[i],
                   this.#_sessionData
                     ? this.#_sessionData[i].sessionId
@@ -659,14 +720,16 @@ class Client extends EventsEmitter implements ClientType {
         }
 
         setInterval(async () => {
-          this.guilds.forEach((guild: any) => {
+          this.guilds.forEach((guild: GuildType) => {
             guild._intervalCallback();
           });
 
           this.users._intervalCallback();
         }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
+
+        return null;
       })
-      .catch((error: any) => {
+      .catch((error: Error) => {
         this._emitDebug(
           GLUON_DEBUG_LEVELS.ERROR,
           "Get gateway bot request failed, terminating process",

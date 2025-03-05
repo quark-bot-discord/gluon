@@ -66,7 +66,7 @@ import {
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -126,6 +126,9 @@ class ScheduledEvent {
       BigInt(guildId),
       "f",
     );
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     /**
      * The name of the scheduled event.
      * @type {String}
@@ -527,6 +530,28 @@ class ScheduledEvent {
    */
   get location() {
     return __classPrivateFieldGet(this, _ScheduledEvent_location, "f") ?? null;
+  }
+  _decrementUserCount() {
+    var _a;
+    __classPrivateFieldSet(
+      this,
+      _ScheduledEvent_user_count,
+      ((_a = __classPrivateFieldGet(this, _ScheduledEvent_user_count, "f")),
+      _a--,
+      _a),
+      "f",
+    );
+  }
+  _incrementUserCount() {
+    var _a;
+    __classPrivateFieldSet(
+      this,
+      _ScheduledEvent_user_count,
+      ((_a = __classPrivateFieldGet(this, _ScheduledEvent_user_count, "f")),
+      _a++,
+      _a),
+      "f",
+    );
   }
   /**
    * Returns the URL of the event's image.

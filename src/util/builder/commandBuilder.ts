@@ -1,37 +1,29 @@
-import {
-  APPLICATION_COMMAND_TYPES,
-  LIMITS,
-  TO_JSON_TYPES_ENUM,
-} from "../../constants.js";
+import { ApplicationCommandType, Locale } from "discord-api-types/v10";
+import { APPLICATION_COMMAND_TYPES, LIMITS } from "../../constants.js";
 import CommandOption from "./commandOptionBuilder.js";
+import type {
+  CommandDescriptionLocalizations,
+  CommandNameLocalizations,
+  CommandOptionBuilder,
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
+import { PermissionsBitfield } from "src/interfaces/gluon.js";
 
 /**
  * Structure for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command}
  */
 class Command {
-  contexts: any;
-  defaultLocale: any;
-  default_member_permissions: any;
-  description: any;
-  description_localizations: any;
-  name: any;
-  name_localizations: any;
-  nsfw: any;
-  options: any;
-  type: any;
-  /**
-   * Creates the structure for a command.
-   */
-  constructor() {
-    this.type = APPLICATION_COMMAND_TYPES.CHAT_INPUT;
-
-    this.contexts = [0];
-
-    this.options = [];
-
-    this.defaultLocale = "en-US";
-  }
+  contexts: [0] = [0];
+  defaultLocale: Locale = Locale.EnglishUS;
+  default_member_permissions?: PermissionsBitfield;
+  description?: string;
+  description_localizations?: CommandDescriptionLocalizations;
+  name?: string;
+  name_localizations?: CommandNameLocalizations;
+  nsfw: boolean = false;
+  options: CommandOptionBuilder[] = [];
+  type: ApplicationCommandType = ApplicationCommandType.ChatInput;
 
   /**
    * Sets the name of the command.
@@ -39,16 +31,18 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setName(name: any) {
+  setName(name: string | CommandNameLocalizations) {
     if (!name) throw new TypeError("GLUON: Command name must be provided.");
 
     if (typeof name == "object") {
       this.name = name[this.defaultLocale];
 
-      delete name[this.defaultLocale];
-
-      this.name_localizations = name;
-    } else this.name = name;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...localizations } = name;
+      this.name_localizations = localizations;
+    } else {
+      this.name = name;
+    }
 
     return this;
   }
@@ -59,7 +53,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types}
    */
-  setType(type: any) {
+  setType(type: ApplicationCommandType) {
     if (typeof type != "number")
       throw new TypeError("GLUON: Command type must be a number.");
 
@@ -74,14 +68,16 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/interactions/application-commands#localization}
    */
-  setDescription(description: any) {
+  setDescription(description: string | CommandDescriptionLocalizations) {
     if (!description)
       throw new TypeError("GLUON: Command description must be provided.");
 
     if (typeof description == "object") {
       this.description = description[this.defaultLocale];
 
-      delete description[this.defaultLocale];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [this.defaultLocale]: _, ...localizations } = description;
+      this.description_localizations = localizations;
 
       this.description_localizations = description;
     } else this.description = description;
@@ -94,7 +90,7 @@ class Command {
    * @param {String} permissions The permissions required to be able to use this command.
    * @returns {Command}
    */
-  setDefaultMemberPermissions(permissions: any) {
+  setDefaultMemberPermissions(permissions: PermissionsBitfield) {
     if (typeof permissions !== "string")
       throw new TypeError(
         "GLUON: Command default permission must be a string.",
@@ -110,7 +106,7 @@ class Command {
    * @param {Boolean} nsfw Whether this command is NSFW.
    * @returns {Command}
    */
-  setNsfw(nsfw: any) {
+  setNsfw(nsfw: boolean) {
     if (typeof nsfw !== "boolean")
       throw new TypeError("GLUON: Command nsfw must be a boolean.");
 
@@ -124,7 +120,7 @@ class Command {
    * @param {CommandOption} option Adds an option to the command.
    * @returns {Command}
    */
-  addOption(option: any) {
+  addOption(option: CommandOptionBuilder) {
     if (!option) throw new TypeError("GLUON: Command option must be provided.");
 
     if (!(option instanceof CommandOption))
@@ -143,7 +139,7 @@ class Command {
    * @returns {Command}
    * @see {@link https://discord.com/developers/docs/reference#locales}
    */
-  setDefaultLocale(locale: any) {
+  setDefaultLocale(locale: Locale) {
     if (!locale) throw new TypeError("GLUON: Default locale must be provided.");
 
     if (typeof locale !== "string")
@@ -159,7 +155,7 @@ class Command {
    * @returns {Object}
    */
   toJSON(
-    format: number,
+    format?: JsonTypes,
     { suppressValidation = false }: { suppressValidation: boolean } = {
       suppressValidation: false,
     },
@@ -188,8 +184,10 @@ class Command {
         throw new TypeError("GLUON: Command description must be a string.");
       if (
         this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT &&
-        (this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION ||
-          this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION)
+        ((this.description &&
+          this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION) ||
+          (this.description &&
+            this.description.length > LIMITS.MAX_COMMAND_DESCRIPTION))
       )
         throw new RangeError(
           `GLUON: Command description must be between ${LIMITS.MIN_COMMAND_DESCRIPTION} and ${LIMITS.MAX_COMMAND_DESCRIPTION} characters.`,
@@ -247,7 +245,7 @@ class Command {
         throw new TypeError("GLUON: Command options must be an array.");
       if (
         this.options &&
-        !this.options.every((o: any) => o instanceof CommandOption)
+        !this.options.every((o) => o instanceof CommandOption)
       )
         throw new TypeError(
           "GLUON: Command options must be an array of CommandOption instances.",
@@ -258,9 +256,9 @@ class Command {
         );
     }
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           name: this.name,
@@ -270,7 +268,7 @@ class Command {
           description_localizations: this.description_localizations,
           default_member_permissions: this.default_member_permissions,
           nsfw: this.nsfw,
-          options: this.options,
+          options: this.options.map((o) => o.toJSON(format)),
         };
       }
     }

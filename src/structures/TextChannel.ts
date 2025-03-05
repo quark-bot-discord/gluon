@@ -4,19 +4,19 @@ import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   TextChannel as TextChannelType,
   TextChannelCacheJSON,
   TextChannelDiscordJSON,
   TextChannelStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import {
   APIGuildTextChannel,
   ChannelType,
   GuildTextChannelType,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a text channel within Discord.
@@ -55,6 +55,10 @@ class TextChannel extends GuildChannel implements TextChannelType {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for text channel.`);
+    }
 
     /**
      * The client instance.
@@ -104,6 +108,12 @@ class TextChannel extends GuildChannel implements TextChannelType {
     messages: Snowflake[],
     { reason }: { reason?: string } = {},
   ) {
+    if (!this.guild) {
+      throw new Error(
+        `GLUON: Guild ${this.guildId} not found for text channel.`,
+      );
+    }
+
     if (
       !checkPermission(
         this.checkPermission(await this.guild.me()),

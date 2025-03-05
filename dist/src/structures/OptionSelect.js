@@ -49,7 +49,7 @@ var _OptionSelect__client,
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when an option is selected.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}

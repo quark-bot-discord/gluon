@@ -3,18 +3,20 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./GuildChannel.js";
 import util from "util";
-import {
+import type {
   Thread as ThreadType,
   ThreadCacheJSON,
   ThreadDiscordJSON,
   ThreadStorageJSON,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  TextChannel as TextChannelType,
+  VoiceChannel as VoiceChannelType,
+} from "../../typings/index.d.ts";
 import { Snowflake } from "discord-api-types/globals";
 import { APIThreadChannel } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a thread within Discord.
@@ -53,6 +55,10 @@ class Thread extends Channel implements ThreadType {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
+    }
 
     /**
      * The client instance.
@@ -135,7 +141,10 @@ class Thread extends Channel implements ThreadType {
    * @public
    */
   get parent() {
-    return this.guild?.channels.get(this.parentId) || null;
+    return this.guild?.channels.get(this.parentId) as
+      | TextChannelType
+      | VoiceChannelType
+      | null;
   }
 
   /**

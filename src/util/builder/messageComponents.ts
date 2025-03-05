@@ -1,9 +1,9 @@
 import { LIMITS } from "../../constants.js";
-import {
+import type {
   MessageComponents as MessageComponentsType,
   ActionRowBuilder as ActionRowBuilderType,
-  JsonTypes,
-} from "typings/index.d.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Structure for message components.

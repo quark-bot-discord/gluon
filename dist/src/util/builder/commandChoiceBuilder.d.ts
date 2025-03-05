@@ -1,9 +1,9 @@
 import { Locale } from "discord-api-types/v10";
-import {
+import type {
   CommandChoiceBuilder as CommandChoiceBuilderType,
   CommandChoiceNameLocalizations,
-  JsonTypes,
-} from "typings/index.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}

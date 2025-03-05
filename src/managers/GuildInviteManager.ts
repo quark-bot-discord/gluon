@@ -15,7 +15,7 @@ import { APIExtendedInvite } from "discord-api-types/v10";
  * Manages all invites within a guild.
  */
 class GuildInviteManager
-  extends BaseCacheManager
+  extends BaseCacheManager<InviteType>
   implements GuildInviteManagerType
 {
   #_client;

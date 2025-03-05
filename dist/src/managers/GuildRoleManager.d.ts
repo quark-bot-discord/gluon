@@ -12,7 +12,7 @@ import {
  * Manages all roles belonging to a guild.
  */
 declare class GuildRoleManager
-  extends BaseCacheManager
+  extends BaseCacheManager<RoleType>
   implements GuildRoleManagerType
 {
   #private;
@@ -62,7 +62,7 @@ declare class GuildRoleManager
     client: ClientType,
     guildId: Snowflake,
     roleId: Snowflake,
-  ): any;
+  ): RoleType | null;
   /**
    * Returns the cache manager.
    * @param {Client} client The client instance.
@@ -73,7 +73,10 @@ declare class GuildRoleManager
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(client: ClientType, guildId: Snowflake): any;
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+  ): GuildRoleManagerType;
   /**
    * Fetches a role, checking the cache first.
    * @param {String} guildId The id of the guild the role belongs to.
@@ -89,6 +92,13 @@ declare class GuildRoleManager
     client: ClientType,
     guildId: Snowflake,
     roleId: Snowflake,
-  ): Promise<any>;
+  ): Promise<
+    | Role
+    | RoleType
+    | import("../../typings/index.d.js").RoleStorageJSON[]
+    | import("../../typings/index.d.js").RoleDiscordJSON[]
+    | Role[]
+    | undefined
+  >;
 }
 export default GuildRoleManager;

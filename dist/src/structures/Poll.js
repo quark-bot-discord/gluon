@@ -53,7 +53,7 @@ var _Poll__client,
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 class Poll {
   /**
    * Creates the structure for a poll.

@@ -6,14 +6,14 @@ import {
   APIMessageComponentGuildInteraction,
   APIMessageComponentSelectMenuInteraction,
 } from "discord-api-types/v10";
-import {
+import type {
   OptionSelect as OptionSelectType,
   OptionSelectCacheJSON,
   OptionSelectDiscordJSON,
   OptionSelectStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when an option is selected.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}

@@ -21,17 +21,13 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import GuildChannelsManager from "../managers/GuildChannelsManager.js";
-import GuildManager from "../managers/GuildManager.js";
-import GuildMemberManager from "../managers/GuildMemberManager.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import {
+import type {
   MessageCacheJSON,
   MessageDiscordJSON,
   MessageStorageJSON,
   Message as MessageTypeClass,
   Attachment as AttachmentType,
-  JsonTypes,
   AttachmentStorageJSON,
   AttachmentCacheJSON,
   AttachmentDiscordJSON,
@@ -56,8 +52,18 @@ import {
   Embed as EmbedType,
   FileUpload,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  VoiceChannel as VoiceChannelType,
+  Thread as ThreadType,
+  TextChannel as TextChannelType,
+  MemberDiscordJSON,
+  MemberStorageJSON,
+  MemberCacheJSON,
+} from "../../typings/index.d.ts";
 import { APIMessage, MessageType } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
+import getChannel from "#src/util/gluon/getChannel.js";
+import getMember from "#src/util/gluon/getMember.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -138,6 +144,10 @@ class Message implements MessageTypeClass {
      */
     this.#_guild_id = BigInt(guildId);
 
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
+
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
@@ -180,7 +190,8 @@ class Message implements MessageTypeClass {
         // @ts-expect-error TS(2322): Type 'boolean' is not assignable to type 'false'.
         nocache: !data.webhook_id || nocache,
       });
-    else if (existing?.author) this.#author = existing.author;
+    else if (existing?.author)
+      this.#author = new User(this.#_client, existing.author.toJSON());
     else {
       throw new Error("GLUON: Message author is missing.");
     }
@@ -353,7 +364,8 @@ class Message implements MessageTypeClass {
        */
       if ("webhook_id" in data && data.webhook_id)
         this.#webhook_id = BigInt(data.webhook_id);
-      else if (existing?.webhookId) this.#webhook_id = existing.webhookId;
+      else if (existing?.webhookId)
+        this.#webhook_id = BigInt(existing.webhookId);
     }
 
     if (this.channel?._cacheOptions.stickerCaching !== false) {
@@ -381,7 +393,9 @@ class Message implements MessageTypeClass {
       if (data.message_snapshots)
         this.#message_snapshots = data.message_snapshots;
       else if (existing && existing.messageSnapshots != undefined)
-        this.#message_snapshots = existing.messageSnapshots;
+        this.#message_snapshots = existing.messageSnapshots.map((m) =>
+          m.toJSON(JsonTypes.DISCORD_FORMAT),
+        );
     }
 
     const shouldCache = this.channel
@@ -489,11 +503,7 @@ class Message implements MessageTypeClass {
     if (!this.author || !this.author.id) {
       return null;
     }
-    return GuildMemberManager.getMember(
-      this.#_client,
-      this.guildId,
-      this.authorId,
-    );
+    return getMember(this.#_client, this.guildId, this.authorId);
   }
 
   /**
@@ -583,7 +593,11 @@ class Message implements MessageTypeClass {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    return this.guild?.channels.get(this.channelId) as
+      | TextChannelType
+      | VoiceChannelType
+      | ThreadType
+      | null;
   }
 
   /**
@@ -623,7 +637,7 @@ class Message implements MessageTypeClass {
    * @public
    */
   get content() {
-    return this.#content;
+    return this.#content ?? null;
   }
 
   /**
@@ -729,17 +743,28 @@ class Message implements MessageTypeClass {
    * @public
    */
   get messageSnapshots() {
-    return this.#message_snapshots && Array.isArray(this.#message_snapshots)
-      ? this.#message_snapshots.map((snapshot) => {
-          snapshot.id = this.id;
-          return new Message(this.#_client, snapshot, {
-            channelId: this.channelId,
-            guildId: this.guildId,
-            nocache: true,
-            ignoreExisting: true,
-          });
-        })
-      : null;
+    return [] as MessageTypeClass[];
+    // return this.#message_snapshots && Array.isArray(this.#message_snapshots)
+    //   ? this.#message_snapshots.map((snapshot) => {
+    //       return new Message(
+    //         this.#_client,
+    //         {
+    //           ...snapshot,
+    //           id: this.id,
+    //           channel_id: this.channelId,
+    //           author: null,
+    //           content: this.content,
+    //           member: null,
+    //         },
+    //         {
+    //           channelId: this.channelId,
+    //           guildId: this.guildId,
+    //           nocache: true,
+    //           ignoreExisting: true,
+    //         },
+    //       );
+    //     })
+    //   : null;
   }
 
   /**
@@ -970,6 +995,22 @@ class Message implements MessageTypeClass {
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
 
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} is not cached.`);
+    }
+
+    const channel = getChannel(client, guildId, channelId) as
+      | TextChannelType
+      | VoiceChannelType
+      | ThreadType
+      | null;
+
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${channelId} is not cached.`);
+    }
+
     Message.sendValidation({ content, embeds, components, files, reference });
 
     if (typeof suppressMentions !== "boolean")
@@ -977,11 +1018,7 @@ class Message implements MessageTypeClass {
 
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -1045,7 +1082,7 @@ class Message implements MessageTypeClass {
       attachments,
       files,
     }: {
-      content?: string;
+      content?: string | null;
       embeds?: EmbedType[];
       components?: MessageComponents;
       attachments?: AttachmentType[];
@@ -1061,15 +1098,27 @@ class Message implements MessageTypeClass {
     if (typeof messageId !== "string")
       throw new TypeError("GLUON: Message ID is not a string.");
 
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} is not cached.`);
+    }
+
+    const channel = getChannel(client, guildId, channelId) as
+      | TextChannelType
+      | VoiceChannelType
+      | ThreadType
+      | null;
+
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${channelId} is not cached.`);
+    }
+
     Message.sendValidation({ content, embeds, components, attachments, files });
 
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
     )
@@ -1190,7 +1239,7 @@ class Message implements MessageTypeClass {
     flags,
     reference,
   }: {
-    content?: string;
+    content?: string | null;
     embeds?: EmbedType[];
     components?: MessageComponents;
     files?: FileUpload[];
@@ -1290,13 +1339,25 @@ class Message implements MessageTypeClass {
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
 
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GUILD NOT FOUND: ${guildId}`);
+    }
+
+    const channel = getChannel(client, guildId, channelId) as
+      | TextChannelType
+      | VoiceChannelType
+      | ThreadType
+      | null;
+
+    if (!channel) {
+      throw new Error(`CHANNEL NOT FOUND: ${channelId}`);
+    }
+
     if (
       !checkPermission(
-        GuildChannelsManager.getChannel(
-          client,
-          guildId,
-          channelId,
-        ).checkPermission(await GuildManager.getGuild(client, guildId).me()),
+        channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
     )
@@ -1358,7 +1419,9 @@ class Message implements MessageTypeClass {
           author: this.author?.toJSON(format) as
             | UserStorageJSON
             | UserCacheJSON,
-          member: this.member?.toJSON(format),
+          member: this.member?.toJSON(format) as
+            | MemberStorageJSON
+            | MemberCacheJSON,
           content: this.content,
           _attributes: this.#_attributes,
           attachments: this.attachments.map((a) => a.toJSON(format)) as
@@ -1395,7 +1458,7 @@ class Message implements MessageTypeClass {
           id: this.id,
           channel_id: this.channelId,
           author: this.author?.toJSON(format) as UserDiscordJSON,
-          member: this.member?.toJSON(format),
+          member: this.member?.toJSON(format) as MemberDiscordJSON,
           content: this.content,
           pinned: this.pinned,
           attachments: this.attachments.map((a) =>

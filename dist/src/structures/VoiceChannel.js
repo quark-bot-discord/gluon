@@ -50,7 +50,7 @@ import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a voice channel.
  * @extends {Channel}
@@ -78,13 +78,16 @@ class VoiceChannel extends GuildChannel {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for voice channel.`);
+    }
     /**
      * The client instance.
      * @type {Client}
      * @private
      */
     __classPrivateFieldSet(this, _VoiceChannel__client, client, "f");
-    const existing = this.guild?.channels.get(data.id) || null;
+    const existing = this.guild?.channels.get(data.id);
     if (typeof data.bitrate == "number")
       /**
        * The bitrate of the channel.

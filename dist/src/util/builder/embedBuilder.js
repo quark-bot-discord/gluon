@@ -1,7 +1,7 @@
 import { LIMITS } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
-import { JsonTypes } from "typings/index.js";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create an embed for a message.
  * @see {@link https://discord.com/developers/docs/resources/channel#embed-object-embed-structure}

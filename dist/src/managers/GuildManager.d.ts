@@ -10,7 +10,7 @@ import { Snowflake } from "discord-api-types/globals";
  * Manages all guilds belonging to this client.
  */
 declare class GuildManager
-  extends BaseCacheManager
+  extends BaseCacheManager<GuildType>
   implements GuildManagerType
 {
   #private;
@@ -39,7 +39,7 @@ declare class GuildManager
    * @param {Client} client The client instance.
    * @returns {GuildManager}
    */
-  static getCacheManager(client: ClientType): any;
+  static getCacheManager(client: ClientType): GuildManagerType;
   /**
    * Gets a guild from the cache.
    * @param {Client} client The client instance.
@@ -50,6 +50,6 @@ declare class GuildManager
    * @throws {TypeError}
    * @static
    */
-  static getGuild(client: ClientType, guildId: Snowflake): any;
+  static getGuild(client: ClientType, guildId: Snowflake): GuildType | null;
 }
 export default GuildManager;

@@ -11,7 +11,7 @@ import {
  * Manages all invites within a guild.
  */
 declare class GuildInviteManager
-  extends BaseCacheManager
+  extends BaseCacheManager<InviteType>
   implements GuildInviteManagerType
 {
   #private;

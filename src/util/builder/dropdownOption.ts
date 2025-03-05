@@ -1,10 +1,10 @@
-import {
-  JsonTypes,
+import type {
   DropdownOptionBuilder as DropdownOptionBuilderType,
   ResolvedEmoji,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to create a dropdown option.

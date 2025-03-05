@@ -6,17 +6,20 @@ import {
   APIMessageComponentGuildInteraction,
   APIMessageComponentSelectMenuInteraction,
 } from "discord-api-types/v10";
-import {
+import type {
   OptionSelect as OptionSelectType,
   OptionSelectCacheJSON,
   OptionSelectDiscordJSON,
   OptionSelectStorageJSON,
-  JsonTypes,
   MessageCacheJSON,
   MessageStorageJSON,
   MessageDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  MemberCacheJSON,
+  MemberStorageJSON,
+  MemberDiscordJSON,
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents when an option is selected.
@@ -154,7 +157,11 @@ class OptionSelect extends Interaction implements OptionSelectType {
             | MessageCacheJSON
             | MessageStorageJSON,
           values: this.values,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as
+                | MemberCacheJSON
+                | MemberStorageJSON)
+            : null,
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -166,7 +173,9 @@ class OptionSelect extends Interaction implements OptionSelectType {
             values: this.values,
           },
           message: this.message.toJSON(format) as MessageDiscordJSON,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as MemberDiscordJSON)
+            : null,
         };
       }
     }

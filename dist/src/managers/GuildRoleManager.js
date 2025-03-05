@@ -45,7 +45,7 @@ var __classPrivateFieldGet =
 var _GuildRoleManager__client, _GuildRoleManager_guild;
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildManager from "./GuildManager.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Manages all roles belonging to a guild.
  */
@@ -153,7 +153,11 @@ class GuildRoleManager extends BaseCacheManager {
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID is not a string.");
-    return GuildManager.getGuild(client, guildId).roles.get(roleId);
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+    return guild.roles.get(roleId);
   }
   /**
    * Returns the cache manager.
@@ -170,7 +174,11 @@ class GuildRoleManager extends BaseCacheManager {
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
-    return GuildManager.getGuild(client, guildId).roles;
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+    return guild.roles;
   }
   /**
    * Fetches a role, checking the cache first.

@@ -1,6 +1,5 @@
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildManager from "./GuildManager.js";
 import {
   GuildChannelsManager as GuildChannelsManagerType,
   Guild as GuildType,
@@ -9,12 +8,13 @@ import {
   Client as ClientType,
 } from "../../typings/index.d.js";
 import { Snowflake } from "discord-api-types/globals";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
  * Manages all channels within a guild.
  */
 class GuildChannelsManager
-  extends BaseCacheManager
+  extends BaseCacheManager<AllChannels>
   implements GuildChannelsManagerType
 {
   #_client;
@@ -125,7 +125,11 @@ class GuildChannelsManager
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
-    return GuildManager.getGuild(client, guildId).channels.get(channelId);
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.channels.get(channelId);
   }
 
   /**
@@ -143,7 +147,11 @@ class GuildChannelsManager
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
-    return GuildManager.getGuild(client, guildId).channels;
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.channels;
   }
 
   /**

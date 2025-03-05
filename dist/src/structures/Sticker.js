@@ -46,7 +46,7 @@ var _Sticker__id, _Sticker_name, _Sticker_format_type;
 import { CDN_BASE_URL, MEDIA_BASE_URL } from "../constants.js";
 import util from "util";
 import { StickerFormatType } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an sticker.
  */

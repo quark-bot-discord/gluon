@@ -1,15 +1,15 @@
 import util from "util";
-import {
+import type {
   Emoji as EmojiType,
   EmojiCacheJSON,
   EmojiDiscordJSON,
   EmojiStorageJSON,
-  JsonTypes,
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import { APIEmoji, Snowflake } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an emoji.
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
@@ -96,7 +96,7 @@ declare class Emoji implements EmojiType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The id of the emoji, if it is custom.
    * @type {String?}

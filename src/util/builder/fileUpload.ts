@@ -1,6 +1,7 @@
 import { Stream } from "stream";
 import { LIMITS } from "../../constants.js";
-import { FileUpload as FileUploadType, JsonTypes } from "typings/index.d.js";
+import type { FileUpload as FileUploadType } from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 
 class FileUpload implements FileUploadType {
   #name: string | undefined;

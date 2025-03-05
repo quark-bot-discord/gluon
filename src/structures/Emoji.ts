@@ -2,17 +2,17 @@ import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import {
+import type {
   Emoji as EmojiType,
   EmojiCacheJSON,
   EmojiDiscordJSON,
   EmojiStorageJSON,
-  JsonTypes,
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import { APIEmoji, Snowflake } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an emoji.
@@ -101,12 +101,16 @@ class Emoji implements EmojiType {
      */
     this.#_guild_id = BigInt(guildId);
 
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+
     const shouldCache = Emoji.shouldCache(
       this.#_client._cacheOptions,
       this.guild._cacheOptions,
     );
 
-    if (nocache === false && shouldCache && this.id) {
+    if (nocache === false && shouldCache && data.id) {
       this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
       this.#_client._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,

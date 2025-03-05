@@ -1,5 +1,5 @@
 import endpoints from "./endpoints.js";
-import { Client as ClientType } from "typings/index.js";
+import type { Client as ClientType } from "typings/index.d.ts";
 declare class BetterRequestHandler {
   #private;
   constructor(client: ClientType, token: string);

@@ -11,7 +11,10 @@ import { Snowflake } from "discord-api-types/globals";
 /**
  * Manages all the users belonging to a client.
  */
-class UserManager extends BaseCacheManager implements UserManagerType {
+class UserManager
+  extends BaseCacheManager<UserType>
+  implements UserManagerType
+{
   #_client;
   static identifier = "users" as StructureIdentifiers;
   /**

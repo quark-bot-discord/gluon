@@ -1,18 +1,18 @@
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import {
+import type {
   ButtonClickCacheJSON,
   ButtonClickDiscordJSON,
   ButtonClickStorageJSON,
   ButtonClick as ButtonClickType,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import {
   APIMessageComponentGuildInteraction,
   Snowflake,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}

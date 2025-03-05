@@ -1,14 +1,18 @@
 import util from "util";
-import { APIGuildCategoryChannel, Snowflake } from "discord-api-types/v10";
 import {
+  APIGuildCategoryChannel,
+  ChannelType,
+  Snowflake,
+} from "discord-api-types/v10";
+import type {
   CategoryChannelCacheJSON,
   CategoryChannelDiscordJSON,
   CategoryChannelStorageJSON,
   CategoryChannel as CategoryChannelType,
   PermissionOverwrite as PermissionOverwriteType,
   Client as ClientType,
-  JsonTypes,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 declare class CategoryChannel implements CategoryChannelType {
   #private;
   /**
@@ -54,7 +58,7 @@ declare class CategoryChannel implements CategoryChannelType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The name of the channel.
    * @type {String}
@@ -68,7 +72,8 @@ declare class CategoryChannel implements CategoryChannelType {
    * @readonly
    * @public
    */
-  get type(): number;
+  get type(): ChannelType.GuildCategory;
+  get position(): number | undefined;
   /**
    * The permission overwrites for the channel.
    * @type {Array<PermissionOverwrite>}

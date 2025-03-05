@@ -44,7 +44,7 @@ var __classPrivateFieldGet =
   };
 var _FileUpload_name, _FileUpload_stream, _FileUpload_path, _FileUpload_size;
 import { LIMITS } from "../../constants.js";
-import { JsonTypes } from "typings/index.d.js";
+import { JsonTypes } from "../../../typings/enums.js";
 class FileUpload {
   constructor() {
     _FileUpload_name.set(this, void 0);

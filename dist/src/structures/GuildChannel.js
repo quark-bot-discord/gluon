@@ -64,7 +64,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
-import { JsonTypes } from "../../typings/index.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
@@ -116,13 +116,16 @@ class GuildChannel {
      * @private
      */
     __classPrivateFieldSet(this, _GuildChannel__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
     /**
      * The type of channel.
      * @type {Number}
      * @private
      */
     __classPrivateFieldSet(this, _GuildChannel_type, data.type, "f");
-    const existing = this.guild?.channels.get(data.id) || null;
+    const existing = this.guild?.channels.get(data.id);
     /**
      * The name of the channel.
      * @type {String}
@@ -140,6 +143,7 @@ class GuildChannel {
       "topic" in data &&
       typeof data.topic != "string" &&
       existing &&
+      "topic" in existing &&
       typeof existing.topic == "string"
     )
       __classPrivateFieldSet(this, _GuildChannel_topic, existing.topic, "f");
@@ -188,6 +192,7 @@ class GuildChannel {
     else if (
       typeof data.rate_limit_per_user != "number" &&
       existing &&
+      "rateLimitPerUser" in existing &&
       typeof existing.rateLimitPerUser == "number"
     )
       __classPrivateFieldSet(
@@ -231,12 +236,13 @@ class GuildChannel {
       typeof data.parent_id != "string" &&
       data.parent_id === undefined &&
       existing &&
+      "parentId" in existing &&
       typeof existing.parentId == "string"
     )
       __classPrivateFieldSet(
         this,
         _GuildChannel__parent_id,
-        existing.parentId,
+        BigInt(existing.parentId),
         "f",
       );
     /**

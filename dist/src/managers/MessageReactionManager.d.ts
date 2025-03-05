@@ -1,16 +1,16 @@
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   MessageReactionManager as MessageReactionManagerType,
   Guild as GuildType,
   MessageReactionManagerCacheJSON,
   MessageReactionManagerStorageJSON,
-  JsonTypes,
   ReactionCacheJSON,
   ReactionStorageJSON,
   ReactionDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { GatewayMessageReactionAddDispatch } from "discord-api-types/v10";
+} from "../../typings/index.d.ts";
+import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Manages the reactions of a message.
  */
@@ -39,7 +39,7 @@ declare class MessageReactionManager implements MessageReactionManagerType {
   _addReaction(
     userId: Snowflake,
     emoji: Snowflake | string,
-    data: GatewayMessageReactionAddDispatch,
+    data: GatewayMessageReactionAddDispatchData,
   ): void;
   /**
    * Removes a reaction from a message.

@@ -1,19 +1,20 @@
 import User from "./User.js";
 import util from "util";
-import {
+import type {
   AuditLogCacheJSON,
   AuditLogDiscordJSON,
   AuditLogStorageJSON,
   AuditLog as AuditLogType,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  AllChannels,
+} from "../../typings/index.d.ts";
 import {
   APIAuditLogEntry,
   APIUser,
   AuditLogOptionsType,
   Snowflake,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an audit log entry.
@@ -281,7 +282,7 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get guild() {
-    return this.#_client.guilds.get(this.guildId) || null;
+    return this.#_client.guilds.get(this.guildId);
   }
 
   /**
@@ -291,7 +292,8 @@ class AuditLog implements AuditLogType {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    if (!this.channelId) return null;
+    return this.guild?.channels.get(this.channelId) as AllChannels | null;
   }
 
   /**

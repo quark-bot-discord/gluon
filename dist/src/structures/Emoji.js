@@ -51,7 +51,7 @@ import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an emoji.
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
@@ -165,11 +165,14 @@ class Emoji {
      * @private
      */
     __classPrivateFieldSet(this, _Emoji__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     const shouldCache = Emoji.shouldCache(
       __classPrivateFieldGet(this, _Emoji__client, "f")._cacheOptions,
       this.guild._cacheOptions,
     );
-    if (nocache === false && shouldCache && this.id) {
+    if (nocache === false && shouldCache && data.id) {
       __classPrivateFieldGet(this, _Emoji__client, "f")
         .guilds.get(guildId)
         ?.emojis.set(data.id, this);

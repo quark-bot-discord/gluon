@@ -1,7 +1,7 @@
+import Member from "./Member.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
-  JsonTypes,
+import type {
   VoiceStateCacheJSON,
   VoiceStateDiscordJSON,
   VoiceStateStorageJSON,
@@ -9,8 +9,10 @@ import {
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  VoiceChannel as VoiceChannelType,
+} from "../../typings/index.d.ts";
 import { APIVoiceState } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a voice state.
  */
@@ -94,7 +96,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The id of the guild that this voice state belongs to.
    * @type {String}
@@ -108,7 +110,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): VoiceChannelType | null;
   /**
    * The id of the channel involved.
    * @type {String}
@@ -122,7 +124,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get member(): any;
+  get member(): Member | import("../../typings/index.d.ts").Member | null;
   /**
    * The id of the user the voice state is about.
    * @type {String}
@@ -136,7 +138,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get joined(): any;
+  get joined(): number;
   /**
    * The UNIX timestamp of when the user requested to speak.
    * @type {Number?}
@@ -174,38 +176,8 @@ declare class VoiceState implements VoiceStateType {
    * @public
    * @method
    */
-  toJSON(format: JsonTypes):
-    | {
-        guild_id: string;
-        channel_id: string;
-        _attributes: number;
-        member: any;
-        user_id: string;
-        joined: any;
-        request_to_speak_timestamp: number | null;
-        deaf?: undefined;
-        mute?: undefined;
-        self_deaf?: undefined;
-        self_mute?: undefined;
-        self_stream?: undefined;
-        self_video?: undefined;
-        suppress?: undefined;
-      }
-    | {
-        guild_id: string;
-        channel_id: string;
-        deaf: boolean;
-        mute: boolean;
-        self_deaf: boolean;
-        self_mute: boolean;
-        self_stream: boolean;
-        self_video: boolean;
-        suppress: boolean;
-        member: any;
-        user_id: string;
-        joined: any;
-        request_to_speak_timestamp: number | null;
-        _attributes?: undefined;
-      };
+  toJSON(
+    format: JsonTypes,
+  ): VoiceStateCacheJSON | VoiceStateDiscordJSON | VoiceStateStorageJSON;
 }
 export default VoiceState;

@@ -12,7 +12,7 @@ import {
  * Manages all voice states belonging to a guild.
  */
 class GuildVoiceStatesManager
-  extends BaseCacheManager
+  extends BaseCacheManager<VoiceStateType>
   implements GuildVoiceStatesManagerType
 {
   static identifier = "voicestates" as StructureIdentifiers;

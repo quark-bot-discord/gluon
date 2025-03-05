@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _MessagePollManager__client, _MessagePollManager_cache;
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Manages a poll for a message.
  */
@@ -152,6 +152,9 @@ class MessagePollManager {
    * @method
    */
   toJSON(format) {
+    if (!__classPrivateFieldGet(this, _MessagePollManager__client, "f").user) {
+      throw new Error("GLUON: Client has not logged in yet");
+    }
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {

@@ -1,14 +1,17 @@
 import Interaction from "./Interaction.js";
 import util from "util";
-import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
 import {
+  APIApplicationCommandAutocompleteGuildInteraction,
+  APIChatInputApplicationCommandGuildInteraction,
+} from "discord-api-types/v10";
+import type {
   SlashCommand as SlashCommandType,
   SlashCommandCacheJSON,
   SlashCommandDiscordJSON,
   SlashCommandStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a slash command.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands}
@@ -23,7 +26,9 @@ declare class SlashCommand extends Interaction implements SlashCommandType {
    */
   constructor(
     client: ClientType,
-    data: APIChatInputApplicationCommandGuildInteraction,
+    data:
+      | APIChatInputApplicationCommandGuildInteraction
+      | APIApplicationCommandAutocompleteGuildInteraction,
   );
   /**
    * The raw slash command data from Discord.
@@ -31,7 +36,15 @@ declare class SlashCommand extends Interaction implements SlashCommandType {
    * @readonly
    * @public
    */
-  get data(): import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData;
+  get data():
+    | import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData
+    | (import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData &
+        Required<
+          Pick<
+            import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData,
+            "options"
+          >
+        >);
   /**
    * The options provided with the slash command.
    * @type {Array<Object>}

@@ -4,20 +4,24 @@ import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   Invite as InviteType,
   InviteCacheJSON,
   InviteDiscordJSON,
   InviteStorageJSON,
-  JsonTypes,
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { APIExtendedInvite } from "discord-api-types/v10";
+} from "../../typings/index.d.ts";
+import {
+  APIExtendedInvite,
+  GatewayInviteCreateDispatchData,
+  GatewayInviteDeleteDispatchData,
+} from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a guild invite.
@@ -47,7 +51,9 @@ class Invite implements InviteType {
       | APIExtendedInvite
       | InviteCacheJSON
       | InviteDiscordJSON
-      | InviteStorageJSON,
+      | InviteStorageJSON
+      | GatewayInviteCreateDispatchData
+      | GatewayInviteDeleteDispatchData,
     { guildId, nocache = false }: { guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
@@ -73,6 +79,10 @@ class Invite implements InviteType {
      */
     this.#_guild_id = BigInt(guildId);
 
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found.`);
+    }
+
     /**
      * The code for the invite.
      * @type {String}
@@ -85,9 +95,13 @@ class Invite implements InviteType {
      * @type {BigInt}
      * @private
      */
-    if (data.channel?.id) this.#_channel_id = BigInt(data.channel.id);
+    if ("channel" in data && data.channel?.id) {
+      this.#_channel_id = BigInt(data.channel.id);
+    } else if ("channel_id" in data && data.channel_id) {
+      this.#_channel_id = BigInt(data.channel_id);
+    }
 
-    if (data.inviter) {
+    if ("inviter" in data && data.inviter) {
       /**
        * The user who created the invite.
        * @type {User?}
@@ -103,7 +117,7 @@ class Invite implements InviteType {
      * @type {Number?}
      * @private
      */
-    this.#uses = data.uses;
+    this.#uses = "uses" in data ? data.uses : undefined;
 
     if ("expires_at" in data && data.expires_at)
       /**
@@ -128,7 +142,7 @@ class Invite implements InviteType {
      * @type {Number?}
      * @private
      */
-    this.#max_uses = data.max_uses;
+    this.#max_uses = "max_uses" in data ? data.max_uses : undefined;
 
     const shouldCache = Invite.shouldCache(
       this.#_client._cacheOptions,
@@ -169,7 +183,11 @@ class Invite implements InviteType {
    * @public
    */
   get channel() {
-    return this.guild.channels.get(this.channelId) || null;
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found.`);
+    }
+
+    return this.guild.channels.get(this.channelId);
   }
 
   /**
@@ -329,7 +347,7 @@ class Invite implements InviteType {
    * @public
    * @method
    */
-  toJSON(format: JsonTypes) {
+  toJSON(format?: JsonTypes) {
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {

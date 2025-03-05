@@ -1,21 +1,21 @@
 import util from "util";
-import {
+import type {
   Interaction as InteractionType,
   InteractionCacheJSON,
   InteractionDiscordJSON,
   InteractionStorageJSON,
-  JsonTypes,
   FileUpload,
   Embed,
   MessageComponents as MessageComponentsType,
   TextInputBuilder as TextInputBuilderType,
   CommandChoiceBuilder as CommandChoiceBuilderType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
 import {
   APIGuildInteraction,
   APIMessageComponentGuildInteraction,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
@@ -69,7 +69,7 @@ declare class Interaction implements InteractionType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The id of the channel that this interaction belongs to.
    * @type {String}
@@ -83,14 +83,14 @@ declare class Interaction implements InteractionType {
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): import("../../typings/index.d.ts").AllChannels | null;
   /**
    * The member that triggered the interaction, if it was run in a guild.
    * @type {Member?}
    * @readonly
    * @public
    */
-  get member(): any;
+  get member(): import("../../typings/index.d.ts").Member | null | undefined;
   /**
    * The id of the member that triggered the interaction, if it was run in a guild.
    * @type {String?}

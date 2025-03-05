@@ -2,25 +2,29 @@ import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
-import { APIGuildCategoryChannel, Snowflake } from "discord-api-types/v10";
 import {
+  APIGuildCategoryChannel,
+  ChannelType,
+  Snowflake,
+} from "discord-api-types/v10";
+import type {
   CategoryChannelCacheJSON,
   CategoryChannelDiscordJSON,
   CategoryChannelStorageJSON,
   CategoryChannel as CategoryChannelType,
   PermissionOverwrite as PermissionOverwriteType,
   Client as ClientType,
-  JsonTypes,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 class CategoryChannel implements CategoryChannelType {
   #_client: ClientType;
   #_id: bigint;
   #_guild_id: bigint;
-  #type: number;
   #name: string | undefined;
   #_attributes: number;
   #permission_overwrites: Array<PermissionOverwriteType> = [];
+  #position: number | undefined;
   /**
    * Creates the structure for a category channel.
    * @param {Client} client The client instance.
@@ -68,12 +72,9 @@ class CategoryChannel implements CategoryChannelType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    /**
-     * The type of channel.
-     * @type {Number}
-     * @private
-     */
-    this.#type = data.type;
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
 
     const existing = this.guild?.channels.get(data.id) || null;
 
@@ -89,6 +90,16 @@ class CategoryChannel implements CategoryChannelType {
       typeof existing.name == "string"
     )
       this.#name = existing.name;
+
+    if (typeof data.position == "number") {
+      this.#position = data.position;
+    } else if (
+      typeof data.position !== "number" &&
+      existing &&
+      typeof existing.position == "number"
+    ) {
+      this.#position = existing.position;
+    }
 
     /**
      * The attributes of the channel.
@@ -189,8 +200,12 @@ class CategoryChannel implements CategoryChannelType {
    * @readonly
    * @public
    */
-  get type() {
-    return this.#type;
+  get type(): ChannelType.GuildCategory {
+    return ChannelType.GuildCategory;
+  }
+
+  get position() {
+    return this.#position;
   }
 
   /**

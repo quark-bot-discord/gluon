@@ -1,3 +1,15 @@
+import {
+  APIChatInputApplicationCommandGuildInteraction,
+  APIExtendedInvite,
+  APIGuildMember,
+  APIGuildTextChannel,
+  APIMessage,
+  APIMessageComponentGuildInteraction,
+  APIRole,
+  APIThreadChannel,
+  APIUser,
+  ChannelType,
+} from "discord-api-types/v10";
 import Client from "./Client.js";
 import {
   ButtonClick,
@@ -32,33 +44,7 @@ export declare const TEST_DATA: {
     parent_id: string;
     last_pin_timestamp: null;
   };
-  TEXT_CHANNEL_2: {
-    id: string;
-    type: number;
-    guild_id: string;
-    name: string;
-    position: number;
-    permission_overwrites: (
-      | {
-          id: string;
-          type: number;
-          allow: number;
-          deny: string;
-        }
-      | {
-          id: string;
-          type: number;
-          allow: string;
-          deny: number;
-        }
-    )[];
-    rate_limit_per_user: number;
-    nsfw: boolean;
-    topic: string;
-    last_message_id: null;
-    parent_id: string;
-    last_pin_timestamp: null;
-  };
+  TEXT_CHANNEL_2: APIGuildTextChannel<ChannelType.GuildText>;
   VOICE_CHANNEL: {
     id: string;
     type: number;
@@ -171,160 +157,10 @@ export declare const TEST_DATA: {
     stage_instances: never[];
     stickers: never[];
   };
-  THREAD: {
-    id: string;
-    type: number;
-    guild_id: string;
-    name: string;
-    position: number;
-    permission_overwrites: never[];
-    rate_limit_per_user: number;
-    nsfw: boolean;
-    topic: string;
-    last_message_id: null;
-    last_pin_timestamp: null;
-    owner_id: string;
-    parent_id: string;
-  };
+  THREAD: APIThreadChannel;
   CHANNEL_ID: string;
   MESSAGE_ID: string;
-  MESSAGE: {
-    id: string;
-    type: number;
-    content: string;
-    channel_id: string;
-    author: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-      _cached: number;
-    };
-    edited_timestamp: string;
-    mention_everyone: boolean;
-    mentions: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    }[];
-    mention_roles: string[];
-    mention_channels: string[];
-    attachments: {
-      id: string;
-      filename: string;
-      size: number;
-      url: string;
-      proxy_url: string;
-      height: number;
-      width: number;
-    }[];
-    embeds: {
-      title: string;
-      description: string;
-      url: string;
-      timestamp: string;
-      color: number;
-      footer: {
-        text: string;
-        icon_url: null;
-        proxy_icon_url: null;
-      };
-      image: {
-        url: string;
-        proxy_url: string;
-        height: number;
-        width: number;
-      };
-      thumbnail: {
-        url: string;
-        proxy_url: string;
-        height: number;
-        width: number;
-      };
-      video: {
-        url: string;
-      };
-      fields: {
-        name: string;
-        value: string;
-        inline: boolean;
-      }[];
-    }[];
-    reactions: {
-      count: number;
-      me: boolean;
-      emoji: {
-        id: string;
-        name: string;
-      };
-    }[];
-    pinned: boolean;
-    webhook_id: null;
-    message_reference: {
-      message_id: string;
-      channel_id: string;
-      guild_id: string;
-    };
-    message_snapshots: {
-      type: number;
-      content: string;
-    }[];
-    referenced_message: {
-      id: string;
-      type: number;
-      content: string;
-      channel_id: string;
-    };
-    sticker_items: {
-      id: string;
-      name: string;
-      format_type: number;
-    }[];
-    poll: {
-      question: {
-        text: string;
-      };
-      answers: {
-        answer_id: number;
-        poll_media: {
-          text: string;
-          emoji: {
-            id: string;
-            name: string;
-          };
-        };
-      }[];
-      expiry: string;
-      allow_multiselect: boolean;
-      layout_type: number;
-      results: {
-        is_finalized: boolean;
-        answer_counts: {
-          id: number;
-          count: number;
-          me_voted: boolean;
-        }[];
-      };
-    };
-  };
+  MESSAGE: APIMessage;
   MEMBER_ID: string;
   MEMBER_ID_2: string;
   MEMBER: {
@@ -410,112 +246,10 @@ export declare const TEST_DATA: {
     };
     created_at: string;
   };
-  BUTTON_CLICK: {
-    id: string;
-    type: number;
-    data: {
-      custom_id: string;
-      component_type: number;
-    };
-    guild_id: string;
-    channel_id: string;
-    member: {
-      user: {
-        id: string;
-        username: string;
-        discriminator: string;
-        avatar: null;
-        bot: boolean;
-        system: boolean;
-        mfa_enabled: boolean;
-        locale: string;
-        verified: boolean;
-        email: null;
-        flags: number;
-        premium_type: number;
-        public_flags: number;
-      };
-      roles: never[];
-      joined_at: string;
-      premium_since: null;
-      deaf: boolean;
-      mute: boolean;
-      pending: boolean;
-      permissions: string;
-    };
-    token: string;
-    version: number;
-    message: {
-      id: string;
-      type: number;
-      content: string;
-      channel_id: string;
-    };
-    custom_id: string;
-  };
-  CLIENT_USER: {
-    id: string;
-    username: string;
-    discriminator: string;
-    avatar: null;
-    bot: boolean;
-    system: boolean;
-    mfa_enabled: boolean;
-    locale: string;
-    verified: boolean;
-    email: null;
-    flags: number;
-    premium_type: number;
-    public_flags: number;
-  };
-  CLIENT_MEMBER: {
-    user: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    };
-    nick: null;
-    roles: string[];
-    joined_at: string;
-    premium_since: null;
-    deaf: boolean;
-    mute: boolean;
-    pending: boolean;
-  };
-  CLIENT_MEMBER_ADMIN: {
-    user: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    };
-    nick: null;
-    roles: string[];
-    joined_at: string;
-    premium_since: null;
-    deaf: boolean;
-    mute: boolean;
-    pending: boolean;
-  };
+  BUTTON_CLICK: APIMessageComponentGuildInteraction;
+  CLIENT_USER: APIUser;
+  CLIENT_MEMBER: APIGuildMember;
+  CLIENT_MEMBER_ADMIN: APIGuildMember;
   ROLE_OVERRIDES_MEMBER: {
     user: {
       id: string;
@@ -568,38 +302,8 @@ export declare const TEST_DATA: {
     permissions: string;
     flags: number;
   };
-  ROLE_ADMIN: {
-    id: string;
-    name: string;
-    color: number;
-    hoist: boolean;
-    position: number;
-    permissions: string;
-    managed: boolean;
-    mentionable: boolean;
-    tags: {
-      bot_id: string;
-      integration_id: null;
-      premium_subscriber: null;
-    };
-    icon: string;
-  };
-  ROLE_ADMIN_2: {
-    id: string;
-    name: string;
-    color: number;
-    hoist: boolean;
-    position: number;
-    permissions: string;
-    managed: boolean;
-    mentionable: boolean;
-    tags: {
-      bot_id: string;
-      integration_id: null;
-      premium_subscriber: null;
-    };
-    icon: string;
-  };
+  ROLE_ADMIN: APIRole;
+  ROLE_ADMIN_2: APIRole;
   ROLE_OVERRIDES: {
     id: string;
     name: string;
@@ -632,79 +336,8 @@ export declare const TEST_DATA: {
     id: null;
     name: string;
   };
-  INTERACTION: {
-    id: string;
-    type: number;
-    data: {
-      name: string;
-      options: never[];
-    };
-    guild_id: string;
-    channel_id: string;
-    member: {
-      user: {
-        id: string;
-        username: string;
-        discriminator: string;
-        avatar: null;
-        bot: boolean;
-        system: boolean;
-        mfa_enabled: boolean;
-        locale: string;
-        verified: boolean;
-        email: null;
-        flags: number;
-        premium_type: number;
-        public_flags: number;
-      };
-      roles: never[];
-      joined_at: string;
-      premium_since: null;
-      deaf: boolean;
-      mute: boolean;
-      pending: boolean;
-      permissions: string;
-    };
-    token: string;
-    version: number;
-  };
-  INVITE: {
-    code: string;
-    guild_id: string;
-    channel: {
-      id: string;
-      name: string;
-      type: number;
-      nsfw: boolean;
-      parent_id: string;
-      topic: string;
-    };
-    inviter: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    };
-    target_user_id: null;
-    target_user_type: number;
-    approximate_presence_count: number;
-    approximate_member_count: number;
-    expires_at: string;
-    uses: number;
-    max_uses: number;
-    max_age: number;
-    temporary: boolean;
-    created_at: string;
-  };
+  INTERACTION: APIChatInputApplicationCommandGuildInteraction;
+  INVITE: APIExtendedInvite;
   MODAL_RESPONSE: {
     id: string;
     type: number;
@@ -838,43 +471,7 @@ export declare const TEST_DATA: {
     burst: boolean;
     type: number;
   };
-  SLASH_COMMAND: {
-    id: string;
-    type: number;
-    data: {
-      name: string;
-      description: string;
-      options: never[];
-    };
-    guild_id: string;
-    channel_id: string;
-    member: {
-      user: {
-        id: string;
-        username: string;
-        discriminator: string;
-        avatar: null;
-        bot: boolean;
-        system: boolean;
-        mfa_enabled: boolean;
-        locale: string;
-        verified: boolean;
-        email: null;
-        flags: number;
-        premium_type: number;
-        public_flags: number;
-      };
-      roles: never[];
-      joined_at: string;
-      premium_since: null;
-      deaf: boolean;
-      mute: boolean;
-      pending: boolean;
-      permissions: string;
-    };
-    token: string;
-    version: number;
-  };
+  SLASH_COMMAND: APIChatInputApplicationCommandGuildInteraction;
   STICKER: {
     id: string;
     name: string;
@@ -916,74 +513,8 @@ export declare const TEST_DATA: {
     request_to_speak_timestamp: string;
     joined: number;
   };
-  SCHEDULED_EVENT: {
-    id: string;
-    guild_id: string;
-    channel_id: string;
-    creator_id: string;
-    name: string;
-    description: string;
-    scheduled_start_time: string;
-    scheduled_end_time: string;
-    privacy_level: number;
-    status: number;
-    entity_type: number;
-    entity_id: string;
-    entity_metadata: {
-      location: undefined;
-    };
-    creator: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    };
-    user_count: number;
-    image: string;
-  };
-  SCHEDULED_EVENT_EXTERNAL: {
-    id: string;
-    guild_id: string;
-    channel_id: string;
-    creator_id: string;
-    name: string;
-    description: string;
-    scheduled_start_time: string;
-    scheduled_end_time: string;
-    privacy_level: number;
-    status: number;
-    entity_type: number;
-    entity_id: string;
-    entity_metadata: {
-      location: string;
-    };
-    creator: {
-      id: string;
-      username: string;
-      discriminator: string;
-      avatar: null;
-      bot: boolean;
-      system: boolean;
-      mfa_enabled: boolean;
-      locale: string;
-      verified: boolean;
-      email: null;
-      flags: number;
-      premium_type: number;
-      public_flags: number;
-    };
-    user_count: number;
-    image: string;
-  };
+  SCHEDULED_EVENT: import("discord-api-types/v10").APIVoiceGuildScheduledEvent;
+  SCHEDULED_EVENT_EXTERNAL: import("discord-api-types/v10").APIExternalGuildScheduledEvent;
   POLL: {
     question: {
       text: string;

@@ -1,20 +1,25 @@
+import User from "./User.js";
 import util from "util";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
-import {
+import type {
   Member as MemberType,
   MemberCacheJSON,
   MemberDiscordJSON,
   MemberStorageJSON,
-  JsonTypes,
   User as UserType,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  UserCacheJSON,
+  UserStorageJSON,
+  UserDiscordJSON,
+} from "../../typings/index.d.ts";
 import {
   APIGuildMember,
   APIInteractionDataResolvedGuildMember,
+  GatewayGuildMemberUpdateDispatchData,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
@@ -38,7 +43,8 @@ declare class Member implements MemberType {
       | APIInteractionDataResolvedGuildMember
       | MemberStorageJSON
       | MemberCacheJSON
-      | MemberDiscordJSON,
+      | MemberDiscordJSON
+      | GatewayGuildMemberUpdateDispatchData,
     {
       userId,
       guildId,
@@ -71,21 +77,21 @@ declare class Member implements MemberType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The nickname of the member.
    * @type {String?}
    * @readonly
    * @public
    */
-  get nick(): any;
+  get nick(): string | null;
   /**
    * The UNIX timestamp for when this member joined the guild.
    * @type {Number?}
    * @readonly
    * @public
    */
-  get joinedAt(): any;
+  get joinedAt(): number | undefined;
   /**
    * The UNIX timestamp for when this member's timeout expires, if applicable.
    * @type {Number?}
@@ -99,14 +105,14 @@ declare class Member implements MemberType {
    * @readonly
    * @public
    */
-  get flags(): any;
+  get flags(): number;
   /**
    * The member's roles.
    * @readonly
    * @type {Array<Role> | null}
    * @public
    */
-  get roles(): any[] | null;
+  get roles(): import("../../typings/index.d.ts").Role[] | null;
   /**
    * The position of the member's highest role.
    * @readonly
@@ -134,7 +140,7 @@ declare class Member implements MemberType {
    * @readonly
    * @public
    */
-  get user(): any;
+  get user(): User | UserType | undefined;
   /**
    * The hash of the member's avatar, as it was received from Discord.
    * @readonly
@@ -405,26 +411,26 @@ declare class Member implements MemberType {
    */
   toJSON(format: JsonTypes):
     | {
-        user: any;
-        nick: any;
+        user: UserCacheJSON | UserStorageJSON | undefined;
+        nick: string | null;
         joined_at: number | undefined;
         avatar: string | null;
         permissions: string;
         roles: string[] | undefined;
         communication_disabled_until: number | undefined;
-        flags: any;
+        flags: number;
         _attributes: number;
         pending?: undefined;
       }
     | {
-        user: any;
-        nick: any;
+        user: UserDiscordJSON | undefined;
+        nick: string | null;
         joined_at: string | undefined;
         avatar: string | null;
         permissions: string;
         roles: string[] | undefined;
         communication_disabled_until: number | undefined;
-        flags: any;
+        flags: number;
         pending: boolean;
         _attributes?: undefined;
       };

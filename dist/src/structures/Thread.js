@@ -48,7 +48,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./GuildChannel.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
@@ -77,6 +77,9 @@ class Thread extends Channel {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
+    }
     /**
      * The client instance.
      * @type {Client}
@@ -160,7 +163,7 @@ class Thread extends Channel {
    * @public
    */
   get parent() {
-    return this.guild?.channels.get(this.parentId) || null;
+    return this.guild?.channels.get(this.parentId);
   }
   /**
    * Determines whether the thread should be cached.

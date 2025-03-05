@@ -46,7 +46,7 @@ var _ButtonClick__client, _ButtonClick_custom_id, _ButtonClick_message;
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a button is clicked.
  * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure}

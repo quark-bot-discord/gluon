@@ -58,7 +58,7 @@ import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a role belonging to a guild.
  */
@@ -104,6 +104,9 @@ class Role {
      * @private
      */
     __classPrivateFieldSet(this, _Role__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found.`);
+    }
     /**
      * The id of the role.
      * @type {BigInt}

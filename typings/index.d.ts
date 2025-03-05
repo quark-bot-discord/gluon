@@ -1,4 +1,5 @@
 import { Snowflake } from "discord-api-types/globals";
+import util from "util";
 import {
   APIApplicationCommandInteractionDataOption,
   APIAttachment,
@@ -40,14 +41,25 @@ import {
   APISticker,
   APIThreadChannel,
   APIUser,
-  APIVoiceRegion,
   APIVoiceState,
+  ApplicationCommandType,
   AuditLogEvent,
   AuditLogOptionsType,
   ButtonStyle,
   ChannelType,
   ComponentType,
-  GatewayMessageReactionAddDispatch,
+  GatewayChannelPinsUpdateDispatchData,
+  GatewayEntitlementCreateDispatchData,
+  GatewayEntitlementDeleteDispatchData,
+  GatewayEntitlementUpdateDispatchData,
+  GatewayGuildScheduledEventUserAddDispatchData,
+  GatewayGuildScheduledEventUserRemoveDispatchData,
+  GatewayMessageDeleteDispatchData,
+  GatewayMessagePollVoteDispatchData,
+  GatewayMessageReactionAddDispatchData,
+  GatewayMessageReactionRemoveDispatchData,
+  GatewayReceivePayload,
+  GatewayWebhooksUpdateDispatchData,
   GuildDefaultMessageNotifications,
   GuildExplicitContentFilter,
   GuildMFALevel,
@@ -69,20 +81,16 @@ import {
 import { HttpMethods, HttpResponse } from "msw";
 import {
   ISO8601Timestamp,
+  PermissionsBitfield,
   UnixMillisecondsTimestamp,
   UnixTimestamp,
 } from "src/interfaces/gluon.ts";
 import { TypedEmitter } from "tiny-typed-emitter";
-
-export enum JsonTypes {
-  DISCORD_FORMAT = 1, // default
-  CACHE_FORMAT = 2,
-  STORAGE_FORMAT = 3,
-}
+import { Events, JsonTypes } from "./enums.ts";
 
 export class Attachment {
   public constructor(
-    client: any,
+    client: Client,
     data:
       | APIAttachment
       | AttachmentCacheJSON
@@ -124,7 +132,7 @@ export interface AttachmentDiscordJSON {
 
 export class AuditLog {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIAuditLogEntry
       | AuditLogCacheJSON
@@ -138,7 +146,7 @@ export class AuditLog {
   public readonly targetId: Snowflake | null;
   public readonly channelId: Snowflake | null;
   public readonly guild: Guild | null;
-  public readonly channel: TextChannel | VoiceChannel | null;
+  public readonly channel: AllChannels | null;
   public readonly target: User | null;
   public readonly executorId: Snowflake | null;
   public readonly executor: User | null;
@@ -181,7 +189,7 @@ export type AuditLogDiscordJSON = AuditLogStorageJSON;
 
 export class ButtonClick extends Interaction {
   public constructor(
-    client: any,
+    client: Client,
     data: APIMessageComponentButtonInteraction,
     { guildId, channelId }: { guildId: Snowflake; channelId: Snowflake },
   );
@@ -217,6 +225,12 @@ export interface ButtonClickDiscordJSON extends InteractionDiscordJSON {
 export class CategoryChannel {
   readonly nsfw: boolean;
   readonly mention: string;
+  readonly name?: string;
+  readonly type: ChannelType.GuildCategory;
+  readonly id: Snowflake;
+  readonly position?: number;
+  readonly guildId: Snowflake;
+  readonly permissionOverwrites: Array<PermissionOverwrite>;
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -233,6 +247,7 @@ export interface CategoryChannelCacheJSON {
   type: number;
   nsfw: boolean;
   permission_overwrites: PermissionOverwriteCacheJSON[];
+  position?: number;
 }
 
 export interface CategoryChannelDiscordJSON {
@@ -242,6 +257,7 @@ export interface CategoryChannelDiscordJSON {
   type: number;
   nsfw: boolean;
   permission_overwrites: PermissionOverwriteDiscordJSON[];
+  position?: number;
 }
 
 export interface CategoryChannelStorageJSON {
@@ -251,18 +267,19 @@ export interface CategoryChannelStorageJSON {
   type: number;
   _attributes: number;
   permission_overwrites: PermissionOverwriteStorageJSON[];
+  position?: number;
 }
 
 export class GuildChannel {
   public constructor(
-    client: any,
+    client: Client,
     data: APIGuildChannel,
     { guildId }: { guildId: Snowflake },
   );
   public readonly mention: string;
   public readonly nsfw: boolean;
   public readonly guild: Guild | null;
-  public readonly parent: ChannelType | null;
+  public readonly parent: AllChannels | null;
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly parentId: Snowflake | null;
@@ -330,7 +347,7 @@ export interface GuildChannelDiscordJSON {
 
 export class Emoji {
   constructor(
-    client: any,
+    client: Client,
     data: APIEmoji | EmojiCacheJSON | EmojiStorageJSON | EmojiDiscordJSON,
     {
       guildId,
@@ -379,7 +396,7 @@ export interface EmojiDiscordJSON {
 
 export class Guild {
   constructor(
-    client: any,
+    client: Client,
     data: APIGuild | GuildCacheJSON | GuildStorageJSON | GuildDiscordJSON,
     { nocache }: { nocache?: boolean },
   );
@@ -434,6 +451,8 @@ export class Guild {
   calculateMemberCacheCount(): number;
   me(): Promise<Member>;
   _intervalCallback(): void;
+  _incrementMemberCount(): void;
+  _decrementMemberCount(): void;
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -516,7 +535,7 @@ export interface GuildDiscordJSON {
 
 export class Interaction {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIGuildInteraction
       | InteractionCacheJSON
@@ -592,22 +611,22 @@ export interface InteractionDiscordJSON {
 
 export class Invite {
   constructor(
-    client: any,
+    client: Client,
     data: APIInvite | InviteCacheJSON | InviteDiscordJSON | InviteStorageJSON,
     { guildId, nocache }: { guildId: Snowflake; nocache?: boolean },
   );
   public readonly channelId: Snowflake | null;
-  public readonly channel: TextChannel | VoiceChannel | null;
+  public readonly channel: AllChannels | null;
   public readonly id: Snowflake;
   public readonly code: string;
   public readonly guildId: Snowflake;
   public readonly guild: Guild | null;
-  public readonly uses: number;
+  public readonly uses?: number;
   public readonly expires?: UnixTimestamp;
   public readonly inviter?: User;
   public readonly inviterId: Snowflake;
   public readonly url: string;
-  public readonly maxUses: number;
+  public readonly maxUses?: number;
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -618,32 +637,32 @@ export interface InviteStorageJSON {
   code: string;
   channel: ChannelStorageJSON | null;
   inviter?: UserStorageJSON;
-  uses: number;
+  uses?: number;
   expires: UnixMillisecondsTimestamp | undefined;
-  max_uses: number;
+  max_uses?: number;
 }
 
 export interface InviteCacheJSON {
   code: string;
   channel: ChannelCacheJSON | null;
   inviter?: UserCacheJSON;
-  uses: number;
+  uses?: number;
   expires: UnixMillisecondsTimestamp | undefined;
-  max_uses: number;
+  max_uses?: number;
 }
 
 export interface InviteDiscordJSON {
   code: string;
   channel: ChannelDiscordJSON | null;
   inviter?: UserDiscordJSON;
-  uses: number;
+  uses?: number;
   expires_at: ISO8601Timestamp | undefined;
-  max_uses: number;
+  max_uses?: number;
 }
 
 export class Member {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIGuildMember
       | APIInteractionDataResolvedGuildMember
@@ -665,7 +684,7 @@ export class Member {
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
   public readonly guild: Guild | null;
-  public readonly nick: string;
+  public readonly nick: string | null;
   public readonly joinedAt?: UnixTimestamp;
   public readonly timeoutUntil: UnixTimestamp | null;
   public readonly flags: number;
@@ -673,7 +692,7 @@ export class Member {
   public readonly highestRolePosition: number;
   public readonly permissions: PermissionsBitfield | null;
   public readonly rejoined: boolean;
-  public readonly user: User;
+  public readonly user?: User;
   public readonly _originalAvatarHash: string | null;
   public readonly displayAvatarURL: string | null;
   public readonly displayAvatarURLNoFallback: string | null;
@@ -705,7 +724,7 @@ export class Member {
 }
 
 export interface MemberStorageJSON {
-  user: UserStorageJSON;
+  user?: UserStorageJSON;
   nick: string | null;
   joined_at?: UnixMillisecondsTimestamp;
   avatar: string | null;
@@ -717,7 +736,7 @@ export interface MemberStorageJSON {
 }
 
 export interface MemberCacheJSON {
-  user: UserCacheJSON;
+  user?: UserCacheJSON;
   nick: string | null;
   joined_at?: UnixMillisecondsTimestamp;
   avatar: string | null;
@@ -729,7 +748,7 @@ export interface MemberCacheJSON {
 }
 
 export interface MemberDiscordJSON {
-  user: UserDiscordJSON;
+  user?: UserDiscordJSON;
   nick: string | null;
   joined_at?: ISO8601Timestamp;
   avatar: string | null;
@@ -742,7 +761,7 @@ export interface MemberDiscordJSON {
 
 export class Message {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIMessage
       | MessageCacheJSON
@@ -763,15 +782,16 @@ export class Message {
   readonly id: Snowflake;
   readonly guildId: Snowflake | null;
   readonly channelId: Snowflake;
-  readonly channel: any;
+  readonly channel: TextChannel | VoiceChannel | Thread | null;
   readonly author: User;
-  readonly member: MemberCacheJSON | null;
+  readonly member: Member | null;
   readonly timestamp: UnixMillisecondsTimestamp;
   readonly editedTimestamp: UnixMillisecondsTimestamp | null;
   readonly mentionEveryone: boolean;
-  // readonly mentions: Array<UserCacheJSON>;
-  // readonly mentionRoles: Array<Snowflake>;
-  // readonly mentionChannels: Array<MessageChannelMentionObject>;
+  readonly mentions: boolean;
+  readonly mentionRoles: boolean;
+  readonly pinned: boolean;
+  readonly mirrored: boolean;
   readonly attachments: Array<Attachment>;
   readonly content: string | null;
   readonly poll: PollType | null;
@@ -813,7 +833,7 @@ export interface MessageStorageJSON {
   id: Snowflake;
   author: UserStorageJSON;
   member: MemberStorageJSON | null;
-  content: string;
+  content: string | null;
   _attributes: number;
   attachments: AttachmentStorageJSON[];
   embeds: EmbedStorageJSON[];
@@ -832,7 +852,7 @@ export interface MessageCacheJSON {
   id: Snowflake;
   author: UserCacheJSON;
   member: MemberCacheJSON | null;
-  content: string;
+  content: string | null;
   _attributes: number;
   attachments: AttachmentCacheJSON[];
   embeds: EmbedCacheJSON[];
@@ -852,7 +872,7 @@ export interface MessageDiscordJSON {
   channel_id: Snowflake;
   author: UserDiscordJSON;
   member: MemberDiscordJSON | null;
-  content: string;
+  content: string | null;
   pinned: boolean;
   attachments: AttachmentDiscordJSON[];
   embeds: EmbedDiscordJSON[];
@@ -871,7 +891,7 @@ export interface MessageDiscordJSON {
 }
 
 export class ModalResponse extends Interaction {
-  constructor(client: any, data: APIModalSubmitInteraction);
+  constructor(client: Client, data: APIModalSubmitInteraction);
   public readonly customId: string;
   public readonly values: Array<ModalSubmitComponent>;
   toString(): string;
@@ -904,7 +924,7 @@ export interface ModalResponseDiscordJSON extends InteractionDiscordJSON {
 
 export class OptionSelect extends Interaction {
   constructor(
-    client: any,
+    client: Client,
     data: APIMessageComponentSelectMenuInteraction,
     { channelId, guildId }: { channelId: Snowflake; guildId: Snowflake },
   );
@@ -938,7 +958,7 @@ export interface OptionSelectDiscordJSON extends InteractionDiscordJSON {
 }
 
 export class PermissionOverwrite {
-  constructor(client: any, data: APIOverwrite);
+  constructor(client: Client, data: APIOverwrite);
   public readonly allow: string;
   public readonly deny: string;
   public readonly id: string;
@@ -975,7 +995,7 @@ export interface PermissionOverwriteDiscordJSON {
 
 export class Poll {
   constructor(
-    client: any,
+    client: Client,
     data: APIPoll | PollCacheJSON | PollDiscordJSON | PollStorageJSON,
     { guildId }: { guildId: Snowflake },
   );
@@ -1020,12 +1040,13 @@ export interface PollStorageJSON {
 
 export class Reaction {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIReaction
+      | ReactionStorageJSON
       | ReactionCacheJSON
       | ReactionDiscordJSON
-      | ReactionStorageJSON,
+      | GatewayMessageReactionAddDispatchData,
     { guildId }: { guildId: Snowflake },
   );
   public readonly count: number;
@@ -1062,7 +1083,7 @@ export interface ReactionDiscordJSON {
 
 export class Role {
   constructor(
-    client: any,
+    client: Client,
     data: APIRole | RoleCacheJSON | RoleDiscordJSON | RoleStorageJSON,
     { guildId, nocache }: { guildId: Snowflake; nocache?: boolean },
   );
@@ -1121,7 +1142,7 @@ export interface RoleDiscordJSON {
 
 export class ScheduledEvent {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIGuildScheduledEvent
       | ScheduledEventCacheJSON
@@ -1144,6 +1165,8 @@ export class ScheduledEvent {
   readonly scheduledEndTime: UnixTimestamp | null;
   readonly userCount: number;
   readonly location: string | null;
+  _incrementUserCount(): void;
+  _decrementUserCount(): void;
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -1209,7 +1232,7 @@ export interface ScheduledEventDiscordJSON {
 
 export class SlashCommand extends Interaction {
   constructor(
-    client: any,
+    client: Client,
     data: APIChatInputApplicationCommandGuildInteraction,
   );
   readonly data: APIChatInputApplicationCommandInteractionData;
@@ -1237,7 +1260,7 @@ export interface SlashCommandDiscordJSON extends InteractionDiscordJSON {
 
 export class Sticker {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APISticker
       | StickerCacheJSON
@@ -1274,7 +1297,7 @@ export interface StickerDiscordJSON {
 
 export class TextChannel extends GuildChannel {
   constructor(
-    client: any,
+    client: Client,
     data: APIGuildTextChannel,
     { guildId, nocache }: { guildId: Snowflake; nocache?: boolean },
   );
@@ -1296,12 +1319,12 @@ export type TextChannelStorageJSON = GuildChannelStorageJSON;
 
 export class Thread extends GuildChannel {
   constructor(
-    client: any,
+    client: Client,
     data: APIThreadChannel,
     { guildId, nocache }: { guildId: Snowflake; nocache?: boolean },
   );
   readonly owner: Member | null;
-  readonly parent: TextChannel | VoiceChannel;
+  readonly parent: TextChannel | VoiceChannel | null;
   readonly ownerId: Snowflake;
   readonly parentId: Snowflake;
   toString(): string;
@@ -1327,7 +1350,7 @@ export interface ThreadDiscordJSON extends GuildChannelDiscordJSON {
 
 export class User {
   constructor(
-    client: any,
+    client: Client,
     data: APIUser | UserCacheJSON | UserStorageJSON | UserDiscordJSON,
     { nocache }: { nocache?: boolean },
   );
@@ -1382,7 +1405,7 @@ export interface UserDiscordJSON {
 
 export class VoiceChannel extends GuildChannel {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIGuildVoiceChannel
       | APIGuildStageVoiceChannel
@@ -1391,9 +1414,9 @@ export class VoiceChannel extends GuildChannel {
       | VoiceChannelStorageJSON,
     { guildId, nocache }: { guildId: Snowflake; nocache?: boolean },
   );
-  readonly bitrate: number;
-  readonly userLimit: number;
-  readonly rtcRegion: APIVoiceRegion;
+  readonly bitrate?: number;
+  readonly userLimit?: number;
+  readonly rtcRegion?: string;
   toString(): string;
   toJSON(
     format?: JsonTypes,
@@ -1401,26 +1424,26 @@ export class VoiceChannel extends GuildChannel {
 }
 
 export interface VoiceChannelCacheJSON extends GuildChannelCacheJSON {
-  bitrate: number;
-  user_limit: number;
-  rtc_region: APIVoiceRegion;
+  bitrate?: number;
+  user_limit?: number;
+  rtc_region?: string;
 }
 
 export interface VoiceChannelDiscordJSON extends GuildChannelDiscordJSON {
-  bitrate: number;
-  user_limit: number;
-  rtc_region: APIVoiceRegion;
+  bitrate?: number;
+  user_limit?: number;
+  rtc_region?: string;
 }
 
 export interface VoiceChannelStorageJSON extends GuildChannelStorageJSON {
-  bitrate: number;
-  user_limit: number;
-  rtc_region: APIVoiceRegion;
+  bitrate?: number;
+  user_limit?: number;
+  rtc_region?: string;
 }
 
 export class VoiceState {
   constructor(
-    client: any,
+    client: Client,
     data:
       | APIVoiceState
       | VoiceStateCacheJSON
@@ -1459,7 +1482,7 @@ export interface VoiceStateStorageJSON {
   guild_id: Snowflake;
   channel_id: Snowflake;
   _attributes: number;
-  member: MemberStorageJSON | null;
+  member?: MemberStorageJSON;
   user_id: Snowflake;
   joined: UnixTimestamp;
   request_to_speak_timestamp: UnixMillisecondsTimestamp | null;
@@ -1469,7 +1492,7 @@ export interface VoiceStateCacheJSON {
   guild_id: Snowflake;
   channel_id: Snowflake;
   _attributes: number;
-  member: MemberCacheJSON | null;
+  member?: MemberCacheJSON;
   user_id: Snowflake;
   joined: UnixTimestamp;
   request_to_speak_timestamp: UnixMillisecondsTimestamp | null;
@@ -1485,37 +1508,40 @@ export interface VoiceStateDiscordJSON {
   self_stream: boolean;
   self_video: boolean;
   suppress: boolean;
-  member: MemberDiscordJSON | null;
+  member?: MemberDiscordJSON;
   user_id: Snowflake;
   joined: UnixTimestamp;
   request_to_speak_timestamp: UnixMillisecondsTimestamp | null;
 }
 
-export class BaseCacheManager {
+export class BaseCacheManager<T> {
   constructor(
-    client: any,
+    client: Client,
     {
       structureType,
     }: {
       structureType: StaticManagerType;
     },
   );
-  get(key: string): unknown | null;
-  fetchFromRules(key: string): Promise<unknown | null>;
-  fetchWithRules(key: string): Promise<unknown | null>;
-  set(key: string, value: unknown, expiry: number): void;
+  get(key: string): T | null;
+  fetchFromRules(key: string): Promise<T | null>;
+  fetchWithRules(key: string): Promise<T | null>;
+  set(key: string, value: T, expiry: number): void;
   delete(key: string): boolean;
   clear(): void;
   _intervalCallback(): { i: StructureIdentifiers };
   size: number;
   forEach(
-    callbackfn: (
-      value: unknown,
-      key: string,
-      map: Map<string, unknown>,
-    ) => void,
+    callbackfn: (value: T, key: string, map: Map<string, T>) => void,
   ): void;
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [string, T],
+      index: number,
+      array: [string, T][],
+    ) => unknown,
+  ): T[];
   toJSON(format?: JsonTypes): unknown;
 }
 
@@ -1531,9 +1557,9 @@ export type StructureIdentifiers =
   | "voicestates"
   | "users";
 
-export interface StaticManagerType {
+export interface StaticManagerType<T> {
   identifier: StructureIdentifiers;
-  rules: GluonCacheRuleSetStructure;
+  rules: GluonCacheRuleSetStructure<T>;
 }
 
 export class ChannelCacheOptions {
@@ -1564,7 +1590,7 @@ export class ChannelCacheOptions {
 }
 
 export class ChannelMessageManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild, channel: GuildChannel);
+  constructor(client: Client, guild: Guild, channel: GuildChannel);
   get(key: Snowflake): Message | null;
   fetchFromRules(key: Snowflake): Promise<Message | null>;
   fetchWithRules(key: Snowflake): Promise<Message | null>;
@@ -1581,6 +1607,13 @@ export class ChannelMessageManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, Message],
+      index: number,
+      array: [Snowflake, Message][],
+    ) => unknown,
+  ): unknown[];
   toJSON(
     format?: JsonTypes,
   ): MessageDiscordJSON[] | MessageStorageJSON[] | MessageCacheJSON[];
@@ -1640,7 +1673,7 @@ export interface GuildCacheOptions {
 }
 
 export class GuildChannelsManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: Snowflake): AllChannels | null;
   fetch(key: Snowflake): Promise<AllChannels | null>;
   fetchFromRules(key: Snowflake): Promise<AllChannels | null>;
@@ -1658,6 +1691,13 @@ export class GuildChannelsManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, AllChannels],
+      index: number,
+      array: [Snowflake, AllChannels][],
+    ) => unknown,
+  ): unknown[];
   toJSON(format?: JsonTypes): AllChannelJSON[];
 }
 
@@ -1678,7 +1718,7 @@ export type AllChannelJSON =
   | CategoryChannelStorageJSON;
 
 export class GuildEmojisManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: Snowflake): Emoji | null;
   fetch(key: Snowflake): Promise<Emoji | null>;
   fetchFromRules(key: Snowflake): Promise<Emoji | null>;
@@ -1696,13 +1736,20 @@ export class GuildEmojisManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, Emoji],
+      index: number,
+      array: [Snowflake, Emoji][],
+    ) => unknown,
+  ): unknown[];
   toJSON(
     format?: JsonTypes,
   ): EmojiStorageJSON[] | EmojiDiscordJSON[] | EmojiCacheJSON[];
 }
 
 export class GuildInviteManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: string): Invite | null;
   fetchFromRules(key: string): Promise<Invite | null>;
   fetchWithRules(key: string): Promise<Invite | null>;
@@ -1715,6 +1762,13 @@ export class GuildInviteManager extends BaseCacheManager {
     callbackfn: (value: Invite, key: string, map: Map<string, Invite>) => void,
   ): void;
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [string, Invite],
+      index: number,
+      array: [string, Invite][],
+    ) => unknown,
+  ): unknown[];
   fetch(): Promise<Invite[]>;
   toJSON(
     format?: JsonTypes,
@@ -1722,7 +1776,7 @@ export class GuildInviteManager extends BaseCacheManager {
 }
 
 export class GuildManager extends BaseCacheManager {
-  constructor(client: any);
+  constructor(client: Client);
   get(key: Snowflake): Guild | null;
   fetchFromRules(key: Snowflake): Promise<Guild | null>;
   fetchWithRules(key: Snowflake): Promise<Guild | null>;
@@ -1739,13 +1793,20 @@ export class GuildManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, Guild],
+      index: number,
+      array: [Snowflake, Guild][],
+    ) => unknown,
+  ): unknown[];
   toJSON(
     format?: JsonTypes,
   ): GuildStorageJSON[] | GuildCacheJSON[] | GuildDiscordJSON[];
 }
 
 export class GuildMemberManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: Snowflake): Member | null;
   fetchFromRules(key: Snowflake): Promise<Member | null>;
   fetchWithRules(key: Snowflake): Promise<Member | null>;
@@ -1762,6 +1823,13 @@ export class GuildMemberManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, Member],
+      index: number,
+      array: [Snowflake, Member][],
+    ) => unknown,
+  ): unknown[];
   fetch(key: Snowflake): Promise<Member | null>;
   search(query: string): Promise<Member[]>;
   fetch(key: Snowflake): Promise<Member | null>;
@@ -1771,7 +1839,7 @@ export class GuildMemberManager extends BaseCacheManager {
 }
 
 export class GuildRoleManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: Snowflake): Role | null;
   fetchFromRules(key: Snowflake): Promise<Role | null>;
   fetchWithRules(key: Snowflake): Promise<Role | null>;
@@ -1788,6 +1856,13 @@ export class GuildRoleManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, Role],
+      index: number,
+      array: [Snowflake, Role][],
+    ) => unknown,
+  ): unknown[];
   fetch(key: Snowflake): Promise<Role | null>;
   toJSON(
     format?: JsonTypes,
@@ -1795,7 +1870,7 @@ export class GuildRoleManager extends BaseCacheManager {
 }
 
 export class GuildScheduledEventManager extends BaseCacheManager {
-  constructor(client: any, guild: Guild);
+  constructor(client: Client, guild: Guild);
   get(key: Snowflake): ScheduledEvent | null;
   fetchFromRules(key: Snowflake): Promise<ScheduledEvent | null>;
   fetchWithRules(key: Snowflake): Promise<ScheduledEvent | null>;
@@ -1812,6 +1887,13 @@ export class GuildScheduledEventManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, ScheduledEvent],
+      index: number,
+      array: [Snowflake, ScheduledEvent][],
+    ) => unknown,
+  ): unknown[];
   list(): Promise<ScheduledEvent[]>;
   fetch(key: Snowflake): Promise<ScheduledEvent | null>;
   toJSON(
@@ -1823,7 +1905,7 @@ export class GuildScheduledEventManager extends BaseCacheManager {
 }
 
 export class GuildVoiceStatesManager extends BaseCacheManager {
-  constructor(client: any);
+  constructor(client: Client);
   get(key: Snowflake): VoiceState | null;
   fetchFromRules(key: Snowflake): Promise<VoiceState | null>;
   fetchWithRules(key: Snowflake): Promise<VoiceState | null>;
@@ -1840,6 +1922,13 @@ export class GuildVoiceStatesManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, VoiceState],
+      index: number,
+      array: [Snowflake, VoiceState][],
+    ) => unknown,
+  ): unknown[];
   toJSON(
     format?: JsonTypes,
   ): VoiceStateCacheJSON[] | VoiceStateDiscordJSON[] | VoiceStateStorageJSON[];
@@ -1873,7 +1962,7 @@ export interface MessageReactionManager {
   _addReaction(
     userId: Snowflake,
     emoji: Snowflake | string,
-    data: GatewayMessageReactionAddDispatch,
+    data: GatewayMessageReactionAddDispatchData,
   ): void;
   _removeReaction(userId: Snowflake, emoji: Snowflake | string): void;
   toJSON(
@@ -1895,7 +1984,7 @@ export interface MessageReactionManagerCacheJSON {
 export type MessageReactionManagerDiscordJSON = Array<ReactionDiscordJSON>;
 
 export class UserManager extends BaseCacheManager {
-  constructor(client: any);
+  constructor(client: Client);
   get(key: Snowflake): User | null;
   fetchFromRules(key: Snowflake): Promise<User | null>;
   fetchWithRules(key: Snowflake): Promise<User | null>;
@@ -1912,6 +2001,13 @@ export class UserManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  map(
+    callbackfn: (
+      value: [Snowflake, User],
+      index: number,
+      array: [Snowflake, User][],
+    ) => unknown,
+  ): unknown[];
   fetch(key: Snowflake): Promise<User | null>;
   toJSON(
     format?: JsonTypes,
@@ -2063,6 +2159,14 @@ export interface CommandOptionNameLocalizations {
 }
 
 export interface CommandOptionDescriptionLocalizations {
+  [key: string]: string;
+}
+
+export interface CommandNameLocalizations {
+  [key: string]: string;
+}
+
+export interface CommandDescriptionLocalizations {
   [key: string]: string;
 }
 
@@ -2413,30 +2517,30 @@ export type DataManagers =
   | GuildVoiceStatesManager
   | UserManager;
 
-export interface GluonCacheRuleSetStructure {
+export interface GluonCacheRuleSetStructure<T> {
   [key: string]: {
-    store: GluonCacheRuleHandlerFunction;
-    retrieve: GluonCacheRuleRetrieveFunction;
-    structure: StaticManagerType;
+    store: GluonCacheRuleHandlerFunction<T>;
+    retrieve: GluonCacheRuleRetrieveFunction<T>;
+    structure: StaticManagerType<T>;
   };
 }
 
-export type GluonCacheRuleHandlerFunction = (value: unknown) => void;
+export type GluonCacheRuleHandlerFunction<T> = (value: T) => void;
 
-export type GluonCacheRuleRetrieveFunction = (
+export type GluonCacheRuleRetrieveFunction<T> = (
   id: string,
-  structure: StaticManagerType,
-) => Promise<unknown>;
+  structure: StaticManagerType<T>,
+) => Promise<T>;
 
-export class GluonCacheRule {
-  setName(name: string): GluonCacheRule;
+export class GluonCacheRule<T> {
+  setName(name: string): GluonCacheRule<T>;
   setHandlerFunction(
     handlerFunction: GluonCacheRuleHandlerFunction,
-  ): GluonCacheRule;
+  ): GluonCacheRule<T>;
   setRetrieveFunction(
     retrieveFunction: GluonCacheRuleRetrieveFunction,
-  ): GluonCacheRule;
-  setStructureType(structure: StaticManagerType): GluonCacheRule;
+  ): GluonCacheRule<T>;
+  setStructureType(structure: StaticManagerType<T>): GluonCacheRule<T>;
   applyRule(): void;
 }
 
@@ -2464,6 +2568,11 @@ export interface EndpointIndexItem {
   mockResponse: ({ params }: any) => HttpResponse;
 }
 
+export interface InitCache {
+  clientUser?: UserDiscordJSON | UserCacheJSON | UserStorageJSON;
+  guilds?: GuildDiscordJSON[] | GuildCacheJSON[] | GuildStorageJSON[];
+}
+
 export interface ClientOptions {
   cacheMessages?: boolean;
   cacheUsers?: boolean;
@@ -2480,90 +2589,149 @@ export interface ClientOptions {
   intents: number;
   totalShards?: number;
   shardIds?: number[];
-  sessionData?: object;
-  initCache?: object;
+  sessionData?: SessionData[];
+  initCache?: InitCache;
   softRestartFunction?: Function;
 }
 
-export class Client extends TypedEmitter<{
+export interface SessionData {
+  sessionId: string;
+  sequence: number;
+  resumeGatewayUrl: string;
+}
+
+export interface ClientEvents {
   [Events.READY]: (shardGuilds: string[]) => void;
   [Events.RESUMED]: () => void;
   [Events.GUILD_CREATE]: (guild: Guild) => void;
   [Events.GUILD_DELETE]: (guild: Guild) => void;
-  [Events.GUILD_UPDATE]: (oldGuild: Guild, newGuild: Guild) => void;
+  [Events.GUILD_UPDATE]: (oldGuild: Guild | null, newGuild: Guild) => void;
   [Events.MESSAGE_CREATE]: (message: Message) => void;
   [Events.MESSAGE_UPDATE]: (
     oldMessage: Message | null,
     newMessage: Message,
   ) => void;
-  [Events.MESSAGE_DELETE]: (message: Message) => void;
-  [Events.MESSAGE_DELETE_BULK]: (messages: Message[]) => void;
-  [Events.GUILD_AUDIT_LOG_ENTRY_CREATE]: (auditLog: object) => void;
-  [Events.GUILD_BAN_ADD]: (bannedUser: any) => void;
-  [Events.GUILD_BAN_REMOVE]: (unbannedUser: any) => void;
-  [Events.GUILD_MEMBER_ADD]: (member: any) => void;
-  [Events.GUILD_MEMBER_UPDATE]: (oldMember: any, newMember: any) => void;
-  [Events.GUILD_MEMBER_REMOVE]: (member: any) => void;
-  [Events.BUTTON_CLICK]: (interaction: any) => void;
-  [Events.MENU_SELECT]: (interaction: any) => void;
-  [Events.MODAL_RESPONSE]: (interaction: any) => void;
-  [Events.SLASH_COMMAND]: (interaction: any) => void;
-  [Events.SLASH_COMMAND_AUTOCOMPLETE]: (interaction: any) => void;
-  [Events.VOICE_STATE_UPDATE]: (oldVoiceState: any, newVoiceState: any) => void;
-  [Events.VOICE_CHANNEL_STATUS_UPDATE]: (data: object) => void;
-  [Events.CHANNEL_CREATE]: (channel: object) => void;
-  [Events.CHANNEL_UPDATE]: (oldChannel: object, newChannel: object) => void;
-  [Events.CHANNEL_DELETE]: (channel: object) => void;
-  [Events.CHANNEL_PINS_UPDATE]: (data: object) => void;
-  [Events.THREAD_CREATE]: (thread: object) => void;
-  [Events.THREAD_UPDATE]: (oldThread: object, newThread: object) => void;
-  [Events.THREAD_DELETE]: (thread: object) => void;
-  [Events.THREAD_LIST_SYNC]: (threads: object[]) => void;
-  [Events.INVITE_CREATE]: (invite: any) => void;
-  [Events.INVITE_DELETE]: (data: object, invite: any) => void;
-  [Events.GUILD_ROLE_CREATE]: (role: any) => void;
-  [Events.GUILD_ROLE_UPDATE]: (oldRole: any, newRole: any) => void;
-  [Events.GUILD_ROLE_DELETE]: (role: any) => void;
-  [Events.GUILD_EMOJI_CREATE]: (emoji: any) => void;
-  [Events.GUILD_EMOJI_UPDATE]: (oldEmoji: any, newEmoji: any) => void;
-  [Events.GUILD_EMOJI_DELETE]: (emoji: any) => void;
-  [Events.ENTITLEMENT_CREATE]: (entitlement: object) => void;
-  [Events.ENTITLEMENT_UPDATE]: (entitlement: object) => void;
-  [Events.ENTITLEMENT_DELETE]: (entitlement: object) => void;
-  [Events.GUILD_SCHEDULED_EVENT_CREATE]: (scheduledEvent: any) => void;
-  [Events.GUILD_SCHEDULED_EVENT_UPDATE]: (
-    oldScheduledEvent: any,
-    newScheduledEvent: any,
+  [Events.MESSAGE_EDIT]: (
+    oldMessage: Message | null,
+    newMessage: Message,
   ) => void;
-  [Events.GUILD_SCHEDULED_EVENT_DELETE]: (scheduledEvent: any) => void;
-  [Events.GUILD_SCHEDULED_EVENT_USER_ADD]: (data: object, user: any) => void;
-  [Events.GUILD_SCHEDULED_EVENT_USER_REMOVE]: (data: object, user: any) => void;
+  [Events.MESSAGE_DELETE]: (
+    message: Message | null,
+    data: GatewayMessageDeleteDispatchData,
+  ) => void;
+  [Events.MESSAGE_DELETE_BULK]: (messages: Message[]) => void;
+  [Events.GUILD_AUDIT_LOG_ENTRY_CREATE]: (auditLog: AuditLog) => void;
+  [Events.GUILD_BAN_ADD]: (bannedUser: User, guildId: string) => void;
+  [Events.GUILD_BAN_REMOVE]: (unbannedUser: User, guildId: string) => void;
+  [Events.GUILD_MEMBER_ADD]: (member: Member) => void;
+  [Events.GUILD_MEMBER_UPDATE]: (
+    oldMember: Member | null,
+    newMember: Member,
+  ) => void;
+  [Events.GUILD_MEMBER_REMOVE]: (member: any) => void;
+  [Events.BUTTON_CLICK]: (interaction: ButtonClick) => void;
+  [Events.MENU_SELECT]: (interaction: OptionSelect) => void;
+  [Events.MODAL_RESPONSE]: (interaction: ModalResponse) => void;
+  [Events.SLASH_COMMAND]: (interaction: SlashCommand) => void;
+  [Events.SLASH_COMMAND_AUTOCOMPLETE]: (interaction: SlashCommand) => void;
+  [Events.VOICE_STATE_UPDATE]: (
+    oldVoiceState: VoiceState | null,
+    newVoiceState: VoiceState | null,
+  ) => void;
+  [Events.VOICE_CHANNEL_STATUS_UPDATE]: (data: any) => void;
+  [Events.CHANNEL_CREATE]: (channel: AllChannels) => void;
+  [Events.CHANNEL_UPDATE]: (
+    oldChannel: AllChannels | null,
+    newChannel: AllChannels,
+  ) => void;
+  [Events.CHANNEL_DELETE]: (channel: AllChannels | null) => void;
+  [Events.CHANNEL_PINS_UPDATE]: (
+    data: GatewayChannelPinsUpdateDispatchData,
+  ) => void;
+  [Events.THREAD_CREATE]: (thread: Thread) => void;
+  [Events.THREAD_UPDATE]: (oldThread: Thread | null, newThread: Thread) => void;
+  [Events.THREAD_DELETE]: (thread: Thread | null) => void;
+  [Events.THREAD_LIST_SYNC]: (threads: Thread[]) => void;
+  [Events.INVITE_CREATE]: (invite: Invite) => void;
+  [Events.INVITE_DELETE]: (partialInvite: any, invite: any) => void;
+  [Events.GUILD_ROLE_CREATE]: (role: Role) => void;
+  [Events.GUILD_ROLE_UPDATE]: (oldRole: Role | null, newRole: Role) => void;
+  [Events.GUILD_ROLE_DELETE]: (role: Role | null) => void;
+  [Events.GUILD_EMOJI_CREATE]: (emoji: Emoji | null) => void;
+  [Events.GUILD_EMOJI_UPDATE]: (
+    oldEmoji: Emoji | null,
+    newEmoji: Emoji | null,
+  ) => void;
+  [Events.GUILD_EMOJI_DELETE]: (emoji: Emoji | null) => void;
+  [Events.ENTITLEMENT_CREATE]: (
+    entitlement: GatewayEntitlementCreateDispatchData,
+  ) => void;
+  [Events.ENTITLEMENT_UPDATE]: (
+    entitlement: GatewayEntitlementUpdateDispatchData,
+  ) => void;
+  [Events.ENTITLEMENT_DELETE]: (
+    entitlement: GatewayEntitlementDeleteDispatchData,
+  ) => void;
+  [Events.GUILD_SCHEDULED_EVENT_CREATE]: (
+    scheduledEvent: ScheduledEvent,
+  ) => void;
+  [Events.GUILD_SCHEDULED_EVENT_UPDATE]: (
+    oldScheduledEvent: ScheduledEvent | null,
+    newScheduledEvent: ScheduledEvent,
+  ) => void;
+  [Events.GUILD_SCHEDULED_EVENT_DELETE]: (
+    scheduledEvent: ScheduledEvent | null,
+  ) => void;
+  [Events.GUILD_SCHEDULED_EVENT_USER_ADD]: (
+    data: GatewayGuildScheduledEventUserAddDispatchData,
+    user: User | null,
+  ) => void;
+  [Events.GUILD_SCHEDULED_EVENT_USER_REMOVE]: (
+    data: GatewayGuildScheduledEventUserRemoveDispatchData,
+    user: User | null,
+  ) => void;
   [Events.INITIALISED]: () => void;
-  [Events.MESSAGE_POLL_VOTE_ADD]: (data: object) => void;
-  [Events.MESSAGE_POLL_VOTE_REMOVE]: (data: object) => void;
-  [Events.MESSAGE_REACTION_ADD]: (data: object) => void;
-  [Events.MESSAGE_REACTION_REMOVE]: (data: object) => void;
-  [Events.WEBHOOKS_UPDATE]: (data: object) => void;
-}> {
+  [Events.MESSAGE_POLL_VOTE_ADD]: (
+    data: GatewayMessagePollVoteDispatchData,
+  ) => void;
+  [Events.MESSAGE_POLL_VOTE_REMOVE]: (
+    data: GatewayMessagePollVoteDispatchData,
+  ) => void;
+  [Events.MESSAGE_REACTION_ADD]: (
+    data: GatewayMessageReactionAddDispatchData,
+    emoji: Emoji,
+  ) => void;
+  [Events.MESSAGE_REACTION_REMOVE]: (
+    data: GatewayMessageReactionRemoveDispatchData,
+    emoji: Emoji,
+  ) => void;
+  [Events.WEBHOOKS_UPDATE]: (data: GatewayWebhooksUpdateDispatchData) => void;
+  [Events.REQUEST_COMPLETED]: (data: RequestCompletedData) => void;
+  [Events.RAW]: (data: GatewayReceivePayload) => void;
+}
+
+export class Client extends TypedEmitter<ClientEvents> {
   request: any;
   user: User | null;
   constructor(options: ClientOptions);
   get shardIds(): number[];
   get totalShards(): number;
   get intents(): number;
-  get users(): any;
-  get guilds(): any;
-  get sessionData(): object;
+  get users(): UserManager;
+  get guilds(): GuildManager;
+  get sessionData(): SessionData[];
+  get ready(): boolean;
+  get initialized(): boolean;
   softRestartFunction(): void;
   halt(): void;
   checkProcess(): object;
   _emitDebug(status: number, message: string): void;
   getCacheCounts(): object;
-  get _cacheOptions(): any;
-  get _defaultGuildCacheOptions(): any;
+  get _cacheOptions(): GluonCacheOptions;
+  get _defaultGuildCacheOptions(): GuildCacheOptions;
   getMemberCount(): number;
   bundleCache(): object[];
-  registerCommands(commands: any[]): Promise<object[]>;
+  registerCommands(commands: CommandBuilder[]): Promise<object[]>;
   fetchEmojis(): Promise<object[]>;
   createEmoji(emoji: { name: string; image: string }): Promise<void>;
   setStatus(status: {
@@ -2573,6 +2741,8 @@ export class Client extends TypedEmitter<{
     afk?: boolean;
     since?: number;
   }): void;
+  setReady(): void;
+  setInitialized(): void;
   login(token: string): void;
 }
 
@@ -2668,58 +2838,108 @@ export interface CommandOptionDiscordJSON {
   autocomplete: boolean;
 }
 
-export enum Events {
-  READY = "ready",
-  RESUMED = "resumed",
-  GUILD_CREATE = "guildCreate",
-  GUILD_DELETE = "guildDelete",
-  GUILD_UPDATE = "guildUpdate",
-  MESSAGE_CREATE = "messageCreate",
-  MESSAGE_UPDATE = "messageUpdate",
-  MESSAGE_EDIT = "messageEdit",
-  MESSAGE_DELETE = "messageDelete",
-  MESSAGE_DELETE_BULK = "messageDeleteBulk",
-  GUILD_AUDIT_LOG_ENTRY_CREATE = "guildAuditLogEntryCreate",
-  GUILD_BAN_ADD = "guildBanAdd",
-  GUILD_BAN_REMOVE = "guildBanRemove",
-  GUILD_MEMBER_ADD = "guildMemberAdd",
-  GUILD_MEMBER_UPDATE = "guildMemberUpdate",
-  GUILD_MEMBER_REMOVE = "guildMemberRemove",
-  BUTTON_CLICK = "buttonClick",
-  MENU_SELECT = "menuSelect",
-  MODAL_RESPONSE = "modalResponse",
-  SLASH_COMMAND = "slashCommand",
-  SLASH_COMMAND_AUTOCOMPLETE = "slashCommandAutocomplete",
-  VOICE_STATE_UPDATE = "voiceStateUpdate",
-  VOICE_CHANNEL_STATUS_UPDATE = "voiceChannelStatusUpdate",
-  CHANNEL_CREATE = "channelCreate",
-  CHANNEL_UPDATE = "channelUpdate",
-  CHANNEL_DELETE = "channelDelete",
-  CHANNEL_PINS_UPDATE = "channelPinsUpdate",
-  THREAD_CREATE = "threadCreate",
-  THREAD_UPDATE = "threadUpdate",
-  THREAD_DELETE = "threadDelete",
-  THREAD_LIST_SYNC = "threadListSync",
-  INVITE_CREATE = "inviteCreate",
-  INVITE_DELETE = "inviteDelete",
-  GUILD_ROLE_CREATE = "roleCreate",
-  GUILD_ROLE_UPDATE = "roleUpdate",
-  GUILD_ROLE_DELETE = "roleDelete",
-  GUILD_EMOJI_CREATE = "emojiCreate",
-  GUILD_EMOJI_UPDATE = "emojiUpdate",
-  GUILD_EMOJI_DELETE = "emojiDelete",
-  ENTITLEMENT_CREATE = "entitlementCreate",
-  ENTITLEMENT_UPDATE = "entitlementUpdate",
-  ENTITLEMENT_DELETE = "entitlementDelete",
-  GUILD_SCHEDULED_EVENT_CREATE = "guildScheduledEventCreate",
-  GUILD_SCHEDULED_EVENT_UPDATE = "guildScheduledEventUpdate",
-  GUILD_SCHEDULED_EVENT_DELETE = "guildScheduledEventDelete",
-  GUILD_SCHEDULED_EVENT_USER_ADD = "guildScheduledEventUserAdd",
-  GUILD_SCHEDULED_EVENT_USER_REMOVE = "guildScheduledEventUserRemove",
-  INITIALISED = "initialised",
-  MESSAGE_POLL_VOTE_ADD = "messagePollVoteAdd",
-  MESSAGE_POLL_VOTE_REMOVE = "messagePollVoteRemove",
-  MESSAGE_REACTION_ADD = "messageReactionAdd",
-  MESSAGE_REACTION_REMOVE = "messageReactionRemove",
-  WEBHOOKS_UPDATE = "webhooksUpdate",
+export class CommandBuilder {
+  contexts: [0] = [0];
+  defaultLocale: Locale = Locale.EnglishUS;
+  default_member_permissions?: PermissionsBitfield;
+  description?: string;
+  description_localizations?: CommandDescriptionLocalizations;
+  name?: string;
+  name_localizations?: CommandNameLocalizations;
+  nsfw: boolean = false;
+  options: CommandOptionBuilder[] = [];
+  type: ApplicationCommandType = ApplicationCommandType.ChatInput;
+
+  setName(name: string | CommandNameLocalizations): CommandBuilder;
+  setDescription(
+    description: string | CommandDescriptionLocalizations,
+  ): CommandBuilder;
+  setDefaultLocale(locale: Locale): CommandBuilder;
+  setDefaultMemberPermissions(permission: PermissionsBitfield): CommandBuilder;
+  setType(type: ApplicationCommandType): CommandBuilder;
+  setNsfw(nsfw: boolean): CommandBuilder;
+  addOption(option: CommandOptionBuilder): CommandBuilder;
+  toJSON(
+    format?: JsonTypes,
+    options?: { suppressValidation: boolean },
+  ): CommandStorageJSON | CommandCacheJSON | CommandDiscordJSON;
+}
+
+export interface CommandStorageJSON {
+  name: string;
+  name_localizations?: CommandNameLocalizations;
+  type: ApplicationCommandType;
+  description?: string;
+  description_localizations?: CommandDescriptionLocalizations;
+  default_member_permissions: PermissionsBitfield;
+  nsfw: boolean;
+  options: CommandOptionStorageJSON[];
+}
+
+export interface CommandCacheJSON {
+  name: string;
+  name_localizations?: CommandNameLocalizations;
+  type: ApplicationCommandType;
+  description?: string;
+  description_localizations?: CommandDescriptionLocalizations;
+  default_member_permissions: PermissionsBitfield;
+  nsfw: boolean;
+  options: CommandOptionCacheJSON[];
+}
+
+export interface CommandDiscordJSON {
+  name: string;
+  name_localizations?: CommandNameLocalizations;
+  type: ApplicationCommandType;
+  description?: string;
+  description_localizations?: CommandDescriptionLocalizations;
+  default_member_permissions: PermissionsBitfield;
+  nsfw: boolean;
+  options: CommandOptionDiscordJSON[];
+}
+
+export interface RequestCompletedData {
+  status: number;
+  method: HttpMethods;
+  endpoint: string;
+  hash: string;
+}
+
+export type AttachmentJsonStructures =
+  | AttachmentCacheJSON
+  | AttachmentDiscordJSON
+  | AttachmentStorageJSON;
+
+export type AuditLogJsonStructures =
+  | AuditLogCacheJSON
+  | AuditLogDiscordJSON
+  | AuditLogStorageJSON;
+
+export type CategoryChannelJsonStructures =
+  | CategoryChannelCacheJSON
+  | CategoryChannelDiscordJSON
+  | CategoryChannelStorageJSON;
+
+export type MessageJsonStructures =
+  | MessageCacheJSON
+  | MessageDiscordJSON
+  | MessageStorageJSON;
+
+export abstract class BaseStructure<T> {
+  protected client;
+  readonly id;
+  constructor(client: Client, id: Snowflake) {
+    this.client = client;
+    this.id = id;
+  }
+  toString() {
+    return `[${this.constructor.name
+      .split(/(?=[A-Z])/)
+      .join(" ")
+      .toLowerCase()} ${this.id}]`;
+  }
+  [util.inspect.custom]() {
+    return this.toString();
+  }
+  abstract toJSON(format?: JsonTypes): T;
 }

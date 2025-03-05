@@ -8,7 +8,7 @@ import {
   Client as ClientType,
 } from "../../typings/index.d.js";
 declare class GuildScheduledEventManager
-  extends BaseCacheManager
+  extends BaseCacheManager<ScheduledEventType>
   implements GuildScheduledEventManagerType
 {
   #private;

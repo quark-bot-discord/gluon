@@ -45,7 +45,7 @@ var __classPrivateFieldGet =
 var _GuildChannelsManager__client, _GuildChannelsManager_guild;
 import cacheChannel from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildManager from "./GuildManager.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Manages all channels within a guild.
  */
@@ -146,7 +146,11 @@ class GuildChannelsManager extends BaseCacheManager {
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof channelId !== "string")
       throw new TypeError("GLUON: Channel ID must be a string.");
-    return GuildManager.getGuild(client, guildId).channels.get(channelId);
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.channels.get(channelId);
   }
   /**
    * Returns the cache manager for a guild.
@@ -163,7 +167,11 @@ class GuildChannelsManager extends BaseCacheManager {
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID must be a string.");
-    return GuildManager.getGuild(client, guildId).channels;
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.channels;
   }
   /**
    * Fetches a channel, checking the cache first.

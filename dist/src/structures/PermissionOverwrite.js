@@ -47,7 +47,7 @@ var _PermissionOverwrite__id,
   _PermissionOverwrite_allow,
   _PermissionOverwrite_deny;
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 class PermissionOverwrite {
   /**
    * Creates the structure for a permission overwrite.

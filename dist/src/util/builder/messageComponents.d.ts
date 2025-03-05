@@ -1,8 +1,8 @@
-import {
+import type {
   MessageComponents as MessageComponentsType,
   ActionRowBuilder as ActionRowBuilderType,
-  JsonTypes,
-} from "typings/index.d.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Structure for message components.
  */
@@ -25,9 +25,9 @@ declare class MessageComponents implements MessageComponentsType {
   toJSON(
     format?: JsonTypes,
   ): (
-    | import("typings/index.d.js").ActionRowBuilderStorageJSON
-    | import("typings/index.d.js").ActionRowBuilderCacheJSON
-    | import("typings/index.d.js").ActionRowBuilderDiscordJSON
+    | import("typings/index.d.ts").ActionRowBuilderStorageJSON
+    | import("typings/index.d.ts").ActionRowBuilderCacheJSON
+    | import("typings/index.d.ts").ActionRowBuilderDiscordJSON
   )[];
 }
 export default MessageComponents;

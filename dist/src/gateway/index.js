@@ -83,6 +83,8 @@ import {
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
+import { GatewayOpcodes } from "discord-api-types/v10";
+import { Events } from "#typings/enums.js";
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 class Shard {
   constructor(
@@ -95,22 +97,22 @@ class Shard {
     resumeGatewayUrl = null,
   ) {
     _Shard_instances.add(this);
+    this.terminateSocketTimeout = null;
+    this.zlib = new ZlibSync.Inflate({
+      chunkSize: 128 * 1024,
+    });
     _Shard_token.set(this, void 0);
     _Shard__client.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#_sessionId' implicitly has an 'any' type.
     _Shard__sessionId.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#_s' implicitly has an 'any' type.
     _Shard__s.set(this, void 0);
     _Shard_resuming.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#heartbeatSetInterval' implicitly has an '... Remove this comment to see the full error message
-    _Shard_heartbeatSetInterval.set(this, void 0);
+    _Shard_heartbeatSetInterval.set(this, null);
     // @ts-expect-error TS(7008): Member '#heartbeatInterval' implicitly has an 'any... Remove this comment to see the full error message
     _Shard_heartbeatInterval.set(this, void 0);
     _Shard_waitingForHeartbeatACK.set(this, void 0);
     // @ts-expect-error TS(7008): Member '#monitorOpened' implicitly has an 'any' ty... Remove this comment to see the full error message
     _Shard_monitorOpened.set(this, void 0);
     _Shard_ws.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#resumeGatewayUrl' implicitly has an 'any'... Remove this comment to see the full error message
     _Shard_resumeGatewayUrl.set(this, void 0);
     _Shard_retries.set(this, void 0);
     _Shard_halted.set(this, void 0);
@@ -238,18 +240,18 @@ class Shard {
     if (!data) return;
     if (data.s) __classPrivateFieldSet(this, _Shard__s, data.s, "f");
     if (process.env.NODE_ENV == "development")
-      __classPrivateFieldGet(this, _Shard__client, "f").emit("raw", data);
+      __classPrivateFieldGet(this, _Shard__client, "f").emit(Events.RAW, data);
     switch (data.op) {
       // Dispatch
-      case 0: {
+      case GatewayOpcodes.Dispatch: {
         try {
           // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          __classPrivateFieldGet(this, _Shard_eventHandler, "f")[data.t]
-            ? // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-              __classPrivateFieldGet(this, _Shard_eventHandler, "f")[data.t](
-                data.d,
-              )
-            : null;
+          if (__classPrivateFieldGet(this, _Shard_eventHandler, "f")[data.t]) {
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+            __classPrivateFieldGet(this, _Shard_eventHandler, "f")[data.t](
+              data.d,
+            );
+          }
         } catch (error) {
           __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
             GLUON_DEBUG_LEVELS.ERROR,
@@ -260,7 +262,7 @@ class Shard {
         break;
       }
       // Heartbeat
-      case 1: {
+      case GatewayOpcodes.Heartbeat: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
           GLUON_DEBUG_LEVELS.INFO,
           "Heartbeat requested",
@@ -274,7 +276,7 @@ class Shard {
         break;
       }
       // Reconnect
-      case 7: {
+      case GatewayOpcodes.Reconnect: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
           GLUON_DEBUG_LEVELS.INFO,
           "Reconnect requested",
@@ -289,7 +291,7 @@ class Shard {
         break;
       }
       // Invalid Session
-      case 9: {
+      case GatewayOpcodes.InvalidSession: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
           GLUON_DEBUG_LEVELS.DANGER,
           "Invalid session",
@@ -316,7 +318,7 @@ class Shard {
         break;
       }
       // Hello
-      case 10: {
+      case GatewayOpcodes.Hello: {
         __classPrivateFieldSet(
           this,
           _Shard_heartbeatInterval,
@@ -351,7 +353,7 @@ class Shard {
         break;
       }
       // Heartbeat ACK
-      case 11: {
+      case GatewayOpcodes.HeartbeatAck: {
         __classPrivateFieldSet(this, _Shard_waitingForHeartbeatACK, false, "f");
         __classPrivateFieldSet(
           this,
@@ -489,6 +491,12 @@ class Shard {
       GLUON_DEBUG_LEVELS.INFO,
       `Resuming with token ${__classPrivateFieldGet(this, _Shard_token, "f")}, session id ${__classPrivateFieldGet(this, _Shard__sessionId, "f")} and sequence ${__classPrivateFieldGet(this, _Shard__s, "f")}`,
     );
+    if (
+      !__classPrivateFieldGet(this, _Shard__sessionId, "f") ||
+      !__classPrivateFieldGet(this, _Shard__s, "f")
+    ) {
+      throw new Error("GLUON: Session ID or sequence not found");
+    }
     __classPrivateFieldGet(this, _Shard_ws, "f").send(
       _resume(
         __classPrivateFieldGet(this, _Shard_token, "f"),
@@ -503,9 +511,6 @@ class Shard {
       GLUON_DEBUG_LEVELS.INFO,
       "Adding websocket listeners",
     );
-    this.zlib = new ZlibSync.Inflate({
-      chunkSize: 128 * 1024,
-    });
     __classPrivateFieldGet(this, _Shard_ws, "f").once("open", () => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
         GLUON_DEBUG_LEVELS.INFO,
@@ -519,10 +524,16 @@ class Shard {
         `Websocket closed with code ${data}`,
       );
       __classPrivateFieldGet(this, _Shard_ws, "f").removeAllListeners();
-      clearInterval(this.terminateSocketTimeout);
-      clearInterval(
-        __classPrivateFieldGet(this, _Shard_heartbeatSetInterval, "f"),
-      );
+      if (this.terminateSocketTimeout) {
+        clearInterval(this.terminateSocketTimeout);
+        this.terminateSocketTimeout = null;
+      }
+      if (__classPrivateFieldGet(this, _Shard_heartbeatSetInterval, "f")) {
+        clearInterval(
+          __classPrivateFieldGet(this, _Shard_heartbeatSetInterval, "f"),
+        );
+        __classPrivateFieldSet(this, _Shard_heartbeatSetInterval, null, "f");
+      }
       __classPrivateFieldSet(this, _Shard_waitingForHeartbeatACK, false, "f");
       if (
         data < 2000 ||
@@ -591,8 +602,12 @@ class Shard {
       else if (Array.isArray(data)) data = Buffer.concat(data);
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
         this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-        if (this.zlib.err) throw new Error(this.zlib.msg);
-        data = Buffer.from(this.zlib.result);
+        if (this.zlib.err) throw new Error(this.zlib.msg ?? undefined);
+        if (this.zlib.result) {
+          data = Buffer.from(this.zlib.result);
+        } else {
+          throw new Error("Zlib error");
+        }
         return __classPrivateFieldGet(
           this,
           _Shard_instances,

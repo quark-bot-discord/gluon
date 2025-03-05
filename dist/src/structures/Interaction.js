@@ -55,8 +55,8 @@ import Member from "./Member.js";
 import TextInput from "../util/builder/textInputBuilder.js";
 import util from "util";
 import Message from "./Message.js";
-import { GuildMemberManager } from "src/structures.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
+import getMember from "#src/util/gluon/getMember.js";
 /**
  * Represents an interaction received over the gateway.
  * @see {@link https://discord.com/developers/docs/interactions/slash-commands#interaction-object-interaction-structure}
@@ -228,7 +228,7 @@ class Interaction {
    */
   get member() {
     return this.memberId
-      ? GuildMemberManager.getMember(
+      ? getMember(
           __classPrivateFieldGet(this, _Interaction__client, "f"),
           this.guildId,
           this.memberId,
@@ -388,6 +388,9 @@ class Interaction {
         body.components = Array.isArray(components) != true ? components : [];
       // @ts-expect-error TS(2339): Property 'flags' does not exist on type '{}'.
       if (quiet == true) body.flags = 64;
+      if (!__classPrivateFieldGet(this, _Interaction__client, "f").user) {
+        throw new Error("GLUON: Client has not logged in yet");
+      }
       await __classPrivateFieldGet(
         this,
         _Interaction__client,
@@ -467,6 +470,9 @@ class Interaction {
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
+    if (!client.user) {
+      throw new Error("GLUON: Client has not logged in yet");
+    }
     return client.request.makeRequest("deleteOriginalInteractionResponse", [
       client.user.id,
       interactionToken,
@@ -532,6 +538,9 @@ class Interaction {
     if (components)
       // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
       body.components = Array.isArray(components) != true ? components : [];
+    if (!client.user) {
+      throw new Error("GLUON: Client has not logged in yet");
+    }
     return client.request.makeRequest(
       "patchOriginalInteractionResponse",
       [client.user.id, interactionToken],
@@ -570,8 +579,16 @@ class Interaction {
   toJSON(format) {
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          type: this.type,
+          guild_id: this.guildId,
+          channel_id: this.channelId,
+          member: this.member ? this.member.toJSON(format) : null,
+        };
+      }
       case JsonTypes.DISCORD_FORMAT:
-      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           id: this.id,

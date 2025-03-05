@@ -102,7 +102,7 @@ import {
   GuildVerificationLevel,
   Locale,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -1373,6 +1373,9 @@ class Guild {
    * @throws {Error}
    */
   async me() {
+    if (!__classPrivateFieldGet(this, _Guild__client, "f").user) {
+      throw new Error("GLUON: Client has not logged in yet");
+    }
     const cached = this.members.get(
       __classPrivateFieldGet(this, _Guild__client, "f").user.id,
     );

@@ -1,9 +1,9 @@
-import {
-  JsonTypes,
+import type {
   ResolvedEmoji,
   ButtonBuilder as ButtonBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct a button for a message.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#button-object-button-structure}

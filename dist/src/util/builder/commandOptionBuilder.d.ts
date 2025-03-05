@@ -3,13 +3,13 @@ import {
   ChannelType,
   Locale,
 } from "discord-api-types/v10";
-import {
+import type {
   CommandOptionDescriptionLocalizations,
   CommandOptionNameLocalizations,
   CommandChoiceBuilder as CommandChoiceBuilderType,
-  JsonTypes,
   CommandOptionBuilder as CommandOptionBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a choice for a command.
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
@@ -139,14 +139,14 @@ declare class CommandOption implements CommandOptionBuilderType {
       | undefined;
     required: boolean | undefined;
     choices: (
-      | import("typings/index.js").CommandChoiceBuilderStorageJSON
-      | import("typings/index.js").CommandChoiceBuilderDiscordJSON
-      | import("typings/index.js").CommandChoiceBuilderCacheJSON
+      | import("typings/index.d.ts").CommandChoiceBuilderStorageJSON
+      | import("typings/index.d.ts").CommandChoiceBuilderDiscordJSON
+      | import("typings/index.d.ts").CommandChoiceBuilderCacheJSON
     )[];
     options: (
-      | import("typings/index.js").CommandOptionStorageJSON
-      | import("typings/index.js").CommandOptionCacheJSON
-      | import("typings/index.js").CommandOptionDiscordJSON
+      | import("typings/index.d.ts").CommandOptionStorageJSON
+      | import("typings/index.d.ts").CommandOptionCacheJSON
+      | import("typings/index.d.ts").CommandOptionDiscordJSON
     )[];
     channel_types: ChannelType[] | undefined;
     min_value: number | undefined;

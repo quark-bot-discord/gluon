@@ -4,13 +4,12 @@ import Embed from "../util/builder/embedBuilder.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   MessageCacheJSON,
   MessageDiscordJSON,
   MessageStorageJSON,
   Message as MessageTypeClass,
   Attachment as AttachmentType,
-  JsonTypes,
   Sticker as StickerType,
   Poll as PollType,
   MessageReactionManager as MessageReactionManagerType,
@@ -20,8 +19,12 @@ import {
   Embed as EmbedType,
   FileUpload,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  VoiceChannel as VoiceChannelType,
+  Thread as ThreadType,
+  TextChannel as TextChannelType,
+} from "../../typings/index.d.ts";
 import { APIMessage, MessageType } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -84,7 +87,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get member(): any;
+  get member(): import("../../typings/index.d.ts").Member | null;
   /**
    * Whether this message includes user mentions.
    * @readonly
@@ -133,7 +136,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The guild that this message belongs to.
    * @type {String}
@@ -147,7 +150,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get channel(): any;
+  get channel(): TextChannelType | VoiceChannelType | ThreadType | null;
   /**
    * The channel that this message belongs to.
    * @type {String}
@@ -175,7 +178,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get content(): any;
+  get content(): string | null;
   /**
    * The message poll.
    * @type {Poll?}
@@ -241,7 +244,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get messageSnapshots(): Message[] | null;
+  get messageSnapshots(): MessageTypeClass[];
   /**
    * The URL of the message.
    * @type {String}
@@ -417,7 +420,7 @@ declare class Message implements MessageTypeClass {
       attachments,
       files,
     }: {
-      content?: string;
+      content?: string | null;
       embeds?: EmbedType[];
       components?: MessageComponents;
       attachments?: AttachmentType[];
@@ -488,7 +491,7 @@ declare class Message implements MessageTypeClass {
     flags,
     reference,
   }?: {
-    content?: string;
+    content?: string | null;
     embeds?: EmbedType[];
     components?: MessageComponents;
     files?: FileUpload[];

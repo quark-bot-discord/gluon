@@ -1,22 +1,23 @@
 import Emoji from "./Emoji.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   EmojiCacheJSON,
   EmojiDiscordJSON,
   EmojiStorageJSON,
   Emoji as EmojiType,
-  JsonTypes,
   ReactionCacheJSON,
   ReactionDiscordJSON,
   ReactionStorageJSON,
   Reaction as ReactionType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  Guild as GuildType,
+} from "../../typings/index.d.ts";
 import {
   APIReaction,
-  GatewayMessageReactionAddDispatch,
+  GatewayMessageReactionAddDispatchData,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a reaction belonging to a message.
  */
@@ -37,7 +38,7 @@ declare class Reaction implements ReactionType {
       | ReactionStorageJSON
       | ReactionCacheJSON
       | ReactionDiscordJSON
-      | GatewayMessageReactionAddDispatch,
+      | GatewayMessageReactionAddDispatchData,
     {
       guildId,
     }: {
@@ -57,7 +58,7 @@ declare class Reaction implements ReactionType {
    * @type {Array<Member | String>}
    * @public
    */
-  get reacted(): any[];
+  get reacted(): (string | import("../../typings/index.d.ts").Member)[];
   /**
    * The user ids of the users who reacted.
    * @readonly
@@ -78,7 +79,7 @@ declare class Reaction implements ReactionType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): GuildType | null;
   /**
    * The emoji used for the reaction.
    * @type {Emoji}

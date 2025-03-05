@@ -1,12 +1,12 @@
-import {
-  JsonTypes,
+import type {
   ResolvedEmoji,
   ButtonBuilder as ButtonBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import { BUTTON_STYLES, LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to construct a button for a message.

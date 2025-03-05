@@ -71,8 +71,8 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import GuildManager from "../managers/GuildManager.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
@@ -125,6 +125,9 @@ class Member {
      * @private
      */
     __classPrivateFieldSet(this, _Member__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     const existing = this.guild?.members.get(userId) || null;
     /**
      * The id of the member.
@@ -255,8 +258,19 @@ class Member {
         data.avatar ? BigInt(`0x${data.avatar.replace("a_", "")}`) : null,
         "f",
       );
-    else if (data.avatar === undefined && existing && existing._avatar)
-      __classPrivateFieldSet(this, _Member__avatar, existing._avatar, "f");
+    else if (
+      data.avatar === undefined &&
+      existing &&
+      existing._originalAvatarHash
+    )
+      __classPrivateFieldSet(
+        this,
+        _Member__avatar,
+        existing._originalAvatarHash
+          ? BigInt(`0x${existing._originalAvatarHash.replace("a_", "")}`)
+          : null,
+        "f",
+      );
     /**
      * The roles for this member.
      * @type {Array<BigInt>?}
@@ -276,6 +290,9 @@ class Member {
           __classPrivateFieldGet(this, _Member__roles, "f").push(
             BigInt(data.roles[i]),
           );
+    }
+    if (!__classPrivateFieldGet(this, _Member__client, "f").user) {
+      throw new Error("GLUON: Client has not logged in yet");
     }
     const memberIsClient =
       this.id === __classPrivateFieldGet(this, _Member__client, "f").user.id;
@@ -334,7 +351,7 @@ class Member {
    * @public
    */
   get nick() {
-    return __classPrivateFieldGet(this, _Member_nick, "f");
+    return __classPrivateFieldGet(this, _Member_nick, "f") ?? null;
   }
   /**
    * The UNIX timestamp for when this member joined the guild.
@@ -373,6 +390,9 @@ class Member {
    * @public
    */
   get roles() {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     if (
       Role.shouldCache(
         __classPrivateFieldGet(this, _Member__client, "f")._cacheOptions,
@@ -420,6 +440,9 @@ class Member {
    * @public
    */
   get permissions() {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     if (this.id == this.guild.ownerId) return PERMISSIONS.ADMINISTRATOR;
     if (!this.roles) {
       return null;
@@ -446,7 +469,7 @@ class Member {
    * @public
    */
   get user() {
-    return __classPrivateFieldGet(this, _Member_user, "f");
+    return __classPrivateFieldGet(this, _Member_user, "f") ?? undefined;
   }
   /**
    * The hash of the member's avatar, as it was received from Discord.
@@ -467,6 +490,11 @@ class Member {
    * @public
    */
   get displayAvatarURL() {
+    if (!this.user) {
+      throw new Error(
+        `GLUON: User ${__classPrivateFieldGet(this, _Member__id, "f")} cannot be found in cache`,
+      );
+    }
     return (
       Member.getAvatarUrl(this.id, this.guildId, this._originalAvatarHash) ??
       this.user.displayAvatarURL
@@ -613,6 +641,9 @@ class Member {
    * @throws {TypeError | Error}
    */
   async timeoutAdd(timeout_until, { reason } = {}) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -648,6 +679,9 @@ class Member {
    * @throws {TypeError | Error}
    */
   async timeoutRemove({ reason } = {}) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -680,6 +714,9 @@ class Member {
    * @throws {TypeError | Error}
    */
   async massUpdateRoles(roles, { reason } = {}) {
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     if (
       !checkPermission(
         (await this.guild.me()).permissions,
@@ -785,11 +822,12 @@ class Member {
       throw new TypeError("GLUON: Role ID is not a string.");
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     if (
-      !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
     const body = {};
@@ -824,11 +862,12 @@ class Member {
       throw new TypeError("GLUON: Role ID is not a string.");
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason is not a string.");
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     if (
-      !checkPermission(
-        (await GuildManager.getGuild(client, guildId).me()).permissions,
-        PERMISSIONS.MANAGE_ROLES,
-      )
+      !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
     )
       throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
     const body = {};
@@ -900,7 +939,7 @@ class Member {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {
         return {
-          user: this.user.toJSON(format),
+          user: this.user?.toJSON(format),
           nick: this.nick,
           joined_at: this.joinedAt ? this.joinedAt * 1000 : undefined,
           avatar: this._originalAvatarHash,
@@ -922,7 +961,7 @@ class Member {
       case JsonTypes.DISCORD_FORMAT:
       default: {
         return {
-          user: this.user.toJSON(format),
+          user: this.user?.toJSON(format),
           nick: this.nick,
           joined_at: this.joinedAt
             ? new Date(this.joinedAt * 1000).toISOString()

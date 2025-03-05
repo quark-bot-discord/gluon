@@ -44,7 +44,7 @@ var __classPrivateFieldGet =
   };
 var _ChannelCacheOptions__cache_options;
 import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.

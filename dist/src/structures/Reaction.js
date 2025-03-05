@@ -50,7 +50,7 @@ var _Reaction__client,
   _Reaction_count;
 import Emoji from "./Emoji.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a reaction belonging to a message.
  */
@@ -149,6 +149,9 @@ class Reaction {
    * @public
    */
   get reacted() {
+    if (!this.guild) {
+      throw new Error("GLUON: Guild not found.");
+    }
     return __classPrivateFieldGet(this, _Reaction__reacted, "f").map(
       (userId) => {
         const member = this.guild.members.get(String(userId));

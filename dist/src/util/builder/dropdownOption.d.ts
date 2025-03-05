@@ -1,8 +1,8 @@
-import {
-  JsonTypes,
+import type {
   DropdownOptionBuilder as DropdownOptionBuilderType,
   ResolvedEmoji,
-} from "typings/index.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a dropdown option.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}

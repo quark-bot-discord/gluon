@@ -1,4 +1,4 @@
-import { ResolvedEmoji } from "typings/index.js";
+import type { ResolvedEmoji } from "typings/index.d.ts";
 /**
  * Gives a valid Discord emoji structure when given an emoji mention.
  * @param {String} text Emoji mention. e.g. <:bitcoin:844240546246950922>

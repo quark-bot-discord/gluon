@@ -45,7 +45,7 @@ var __classPrivateFieldGet =
 var _GuildEmojisManager__client, _GuildEmojisManager_guild;
 import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildManager from "./GuildManager.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Manages all emojis within a guild.
  */
@@ -147,7 +147,11 @@ class GuildEmojisManager extends BaseCacheManager {
       throw new TypeError("GLUON: Guild ID must be a string.");
     if (typeof emojiId !== "string")
       throw new TypeError("GLUON: Emoji ID must be a string.");
-    return GuildManager.getGuild(client, guildId).emojis.get(emojiId);
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.emojis.get(emojiId);
   }
   /**
    * Adds an emoji to the cache.

@@ -13,31 +13,37 @@ import {
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
+import type { Client as ClientType } from "typings/index.d.ts";
+import {
+  GatewayCloseCodes,
+  GatewayOpcodes,
+  GatewayReceivePayload,
+} from "discord-api-types/v10";
+import { PresenceStatus, PresenceType } from "#src/gateway.js";
+import { Events } from "#typings/enums.js";
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
 class Shard {
-  shard: any;
-  terminateSocketTimeout: any;
-  zlib: any;
+  shard: number;
+  terminateSocketTimeout: NodeJS.Timeout | null = null;
+  zlib: ZlibSync.Inflate = new ZlibSync.Inflate({
+    chunkSize: 128 * 1024,
+  });
   #token;
   #_client;
-  // @ts-expect-error TS(7008): Member '#_sessionId' implicitly has an 'any' type.
   #_sessionId;
-  // @ts-expect-error TS(7008): Member '#_s' implicitly has an 'any' type.
   #_s;
   #resuming;
-  // @ts-expect-error TS(7008): Member '#heartbeatSetInterval' implicitly has an '... Remove this comment to see the full error message
-  #heartbeatSetInterval;
+  #heartbeatSetInterval: NodeJS.Timeout | null = null;
   // @ts-expect-error TS(7008): Member '#heartbeatInterval' implicitly has an 'any... Remove this comment to see the full error message
   #heartbeatInterval;
   #waitingForHeartbeatACK;
   // @ts-expect-error TS(7008): Member '#monitorOpened' implicitly has an 'any' ty... Remove this comment to see the full error message
   #monitorOpened;
   #ws;
-  // @ts-expect-error TS(7008): Member '#resumeGatewayUrl' implicitly has an 'any'... Remove this comment to see the full error message
-  #resumeGatewayUrl;
-  #retries;
+  #resumeGatewayUrl: string | null;
+  #retries: number;
   #halted;
   // @ts-expect-error TS(7008): Member '#lastReconnect' implicitly has an 'any' ty... Remove this comment to see the full error message
   #lastReconnect;
@@ -47,13 +53,13 @@ class Shard {
   #lastHeartbeatTimestamp;
   #eventHandler;
   constructor(
-    client: any,
-    token: any,
-    url: any,
-    shardId: any,
-    sessionId = null,
-    sequence = null,
-    resumeGatewayUrl = null,
+    client: ClientType,
+    token: string,
+    url: string,
+    shardId: number,
+    sessionId: string | null = null,
+    sequence: number | null = null,
+    resumeGatewayUrl: string | null = null,
   ) {
     this.#token = token;
     this.shard = shardId;
@@ -89,24 +95,25 @@ class Shard {
     this.#addListeners();
   }
 
-  #handleIncoming(data: any) {
+  #handleIncoming(data: GatewayReceivePayload) {
     if (this.#halted === true) return;
 
     if (!data) return;
 
     if (data.s) this.#_s = data.s;
 
-    if (process.env.NODE_ENV == "development") this.#_client.emit("raw", data);
+    if (process.env.NODE_ENV == "development")
+      this.#_client.emit(Events.RAW, data);
 
     switch (data.op) {
       // Dispatch
-      case 0: {
+      case GatewayOpcodes.Dispatch: {
         try {
           // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-          this.#eventHandler[data.t]
-            ? // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-              this.#eventHandler[data.t](data.d)
-            : null;
+          if (this.#eventHandler[data.t]) {
+            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+            this.#eventHandler[data.t](data.d);
+          }
         } catch (error) {
           this.#_client._emitDebug(
             GLUON_DEBUG_LEVELS.ERROR,
@@ -118,7 +125,7 @@ class Shard {
       }
 
       // Heartbeat
-      case 1: {
+      case GatewayOpcodes.Heartbeat: {
         this.#_client._emitDebug(
           GLUON_DEBUG_LEVELS.INFO,
           "Heartbeat requested",
@@ -130,7 +137,7 @@ class Shard {
       }
 
       // Reconnect
-      case 7: {
+      case GatewayOpcodes.Reconnect: {
         this.#_client._emitDebug(
           GLUON_DEBUG_LEVELS.INFO,
           "Reconnect requested",
@@ -143,7 +150,7 @@ class Shard {
       }
 
       // Invalid Session
-      case 9: {
+      case GatewayOpcodes.InvalidSession: {
         this.#_client._emitDebug(GLUON_DEBUG_LEVELS.DANGER, "Invalid session");
 
         if (data.d != false) this.#resume();
@@ -159,7 +166,7 @@ class Shard {
       }
 
       // Hello
-      case 10: {
+      case GatewayOpcodes.Hello: {
         this.#heartbeatInterval = data.d.heartbeat_interval;
 
         this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Hello received");
@@ -175,7 +182,7 @@ class Shard {
       }
 
       // Heartbeat ACK
-      case 11: {
+      case GatewayOpcodes.HeartbeatAck: {
         this.#waitingForHeartbeatACK = false;
 
         this.#latencyMs = Date.now() - this.#lastHeartbeatTimestamp;
@@ -191,7 +198,7 @@ class Shard {
       default: {
         this.#_client._emitDebug(
           GLUON_DEBUG_LEVELS.WARN,
-          `Unknown opcode: ${data.op}`,
+          `Unknown opcode: ${(data as { op: number }).op}`,
         );
 
         break;
@@ -217,7 +224,13 @@ class Shard {
     return Math.random();
   }
 
-  updatePresence(name: any, type: any, status: any, afk: any, since: any) {
+  updatePresence(
+    name: string,
+    type?: PresenceType,
+    status?: PresenceStatus,
+    afk?: boolean,
+    since?: number | null,
+  ) {
     if (this.#ws.readyState != WebSocket.OPEN) return;
 
     this.#ws.send(_updatePresence(name, type, status, afk, since));
@@ -304,6 +317,10 @@ class Shard {
       `Resuming with token ${this.#token}, session id ${this.#_sessionId} and sequence ${this.#_s}`,
     );
 
+    if (!this.#_sessionId || !this.#_s) {
+      throw new Error("GLUON: Session ID or sequence not found");
+    }
+
     this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
 
     this.#resuming = false;
@@ -315,17 +332,13 @@ class Shard {
       "Adding websocket listeners",
     );
 
-    this.zlib = new ZlibSync.Inflate({
-      chunkSize: 128 * 1024,
-    });
-
     this.#ws.once("open", () => {
       this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Websocket opened");
 
       clearTimeout(this.#monitorOpened);
     });
 
-    this.#ws.once("close", (data: any) => {
+    this.#ws.once("close", (data: GatewayCloseCodes | 4901) => {
       this.#_client._emitDebug(
         data < 2000 ? GLUON_DEBUG_LEVELS.INFO : GLUON_DEBUG_LEVELS.ERROR,
         `Websocket closed with code ${data}`,
@@ -333,9 +346,15 @@ class Shard {
 
       this.#ws.removeAllListeners();
 
-      clearInterval(this.terminateSocketTimeout);
+      if (this.terminateSocketTimeout) {
+        clearInterval(this.terminateSocketTimeout);
+        this.terminateSocketTimeout = null;
+      }
 
-      clearInterval(this.#heartbeatSetInterval);
+      if (this.#heartbeatSetInterval) {
+        clearInterval(this.#heartbeatSetInterval);
+        this.#heartbeatSetInterval = null;
+      }
 
       this.#waitingForHeartbeatACK = false;
 
@@ -382,9 +401,13 @@ class Shard {
 
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
         this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-        if (this.zlib.err) throw new Error(this.zlib.msg);
+        if (this.zlib.err) throw new Error(this.zlib.msg ?? undefined);
 
-        data = Buffer.from(this.zlib.result);
+        if (this.zlib.result) {
+          data = Buffer.from(this.zlib.result);
+        } else {
+          throw new Error("Zlib error");
+        }
         return this.#handleIncoming(erlpack.unpack(data));
       } else this.zlib.push(data, false);
     });
@@ -426,14 +449,14 @@ class Shard {
   /**
    * @param {String} id
    */
-  set sessionId(id: any) {
+  set sessionId(id: string) {
     this.#_sessionId = id;
   }
 
   /**
    * @param {String} url
    */
-  set resumeGatewayUrl(url: any) {
+  set resumeGatewayUrl(url: string) {
     this.#resumeGatewayUrl = url;
   }
 }

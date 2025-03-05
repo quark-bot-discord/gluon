@@ -1,3 +1,4 @@
+import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   GuildEmojisManager as GuildEmojisManagerType,
@@ -11,7 +12,7 @@ import { Snowflake } from "discord-api-types/globals";
  * Manages all emojis within a guild.
  */
 declare class GuildEmojisManager
-  extends BaseCacheManager
+  extends BaseCacheManager<EmojiType>
   implements GuildEmojisManagerType
 {
   #private;
@@ -33,7 +34,7 @@ declare class GuildEmojisManager
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(emojiId: Snowflake): Promise<any>;
+  fetch(emojiId: Snowflake): Promise<Emoji | EmojiType>;
   /**
    * Fetches a particular emoji that belongs to this guild, checking the cache first.
    * @param {Client} client The client instance.
@@ -50,7 +51,7 @@ declare class GuildEmojisManager
     client: ClientType,
     guildId: Snowflake,
     emojiId: Snowflake,
-  ): Promise<any>;
+  ): Promise<Emoji | EmojiType>;
   /**
    * Gets an emoji from the cache.
    * @param {Client} client The client instance.
@@ -66,7 +67,7 @@ declare class GuildEmojisManager
     client: ClientType,
     guildId: Snowflake,
     emojiId: Snowflake,
-  ): any;
+  ): EmojiType | null;
   /**
    * Adds an emoji to the cache.
    * @param {String} id The ID of the emoji to cache.

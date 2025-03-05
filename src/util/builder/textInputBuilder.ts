@@ -1,9 +1,7 @@
 import { ComponentType, TextInputStyle } from "discord-api-types/v10";
 import { LIMITS, TEXT_INPUT_STYLES } from "../../constants.js";
-import {
-  JsonTypes,
-  TextInputBuilder as TextInputBuilderType,
-} from "typings/index.js";
+import type { TextInputBuilder as TextInputBuilderType } from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to construct a text input interaction.

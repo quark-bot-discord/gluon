@@ -45,15 +45,16 @@ var __classPrivateFieldGet =
 var _CategoryChannel__client,
   _CategoryChannel__id,
   _CategoryChannel__guild_id,
-  _CategoryChannel_type,
   _CategoryChannel_name,
   _CategoryChannel__attributes,
-  _CategoryChannel_permission_overwrites;
+  _CategoryChannel_permission_overwrites,
+  _CategoryChannel_position;
 import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { ChannelType } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 class CategoryChannel {
   /**
    * Creates the structure for a category channel.
@@ -67,10 +68,10 @@ class CategoryChannel {
     _CategoryChannel__client.set(this, void 0);
     _CategoryChannel__id.set(this, void 0);
     _CategoryChannel__guild_id.set(this, void 0);
-    _CategoryChannel_type.set(this, void 0);
     _CategoryChannel_name.set(this, void 0);
     _CategoryChannel__attributes.set(this, void 0);
     _CategoryChannel_permission_overwrites.set(this, []);
+    _CategoryChannel_position.set(this, void 0);
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -102,12 +103,9 @@ class CategoryChannel {
       BigInt(guildId),
       "f",
     );
-    /**
-     * The type of channel.
-     * @type {Number}
-     * @private
-     */
-    __classPrivateFieldSet(this, _CategoryChannel_type, data.type, "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
     const existing = this.guild?.channels.get(data.id) || null;
     /**
      * The name of the channel.
@@ -122,6 +120,25 @@ class CategoryChannel {
       typeof existing.name == "string"
     )
       __classPrivateFieldSet(this, _CategoryChannel_name, existing.name, "f");
+    if (typeof data.position == "number") {
+      __classPrivateFieldSet(
+        this,
+        _CategoryChannel_position,
+        data.position,
+        "f",
+      );
+    } else if (
+      typeof data.position !== "number" &&
+      existing &&
+      typeof existing.position == "number"
+    ) {
+      __classPrivateFieldSet(
+        this,
+        _CategoryChannel_position,
+        existing.position,
+        "f",
+      );
+    }
     /**
      * The attributes of the channel.
      * @type {Number}
@@ -250,7 +267,10 @@ class CategoryChannel {
    * @public
    */
   get type() {
-    return __classPrivateFieldGet(this, _CategoryChannel_type, "f");
+    return ChannelType.GuildCategory;
+  }
+  get position() {
+    return __classPrivateFieldGet(this, _CategoryChannel_position, "f");
   }
   /**
    * The permission overwrites for the channel.
@@ -301,10 +321,10 @@ class CategoryChannel {
   [((_CategoryChannel__client = new WeakMap()),
   (_CategoryChannel__id = new WeakMap()),
   (_CategoryChannel__guild_id = new WeakMap()),
-  (_CategoryChannel_type = new WeakMap()),
   (_CategoryChannel_name = new WeakMap()),
   (_CategoryChannel__attributes = new WeakMap()),
   (_CategoryChannel_permission_overwrites = new WeakMap()),
+  (_CategoryChannel_position = new WeakMap()),
   util.inspect.custom)]() {
     return this.toString();
   }

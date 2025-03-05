@@ -1,21 +1,21 @@
 // import hashjs from "hash.js";
 // import { GLUON_VERSION, NAME } from "../constants.js";
-import {
+import type {
   BaseCacheManager as BaseCacheManagerType,
   GluonCacheRuleSetStructure,
-  JsonTypes,
   StaticManagerType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * The base cache manager for all cache managers.
  */
-class BaseCacheManager implements BaseCacheManagerType {
-  #cache;
+class BaseCacheManager<T> implements BaseCacheManagerType<T> {
+  #cache: Map<string, T>;
   #expiryBucket;
-  #structureType;
-  static rules: GluonCacheRuleSetStructure = {};
+  #structureType: StaticManagerType<T>;
+  static rules: GluonCacheRuleSetStructure<any> = {};
 
   /**
    * Creates a cache manager.
@@ -31,7 +31,7 @@ class BaseCacheManager implements BaseCacheManagerType {
     {
       structureType,
     }: {
-      structureType: StaticManagerType;
+      structureType: StaticManagerType<T>;
     },
   ) {
     if (!client)
@@ -44,7 +44,7 @@ class BaseCacheManager implements BaseCacheManagerType {
      * @type {Map<String, Object>}
      * @private
      */
-    this.#cache = new Map() as Map<string, unknown>;
+    this.#cache = new Map() as Map<string, T>;
 
     /**
      * The expiry bucket for this manager.
@@ -138,7 +138,7 @@ class BaseCacheManager implements BaseCacheManagerType {
   async fetchWithRules(key: string) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
-    const value = this.get(key) as unknown | null;
+    const value = this.get(key);
     if (value) return value;
     else return this.#_callFetches(key);
   }
@@ -153,7 +153,7 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @method
    * @throws {TypeError}
    */
-  set(key: string, value: unknown, expiry = 0) {
+  set(key: string, value: T, expiry = 0) {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     if (typeof expiry !== "number")
@@ -174,8 +174,9 @@ class BaseCacheManager implements BaseCacheManagerType {
     if (expiry === 0) return;
     const expiryDate = new Date(Date.now() + expiry * 1000);
     const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
-    if (!this.#expiryBucket.has(bucket))
+    if (!this.#expiryBucket.has(bucket)) {
       this.#expiryBucket.set(bucket, new Set());
+    }
     this.#expiryBucket.get(bucket).add(key);
   }
 
@@ -291,7 +292,7 @@ class BaseCacheManager implements BaseCacheManagerType {
    * @method
    * @async
    */
-  async #_callFetches(id: string) {
+  async #_callFetches(id: string): Promise<T | null> {
     const rules = Object.values(BaseCacheManager.rules);
     let fetchValue;
     for (const rule of rules) {
@@ -322,11 +323,7 @@ class BaseCacheManager implements BaseCacheManagerType {
    */
   forEach(callbackfn: unknown) {
     return this.#cache.forEach(
-      callbackfn as (
-        value: unknown,
-        key: string,
-        map: Map<string, unknown>,
-      ) => void,
+      callbackfn as (value: T, key: string, map: Map<string, T>) => void,
     );
   }
 
@@ -342,6 +339,17 @@ class BaseCacheManager implements BaseCacheManagerType {
     if (typeof key !== "string")
       throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.has(key);
+  }
+
+  map(
+    callbackfn: (
+      value: [string, T],
+      index: number,
+      array: [string, T][],
+    ) => unknown,
+  ): T[] {
+    const arr = Array.from(this.#cache.entries());
+    return arr.map(callbackfn) as T[];
   }
 
   /**

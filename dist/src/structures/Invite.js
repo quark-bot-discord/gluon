@@ -56,7 +56,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a guild invite.
  */
@@ -100,6 +100,9 @@ class Invite {
      * @private
      */
     __classPrivateFieldSet(this, _Invite__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found.`);
+    }
     /**
      * The code for the invite.
      * @type {String}
@@ -111,14 +114,22 @@ class Invite {
      * @type {BigInt}
      * @private
      */
-    if (data.channel?.id)
+    if ("channel" in data && data.channel?.id) {
       __classPrivateFieldSet(
         this,
         _Invite__channel_id,
         BigInt(data.channel.id),
         "f",
       );
-    if (data.inviter) {
+    } else if ("channel_id" in data && data.channel_id) {
+      __classPrivateFieldSet(
+        this,
+        _Invite__channel_id,
+        BigInt(data.channel_id),
+        "f",
+      );
+    }
+    if ("inviter" in data && data.inviter) {
       /**
        * The user who created the invite.
        * @type {User?}
@@ -146,7 +157,12 @@ class Invite {
      * @type {Number?}
      * @private
      */
-    __classPrivateFieldSet(this, _Invite_uses, data.uses, "f");
+    __classPrivateFieldSet(
+      this,
+      _Invite_uses,
+      "uses" in data ? data.uses : undefined,
+      "f",
+    );
     if ("expires_at" in data && data.expires_at)
       /**
        * The UNIX timestamp of when the invite expires.
@@ -178,7 +194,12 @@ class Invite {
      * @type {Number?}
      * @private
      */
-    __classPrivateFieldSet(this, _Invite_max_uses, data.max_uses, "f");
+    __classPrivateFieldSet(
+      this,
+      _Invite_max_uses,
+      "max_uses" in data ? data.max_uses : undefined,
+      "f",
+    );
     const shouldCache = Invite.shouldCache(
       __classPrivateFieldGet(this, _Invite__client, "f")._cacheOptions,
       this.guild._cacheOptions,
@@ -222,7 +243,10 @@ class Invite {
    * @public
    */
   get channel() {
-    return this.guild.channels.get(this.channelId) || null;
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found.`);
+    }
+    return this.guild.channels.get(this.channelId);
   }
   /**
    * The code of the invite.

@@ -20,10 +20,15 @@ import deepCompare from "../util/general/deepCompare.js";
 import ModalResponse from "../structures/ModalResponse.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
-import GuildManager from "../managers/GuildManager.js";
 import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
 import {
+  APIApplicationCommandAutocompleteGuildInteraction,
+  APIChatInputApplicationCommandGuildInteraction,
+  APIMessageComponentButtonInteraction,
+  APIMessageComponentGuildInteraction,
+  APIMessageComponentSelectMenuInteraction,
+  APIModalInteractionResponse,
   ComponentType,
   GatewayAutoModerationActionExecutionDispatchData,
   GatewayAutoModerationRuleCreateDispatchData,
@@ -62,6 +67,7 @@ import {
   GatewayMessageDeleteBulkDispatchData,
   GatewayMessageDeleteDispatchData,
   GatewayMessagePollVoteDispatchData,
+  GatewayMessageReactionAddDispatchData,
   GatewayMessageReactionRemoveDispatchData,
   GatewayMessageUpdateDispatchData,
   GatewayReadyDispatchData,
@@ -73,15 +79,18 @@ import {
   GatewayVoiceStateUpdateDispatchData,
   GatewayWebhooksUpdateDispatchData,
   InteractionType,
+  Snowflake,
 } from "discord-api-types/v10";
-import {
-  EmojiDiscordJSON,
+import type {
+  Emoji as EmojiType,
   Message as MessageType,
   Member as MemberType,
   Client as ClientType,
-  Events,
-} from "typings/index.d.js";
-import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v9";
+  User as UserType,
+  Thread as ThreadType,
+} from "typings/index.d.ts";
+import { Events } from "#typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 class EventHandler {
   #_client;
@@ -113,7 +122,7 @@ class EventHandler {
 
     this.#_client.user = user;
 
-    this.#_client.ready = true;
+    this.#_client.setReady();
 
     this.#initialGuilds = data.guilds.map((g) => g.id);
 
@@ -147,7 +156,7 @@ class EventHandler {
     );
 
     if (
-      GuildManager.getGuild(this.#_client, data.id)?.unavailable == true &&
+      getGuild(this.#_client, data.id)?.unavailable == true &&
       data.unavailable != true
     ) {
       guild = new Guild(this.#_client, data);
@@ -161,6 +170,7 @@ class EventHandler {
     if (this.#initialGuilds.length == 0 && this.#initialisedSent == false) {
       this.#initialisedSent = true;
       this.#_client.emit(Events.INITIALISED);
+      this.#_client.setInitialized();
     }
   }
 
@@ -170,7 +180,7 @@ class EventHandler {
       `GUILD_UPDATE ${data.id}`,
     );
 
-    const oldGuild = GuildManager.getGuild(this.#_client, data.id);
+    const oldGuild = getGuild(this.#_client, data.id);
     const newGuild = new Guild(this.#_client, data);
 
     this.#_client.emit(Events.GUILD_UPDATE, oldGuild, newGuild);
@@ -183,7 +193,7 @@ class EventHandler {
     );
 
     if (data.unavailable != true) {
-      const guild = GuildManager.getGuild(this.#_client, data.id);
+      const guild = getGuild(this.#_client, data.id);
 
       this.#_client.guilds.delete(data.id);
 
@@ -219,7 +229,7 @@ class EventHandler {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(Events.GUILD_ROLE_UPDATE, oldRole, newRole);
+    this.#_client.emit(Events.GUILD_ROLE_UPDATE, oldRole ?? null, newRole);
   }
 
   GUILD_ROLE_DELETE(data: GatewayGuildRoleDeleteDispatchData) {
@@ -231,11 +241,9 @@ class EventHandler {
     const role = this.#_client.guilds
       .get(data.guild_id)
       ?.roles.get(data.role_id);
-    GuildManager.getGuild(this.#_client, data.guild_id)?.roles.delete(
-      data.role_id,
-    );
+    getGuild(this.#_client, data.guild_id)?.roles.delete(data.role_id);
 
-    this.#_client.emit(Events.GUILD_ROLE_DELETE, role);
+    this.#_client.emit(Events.GUILD_ROLE_DELETE, role ?? null);
   }
 
   CHANNEL_CREATE(data: GatewayChannelCreateDispatchData) {
@@ -260,7 +268,7 @@ class EventHandler {
       ?.channels.get(data.id);
     const newChannel = cacheChannel(this.#_client, data, data.guild_id, true);
 
-    this.#_client.emit(Events.CHANNEL_UPDATE, oldChannel, newChannel);
+    this.#_client.emit(Events.CHANNEL_UPDATE, oldChannel ?? null, newChannel);
   }
 
   CHANNEL_DELETE(data: GatewayChannelDeleteDispatchData) {
@@ -272,11 +280,9 @@ class EventHandler {
     const channel = this.#_client.guilds
       .get(data.guild_id)
       ?.channels.get(data.id);
-    GuildManager.getGuild(this.#_client, data.guild_id)?.channels.delete(
-      data.id,
-    );
+    getGuild(this.#_client, data.guild_id)?.channels.delete(data.id);
 
-    this.#_client.emit(Events.CHANNEL_DELETE, channel);
+    this.#_client.emit(Events.CHANNEL_DELETE, channel ?? null);
   }
 
   CHANNEL_PINS_UPDATE(data: GatewayChannelPinsUpdateDispatchData) {
@@ -294,6 +300,10 @@ class EventHandler {
       `THREAD_CREATE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const thread = new Thread(this.#_client, data, { guildId: data.guild_id });
 
     this.#_client.emit(Events.THREAD_CREATE, thread);
@@ -305,14 +315,18 @@ class EventHandler {
       `THREAD_UPDATE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const oldThread = this.#_client.guilds
       .get(data.guild_id)
-      ?.channels.get(data.id);
+      ?.channels.get(data.id) as ThreadType | null;
     const newThread = new Thread(this.#_client, data, {
       guildId: data.guild_id,
     });
 
-    this.#_client.emit(Events.THREAD_UPDATE, oldThread, newThread);
+    this.#_client.emit(Events.THREAD_UPDATE, oldThread ?? null, newThread);
   }
 
   THREAD_DELETE(data: GatewayThreadDeleteDispatchData) {
@@ -321,12 +335,14 @@ class EventHandler {
       `THREAD_DELETE ${data.guild_id}`,
     );
 
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+
     const thread = this.#_client.guilds
       .get(data.guild_id)
-      ?.channels.get(data.id);
-    GuildManager.getGuild(this.#_client, data.guild_id)?.channels.delete(
-      data.id,
-    );
+      ?.channels.get(data.id) as ThreadType | null;
+    getGuild(this.#_client, data.guild_id)?.channels.delete(data.id);
 
     this.#_client.emit(Events.THREAD_DELETE, thread);
   }
@@ -338,10 +354,11 @@ class EventHandler {
     );
 
     const threads = [];
-    for (let i = 0; i < data.threads.length; i++)
+    for (let i = 0; i < data.threads.length; i++) {
       threads.push(
         new Thread(this.#_client, data.threads[i], { guildId: data.guild_id }),
       );
+    }
 
     this.#_client.emit(Events.THREAD_LIST_SYNC, threads);
   }
@@ -356,6 +373,12 @@ class EventHandler {
       userId: data.user.id,
       guildId: data.guild_id,
     });
+
+    if (!member.guild) {
+      throw new Error(
+        `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
+      );
+    }
 
     member.guild._incrementMemberCount();
 
@@ -376,21 +399,26 @@ class EventHandler {
     cacheManager
       .fetchWithRules(data.user.id)
       .then((member: MemberType | null) => {
-        const guild = GuildManager.getCacheManager(this.#_client).get(
-          data.guild_id,
-        );
+        const guild = getGuild(this.#_client, data.guild_id);
         if (member) guild?.members.delete(data.user.id);
         else {
-          const user = new User(this.#_client, data.user, { nocache: true });
-          member = new Member(
-            this.#_client,
-            {},
-            {
-              userId: data.user.id,
-              guildId: data.guild_id,
-              user,
-              nocache: true,
-            },
+          // const user = new User(this.#_client, data.user, { nocache: true });
+          // member = new Member(
+          //   this.#_client,
+          //   {},
+          //   {
+          //     userId: data.user.id,
+          //     guildId: data.guild_id,
+          //     user,
+          //     nocache: true,
+          //   },
+          // );
+          throw new Error("GLUON: NOT IMPLEMENTED");
+        }
+
+        if (!member.guild) {
+          throw new Error(
+            `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
           );
         }
 
@@ -401,6 +429,7 @@ class EventHandler {
       })
       .catch((error: Error) => {
         console.error("Error fetching member:", error);
+        throw error;
       });
   }
 
@@ -428,6 +457,7 @@ class EventHandler {
       })
       .catch((error: Error) => {
         console.error("Error fetching member:", error);
+        throw error;
       });
   }
 
@@ -451,12 +481,8 @@ class EventHandler {
     );
 
     const user = new User(this.#_client, data.user);
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
-    this.#_client.emit(Events.GUILD_BAN_ADD, user);
+    this.#_client.emit(Events.GUILD_BAN_ADD, user, data.guild_id);
   }
 
   GUILD_BAN_REMOVE(data: GatewayGuildBanRemoveDispatchData) {
@@ -466,12 +492,8 @@ class EventHandler {
     );
 
     const user = new User(this.#_client, data.user);
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    user.guild = GuildManager.getGuild(this.#_client, data.guild_id) || null;
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    if (!user.guild) user.guild_id = BigInt(data.guild_id);
 
-    this.#_client.emit(Events.GUILD_BAN_REMOVE, user);
+    this.#_client.emit(Events.GUILD_BAN_REMOVE, user, data.guild_id);
   }
 
   INVITE_CREATE(data: GatewayInviteCreateDispatchData) {
@@ -479,6 +501,10 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_CREATE ${data.guild_id}`,
     );
+
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     const invite = new Invite(this.#_client, data, { guildId: data.guild_id });
 
@@ -495,7 +521,7 @@ class EventHandler {
       throw new Error("GLUON: Gluon does not support DMs.");
     }
 
-    const guild = GuildManager.getGuild(this.#_client, data.guild_id);
+    const guild = getGuild(this.#_client, data.guild_id);
 
     const invite = guild?.invites?.get(data.code) || null;
 
@@ -520,19 +546,16 @@ class EventHandler {
     }
 
     const oldVoiceState =
-      GuildManager.getGuild(this.#_client, data.guild_id)?.voiceStates.get(
-        data.user_id,
-      ) || null;
+      getGuild(this.#_client, data.guild_id)?.voiceStates.get(data.user_id) ||
+      null;
     let newVoiceState;
-    if (data.channel_id)
+    if (data.channel_id) {
       newVoiceState = new VoiceState(this.#_client, data, {
         guildId: data.guild_id,
       });
-    else {
+    } else {
       newVoiceState = null;
-      GuildManager.getGuild(this.#_client, data.guild_id)?.voiceStates.delete(
-        data.user_id,
-      );
+      getGuild(this.#_client, data.guild_id)?.voiceStates.delete(data.user_id);
     }
 
     this.#_client.emit(Events.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
@@ -603,6 +626,7 @@ class EventHandler {
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 
@@ -625,11 +649,12 @@ class EventHandler {
     cacheManager
       .fetchWithRules(data.id)
       .then((message: MessageType | null) => {
-        this.#_client.emit(Events.MESSAGE_DELETE, message);
+        this.#_client.emit(Events.MESSAGE_DELETE, message, data);
         return message;
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 
@@ -662,6 +687,7 @@ class EventHandler {
       )
       .catch((error) => {
         console.error("Error fetching messages:", error);
+        throw error;
       });
   }
 
@@ -671,16 +697,23 @@ class EventHandler {
       `INTERACTION_CREATE ${data.guild_id}`,
     );
 
-    if (!data.guild_id) return;
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
 
     switch (data.type) {
       case InteractionType.MessageComponent: {
         switch (data.data.component_type) {
           case ComponentType.Button: {
-            const componentInteraction = new ButtonClick(this.#_client, data, {
-              guildId: data.guild_id,
-              channelId: data.channel_id,
-            });
+            const componentInteraction = new ButtonClick(
+              this.#_client,
+              data as APIMessageComponentButtonInteraction &
+                APIMessageComponentGuildInteraction,
+              {
+                guildId: data.guild_id,
+                channelId: data.channel.id,
+              },
+            );
 
             this.#_client.emit(Events.BUTTON_CLICK, componentInteraction);
 
@@ -692,10 +725,15 @@ class EventHandler {
           case ComponentType.RoleSelect:
           case ComponentType.MentionableSelect:
           case ComponentType.ChannelSelect: {
-            const componentInteraction = new OptionSelect(this.#_client, data, {
-              guildId: data.guild_id,
-              channelId: data.channel.id,
-            });
+            const componentInteraction = new OptionSelect(
+              this.#_client,
+              data as APIMessageComponentSelectMenuInteraction &
+                APIMessageComponentGuildInteraction,
+              {
+                guildId: data.guild_id,
+                channelId: data.channel.id,
+              },
+            );
 
             this.#_client.emit(Events.MENU_SELECT, componentInteraction);
 
@@ -710,7 +748,10 @@ class EventHandler {
       }
 
       case InteractionType.ApplicationCommand: {
-        const commandInteraction = new SlashCommand(this.#_client, data);
+        const commandInteraction = new SlashCommand(
+          this.#_client,
+          data as APIChatInputApplicationCommandGuildInteraction,
+        );
 
         this.#_client.emit(Events.SLASH_COMMAND, commandInteraction);
 
@@ -718,7 +759,11 @@ class EventHandler {
       }
 
       case InteractionType.ModalSubmit: {
-        const componentInteraction = new ModalResponse(this.#_client, data);
+        const componentInteraction = new ModalResponse(
+          this.#_client,
+          data as APIModalInteractionResponse &
+            APIMessageComponentGuildInteraction,
+        );
 
         this.#_client.emit(Events.MODAL_RESPONSE, componentInteraction);
 
@@ -726,7 +771,10 @@ class EventHandler {
       }
 
       case InteractionType.ApplicationCommandAutocomplete: {
-        const commandInteraction = new SlashCommand(this.#_client, data);
+        const commandInteraction = new SlashCommand(
+          this.#_client,
+          data as APIApplicationCommandAutocompleteGuildInteraction,
+        );
 
         this.#_client.emit(
           Events.SLASH_COMMAND_AUTOCOMPLETE,
@@ -807,9 +855,8 @@ class EventHandler {
     );
 
     const oldScheduledEvent =
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
-        data.id,
-      ) || null;
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(data.id) ||
+      null;
     const newScheduledEvent = new ScheduledEvent(this.#_client, data, {
       guildId: data.guild_id,
     });
@@ -830,12 +877,9 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
-        data.id,
-      ) || null;
-    GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.delete(
-      data.id,
-    );
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(data.id) ||
+      null;
+    getGuild(this.#_client, data.guild_id)?.scheduledEvents.delete(data.id);
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }
@@ -849,20 +893,20 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
         data.guild_scheduled_event_id,
       ) || null;
 
     if (scheduledEvent) {
-      scheduledEvent.user_count++;
+      scheduledEvent._incrementUserCount();
 
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
         data.guild_scheduled_event_id,
         scheduledEvent,
       );
     }
 
-    const user = this.#_client.users.get(data.user_id) || null;
+    const user = this.#_client.users.get(data.user_id) as UserType | null;
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
   }
@@ -876,20 +920,20 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(
         data.guild_scheduled_event_id,
       ) || null;
 
     if (scheduledEvent) {
-      scheduledEvent.user_count--;
+      scheduledEvent._decrementUserCount();
 
-      GuildManager.getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.set(
         data.guild_scheduled_event_id,
         scheduledEvent,
       );
     }
 
-    const user = this.#_client.users.get(data.user_id) || null;
+    const user = this.#_client.users.get(data.user_id) as UserType | null;
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
   }
@@ -948,18 +992,22 @@ class EventHandler {
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
-    const oldEmojis = GuildManager.getGuild(
-      this.#_client,
-      data.guild_id,
-    )?.emojis;
+    const oldEmojis = getGuild(this.#_client, data.guild_id)?.emojis;
     const newEmojis = data.emojis.map(
       (emoji) => new Emoji(this.#_client, emoji, { guildId: data.guild_id }),
     );
 
+    if (!oldEmojis) {
+      throw new Error(
+        `GLUON: Guild emojis cache not found for ${data.guild_id}.`,
+      );
+    }
+
     if (oldEmojis.size < newEmojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
-      const oldIds = oldEmojis.toJSON().map((e: EmojiDiscordJSON) => e.id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldIds = oldEmojis.map(([id, _]) => id);
 
       for (let i = 0; i < newEmojis.length; i++) {
         let matchingFound = false;
@@ -976,13 +1024,14 @@ class EventHandler {
         }
       }
 
-      const addedEmoji = addedEmojiRaw;
+      const addedEmoji = addedEmojiRaw ?? null;
 
       this.#_client.emit(Events.GUILD_EMOJI_CREATE, addedEmoji);
     } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
-      const oldIds = oldEmojis.toJSON().map((e: EmojiDiscordJSON) => e.id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldIds = oldEmojis.map(([id, _]) => id);
 
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
@@ -999,16 +1048,21 @@ class EventHandler {
         }
       }
 
-      const deletedEmoji = oldEmojis.get(deletedId);
+      if (!deletedId) {
+        throw new Error("GLUON: Deleted emoji not found.");
+      }
 
-      GuildManager.getGuild(this.#_client, data.guild_id)?.emojis.delete(
-        deletedId,
+      const deletedEmoji = oldEmojis.get(deletedId as Snowflake);
+
+      getGuild(this.#_client, data.guild_id)?.emojis.delete(
+        deletedId as Snowflake,
       );
 
       this.#_client.emit(Events.GUILD_EMOJI_DELETE, deletedEmoji);
     } else {
       // EMOJI UPDATED
-      const oldEmojisArray = oldEmojis.toJSON();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldEmojisArray = oldEmojis.map(([_, e]) => e) as EmojiType[];
 
       let newEmoji;
       let oldEmoji;
@@ -1030,7 +1084,11 @@ class EventHandler {
         }
       }
 
-      this.#_client.emit(Events.GUILD_EMOJI_UPDATE, oldEmoji, newEmoji);
+      this.#_client.emit(
+        Events.GUILD_EMOJI_UPDATE,
+        oldEmoji ?? null,
+        newEmoji ?? null,
+      );
     }
   }
 
@@ -1070,6 +1128,7 @@ class EventHandler {
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 
@@ -1101,6 +1160,7 @@ class EventHandler {
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 
@@ -1127,21 +1187,25 @@ class EventHandler {
           message.reactions._addReaction(
             data.user_id,
             (data.emoji.id ? data.emoji.id : data.emoji.name) as string, // valid because one of them will always be present
-            data,
+            { ...data, burst_colors: data.burst_colors ?? [] },
           );
         }
-        const finalData = data;
 
-        finalData.emoji = new Emoji(this.#_client, data.emoji, {
+        const emoji = new Emoji(this.#_client, data.emoji, {
           guildId: data.guild_id as string, // valid as we check for guild_id above
         });
 
-        this.#_client.emit(Events.MESSAGE_REACTION_ADD, finalData);
+        this.#_client.emit(
+          Events.MESSAGE_REACTION_ADD,
+          { ...data, burst_colors: data.burst_colors ?? [] },
+          emoji,
+        );
 
-        return finalData;
+        return data;
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 
@@ -1170,18 +1234,18 @@ class EventHandler {
             (data.emoji.id ? data.emoji.id : data.emoji.name) as string, // valid because one of them will always be present
           );
         }
-        const finalData = data;
 
-        finalData.emoji = new Emoji(this.#_client, data.emoji, {
+        const emoji = new Emoji(this.#_client, data.emoji, {
           guildId: data.guild_id as string, // valid as we check for guild_id above
         });
 
-        this.#_client.emit(Events.MESSAGE_REACTION_REMOVE, finalData);
+        this.#_client.emit(Events.MESSAGE_REACTION_REMOVE, data, emoji);
 
-        return finalData;
+        return data;
       })
       .catch((error: Error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 }

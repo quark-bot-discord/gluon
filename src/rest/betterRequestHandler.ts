@@ -15,8 +15,12 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
-import { EndpointIndexItem, Client as ClientType } from "typings/index.js";
-import redisClient from "src/util/general/redisClient.js";
+import type {
+  EndpointIndexItem,
+  Client as ClientType,
+} from "typings/index.d.ts";
+import redisClient from "#src/util/general/redisClient.js";
+import { Events } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -335,6 +339,7 @@ class BetterRequestHandler {
 
       try {
         json = await res.json();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
         json = null;
       }
@@ -352,7 +357,7 @@ class BetterRequestHandler {
         console.error(error);
       }
 
-      this.#_client.emit("requestCompleted", {
+      this.#_client.emit(Events.REQUEST_COMPLETED, {
         status: res.status,
         method: actualRequest.method,
         endpoint: actualRequest.path(...(params ?? [])),

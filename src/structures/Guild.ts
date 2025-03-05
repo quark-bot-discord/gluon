@@ -28,6 +28,7 @@ import Message from "./Message.js";
 import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
 import {
   APIAuditLog,
+  APIGuild,
   AuditLogEvent,
   GatewayGuildCreateDispatchData,
   GuildDefaultMessageNotifications,
@@ -38,12 +39,11 @@ import {
   GuildVerificationLevel,
   Locale,
 } from "discord-api-types/v10";
-import {
+import type {
   Guild as GuildType,
   GuildCacheJSON,
   GuildDiscordJSON,
   GuildStorageJSON,
-  JsonTypes,
   TextChannel as TextChannelType,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
@@ -73,7 +73,8 @@ import {
   MemberStorageJSON,
   MemberCacheJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a Discord guild.
@@ -116,7 +117,8 @@ class Guild implements GuildType {
       | GatewayGuildCreateDispatchData
       | GuildCacheJSON
       | GuildStorageJSON
-      | GuildDiscordJSON,
+      | GuildDiscordJSON
+      | APIGuild,
     { nocache = false } = { nocache: false },
   ) {
     if (!client)

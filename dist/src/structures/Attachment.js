@@ -50,7 +50,7 @@ var _Attachment__id,
 import fetch from "node-fetch";
 import { CDN_BASE_URL } from "../constants.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an attachment.
  * @see {@link https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure}

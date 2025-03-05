@@ -3,24 +3,27 @@ import Member from "./Member.js";
 import TextInput from "../util/builder/textInputBuilder.js";
 import util from "util";
 import Message from "./Message.js";
-import { GuildMemberManager } from "src/structures.js";
-import {
+import type {
   Interaction as InteractionType,
   InteractionCacheJSON,
   InteractionDiscordJSON,
   InteractionStorageJSON,
-  JsonTypes,
   FileUpload,
   Embed,
   MessageComponents as MessageComponentsType,
   TextInputBuilder as TextInputBuilderType,
   CommandChoiceBuilder as CommandChoiceBuilderType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  MemberCacheJSON,
+  MemberDiscordJSON,
+  MemberStorageJSON,
+} from "../../typings/index.d.ts";
 import {
   APIGuildInteraction,
   APIMessageComponentGuildInteraction,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
+import getMember from "#src/util/gluon/getMember.js";
 
 /**
  * Represents an interaction received over the gateway.
@@ -189,7 +192,7 @@ class Interaction implements InteractionType {
    */
   get member() {
     return this.memberId
-      ? GuildMemberManager.getMember(this.#_client, this.guildId, this.memberId)
+      ? getMember(this.#_client, this.guildId, this.memberId)
       : undefined;
   }
 
@@ -572,15 +575,29 @@ class Interaction implements InteractionType {
   ): InteractionCacheJSON | InteractionDiscordJSON | InteractionStorageJSON {
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT: {
+        return {
+          id: this.id,
+          type: this.type,
+          guild_id: this.guildId,
+          channel_id: this.channelId,
+          member: this.member
+            ? (this.member.toJSON(format) as
+                | MemberCacheJSON
+                | MemberStorageJSON)
+            : null,
+        };
+      }
       case JsonTypes.DISCORD_FORMAT:
-      case JsonTypes.STORAGE_FORMAT:
       default: {
         return {
           id: this.id,
           type: this.type,
           guild_id: this.guildId,
           channel_id: this.channelId,
-          member: this.member ? this.member.toJSON(format) : null,
+          member: this.member
+            ? (this.member.toJSON(format) as MemberDiscordJSON)
+            : null,
         };
       }
     }

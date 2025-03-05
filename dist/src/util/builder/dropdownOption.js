@@ -1,6 +1,6 @@
-import { JsonTypes } from "typings/index.js";
 import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a dropdown option.
  * @see {@link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure}

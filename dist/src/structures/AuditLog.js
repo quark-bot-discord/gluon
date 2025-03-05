@@ -61,7 +61,7 @@ var _AuditLog__client,
   _AuditLog_changes;
 import User from "./User.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
@@ -366,10 +366,8 @@ class AuditLog {
    * @public
    */
   get guild() {
-    return (
-      __classPrivateFieldGet(this, _AuditLog__client, "f").guilds.get(
-        this.guildId,
-      ) || null
+    return __classPrivateFieldGet(this, _AuditLog__client, "f").guilds.get(
+      this.guildId,
     );
   }
   /**
@@ -379,7 +377,8 @@ class AuditLog {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    if (!this.channelId) return null;
+    return this.guild?.channels.get(this.channelId);
   }
   /**
    * The target user involved with this audit log entry.

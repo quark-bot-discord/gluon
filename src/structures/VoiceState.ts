@@ -1,9 +1,8 @@
-import { GLUON_CACHING_OPTIONS, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
-  JsonTypes,
+import type {
   VoiceStateCacheJSON,
   VoiceStateDiscordJSON,
   VoiceStateStorageJSON,
@@ -11,8 +10,13 @@ import {
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  VoiceChannel as VoiceChannelType,
+  MemberCacheJSON,
+  MemberStorageJSON,
+  MemberDiscordJSON,
+} from "../../typings/index.d.ts";
 import { APIVoiceState } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a voice state.
@@ -66,10 +70,11 @@ class VoiceState implements VoiceStateType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (this.guild)
-      nocache =
-        (this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) ==
-        GLUON_CACHING_OPTIONS.NO_VOICE_STATE;
+    if (!this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
+
+    nocache = this.guild._cacheOptions.voiceStateCaching === false;
 
     const existing = this.guild?.voiceStates.get(data.user_id) || null;
 
@@ -262,7 +267,7 @@ class VoiceState implements VoiceStateType {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    return this.guild?.channels.get(this.channelId) as VoiceChannelType | null;
   }
 
   /**
@@ -356,7 +361,9 @@ class VoiceState implements VoiceStateType {
    * @public
    * @method
    */
-  toJSON(format: JsonTypes) {
+  toJSON(
+    format: JsonTypes,
+  ): VoiceStateCacheJSON | VoiceStateDiscordJSON | VoiceStateStorageJSON {
     switch (format) {
       case JsonTypes.STORAGE_FORMAT:
       case JsonTypes.CACHE_FORMAT: {
@@ -364,7 +371,9 @@ class VoiceState implements VoiceStateType {
           guild_id: this.guildId,
           channel_id: this.channelId,
           _attributes: this.#_attributes,
-          member: this.member.toJSON(format),
+          member: this.member?.toJSON(format) as
+            | MemberCacheJSON
+            | MemberStorageJSON,
           user_id: this.memberId,
           joined: this.joined,
           request_to_speak_timestamp: this.requestToSpeakTimestamp
@@ -384,7 +393,7 @@ class VoiceState implements VoiceStateType {
           self_stream: this.selfStream,
           self_video: this.selfVideo,
           suppress: this.suppress,
-          member: this.member,
+          member: this.member?.toJSON(format) as MemberDiscordJSON,
           user_id: this.memberId,
           joined: this.joined,
           request_to_speak_timestamp: this.requestToSpeakTimestamp

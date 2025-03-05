@@ -1,8 +1,7 @@
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import { APIRole } from "discord-api-types/v10";
-import {
-  JsonTypes,
+import type {
   RoleCacheJSON,
   RoleDiscordJSON,
   RoleStorageJSON,
@@ -10,7 +9,8 @@ import {
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a role belonging to a guild.
  */
@@ -84,7 +84,7 @@ declare class Role implements RoleType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The ID of the guild that this role belongs to.
    * @type {String}

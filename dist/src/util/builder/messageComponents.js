@@ -1,5 +1,5 @@
 import { LIMITS } from "../../constants.js";
-import { JsonTypes } from "typings/index.d.js";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Structure for message components.
  */

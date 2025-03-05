@@ -50,10 +50,10 @@ var _VoiceState__client,
   _VoiceState__user_id,
   _VoiceState_joined,
   _VoiceState_request_to_speak_timestamp;
-import { GLUON_CACHING_OPTIONS, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
-import { JsonTypes } from "../../typings/index.d.js";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a voice state.
  */
@@ -95,10 +95,10 @@ class VoiceState {
      * @private
      */
     __classPrivateFieldSet(this, _VoiceState__guild_id, BigInt(guildId), "f");
-    if (this.guild)
-      nocache =
-        (this.guild._cache_options & GLUON_CACHING_OPTIONS.NO_VOICE_STATE) ==
-        GLUON_CACHING_OPTIONS.NO_VOICE_STATE;
+    if (!this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    }
+    nocache = this.guild._cacheOptions.voiceStateCaching === false;
     const existing = this.guild?.voiceStates.get(data.user_id) || null;
     /**
      * The id of the channel involved.
@@ -374,7 +374,7 @@ class VoiceState {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    return this.guild?.channels.get(this.channelId);
   }
   /**
    * The id of the channel involved.
@@ -482,7 +482,7 @@ class VoiceState {
             _VoiceState__attributes,
             "f",
           ),
-          member: this.member.toJSON(format),
+          member: this.member?.toJSON(format),
           user_id: this.memberId,
           joined: this.joined,
           request_to_speak_timestamp: this.requestToSpeakTimestamp
@@ -502,7 +502,7 @@ class VoiceState {
           self_stream: this.selfStream,
           self_video: this.selfVideo,
           suppress: this.suppress,
-          member: this.member,
+          member: this.member?.toJSON(format),
           user_id: this.memberId,
           joined: this.joined,
           request_to_speak_timestamp: this.requestToSpeakTimestamp

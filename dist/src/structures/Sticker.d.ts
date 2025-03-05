@@ -1,13 +1,13 @@
 import util from "util";
 import { APISticker, StickerFormatType } from "discord-api-types/v10";
-import {
+import type {
   Sticker as StickerType,
   StickerCacheJSON,
   StickerDiscordJSON,
   StickerStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an sticker.
  */

@@ -1,6 +1,5 @@
 import Role from "../structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import GuildManager from "./GuildManager.js";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
   GuildRoleManager as GuildRoleManagerType,
@@ -10,12 +9,13 @@ import {
   Client as ClientType,
 } from "../../typings/index.d.js";
 import { APIRole } from "discord-api-types/v10";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
  * Manages all roles belonging to a guild.
  */
 class GuildRoleManager
-  extends BaseCacheManager
+  extends BaseCacheManager<RoleType>
   implements GuildRoleManagerType
 {
   #_client;
@@ -125,7 +125,14 @@ class GuildRoleManager
       throw new TypeError("GLUON: Guild ID is not a string.");
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID is not a string.");
-    return GuildManager.getGuild(client, guildId).roles.get(roleId);
+
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+
+    return guild.roles.get(roleId);
   }
 
   /**
@@ -143,7 +150,14 @@ class GuildRoleManager
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
       throw new TypeError("GLUON: Guild ID is not a string.");
-    return GuildManager.getGuild(client, guildId).roles;
+
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found in cache.`);
+    }
+
+    return guild.roles;
   }
 
   /**

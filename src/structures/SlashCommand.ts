@@ -2,17 +2,20 @@ import Interaction from "./Interaction.js";
 import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
-import cacheChannel from "../util/gluon/cacheChannel.js";
+// import cacheChannel from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
-import { APIChatInputApplicationCommandGuildInteraction } from "discord-api-types/v10";
 import {
+  APIApplicationCommandAutocompleteGuildInteraction,
+  APIChatInputApplicationCommandGuildInteraction,
+} from "discord-api-types/v10";
+import type {
   SlashCommand as SlashCommandType,
   SlashCommandCacheJSON,
   SlashCommandDiscordJSON,
   SlashCommandStorageJSON,
-  JsonTypes,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a slash command.
@@ -29,7 +32,9 @@ class SlashCommand extends Interaction implements SlashCommandType {
    */
   constructor(
     client: ClientType,
-    data: APIChatInputApplicationCommandGuildInteraction,
+    data:
+      | APIChatInputApplicationCommandGuildInteraction
+      | APIApplicationCommandAutocompleteGuildInteraction,
   ) {
     super(client, data);
 
@@ -62,11 +67,11 @@ class SlashCommand extends Interaction implements SlashCommandType {
         });
       }
     }
-    if (data.data.resolved?.channels) {
-      for (const value of Object.values(data.data.resolved.channels)) {
-        cacheChannel(client, value, data.guild_id);
-      }
-    }
+    // if (data.data.resolved?.channels) {
+    //   for (const value of Object.values(data.data.resolved.channels)) {
+    //     cacheChannel(client, value, data.guild_id);
+    //   }
+    // }
 
     /**
      * The options provided with the interaction.

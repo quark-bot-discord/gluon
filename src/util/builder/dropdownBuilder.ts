@@ -1,12 +1,12 @@
 import { LIMITS, SELECT_MENU_TYPES } from "../../constants.js";
 import DropdownOption from "./dropdownOption.js";
 import { ChannelType, ComponentType } from "discord-api-types/v10";
-import {
-  JsonTypes,
+import type {
   DropdownBuilder as DropdownBuilderType,
   DropdownDefaultOption,
   DropdownOptionBuilder as DropdownOptionBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
+import { JsonTypes } from "../../../typings/enums.js";
 
 /**
  * Helps to create a dropdown message component.

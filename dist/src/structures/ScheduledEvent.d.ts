@@ -6,19 +6,19 @@ import {
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
 } from "discord-api-types/v10";
-import {
+import type {
   ScheduledEvent as ScheduledEventType,
   ScheduledEventCacheJSON,
   ScheduledEventDiscordJSON,
   ScheduledEventStorageJSON,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -124,7 +124,7 @@ declare class ScheduledEvent implements ScheduledEventType {
    * @readonly
    * @public
    */
-  get guild(): any;
+  get guild(): import("../../typings/index.d.ts").Guild | null;
   /**
    * The UNIX timestamp of the start time for the event.
    * @type {Number}
@@ -153,6 +153,8 @@ declare class ScheduledEvent implements ScheduledEventType {
    * @public
    */
   get location(): string;
+  _decrementUserCount(): void;
+  _incrementUserCount(): void;
   /**
    * Returns the URL of the event's image.
    * @param {String} id The id of the event.

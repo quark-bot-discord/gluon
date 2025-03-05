@@ -1,11 +1,11 @@
-import {
-  JsonTypes,
+import type {
   ActionRowBuilder as ActionRowBuilderType,
   ButtonBuilder as ButtonBuilderType,
   DropdownBuilder as DropdownBuilderType,
   TextInputBuilder as TextInputBuilderType,
-} from "typings/index.js";
+} from "typings/index.d.ts";
 import { ComponentType } from "discord-api-types/v10";
+import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct an action row for a message.
  */
@@ -40,9 +40,9 @@ declare class ActionRow implements ActionRowBuilderType {
   ): {
     type: ComponentType.ActionRow;
     components: (
-      | import("typings/index.js").DropdownBuilderCacheJSON
-      | import("typings/index.js").ButtonBuilderCacheJSON
-      | import("typings/index.js").TextInputBuilderCacheJSON
+      | import("typings/index.d.ts").DropdownBuilderCacheJSON
+      | import("typings/index.d.ts").ButtonBuilderCacheJSON
+      | import("typings/index.d.ts").TextInputBuilderCacheJSON
     )[];
   };
 }

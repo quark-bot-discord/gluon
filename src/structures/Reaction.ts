@@ -1,22 +1,23 @@
 import Emoji from "./Emoji.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
-import {
+import type {
   EmojiCacheJSON,
   EmojiDiscordJSON,
   EmojiStorageJSON,
   Emoji as EmojiType,
-  JsonTypes,
   ReactionCacheJSON,
   ReactionDiscordJSON,
   ReactionStorageJSON,
   Reaction as ReactionType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+  Guild as GuildType,
+} from "../../typings/index.d.ts";
 import {
   APIReaction,
-  GatewayMessageReactionAddDispatch,
+  GatewayMessageReactionAddDispatchData,
 } from "discord-api-types/v10";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a reaction belonging to a message.
@@ -43,7 +44,7 @@ class Reaction implements ReactionType {
       | ReactionStorageJSON
       | ReactionCacheJSON
       | ReactionDiscordJSON
-      | GatewayMessageReactionAddDispatch,
+      | GatewayMessageReactionAddDispatchData,
     { guildId }: { guildId: Snowflake },
   ) {
     if (!client)
@@ -115,8 +116,11 @@ class Reaction implements ReactionType {
    * @public
    */
   get reacted() {
+    if (!this.guild) {
+      throw new Error("GLUON: Guild not found.");
+    }
     return this.#_reacted.map((userId: bigint) => {
-      const member = this.guild.members.get(String(userId));
+      const member = (this.guild as GuildType).members.get(String(userId));
 
       if (member) return member;
       else return String(userId);

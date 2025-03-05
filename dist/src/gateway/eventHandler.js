@@ -49,7 +49,7 @@ var _EventHandler__client,
   _EventHandler_asciiArtSent;
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-import { EVENTS, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
 import Emoji from "../structures/Emoji.js";
@@ -69,10 +69,11 @@ import deepCompare from "../util/general/deepCompare.js";
 import ModalResponse from "../structures/ModalResponse.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
-import GuildManager from "../managers/GuildManager.js";
 import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
 import { ComponentType, InteractionType } from "discord-api-types/v10";
+import { Events } from "#typings/enums.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 class EventHandler {
   constructor(client, ws) {
     _EventHandler__client.set(this, void 0);
@@ -98,7 +99,7 @@ class EventHandler {
       data.user,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").user = user;
-    __classPrivateFieldGet(this, _EventHandler__client, "f").ready = true;
+    __classPrivateFieldGet(this, _EventHandler__client, "f").setReady();
     __classPrivateFieldSet(
       this,
       _EventHandler_initialGuilds,
@@ -119,7 +120,7 @@ class EventHandler {
       "READY",
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.READY,
+      Events.READY,
       __classPrivateFieldGet(this, _EventHandler_initialGuilds, "f"),
     );
   }
@@ -130,7 +131,7 @@ class EventHandler {
       "RESUMED",
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.RESUMED,
+      Events.RESUMED,
     );
   }
   GUILD_CREATE(data) {
@@ -140,7 +141,7 @@ class EventHandler {
       `GUILD_CREATE ${data.id}`,
     );
     if (
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.id,
       )?.unavailable == true &&
@@ -162,7 +163,7 @@ class EventHandler {
       )
     )
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_CREATE,
+        Events.GUILD_CREATE,
         guild,
       );
     else
@@ -179,8 +180,9 @@ class EventHandler {
     ) {
       __classPrivateFieldSet(this, _EventHandler_initialisedSent, true, "f");
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.INITIALISED,
+        Events.INITIALISED,
       );
+      __classPrivateFieldGet(this, _EventHandler__client, "f").setInitialized();
     }
   }
   GUILD_UPDATE(data) {
@@ -188,7 +190,7 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_UPDATE ${data.id}`,
     );
-    const oldGuild = GuildManager.getGuild(
+    const oldGuild = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.id,
     );
@@ -197,7 +199,7 @@ class EventHandler {
       data,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_UPDATE,
+      Events.GUILD_UPDATE,
       oldGuild,
       newGuild,
     );
@@ -208,7 +210,7 @@ class EventHandler {
       `GUILD_DELETE ${data.id}`,
     );
     if (data.unavailable != true) {
-      const guild = GuildManager.getGuild(
+      const guild = getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.id,
       );
@@ -217,7 +219,7 @@ class EventHandler {
       );
       if (!guild) return;
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_DELETE,
+        Events.GUILD_DELETE,
         guild,
       );
     }
@@ -235,7 +237,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_ROLE_CREATE,
+      Events.GUILD_ROLE_CREATE,
       role,
     );
   }
@@ -255,8 +257,8 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_ROLE_UPDATE,
-      oldRole,
+      Events.GUILD_ROLE_UPDATE,
+      oldRole ?? null,
       newRole,
     );
   }
@@ -268,13 +270,13 @@ class EventHandler {
     const role = __classPrivateFieldGet(this, _EventHandler__client, "f")
       .guilds.get(data.guild_id)
       ?.roles.get(data.role_id);
-    GuildManager.getGuild(
+    getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     )?.roles.delete(data.role_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_ROLE_DELETE,
-      role,
+      Events.GUILD_ROLE_DELETE,
+      role ?? null,
     );
   }
   CHANNEL_CREATE(data) {
@@ -288,7 +290,7 @@ class EventHandler {
       data.guild_id,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.CHANNEL_CREATE,
+      Events.CHANNEL_CREATE,
       channel,
     );
   }
@@ -307,8 +309,8 @@ class EventHandler {
       true,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.CHANNEL_UPDATE,
-      oldChannel,
+      Events.CHANNEL_UPDATE,
+      oldChannel ?? null,
       newChannel,
     );
   }
@@ -320,13 +322,13 @@ class EventHandler {
     const channel = __classPrivateFieldGet(this, _EventHandler__client, "f")
       .guilds.get(data.guild_id)
       ?.channels.get(data.id);
-    GuildManager.getGuild(
+    getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     )?.channels.delete(data.id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.CHANNEL_DELETE,
-      channel,
+      Events.CHANNEL_DELETE,
+      channel ?? null,
     );
   }
   CHANNEL_PINS_UPDATE(data) {
@@ -335,7 +337,7 @@ class EventHandler {
       `CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.CHANNEL_PINS_UPDATE,
+      Events.CHANNEL_PINS_UPDATE,
       data,
     );
   }
@@ -344,13 +346,16 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_CREATE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const thread = new Thread(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data,
       { guildId: data.guild_id },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.THREAD_CREATE,
+      Events.THREAD_CREATE,
       thread,
     );
   }
@@ -359,6 +364,9 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_UPDATE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const oldThread = __classPrivateFieldGet(this, _EventHandler__client, "f")
       .guilds.get(data.guild_id)
       ?.channels.get(data.id);
@@ -370,8 +378,8 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.THREAD_UPDATE,
-      oldThread,
+      Events.THREAD_UPDATE,
+      oldThread ?? null,
       newThread,
     );
   }
@@ -380,15 +388,18 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `THREAD_DELETE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const thread = __classPrivateFieldGet(this, _EventHandler__client, "f")
       .guilds.get(data.guild_id)
       ?.channels.get(data.id);
-    GuildManager.getGuild(
+    getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     )?.channels.delete(data.id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.THREAD_DELETE,
+      Events.THREAD_DELETE,
       thread,
     );
   }
@@ -398,7 +409,7 @@ class EventHandler {
       `THREAD_LIST_SYNC ${data.guild_id}`,
     );
     const threads = [];
-    for (let i = 0; i < data.threads.length; i++)
+    for (let i = 0; i < data.threads.length; i++) {
       threads.push(
         new Thread(
           __classPrivateFieldGet(this, _EventHandler__client, "f"),
@@ -406,8 +417,9 @@ class EventHandler {
           { guildId: data.guild_id },
         ),
       );
+    }
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.THREAD_LIST_SYNC,
+      Events.THREAD_LIST_SYNC,
       threads,
     );
   }
@@ -424,9 +436,14 @@ class EventHandler {
         guildId: data.guild_id,
       },
     );
+    if (!member.guild) {
+      throw new Error(
+        `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
+      );
+    }
     member.guild._incrementMemberCount();
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_MEMBER_ADD,
+      Events.GUILD_MEMBER_ADD,
       member,
     );
   }
@@ -439,29 +456,44 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     );
-    cacheManager.fetchWithRules(data.user.id).then((member) => {
-      const guild = GuildManager.getCacheManager(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-      ).get(data.guild_id);
-      if (member) guild?.members.delete(data.user.id);
-      else {
-        const user = new User(
+    cacheManager
+      .fetchWithRules(data.user.id)
+      .then((member) => {
+        const guild = getGuild(
           __classPrivateFieldGet(this, _EventHandler__client, "f"),
-          data.user,
-          { nocache: true },
+          data.guild_id,
         );
-        member = new Member(
-          __classPrivateFieldGet(this, _EventHandler__client, "f"),
-          {},
-          { userId: data.user.id, guildId: data.guild_id, user, nocache: true },
+        if (member) guild?.members.delete(data.user.id);
+        else {
+          // const user = new User(this.#_client, data.user, { nocache: true });
+          // member = new Member(
+          //   this.#_client,
+          //   {},
+          //   {
+          //     userId: data.user.id,
+          //     guildId: data.guild_id,
+          //     user,
+          //     nocache: true,
+          //   },
+          // );
+          throw new Error("GLUON: NOT IMPLEMENTED");
+        }
+        if (!member.guild) {
+          throw new Error(
+            `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
+          );
+        }
+        member.guild._decrementMemberCount();
+        __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
+          Events.GUILD_MEMBER_REMOVE,
+          member,
         );
-      }
-      member.guild._decrementMemberCount();
-      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_MEMBER_REMOVE,
-        member,
-      );
-    });
+        return member;
+      })
+      .catch((error) => {
+        console.error("Error fetching member:", error);
+        throw error;
+      });
   }
   GUILD_MEMBER_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
@@ -472,21 +504,28 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     );
-    cacheManager.fetchWithRules(data.user.id).then((oldMember) => {
-      const newMember = new Member(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        data,
-        {
-          userId: data.user.id,
-          guildId: data.guild_id,
-        },
-      );
-      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_MEMBER_UPDATE,
-        oldMember,
-        newMember,
-      );
-    });
+    cacheManager
+      .fetchWithRules(data.user.id)
+      .then((oldMember) => {
+        const newMember = new Member(
+          __classPrivateFieldGet(this, _EventHandler__client, "f"),
+          data,
+          {
+            userId: data.user.id,
+            guildId: data.guild_id,
+          },
+        );
+        __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
+          Events.GUILD_MEMBER_UPDATE,
+          oldMember,
+          newMember,
+        );
+        return newMember;
+      })
+      .catch((error) => {
+        console.error("Error fetching member:", error);
+        throw error;
+      });
   }
   GUILD_MEMBERS_CHUNK(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
@@ -512,17 +551,10 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.user,
     );
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    user.guild =
-      GuildManager.getGuild(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        data.guild_id,
-      ) || null;
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    if (!user.guild) user.guild_id = BigInt(data.guild_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_BAN_ADD,
+      Events.GUILD_BAN_ADD,
       user,
+      data.guild_id,
     );
   }
   GUILD_BAN_REMOVE(data) {
@@ -534,17 +566,10 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.user,
     );
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    user.guild =
-      GuildManager.getGuild(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        data.guild_id,
-      ) || null;
-    // @ts-expect-error TS(2339): Property 'guild' does not exist on type 'User'.
-    if (!user.guild) user.guild_id = BigInt(data.guild_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_BAN_REMOVE,
+      Events.GUILD_BAN_REMOVE,
       user,
+      data.guild_id,
     );
   }
   INVITE_CREATE(data) {
@@ -552,13 +577,16 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_CREATE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const invite = new Invite(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data,
       { guildId: data.guild_id },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.INVITE_CREATE,
+      Events.INVITE_CREATE,
       invite,
     );
   }
@@ -567,7 +595,10 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `INVITE_DELETE ${data.guild_id}`,
     );
-    const guild = GuildManager.getGuild(
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
+    const guild = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     );
@@ -582,7 +613,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.INVITE_DELETE,
+      Events.INVITE_DELETE,
       partialInvite,
       invite,
     );
@@ -592,13 +623,16 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `VOICE_STATE_UPDATE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const oldVoiceState =
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.voiceStates.get(data.user_id) || null;
     let newVoiceState;
-    if (data.channel_id)
+    if (data.channel_id) {
       newVoiceState = new VoiceState(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data,
@@ -606,15 +640,15 @@ class EventHandler {
           guildId: data.guild_id,
         },
       );
-    else {
+    } else {
       newVoiceState = null;
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.voiceStates.delete(data.user_id);
     }
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.VOICE_STATE_UPDATE,
+      Events.VOICE_STATE_UPDATE,
       oldVoiceState,
       newVoiceState,
     );
@@ -625,7 +659,7 @@ class EventHandler {
       `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.VOICE_CHANNEL_STATUS_UPDATE,
+      Events.VOICE_CHANNEL_STATUS_UPDATE,
       data,
     );
   }
@@ -634,6 +668,9 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_CREATE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const message = new Message(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data,
@@ -643,7 +680,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.MESSAGE_CREATE,
+      Events.MESSAGE_CREATE,
       message,
     );
   }
@@ -678,13 +715,13 @@ class EventHandler {
           )
         ) {
           __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-            EVENTS.MESSAGE_EDIT,
+            Events.MESSAGE_EDIT,
             oldMessage,
             newMessage,
           );
         }
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MESSAGE_UPDATE,
+          Events.MESSAGE_UPDATE,
           oldMessage,
           newMessage,
         );
@@ -692,6 +729,7 @@ class EventHandler {
       })
       .catch((error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
   MESSAGE_DELETE(data) {
@@ -711,13 +749,15 @@ class EventHandler {
       .fetchWithRules(data.id)
       .then((message) => {
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MESSAGE_DELETE,
+          Events.MESSAGE_DELETE,
           message,
+          data,
         );
         return message;
       })
       .catch((error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
   MESSAGE_DELETE_BULK(data) {
@@ -739,12 +779,13 @@ class EventHandler {
     Promise.all(messages)
       .then((m) =>
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MESSAGE_DELETE_BULK,
+          Events.MESSAGE_DELETE_BULK,
           m.filter((a) => a != null),
         ),
       )
       .catch((error) => {
         console.error("Error fetching messages:", error);
+        throw error;
       });
   }
   INTERACTION_CREATE(data) {
@@ -752,7 +793,9 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `INTERACTION_CREATE ${data.guild_id}`,
     );
-    if (!data.guild_id) return;
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     switch (data.type) {
       case InteractionType.MessageComponent: {
         switch (data.data.component_type) {
@@ -762,11 +805,11 @@ class EventHandler {
               data,
               {
                 guildId: data.guild_id,
-                channelId: data.channel_id,
+                channelId: data.channel.id,
               },
             );
             __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-              EVENTS.BUTTON_CLICK,
+              Events.BUTTON_CLICK,
               componentInteraction,
             );
             break;
@@ -781,11 +824,11 @@ class EventHandler {
               data,
               {
                 guildId: data.guild_id,
-                channelId: data.channel_id,
+                channelId: data.channel.id,
               },
             );
             __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-              EVENTS.MENU_SELECT,
+              Events.MENU_SELECT,
               componentInteraction,
             );
             break;
@@ -801,7 +844,7 @@ class EventHandler {
           data,
         );
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.SLASH_COMMAND,
+          Events.SLASH_COMMAND,
           commandInteraction,
         );
         break;
@@ -812,7 +855,7 @@ class EventHandler {
           data,
         );
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MODAL_RESPONSE,
+          Events.MODAL_RESPONSE,
           componentInteraction,
         );
         break;
@@ -823,7 +866,7 @@ class EventHandler {
           data,
         );
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.SLASH_COMMAND_AUTOCOMPLETE,
+          Events.SLASH_COMMAND_AUTOCOMPLETE,
           commandInteraction,
         );
         break;
@@ -845,7 +888,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_AUDIT_LOG_ENTRY_CREATE,
+      Events.GUILD_AUDIT_LOG_ENTRY_CREATE,
       auditLogEntry,
     );
   }
@@ -855,7 +898,7 @@ class EventHandler {
       `ENTITLEMENT_CREATE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.ENTITLEMENT_CREATE,
+      Events.ENTITLEMENT_CREATE,
       data,
     );
   }
@@ -865,7 +908,7 @@ class EventHandler {
       `ENTITLEMENT_UPDATE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.ENTITLEMENT_UPDATE,
+      Events.ENTITLEMENT_UPDATE,
       data,
     );
   }
@@ -875,7 +918,7 @@ class EventHandler {
       `ENTITLEMENT_DELETE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.ENTITLEMENT_DELETE,
+      Events.ENTITLEMENT_DELETE,
       data,
     );
   }
@@ -892,7 +935,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_CREATE,
+      Events.GUILD_SCHEDULED_EVENT_CREATE,
       scheduledEvent,
     );
   }
@@ -902,7 +945,7 @@ class EventHandler {
       `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
     );
     const oldScheduledEvent =
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.get(data.id) || null;
@@ -914,7 +957,7 @@ class EventHandler {
       },
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_UPDATE,
+      Events.GUILD_SCHEDULED_EVENT_UPDATE,
       oldScheduledEvent,
       newScheduledEvent,
     );
@@ -925,16 +968,16 @@ class EventHandler {
       `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
     );
     const scheduledEvent =
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.get(data.id) || null;
-    GuildManager.getGuild(
+    getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     )?.scheduledEvents.delete(data.id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_DELETE,
+      Events.GUILD_SCHEDULED_EVENT_DELETE,
       scheduledEvent,
     );
   }
@@ -944,23 +987,24 @@ class EventHandler {
       `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
     );
     const scheduledEvent =
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.get(data.guild_scheduled_event_id) || null;
     if (scheduledEvent) {
-      scheduledEvent.user_count++;
-      GuildManager.getGuild(
+      scheduledEvent._incrementUserCount();
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.set(data.guild_scheduled_event_id, scheduledEvent);
     }
-    const user =
-      __classPrivateFieldGet(this, _EventHandler__client, "f").users.get(
-        data.user_id,
-      ) || null;
+    const user = __classPrivateFieldGet(
+      this,
+      _EventHandler__client,
+      "f",
+    ).users.get(data.user_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_USER_ADD,
+      Events.GUILD_SCHEDULED_EVENT_USER_ADD,
       data,
       user,
     );
@@ -971,23 +1015,24 @@ class EventHandler {
       `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
     );
     const scheduledEvent =
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.get(data.guild_scheduled_event_id) || null;
     if (scheduledEvent) {
-      scheduledEvent.user_count--;
-      GuildManager.getGuild(
+      scheduledEvent._decrementUserCount();
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.scheduledEvents.set(data.guild_scheduled_event_id, scheduledEvent);
     }
-    const user =
-      __classPrivateFieldGet(this, _EventHandler__client, "f").users.get(
-        data.user_id,
-      ) || null;
+    const user = __classPrivateFieldGet(
+      this,
+      _EventHandler__client,
+      "f",
+    ).users.get(data.user_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.GUILD_SCHEDULED_EVENT_USER_REMOVE,
+      Events.GUILD_SCHEDULED_EVENT_USER_REMOVE,
       data,
       user,
     );
@@ -999,7 +1044,7 @@ class EventHandler {
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.AUTO_MODERATION_RULE_CREATE,
+      Events.AUTO_MODERATION_RULE_CREATE,
       data,
     );
   }
@@ -1010,7 +1055,7 @@ class EventHandler {
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.AUTO_MODERATION_RULE_CREATE,
+      Events.AUTO_MODERATION_RULE_CREATE,
       data,
     );
   }
@@ -1021,7 +1066,7 @@ class EventHandler {
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.AUTO_MODERATION_RULE_CREATE,
+      Events.AUTO_MODERATION_RULE_CREATE,
       data,
     );
   }
@@ -1032,7 +1077,7 @@ class EventHandler {
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_ACTION_EXECUTION' does n... Remove this comment to see the full error message
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.AUTO_MODERATION_ACTION_EXECUTION,
+      Events.AUTO_MODERATION_ACTION_EXECUTION,
       data,
     );
   }
@@ -1041,7 +1086,7 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
-    const oldEmojis = GuildManager.getGuild(
+    const oldEmojis = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     )?.emojis;
@@ -1053,10 +1098,16 @@ class EventHandler {
           { guildId: data.guild_id },
         ),
     );
+    if (!oldEmojis) {
+      throw new Error(
+        `GLUON: Guild emojis cache not found for ${data.guild_id}.`,
+      );
+    }
     if (oldEmojis.size < newEmojis.length) {
       // EMOJI ADDED
       let addedEmojiRaw;
-      const oldIds = oldEmojis.toJSON().map((e) => e.id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldIds = oldEmojis.map(([id, _]) => id);
       for (let i = 0; i < newEmojis.length; i++) {
         let matchingFound = false;
         for (let n = 0; n < oldIds.length; n++)
@@ -1069,21 +1120,16 @@ class EventHandler {
           break;
         }
       }
-      const addedEmoji = new Emoji(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        addedEmojiRaw,
-        {
-          guildId: data.guild_id,
-        },
-      );
+      const addedEmoji = addedEmojiRaw ?? null;
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_EMOJI_CREATE,
+        Events.GUILD_EMOJI_CREATE,
         addedEmoji,
       );
     } else if (oldEmojis.size > newEmojis.length) {
       // EMOJI DELETED
       let deletedId;
-      const oldIds = oldEmojis.toJSON().map((e) => e.id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldIds = oldEmojis.map(([id, _]) => id);
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
         for (let n = 0; n < newEmojis.length; n++)
@@ -1096,28 +1142,27 @@ class EventHandler {
           break;
         }
       }
+      if (!deletedId) {
+        throw new Error("GLUON: Deleted emoji not found.");
+      }
       const deletedEmoji = oldEmojis.get(deletedId);
-      GuildManager.getGuild(
+      getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
       )?.emojis.delete(deletedId);
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_EMOJI_DELETE,
+        Events.GUILD_EMOJI_DELETE,
         deletedEmoji,
       );
     } else {
       // EMOJI UPDATED
-      const oldEmojisArray = oldEmojis.toJSON();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const oldEmojisArray = oldEmojis.map(([_, e]) => e);
       let newEmoji;
       let oldEmoji;
       for (let i = 0; i < oldEmojisArray.length; i++) {
-        const correspondingNewEmojiRaw = newEmojis.find(
+        const correspondingNewEmoji = newEmojis.find(
           (e) => e.id == oldEmojisArray[i].id,
-        );
-        const correspondingNewEmoji = new Emoji(
-          __classPrivateFieldGet(this, _EventHandler__client, "f"),
-          correspondingNewEmojiRaw,
-          { guildId: data.guild_id },
         );
         const differences = deepCompare(
           oldEmojisArray[i],
@@ -1130,9 +1175,9 @@ class EventHandler {
         }
       }
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.GUILD_EMOJI_UPDATE,
-        oldEmoji,
-        newEmoji,
+        Events.GUILD_EMOJI_UPDATE,
+        oldEmoji ?? null,
+        newEmoji ?? null,
       );
     }
   }
@@ -1142,7 +1187,7 @@ class EventHandler {
       `WEBHOOKS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      EVENTS.WEBHOOKS_UPDATE,
+      Events.WEBHOOKS_UPDATE,
       data,
     );
   }
@@ -1151,40 +1196,60 @@ class EventHandler {
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const cacheManager = ChannelMessageManager.getCacheManager(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
       data.channel_id,
     );
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
-      if (message) {
-        message.poll._results._addVote(data.user_id, data.answer_id);
-      }
-      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.MESSAGE_POLL_VOTE_ADD,
-        data,
-      );
-    });
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message) => {
+        if (message) {
+          message.poll._results._addVote(data.user_id, data.answer_id);
+        }
+        __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
+          Events.MESSAGE_POLL_VOTE_ADD,
+          data,
+        );
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error fetching message:", error);
+        throw error;
+      });
   }
   MESSAGE_POLL_VOTE_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
       GLUON_DEBUG_LEVELS.INFO,
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
+    if (!data.guild_id) {
+      throw new Error("GLUON: Gluon does not support DMs.");
+    }
     const cacheManager = ChannelMessageManager.getCacheManager(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
       data.channel_id,
     );
-    cacheManager.fetchWithRules(data.message_id).then((message) => {
-      if (message) {
-        message.poll._results._removeVote(data.user_id, data.answer_id);
-      }
-      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        EVENTS.MESSAGE_POLL_VOTE_REMOVE,
-        data,
-      );
-    });
+    cacheManager
+      .fetchWithRules(data.message_id)
+      .then((message) => {
+        if (message) {
+          message.poll._results._removeVote(data.user_id, data.answer_id);
+        }
+        __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
+          Events.MESSAGE_POLL_VOTE_REMOVE,
+          data,
+        );
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error fetching message:", error);
+        throw error;
+      });
   }
   MESSAGE_REACTION_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
@@ -1206,11 +1271,10 @@ class EventHandler {
           message.reactions._addReaction(
             data.user_id,
             data.emoji.id ? data.emoji.id : data.emoji.name, // valid because one of them will always be present
-            data,
+            { ...data, burst_colors: data.burst_colors ?? [] },
           );
         }
-        const finalData = data;
-        finalData.emoji = new Emoji(
+        const emoji = new Emoji(
           __classPrivateFieldGet(this, _EventHandler__client, "f"),
           data.emoji,
           {
@@ -1218,13 +1282,15 @@ class EventHandler {
           },
         );
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MESSAGE_REACTION_ADD,
-          finalData,
+          Events.MESSAGE_REACTION_ADD,
+          { ...data, burst_colors: data.burst_colors ?? [] },
+          emoji,
         );
-        return finalData;
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
   MESSAGE_REACTION_REMOVE(data) {
@@ -1249,8 +1315,7 @@ class EventHandler {
             data.emoji.id ? data.emoji.id : data.emoji.name,
           );
         }
-        const finalData = data;
-        finalData.emoji = new Emoji(
+        const emoji = new Emoji(
           __classPrivateFieldGet(this, _EventHandler__client, "f"),
           data.emoji,
           {
@@ -1258,13 +1323,15 @@ class EventHandler {
           },
         );
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-          EVENTS.MESSAGE_REACTION_REMOVE,
-          finalData,
+          Events.MESSAGE_REACTION_REMOVE,
+          data,
+          emoji,
         );
-        return finalData;
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching message:", error);
+        throw error;
       });
   }
 }

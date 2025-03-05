@@ -1,10 +1,16 @@
-import EventsEmitter from "events";
-import UserManager from "./managers/UserManager.js";
-import GuildManager from "./managers/GuildManager.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
-import { Client as ClientType, User as UserType } from "typings/index.js";
-declare class Client extends EventsEmitter implements ClientType {
+import {
+  Client as ClientType,
+  User as UserType,
+  UserManager as UserManagerType,
+  GuildManager as GuildManagerType,
+  CommandBuilder,
+  ClientOptions,
+  ClientEvents,
+} from "../typings/index.d.js";
+import { TypedEmitter } from "tiny-typed-emitter";
+declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #private;
   request: any;
   user: UserType | null;
@@ -53,7 +59,7 @@ declare class Client extends EventsEmitter implements ClientType {
     sessionData,
     initCache,
     softRestartFunction,
-  }?: any);
+  }: ClientOptions);
   /**
    * The ids of the shards that this client is managing.
    * @type {Array<Number>}
@@ -81,14 +87,14 @@ declare class Client extends EventsEmitter implements ClientType {
    * @readonly
    * @public
    */
-  get users(): UserManager;
+  get users(): UserManagerType;
   /**
    * The guild manager for this client.
    * @type {GuildManager}
    * @readonly
    * @public
    */
-  get guilds(): GuildManager;
+  get guilds(): GuildManagerType;
   /**
    * The session data for this client.
    * @type {Object}
@@ -116,7 +122,26 @@ declare class Client extends EventsEmitter implements ClientType {
    * @method
    * @returns {Object}
    */
-  checkProcess(): any;
+  checkProcess(): {
+    totalShards: number;
+    shardsManaged: number[];
+    shards: never[];
+    guildCount: number;
+    memberCount: number;
+    cacheCounts: {
+      users: number;
+      guilds: number;
+      messages: number;
+      members: number;
+      channels: number;
+      roles: number;
+      emojis: number;
+      voiceStates: number;
+    };
+    guilds: string[];
+    processId: string;
+    restLatency: number;
+  };
   /**
    * Outputs a debug message if NODE_ENV=development.
    * @param {Number} status The debug status level.
@@ -125,14 +150,23 @@ declare class Client extends EventsEmitter implements ClientType {
    * @method
    * @public
    */
-  _emitDebug(status: any, message: any): void;
+  _emitDebug(status: any, message: string): void;
   /**
    * Counts how many items are in each cache.
    * @returns {Object}
    * @public
    * @method
    */
-  getCacheCounts(): any;
+  getCacheCounts(): {
+    users: number;
+    guilds: number;
+    messages: number;
+    members: number;
+    channels: number;
+    roles: number;
+    emojis: number;
+    voiceStates: number;
+  };
   /**
    * Returns the cache options for this client.
    * @type {GluonCacheOptions}
@@ -147,6 +181,8 @@ declare class Client extends EventsEmitter implements ClientType {
    * @public
    */
   get _defaultGuildCacheOptions(): GuildCacheOptions;
+  get initialized(): boolean;
+  get ready(): boolean;
   /**
    * Counts how many members are in all of Quark's servers.
    * @returns {Number}
@@ -160,7 +196,10 @@ declare class Client extends EventsEmitter implements ClientType {
    * @public
    * @method
    */
-  bundleCache(): any;
+  bundleCache():
+    | import("../typings/index.d.js").GuildStorageJSON[]
+    | import("../typings/index.d.js").GuildCacheJSON[]
+    | import("../typings/index.d.js").GuildDiscordJSON[];
   /**
    * Registers commands, overwriting all previous ones.
    * @param {Array<Command>} commands Array of commands to register.
@@ -172,7 +211,7 @@ declare class Client extends EventsEmitter implements ClientType {
    * @async
    * @throws {TypeError}
    */
-  registerCommands(commands: any): Promise<any>;
+  registerCommands(commands: CommandBuilder[]): Promise<any>;
   /**
    * Fetches the emojis for this client.
    * @returns {Array<Object>}
@@ -192,7 +231,9 @@ declare class Client extends EventsEmitter implements ClientType {
    * @async
    * @throws {TypeError}
    */
-  createEmoji({ name, image }: any): Promise<any>;
+  createEmoji({ name, image }: { name: string; image: string }): Promise<any>;
+  setInitialized(): void;
+  setReady(): void;
   /**
    * Sets the bot's status across all shards.
    * @param {Object} status Status options.
@@ -206,7 +247,19 @@ declare class Client extends EventsEmitter implements ClientType {
    * @method
    * @throws {TypeError}
    */
-  setStatus({ name, type, status, afk, since }?: any): void;
+  setStatus({
+    name,
+    type,
+    status,
+    afk,
+    since,
+  }: {
+    name: string;
+    type?: number;
+    status?: string;
+    afk?: boolean;
+    since?: number;
+  }): void;
   /**
    * Initiates the login sequence
    * @param {String} token The authorization token
@@ -215,6 +268,6 @@ declare class Client extends EventsEmitter implements ClientType {
    * @method
    * @throws {TypeError}
    */
-  login(token: any): void;
+  login(token: string): void;
 }
 export default Client;

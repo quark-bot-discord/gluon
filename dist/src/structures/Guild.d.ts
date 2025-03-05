@@ -2,6 +2,7 @@ import AuditLog from "./AuditLog.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
 import {
+  APIGuild,
   AuditLogEvent,
   GatewayGuildCreateDispatchData,
   GuildDefaultMessageNotifications,
@@ -12,12 +13,11 @@ import {
   GuildVerificationLevel,
   Locale,
 } from "discord-api-types/v10";
-import {
+import type {
   Guild as GuildType,
   GuildCacheJSON,
   GuildDiscordJSON,
   GuildStorageJSON,
-  JsonTypes,
   TextChannel as TextChannelType,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
@@ -32,7 +32,8 @@ import {
   FileUpload,
   MessageComponents as MessageComponentsType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -53,7 +54,8 @@ declare class Guild implements GuildType {
       | GatewayGuildCreateDispatchData
       | GuildCacheJSON
       | GuildStorageJSON
-      | GuildDiscordJSON,
+      | GuildDiscordJSON
+      | APIGuild,
     {
       nocache,
     }?: {
@@ -87,7 +89,7 @@ declare class Guild implements GuildType {
    * @readonly
    * @public
    */
-  get owner(): import("../../typings/index.d.js").Member | null;
+  get owner(): import("../../typings/index.d.ts").Member | null;
   /**
    * System channel flags.
    * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
@@ -309,7 +311,7 @@ declare class Guild implements GuildType {
    * @method
    * @throws {Error}
    */
-  me(): Promise<import("../../typings/index.d.js").Member>;
+  me(): Promise<import("../../typings/index.d.ts").Member>;
   /**
    * Bans a user with the given id from the guild.
    * @param {String} user_id The id of the user to ban.
@@ -438,9 +440,9 @@ declare class Guild implements GuildType {
   fetchChannels(): Promise<
     (
       | TextChannelType
-      | import("../../typings/index.d.js").VoiceChannel
-      | import("../../typings/index.d.js").Thread
-      | import("../../typings/index.d.js").CategoryChannel
+      | import("../../typings/index.d.ts").VoiceChannel
+      | import("../../typings/index.d.ts").Thread
+      | import("../../typings/index.d.ts").CategoryChannel
     )[]
   >;
   /**

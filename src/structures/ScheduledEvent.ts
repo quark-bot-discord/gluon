@@ -9,19 +9,19 @@ import {
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
 } from "discord-api-types/v10";
-import {
+import type {
   ScheduledEvent as ScheduledEventType,
   ScheduledEventCacheJSON,
   ScheduledEventDiscordJSON,
   ScheduledEventStorageJSON,
-  JsonTypes,
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "../../typings/index.d.ts";
+import { JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an scheduled event.
@@ -87,6 +87,10 @@ class ScheduledEvent implements ScheduledEventType {
      * @private
      */
     this.#_guild_id = BigInt(guildId);
+
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
+    }
 
     /**
      * The name of the scheduled event.
@@ -410,6 +414,14 @@ class ScheduledEvent implements ScheduledEventType {
    */
   get location() {
     return (this.#location as string) ?? null;
+  }
+
+  _decrementUserCount() {
+    this.#user_count--;
+  }
+
+  _incrementUserCount() {
+    this.#user_count++;
   }
 
   /**
