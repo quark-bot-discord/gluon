@@ -9,6 +9,7 @@ import {
   APIThreadChannel,
   APIUser,
   ChannelType,
+  GatewayGuildCreateDispatchData,
 } from "#typings/discord.js";
 import Client from "./Client.js";
 import {
@@ -28,6 +29,7 @@ import Guild from "./structures/Guild.js";
 import TextChannel from "./structures/TextChannel.js";
 import User from "./structures/User.js";
 import VoiceChannel from "./structures/VoiceChannel.js";
+import type { Client as ClientType } from "#typings/index.d.ts";
 export declare const TEST_DATA: {
   GUILD_ID: string;
   TEXT_CHANNEL: {
@@ -76,87 +78,7 @@ export declare const TEST_DATA: {
     nsfw: boolean;
     parent_id: null;
   };
-  GUILD: {
-    id: string;
-    name: string;
-    icon: null;
-    splash: null;
-    discovery_splash: null;
-    owner_id: string;
-    region: string;
-    afk_channel_id: null;
-    afk_timeout: number;
-    verification_level: number;
-    default_message_notifications: number;
-    explicit_content_filter: number;
-    roles: never[];
-    emojis: never[];
-    features: never[];
-    mfa_level: number;
-    application_id: null;
-    system_channel_id: string;
-    system_channel_flags: number;
-    rules_channel_id: string;
-    joined_at: string;
-    large: boolean;
-    unavailable: boolean;
-    member_count: number;
-    voice_states: never[];
-    members: never[];
-    channels: (
-      | {
-          id: string;
-          type: number;
-          guild_id: string;
-          name: string;
-          position: number;
-          permission_overwrites: never[];
-          rate_limit_per_user: number;
-          nsfw: boolean;
-          topic: null;
-          last_message_id: null;
-          parent_id: null;
-          last_pin_timestamp: null;
-          bitrate?: undefined;
-          user_limit?: undefined;
-        }
-      | {
-          id: string;
-          type: number;
-          guild_id: string;
-          name: string;
-          position: number;
-          permission_overwrites: never[];
-          rate_limit_per_user: number;
-          nsfw: boolean;
-          topic: null;
-          last_message_id: null;
-          parent_id: null;
-          last_pin_timestamp: null;
-          bitrate: number;
-          user_limit: number;
-        }
-    )[];
-    threads: never[];
-    presences: never[];
-    max_presences: number;
-    max_members: number;
-    vanity_url_code: null;
-    description: null;
-    banner: null;
-    premium_progress_bar_enabled: boolean;
-    premium_tier: number;
-    premium_subscription_count: number;
-    preferred_locale: string;
-    public_updates_channel_id: null;
-    max_video_channel_users: number;
-    approximate_member_count: number;
-    approximate_presence_count: number;
-    welcome_screen: null;
-    nsfw_level: number;
-    stage_instances: never[];
-    stickers: never[];
-  };
+  GUILD: GatewayGuildCreateDispatchData;
   THREAD: APIThreadChannel;
   CHANNEL_ID: string;
   MESSAGE_ID: string;
@@ -585,31 +507,31 @@ export declare const TEST_CLIENTS: {
   NO_CACHES_ENABLED: () => Client;
 };
 export declare const TEST_GUILDS: {
-  ALL_CACHES_ENABLED: (client: any) => Guild;
-  NO_CACHES_ENABLED: (client: any) => Guild;
+  ALL_CACHES_ENABLED: (client: ClientType) => Guild;
+  NO_CACHES_ENABLED: (client: ClientType) => Guild;
 };
 export declare const TEST_CHANNELS: {
-  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client: any) => TextChannel;
-  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client: any) => TextChannel;
-  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client: any) => VoiceChannel;
-  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client: any) => CategoryChannel;
-  THREAD_CHANNEL: (client: any) => Thread;
+  TEXT_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => TextChannel;
+  TEXT_CHANNEL_2_ALL_CACHES_ENABLED: (client: ClientType) => TextChannel;
+  VOICE_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => VoiceChannel;
+  CATEGORY_CHANNEL_ALL_CACHES_ENABLED: (client: ClientType) => CategoryChannel;
+  THREAD_CHANNEL: (client: ClientType) => Thread;
 };
 export declare const TEST_MEMBERS: {
-  CLIENT_MEMBER: (client: any) => Member;
-  THREAD_OWNER_MEMBER: (client: any) => Member;
-  GUILD_OWNER_MEMBER: (client: any) => Member;
-  GENERIC_MEMBER: (client: any) => Member;
-  VOICE_STATE_MEMBER: (client: any) => Member;
-  EXECUTOR_MEMBER: (client: any) => Member;
-  TARGET_MEMBER: (client: any) => Member;
-  CLIENT_MEMBER_1: (client: any) => Member;
-  ROLE_OVERRIDES_MEMBER: (client: any) => Member;
-  ROLE_OVERRIDES_MEMBER_2: (client: any) => Member;
+  CLIENT_MEMBER: (client: ClientType) => Member;
+  THREAD_OWNER_MEMBER: (client: ClientType) => Member;
+  GUILD_OWNER_MEMBER: (client: ClientType) => Member;
+  GENERIC_MEMBER: (client: ClientType) => Member;
+  VOICE_STATE_MEMBER: (client: ClientType) => Member;
+  EXECUTOR_MEMBER: (client: ClientType) => Member;
+  TARGET_MEMBER: (client: ClientType) => Member;
+  CLIENT_MEMBER_1: (client: ClientType) => Member;
+  ROLE_OVERRIDES_MEMBER: (client: ClientType) => Member;
+  ROLE_OVERRIDES_MEMBER_2: (client: ClientType) => Member;
 };
 export declare const TEST_MESSAGES: {
   GENERIC_MESSAGE: (
-    client: any,
+    client: ClientType,
     {
       channelId,
     }?: {
@@ -618,26 +540,26 @@ export declare const TEST_MESSAGES: {
   ) => Message;
 };
 export declare const TEST_ROLES: {
-  GENERIC_ADMIN_ROLE: (client: any) => Role;
-  GENERIC_ADMIN_ROLE_2: (client: any) => Role;
-  GENERIC_ROLE: (client: any) => Role;
-  GENERIC_ROLE_2: (client: any) => Role;
+  GENERIC_ADMIN_ROLE: (client: ClientType) => Role;
+  GENERIC_ADMIN_ROLE_2: (client: ClientType) => Role;
+  GENERIC_ROLE: (client: ClientType) => Role;
+  GENERIC_ROLE_2: (client: ClientType) => Role;
 };
 export declare const TEST_SCHEDULED_EVENTS: {
-  GENERIC_SCHEDULED_EVENT: (client: any) => ScheduledEvent;
-  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client: any) => ScheduledEvent;
+  GENERIC_SCHEDULED_EVENT: (client: ClientType) => ScheduledEvent;
+  EXTERNAL_GENERIC_SCHEDULED_EVENT: (client: ClientType) => ScheduledEvent;
 };
 export declare const TEST_USERS: {
-  GENERIC_USER: (client: any) => User;
+  GENERIC_USER: (client: ClientType) => User;
 };
 export declare const TEST_EMOJIS: {
-  GENERIC_EMOJI: (client: any) => Emoji;
+  GENERIC_EMOJI: (client: ClientType) => Emoji;
 };
 export declare const TEST_INVITES: {
-  GENERIC_INVITE: (client: any) => Invite;
+  GENERIC_INVITE: (client: ClientType) => Invite;
 };
 export declare const TEST_INTERACTIONS: {
-  GENERIC_INTERACTION: (client: any) => Interaction;
-  SLASH_COMMAND: (client: any) => SlashCommand;
-  BUTTON_CLICK: (client: any) => ButtonClick;
+  GENERIC_INTERACTION: (client: ClientType) => Interaction;
+  SLASH_COMMAND: (client: ClientType) => SlashCommand;
+  BUTTON_CLICK: (client: ClientType) => ButtonClick;
 };
