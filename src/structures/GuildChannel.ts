@@ -267,11 +267,11 @@ class GuildChannel implements GuildChannelType {
     embeds,
     suppressMentions = false,
   }: {
-    content: string;
-    components: MessageComponentsType;
-    files: FileUpload[];
-    embeds: Embed[];
-    suppressMentions: boolean;
+    content?: string;
+    components?: MessageComponentsType;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    suppressMentions?: boolean;
   }) {
     return Message.send(this.#_client, this.id, this.guildId, {
       content,

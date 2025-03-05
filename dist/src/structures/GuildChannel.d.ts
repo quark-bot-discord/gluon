@@ -76,11 +76,11 @@ declare class GuildChannel implements GuildChannelType {
     embeds,
     suppressMentions,
   }: {
-    content: string;
-    components: MessageComponentsType;
-    files: FileUpload[];
-    embeds: Embed[];
-    suppressMentions: boolean;
+    content?: string;
+    components?: MessageComponentsType;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    suppressMentions?: boolean;
   }): Promise<Message>;
   /**
    * Returns the mention for this channel.
