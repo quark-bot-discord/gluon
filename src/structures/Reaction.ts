@@ -1,6 +1,5 @@
 import Emoji from "./Emoji.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   EmojiCacheJSON,
   EmojiDiscordJSON,
@@ -12,12 +11,13 @@ import type {
   Reaction as ReactionType,
   Client as ClientType,
   Guild as GuildType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIReaction,
   GatewayMessageReactionAddDispatchData,
-} from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a reaction belonging to a message.

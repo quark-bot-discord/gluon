@@ -1,11 +1,11 @@
 import Interaction from "./Interaction.js";
 import Message from "./Message.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIMessageComponentGuildInteraction,
   APIMessageComponentSelectMenuInteraction,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   OptionSelect as OptionSelectType,
   OptionSelectCacheJSON,
@@ -18,8 +18,8 @@ import type {
   MemberCacheJSON,
   MemberStorageJSON,
   MemberDiscordJSON,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents when an option is selected.

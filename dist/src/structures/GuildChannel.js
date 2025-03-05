@@ -63,8 +63,8 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
-import { OverwriteType } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { OverwriteType } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}

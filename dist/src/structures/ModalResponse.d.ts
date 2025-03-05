@@ -10,7 +10,7 @@ import type {
 import {
   APIGuildInteraction,
   APIModalSubmitInteraction,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a modal is submitted.
@@ -41,7 +41,7 @@ declare class ModalResponse extends Interaction implements ModalResponseType {
    * @readonly
    * @public
    */
-  get values(): import("discord-api-types/v10").ModalSubmitComponent[];
+  get values(): import("#typings/discord.js").ModalSubmitComponent[];
   /**
    * @method
    * @public

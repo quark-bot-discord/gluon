@@ -2,7 +2,7 @@ import {
   ApplicationCommandOptionType,
   ChannelType,
   Locale,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import type {
   CommandOptionDescriptionLocalizations,
   CommandOptionNameLocalizations,

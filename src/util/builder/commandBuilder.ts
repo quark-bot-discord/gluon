@@ -1,4 +1,4 @@
-import { ApplicationCommandType, Locale } from "discord-api-types/v10";
+import { ApplicationCommandType, Locale } from "#typings/discord.js";
 import { LIMITS } from "../../constants.js";
 import CommandOption from "./commandOptionBuilder.js";
 import type {
@@ -7,7 +7,7 @@ import type {
   CommandOptionBuilder,
 } from "typings/index.d.ts";
 import { JsonTypes } from "../../../typings/enums.js";
-import { PermissionsBitfield } from "src/interfaces/gluon.js";
+import { PermissionsBitfield } from "#typings/gluon.js";
 
 /**
  * Structure for a command.

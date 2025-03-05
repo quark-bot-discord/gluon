@@ -96,8 +96,8 @@ import {
   GuildPremiumTier,
   GuildVerificationLevel,
   Locale,
-} from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}

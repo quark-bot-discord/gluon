@@ -70,7 +70,7 @@ import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
 import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
-import { ComponentType, InteractionType } from "discord-api-types/v10";
+import { ComponentType, InteractionType } from "#typings/discord.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 class EventHandler {

@@ -1,7 +1,8 @@
+import { GatewayOpcodes } from "#typings/discord.js";
 import erlpack from "erlpack";
 function _heartbeat(d) {
   const payload = {
-    op: 1,
+    op: GatewayOpcodes.Heartbeat,
     d: d ? d : null,
   };
   return erlpack.pack(payload);

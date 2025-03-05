@@ -66,8 +66,8 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import { GuildMemberFlags } from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GuildMemberFlags } from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Represents a guild member.

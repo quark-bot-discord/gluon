@@ -1,9 +1,9 @@
-import { GatewayResume } from "discord-api-types/v10";
+import { GatewayOpcodes, GatewayResume } from "#typings/discord.js";
 import erlpack from "erlpack";
 
 function _resume(token: string, session_id: string, seq: number): Buffer {
   const payload: GatewayResume = {
-    op: 6,
+    op: GatewayOpcodes.Resume,
     d: {
       token,
       session_id,

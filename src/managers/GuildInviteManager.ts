@@ -9,7 +9,7 @@ import {
   StructureIdentifiers,
   Client as ClientType,
 } from "../../typings/index.d.js";
-import { APIExtendedInvite } from "discord-api-types/v10";
+import { APIExtendedInvite } from "#typings/discord.js";
 
 /**
  * Manages all invites within a guild.

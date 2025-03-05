@@ -50,7 +50,7 @@ var _Reaction__client,
   _Reaction_count;
 import Emoji from "./Emoji.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a reaction belonging to a message.
  */

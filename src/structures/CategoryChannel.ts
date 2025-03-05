@@ -5,7 +5,7 @@ import {
   APIGuildCategoryChannel,
   ChannelType,
   Snowflake,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import type {
   CategoryChannelCacheJSON,
   CategoryChannelDiscordJSON,

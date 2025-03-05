@@ -1,15 +1,14 @@
 import MessagePollManager from "../managers/MessagePollManager.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   Poll as PollType,
   PollCacheJSON,
   PollDiscordJSON,
   PollStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { APIPoll } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIPoll, Snowflake } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 declare class Poll implements PollType {
   #private;
   /**
@@ -41,7 +40,7 @@ declare class Poll implements PollType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The question of the poll.
    * @type {String}
@@ -80,7 +79,7 @@ declare class Poll implements PollType {
    * @readonly
    * @public
    */
-  get layoutType(): import("discord-api-types/v10").PollLayoutType;
+  get layoutType(): import("#typings/discord.js").PollLayoutType;
   /**
    * The poll responses.
    * @type {MessagePollManager}

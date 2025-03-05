@@ -52,7 +52,7 @@ var _CategoryChannel__client,
 import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
-import { ChannelType } from "discord-api-types/v10";
+import { ChannelType } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 class CategoryChannel {
   /**

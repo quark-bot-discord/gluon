@@ -49,7 +49,7 @@ var _VoiceChannel__client,
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a voice channel.
  * @extends {Channel}

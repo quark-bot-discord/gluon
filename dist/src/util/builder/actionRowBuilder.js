@@ -1,5 +1,5 @@
 import { LIMITS } from "../../constants.js";
-import { ComponentType } from "discord-api-types/v10";
+import { ComponentType } from "#typings/discord.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct an action row for a message.

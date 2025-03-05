@@ -1,12 +1,12 @@
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   MessagePollManagerCacheJSON,
   MessagePollManagerDiscordJSON,
   MessagePollManagerStorageJSON,
   MessagePollManager as MessagePollManagerType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages a poll for a message.
  */

@@ -1,11 +1,11 @@
 import User from "./User.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildScheduledEvent,
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   ScheduledEvent as ScheduledEventType,
   ScheduledEventCacheJSON,
@@ -17,8 +17,8 @@ import type {
   UserStorageJSON,
   UserDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -124,7 +124,7 @@ declare class ScheduledEvent implements ScheduledEventType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The UNIX timestamp of the start time for the event.
    * @type {Number}

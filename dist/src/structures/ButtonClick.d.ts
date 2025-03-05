@@ -11,7 +11,7 @@ import type {
 import {
   APIMessageComponentGuildInteraction,
   Snowflake,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents when a button is clicked.

@@ -56,7 +56,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a guild invite.
  */

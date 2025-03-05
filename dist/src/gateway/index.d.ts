@@ -1,6 +1,6 @@
 import ZlibSync from "zlib-sync";
 import type { Client as ClientType } from "typings/index.d.ts";
-import { PresenceStatus, PresenceType } from "#src/gateway.js";
+import { ActivityType, PresenceUpdateStatus } from "#typings/discord.js";
 declare class Shard {
   #private;
   shard: number;
@@ -25,8 +25,8 @@ declare class Shard {
   jitter(): number;
   updatePresence(
     name: string,
-    type?: PresenceType,
-    status?: PresenceStatus,
+    type?: ActivityType,
+    status?: PresenceUpdateStatus,
     afk?: boolean,
     since?: number | null,
   ): void;

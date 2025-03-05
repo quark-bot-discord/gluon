@@ -3,20 +3,20 @@ import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   TextChannel as TextChannelType,
   TextChannelCacheJSON,
   TextChannelDiscordJSON,
   TextChannelStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildTextChannel,
   ChannelType,
   GuildTextChannelType,
-} from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a text channel within Discord.

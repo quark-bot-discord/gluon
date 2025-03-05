@@ -1,6 +1,5 @@
 import Member from "./Member.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   VoiceStateCacheJSON,
   VoiceStateDiscordJSON,
@@ -10,9 +9,9 @@ import type {
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
   VoiceChannel as VoiceChannelType,
-} from "../../typings/index.d.ts";
-import { APIVoiceState } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIVoiceState, Snowflake } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a voice state.
  */
@@ -96,7 +95,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The id of the guild that this voice state belongs to.
    * @type {String}
@@ -124,7 +123,7 @@ declare class VoiceState implements VoiceStateType {
    * @readonly
    * @public
    */
-  get member(): Member | import("../../typings/index.d.ts").Member | null;
+  get member(): Member | import("#typings/index.d.ts").Member | null;
   /**
    * The id of the user the voice state is about.
    * @type {String}

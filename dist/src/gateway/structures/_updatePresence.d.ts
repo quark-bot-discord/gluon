@@ -1,9 +1,10 @@
-import { PresenceStatus, PresenceType } from "src/gateway.js";
+import { UnixTimestamp } from "#typings/gluon.js";
+import { ActivityType, PresenceUpdateStatus } from "#typings/discord.js";
 declare function _updatePresence(
   name: string,
-  type?: PresenceType,
-  status?: PresenceStatus,
+  type?: ActivityType,
+  status?: PresenceUpdateStatus,
   afk?: boolean,
-  since?: number | null,
+  since?: UnixTimestamp | null,
 ): Buffer<ArrayBufferLike>;
 export default _updatePresence;

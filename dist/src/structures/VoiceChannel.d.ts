@@ -1,18 +1,18 @@
 import GuildChannel from "./GuildChannel.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   VoiceChannelCacheJSON,
   VoiceChannelDiscordJSON,
   VoiceChannelStorageJSON,
   VoiceChannel as VoiceChannelType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
-} from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a voice channel.
  * @extends {Channel}
@@ -87,47 +87,47 @@ declare class VoiceChannel extends GuildChannel implements VoiceChannelType {
         bitrate: number | undefined;
         user_limit: number | undefined;
         rtc_region: string | undefined;
-        id: import("discord-api-types/globals").Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        id: Snowflake;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageCacheJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteCacheJSON[];
+        messages: import("#typings/index.d.ts").MessageCacheJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
     | {
         bitrate: number | undefined;
         user_limit: number | undefined;
         rtc_region: string | undefined;
-        id: import("discord-api-types/globals").Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        id: Snowflake;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageDiscordJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteDiscordJSON[];
+        messages: import("#typings/index.d.ts").MessageDiscordJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteDiscordJSON[];
       }
     | {
         bitrate: number | undefined;
         user_limit: number | undefined;
         rtc_region: string | undefined;
-        id: import("discord-api-types/globals").Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        id: Snowflake;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         _attributes: number;
         _cacheOptions: number;
-        messages: import("../../typings/index.d.ts").MessageStorageJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteStorageJSON[];
+        messages: import("#typings/index.d.ts").MessageStorageJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };
 }
 export default VoiceChannel;

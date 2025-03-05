@@ -1,4 +1,4 @@
-import { Locale } from "discord-api-types/v10";
+import { Locale } from "#typings/discord.js";
 import { LIMITS } from "../../constants.js";
 import type {
   CommandChoiceBuilder as CommandChoiceBuilderType,

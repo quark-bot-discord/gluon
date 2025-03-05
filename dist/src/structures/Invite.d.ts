@@ -1,6 +1,5 @@
 import User from "./User.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   Invite as InviteType,
   InviteCacheJSON,
@@ -12,13 +11,14 @@ import type {
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIExtendedInvite,
   GatewayInviteCreateDispatchData,
   GatewayInviteDeleteDispatchData,
-} from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a guild invite.
  */
@@ -63,7 +63,7 @@ declare class Invite implements InviteType {
    * @readonly
    * @public
    */
-  get channel(): import("../../typings/index.d.ts").AllChannels | null;
+  get channel(): import("#typings/index.d.ts").AllChannels | null;
   /**
    * The code of the invite.
    * @type {String}
@@ -91,7 +91,7 @@ declare class Invite implements InviteType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The number of times the invite has been used.
    * @type {Number?}
@@ -171,11 +171,11 @@ declare class Invite implements InviteType {
     | {
         code: string;
         channel:
-          | import("../../typings/index.d.ts").GuildChannelCacheJSON
-          | import("../../typings/index.d.ts").GuildChannelDiscordJSON
-          | import("../../typings/index.d.ts").GuildChannelStorageJSON
-          | import("../../typings/index.d.ts").CategoryChannelCacheJSON
-          | import("../../typings/index.d.ts").CategoryChannelStorageJSON
+          | import("#typings/index.d.ts").GuildChannelCacheJSON
+          | import("#typings/index.d.ts").GuildChannelDiscordJSON
+          | import("#typings/index.d.ts").GuildChannelStorageJSON
+          | import("#typings/index.d.ts").CategoryChannelCacheJSON
+          | import("#typings/index.d.ts").CategoryChannelStorageJSON
           | undefined;
         inviter: UserCacheJSON | UserStorageJSON;
         uses: number | undefined;
@@ -186,11 +186,11 @@ declare class Invite implements InviteType {
     | {
         code: string;
         channel:
-          | import("../../typings/index.d.ts").GuildChannelCacheJSON
-          | import("../../typings/index.d.ts").GuildChannelDiscordJSON
-          | import("../../typings/index.d.ts").GuildChannelStorageJSON
-          | import("../../typings/index.d.ts").CategoryChannelCacheJSON
-          | import("../../typings/index.d.ts").CategoryChannelStorageJSON
+          | import("#typings/index.d.ts").GuildChannelCacheJSON
+          | import("#typings/index.d.ts").GuildChannelDiscordJSON
+          | import("#typings/index.d.ts").GuildChannelStorageJSON
+          | import("#typings/index.d.ts").CategoryChannelCacheJSON
+          | import("#typings/index.d.ts").CategoryChannelStorageJSON
           | undefined;
         inviter: UserDiscordJSON;
         uses: number | undefined;

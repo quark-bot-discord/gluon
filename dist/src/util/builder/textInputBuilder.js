@@ -1,4 +1,4 @@
-import { ComponentType, TextInputStyle } from "discord-api-types/v10";
+import { ComponentType, TextInputStyle } from "#typings/discord.js";
 import { LIMITS } from "../../constants.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**

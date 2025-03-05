@@ -2,7 +2,6 @@ import CategoryChannel from "../../structures/CategoryChannel.js";
 import TextChannel from "../../structures/TextChannel.js";
 import Thread from "../../structures/Thread.js";
 import VoiceChannel from "../../structures/VoiceChannel.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildCategoryChannel,
   APIGuildStageVoiceChannel,
@@ -10,7 +9,8 @@ import {
   APIThreadChannel,
   ChannelType,
   GatewayChannelCreateDispatchData,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type { AllChannels, Client as ClientType } from "typings/index.d.ts";
 
 /**

@@ -6,7 +6,6 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import { FileUpload } from "src/util.js";
 import {
   APIGuildTextChannel,
@@ -14,7 +13,8 @@ import {
   ChannelType,
   GuildTextChannelType,
   OverwriteType,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   GuildChannel as GuildChannelType,
   GuildChannelCacheJSON,
@@ -35,8 +35,8 @@ import type {
   VoiceChannel as VoiceChannelType,
   Thread as ThreadType,
   ChannelCacheOptions as ChannelCacheOptionsType,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a channel within Discord.

@@ -1,11 +1,11 @@
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildCategoryChannel,
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
   APIThreadChannel,
   GatewayChannelCreateDispatchData,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type { AllChannels, Client as ClientType } from "typings/index.d.ts";
 /**
  * Automatically determines the channel type and caches the channel appropriately.

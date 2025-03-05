@@ -46,7 +46,7 @@ var _MessageReactionManager__client,
   _MessageReactionManager_guild,
   _MessageReactionManager_cache;
 import Reaction from "../structures/Reaction.js";
-import { JsonTypes } from "../../typings/enums.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Manages the reactions of a message.
  */

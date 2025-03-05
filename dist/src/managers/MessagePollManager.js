@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _MessagePollManager__client, _MessagePollManager_cache;
-import { JsonTypes } from "../../typings/enums.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Manages a poll for a message.
  */

@@ -1,4 +1,4 @@
-import { Snowflake } from "src/interfaces/gluon.js";
+import { Snowflake } from "#typings/discord.js";
 
 /**
  * Gives the UNIX timestamp for when the snowflake was created.

@@ -1,5 +1,4 @@
 import Reaction from "../structures/Reaction.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   MessageReactionManager as MessageReactionManagerType,
   Guild as GuildType,
@@ -10,9 +9,12 @@ import type {
   ReactionStorageJSON,
   ReactionDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { GatewayMessageReactionAddDispatchData } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import {
+  GatewayMessageReactionAddDispatchData,
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 
 /**
  * Manages the reactions of a message.

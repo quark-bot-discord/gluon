@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import Button from "../../../src/util/builder/buttonBuilder.js";
 import ActionRow from "../../../src/util/builder/actionRowBuilder.js";
-import { ComponentType } from "discord-api-types/v10";
+import { ComponentType } from "#typings/discord.js";
 
 describe("ActionRowBuilder", () => {
   context("check import", function () {

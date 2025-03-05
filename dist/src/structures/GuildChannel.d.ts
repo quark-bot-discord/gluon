@@ -1,13 +1,13 @@
 import Message from "./Message.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import { FileUpload } from "src/util.js";
 import {
   APIGuildTextChannel,
   APIGuildVoiceChannel,
   ChannelType,
   GuildTextChannelType,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   GuildChannel as GuildChannelType,
   GuildChannelCacheJSON,
@@ -22,8 +22,8 @@ import type {
   MessageComponents as MessageComponentsType,
   Client as ClientType,
   ChannelCacheOptions as ChannelCacheOptionsType,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a channel within Discord.
  * @see {@link https://discord.com/developers/docs/resources/channel}
@@ -102,14 +102,14 @@ declare class GuildChannel implements GuildChannelType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The parent channel.
    * @type {Channel?}
    * @readonly
    * @public
    */
-  get parent(): import("../../typings/index.d.ts").AllChannels | null;
+  get parent(): import("#typings/index.d.ts").AllChannels | null;
   /**
    * The ID of the channel.
    * @type {String}

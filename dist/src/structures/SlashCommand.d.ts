@@ -3,7 +3,7 @@ import util from "util";
 import {
   APIApplicationCommandAutocompleteGuildInteraction,
   APIChatInputApplicationCommandGuildInteraction,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import type {
   SlashCommand as SlashCommandType,
   SlashCommandCacheJSON,
@@ -37,11 +37,11 @@ declare class SlashCommand extends Interaction implements SlashCommandType {
    * @public
    */
   get data():
-    | import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData
-    | (import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData &
+    | import("#typings/discord.js").APIChatInputApplicationCommandInteractionData
+    | (import("#typings/discord.js").APIChatInputApplicationCommandInteractionData &
         Required<
           Pick<
-            import("discord-api-types/v10").APIChatInputApplicationCommandInteractionData,
+            import("#typings/discord.js").APIChatInputApplicationCommandInteractionData,
             "options"
           >
         >);
@@ -51,7 +51,7 @@ declare class SlashCommand extends Interaction implements SlashCommandType {
    * @readonly
    * @public
    */
-  get options(): import("discord-api-types/v10").APIApplicationCommandInteractionDataOption[];
+  get options(): import("#typings/discord.js").APIApplicationCommandInteractionDataOption[];
   /**
    * @method
    * @public

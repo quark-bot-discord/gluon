@@ -47,7 +47,7 @@ import {
   GatewayThreadUpdateDispatchData,
   GatewayVoiceStateUpdateDispatchData,
   GatewayWebhooksUpdateDispatchData,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import type { Client as ClientType } from "typings/index.d.ts";
 declare class EventHandler {
   #private;

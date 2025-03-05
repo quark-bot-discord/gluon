@@ -18,7 +18,7 @@ import {
   Locale,
   MessageFlags,
   RoleFlags,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import Client from "./Client.js";
 import { INTENTS, PERMISSIONS } from "./constants.js";
 import BetterRequestHandler from "./rest/betterRequestHandler.js";

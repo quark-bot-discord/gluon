@@ -1,6 +1,5 @@
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { APIRole } from "discord-api-types/v10";
+import { APIRole, Snowflake } from "#typings/discord.js";
 import type {
   RoleCacheJSON,
   RoleDiscordJSON,
@@ -9,8 +8,8 @@ import type {
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a role belonging to a guild.
  */
@@ -84,7 +83,7 @@ declare class Role implements RoleType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The ID of the guild that this role belongs to.
    * @type {String}
@@ -126,7 +125,7 @@ declare class Role implements RoleType {
    * @readonly
    * @public
    */
-  get tags(): import("discord-api-types/v10").APIRoleTags | undefined;
+  get tags(): import("#typings/discord.js").APIRoleTags | undefined;
   /**
    * Returns a mention for the role.
    * @type {String}
@@ -190,7 +189,7 @@ declare class Role implements RoleType {
         permissions: string;
         icon: string | null;
         _attributes: number;
-        tags: import("discord-api-types/v10").APIRoleTags | undefined;
+        tags: import("#typings/discord.js").APIRoleTags | undefined;
         hoist?: undefined;
         managed?: undefined;
         mentionable?: undefined;
@@ -202,7 +201,7 @@ declare class Role implements RoleType {
         position: number;
         permissions: string;
         icon: string | null;
-        tags: import("discord-api-types/v10").APIRoleTags | undefined;
+        tags: import("#typings/discord.js").APIRoleTags | undefined;
         hoist: boolean;
         managed: boolean;
         mentionable: boolean;

@@ -48,7 +48,7 @@ import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}

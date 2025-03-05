@@ -9,7 +9,7 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import { UnixTimestamp } from "#typings/gluon.js";
 import type {
   Member as MemberType,
   MemberCacheJSON,
@@ -22,14 +22,15 @@ import type {
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildMember,
   APIInteractionDataResolvedGuildMember,
   GatewayGuildMemberUpdateDispatchData,
   GuildMemberFlags,
-} from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 
 /**

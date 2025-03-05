@@ -1,6 +1,5 @@
 import Member from "./Member.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   VoiceStateCacheJSON,
   VoiceStateDiscordJSON,
@@ -13,9 +12,9 @@ import type {
   MemberCacheJSON,
   MemberStorageJSON,
   MemberDiscordJSON,
-} from "../../typings/index.d.ts";
-import { APIVoiceState } from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIVoiceState, Snowflake } from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a voice state.

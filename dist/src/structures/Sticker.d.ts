@@ -1,5 +1,5 @@
 import util from "util";
-import { APISticker, StickerFormatType } from "discord-api-types/v10";
+import { APISticker, StickerFormatType } from "#typings/discord.js";
 import type {
   Sticker as StickerType,
   StickerCacheJSON,

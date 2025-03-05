@@ -1,5 +1,5 @@
 import util from "util";
-import { APIOverwrite } from "discord-api-types/v10";
+import { APIOverwrite } from "#typings/discord.js";
 import type {
   PermissionOverwriteCacheJSON,
   PermissionOverwriteDiscordJSON,

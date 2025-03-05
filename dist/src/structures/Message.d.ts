@@ -3,7 +3,6 @@ import Attachment from "./Attachment.js";
 import Embed from "../util/builder/embedBuilder.js";
 import util from "util";
 import MessageComponents from "../util/builder/messageComponents.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   MessageCacheJSON,
   MessageDiscordJSON,
@@ -22,9 +21,9 @@ import type {
   VoiceChannel as VoiceChannelType,
   Thread as ThreadType,
   TextChannel as TextChannelType,
-} from "../../typings/index.d.ts";
-import { APIMessage, MessageType } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIMessage, MessageType, Snowflake } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -87,7 +86,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get member(): import("../../typings/index.d.ts").Member | null;
+  get member(): import("#typings/index.d.ts").Member | null;
   /**
    * Whether this message includes user mentions.
    * @readonly
@@ -136,7 +135,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The guild that this message belongs to.
    * @type {String}

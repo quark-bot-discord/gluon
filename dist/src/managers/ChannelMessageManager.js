@@ -49,7 +49,7 @@ import { LIMITS, PERMISSIONS } from "../constants.js";
 import Message from "../structures/Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { ChannelType } from "discord-api-types/v10";
+import { ChannelType } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 /**

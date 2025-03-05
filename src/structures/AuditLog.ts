@@ -13,7 +13,7 @@ import {
   APIUser,
   AuditLogOptionsType,
   Snowflake,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 
 /**

@@ -1,19 +1,19 @@
 import GuildChannel from "./GuildChannel.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   TextChannel as TextChannelType,
   TextChannelCacheJSON,
   TextChannelDiscordJSON,
   TextChannelStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildTextChannel,
   ChannelType,
   GuildTextChannelType,
-} from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
@@ -86,41 +86,41 @@ declare class TextChannel extends GuildChannel implements TextChannelType {
    */
   toJSON(format: JsonTypes):
     | {
-        id: import("discord-api-types/globals").Snowflake;
+        id: Snowflake;
         type: ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageCacheJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteCacheJSON[];
+        messages: import("#typings/index.d.ts").MessageCacheJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
     | {
-        id: import("discord-api-types/globals").Snowflake;
+        id: Snowflake;
         type: ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageDiscordJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteDiscordJSON[];
+        messages: import("#typings/index.d.ts").MessageDiscordJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteDiscordJSON[];
       }
     | {
-        id: import("discord-api-types/globals").Snowflake;
+        id: Snowflake;
         type: ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        parent_id?: import("discord-api-types/globals").Snowflake | null;
+        parent_id?: Snowflake | null;
         _attributes: number;
         _cacheOptions: number;
-        messages: import("../../typings/index.d.ts").MessageStorageJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteStorageJSON[];
+        messages: import("#typings/index.d.ts").MessageStorageJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };
 }
 export default TextChannel;

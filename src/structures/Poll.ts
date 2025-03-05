@@ -1,7 +1,6 @@
 import MessagePollManager from "../managers/MessagePollManager.js";
 import Emoji from "./Emoji.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   Poll as PollType,
   PollCacheJSON,
@@ -11,9 +10,9 @@ import type {
   MessagePollManagerDiscordJSON,
   MessagePollManagerStorageJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { APIPoll } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIPoll, Snowflake } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 
 class Poll implements PollType {
   #_client;

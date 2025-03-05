@@ -1,4 +1,4 @@
-import { ApplicationCommandType, Locale } from "discord-api-types/v10";
+import { ApplicationCommandType, Locale } from "#typings/discord.js";
 import { LIMITS } from "../../constants.js";
 import CommandOption from "./commandOptionBuilder.js";
 import { JsonTypes } from "../../../typings/enums.js";

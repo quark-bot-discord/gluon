@@ -1,8 +1,13 @@
+import {
+  ActivityType,
+  GatewayOpcodes,
+  PresenceUpdateStatus,
+} from "#typings/discord.js";
 import erlpack from "erlpack";
 function _updatePresence(
   name,
-  type = 0,
-  status = "online",
+  type = ActivityType.Playing,
+  status = PresenceUpdateStatus.Online,
   afk = false,
   since = null,
 ) {
@@ -15,7 +20,7 @@ function _updatePresence(
     });
   }
   const payload = {
-    op: 3,
+    op: GatewayOpcodes.PresenceUpdate,
     d: {
       since,
       activities,

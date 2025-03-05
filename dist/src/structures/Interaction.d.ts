@@ -14,7 +14,7 @@ import type {
 import {
   APIGuildInteraction,
   APIMessageComponentGuildInteraction,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an interaction received over the gateway.
@@ -52,10 +52,10 @@ declare class Interaction implements InteractionType {
    * @public
    */
   get type():
-    | import("discord-api-types/v10").InteractionType.ApplicationCommand
-    | import("discord-api-types/v10").InteractionType.MessageComponent
-    | import("discord-api-types/v10").InteractionType.ApplicationCommandAutocomplete
-    | import("discord-api-types/v10").InteractionType.ModalSubmit;
+    | import("#typings/discord.js").InteractionType.ApplicationCommand
+    | import("#typings/discord.js").InteractionType.MessageComponent
+    | import("#typings/discord.js").InteractionType.ApplicationCommandAutocomplete
+    | import("#typings/discord.js").InteractionType.ModalSubmit;
   /**
    * The id of the guild that this interaction belongs to.
    * @type {String}

@@ -1,7 +1,7 @@
 import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
-import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { ButtonStyle, ComponentType } from "#typings/discord.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct a button for a message.

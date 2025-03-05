@@ -3,12 +3,12 @@ import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   APIGuildScheduledEvent,
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   ScheduledEvent as ScheduledEventType,
   ScheduledEventCacheJSON,
@@ -20,8 +20,8 @@ import type {
   UserStorageJSON,
   UserDiscordJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents an scheduled event.

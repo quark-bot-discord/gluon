@@ -1,5 +1,6 @@
 import erlpack from "erlpack";
 import { NAME, GLUON_VERSION } from "../../constants.js";
+import { GatewayOpcodes, PresenceUpdateStatus } from "#typings/discord.js";
 /**
  * Creates an identify payload for the gateway.
  * @param {String} token The authorization token.
@@ -18,7 +19,7 @@ function _identify(token, shard, intents) {
     throw new TypeError("GLUON: Intents must be a number.");
   }
   const payload = {
-    op: 2,
+    op: GatewayOpcodes.Identify,
     d: {
       token,
       properties: {
@@ -35,7 +36,7 @@ function _identify(token, shard, intents) {
             type: 0,
           },
         ],
-        status: "idle",
+        status: PresenceUpdateStatus.Idle,
         since: null,
         afk: true,
       },

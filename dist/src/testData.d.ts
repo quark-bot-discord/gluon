@@ -9,7 +9,7 @@ import {
   APIThreadChannel,
   APIUser,
   ChannelType,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import Client from "./Client.js";
 import {
   ButtonClick,
@@ -513,8 +513,8 @@ export declare const TEST_DATA: {
     request_to_speak_timestamp: string;
     joined: number;
   };
-  SCHEDULED_EVENT: import("discord-api-types/v10").APIVoiceGuildScheduledEvent;
-  SCHEDULED_EVENT_EXTERNAL: import("discord-api-types/v10").APIExternalGuildScheduledEvent;
+  SCHEDULED_EVENT: import("#typings/discord.js").APIVoiceGuildScheduledEvent;
+  SCHEDULED_EVENT_EXTERNAL: import("#typings/discord.js").APIExternalGuildScheduledEvent;
   POLL: {
     question: {
       text: string;

@@ -7,8 +7,8 @@ import {
   Guild as GuildType,
   GuildChannel as GuildChannelType,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { Snowflake } from "discord-api-types/globals";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all messages within a channel.
  */

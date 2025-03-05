@@ -9,9 +9,8 @@ import {
   Guild as GuildType,
   GuildChannel as GuildChannelType,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { Snowflake } from "discord-api-types/globals";
-import { ChannelType } from "discord-api-types/v10";
+} from "#typings/index.d.js";
+import { ChannelType, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 

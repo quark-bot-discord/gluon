@@ -2,8 +2,7 @@ import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
-import { APIRole } from "discord-api-types/v10";
+import { APIRole, Snowflake } from "#typings/discord.js";
 import type {
   RoleCacheJSON,
   RoleDiscordJSON,
@@ -12,8 +11,8 @@ import type {
   GuildCacheOptions as GuildCacheOptionsType,
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a role belonging to a guild.

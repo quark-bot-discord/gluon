@@ -3,7 +3,6 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   Invite as InviteType,
   InviteCacheJSON,
@@ -15,13 +14,14 @@ import type {
   GluonCacheOptions as GluonCacheOptionsType,
   GuildCacheOptions as GuildCacheOptionsType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIExtendedInvite,
   GatewayInviteCreateDispatchData,
   GatewayInviteDeleteDispatchData,
-} from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a guild invite.

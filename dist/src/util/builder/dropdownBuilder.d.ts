@@ -1,4 +1,4 @@
-import { ChannelType, ComponentType } from "discord-api-types/v10";
+import { ChannelType, ComponentType } from "#typings/discord.js";
 import type {
   DropdownBuilder as DropdownBuilderType,
   DropdownDefaultOption,

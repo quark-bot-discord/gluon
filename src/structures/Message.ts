@@ -16,7 +16,7 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import { UnixTimestamp } from "#typings/gluon.js";
 import type {
   MessageCacheJSON,
   MessageDiscordJSON,
@@ -53,9 +53,9 @@ import type {
   MemberDiscordJSON,
   MemberStorageJSON,
   MemberCacheJSON,
-} from "../../typings/index.d.ts";
-import { APIMessage, MessageType } from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIMessage, MessageType, Snowflake } from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";

@@ -1,5 +1,5 @@
 import util from "util";
-import { APIAttachment, Snowflake } from "discord-api-types/v10";
+import { APIAttachment, Snowflake } from "#typings/discord.js";
 import type {
   Attachment as AttachmentType,
   AttachmentCacheJSON,

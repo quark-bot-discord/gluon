@@ -57,7 +57,7 @@ import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
 import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a Discord user.
  * @see {@link https://discord.com/developers/docs/resources/user}

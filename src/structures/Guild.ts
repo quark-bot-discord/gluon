@@ -20,7 +20,7 @@ import Channel from "./GuildChannel.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import Message from "./Message.js";
-import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import { UnixTimestamp } from "#typings/gluon.js";
 import {
   APIAuditLog,
   APIGuild,
@@ -33,7 +33,8 @@ import {
   GuildPremiumTier,
   GuildVerificationLevel,
   Locale,
-} from "discord-api-types/v10";
+  Snowflake,
+} from "#typings/discord.js";
 import type {
   Guild as GuildType,
   GuildCacheJSON,
@@ -68,8 +69,8 @@ import type {
   MemberStorageJSON,
   MemberCacheJSON,
   Client as ClientType,
-} from "../../typings/index.d.ts";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a Discord guild.

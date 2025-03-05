@@ -1,19 +1,19 @@
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
-import { Snowflake } from "src/interfaces/gluon.js";
 import type {
   VoiceChannelCacheJSON,
   VoiceChannelDiscordJSON,
   VoiceChannelStorageJSON,
   VoiceChannel as VoiceChannelType,
   Client as ClientType,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
-} from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a voice channel.

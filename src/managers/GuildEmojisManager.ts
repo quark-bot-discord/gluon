@@ -6,8 +6,8 @@ import {
   Emoji as EmojiType,
   Guild as GuildType,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { Snowflake } from "discord-api-types/globals";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 
 /**

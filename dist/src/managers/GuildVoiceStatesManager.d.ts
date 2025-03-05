@@ -1,11 +1,11 @@
 import BaseCacheManager from "./BaseCacheManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   GuildVoiceStatesManager as GuildVoiceStatesManagerType,
   StructureIdentifiers,
   VoiceState as VoiceStateType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all voice states belonging to a guild.
  */

@@ -52,7 +52,7 @@ var _VoiceState__client,
   _VoiceState_request_to_speak_timestamp;
 import Member from "./Member.js";
 import util from "util";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 /**
  * Represents a voice state.
  */

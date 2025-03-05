@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import ChannelCacheOptions from "../../src/managers/ChannelCacheOptions.js";
-import { GLUON_CHANNEL_CACHING_OPTIONS } from "../../src/constants.js";
+import { GluonChannelCachingOptions } from "#typings/enums.js";
 
 describe("ChannelCacheOptions", function () {
   context("check import", function () {
@@ -40,7 +40,7 @@ describe("ChannelCacheOptions", function () {
   context("check attributeCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES,
+        GluonChannelCachingOptions.Attributes,
       );
       expect(channelCacheOptions.attributeCaching).to.be.true;
     });
@@ -49,7 +49,7 @@ describe("ChannelCacheOptions", function () {
   context("check referenceCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE,
+        GluonChannelCachingOptions.Reference,
       );
       expect(channelCacheOptions.referenceCaching).to.be.true;
     });
@@ -58,7 +58,7 @@ describe("ChannelCacheOptions", function () {
   context("check stickerCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.STICKER,
+        GluonChannelCachingOptions.Sticker,
       );
       expect(channelCacheOptions.stickerCaching).to.be.true;
     });
@@ -67,7 +67,7 @@ describe("ChannelCacheOptions", function () {
   context("check webhookCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK,
+        GluonChannelCachingOptions.Webhook,
       );
       expect(channelCacheOptions.webhookCaching).to.be.true;
     });
@@ -76,7 +76,7 @@ describe("ChannelCacheOptions", function () {
   context("check messageCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+        GluonChannelCachingOptions.Messages,
       );
       expect(channelCacheOptions.messageCaching).to.be.true;
     });
@@ -85,7 +85,7 @@ describe("ChannelCacheOptions", function () {
   context("check fileCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES,
+        GluonChannelCachingOptions.Files,
       );
       expect(channelCacheOptions.fileCaching).to.be.true;
     });
@@ -94,7 +94,7 @@ describe("ChannelCacheOptions", function () {
   context("check contentCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.CONTENT,
+        GluonChannelCachingOptions.Content,
       );
       expect(channelCacheOptions.contentCaching).to.be.true;
     });
@@ -103,7 +103,7 @@ describe("ChannelCacheOptions", function () {
   context("check pollCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.POLL,
+        GluonChannelCachingOptions.Poll,
       );
       expect(channelCacheOptions.pollCaching).to.be.true;
     });
@@ -112,7 +112,7 @@ describe("ChannelCacheOptions", function () {
   context("check reactionCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS,
+        GluonChannelCachingOptions.Reactions,
       );
       expect(channelCacheOptions.reactionCaching).to.be.true;
     });
@@ -121,7 +121,7 @@ describe("ChannelCacheOptions", function () {
   context("check embedCaching", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS,
+        GluonChannelCachingOptions.Embeds,
       );
       expect(channelCacheOptions.embedCaching).to.be.true;
     });
@@ -210,9 +210,9 @@ describe("ChannelCacheOptions", function () {
   context("check setDisableAll", function () {
     it("should set the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.POLL |
-          GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS |
-          GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES,
+        GluonChannelCachingOptions.Poll |
+          GluonChannelCachingOptions.Embeds |
+          GluonChannelCachingOptions.Attributes,
       );
       channelCacheOptions.setDisableAll();
       expect(channelCacheOptions.messageCaching).to.be.false;
@@ -231,7 +231,7 @@ describe("ChannelCacheOptions", function () {
   context("check toString", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES,
+        GluonChannelCachingOptions.Files,
       );
       expect(channelCacheOptions.toString()).to.equal(
         "ChannelCacheOptions { MESSAGES: false, FILES: true, CONTENT: false, POLL: false, REACTIONS: false, EMBEDS: false, ATTRIBUTES: false, REFERENCE: false, WEBHOOK: false, STICKER: false }",
@@ -242,12 +242,10 @@ describe("ChannelCacheOptions", function () {
   context("check toJSON", function () {
     it("should return the correct value", function () {
       const channelCacheOptions = new ChannelCacheOptions(
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES |
-          GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+        GluonChannelCachingOptions.Files | GluonChannelCachingOptions.Messages,
       );
       expect(channelCacheOptions.toJSON()).to.deep.equal(
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES |
-          GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+        GluonChannelCachingOptions.Files | GluonChannelCachingOptions.Messages,
       );
     });
   });

@@ -12,10 +12,9 @@ import type {
   Client as ClientType,
   TextChannel as TextChannelType,
   VoiceChannel as VoiceChannelType,
-} from "../../typings/index.d.ts";
-import { Snowflake } from "discord-api-types/globals";
-import { APIThreadChannel } from "discord-api-types/v10";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIThreadChannel, Snowflake } from "#typings/discord.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 
 /**
  * Represents a thread within Discord.

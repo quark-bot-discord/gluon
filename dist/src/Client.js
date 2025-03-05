@@ -77,7 +77,7 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
-import { ChannelType } from "discord-api-types/v10";
+import { ChannelType } from "#typings/discord.js";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { GluonDebugLevels, JsonTypes } from "../typings/enums.js";
 class Client extends TypedEmitter {

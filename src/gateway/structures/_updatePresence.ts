@@ -1,12 +1,18 @@
+import { UnixTimestamp } from "#typings/gluon.js";
+import {
+  ActivityType,
+  GatewayOpcodes,
+  GatewayUpdatePresence,
+  PresenceUpdateStatus,
+} from "#typings/discord.js";
 import erlpack from "erlpack";
-import { PresenceStatus, PresenceType, UpdatePresence } from "src/gateway.js";
 
 function _updatePresence(
   name: string,
-  type: PresenceType = 0,
-  status: PresenceStatus = "online",
+  type: ActivityType = ActivityType.Playing,
+  status: PresenceUpdateStatus = PresenceUpdateStatus.Online,
   afk: boolean = false,
-  since: number | null = null,
+  since: UnixTimestamp | null = null,
 ) {
   const activities = [];
 
@@ -18,8 +24,8 @@ function _updatePresence(
     });
   }
 
-  const payload: UpdatePresence = {
-    op: 3,
+  const payload: GatewayUpdatePresence = {
+    op: GatewayOpcodes.PresenceUpdate,
     d: {
       since,
       activities,

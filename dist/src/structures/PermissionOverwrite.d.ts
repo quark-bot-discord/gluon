@@ -1,5 +1,5 @@
 import util from "util";
-import { APIOverwrite } from "discord-api-types/v10";
+import { APIOverwrite } from "#typings/discord.js";
 import type {
   PermissionOverwriteCacheJSON,
   PermissionOverwriteDiscordJSON,
@@ -36,7 +36,7 @@ declare class PermissionOverwrite implements PermissionOverwriteType {
    * @readonly
    * @public
    */
-  get type(): import("discord-api-types/v10").OverwriteType;
+  get type(): import("#typings/discord.js").OverwriteType;
   /**
    * The permissions for the overwrite.
    * @type {String}
@@ -70,7 +70,7 @@ declare class PermissionOverwrite implements PermissionOverwriteType {
    */
   toJSON(format: JsonTypes): {
     id: string;
-    type: import("discord-api-types/v10").OverwriteType;
+    type: import("#typings/discord.js").OverwriteType;
     allow: string;
     deny: string;
   };

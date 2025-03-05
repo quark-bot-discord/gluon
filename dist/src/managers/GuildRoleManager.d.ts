@@ -1,13 +1,13 @@
-import Role from "../structures/Role.js";
+import Role from "#structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   GuildRoleManager as GuildRoleManagerType,
   Guild as GuildType,
   Role as RoleType,
   StructureIdentifiers,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all roles belonging to a guild.
  */
@@ -95,8 +95,8 @@ declare class GuildRoleManager
   ): Promise<
     | Role
     | RoleType
-    | import("../../typings/index.d.js").RoleStorageJSON[]
-    | import("../../typings/index.d.js").RoleDiscordJSON[]
+    | import("#typings/index.d.js").RoleStorageJSON[]
+    | import("#typings/index.d.js").RoleDiscordJSON[]
     | Role[]
     | undefined
   >;

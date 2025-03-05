@@ -21,7 +21,7 @@ import type {
 import {
   APIGuildInteraction,
   APIMessageComponentGuildInteraction,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 import getMember from "#src/util/gluon/getMember.js";
 

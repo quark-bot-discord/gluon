@@ -1,14 +1,13 @@
-import Role from "../structures/Role.js";
+import Role from "#structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   GuildRoleManager as GuildRoleManagerType,
   Guild as GuildType,
   Role as RoleType,
   StructureIdentifiers,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { APIRole } from "discord-api-types/v10";
+} from "#typings/index.d.js";
+import { APIRole, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 
 /**

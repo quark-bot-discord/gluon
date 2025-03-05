@@ -10,10 +10,9 @@ import type {
   Client as ClientType,
   TextChannel as TextChannelType,
   VoiceChannel as VoiceChannelType,
-} from "../../typings/index.d.ts";
-import { Snowflake } from "discord-api-types/globals";
-import { APIThreadChannel } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+} from "#typings/index.d.ts";
+import { APIThreadChannel, Snowflake } from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
@@ -58,7 +57,7 @@ declare class Thread extends Channel implements ThreadType {
    * @readonly
    * @public
    */
-  get owner(): import("../../typings/index.d.ts").Member | null;
+  get owner(): import("#typings/index.d.ts").Member | null;
   /**
    * The ID of the text channel that this thread belongs to.
    * @type {String}
@@ -110,41 +109,41 @@ declare class Thread extends Channel implements ThreadType {
         owner_id: string;
         parent_id: string;
         id: Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageCacheJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteCacheJSON[];
+        messages: import("#typings/index.d.ts").MessageCacheJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
     | {
         owner_id: string;
         parent_id: string;
         id: Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
         nsfw: boolean;
-        messages: import("../../typings/index.d.ts").MessageDiscordJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteDiscordJSON[];
+        messages: import("#typings/index.d.ts").MessageDiscordJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteDiscordJSON[];
       }
     | {
         owner_id: string;
         parent_id: string;
         id: Snowflake;
-        type: import("discord-api-types/v10").ChannelType;
+        type: import("#typings/discord.js").ChannelType;
         name: string;
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
         _attributes: number;
         _cacheOptions: number;
-        messages: import("../../typings/index.d.ts").MessageStorageJSON[];
-        permission_overwrites: import("../../typings/index.d.ts").PermissionOverwriteStorageJSON[];
+        messages: import("#typings/index.d.ts").MessageStorageJSON[];
+        permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };
 }
 export default Thread;

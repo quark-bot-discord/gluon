@@ -23,11 +23,7 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
-import {
-  APIGatewayBotInfo,
-  ChannelType,
-  Snowflake,
-} from "discord-api-types/v10";
+import { APIGatewayBotInfo, ChannelType, Snowflake } from "#typings/discord.js";
 import {
   Client as ClientType,
   User as UserType,

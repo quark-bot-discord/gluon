@@ -1,7 +1,4 @@
-import {
-  UnixMillisecondsTimestamp,
-  UnixTimestamp,
-} from "src/interfaces/gluon.js";
+import { UnixMillisecondsTimestamp, UnixTimestamp } from "#typings/gluon.js";
 import type {
   EmbedBuilderCacheJSON,
   EmbedBuilderDiscordJSON,
@@ -16,7 +13,7 @@ import {
   APIEmbedImage,
   APIEmbedThumbnail,
   APIEmbedVideo,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create an embed for a message.

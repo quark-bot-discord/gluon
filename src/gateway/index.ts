@@ -12,11 +12,12 @@ import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
 import type { Client as ClientType } from "typings/index.d.ts";
 import {
+  ActivityType,
   GatewayCloseCodes,
   GatewayOpcodes,
   GatewayReceivePayload,
-} from "discord-api-types/v10";
-import { PresenceStatus, PresenceType } from "#src/gateway.js";
+  PresenceUpdateStatus,
+} from "#typings/discord.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
@@ -217,8 +218,8 @@ class Shard {
 
   updatePresence(
     name: string,
-    type?: PresenceType,
-    status?: PresenceStatus,
+    type?: ActivityType,
+    status?: PresenceUpdateStatus,
     afk?: boolean,
     since?: number | null,
   ) {

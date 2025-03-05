@@ -80,7 +80,7 @@ import { GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
-import { GatewayOpcodes } from "discord-api-types/v10";
+import { GatewayOpcodes } from "#typings/discord.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 class Shard {

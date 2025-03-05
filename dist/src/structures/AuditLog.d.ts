@@ -13,7 +13,7 @@ import {
   APIUser,
   AuditLogOptionsType,
   Snowflake,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an audit log entry.
@@ -169,9 +169,7 @@ declare class AuditLog implements AuditLogType {
    * @readonly
    * @public
    */
-  get changes():
-    | import("discord-api-types/v10").APIAuditLogChange[]
-    | undefined;
+  get changes(): import("#typings/discord.js").APIAuditLogChange[] | undefined;
   /**
    * @method
    * @public

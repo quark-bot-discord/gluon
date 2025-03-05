@@ -8,7 +8,7 @@ import type {
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
 } from "../../typings/index.d.ts";
-import { APIEmoji, Snowflake } from "discord-api-types/v10";
+import { APIEmoji, Snowflake } from "#typings/discord.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an emoji.

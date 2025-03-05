@@ -7,7 +7,7 @@ import User from "./User.js";
 import {
   APIApplicationCommandAutocompleteGuildInteraction,
   APIChatInputApplicationCommandGuildInteraction,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import type {
   SlashCommand as SlashCommandType,
   SlashCommandCacheJSON,

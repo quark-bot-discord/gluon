@@ -6,7 +6,7 @@ import {
   StructureIdentifiers,
   Client as ClientType,
 } from "../../typings/index.d.js";
-import { Snowflake } from "discord-api-types/globals";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all the users belonging to a client.
  */

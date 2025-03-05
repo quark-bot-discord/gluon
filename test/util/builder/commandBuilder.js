@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import Command from "../../../src/util/builder/commandBuilder.js";
 import CommandOption from "../../../src/util/builder/commandOptionBuilder.js";
-import { ApplicationCommandType } from "discord-api-types/v10";
+import { ApplicationCommandType } from "#typings/discord.js";
 
 describe("CommandBuilder", function () {
   context("check import", function () {

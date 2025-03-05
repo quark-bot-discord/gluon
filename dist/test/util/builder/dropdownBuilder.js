@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { LIMITS } from "../../../src/constants.js";
 import DropdownBuilder from "../../../src/util/builder/dropdownBuilder.js";
 import DropdownOption from "../../../src/util/builder/dropdownOption.js";
-import { ComponentType } from "discord-api-types/v10";
+import { ComponentType } from "#typings/discord.js";
 describe("DropdownBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {

@@ -1,7 +1,4 @@
-import {
-  UnixMillisecondsTimestamp,
-  UnixTimestamp,
-} from "src/interfaces/gluon.js";
+import { UnixMillisecondsTimestamp, UnixTimestamp } from "#typings/gluon.js";
 import { LIMITS } from "../../constants.js";
 import hexToInt from "../general/hexToInt.js";
 import isValidUrl from "../general/isValidUrl.js";
@@ -19,7 +16,7 @@ import {
   APIEmbedImage,
   APIEmbedThumbnail,
   APIEmbedVideo,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { JsonTypes } from "../../../typings/enums.js";
 
 /**

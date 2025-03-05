@@ -5,7 +5,7 @@ import type {
   TextInputBuilder as TextInputBuilderType,
 } from "typings/index.d.ts";
 import { LIMITS } from "../../constants.js";
-import { ComponentType } from "discord-api-types/v10";
+import { ComponentType } from "#typings/discord.js";
 import { JsonTypes } from "../../../typings/enums.js";
 
 /**

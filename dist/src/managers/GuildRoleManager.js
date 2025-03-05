@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildRoleManager__client, _GuildRoleManager_guild;
-import Role from "../structures/Role.js";
+import Role from "#structures/Role.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 /**

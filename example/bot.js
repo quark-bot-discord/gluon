@@ -1,4 +1,4 @@
-import { ButtonStyle } from "discord-api-types/v10";
+import { ButtonStyle } from "#typings/discord.js";
 import Client from "../src/Client.js";
 import { INTENTS } from "../src/constants.js";
 import ActionRow from "../src/util/builder/actionRowBuilder.js";

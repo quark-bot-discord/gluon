@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { LIMITS } from "../../../src/constants.js";
 import Button from "../../../src/util/builder/buttonBuilder.js";
-import { ButtonStyle, ComponentType } from "discord-api-types/v10";
+import { ButtonStyle, ComponentType } from "#typings/discord.js";
 describe("ButtonBuilder", () => {
   context("check import", function () {
     it("should be an object", function () {

@@ -1,6 +1,6 @@
 import User from "./User.js";
 import util from "util";
-import { Snowflake, UnixTimestamp } from "src/interfaces/gluon.js";
+import { UnixTimestamp } from "#typings/gluon.js";
 import type {
   Member as MemberType,
   MemberCacheJSON,
@@ -13,13 +13,14 @@ import type {
   UserCacheJSON,
   UserStorageJSON,
   UserDiscordJSON,
-} from "../../typings/index.d.ts";
+} from "#typings/index.d.ts";
 import {
   APIGuildMember,
   APIInteractionDataResolvedGuildMember,
   GatewayGuildMemberUpdateDispatchData,
-} from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+  Snowflake,
+} from "#typings/discord.js";
+import { JsonTypes } from "#typings/enums.js";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
@@ -77,7 +78,7 @@ declare class Member implements MemberType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild | null;
   /**
    * The nickname of the member.
    * @type {String?}
@@ -112,7 +113,7 @@ declare class Member implements MemberType {
    * @type {Array<Role> | null}
    * @public
    */
-  get roles(): import("../../typings/index.d.ts").Role[] | null;
+  get roles(): import("#typings/index.d.ts").Role[] | null;
   /**
    * The position of the member's highest role.
    * @readonly

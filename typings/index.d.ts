@@ -1,4 +1,3 @@
-import { Snowflake } from "discord-api-types/globals";
 import util from "util";
 import {
   APIApplicationCommandInteractionDataOption,
@@ -76,15 +75,16 @@ import {
   OverwriteType,
   PollLayoutType,
   StickerFormatType,
+  Snowflake,
   TextInputStyle,
-} from "discord-api-types/v10";
+} from "#typings/discord.js";
 import { HttpMethods, HttpResponse } from "msw";
 import {
   ISO8601Timestamp,
   PermissionsBitfield,
   UnixMillisecondsTimestamp,
   UnixTimestamp,
-} from "src/interfaces/gluon.ts";
+} from "#typings/gluon.ts";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { Events, JsonTypes } from "./enums.ts";
 

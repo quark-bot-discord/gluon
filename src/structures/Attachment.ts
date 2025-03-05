@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { CDN_BASE_URL } from "../constants.js";
 import util from "util";
-import { APIAttachment, Snowflake } from "discord-api-types/v10";
+import { APIAttachment, Snowflake } from "#typings/discord.js";
 import type {
   Attachment as AttachmentType,
   AttachmentCacheJSON,

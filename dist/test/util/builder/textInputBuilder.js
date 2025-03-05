@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { LIMITS } from "../../../src/constants.js";
 import TextInputBuilder from "../../../src/util/builder/textInputBuilder.js";
-import { ComponentType, TextInputStyle } from "discord-api-types/v10";
+import { ComponentType, TextInputStyle } from "#typings/discord.js";
 describe("TextInputBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {

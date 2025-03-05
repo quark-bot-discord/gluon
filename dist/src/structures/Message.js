@@ -78,7 +78,7 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
-import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";

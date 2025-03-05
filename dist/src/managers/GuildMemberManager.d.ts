@@ -6,8 +6,8 @@ import {
   Member as MemberType,
   StructureIdentifiers,
   Client as ClientType,
-} from "../../typings/index.d.js";
-import { Snowflake } from "discord-api-types/globals";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all members belonging to this guild.
  */

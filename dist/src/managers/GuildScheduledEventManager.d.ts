@@ -1,12 +1,12 @@
 import BaseCacheManager from "./BaseCacheManager.js";
-import { Snowflake } from "src/interfaces/gluon.js";
 import {
   ScheduledEvent as ScheduledEventType,
   StructureIdentifiers,
   Guild as GuildType,
   GuildScheduledEventManager as GuildScheduledEventManagerType,
   Client as ClientType,
-} from "../../typings/index.d.js";
+} from "#typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 declare class GuildScheduledEventManager
   extends BaseCacheManager<ScheduledEventType>
   implements GuildScheduledEventManagerType
