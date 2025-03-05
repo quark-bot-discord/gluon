@@ -18,6 +18,14 @@ import {
   GuildCacheOptions,
 } from "../../src/structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import {
+  GuildDefaultMessageNotifications,
+  GuildExplicitContentFilter,
+  GuildMFALevel,
+  GuildNSFWLevel,
+  GuildSystemChannelFlags,
+  GuildVerificationLevel,
+} from "discord-api-types/v10";
 
 describe("Guild", function () {
   context("check import", function () {
@@ -118,28 +126,32 @@ describe("Guild", function () {
     it("should have the correct verificationLevel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.verificationLevel).to.equal("NONE");
+      expect(guild.verificationLevel).to.equal(GuildVerificationLevel.None);
     });
   });
   context("check defaultMessageNotifications", function () {
     it("should have the correct defaultMessageNotifications", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.defaultMessageNotifications).to.equal("ALL_MESSAGES");
+      expect(guild.defaultMessageNotifications).to.equal(
+        GuildDefaultMessageNotifications.AllMessages,
+      );
     });
   });
   context("check explicitContentFilter", function () {
     it("should have the correct explicitContentFilter", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.explicitContentFilter).to.equal("DISABLED");
+      expect(guild.explicitContentFilter).to.equal(
+        GuildExplicitContentFilter.Disabled,
+      );
     });
   });
   context("check available", function () {
     it("should have the correct available", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.unavailable).to.equal(TEST_DATA.GUILD.unavailable);
+      expect(guild.unavailable).to.equal(false);
     });
   });
   context("check memberCount", function () {
@@ -160,7 +172,7 @@ describe("Guild", function () {
     it("should have the correct mfaLevel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.mfaLevel).to.equal("NONE");
+      expect(guild.mfaLevel).to.equal(GuildMFALevel.None);
     });
   });
   context("check systemChannelId", function () {
@@ -174,7 +186,9 @@ describe("Guild", function () {
     it("should have the correct systemChannelFlags", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.systemChannelFlags).to.deep.equal([]);
+      expect(guild.systemChannelFlags).to.deep.equal(
+        GuildSystemChannelFlags.SuppressGuildReminderNotifications,
+      );
     });
   });
   context("check systemChannel", function () {
@@ -234,7 +248,7 @@ describe("Guild", function () {
     it("should have the correct nsfwLevel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.nsfwLevel).to.equal("DEFAULT");
+      expect(guild.nsfwLevel).to.equal(GuildNSFWLevel.Default);
     });
   });
   context("check emojis", function () {
@@ -393,9 +407,10 @@ describe("Guild", function () {
         roles: [],
         rules_channel_id: TEST_DATA.GUILD.rules_channel_id,
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
-        system_channel_flags: 0,
+        system_channel_flags:
+          GuildSystemChannelFlags.SuppressGuildReminderNotifications,
         verification_level: 0,
-        unavailable: TEST_DATA.GUILD.unavailable,
+        unavailable: false,
         voice_states: [],
         default_message_notifications: 0,
         explicit_content_filter: 0,
@@ -405,8 +420,8 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
-        _attributes: 75800896,
-        _cache_options: {},
+        _attributes: 75800900,
+        _cache_options: 1023,
         channels: [],
         emojis: [],
         icon: null,
@@ -423,12 +438,12 @@ describe("Guild", function () {
         roles: [],
         rules_channel_id: TEST_DATA.GUILD.rules_channel_id,
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
-        unavailable: TEST_DATA.GUILD.unavailable,
+        unavailable: false,
         voice_states: [],
       });
       expect(guild.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
-        _attributes: 75800896,
-        _cache_options: {},
+        _attributes: 75800900,
+        _cache_options: 1023,
         channels: [],
         emojis: [],
         icon: null,
@@ -445,7 +460,7 @@ describe("Guild", function () {
         roles: [],
         rules_channel_id: TEST_DATA.GUILD.rules_channel_id,
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
-        unavailable: TEST_DATA.GUILD.unavailable,
+        unavailable: false,
         voice_states: [],
       });
       expect(guild.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
@@ -470,9 +485,10 @@ describe("Guild", function () {
         roles: [],
         rules_channel_id: TEST_DATA.GUILD.rules_channel_id,
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
-        system_channel_flags: 0,
+        system_channel_flags:
+          GuildSystemChannelFlags.SuppressGuildReminderNotifications,
         verification_level: 0,
-        unavailable: TEST_DATA.GUILD.unavailable,
+        unavailable: false,
         voice_states: [],
         default_message_notifications: 0,
         explicit_content_filter: 0,

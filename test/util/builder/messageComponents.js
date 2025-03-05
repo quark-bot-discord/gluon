@@ -73,7 +73,22 @@ describe("MessageComponents", function () {
         .setStyle(1);
       const actionRow = new ActionRow().addComponent(button);
       messageComponents.addActionRow(actionRow);
-      expect(messageComponents.toJSON()).to.deep.equal([actionRow]);
+      expect(messageComponents.toJSON()).to.deep.equal([
+        {
+          type: 1,
+          components: [
+            {
+              type: 2,
+              custom_id: "test",
+              label: "testLabel",
+              style: 1,
+              disabled: undefined,
+              emoji: undefined,
+              url: undefined,
+            },
+          ],
+        },
+      ]);
     });
   });
 });

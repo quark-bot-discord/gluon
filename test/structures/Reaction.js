@@ -200,10 +200,10 @@ describe("Reaction", function () {
         count: 1,
         emoji: {
           animated: false,
-          available: true,
+          available: false,
           id: null,
           name: TEST_DATA.REACTION.emoji.name,
-          require_colons: true,
+          require_colons: false,
           managed: false,
         },
       });
@@ -218,7 +218,7 @@ describe("Reaction", function () {
       expect(reaction.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _reacted: [TEST_DATA.MEMBER_ID],
         emoji: {
-          _attributes: 9,
+          _attributes: 0,
           id: null,
           name: TEST_DATA.REACTION.emoji.name,
         },
@@ -227,7 +227,7 @@ describe("Reaction", function () {
       expect(reaction.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _reacted: [TEST_DATA.MEMBER_ID],
         emoji: {
-          _attributes: 9,
+          _attributes: 0,
           id: null,
           name: TEST_DATA.REACTION.emoji.name,
         },
@@ -237,10 +237,10 @@ describe("Reaction", function () {
         count: 1,
         emoji: {
           animated: false,
-          available: true,
+          available: false,
           id: null,
           name: TEST_DATA.REACTION.emoji.name,
-          require_colons: true,
+          require_colons: false,
           managed: false,
         },
       });

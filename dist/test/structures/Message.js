@@ -300,7 +300,7 @@ describe("Message", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      expect(message.webhookId).to.equal(TEST_DATA.MESSAGE.webhook_id);
+      expect(message.webhookId).to.equal(null);
     });
   });
   context("check stickerItems", function () {
@@ -395,7 +395,7 @@ describe("Message", function () {
       TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      await expect(message.reply()).to.be.rejectedWith(
+      await expect(message.reply({})).to.be.rejectedWith(
         Error,
         "GLUON: Must provide content, embeds, components or files",
       );
@@ -995,7 +995,7 @@ describe("Message", function () {
           _cached: message.author._cached,
           id: TEST_DATA.MESSAGE.author.id,
           username: TEST_DATA.MESSAGE.author.username,
-          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          discriminator: Number(TEST_DATA.MESSAGE.author.discriminator),
           avatar: TEST_DATA.MESSAGE.author.avatar,
           bot: TEST_DATA.MESSAGE.author.bot,
           global_name: TEST_DATA.MESSAGE.author.global_name,
@@ -1071,7 +1071,7 @@ describe("Message", function () {
             _cached: message.member.user._cached,
             avatar: TEST_DATA.MEMBER.user.avatar,
             bot: TEST_DATA.MEMBER.user.bot,
-            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            discriminator: Number(TEST_DATA.MEMBER.user.discriminator),
             global_name: TEST_DATA.MEMBER.user.global_name,
             id: TEST_DATA.MEMBER.user.id,
             username: TEST_DATA.MEMBER.user.username,

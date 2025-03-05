@@ -502,7 +502,7 @@ class ChannelCacheOptions {
     return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
+          `${value}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

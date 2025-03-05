@@ -353,7 +353,7 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
     return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
       .map(
         ([key, value]: [string, string | GluonChannelCachingOptions]) =>
-          `${key}: ${(this.#_cache_options & Number(value)) === Number(value)}`,
+          `${value}: ${(this.#_cache_options & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

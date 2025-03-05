@@ -320,6 +320,11 @@ describe("CommandOptionBuilder", () => {
     });
     it("should return the command option as an object", () => {
       const commandOption = new CommandOptionBuilder();
+      const anotherCommandOption = new CommandOptionBuilder()
+        .setName("test")
+        .setDescription("testDescription")
+        .setType(3)
+        .setRequired(true);
       const choice = new CommandChoice()
         .setName("testChoiceName")
         .setValue("testChoiceValue");
@@ -329,7 +334,7 @@ describe("CommandOptionBuilder", () => {
         .setType(3)
         .setRequired(true)
         .addChoice(choice)
-        .addOption({ name: "test" })
+        .addOption(anotherCommandOption)
         .setChannelTypes([0, 1, 2])
         .setMinValue(1)
         .setMaxValue(1)
@@ -343,8 +348,26 @@ describe("CommandOptionBuilder", () => {
         description: "testDescription",
         type: 3,
         required: true,
-        choices: [choice],
-        options: [{ name: "test" }],
+        choices: [choice.toJSON()],
+        options: [
+          {
+            name: "test",
+            autocomplete: false,
+            channel_types: undefined,
+            choices: [],
+            description: "testDescription",
+            description_localizations: undefined,
+            max_length: undefined,
+            max_value: undefined,
+            min_length: undefined,
+            min_value: undefined,
+            name: "test",
+            options: [],
+            name_localizations: undefined,
+            required: true,
+            type: 3,
+          },
+        ],
         channel_types: [0, 1, 2],
         min_value: 1,
         max_value: 1,

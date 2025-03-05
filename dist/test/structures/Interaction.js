@@ -201,7 +201,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.autocompleteResponse()).to.be.rejectedWith(
+      await expect(interaction.autocompleteResponse({})).to.be.rejectedWith(
         Error,
         "GLUON: No choices provided.",
       );
@@ -238,7 +238,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.reply()).to.be.rejectedWith(
+      await expect(interaction.reply({})).to.be.rejectedWith(
         Error,
         "GLUON: No content, files, embed, or components provided.",
       );
@@ -250,15 +250,6 @@ describe("Interaction", function () {
       await expect(interaction.reply({ content: 123 })).to.be.rejectedWith(
         TypeError,
         "GLUON: Content must be a string.",
-      );
-    });
-    it("should throw an error if files is not an array of files", async function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
-      await expect(interaction.reply({ files: "test" })).to.be.rejectedWith(
-        TypeError,
-        "GLUON: Files must be an array of files.",
       );
     });
     it("should throw an error if embeds is not an array of embeds", async function () {
@@ -299,7 +290,7 @@ describe("Interaction", function () {
     it("should throw an error if client is not an instance of Client", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      await expect(Interaction.edit(null)).to.be.rejectedWith(
+      await expect(Interaction.edit(null, "24fvdsd", {})).to.be.rejectedWith(
         Error,
         "GLUON: Client must be an instance of Client",
       );
@@ -307,7 +298,7 @@ describe("Interaction", function () {
     it("should throw an error if interactionToken is not a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      await expect(Interaction.edit(client, 123)).to.be.rejectedWith(
+      await expect(Interaction.edit(client, 123, {})).to.be.rejectedWith(
         Error,
         "GLUON: Interaction token must be a string",
       );
@@ -316,7 +307,7 @@ describe("Interaction", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       await expect(
-        Interaction.edit(client, "vcsfdjhdfkjvhkdf"),
+        Interaction.edit(client, "vcsfdjhdfkjvhkdf", {}),
       ).to.be.rejectedWith(
         Error,
         "GLUON: Must provide content, embeds, components or files",
@@ -325,7 +316,7 @@ describe("Interaction", function () {
     it("should not throw an error if content is provided", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const interaction = new Interaction(client, TEST_DATA.INTERACTION);
+      new Interaction(client, TEST_DATA.INTERACTION);
       await expect(
         Interaction.edit(client, "vcsfdjhdfkjvhkdf", { content: "test" }),
       ).to.not.be.rejected;

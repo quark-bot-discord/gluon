@@ -51,6 +51,9 @@ describe("ActionRowBuilder", () => {
             label: button.label,
             style: button.style,
             custom_id: button.custom_id,
+            disabled: undefined,
+            emoji: undefined,
+            url: undefined,
           },
         ],
       });

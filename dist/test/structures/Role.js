@@ -111,7 +111,6 @@ describe("Role", function () {
       const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       expect(role.tags).to.deep.equal({
         bot_id: "123456789012345678",
-        integration_id: null,
         premium_subscriber: null,
       });
     });
@@ -235,7 +234,6 @@ describe("Role", function () {
         permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
         tags: {
           bot_id: "123456789012345678",
-          integration_id: null,
           premium_subscriber: null,
         },
       });
@@ -254,7 +252,6 @@ describe("Role", function () {
         permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
         tags: {
           bot_id: "123456789012345678",
-          integration_id: null,
           premium_subscriber: null,
         },
       });
@@ -268,7 +265,6 @@ describe("Role", function () {
         permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
         tags: {
           bot_id: "123456789012345678",
-          integration_id: null,
           premium_subscriber: null,
         },
       });
@@ -284,7 +280,6 @@ describe("Role", function () {
         permissions: String(TEST_DATA.ROLE_ADMIN.permissions),
         tags: {
           bot_id: "123456789012345678",
-          integration_id: null,
           premium_subscriber: null,
         },
       });

@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA } from "../../src/testData.js";
 import { AuditLog } from "../../src/structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import { AuditLogOptionsType } from "discord-api-types/v10";
 describe("AuditLog", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -135,7 +136,7 @@ describe("AuditLog", function () {
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(auditLog.specialType).to.equal(TEST_DATA.AUDIT_LOG.options.type);
+      expect(auditLog.specialType).to.equal(AuditLogOptionsType.Member);
     });
   });
   context("check status", function () {
@@ -186,7 +187,7 @@ describe("AuditLog", function () {
           delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
           members_removed: TEST_DATA.AUDIT_LOG.members_removed,
           id: TEST_DATA.AUDIT_LOG.options.id,
-          type: TEST_DATA.AUDIT_LOG.options.type,
+          type: AuditLogOptionsType.Member,
           status: TEST_DATA.AUDIT_LOG.status,
         },
         changes: TEST_DATA.AUDIT_LOG.changes,
@@ -210,7 +211,7 @@ describe("AuditLog", function () {
           delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
           members_removed: TEST_DATA.AUDIT_LOG.members_removed,
           id: TEST_DATA.AUDIT_LOG.options.id,
-          type: TEST_DATA.AUDIT_LOG.options.type,
+          type: AuditLogOptionsType.Member,
           status: TEST_DATA.AUDIT_LOG.status,
         },
         changes: TEST_DATA.AUDIT_LOG.changes,

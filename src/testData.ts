@@ -1,5 +1,6 @@
 import {
   APIChatInputApplicationCommandGuildInteraction,
+  APIEmoji,
   APIExtendedInvite,
   APIGuildInteraction,
   APIGuildMember,
@@ -801,6 +802,16 @@ const GUILD: GatewayGuildCreateDispatchData = {
   threads: [],
 };
 
+const EMOJI: APIEmoji = {
+  id: "844240546246950922",
+  name: "bitcoin",
+  animated: true,
+  available: true,
+  managed: false,
+  require_colons: true,
+  roles: ["123452789012345678"],
+};
+
 export const TEST_DATA = {
   GUILD_ID: "619434557472505857",
   TEXT_CHANNEL: {
@@ -1022,12 +1033,7 @@ export const TEST_DATA = {
     mentionable: true,
     icon: "000000000000000000000000deadbeef",
   },
-  EMOJI: {
-    id: "844240546246950922",
-    name: "bitcoin",
-    guild_id: "619434557472505857",
-    animated: true,
-  },
+  EMOJI,
   STANDARD_EMOJI: {
     id: null,
     name: "☦️",

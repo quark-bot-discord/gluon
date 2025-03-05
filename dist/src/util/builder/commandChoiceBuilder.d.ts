@@ -11,7 +11,7 @@ import { JsonTypes } from "../../../typings/enums.js";
 declare class CommandChoice implements CommandChoiceBuilderType {
   defaultLocale: Locale;
   name: string | undefined;
-  name_localizations: CommandChoiceNameLocalizations;
+  name_localizations?: CommandChoiceNameLocalizations;
   value: string | undefined;
   /**
    * Creates a choice for a command.
@@ -49,7 +49,7 @@ declare class CommandChoice implements CommandChoiceBuilderType {
     },
   ): {
     name: string;
-    name_localizations: CommandChoiceNameLocalizations;
+    name_localizations: CommandChoiceNameLocalizations | undefined;
     value: string;
   };
 }

@@ -87,8 +87,7 @@ class Reaction implements ReactionType {
       "_reacted" in data && Array.isArray(data._reacted)
         ? data._reacted.map((r) => BigInt(r))
         : [];
-    if ("_reacted" in data && !Array.isArray(data._reacted) && "count" in data)
-      this.#count = data.count as number;
+    if (!("_reacted" in data) && "count" in data) this.#count = data.count;
 
     /**
      * The user who added the first reaction.

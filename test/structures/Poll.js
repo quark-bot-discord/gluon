@@ -24,7 +24,6 @@ describe("Poll", function () {
       expect(poll).to.have.property("expiry");
       expect(poll).to.have.property("allowMultiselect");
       expect(poll).to.have.property("layoutType");
-      expect(poll).to.have.property("rawLayoutType");
       expect(poll).to.have.property("_results");
       expect(poll).to.have.property("toString");
       expect(poll).to.have.property("toJSON");
@@ -108,17 +107,7 @@ describe("Poll", function () {
       const poll = new Poll(client, TEST_DATA.POLL, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(poll.layoutType).to.equal("DEFAULT");
-    });
-  });
-
-  context("check rawLayoutType", function () {
-    it("should have the correct rawLayoutType", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const poll = new Poll(client, TEST_DATA.POLL, {
-        guildId: TEST_DATA.GUILD_ID,
-      });
-      expect(poll.rawLayoutType).to.equal(TEST_DATA.POLL.layout_type);
+      expect(poll.layoutType).to.equal(TEST_DATA.POLL.layout_type);
     });
   });
 
@@ -277,7 +266,6 @@ describe("Poll", function () {
       const rebundled = new Poll(client, poll.toJSON(), {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);
@@ -302,7 +290,6 @@ describe("Poll", function () {
       const rebundled = new Poll(client, poll.toJSON(JsonTypes.CACHE_FORMAT), {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);
@@ -328,7 +315,6 @@ describe("Poll", function () {
           guildId: TEST_DATA.GUILD_ID,
         },
       );
-      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);
@@ -354,7 +340,6 @@ describe("Poll", function () {
           guildId: TEST_DATA.GUILD_ID,
         },
       );
-      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
       expect(rebundled.layoutType).to.equal(poll.layoutType);
       expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
       expect(rebundled.expiry).to.equal(poll.expiry);

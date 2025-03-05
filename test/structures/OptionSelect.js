@@ -144,7 +144,7 @@ describe("OptionSelect", function () {
           joined_at: new Date(
             TEST_DATA.OPTION_SELECT.member.joined_at,
           ).toISOString(),
-          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          nick: null,
           pending: TEST_DATA.OPTION_SELECT.member.pending,
           permissions: TEST_DATA.OPTION_SELECT.member.permissions,
           roles: [],
@@ -214,14 +214,16 @@ describe("OptionSelect", function () {
           joined_at: new Date(
             TEST_DATA.OPTION_SELECT.member.joined_at,
           ).getTime(),
-          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          nick: null,
           permissions: TEST_DATA.OPTION_SELECT.member.permissions,
           roles: [],
           user: {
             _cached: optionSelect.member.user._cached,
             avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
             bot: TEST_DATA.OPTION_SELECT.member.user.bot,
-            discriminator: TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            discriminator: Number(
+              TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            ),
             id: TEST_DATA.OPTION_SELECT.member.user.id,
             username: TEST_DATA.OPTION_SELECT.member.user.username,
             global_name: TEST_DATA.OPTION_SELECT.member.user.global_name,
@@ -234,7 +236,9 @@ describe("OptionSelect", function () {
             _cached: optionSelect.message.author._cached,
             avatar: TEST_DATA.OPTION_SELECT.message.author.avatar,
             bot: TEST_DATA.OPTION_SELECT.message.author.bot,
-            discriminator: TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            discriminator: Number(
+              TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            ),
             id: TEST_DATA.OPTION_SELECT.message.author.id,
             username: TEST_DATA.OPTION_SELECT.message.author.username,
             global_name: TEST_DATA.OPTION_SELECT.message.author.global_name,
@@ -268,13 +272,16 @@ describe("OptionSelect", function () {
           joined_at: new Date(
             TEST_DATA.OPTION_SELECT.member.joined_at,
           ).getTime(),
-          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          nick: null,
           permissions: TEST_DATA.OPTION_SELECT.member.permissions,
           roles: [],
           user: {
+            _cached: optionSelect.member.user._cached,
             avatar: TEST_DATA.OPTION_SELECT.member.user.avatar,
             bot: TEST_DATA.OPTION_SELECT.member.user.bot,
-            discriminator: TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            discriminator: Number(
+              TEST_DATA.OPTION_SELECT.member.user.discriminator,
+            ),
             id: TEST_DATA.OPTION_SELECT.member.user.id,
             username: TEST_DATA.OPTION_SELECT.member.user.username,
             global_name: TEST_DATA.OPTION_SELECT.member.user.global_name,
@@ -284,9 +291,12 @@ describe("OptionSelect", function () {
           _attributes: 0,
           attachments: TEST_DATA.OPTION_SELECT.message.attachments,
           author: {
+            _cached: optionSelect.message.author._cached,
             avatar: TEST_DATA.OPTION_SELECT.message.author.avatar,
             bot: TEST_DATA.OPTION_SELECT.message.author.bot,
-            discriminator: TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            discriminator: Number(
+              TEST_DATA.OPTION_SELECT.message.author.discriminator,
+            ),
             id: TEST_DATA.OPTION_SELECT.message.author.id,
             username: TEST_DATA.OPTION_SELECT.message.author.username,
             global_name: TEST_DATA.OPTION_SELECT.message.author.global_name,
@@ -318,7 +328,7 @@ describe("OptionSelect", function () {
           joined_at: new Date(
             TEST_DATA.OPTION_SELECT.member.joined_at,
           ).toISOString(),
-          nick: TEST_DATA.OPTION_SELECT.member.nick,
+          nick: null,
           pending: TEST_DATA.OPTION_SELECT.member.pending,
           permissions: TEST_DATA.OPTION_SELECT.member.permissions,
           roles: [],

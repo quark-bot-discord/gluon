@@ -157,10 +157,10 @@ describe("CategoryChannel", function () {
       ],
     });
     expect(categoryChannel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
+      _attributes: 0,
       id: TEST_DATA.CATEGORY_CHANNEL.id,
       name: TEST_DATA.CATEGORY_CHANNEL.name,
       type: TEST_DATA.CATEGORY_CHANNEL.type,
-      nsfw: TEST_DATA.CATEGORY_CHANNEL.nsfw,
       guild_id: TEST_DATA.GUILD_ID,
       permission_overwrites: [
         {

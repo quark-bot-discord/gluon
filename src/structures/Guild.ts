@@ -80,7 +80,7 @@ class Guild implements GuildType {
   #_client: ClientType;
   #_id: bigint;
   #unavailable: boolean = true;
-  #name: string = "Unknown";
+  #name: string = "Unavailable";
   #description: string | null = null;
   #_icon: bigint | null = null;
   #_owner_id: bigint = BigInt(0);
@@ -138,7 +138,7 @@ class Guild implements GuildType {
      */
     this.#_id = BigInt(data.id);
 
-    if ("unavailable" in data && data.unavailable == true) {
+    if ("unavailable" in data && data.unavailable === true) {
       this.#unavailable = true;
 
       const shouldCache = Guild.shouldCache(this.#_client._cacheOptions);
@@ -156,9 +156,11 @@ class Guild implements GuildType {
         );
       }
       return;
+    } else {
+      this.#unavailable = false;
     }
 
-    const existing = (this.#_client.guilds.get(data.id) as GuildType) || null;
+    const existing = this.#_client.guilds.get(data.id) || null;
 
     // needed for join/leave logging
     /**
@@ -166,7 +168,7 @@ class Guild implements GuildType {
      * @type {String}
      * @private
      */
-    this.#name = data.name;
+    this.#name = data.name ?? existing?.name;
 
     /**
      * The description of the guild.
@@ -345,7 +347,7 @@ class Guild implements GuildType {
       const mfaLevel =
         "mfa_level" in data && typeof data.mfa_level == "number"
           ? data.mfa_level
-          : existing.mfaLevel;
+          : existing?.mfaLevel;
       switch (mfaLevel) {
         case 0:
           // none
@@ -369,7 +371,7 @@ class Guild implements GuildType {
         "verification_level" in data &&
         typeof data.verification_level == "number"
           ? data.verification_level
-          : existing.verificationLevel;
+          : existing?.verificationLevel;
       switch (verificationLevel) {
         case 0:
           // none
@@ -405,7 +407,7 @@ class Guild implements GuildType {
         "default_message_notifications" in data &&
         typeof data.default_message_notifications == "number"
           ? data.default_message_notifications
-          : existing.defaultMessageNotifications;
+          : existing?.defaultMessageNotifications;
       switch (defaultMessageNotifications) {
         case 0:
           // all messages
@@ -429,7 +431,7 @@ class Guild implements GuildType {
         "explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number"
           ? data.explicit_content_filter
-          : existing.explicitContentFilter;
+          : existing?.explicitContentFilter;
       switch (explicitContentFilter) {
         case 0:
           // disabled
@@ -455,7 +457,7 @@ class Guild implements GuildType {
       const nsfwLevel =
         "nsfw_level" in data && typeof data.nsfw_level == "number"
           ? data.nsfw_level
-          : existing.nsfwLevel;
+          : existing?.nsfwLevel;
       switch (nsfwLevel) {
         case 0:
           // default
@@ -485,7 +487,7 @@ class Guild implements GuildType {
       const premiumTier =
         typeof data.premium_tier == "number"
           ? data.premium_tier
-          : existing.premiumTier;
+          : existing?.premiumTier;
       switch (premiumTier) {
         case 0:
           // none

@@ -115,7 +115,7 @@ class Reaction {
         : [],
       "f",
     );
-    if ("_reacted" in data && !Array.isArray(data._reacted) && "count" in data)
+    if (!("_reacted" in data) && "count" in data)
       __classPrivateFieldSet(this, _Reaction_count, data.count, "f");
     /**
      * The user who added the first reaction.

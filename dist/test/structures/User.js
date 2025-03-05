@@ -219,15 +219,16 @@ describe("User", function () {
         _cached: user._cached,
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
-        discriminator: TEST_DATA.USER.discriminator,
+        discriminator: Number(TEST_DATA.USER.discriminator),
         id: TEST_DATA.USER.id,
         global_name: TEST_DATA.USER.global_name,
         username: TEST_DATA.USER.username,
       });
       expect(user.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
+        _cached: user._cached,
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
-        discriminator: TEST_DATA.USER.discriminator,
+        discriminator: Number(TEST_DATA.USER.discriminator),
         id: TEST_DATA.USER.id,
         global_name: TEST_DATA.USER.global_name,
         username: TEST_DATA.USER.username,

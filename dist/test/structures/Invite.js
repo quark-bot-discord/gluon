@@ -46,17 +46,6 @@ describe("Invite", function () {
       expect(invite.code).to.equal(TEST_DATA.INVITE.code);
     });
   });
-  context("check guildId", function () {
-    it("should have the correct guildId", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      const invite = new Invite(client, TEST_DATA.INVITE, {
-        guildId: TEST_DATA.GUILD_ID,
-      });
-      expect(invite.guildId).to.equal(TEST_DATA.INVITE.guild_id);
-    });
-  });
   context("check channelId", function () {
     it("should have the correct channelId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -131,16 +120,6 @@ describe("Invite", function () {
       expect(invite.maxUses).to.equal(TEST_DATA.INVITE.max_uses);
     });
   });
-  context("check guildId", function () {
-    it("should have the correct guildId", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const invite = new Invite(client, TEST_DATA.INVITE, {
-        guildId: TEST_DATA.GUILD_ID,
-      });
-      expect(invite.guildId).to.equal(TEST_DATA.INVITE.guild_id);
-    });
-  });
   context("check guild", function () {
     it("should have the correct guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -186,7 +165,7 @@ describe("Invite", function () {
     it("should return the correct JSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -196,13 +175,12 @@ describe("Invite", function () {
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
-          nsfw: TEST_DATA.INVITE.channel.nsfw,
-          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          nsfw: channel.nsfw,
+          parent_id: channel.parentId,
           position: 0,
-          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
-          topic: TEST_DATA.INVITE.channel.topic,
+          rate_limit_per_user: channel.rateLimitPerUser,
+          topic: channel.topic,
           type: TEST_DATA.INVITE.channel.type,
-          rate_limit_per_user: 0,
           permission_overwrites: [],
         },
         uses: TEST_DATA.INVITE.uses,
@@ -223,7 +201,7 @@ describe("Invite", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
+      const channel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -235,12 +213,11 @@ describe("Invite", function () {
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
-          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          parent_id: channel.parentId,
           position: 0,
-          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
-          topic: TEST_DATA.INVITE.channel.topic,
+          rate_limit_per_user: channel.rateLimitPerUser,
+          topic: channel.topic,
           type: TEST_DATA.INVITE.channel.type,
-          rate_limit_per_user: 0,
           permission_overwrites: [],
         },
         uses: TEST_DATA.INVITE.uses,
@@ -250,7 +227,7 @@ describe("Invite", function () {
           _cached: invite.inviter._cached,
           id: TEST_DATA.INVITE.inviter.id,
           username: TEST_DATA.INVITE.inviter.username,
-          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          discriminator: Number(TEST_DATA.INVITE.inviter.discriminator),
           avatar: TEST_DATA.INVITE.inviter.avatar,
           bot: TEST_DATA.INVITE.inviter.bot,
           global_name: TEST_DATA.INVITE.inviter.global_name,
@@ -264,21 +241,21 @@ describe("Invite", function () {
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
-          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          parent_id: channel.parentId,
           position: 0,
-          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
-          topic: TEST_DATA.INVITE.channel.topic,
+          rate_limit_per_user: channel.rateLimitPerUser,
+          topic: channel.topic,
           type: TEST_DATA.INVITE.channel.type,
-          rate_limit_per_user: 0,
           permission_overwrites: [],
         },
         uses: TEST_DATA.INVITE.uses,
         expires: new Date(TEST_DATA.INVITE.expires_at).getTime(),
         max_uses: TEST_DATA.INVITE.max_uses,
         inviter: {
+          _cached: invite.inviter._cached,
           id: TEST_DATA.INVITE.inviter.id,
           username: TEST_DATA.INVITE.inviter.username,
-          discriminator: TEST_DATA.INVITE.inviter.discriminator,
+          discriminator: Number(TEST_DATA.INVITE.inviter.discriminator),
           avatar: TEST_DATA.INVITE.inviter.avatar,
           bot: TEST_DATA.INVITE.inviter.bot,
           global_name: TEST_DATA.INVITE.inviter.global_name,
@@ -290,13 +267,12 @@ describe("Invite", function () {
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
-          nsfw: TEST_DATA.INVITE.channel.nsfw,
-          parent_id: TEST_DATA.INVITE.channel.parent_id,
+          nsfw: channel.nsfw,
+          parent_id: channel.parentId,
           position: 0,
-          rate_limit_per_user: TEST_DATA.INVITE.channel.rate_limit_per_user,
-          topic: TEST_DATA.INVITE.channel.topic,
+          rate_limit_per_user: channel.rateLimitPerUser,
+          topic: channel.topic,
           type: TEST_DATA.INVITE.channel.type,
-          rate_limit_per_user: 0,
           permission_overwrites: [],
         },
         uses: TEST_DATA.INVITE.uses,

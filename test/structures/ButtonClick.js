@@ -49,7 +49,9 @@ describe("ButtonClick", function () {
         guildId: TEST_DATA.GUILD_ID,
         channelId: TEST_DATA.CHANNEL_ID,
       });
-      expect(buttonClick.customId).to.equal(TEST_DATA.BUTTON_CLICK.custom_id);
+      expect(buttonClick.customId).to.equal(
+        TEST_DATA.BUTTON_CLICK.data.custom_id,
+      );
     });
   });
 

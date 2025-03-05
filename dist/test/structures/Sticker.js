@@ -17,7 +17,6 @@ describe("Sticker", function () {
       expect(sticker).to.have.property("id");
       expect(sticker).to.have.property("name");
       expect(sticker).to.have.property("format");
-      expect(sticker).to.have.property("formatType");
       expect(sticker).to.have.property("previewImageURL");
       expect(sticker).to.have.property("toString");
       expect(sticker).to.have.property("toJSON");
@@ -37,14 +36,6 @@ describe("Sticker", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       expect(sticker.name).to.equal(TEST_DATA.STICKER.name);
-    });
-  });
-  context("check formatType", function () {
-    it("should have the correct format_type", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const sticker = new Sticker(client, TEST_DATA.STICKER);
-      expect(sticker.formatType).to.equal(TEST_DATA.STICKER.format_type);
     });
   });
   context("check previewImageURL", function () {

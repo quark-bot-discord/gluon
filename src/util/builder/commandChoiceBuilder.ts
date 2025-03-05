@@ -13,7 +13,7 @@ import { JsonTypes } from "../../../typings/enums.js";
 class CommandChoice implements CommandChoiceBuilderType {
   defaultLocale: Locale;
   name: string | undefined;
-  name_localizations: CommandChoiceNameLocalizations = {};
+  name_localizations?: CommandChoiceNameLocalizations;
   value: string | undefined;
   /**
    * Creates a choice for a command.
@@ -49,8 +49,6 @@ class CommandChoice implements CommandChoiceBuilderType {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [this.defaultLocale]: _, ...rest } = name;
       this.name_localizations = rest;
-
-      this.name_localizations = name;
     } else {
       if (name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
         throw new RangeError(

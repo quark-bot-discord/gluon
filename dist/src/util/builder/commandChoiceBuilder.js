@@ -10,7 +10,6 @@ class CommandChoice {
    * Creates a choice for a command.
    */
   constructor() {
-    this.name_localizations = {};
     this.defaultLocale = Locale.EnglishUS;
   }
   /**
@@ -36,7 +35,6 @@ class CommandChoice {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [this.defaultLocale]: _, ...rest } = name;
       this.name_localizations = rest;
-      this.name_localizations = name;
     } else {
       if (name.length > LIMITS.MAX_COMMAND_OPTION_CHOICE_NAME)
         throw new RangeError(

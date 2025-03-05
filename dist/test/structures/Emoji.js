@@ -208,8 +208,8 @@ describe("Emoji", function () {
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
         animated: false,
-        available: true,
-        require_colons: true,
+        available: false,
+        require_colons: false,
         managed: false,
       });
     });
@@ -220,12 +220,12 @@ describe("Emoji", function () {
         guildId: TEST_DATA.GUILD_ID,
       });
       expect(emoji.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
-        _attributes: 9,
+        _attributes: 0,
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
       });
       expect(emoji.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
-        _attributes: 9,
+        _attributes: 0,
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
       });
@@ -233,8 +233,8 @@ describe("Emoji", function () {
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
         animated: false,
-        available: true,
-        require_colons: true,
+        available: false,
+        require_colons: false,
         managed: false,
       });
     });

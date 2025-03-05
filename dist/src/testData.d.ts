@@ -1,5 +1,6 @@
 import {
   APIChatInputApplicationCommandGuildInteraction,
+  APIEmoji,
   APIExtendedInvite,
   APIGuildMember,
   APIGuildTextChannel,
@@ -248,12 +249,7 @@ export declare const TEST_DATA: {
     mentionable: boolean;
     icon: string;
   };
-  EMOJI: {
-    id: string;
-    name: string;
-    guild_id: string;
-    animated: boolean;
-  };
+  EMOJI: APIEmoji;
   STANDARD_EMOJI: {
     id: null;
     name: string;

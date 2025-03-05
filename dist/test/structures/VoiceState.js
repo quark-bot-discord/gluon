@@ -235,7 +235,25 @@ describe("VoiceState", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.VOICE_STATE.channel_id,
         user_id: TEST_DATA.VOICE_STATE.user_id,
-        member: {},
+        member: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: 0,
+          joined_at: TEST_DATA.MEMBER.joined_at,
+          nick: TEST_DATA.MEMBER.nick,
+          pending: false,
+          permissions: TEST_DATA.MEMBER.permissions,
+          roles: [],
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            id: TEST_DATA.MEMBER.user.id,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
         joined: TEST_DATA.VOICE_STATE.joined,
         request_to_speak_timestamp:
           ((new Date(
@@ -269,7 +287,7 @@ describe("VoiceState", function () {
             _cached: voiceState.member.user._cached,
             avatar: TEST_DATA.MEMBER.user.avatar,
             bot: TEST_DATA.MEMBER.user.bot,
-            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            discriminator: Number(TEST_DATA.MEMBER.user.discriminator),
             id: TEST_DATA.MEMBER.user.id,
             global_name: TEST_DATA.MEMBER.user.global_name,
             username: TEST_DATA.MEMBER.user.username,
@@ -300,9 +318,10 @@ describe("VoiceState", function () {
           permissions: TEST_DATA.MEMBER.permissions,
           roles: [],
           user: {
+            _cached: voiceState.member.user._cached,
             avatar: TEST_DATA.MEMBER.user.avatar,
             bot: TEST_DATA.MEMBER.user.bot,
-            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            discriminator: Number(TEST_DATA.MEMBER.user.discriminator),
             id: TEST_DATA.MEMBER.user.id,
             global_name: TEST_DATA.MEMBER.user.global_name,
             username: TEST_DATA.MEMBER.user.username,
@@ -331,7 +350,25 @@ describe("VoiceState", function () {
         guild_id: TEST_DATA.GUILD_ID,
         channel_id: TEST_DATA.VOICE_STATE.channel_id,
         user_id: TEST_DATA.VOICE_STATE.user_id,
-        member: {},
+        member: {
+          avatar: TEST_DATA.MEMBER.user.avatar,
+          communication_disabled_until:
+            TEST_DATA.MEMBER.communication_disabled_until,
+          flags: 0,
+          joined_at: TEST_DATA.MEMBER.joined_at,
+          nick: TEST_DATA.MEMBER.nick,
+          pending: false,
+          permissions: TEST_DATA.MEMBER.permissions,
+          roles: [],
+          user: {
+            avatar: TEST_DATA.MEMBER.user.avatar,
+            bot: TEST_DATA.MEMBER.user.bot,
+            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            id: TEST_DATA.MEMBER.user.id,
+            global_name: TEST_DATA.MEMBER.user.global_name,
+            username: TEST_DATA.MEMBER.user.username,
+          },
+        },
         joined: TEST_DATA.VOICE_STATE.joined,
         request_to_speak_timestamp:
           ((new Date(

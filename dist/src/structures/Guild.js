@@ -116,7 +116,7 @@ class Guild {
     _Guild__client.set(this, void 0);
     _Guild__id.set(this, void 0);
     _Guild_unavailable.set(this, true);
-    _Guild_name.set(this, "Unknown");
+    _Guild_name.set(this, "Unavailable");
     _Guild_description.set(this, null);
     _Guild__icon.set(this, null);
     _Guild__owner_id.set(this, BigInt(0));
@@ -153,7 +153,7 @@ class Guild {
      * @private
      */
     __classPrivateFieldSet(this, _Guild__id, BigInt(data.id), "f");
-    if ("unavailable" in data && data.unavailable == true) {
+    if ("unavailable" in data && data.unavailable === true) {
       __classPrivateFieldSet(this, _Guild_unavailable, true, "f");
       const shouldCache = Guild.shouldCache(
         __classPrivateFieldGet(this, _Guild__client, "f")._cacheOptions,
@@ -174,6 +174,8 @@ class Guild {
         );
       }
       return;
+    } else {
+      __classPrivateFieldSet(this, _Guild_unavailable, false, "f");
     }
     const existing =
       __classPrivateFieldGet(this, _Guild__client, "f").guilds.get(data.id) ||
@@ -184,7 +186,7 @@ class Guild {
      * @type {String}
      * @private
      */
-    __classPrivateFieldSet(this, _Guild_name, data.name, "f");
+    __classPrivateFieldSet(this, _Guild_name, data.name ?? existing?.name, "f");
     /**
      * The description of the guild.
      * @type {String?}
@@ -455,7 +457,7 @@ class Guild {
       const mfaLevel =
         "mfa_level" in data && typeof data.mfa_level == "number"
           ? data.mfa_level
-          : existing.mfaLevel;
+          : existing?.mfaLevel;
       switch (mfaLevel) {
         case 0:
           // none
@@ -488,7 +490,7 @@ class Guild {
         "verification_level" in data &&
         typeof data.verification_level == "number"
           ? data.verification_level
-          : existing.verificationLevel;
+          : existing?.verificationLevel;
       switch (verificationLevel) {
         case 0:
           // none
@@ -548,7 +550,7 @@ class Guild {
         "default_message_notifications" in data &&
         typeof data.default_message_notifications == "number"
           ? data.default_message_notifications
-          : existing.defaultMessageNotifications;
+          : existing?.defaultMessageNotifications;
       switch (defaultMessageNotifications) {
         case 0:
           // all messages
@@ -581,7 +583,7 @@ class Guild {
         "explicit_content_filter" in data &&
         typeof data.explicit_content_filter == "number"
           ? data.explicit_content_filter
-          : existing.explicitContentFilter;
+          : existing?.explicitContentFilter;
       switch (explicitContentFilter) {
         case 0:
           // disabled
@@ -621,7 +623,7 @@ class Guild {
       const nsfwLevel =
         "nsfw_level" in data && typeof data.nsfw_level == "number"
           ? data.nsfw_level
-          : existing.nsfwLevel;
+          : existing?.nsfwLevel;
       switch (nsfwLevel) {
         case 0:
           // default
@@ -670,7 +672,7 @@ class Guild {
       const premiumTier =
         typeof data.premium_tier == "number"
           ? data.premium_tier
-          : existing.premiumTier;
+          : existing?.premiumTier;
       switch (premiumTier) {
         case 0:
           // none

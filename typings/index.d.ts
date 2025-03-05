@@ -2118,7 +2118,7 @@ export interface ResolvedEmoji {
 export interface CommandChoiceBuilder {
   defaultLocale: Locale;
   name: string | undefined;
-  name_localizations: CommandChoiceNameLocalizations;
+  name_localizations?: CommandChoiceNameLocalizations;
   value: string | undefined;
   setName(name: string): CommandChoiceBuilder;
   setValue(value: string): CommandChoiceBuilder;
@@ -2134,20 +2134,20 @@ export interface CommandChoiceBuilder {
 
 export interface CommandChoiceBuilderStorageJSON {
   name: string;
-  name_localizations: CommandChoiceNameLocalizations;
+  name_localizations?: CommandChoiceNameLocalizations;
   value: string;
 }
 
 export interface CommandChoiceBuilderDiscordJSON {
   name: string;
   value: string;
-  name_localizations: CommandChoiceNameLocalizations;
+  name_localizations?: CommandChoiceNameLocalizations;
 }
 
 export interface CommandChoiceBuilderCacheJSON {
   name: string;
   value: string;
-  name_localizations: CommandChoiceNameLocalizations;
+  name_localizations?: CommandChoiceNameLocalizations;
 }
 
 export interface CommandChoiceNameLocalizations {

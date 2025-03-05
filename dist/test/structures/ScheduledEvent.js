@@ -7,6 +7,10 @@ import {
 } from "../../src/testData.js";
 import { ScheduledEvent, Guild, User } from "../../src/structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import {
+  GuildScheduledEventEntityType,
+  GuildScheduledEventStatus,
+} from "discord-api-types/v10";
 describe("ScheduledEvent", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -116,14 +120,18 @@ describe("ScheduledEvent", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent =
         TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
-      expect(scheduledEvent.entityType).to.equal("VOICE");
+      expect(scheduledEvent.entityType).to.equal(
+        GuildScheduledEventEntityType.Voice,
+      );
     });
     it("should have the correct entityType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent =
         TEST_SCHEDULED_EVENTS.EXTERNAL_GENERIC_SCHEDULED_EVENT(client);
-      expect(scheduledEvent.entityType).to.equal("EXTERNAL");
+      expect(scheduledEvent.entityType).to.equal(
+        GuildScheduledEventEntityType.External,
+      );
     });
   });
   context("check status", function () {
@@ -132,7 +140,9 @@ describe("ScheduledEvent", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent =
         TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
-      expect(scheduledEvent.status).to.equal("SCHEDULED");
+      expect(scheduledEvent.status).to.equal(
+        GuildScheduledEventStatus.Scheduled,
+      );
     });
   });
   context("check scheduledStartTime", function () {
@@ -266,19 +276,11 @@ describe("ScheduledEvent", function () {
         image: TEST_DATA.SCHEDULED_EVENT.image,
         user_count: TEST_DATA.SCHEDULED_EVENT.user_count,
         status: 1,
-        scheduled_start_time:
-          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
-            1000) |
-            0) *
-          1000,
-        scheduled_end_time:
-          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time).getTime() /
-            1000) |
-            0) *
-          1000,
+        scheduled_start_time: TEST_DATA.SCHEDULED_EVENT.scheduled_start_time,
+        scheduled_end_time: TEST_DATA.SCHEDULED_EVENT.scheduled_end_time,
         name: TEST_DATA.SCHEDULED_EVENT.name,
         entity_metadata: {
-          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+          location: null,
         },
       });
     });
@@ -293,7 +295,9 @@ describe("ScheduledEvent", function () {
           _cached: scheduledEvent.creator._cached,
           id: TEST_DATA.SCHEDULED_EVENT.creator.id,
           username: TEST_DATA.SCHEDULED_EVENT.creator.username,
-          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          discriminator: Number(
+            TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          ),
           avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
           bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
           global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
@@ -317,15 +321,18 @@ describe("ScheduledEvent", function () {
           1000,
         name: TEST_DATA.SCHEDULED_EVENT.name,
         entity_metadata: {
-          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+          location: null,
         },
       });
       expect(scheduledEvent.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
+          _cached: scheduledEvent.creator._cached,
           id: TEST_DATA.SCHEDULED_EVENT.creator.id,
           username: TEST_DATA.SCHEDULED_EVENT.creator.username,
-          discriminator: TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          discriminator: Number(
+            TEST_DATA.SCHEDULED_EVENT.creator.discriminator,
+          ),
           avatar: TEST_DATA.SCHEDULED_EVENT.creator.avatar,
           bot: TEST_DATA.SCHEDULED_EVENT.creator.bot,
           global_name: TEST_DATA.SCHEDULED_EVENT.creator.global_name,
@@ -349,7 +356,7 @@ describe("ScheduledEvent", function () {
           1000,
         name: TEST_DATA.SCHEDULED_EVENT.name,
         entity_metadata: {
-          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+          location: null,
         },
       });
       expect(scheduledEvent.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
@@ -369,19 +376,11 @@ describe("ScheduledEvent", function () {
         image: TEST_DATA.SCHEDULED_EVENT.image,
         user_count: TEST_DATA.SCHEDULED_EVENT.user_count,
         status: 1,
-        scheduled_start_time:
-          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_start_time).getTime() /
-            1000) |
-            0) *
-          1000,
-        scheduled_end_time:
-          ((new Date(TEST_DATA.SCHEDULED_EVENT.scheduled_end_time).getTime() /
-            1000) |
-            0) *
-          1000,
+        scheduled_start_time: TEST_DATA.SCHEDULED_EVENT.scheduled_start_time,
+        scheduled_end_time: TEST_DATA.SCHEDULED_EVENT.scheduled_end_time,
         name: TEST_DATA.SCHEDULED_EVENT.name,
         entity_metadata: {
-          location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
+          location: null,
         },
       });
     });

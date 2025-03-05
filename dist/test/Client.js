@@ -84,7 +84,9 @@ describe("Client", function () {
       ).to.throw("GLUON: Default user expiry is not a number.");
     });
     it("should throw an error if no intents are provided", function () {
-      expect(() => new Client()).to.throw("GLUON: Intents is not a number.");
+      expect(() => new Client({ intents: "abc" })).to.throw(
+        "GLUON: Intents is not a number.",
+      );
     });
     it("should throw an error if totalShards provided and is not a number", function () {
       expect(
