@@ -43,12 +43,12 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _TextChannel__client;
-import { GLUON_DEBUG_LEVELS, PERMISSIONS } from "../constants.js";
+import { PERMISSIONS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
@@ -91,12 +91,12 @@ class TextChannel extends GuildChannel {
     if (nocache === false && shouldCache) {
       this.guild.channels.set(data.id, this);
       __classPrivateFieldGet(this, _TextChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE TEXTCHANNEL ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _TextChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE TEXTCHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

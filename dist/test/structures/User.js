@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { User } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("User", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -215,7 +215,7 @@ describe("User", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const user = new User(client, TEST_DATA.USER);
-      expect(user.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(user.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _cached: user._cached,
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
@@ -224,7 +224,7 @@ describe("User", function () {
         global_name: TEST_DATA.USER.global_name,
         username: TEST_DATA.USER.username,
       });
-      expect(user.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(user.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
         discriminator: TEST_DATA.USER.discriminator,
@@ -232,7 +232,7 @@ describe("User", function () {
         global_name: TEST_DATA.USER.global_name,
         username: TEST_DATA.USER.username,
       });
-      expect(user.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(user.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         avatar: TEST_DATA.USER.avatar,
         bot: TEST_DATA.USER.bot,
         discriminator: TEST_DATA.USER.discriminator,
@@ -267,10 +267,7 @@ describe("User", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const user = new User(client, TEST_DATA.USER);
-      const rebundled = new User(
-        client,
-        user.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      );
+      const rebundled = new User(client, user.toJSON(JsonTypes.CACHE_FORMAT));
       expect(rebundled.id).to.equal(user.id);
       expect(rebundled.username).to.equal(user.username);
       expect(rebundled.discriminator).to.equal(user.discriminator);
@@ -289,10 +286,7 @@ describe("User", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const user = new User(client, TEST_DATA.USER);
-      const rebundled = new User(
-        client,
-        user.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      );
+      const rebundled = new User(client, user.toJSON(JsonTypes.STORAGE_FORMAT));
       expect(rebundled.id).to.equal(user.id);
       expect(rebundled.username).to.equal(user.username);
       expect(rebundled.discriminator).to.equal(user.discriminator);
@@ -311,10 +305,7 @@ describe("User", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const user = new User(client, TEST_DATA.USER);
-      const rebundled = new User(
-        client,
-        user.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      );
+      const rebundled = new User(client, user.toJSON(JsonTypes.DISCORD_FORMAT));
       expect(rebundled.id).to.equal(user.id);
       expect(rebundled.username).to.equal(user.username);
       expect(rebundled.discriminator).to.equal(user.discriminator);

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { Attachment } from "../../src/structures.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Attachment", function () {
   context("check import", function () {
@@ -90,22 +90,18 @@ describe("Attachment", function () {
       const attachment = new Attachment(client, TEST_DATA.ATTACHMENT, {
         channelId: TEST_DATA.CHANNEL_ID,
       });
-      expect(attachment.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(attachment.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
         filename: TEST_DATA.ATTACHMENT.filename,
         size: TEST_DATA.ATTACHMENT.size,
         url: TEST_DATA.ATTACHMENT.url.slice(0, -1),
       });
-      expect(
-        attachment.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(attachment.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
         filename: TEST_DATA.ATTACHMENT.filename,
         size: TEST_DATA.ATTACHMENT.size,
       });
-      expect(
-        attachment.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(attachment.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.ATTACHMENT.id,
         filename: TEST_DATA.ATTACHMENT.filename,
         size: TEST_DATA.ATTACHMENT.size,
@@ -138,7 +134,7 @@ describe("Attachment", function () {
       });
       const rebundled = new Attachment(
         client,
-        attachment.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        attachment.toJSON(JsonTypes.CACHE_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
         },
@@ -157,7 +153,7 @@ describe("Attachment", function () {
       });
       const rebundled = new Attachment(
         client,
-        attachment.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        attachment.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
         },
@@ -174,7 +170,7 @@ describe("Attachment", function () {
       });
       const rebundled = new Attachment(
         client,
-        attachment.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        attachment.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
         },

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { PermissionOverwrite } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("PermissionOverwrite", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -107,13 +107,13 @@ describe("PermissionOverwrite", function () {
         TEST_DATA.PERMISSION_OVERWRITE,
       );
       expect(
-        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        permissionOverwrite.toJSON(JsonTypes.STORAGE_FORMAT),
       ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
+      expect(permissionOverwrite.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal(
+        TEST_DATA.PERMISSION_OVERWRITE,
+      );
       expect(
-        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
-      expect(
-        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        permissionOverwrite.toJSON(JsonTypes.DISCORD_FORMAT),
       ).to.deep.equal(TEST_DATA.PERMISSION_OVERWRITE);
     });
   });
@@ -143,7 +143,7 @@ describe("PermissionOverwrite", function () {
       );
       const rebundled = new PermissionOverwrite(
         client,
-        permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        permissionOverwrite.toJSON(JsonTypes.CACHE_FORMAT),
       );
       expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
       expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
@@ -161,7 +161,7 @@ describe("PermissionOverwrite", function () {
     );
     const rebundled = new PermissionOverwrite(
       client,
-      permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      permissionOverwrite.toJSON(JsonTypes.STORAGE_FORMAT),
     );
     expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
     expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);
@@ -178,7 +178,7 @@ describe("PermissionOverwrite", function () {
     );
     const rebundled = new PermissionOverwrite(
       client,
-      permissionOverwrite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      permissionOverwrite.toJSON(JsonTypes.DISCORD_FORMAT),
     );
     expect(rebundled.allow).to.deep.equal(permissionOverwrite.allow);
     expect(rebundled.deny).to.deep.equal(permissionOverwrite.deny);

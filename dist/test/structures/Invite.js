@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { INVITE_BASE_URL, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { INVITE_BASE_URL } from "../../src/constants.js";
 import {
   TEST_CHANNELS,
   TEST_CLIENTS,
@@ -7,6 +7,7 @@ import {
   TEST_GUILDS,
 } from "../../src/testData.js";
 import { Invite } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("Invite", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -226,7 +227,7 @@ describe("Invite", function () {
       const invite = new Invite(client, TEST_DATA.INVITE, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(invite.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         code: TEST_DATA.INVITE.code,
         channel: {
           _attributes: 0,
@@ -255,7 +256,7 @@ describe("Invite", function () {
           global_name: TEST_DATA.INVITE.inviter.global_name,
         },
       });
-      expect(invite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(invite.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         code: TEST_DATA.INVITE.code,
         channel: {
           _attributes: 0,
@@ -283,7 +284,7 @@ describe("Invite", function () {
           global_name: TEST_DATA.INVITE.inviter.global_name,
         },
       });
-      expect(invite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(invite.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         code: TEST_DATA.INVITE.code,
         channel: {
           id: TEST_DATA.INVITE.channel.id,
@@ -346,7 +347,7 @@ describe("Invite", function () {
       });
       const rebundled = new Invite(
         client,
-        invite.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        invite.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -372,7 +373,7 @@ describe("Invite", function () {
       });
       const rebundled = new Invite(
         client,
-        invite.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        invite.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -398,7 +399,7 @@ describe("Invite", function () {
       });
       const rebundled = new Invite(
         client,
-        invite.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        invite.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

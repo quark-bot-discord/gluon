@@ -60,3 +60,52 @@ export declare enum Events {
   REQUEST_COMPLETED = "requestCompleted",
   RAW = "raw",
 }
+export declare enum GluonDebugLevels {
+  None = 0,
+  Error = 1,
+  Warn = 2,
+  Danger = 3,
+  Info = 4,
+}
+export declare enum WebsocketStates {
+  Connecting = 0,
+  Open = 1,
+  Closing = 2,
+  Closed = 3,
+}
+export declare enum GluonGlobalCache {
+  Guilds = 1,
+  Users = 2,
+  Channels = 3,
+  Messages = 4,
+  Roles = 5,
+  Emojis = 6,
+  Invites = 7,
+  VoiceStates = 8,
+  Members = 9,
+  ScheduledEvents = 10,
+}
+export declare enum GluonGuildCachingOptions {
+  Messages = 1,
+  Files = 2,
+  VoiceStates = 4,
+  Roles = 8,
+  Emojis = 16,
+  Invites = 32,
+  Channels = 64,
+  Members = 128,
+  Threads = 256,
+  ScheduledEvents = 512,
+}
+export declare enum GluonChannelCachingOptions {
+  Messages = 1,
+  Files = 2,
+  Content = 4,
+  Poll = 8,
+  Reactions = 16,
+  Embeds = 32,
+  Attributes = 64,
+  Reference = 128,
+  Webhook = 256,
+  Sticker = 512,
+}

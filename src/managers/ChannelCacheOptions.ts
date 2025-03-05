@@ -1,6 +1,5 @@
-import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
 import type { ChannelCacheOptions as ChannelCacheOptionsType } from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonChannelCachingOptions, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents the cache options for a channel.
@@ -23,16 +22,16 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
      */
     this.#_cache_options =
       cache_options ??
-      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES |
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES |
-        GLUON_CHANNEL_CACHING_OPTIONS.CONTENT |
-        GLUON_CHANNEL_CACHING_OPTIONS.POLL |
-        GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS |
-        GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS |
-        GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES |
-        GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE |
-        GLUON_CHANNEL_CACHING_OPTIONS.STICKER |
-        GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
+      GluonChannelCachingOptions.Messages |
+        GluonChannelCachingOptions.Files |
+        GluonChannelCachingOptions.Content |
+        GluonChannelCachingOptions.Poll |
+        GluonChannelCachingOptions.Reactions |
+        GluonChannelCachingOptions.Embeds |
+        GluonChannelCachingOptions.Attributes |
+        GluonChannelCachingOptions.Reference |
+        GluonChannelCachingOptions.Sticker |
+        GluonChannelCachingOptions.Webhook;
   }
 
   /**
@@ -47,9 +46,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
+      this.#_cache_options |= GluonChannelCachingOptions.Messages;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Messages;
   }
 
   /**
@@ -64,9 +63,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.FILES;
+      this.#_cache_options |= GluonChannelCachingOptions.Files;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.FILES;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Files;
   }
 
   /**
@@ -81,9 +80,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.CONTENT;
+      this.#_cache_options |= GluonChannelCachingOptions.Content;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.CONTENT;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Content;
   }
 
   /**
@@ -98,9 +97,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.POLL;
+      this.#_cache_options |= GluonChannelCachingOptions.Poll;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.POLL;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Poll;
   }
 
   /**
@@ -115,9 +114,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS;
+      this.#_cache_options |= GluonChannelCachingOptions.Reactions;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Reactions;
   }
 
   /**
@@ -132,9 +131,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS;
+      this.#_cache_options |= GluonChannelCachingOptions.Embeds;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Embeds;
   }
 
   /**
@@ -149,9 +148,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES;
+      this.#_cache_options |= GluonChannelCachingOptions.Attributes;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Attributes;
   }
 
   /**
@@ -166,9 +165,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE;
+      this.#_cache_options |= GluonChannelCachingOptions.Reference;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Reference;
   }
 
   /**
@@ -183,9 +182,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.STICKER;
+      this.#_cache_options |= GluonChannelCachingOptions.Sticker;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.STICKER;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Sticker;
   }
 
   /**
@@ -200,9 +199,9 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
       throw new TypeError("GLUON: Setting must be a boolean");
 
     if (option === true)
-      this.#_cache_options |= GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
+      this.#_cache_options |= GluonChannelCachingOptions.Webhook;
     else if (option === false)
-      this.#_cache_options &= ~GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK;
+      this.#_cache_options &= ~GluonChannelCachingOptions.Webhook;
   }
 
   /**
@@ -213,7 +212,7 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   setDisableAll() {
     this.#_cache_options =
-      this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES;
+      this.#_cache_options & GluonChannelCachingOptions.Messages;
   }
 
   /**
@@ -224,8 +223,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get messageCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES
+      (this.#_cache_options & GluonChannelCachingOptions.Messages) ===
+      GluonChannelCachingOptions.Messages
     );
   }
 
@@ -237,8 +236,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get fileCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.FILES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.FILES
+      (this.#_cache_options & GluonChannelCachingOptions.Files) ===
+      GluonChannelCachingOptions.Files
     );
   }
 
@@ -250,8 +249,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get contentCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.CONTENT) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.CONTENT
+      (this.#_cache_options & GluonChannelCachingOptions.Content) ===
+      GluonChannelCachingOptions.Content
     );
   }
 
@@ -263,8 +262,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get pollCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.POLL) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.POLL
+      (this.#_cache_options & GluonChannelCachingOptions.Poll) ===
+      GluonChannelCachingOptions.Poll
     );
   }
 
@@ -276,8 +275,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get reactionCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS
+      (this.#_cache_options & GluonChannelCachingOptions.Reactions) ===
+      GluonChannelCachingOptions.Reactions
     );
   }
 
@@ -289,8 +288,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get embedCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS
+      (this.#_cache_options & GluonChannelCachingOptions.Embeds) ===
+      GluonChannelCachingOptions.Embeds
     );
   }
 
@@ -302,8 +301,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get attributeCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES
+      (this.#_cache_options & GluonChannelCachingOptions.Attributes) ===
+      GluonChannelCachingOptions.Attributes
     );
   }
 
@@ -315,8 +314,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get referenceCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE
+      (this.#_cache_options & GluonChannelCachingOptions.Reference) ===
+      GluonChannelCachingOptions.Reference
     );
   }
 
@@ -328,8 +327,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get stickerCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.STICKER) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.STICKER
+      (this.#_cache_options & GluonChannelCachingOptions.Sticker) ===
+      GluonChannelCachingOptions.Sticker
     );
   }
 
@@ -341,8 +340,8 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   get webhookCaching() {
     return (
-      (this.#_cache_options & GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK
+      (this.#_cache_options & GluonChannelCachingOptions.Webhook) ===
+      GluonChannelCachingOptions.Webhook
     );
   }
 
@@ -351,11 +350,10 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    * @public
    */
   toString() {
-    return `ChannelCacheOptions { ${Object.entries(
-      GLUON_CHANNEL_CACHING_OPTIONS,
-    )
+    return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
       .map(
-        ([key, value]) => `${key}: ${(this.#_cache_options & value) === value}`,
+        ([key, value]: [string, string | GluonChannelCachingOptions]) =>
+          `${key}: ${(this.#_cache_options & Number(value)) === Number(value)}`,
       )
       .join(", ")} }`;
   }

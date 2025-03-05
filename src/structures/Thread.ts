@@ -1,4 +1,3 @@
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./GuildChannel.js";
@@ -16,7 +15,7 @@ import type {
 } from "../../typings/index.d.ts";
 import { Snowflake } from "discord-api-types/globals";
 import { APIThreadChannel } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a thread within Discord.
@@ -93,12 +92,12 @@ class Thread extends Channel implements ThreadType {
     ) {
       this.guild.channels.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE THREAD ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
       );
     }

@@ -1,5 +1,4 @@
 import { expect } from "chai";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import {
   TEST_CLIENTS,
   TEST_DATA,
@@ -7,6 +6,7 @@ import {
   TEST_MEMBERS,
 } from "../../src/testData.js";
 import { Reaction, Guild, Member, Emoji } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Reaction", function () {
   context("check import", function () {
@@ -215,7 +215,7 @@ describe("Reaction", function () {
         guildId: TEST_DATA.GUILD_ID,
       });
       reaction._addReactor(TEST_DATA.MEMBER_ID);
-      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(reaction.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _reacted: [TEST_DATA.MEMBER_ID],
         emoji: {
           _attributes: 9,
@@ -224,7 +224,7 @@ describe("Reaction", function () {
         },
         initial_reactor: TEST_DATA.MEMBER_ID,
       });
-      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(reaction.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _reacted: [TEST_DATA.MEMBER_ID],
         emoji: {
           _attributes: 9,
@@ -233,7 +233,7 @@ describe("Reaction", function () {
         },
         initial_reactor: TEST_DATA.MEMBER_ID,
       });
-      expect(reaction.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(reaction.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         count: 1,
         emoji: {
           animated: false,
@@ -275,7 +275,7 @@ describe("Reaction", function () {
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
-      reaction.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      reaction.toJSON(JsonTypes.CACHE_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },
@@ -299,7 +299,7 @@ describe("Reaction", function () {
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
-      reaction.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      reaction.toJSON(JsonTypes.STORAGE_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },
@@ -323,7 +323,7 @@ describe("Reaction", function () {
     reaction._addReactor(TEST_DATA.MEMBER_ID);
     const rebundled = new Reaction(
       client,
-      reaction.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      reaction.toJSON(JsonTypes.DISCORD_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },

@@ -5,8 +5,8 @@ import {
   TEST_GUILDS,
   TEST_SCHEDULED_EVENTS,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { ScheduledEvent, Guild, User } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("ScheduledEvent", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -287,9 +287,7 @@ describe("ScheduledEvent", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const scheduledEvent =
         TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
-      expect(
-        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(scheduledEvent.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
           _cached: scheduledEvent.creator._cached,
@@ -322,9 +320,7 @@ describe("ScheduledEvent", function () {
           location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
         },
       });
-      expect(
-        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(scheduledEvent.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
           id: TEST_DATA.SCHEDULED_EVENT.creator.id,
@@ -356,9 +352,7 @@ describe("ScheduledEvent", function () {
           location: TEST_DATA.SCHEDULED_EVENT.entity_metadata.location,
         },
       });
-      expect(
-        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(scheduledEvent.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.SCHEDULED_EVENT.id,
         creator: {
           id: TEST_DATA.SCHEDULED_EVENT.creator.id,
@@ -436,7 +430,7 @@ describe("ScheduledEvent", function () {
         TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
       const rebundled = new ScheduledEvent(
         client,
-        scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        scheduledEvent.toJSON(JsonTypes.CACHE_FORMAT),
         { guildId: TEST_DATA.GUILD_ID },
       );
       expect(rebundled.creator).to.be.an.instanceOf(User);
@@ -473,7 +467,7 @@ describe("ScheduledEvent", function () {
       TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
     const rebundled = new ScheduledEvent(
       client,
-      scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      scheduledEvent.toJSON(JsonTypes.STORAGE_FORMAT),
       { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.creator).to.be.an.instanceOf(User);
@@ -507,7 +501,7 @@ describe("ScheduledEvent", function () {
   const scheduledEvent = TEST_SCHEDULED_EVENTS.GENERIC_SCHEDULED_EVENT(client);
   const rebundled = new ScheduledEvent(
     client,
-    scheduledEvent.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+    scheduledEvent.toJSON(JsonTypes.DISCORD_FORMAT),
     { guildId: TEST_DATA.GUILD_ID },
   );
   expect(rebundled.creator).to.be.an.instanceOf(User);

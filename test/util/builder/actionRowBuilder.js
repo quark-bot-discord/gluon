@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import Button from "../../../src/util/builder/buttonBuilder.js";
 import ActionRow from "../../../src/util/builder/actionRowBuilder.js";
-import { COMPONENT_TYPES } from "../../../src/constants.js";
+import { ComponentType } from "discord-api-types/v10";
 
 describe("ActionRowBuilder", () => {
   context("check import", function () {
@@ -13,7 +13,7 @@ describe("ActionRowBuilder", () => {
   context("check type", function () {
     it("should have the correct type", function () {
       const actionRow = new ActionRow();
-      expect(actionRow.type).to.equal(COMPONENT_TYPES.ACTION_ROW);
+      expect(actionRow.type).to.equal(ComponentType.ActionRow);
     });
   });
   context("check addComponent", function () {
@@ -44,7 +44,7 @@ describe("ActionRowBuilder", () => {
         .setStyle(1);
       actionRow.addComponent(button);
       expect(actionRow.toJSON()).to.deep.equal({
-        type: COMPONENT_TYPES.ACTION_ROW,
+        type: ComponentType.ActionRow,
         components: [
           {
             type: button.type,

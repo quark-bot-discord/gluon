@@ -55,7 +55,6 @@ var _GuildChannel__client,
   _GuildChannel__cacheOptions,
   _GuildChannel_messages,
   _GuildChannel_position;
-import { PERMISSION_OVERWRITE_TYPES } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import Message from "./Message.js";
@@ -64,6 +63,7 @@ import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
 import Member from "./Member.js";
+import { OverwriteType } from "discord-api-types/v10";
 import { JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a channel within Discord.
@@ -577,8 +577,7 @@ class GuildChannel {
     // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     let overallPermissions = BigInt(member.permissions);
     const everyoneRole = this.permissionOverwrites.find(
-      (p) =>
-        p.id === this.guildId && p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+      (p) => p.id === this.guildId && p.type === OverwriteType.Role,
     );
     if (everyoneRole) {
       overallPermissions &= ~BigInt(everyoneRole.deny);
@@ -591,8 +590,7 @@ class GuildChannel {
       const role = this.permissionOverwrites.find(
         (p) =>
           // @ts-expect-error TS(2531): Object is possibly 'null'.
-          p.id === member.roles[i].id &&
-          p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+          p.id === member.roles[i].id && p.type === OverwriteType.Role,
       );
       if (role) {
         overallRoleDenyPermissions |= BigInt(role.deny);
@@ -602,7 +600,7 @@ class GuildChannel {
     overallPermissions &= ~overallRoleDenyPermissions;
     overallPermissions |= overallRoleAllowPermissions;
     const memberOverwritePermissions = this.permissionOverwrites.find(
-      (p) => p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
+      (p) => p.id === member.id && p.type === OverwriteType.Member,
     );
     if (memberOverwritePermissions) {
       overallPermissions &= ~BigInt(memberOverwritePermissions.deny);

@@ -66,12 +66,7 @@ var _Guild_instances,
   _Guild_invites,
   _Guild_scheduled_events,
   _Guild__formattedIconHash_get;
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  NAME,
-  PERMISSIONS,
-} from "../constants.js";
+import { CDN_BASE_URL, NAME, PERMISSIONS } from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildEmojisManager from "../managers/GuildEmojisManager.js";
 import GuildInviteManager from "../managers/GuildInviteManager.js";
@@ -102,7 +97,7 @@ import {
   GuildVerificationLevel,
   Locale,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -169,12 +164,12 @@ class Guild {
           this,
         );
         __classPrivateFieldGet(this, _Guild__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           `CACHE GUILD ${data.id} (UNAVAILABLE)`,
         );
       } else {
         __classPrivateFieldGet(this, _Guild__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           `NO CACHE GUILD ${data.id} (UNAVAILABLE) (${nocache} ${shouldCache})`,
         );
       }
@@ -778,12 +773,12 @@ class Guild {
         this,
       );
       __classPrivateFieldGet(this, _Guild__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE GUILD ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _Guild__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE GUILD ${data.id} (${nocache} ${shouldCache})`,
       );
     }

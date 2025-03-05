@@ -1,9 +1,4 @@
-import {
-  PERMISSIONS,
-  MEMBER_FLAGS,
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { PERMISSIONS, CDN_BASE_URL } from "../constants.js";
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
@@ -32,8 +27,9 @@ import {
   APIGuildMember,
   APIInteractionDataResolvedGuildMember,
   GatewayGuildMemberUpdateDispatchData,
+  GuildMemberFlags,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
@@ -241,12 +237,12 @@ class Member implements MemberType {
     if (memberIsClient || (nocache === false && shouldCache)) {
       this.guild.members.set(userId, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE MEMBER ${guildId} ${userId}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE MEMBER ${guildId} ${userId} (${memberIsClient} ${nocache} ${shouldCache})`,
       );
     }
@@ -404,7 +400,9 @@ class Member implements MemberType {
    * @public
    */
   get rejoined() {
-    return (this.#flags & MEMBER_FLAGS.DID_REJOIN) == MEMBER_FLAGS.DID_REJOIN;
+    return (
+      (this.#flags & GuildMemberFlags.DidRejoin) == GuildMemberFlags.DidRejoin
+    );
   }
 
   /**

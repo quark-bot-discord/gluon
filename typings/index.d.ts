@@ -581,7 +581,7 @@ export class Interaction {
   }): Promise<InteractionType>;
   toString(): string;
   toJSON(
-    format?: TO_JSON_TYPES_ENUM,
+    format?: JsonTypes,
   ): InteractionStorageJSON | InteractionCacheJSON | InteractionDiscordJSON;
 }
 
@@ -1669,7 +1669,7 @@ export interface GuildCacheOptions {
   inviteCaching: boolean;
   scheduledEventCaching: boolean;
   toString(): string;
-  toJSON(format?: TO_JSON_TYPES_ENUM): number;
+  toJSON(format?: JsonTypes): number;
 }
 
 export class GuildChannelsManager extends BaseCacheManager {

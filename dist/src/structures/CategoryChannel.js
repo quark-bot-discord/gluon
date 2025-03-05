@@ -49,12 +49,11 @@ var _CategoryChannel__client,
   _CategoryChannel__attributes,
   _CategoryChannel_permission_overwrites,
   _CategoryChannel_position;
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Channel from "./GuildChannel.js";
 import PermissionOverwrite from "./PermissionOverwrite.js";
 import util from "util";
 import { ChannelType } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 class CategoryChannel {
   /**
    * Creates the structure for a category channel.
@@ -208,12 +207,12 @@ class CategoryChannel {
     if (nocache === false && shouldCache) {
       this.guild?.channels.set(data.id, this);
       __classPrivateFieldGet(this, _CategoryChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE CATEGORYCHANNEL ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _CategoryChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE CATEGORYCHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

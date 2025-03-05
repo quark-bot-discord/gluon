@@ -60,7 +60,6 @@ import {
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_POLLING_TIME,
-  GLUON_DEBUG_LEVELS,
   NAME,
 } from "./constants.js";
 import hash from "hash.js";
@@ -80,7 +79,7 @@ import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
 import { ChannelType } from "discord-api-types/v10";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { JsonTypes } from "../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../typings/enums.js";
 class Client extends TypedEmitter {
   /**
    * Creates the client and sets the default options.
@@ -426,27 +425,27 @@ class Client extends TypedEmitter {
     let shardStatus;
     const shardString = `[Shard: ${this.shardIds ? this.shardIds.join(", ") : "???"}]`;
     switch (status) {
-      case GLUON_DEBUG_LEVELS.INFO: {
+      case GluonDebugLevels.Info: {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.blue(chalk.bgWhite("[Info]"), shardString);
         break;
       }
-      case GLUON_DEBUG_LEVELS.WARN: {
+      case GluonDebugLevels.Warn: {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.yellow(chalk.bgYellowBright("[Warn]"), shardString);
         break;
       }
-      case GLUON_DEBUG_LEVELS.DANGER: {
+      case GluonDebugLevels.Danger: {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.yellow(chalk.bgRed("[Danger]"), shardString);
         break;
       }
-      case GLUON_DEBUG_LEVELS.ERROR: {
+      case GluonDebugLevels.Error: {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.red(chalk.bgRedBright("[Error]"), shardString);
         break;
       }
-      case GLUON_DEBUG_LEVELS.NONE:
+      case GluonDebugLevels.None:
       default: {
         // @ts-expect-error TS(2531): Object is possibly 'null'.
         shardStatus = chalk.gray(shardString);
@@ -752,7 +751,7 @@ class Client extends TypedEmitter {
       })
       .catch((error) => {
         this._emitDebug(
-          GLUON_DEBUG_LEVELS.ERROR,
+          GluonDebugLevels.Error,
           "Get gateway bot request failed, terminating process",
         );
         console.error(error);

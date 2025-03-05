@@ -1,9 +1,4 @@
-import {
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-  NAME,
-  PERMISSIONS,
-} from "../constants.js";
+import { CDN_BASE_URL, NAME, PERMISSIONS } from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
 import GuildEmojisManager from "../managers/GuildEmojisManager.js";
 import GuildInviteManager from "../managers/GuildInviteManager.js";
@@ -74,7 +69,7 @@ import type {
   MemberCacheJSON,
   Client as ClientType,
 } from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a Discord guild.
@@ -150,12 +145,12 @@ class Guild implements GuildType {
       if (nocache === false && shouldCache) {
         this.#_client.guilds.set(data.id, this);
         this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           `CACHE GUILD ${data.id} (UNAVAILABLE)`,
         );
       } else {
         this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           `NO CACHE GUILD ${data.id} (UNAVAILABLE) (${nocache} ${shouldCache})`,
         );
       }
@@ -546,13 +541,10 @@ class Guild implements GuildType {
 
     if (nocache === false && shouldCache) {
       this.#_client.guilds.set(data.id, this);
-      this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
-        `CACHE GUILD ${data.id}`,
-      );
+      this.#_client._emitDebug(GluonDebugLevels.Info, `CACHE GUILD ${data.id}`);
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE GUILD ${data.id} (${nocache} ${shouldCache})`,
       );
     }

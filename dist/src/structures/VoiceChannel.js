@@ -46,11 +46,10 @@ var _VoiceChannel__client,
   _VoiceChannel_bitrate,
   _VoiceChannel_user_limit,
   _VoiceChannel_rtc_region;
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a voice channel.
  * @extends {Channel}
@@ -147,12 +146,12 @@ class VoiceChannel extends GuildChannel {
     if (nocache === false && shouldCache) {
       this.guild.channels.set(data.id, this);
       __classPrivateFieldGet(this, _VoiceChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE VOICECHANNEL ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _VoiceChannel__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE VOICECHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

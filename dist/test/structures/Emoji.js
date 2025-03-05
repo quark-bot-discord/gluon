@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { Emoji } from "../../src/structures.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import Guild from "../../src/structures/Guild.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("Emoji", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -179,17 +179,17 @@ describe("Emoji", function () {
       const emoji = new Emoji(client, TEST_DATA.EMOJI, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 13,
         id: "844240546246950922",
         name: "bitcoin",
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 13,
         id: "844240546246950922",
         name: "bitcoin",
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         animated: true,
         available: true,
         id: "844240546246950922",
@@ -219,17 +219,17 @@ describe("Emoji", function () {
       const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 9,
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 9,
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
       });
-      expect(emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(emoji.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         name: TEST_DATA.STANDARD_EMOJI.name,
         id: null,
         animated: false,
@@ -269,9 +269,31 @@ describe("Emoji", function () {
     const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
       guildId: TEST_DATA.GUILD_ID,
     });
+    const rebundled = new Emoji(client, emoji.toJSON(JsonTypes.CACHE_FORMAT), {
+      guildId: TEST_DATA.GUILD_ID,
+    });
+    expect(rebundled.animated).to.equal(emoji.animated);
+    expect(rebundled.available).to.equal(emoji.available);
+    expect(rebundled.id).to.equal(emoji.id);
+    expect(rebundled.name).to.equal(emoji.name);
+    expect(rebundled.managed).to.equal(emoji.managed);
+    expect(rebundled.requireColons).to.equal(emoji.requireColons);
+    expect(rebundled.guildId).to.equal(emoji.guildId);
+    expect(rebundled.guild).to.be.an.instanceOf(Guild);
+    expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
+    expect(rebundled.url).to.equal(emoji.url);
+    expect(rebundled.mention).to.equal(emoji.mention);
+    expect(rebundled.toString()).to.equal(emoji.toString());
+  });
+  it("should bundle correctly with custom toJSON", function () {
+    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
+      guildId: TEST_DATA.GUILD_ID,
+    });
     const rebundled = new Emoji(
       client,
-      emoji.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      emoji.toJSON(JsonTypes.STORAGE_FORMAT),
       { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.animated).to.equal(emoji.animated);
@@ -295,31 +317,7 @@ describe("Emoji", function () {
     });
     const rebundled = new Emoji(
       client,
-      emoji.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      { guildId: TEST_DATA.GUILD_ID },
-    );
-    expect(rebundled.animated).to.equal(emoji.animated);
-    expect(rebundled.available).to.equal(emoji.available);
-    expect(rebundled.id).to.equal(emoji.id);
-    expect(rebundled.name).to.equal(emoji.name);
-    expect(rebundled.managed).to.equal(emoji.managed);
-    expect(rebundled.requireColons).to.equal(emoji.requireColons);
-    expect(rebundled.guildId).to.equal(emoji.guildId);
-    expect(rebundled.guild).to.be.an.instanceOf(Guild);
-    expect(rebundled.guild.toJSON()).to.deep.equal(emoji.guild.toJSON());
-    expect(rebundled.url).to.equal(emoji.url);
-    expect(rebundled.mention).to.equal(emoji.mention);
-    expect(rebundled.toString()).to.equal(emoji.toString());
-  });
-  it("should bundle correctly with custom toJSON", function () {
-    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-    TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    const emoji = new Emoji(client, TEST_DATA.STANDARD_EMOJI, {
-      guildId: TEST_DATA.GUILD_ID,
-    });
-    const rebundled = new Emoji(
-      client,
-      emoji.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      emoji.toJSON(JsonTypes.DISCORD_FORMAT),
       { guildId: TEST_DATA.GUILD_ID },
     );
     expect(rebundled.animated).to.equal(emoji.animated);

@@ -51,12 +51,12 @@ var _Invite__client,
   _Invite_inviter,
   _Invite__inviter_id,
   _Invite_max_uses;
-import { GLUON_DEBUG_LEVELS, INVITE_BASE_URL } from "../constants.js";
+import { INVITE_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a guild invite.
  */
@@ -217,12 +217,12 @@ class Invite {
     ) {
       this.guild.invites.set(data.code, this);
       __classPrivateFieldGet(this, _Invite__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE INVITE ${guildId} ${data.code}`,
       );
     } else {
       __classPrivateFieldGet(this, _Invite__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE INVITE ${guildId} ${data.code} (${nocache} ${notExpired})`,
       );
     }

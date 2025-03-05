@@ -6,8 +6,8 @@ import {
   TEST_GUILDS,
   TEST_MEMBERS,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { VoiceState, VoiceChannel, Member } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("VoiceState", function () {
   context("check import", function () {
@@ -272,7 +272,7 @@ describe("VoiceState", function () {
       const voiceState = new VoiceState(client, TEST_DATA.VOICE_STATE, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(voiceState.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 56,
         member: {
           _attributes: 0,
@@ -306,9 +306,7 @@ describe("VoiceState", function () {
             0) *
           1000,
       });
-      expect(
-        voiceState.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(voiceState.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 56,
         member: {
           _attributes: 0,
@@ -341,9 +339,7 @@ describe("VoiceState", function () {
             0) *
           1000,
       });
-      expect(
-        voiceState.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(voiceState.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         deaf: TEST_DATA.VOICE_STATE.deaf,
         mute: TEST_DATA.VOICE_STATE.mute,
         self_deaf: TEST_DATA.VOICE_STATE.self_deaf,
@@ -410,7 +406,7 @@ describe("VoiceState", function () {
       });
       const rebundled = new VoiceState(
         client,
-        voiceState.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        voiceState.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -446,7 +442,7 @@ describe("VoiceState", function () {
       });
       const rebundled = new VoiceState(
         client,
-        voiceState.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        voiceState.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -482,7 +478,7 @@ describe("VoiceState", function () {
       });
       const rebundled = new VoiceState(
         client,
-        voiceState.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        voiceState.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

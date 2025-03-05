@@ -1,4 +1,4 @@
-import { GLUON_DEBUG_LEVELS, PERMISSIONS } from "../constants.js";
+import { PERMISSIONS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
@@ -16,7 +16,7 @@ import {
   ChannelType,
   GuildTextChannelType,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a text channel within Discord.
@@ -75,12 +75,12 @@ class TextChannel extends GuildChannel implements TextChannelType {
     if (nocache === false && shouldCache) {
       this.guild.channels.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE TEXTCHANNEL ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE TEXTCHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

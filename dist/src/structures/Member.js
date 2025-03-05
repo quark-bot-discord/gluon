@@ -55,12 +55,7 @@ var _Member_instances,
   _Member__roles,
   _Member_user,
   _Member__formattedAvatarHash_get;
-import {
-  PERMISSIONS,
-  MEMBER_FLAGS,
-  CDN_BASE_URL,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { PERMISSIONS, CDN_BASE_URL } from "../constants.js";
 import User from "./User.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import checkMemberPermissions from "../util/discord/checkMemberPermissions.js";
@@ -71,7 +66,8 @@ import util from "util";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
-import { JsonTypes } from "../../typings/enums.js";
+import { GuildMemberFlags } from "discord-api-types/v10";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Represents a guild member.
@@ -303,12 +299,12 @@ class Member {
     if (memberIsClient || (nocache === false && shouldCache)) {
       this.guild.members.set(userId, this);
       __classPrivateFieldGet(this, _Member__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE MEMBER ${guildId} ${userId}`,
       );
     } else {
       __classPrivateFieldGet(this, _Member__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE MEMBER ${guildId} ${userId} (${memberIsClient} ${nocache} ${shouldCache})`,
       );
     }
@@ -458,8 +454,8 @@ class Member {
   get rejoined() {
     return (
       (__classPrivateFieldGet(this, _Member_flags, "f") &
-        MEMBER_FLAGS.DID_REJOIN) ==
-      MEMBER_FLAGS.DID_REJOIN
+        GuildMemberFlags.DidRejoin) ==
+      GuildMemberFlags.DidRejoin
     );
   }
   /**

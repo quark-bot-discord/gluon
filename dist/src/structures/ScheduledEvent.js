@@ -58,7 +58,7 @@ var _ScheduledEvent_instances,
   _ScheduledEvent_description,
   _ScheduledEvent__formattedImageHash_get;
 import User from "./User.js";
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -66,7 +66,7 @@ import {
   GuildScheduledEventEntityType,
   GuildScheduledEventStatus,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an scheduled event.
  * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
@@ -326,12 +326,12 @@ class ScheduledEvent {
     if (nocache === false && shouldCache) {
       this.guild.scheduledEvents.set(data.id, this);
       __classPrivateFieldGet(this, _ScheduledEvent__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE SCHEDULEDEVENT ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _ScheduledEvent__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE SCHEDULEDEVENT ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

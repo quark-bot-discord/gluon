@@ -1,4 +1,3 @@
-import { PERMISSION_OVERWRITE_TYPES } from "../constants.js";
 import ChannelCacheOptions from "../managers/ChannelCacheOptions.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import Message from "./Message.js";
@@ -14,6 +13,7 @@ import {
   APIGuildVoiceChannel,
   ChannelType,
   GuildTextChannelType,
+  OverwriteType,
 } from "discord-api-types/v10";
 import type {
   GuildChannel as GuildChannelType,
@@ -540,8 +540,7 @@ class GuildChannel implements GuildChannelType {
     // @ts-expect-error TS(2345): Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
     let overallPermissions = BigInt(member.permissions);
     const everyoneRole = this.permissionOverwrites.find(
-      (p: PermissionOverwriteType) =>
-        p.id === this.guildId && p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+      (p) => p.id === this.guildId && p.type === OverwriteType.Role,
     );
     if (everyoneRole) {
       overallPermissions &= ~BigInt(everyoneRole.deny);
@@ -554,8 +553,7 @@ class GuildChannel implements GuildChannelType {
       const role = this.permissionOverwrites.find(
         (p) =>
           // @ts-expect-error TS(2531): Object is possibly 'null'.
-          p.id === member.roles[i].id &&
-          p.type === PERMISSION_OVERWRITE_TYPES.ROLE,
+          p.id === member.roles[i].id && p.type === OverwriteType.Role,
       );
       if (role) {
         overallRoleDenyPermissions |= BigInt(role.deny);
@@ -565,8 +563,7 @@ class GuildChannel implements GuildChannelType {
     overallPermissions &= ~overallRoleDenyPermissions;
     overallPermissions |= overallRoleAllowPermissions;
     const memberOverwritePermissions = this.permissionOverwrites.find(
-      (p: PermissionOverwriteType) =>
-        p.id === member.id && p.type === PERMISSION_OVERWRITE_TYPES.MEMBER,
+      (p) => p.id === member.id && p.type === OverwriteType.Member,
     );
     if (memberOverwritePermissions) {
       overallPermissions &= ~BigInt(memberOverwritePermissions.deny);

@@ -62,4 +62,97 @@ export var Events;
   Events["REQUEST_COMPLETED"] = "requestCompleted";
   Events["RAW"] = "raw";
 })(Events || (Events = {}));
+export var GluonDebugLevels;
+(function (GluonDebugLevels) {
+  GluonDebugLevels[(GluonDebugLevels["None"] = 0)] = "None";
+  GluonDebugLevels[(GluonDebugLevels["Error"] = 1)] = "Error";
+  GluonDebugLevels[(GluonDebugLevels["Warn"] = 2)] = "Warn";
+  GluonDebugLevels[(GluonDebugLevels["Danger"] = 3)] = "Danger";
+  GluonDebugLevels[(GluonDebugLevels["Info"] = 4)] = "Info";
+})(GluonDebugLevels || (GluonDebugLevels = {}));
+export var WebsocketStates;
+(function (WebsocketStates) {
+  WebsocketStates[(WebsocketStates["Connecting"] = 0)] = "Connecting";
+  WebsocketStates[(WebsocketStates["Open"] = 1)] = "Open";
+  WebsocketStates[(WebsocketStates["Closing"] = 2)] = "Closing";
+  WebsocketStates[(WebsocketStates["Closed"] = 3)] = "Closed";
+})(WebsocketStates || (WebsocketStates = {}));
+export var GluonGlobalCache;
+(function (GluonGlobalCache) {
+  GluonGlobalCache[(GluonGlobalCache["Guilds"] = 1)] = "Guilds";
+  GluonGlobalCache[(GluonGlobalCache["Users"] = 2)] = "Users";
+  GluonGlobalCache[(GluonGlobalCache["Channels"] = 3)] = "Channels";
+  GluonGlobalCache[(GluonGlobalCache["Messages"] = 4)] = "Messages";
+  GluonGlobalCache[(GluonGlobalCache["Roles"] = 5)] = "Roles";
+  GluonGlobalCache[(GluonGlobalCache["Emojis"] = 6)] = "Emojis";
+  GluonGlobalCache[(GluonGlobalCache["Invites"] = 7)] = "Invites";
+  GluonGlobalCache[(GluonGlobalCache["VoiceStates"] = 8)] = "VoiceStates";
+  GluonGlobalCache[(GluonGlobalCache["Members"] = 9)] = "Members";
+  GluonGlobalCache[(GluonGlobalCache["ScheduledEvents"] = 10)] =
+    "ScheduledEvents";
+})(GluonGlobalCache || (GluonGlobalCache = {}));
+export var GluonGuildCachingOptions;
+(function (GluonGuildCachingOptions) {
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Messages"] = 1)] =
+    "Messages";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Files"] = 2)] = "Files";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["VoiceStates"] = 4)] =
+    "VoiceStates";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Roles"] = 8)] = "Roles";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Emojis"] = 16)] =
+    "Emojis";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Invites"] = 32)] =
+    "Invites";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Channels"] = 64)] =
+    "Channels";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Members"] = 128)] =
+    "Members";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["Threads"] = 256)] =
+    "Threads";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[
+    (GluonGuildCachingOptions["ScheduledEvents"] = 512)
+  ] = "ScheduledEvents";
+})(GluonGuildCachingOptions || (GluonGuildCachingOptions = {}));
+export var GluonChannelCachingOptions;
+(function (GluonChannelCachingOptions) {
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Messages"] = 1)] =
+    "Messages";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Files"] = 2)] =
+    "Files";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Content"] = 4)] =
+    "Content";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Poll"] = 8)] = "Poll";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Reactions"] = 16)] =
+    "Reactions";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Embeds"] = 32)] =
+    "Embeds";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Attributes"] = 64)] =
+    "Attributes";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Reference"] = 128)] =
+    "Reference";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Webhook"] = 256)] =
+    "Webhook";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonChannelCachingOptions[(GluonChannelCachingOptions["Sticker"] = 512)] =
+    "Sticker";
+})(GluonChannelCachingOptions || (GluonChannelCachingOptions = {}));
 //# sourceMappingURL=enums.js.map

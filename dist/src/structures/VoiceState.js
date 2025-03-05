@@ -50,10 +50,9 @@ var _VoiceState__client,
   _VoiceState__user_id,
   _VoiceState_joined,
   _VoiceState_request_to_speak_timestamp;
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a voice state.
  */
@@ -244,12 +243,12 @@ class VoiceState {
     if (nocache === false && shouldCache) {
       this.guild.voiceStates.set(data.user_id, this);
       __classPrivateFieldGet(this, _VoiceState__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE VOICESTATE ${guildId} ${data.user_id}`,
       );
     } else {
       __classPrivateFieldGet(this, _VoiceState__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE VOICESTATE ${guildId} ${data.user_id} (${nocache} ${shouldCache})`,
       );
     }

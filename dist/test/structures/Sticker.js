@@ -1,7 +1,8 @@
 import { expect } from "chai";
-import { CDN_BASE_URL, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { CDN_BASE_URL } from "../../src/constants.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import { Sticker } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("Sticker", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -79,17 +80,17 @@ describe("Sticker", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const sticker = new Sticker(client, TEST_DATA.STICKER);
-      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(sticker.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.STICKER.id,
         name: TEST_DATA.STICKER.name,
         format_type: TEST_DATA.STICKER.format_type,
       });
-      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(sticker.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         id: TEST_DATA.STICKER.id,
         name: TEST_DATA.STICKER.name,
         format_type: TEST_DATA.STICKER.format_type,
       });
-      expect(sticker.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(sticker.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.STICKER.id,
         name: TEST_DATA.STICKER.name,
         format_type: TEST_DATA.STICKER.format_type,
@@ -115,7 +116,7 @@ describe("Sticker", function () {
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       const rebundled = new Sticker(
         client,
-        sticker.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        sticker.toJSON(JsonTypes.CACHE_FORMAT),
       );
       expect(sticker.format).to.equal(rebundled.format);
       expect(sticker.formatType).to.equal(rebundled.formatType);
@@ -130,7 +131,7 @@ describe("Sticker", function () {
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       const rebundled = new Sticker(
         client,
-        sticker.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        sticker.toJSON(JsonTypes.DISCORD_FORMAT),
       );
       expect(sticker.format).to.equal(rebundled.format);
       expect(sticker.formatType).to.equal(rebundled.formatType);
@@ -145,7 +146,7 @@ describe("Sticker", function () {
       const sticker = new Sticker(client, TEST_DATA.STICKER);
       const rebundled = new Sticker(
         client,
-        sticker.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        sticker.toJSON(JsonTypes.STORAGE_FORMAT),
       );
       expect(sticker.format).to.equal(rebundled.format);
       expect(sticker.formatType).to.equal(rebundled.formatType);

@@ -1,10 +1,7 @@
 import { expect } from "chai";
-import {
-  COMPONENT_TYPES,
-  BUTTON_STYLES,
-  LIMITS,
-} from "../../../src/constants.js";
+import { LIMITS } from "../../../src/constants.js";
 import Button from "../../../src/util/builder/buttonBuilder.js";
+import { ButtonStyle, ComponentType } from "discord-api-types/v10";
 describe("ButtonBuilder", () => {
   context("check import", function () {
     it("should be an object", function () {
@@ -15,7 +12,7 @@ describe("ButtonBuilder", () => {
   context("check type", function () {
     it("should have the correct type", function () {
       const button = new Button();
-      expect(button.type).to.equal(COMPONENT_TYPES.BUTTON);
+      expect(button.type).to.equal(ComponentType.Button);
     });
   });
   context("check setLabel", function () {
@@ -153,7 +150,7 @@ describe("ButtonBuilder", () => {
         .setEmoji("👍")
         .setStyle(1);
       expect(button.toJSON()).to.deep.equal({
-        type: COMPONENT_TYPES.BUTTON,
+        type: ComponentType.Button,
         disabled: true,
         label: "test",
         style: 1,
@@ -179,14 +176,14 @@ describe("ButtonBuilder", () => {
     it("should throw an error if no custom id is provided", function () {
       const button = new Button()
         .setLabel("test")
-        .setStyle(BUTTON_STYLES.PRIMARY);
+        .setStyle(ButtonStyle.Primary);
       expect(() => button.toJSON()).to.throw(
         TypeError,
         "GLUON: Button custom id must be provided for non-link buttons.",
       );
     });
     it("should throw an error if no url is provided", function () {
-      const button = new Button().setLabel("test").setStyle(BUTTON_STYLES.LINK);
+      const button = new Button().setLabel("test").setStyle(ButtonStyle.Link);
       expect(() => button.toJSON()).to.throw(
         TypeError,
         "GLUON: Button url must be provided for link buttons.",
@@ -195,7 +192,7 @@ describe("ButtonBuilder", () => {
     it("should throw an error if custom id is provided for link buttons", function () {
       const button = new Button()
         .setLabel("test")
-        .setStyle(BUTTON_STYLES.LINK)
+        .setStyle(ButtonStyle.Link)
         .setURL("https://example.com")
         .setCustomID("custom_id");
       expect(() => button.toJSON()).to.throw(
@@ -206,7 +203,7 @@ describe("ButtonBuilder", () => {
     it("should throw an error if url is provided for non-link buttons", function () {
       const button = new Button()
         .setLabel("test")
-        .setStyle(BUTTON_STYLES.PRIMARY)
+        .setStyle(ButtonStyle.Primary)
         .setCustomID("custom_id")
         .setURL("https://example.com");
       expect(() => button.toJSON()).to.throw(
@@ -217,7 +214,7 @@ describe("ButtonBuilder", () => {
     it("should throw an error if emoji is provided for link buttons", function () {
       const button = new Button()
         .setLabel("test")
-        .setStyle(BUTTON_STYLES.LINK)
+        .setStyle(ButtonStyle.Link)
         .setEmoji("👍")
         .setURL("https://example.com");
       expect(() => button.toJSON()).to.throw(

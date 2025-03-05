@@ -1,12 +1,7 @@
 import User from "./User.js";
 import Member from "./Member.js";
 import Attachment from "./Attachment.js";
-import {
-  PERMISSIONS,
-  BASE_URL,
-  LIMITS,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { PERMISSIONS, BASE_URL, LIMITS } from "../constants.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import Sticker from "./Sticker.js";
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
@@ -60,7 +55,7 @@ import type {
   MemberCacheJSON,
 } from "../../typings/index.d.ts";
 import { APIMessage, MessageType } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";
@@ -452,12 +447,12 @@ class Message implements MessageTypeClass {
     ) {
       this.channel?.messages.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE MESSAGE ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE MESSAGE ${guildId} ${data.id} (${nocache} ${shouldCache} ${attachmentsPresent} ${contentPresent} ${pollPresent} ${reactionsPresent} ${embedsPresent} ${attributesPresent} ${referencePresent} ${webhookPresent} ${stickerPresent} ${snapshotsPresent})`,
       );
     }

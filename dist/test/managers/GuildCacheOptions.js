@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import GuildCacheOptions from "../../src/managers/GuildCacheOptions.js";
-import { GLUON_GUILD_CACHING_OPTIONS } from "../../src/constants.js";
+import { GluonGuildCachingOptions } from "#typings/enums.js";
 describe("GuildCacheOptions", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -36,8 +36,7 @@ describe("GuildCacheOptions", function () {
     });
     it("should have the correct values when added in the constructor", function () {
       const cacheOptions = new GuildCacheOptions(
-        GLUON_GUILD_CACHING_OPTIONS.CHANNELS |
-          GLUON_GUILD_CACHING_OPTIONS.ROLES,
+        GluonGuildCachingOptions.Channels | GluonGuildCachingOptions.Roles,
       );
       expect(cacheOptions.channelCaching).to.be.true;
       expect(cacheOptions.roleCaching).to.be.true;

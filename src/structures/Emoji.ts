@@ -1,4 +1,4 @@
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -12,7 +12,7 @@ import type {
   Client as ClientType,
 } from "../../typings/index.d.ts";
 import { APIEmoji, Snowflake } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an emoji.
@@ -113,12 +113,12 @@ class Emoji implements EmojiType {
     if (nocache === false && shouldCache && data.id) {
       this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE EMOJI ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

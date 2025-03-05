@@ -1,4 +1,4 @@
-import { GLUON_DEBUG_LEVELS, INVITE_BASE_URL } from "../constants.js";
+import { INVITE_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import User from "./User.js";
@@ -21,7 +21,7 @@ import {
   GatewayInviteCreateDispatchData,
   GatewayInviteDeleteDispatchData,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a guild invite.
@@ -155,12 +155,12 @@ class Invite implements InviteType {
     if (nocache === false && shouldCache && this.#_code && notExpired) {
       this.guild.invites.set(data.code, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE INVITE ${guildId} ${data.code}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE INVITE ${guildId} ${data.code} (${nocache} ${notExpired})`,
       );
     }

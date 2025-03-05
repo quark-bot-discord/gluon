@@ -29,135 +29,9 @@ export declare const INTENTS: {
   GUILD_MESSAGE_POLLS: number;
   DIRECT_MESSAGE_POLLS: number;
 };
-export declare const EVENTS: {
-  READY: string;
-  RESUMED: string;
-  GUILD_CREATE: string;
-  GUILD_DELETE: string;
-  GUILD_UPDATE: string;
-  MESSAGE_CREATE: string;
-  MESSAGE_UPDATE: string;
-  MESSAGE_EDIT: string;
-  MESSAGE_DELETE: string;
-  MESSAGE_DELETE_BULK: string;
-  GUILD_AUDIT_LOG_ENTRY_CREATE: string;
-  GUILD_BAN_ADD: string;
-  GUILD_BAN_REMOVE: string;
-  GUILD_MEMBER_ADD: string;
-  GUILD_MEMBER_UPDATE: string;
-  GUILD_MEMBER_REMOVE: string;
-  BUTTON_CLICK: string;
-  MENU_SELECT: string;
-  MODAL_RESPONSE: string;
-  SLASH_COMMAND: string;
-  SLASH_COMMAND_AUTOCOMPLETE: string;
-  VOICE_STATE_UPDATE: string;
-  VOICE_CHANNEL_STATUS_UPDATE: string;
-  CHANNEL_CREATE: string;
-  CHANNEL_UPDATE: string;
-  CHANNEL_DELETE: string;
-  CHANNEL_PINS_UPDATE: string;
-  THREAD_CREATE: string;
-  THREAD_UPDATE: string;
-  THREAD_DELETE: string;
-  THREAD_LIST_SYNC: string;
-  INVITE_CREATE: string;
-  INVITE_DELETE: string;
-  GUILD_ROLE_CREATE: string;
-  GUILD_ROLE_UPDATE: string;
-  GUILD_ROLE_DELETE: string;
-  GUILD_EMOJI_CREATE: string;
-  GUILD_EMOJI_UPDATE: string;
-  GUILD_EMOJI_DELETE: string;
-  ENTITLEMENT_CREATE: string;
-  ENTITLEMENT_UPDATE: string;
-  ENTITLEMENT_DELETE: string;
-  GUILD_SCHEDULED_EVENT_CREATE: string;
-  GUILD_SCHEDULED_EVENT_UPDATE: string;
-  GUILD_SCHEDULED_EVENT_DELETE: string;
-  GUILD_SCHEDULED_EVENT_USER_ADD: string;
-  GUILD_SCHEDULED_EVENT_USER_REMOVE: string;
-  INITIALISED: string;
-  MESSAGE_POLL_VOTE_ADD: string;
-  MESSAGE_POLL_VOTE_REMOVE: string;
-  MESSAGE_REACTION_ADD: string;
-  MESSAGE_REACTION_REMOVE: string;
-  WEBHOOKS_UPDATE: string;
-};
-export declare const USER_FLAGS: {
-  DISCORD_EMPLOYEE: number;
-  DISCORD_PARTNER: number;
-  HYPESQUAD_EVENTS: number;
-  BUG_HUNTER_LEVEL_1: number;
-  HOUSE_BRAVERY: number;
-  HOUSE_BRILLIANCE: number;
-  HOUSE_BALANCE: number;
-  EARLY_SUPPORTER: number;
-  TEAM_USER: number;
-  SYSTEM: number;
-  BUG_HUNTER_LEVEL_2: number;
-  VERIFIED_BOT: number;
-  VERIFIED_BOT_DEVELOPER: number;
-};
-export declare const MEMBER_FLAGS: {
-  DID_REJOIN: number;
-  COMPLETED_ONBOARDING: number;
-  BYPASSES_VERIFICATION: number;
-  STARTED_ONBOARDING: number;
-};
-export declare const MESSAGE_FLAGS: {
-  CROSSPOSTED: number;
-  IS_CROSSPOST: number;
-  SUPPRESS_EMBEDS: number;
-  SOURCE_MESSAGE_DELETED: number;
-  URGENT: number;
-  HAS_THREAD: number;
-  EPHEMERAL: number;
-  LOADING: number;
-  FAILED_TO_MENTION_SOME_ROLES_IN_THREAD: number;
-  SUPPRESS_NOTIFICATIONS: number;
-  IS_VOICE_MESSAGE: number;
-};
-export declare const SELECT_MENU_TYPES: {
-  TEXT: number;
-  USER: number;
-  ROLE: number;
-  MENTIONABLE: number;
-  CHANNEL: number;
-};
-export declare const BUTTON_STYLES: {
-  PRIMARY: number;
-  SECONDARY: number;
-  SUCCESS: number;
-  DANGER: number;
-  LINK: number;
-};
-export declare const TEXT_INPUT_STYLES: {
-  SHORT: number;
-  PARAGRAPH: number;
-};
-export declare const APPLICATION_COMMAND_TYPES: {
-  CHAT_INPUT: number;
-  USER: number;
-  MESSAGE: number;
-};
-export declare const APPLICATION_COMMAND_OPTION_TYPES: {
-  SUB_COMMAND: number;
-  SUB_COMMAND_GROUP: number;
-  STRING: number;
-  INTEGER: number;
-  BOOLEAN: number;
-  USER: number;
-  CHANNEL: number;
-  ROLE: number;
-  MENTIONABLE: number;
-  NUMBER: number;
-  ATTACHMENT: number;
-};
 export declare const DEFAULT_MESSAGE_EXPIRY_SECONDS: number;
 export declare const DEFAULT_USER_EXPIRY_SECONDS: number;
 export declare const DEFAULT_POLLING_TIME: number;
-export declare const DEFAULT_INCREASE_CACHE_BY = 28;
 export declare const PERMISSIONS: {
   CREATE_INSTANT_INVITE: string;
   KICK_MEMBERS: string;
@@ -206,89 +80,6 @@ export declare const PERMISSIONS: {
   USE_EXTERNAL_SOUNDS: string;
   SEND_VOICE_MESSAGES: string;
   SEND_POLLS: string;
-};
-export declare const STICKER_FORMATS_ENUM: {
-  PNG: number;
-  APNG: number;
-  LOTTIE: number;
-  GIF: number;
-};
-export declare const WEBSOCKET_STATES: {
-  CONNECTING: number;
-  OPEN: number;
-  CLOSING: number;
-  CLOSED: number;
-};
-export declare const GLUON_GLOBAL_CACHE_ENUM: {
-  GUILDS: number;
-  USERS: number;
-  CHANNELS: number;
-  MESSAGES: number;
-  ROLES: number;
-  EMOJIS: number;
-  INVITES: number;
-  VOICE_STATES: number;
-  MEMBERS: number;
-  SCHEDULED_EVENTS: number;
-};
-export declare const GLUON_CACHING_OPTIONS: {
-  NO_MESSAGES: number;
-  FILES_ONLY: number;
-  NO_VOICE_STATE: number;
-};
-export declare const GLUON_GUILD_CACHING_OPTIONS: {
-  MESSAGES: number;
-  FILES: number;
-  VOICE_STATES: number;
-  ROLES: number;
-  EMOJIS: number;
-  INVITES: number;
-  CHANNELS: number;
-  MEMBERS: number;
-  THREADS: number;
-  SCHEDULED_EVENTS: number;
-};
-export declare const GLUON_CHANNEL_CACHING_OPTIONS: {
-  MESSAGES: number;
-  FILES: number;
-  CONTENT: number;
-  POLL: number;
-  REACTIONS: number;
-  EMBEDS: number;
-  ATTRIBUTES: number;
-  REFERENCE: number;
-  WEBHOOK: number;
-  STICKER: number;
-};
-export declare const PERMISSION_OVERWRITE_TYPES: {
-  ROLE: number;
-  MEMBER: number;
-};
-export declare const GLUON_DEBUG_LEVELS: {
-  NONE: number;
-  ERROR: number;
-  WARN: number;
-  DANGER: number;
-  INFO: number;
-};
-export declare const AUTO_MODERATION_TRIGGER_TYPES: {
-  KEYWORD: number;
-  SPAM: number;
-  KEYWORD_PRESET: number;
-  MENTION_SPAM: number;
-};
-export declare const AUTO_MODERATION_EVENT_TYPES: {
-  MESSAGE_SEND: number;
-};
-export declare const AUTO_MODERATION_KEYWORD_PRESET_TYPES: {
-  PROFANITY: number;
-  SEXUAL_CONTENT: number;
-  SLURS: number;
-};
-export declare const AUTO_MODERATION_ACTION_TYPES: {
-  BLOCK_MESSAGE: number;
-  SEND_ALERT_MESSAGE: number;
-  TIMEOUT: number;
 };
 export declare const GATEWAY_RECONNECT_CLOSE_CODES: number[];
 export declare const LIMITS: {
@@ -349,53 +140,12 @@ export declare const LIMITS: {
   MAX_MESSAGES_FETCH_LIMIT: number;
 };
 export declare const COMMAND_NAME_REGEX: RegExp;
-export declare enum TO_JSON_TYPES_ENUM {
-  DISCORD_FORMAT = 1, // default
-  CACHE_FORMAT = 2,
-  STORAGE_FORMAT = 3,
-}
 export declare const GLUON_VERSION: string;
-export declare enum LOCALES {
-  INDONESIAN = "id",
-  DANISH = "da",
-  GERMAN = "de",
-  ENGLISH_UK = "en-GB",
-  ENGLISH_US = "en-US",
-  SPANISH = "es-ES",
-  SPANISH_LATAM = "es-419",
-  FRENCH = "fr",
-  CROATIAN = "hr",
-  ITALIAN = "it",
-  LITHUANIAN = "lt",
-  HUNGARIAN = "hu",
-  DUTCH = "nl",
-  NORWEGIAN = "no",
-  POLISH = "pl",
-  PORTUGUESE_BRAZILIAN = "pt-BR",
-  ROMANIAN = "ro",
-  FINNISH = "fi",
-  SWEDISH = "sv-SE",
-  VIETNAMESE = "vi",
-  TURKISH = "tr",
-  CZECH = "cs",
-  GREEK = "el",
-  BULGARIAN = "bg",
-  RUSSIAN = "ru",
-  UKRAINIAN = "uk",
-  HINDI = "hi",
-  THAI = "th",
-  CHINESE_CHINA = "zh-CN",
-  JAPANESE = "ja",
-  CHINESE_TAIWAN = "zh-TW",
-  KOREAN = "ko",
-}
-export declare enum COMPONENT_TYPES {
-  ACTION_ROW = 1,
-  BUTTON = 2,
-  SELECT_MENU = 3,
-  TEXT_INPUT = 4,
-  USER_SELECT_MENU = 5,
-  ROLE_SELECT_MENU = 6,
-  MENTIONABLE_SELECT_MENU = 7,
-  CHANNEL_SELECT_MENU = 8,
-}
+export {
+  JsonTypes,
+  Events,
+  GluonDebugLevels,
+  GluonGlobalCache,
+  GluonGuildCachingOptions,
+  GluonChannelCachingOptions,
+} from "../typings/enums.js";

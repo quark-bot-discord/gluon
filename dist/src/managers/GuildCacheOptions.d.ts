@@ -1,5 +1,5 @@
-import { TO_JSON_TYPES_ENUM } from "../constants.js";
 import { GuildCacheOptions as GuildCacheOptionsType } from "../../typings/index.d.js";
+import { JsonTypes } from "#typings/enums.js";
 declare class GuildCacheOptions implements GuildCacheOptionsType {
   #private;
   constructor(cache_options: number);
@@ -98,13 +98,6 @@ declare class GuildCacheOptions implements GuildCacheOptionsType {
    */
   get fileCaching(): boolean;
   /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  get messageCaching(): boolean;
-  /**
    * Returns whether to cache voice states or not.
    * @type {Boolean}
    * @readonly
@@ -172,6 +165,6 @@ declare class GuildCacheOptions implements GuildCacheOptionsType {
    * @public
    * @method
    */
-  toJSON(format: TO_JSON_TYPES_ENUM): number;
+  toJSON(format: JsonTypes): number;
 }
 export default GuildCacheOptions;

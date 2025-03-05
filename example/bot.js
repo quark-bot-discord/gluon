@@ -1,5 +1,6 @@
+import { ButtonStyle } from "discord-api-types/v10";
 import Client from "../src/Client.js";
-import { BUTTON_STYLES, INTENTS } from "../src/constants.js";
+import { INTENTS } from "../src/constants.js";
 import ActionRow from "../src/util/builder/actionRowBuilder.js";
 import Button from "../src/util/builder/buttonBuilder.js";
 import Embed from "../src/util/builder/embedBuilder.js";
@@ -81,7 +82,7 @@ client.on("messageCreate", (message) => {
     const actionRow = new ActionRow();
     const button = new Button()
       .setLabel("button")
-      .setStyle(BUTTON_STYLES.PRIMARY)
+      .setStyle(ButtonStyle.Primary)
       .setCustomID(message.guild.id.toString());
     actionRow.addComponent(button);
     const messageComponents = new MessageComponents().addActionRow(actionRow);

@@ -1,5 +1,5 @@
+import { JsonTypes } from "#typings/enums.js";
 import encryptText from "../general/encryptText.js";
-import { TO_JSON_TYPES_ENUM } from "../../constants.js";
 import getKeyIv from "./getKeyIv.js";
 /**
  * Encrypts a structure and returns an encrypted string.
@@ -19,9 +19,7 @@ function encryptStructure(structure, ...encryptionKeys) {
     !encryptionKeys.every((key) => typeof key === "string")
   )
     throw new TypeError("GLUON: An encryption key must be provided.");
-  const stringifyableObject = structure.toJSON(
-    TO_JSON_TYPES_ENUM.STORAGE_FORMAT,
-  );
+  const stringifyableObject = structure.toJSON(JsonTypes.STORAGE_FORMAT);
   const structureString = JSON.stringify(stringifyableObject);
   const { key, iv } = getKeyIv(...encryptionKeys);
   return encryptText(structureString, key, iv);

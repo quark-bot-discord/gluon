@@ -30,135 +30,9 @@ export const INTENTS = {
   GUILD_MESSAGE_POLLS: 1 << 24,
   DIRECT_MESSAGE_POLLS: 1 << 25,
 };
-export const EVENTS = {
-  READY: "ready",
-  RESUMED: "resumed",
-  GUILD_CREATE: "guildCreate",
-  GUILD_DELETE: "guildDelete",
-  GUILD_UPDATE: "guildUpdate",
-  MESSAGE_CREATE: "messageCreate",
-  MESSAGE_UPDATE: "messageUpdate",
-  MESSAGE_EDIT: "messageEdit",
-  MESSAGE_DELETE: "messageDelete",
-  MESSAGE_DELETE_BULK: "messageDeleteBulk",
-  GUILD_AUDIT_LOG_ENTRY_CREATE: "guildAuditLogEntryCreate",
-  GUILD_BAN_ADD: "guildBanAdd",
-  GUILD_BAN_REMOVE: "guildBanRemove",
-  GUILD_MEMBER_ADD: "guildMemberAdd",
-  GUILD_MEMBER_UPDATE: "guildMemberUpdate",
-  GUILD_MEMBER_REMOVE: "guildMemberRemove",
-  BUTTON_CLICK: "buttonClick",
-  MENU_SELECT: "menuSelect",
-  MODAL_RESPONSE: "modalResponse",
-  SLASH_COMMAND: "slashCommand",
-  SLASH_COMMAND_AUTOCOMPLETE: "slashCommandAutocomplete",
-  VOICE_STATE_UPDATE: "voiceStateUpdate",
-  VOICE_CHANNEL_STATUS_UPDATE: "voiceChannelStatusUpdate",
-  CHANNEL_CREATE: "channelCreate",
-  CHANNEL_UPDATE: "channelUpdate",
-  CHANNEL_DELETE: "channelDelete",
-  CHANNEL_PINS_UPDATE: "channelPinsUpdate",
-  THREAD_CREATE: "threadCreate",
-  THREAD_UPDATE: "threadUpdate",
-  THREAD_DELETE: "threadDelete",
-  THREAD_LIST_SYNC: "threadListSync",
-  INVITE_CREATE: "inviteCreate",
-  INVITE_DELETE: "inviteDelete",
-  GUILD_ROLE_CREATE: "roleCreate",
-  GUILD_ROLE_UPDATE: "roleUpdate",
-  GUILD_ROLE_DELETE: "roleDelete",
-  GUILD_EMOJI_CREATE: "emojiCreate",
-  GUILD_EMOJI_UPDATE: "emojiUpdate",
-  GUILD_EMOJI_DELETE: "emojiDelete",
-  ENTITLEMENT_CREATE: "entitlementCreate",
-  ENTITLEMENT_UPDATE: "entitlementUpdate",
-  ENTITLEMENT_DELETE: "entitlementDelete",
-  GUILD_SCHEDULED_EVENT_CREATE: "guildScheduledEventCreate",
-  GUILD_SCHEDULED_EVENT_UPDATE: "guildScheduledEventUpdate",
-  GUILD_SCHEDULED_EVENT_DELETE: "guildScheduledEventDelete",
-  GUILD_SCHEDULED_EVENT_USER_ADD: "guildScheduledEventUserAdd",
-  GUILD_SCHEDULED_EVENT_USER_REMOVE: "guildScheduledEventUserRemove",
-  INITIALISED: "initialised",
-  MESSAGE_POLL_VOTE_ADD: "messagePollVoteAdd",
-  MESSAGE_POLL_VOTE_REMOVE: "messagePollVoteRemove",
-  MESSAGE_REACTION_ADD: "messageReactionAdd",
-  MESSAGE_REACTION_REMOVE: "messageReactionRemove",
-  WEBHOOKS_UPDATE: "webhooksUpdate",
-};
-export const USER_FLAGS = {
-  DISCORD_EMPLOYEE: 1 << 0,
-  DISCORD_PARTNER: 1 << 1,
-  HYPESQUAD_EVENTS: 1 << 2,
-  BUG_HUNTER_LEVEL_1: 1 << 3,
-  HOUSE_BRAVERY: 1 << 6,
-  HOUSE_BRILLIANCE: 1 << 7,
-  HOUSE_BALANCE: 1 << 8,
-  EARLY_SUPPORTER: 1 << 9,
-  TEAM_USER: 1 << 10,
-  SYSTEM: 1 << 12,
-  BUG_HUNTER_LEVEL_2: 1 << 14,
-  VERIFIED_BOT: 1 << 16,
-  VERIFIED_BOT_DEVELOPER: 1 << 17,
-};
-export const MEMBER_FLAGS = {
-  DID_REJOIN: 1 << 0,
-  COMPLETED_ONBOARDING: 1 << 1,
-  BYPASSES_VERIFICATION: 1 << 2,
-  STARTED_ONBOARDING: 1 << 3,
-};
-export const MESSAGE_FLAGS = {
-  CROSSPOSTED: 1 << 0,
-  IS_CROSSPOST: 1 << 1,
-  SUPPRESS_EMBEDS: 1 << 2,
-  SOURCE_MESSAGE_DELETED: 1 << 3,
-  URGENT: 1 << 4,
-  HAS_THREAD: 1 << 5,
-  EPHEMERAL: 1 << 6,
-  LOADING: 1 << 7,
-  FAILED_TO_MENTION_SOME_ROLES_IN_THREAD: 1 << 8,
-  SUPPRESS_NOTIFICATIONS: 1 << 12,
-  IS_VOICE_MESSAGE: 1 << 13,
-};
-export const SELECT_MENU_TYPES = {
-  TEXT: 3,
-  USER: 5,
-  ROLE: 6,
-  MENTIONABLE: 7,
-  CHANNEL: 8,
-};
-export const BUTTON_STYLES = {
-  PRIMARY: 1,
-  SECONDARY: 2,
-  SUCCESS: 3,
-  DANGER: 4,
-  LINK: 5,
-};
-export const TEXT_INPUT_STYLES = {
-  SHORT: 1,
-  PARAGRAPH: 2,
-};
-export const APPLICATION_COMMAND_TYPES = {
-  CHAT_INPUT: 1,
-  USER: 2,
-  MESSAGE: 3,
-};
-export const APPLICATION_COMMAND_OPTION_TYPES = {
-  SUB_COMMAND: 1,
-  SUB_COMMAND_GROUP: 2,
-  STRING: 3,
-  INTEGER: 4,
-  BOOLEAN: 5,
-  USER: 6,
-  CHANNEL: 7,
-  ROLE: 8,
-  MENTIONABLE: 9,
-  NUMBER: 10,
-  ATTACHMENT: 11,
-};
 export const DEFAULT_MESSAGE_EXPIRY_SECONDS = 3600 * 12; // 12 hours
 export const DEFAULT_USER_EXPIRY_SECONDS = 3600 * 1; // 1 hour
 export const DEFAULT_POLLING_TIME = 60 * 1000; // 1 min, in MILLISECONDS
-export const DEFAULT_INCREASE_CACHE_BY = 28;
 export const PERMISSIONS = {
   CREATE_INSTANT_INVITE: String(1n << 0n),
   KICK_MEMBERS: String(1n << 1n),
@@ -207,89 +81,6 @@ export const PERMISSIONS = {
   USE_EXTERNAL_SOUNDS: String(1n << 45n),
   SEND_VOICE_MESSAGES: String(1n << 46n),
   SEND_POLLS: String(1n << 49n),
-};
-export const STICKER_FORMATS_ENUM = {
-  PNG: 1,
-  APNG: 2,
-  LOTTIE: 3,
-  GIF: 4,
-};
-export const WEBSOCKET_STATES = {
-  CONNECTING: 0,
-  OPEN: 1,
-  CLOSING: 2,
-  CLOSED: 3,
-};
-export const GLUON_GLOBAL_CACHE_ENUM = {
-  GUILDS: 1,
-  USERS: 2,
-  CHANNELS: 3,
-  MESSAGES: 4,
-  ROLES: 5,
-  EMOJIS: 6,
-  INVITES: 7,
-  VOICE_STATES: 8,
-  MEMBERS: 9,
-  SCHEDULED_EVENTS: 10,
-};
-export const GLUON_CACHING_OPTIONS = {
-  NO_MESSAGES: 1 << 0,
-  FILES_ONLY: 1 << 1,
-  NO_VOICE_STATE: 1 << 2,
-};
-export const GLUON_GUILD_CACHING_OPTIONS = {
-  MESSAGES: 1 << 0,
-  FILES: 1 << 1,
-  VOICE_STATES: 1 << 2,
-  ROLES: 1 << 3,
-  EMOJIS: 1 << 4,
-  INVITES: 1 << 5,
-  CHANNELS: 1 << 6,
-  MEMBERS: 1 << 7,
-  THREADS: 1 << 8,
-  SCHEDULED_EVENTS: 1 << 9,
-};
-export const GLUON_CHANNEL_CACHING_OPTIONS = {
-  MESSAGES: 1 << 0,
-  FILES: 1 << 1,
-  CONTENT: 1 << 2,
-  POLL: 1 << 3,
-  REACTIONS: 1 << 4,
-  EMBEDS: 1 << 5,
-  ATTRIBUTES: 1 << 6,
-  REFERENCE: 1 << 7,
-  WEBHOOK: 1 << 8,
-  STICKER: 1 << 9,
-};
-export const PERMISSION_OVERWRITE_TYPES = {
-  ROLE: 0,
-  MEMBER: 1,
-};
-export const GLUON_DEBUG_LEVELS = {
-  NONE: 0,
-  ERROR: 1,
-  WARN: 2,
-  DANGER: 3,
-  INFO: 4,
-};
-export const AUTO_MODERATION_TRIGGER_TYPES = {
-  KEYWORD: 1,
-  SPAM: 3,
-  KEYWORD_PRESET: 4,
-  MENTION_SPAM: 5,
-};
-export const AUTO_MODERATION_EVENT_TYPES = {
-  MESSAGE_SEND: 1,
-};
-export const AUTO_MODERATION_KEYWORD_PRESET_TYPES = {
-  PROFANITY: 1,
-  SEXUAL_CONTENT: 2,
-  SLURS: 3,
-};
-export const AUTO_MODERATION_ACTION_TYPES = {
-  BLOCK_MESSAGE: 1,
-  SEND_ALERT_MESSAGE: 2,
-  TIMEOUT: 3,
 };
 export const GATEWAY_RECONNECT_CLOSE_CODES = [
   4000, 4001, 4002, 4003, 4005, 4007, 4008, 4009,
@@ -353,63 +144,13 @@ export const LIMITS = {
 };
 export const COMMAND_NAME_REGEX =
   /^[-_\p{L}\p{N}\p{sc=Deva}\p{sc=Thai}]{1,32}$/u;
-export var TO_JSON_TYPES_ENUM;
-(function (TO_JSON_TYPES_ENUM) {
-  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["DISCORD_FORMAT"] = 1)] =
-    "DISCORD_FORMAT";
-  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["CACHE_FORMAT"] = 2)] = "CACHE_FORMAT";
-  TO_JSON_TYPES_ENUM[(TO_JSON_TYPES_ENUM["STORAGE_FORMAT"] = 3)] =
-    "STORAGE_FORMAT";
-})(TO_JSON_TYPES_ENUM || (TO_JSON_TYPES_ENUM = {}));
 export const GLUON_VERSION = packageJSON.version;
-export var LOCALES;
-(function (LOCALES) {
-  LOCALES["INDONESIAN"] = "id";
-  LOCALES["DANISH"] = "da";
-  LOCALES["GERMAN"] = "de";
-  LOCALES["ENGLISH_UK"] = "en-GB";
-  LOCALES["ENGLISH_US"] = "en-US";
-  LOCALES["SPANISH"] = "es-ES";
-  LOCALES["SPANISH_LATAM"] = "es-419";
-  LOCALES["FRENCH"] = "fr";
-  LOCALES["CROATIAN"] = "hr";
-  LOCALES["ITALIAN"] = "it";
-  LOCALES["LITHUANIAN"] = "lt";
-  LOCALES["HUNGARIAN"] = "hu";
-  LOCALES["DUTCH"] = "nl";
-  LOCALES["NORWEGIAN"] = "no";
-  LOCALES["POLISH"] = "pl";
-  LOCALES["PORTUGUESE_BRAZILIAN"] = "pt-BR";
-  LOCALES["ROMANIAN"] = "ro";
-  LOCALES["FINNISH"] = "fi";
-  LOCALES["SWEDISH"] = "sv-SE";
-  LOCALES["VIETNAMESE"] = "vi";
-  LOCALES["TURKISH"] = "tr";
-  LOCALES["CZECH"] = "cs";
-  LOCALES["GREEK"] = "el";
-  LOCALES["BULGARIAN"] = "bg";
-  LOCALES["RUSSIAN"] = "ru";
-  LOCALES["UKRAINIAN"] = "uk";
-  LOCALES["HINDI"] = "hi";
-  LOCALES["THAI"] = "th";
-  LOCALES["CHINESE_CHINA"] = "zh-CN";
-  LOCALES["JAPANESE"] = "ja";
-  LOCALES["CHINESE_TAIWAN"] = "zh-TW";
-  LOCALES["KOREAN"] = "ko";
-})(LOCALES || (LOCALES = {}));
-export var COMPONENT_TYPES;
-(function (COMPONENT_TYPES) {
-  COMPONENT_TYPES[(COMPONENT_TYPES["ACTION_ROW"] = 1)] = "ACTION_ROW";
-  COMPONENT_TYPES[(COMPONENT_TYPES["BUTTON"] = 2)] = "BUTTON";
-  COMPONENT_TYPES[(COMPONENT_TYPES["SELECT_MENU"] = 3)] = "SELECT_MENU";
-  COMPONENT_TYPES[(COMPONENT_TYPES["TEXT_INPUT"] = 4)] = "TEXT_INPUT";
-  COMPONENT_TYPES[(COMPONENT_TYPES["USER_SELECT_MENU"] = 5)] =
-    "USER_SELECT_MENU";
-  COMPONENT_TYPES[(COMPONENT_TYPES["ROLE_SELECT_MENU"] = 6)] =
-    "ROLE_SELECT_MENU";
-  COMPONENT_TYPES[(COMPONENT_TYPES["MENTIONABLE_SELECT_MENU"] = 7)] =
-    "MENTIONABLE_SELECT_MENU";
-  COMPONENT_TYPES[(COMPONENT_TYPES["CHANNEL_SELECT_MENU"] = 8)] =
-    "CHANNEL_SELECT_MENU";
-})(COMPONENT_TYPES || (COMPONENT_TYPES = {}));
+export {
+  JsonTypes,
+  Events,
+  GluonDebugLevels,
+  GluonGlobalCache,
+  GluonGuildCachingOptions,
+  GluonChannelCachingOptions,
+} from "../typings/enums.js";
 //# sourceMappingURL=constants.js.map

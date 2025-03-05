@@ -7,8 +7,8 @@ import {
   TEST_MEMBERS,
   TEST_ROLES,
 } from "../../src/testData.js";
-import { Member, Role } from "../../src/structures.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { Member } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Member", function () {
   context("check import", function () {
@@ -524,7 +524,7 @@ describe("Member", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
-      expect(member.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(member.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
         avatar: null,
         communication_disabled_until:
@@ -544,7 +544,7 @@ describe("Member", function () {
           username: TEST_DATA.MEMBER.user.username,
         },
       });
-      expect(member.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(member.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
         avatar: null,
         communication_disabled_until:
@@ -563,7 +563,7 @@ describe("Member", function () {
           username: TEST_DATA.MEMBER.user.username,
         },
       });
-      expect(member.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(member.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         avatar: null,
         communication_disabled_until:
           TEST_DATA.MEMBER.communication_disabled_until,
@@ -867,7 +867,7 @@ describe("Member", function () {
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       const rebundled = new Member(
         client,
-        member.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        member.toJSON(JsonTypes.CACHE_FORMAT),
         {
           userId: TEST_DATA.MEMBER_ID,
           guildId: TEST_DATA.GUILD_ID,
@@ -904,7 +904,7 @@ describe("Member", function () {
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       const rebundled = new Member(
         client,
-        member.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        member.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           userId: TEST_DATA.MEMBER_ID,
           guildId: TEST_DATA.GUILD_ID,
@@ -941,7 +941,7 @@ describe("Member", function () {
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       const rebundled = new Member(
         client,
-        member.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        member.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           userId: TEST_DATA.MEMBER_ID,
           guildId: TEST_DATA.GUILD_ID,

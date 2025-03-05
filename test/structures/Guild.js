@@ -17,7 +17,7 @@ import {
   GuildChannelsManager,
   GuildCacheOptions,
 } from "../../src/structures.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Guild", function () {
   context("check import", function () {
@@ -404,7 +404,7 @@ describe("Guild", function () {
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(guild.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 75800896,
         _cache_options: {},
         channels: [],
@@ -426,7 +426,7 @@ describe("Guild", function () {
         unavailable: TEST_DATA.GUILD.unavailable,
         voice_states: [],
       });
-      expect(guild.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(guild.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 75800896,
         _cache_options: {},
         channels: [],
@@ -448,7 +448,7 @@ describe("Guild", function () {
         unavailable: TEST_DATA.GUILD.unavailable,
         voice_states: [],
       });
-      expect(guild.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(guild.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         channels: [],
         emojis: [],
         icon: null,
@@ -1262,9 +1262,45 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
+      const rebundled = new Guild(client, guild.toJSON(JsonTypes.CACHE_FORMAT));
+      expect(rebundled.id).to.deep.equal(guild.id);
+      expect(rebundled.name).to.deep.equal(guild.name);
+      expect(rebundled.displayIconURL).to.deep.equal(guild.displayIconURL);
+      expect(rebundled.ownerId).to.deep.equal(guild.ownerId);
+      expect(rebundled.verificationLevel).to.deep.equal(
+        guild.verificationLevel,
+      );
+      expect(rebundled.defaultMessageNotifications).to.deep.equal(
+        guild.defaultMessageNotifications,
+      );
+      expect(rebundled.explicitContentFilter).to.deep.equal(
+        guild.explicitContentFilter,
+      );
+      expect(rebundled.roles).to.deep.equal(guild.roles);
+      expect(rebundled.emojis).to.deep.equal(guild.emojis);
+      expect(rebundled.mfaLevel).to.deep.equal(guild.mfaLevel);
+      expect(rebundled.systemChannel).to.deep.equal(guild.systemChannel);
+      expect(rebundled.systemChannelId).to.deep.equal(guild.systemChannelId);
+      expect(rebundled.systemChannelFlags).to.deep.equal(
+        guild.systemChannelFlags,
+      );
+      expect(rebundled.rulesChannel).to.deep.equal(guild.rulesChannel);
+      expect(rebundled.rulesChannelId).to.deep.equal(guild.rulesChannelId);
+      expect(rebundled.joinedAt).to.deep.equal(guild.joinedAt);
+      expect(rebundled.unavailable).to.deep.equal(guild.unavailable);
+      expect(rebundled.memberCount).to.deep.equal(guild.memberCount);
+      expect(rebundled.voiceStates).to.deep.equal(guild.voiceStates);
+      expect(rebundled.members).to.deep.equal(guild.members);
+      expect(rebundled.channels).to.deep.equal(guild.channels);
+      expect(rebundled.description).to.deep.equal(guild.description);
+    });
+    it("should rebundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(
         client,
-        guild.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        guild.toJSON(JsonTypes.STORAGE_FORMAT),
       );
       expect(rebundled.id).to.deep.equal(guild.id);
       expect(rebundled.name).to.deep.equal(guild.name);
@@ -1303,46 +1339,7 @@ describe("Guild", function () {
       TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
       const rebundled = new Guild(
         client,
-        guild.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      );
-      expect(rebundled.id).to.deep.equal(guild.id);
-      expect(rebundled.name).to.deep.equal(guild.name);
-      expect(rebundled.displayIconURL).to.deep.equal(guild.displayIconURL);
-      expect(rebundled.ownerId).to.deep.equal(guild.ownerId);
-      expect(rebundled.verificationLevel).to.deep.equal(
-        guild.verificationLevel,
-      );
-      expect(rebundled.defaultMessageNotifications).to.deep.equal(
-        guild.defaultMessageNotifications,
-      );
-      expect(rebundled.explicitContentFilter).to.deep.equal(
-        guild.explicitContentFilter,
-      );
-      expect(rebundled.roles).to.deep.equal(guild.roles);
-      expect(rebundled.emojis).to.deep.equal(guild.emojis);
-      expect(rebundled.mfaLevel).to.deep.equal(guild.mfaLevel);
-      expect(rebundled.systemChannel).to.deep.equal(guild.systemChannel);
-      expect(rebundled.systemChannelId).to.deep.equal(guild.systemChannelId);
-      expect(rebundled.systemChannelFlags).to.deep.equal(
-        guild.systemChannelFlags,
-      );
-      expect(rebundled.rulesChannel).to.deep.equal(guild.rulesChannel);
-      expect(rebundled.rulesChannelId).to.deep.equal(guild.rulesChannelId);
-      expect(rebundled.joinedAt).to.deep.equal(guild.joinedAt);
-      expect(rebundled.unavailable).to.deep.equal(guild.unavailable);
-      expect(rebundled.memberCount).to.deep.equal(guild.memberCount);
-      expect(rebundled.voiceStates).to.deep.equal(guild.voiceStates);
-      expect(rebundled.members).to.deep.equal(guild.members);
-      expect(rebundled.channels).to.deep.equal(guild.channels);
-      expect(rebundled.description).to.deep.equal(guild.description);
-    });
-    it("should rebundle correctly with a custom toJSON", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_MEMBERS.GUILD_OWNER_MEMBER(client);
-      const rebundled = new Guild(
-        client,
-        guild.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        guild.toJSON(JsonTypes.DISCORD_FORMAT),
       );
       expect(rebundled.id).to.deep.equal(guild.id);
       expect(rebundled.name).to.deep.equal(guild.name);

@@ -1,5 +1,5 @@
 import getTimestamp from "../util/discord/getTimestampFromSnowflake.js";
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -12,7 +12,7 @@ import type {
   Client as ClientType,
   GluonCacheOptions as GluonCacheOptionsType,
 } from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a Discord user.
@@ -120,13 +120,10 @@ class User implements UserType {
 
     if (nocache === false && shouldCache) {
       this.#_client.users.set(data.id, this);
-      this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
-        `CACHE USER ${data.id}`,
-      );
+      this.#_client._emitDebug(GluonDebugLevels.Info, `CACHE USER ${data.id}`);
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE USER ${data.id} (${nocache} ${shouldCache})`,
       );
     }

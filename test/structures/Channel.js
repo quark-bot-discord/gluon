@@ -13,7 +13,8 @@ import Guild from "../../src/structures/Guild.js";
 import ChannelMessageManager from "../../src/managers/ChannelMessageManager.js";
 import ChannelCacheOptions from "../../src/managers/ChannelCacheOptions.js";
 import Role from "../../src/structures/Role.js";
-import { PERMISSIONS, TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { PERMISSIONS } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Channel", function () {
   context("check import", function () {
@@ -303,7 +304,7 @@ describe("Channel", function () {
       const channel = new Channel(client, TEST_DATA.TEXT_CHANNEL, {
         guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
       });
-      expect(channel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(channel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         id: TEST_DATA.TEXT_CHANNEL.id,
@@ -316,7 +317,7 @@ describe("Channel", function () {
         topic: TEST_DATA.TEXT_CHANNEL.topic,
         messages: [],
       });
-      expect(channel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(channel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         id: TEST_DATA.TEXT_CHANNEL.id,
@@ -329,7 +330,7 @@ describe("Channel", function () {
         topic: TEST_DATA.TEXT_CHANNEL.topic,
         messages: [],
       });
-      expect(channel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(channel.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.TEXT_CHANNEL.id,
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
@@ -547,7 +548,7 @@ describe("Channel", function () {
       });
       const rebundled = new Channel(
         client,
-        channel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        channel.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -575,7 +576,7 @@ describe("Channel", function () {
       });
       const rebundled = new Channel(
         client,
-        channel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        channel.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -603,7 +604,7 @@ describe("Channel", function () {
       });
       const rebundled = new Channel(
         client,
-        channel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        channel.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA } from "../../src/testData.js";
 import { AuditLog } from "../../src/structures.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("AuditLog", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -197,7 +197,7 @@ describe("AuditLog", function () {
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(auditLog.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.AUDIT_LOG.id,
         guild_id: TEST_DATA.GUILD_ID,
         action_type: TEST_DATA.AUDIT_LOG.action_type,
@@ -215,7 +215,7 @@ describe("AuditLog", function () {
         },
         changes: TEST_DATA.AUDIT_LOG.changes,
       });
-      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(auditLog.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.AUDIT_LOG.id,
         guild_id: TEST_DATA.GUILD_ID,
         action_type: TEST_DATA.AUDIT_LOG.action_type,
@@ -233,7 +233,7 @@ describe("AuditLog", function () {
         },
         changes: TEST_DATA.AUDIT_LOG.changes,
       });
-      expect(auditLog.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(auditLog.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.AUDIT_LOG.id,
         guild_id: TEST_DATA.GUILD_ID,
         action_type: TEST_DATA.AUDIT_LOG.action_type,

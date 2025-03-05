@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { Poll, MessagePollManager, Guild } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("Poll", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -178,7 +178,7 @@ describe("Poll", function () {
         TEST_DATA.CLIENT_USER.id,
         TEST_DATA.POLL.answers[0].answer_id,
       );
-      expect(poll.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(poll.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         question: TEST_DATA.POLL.question,
         answers: [
           {
@@ -199,7 +199,7 @@ describe("Poll", function () {
           1: [TEST_DATA.CLIENT_USER.id],
         },
       });
-      expect(poll.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(poll.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         question: TEST_DATA.POLL.question,
         answers: [
           {
@@ -220,7 +220,7 @@ describe("Poll", function () {
           1: [TEST_DATA.CLIENT_USER.id],
         },
       });
-      expect(poll.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(poll.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         question: TEST_DATA.POLL.question,
         answers: [
           {
@@ -286,9 +286,31 @@ describe("Poll", function () {
         TEST_DATA.CLIENT_USER.id,
         TEST_DATA.POLL.answers[0].answer_id,
       );
+      const rebundled = new Poll(client, poll.toJSON(JsonTypes.CACHE_FORMAT), {
+        guildId: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
+      expect(rebundled.layoutType).to.equal(poll.layoutType);
+      expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
+      expect(rebundled.expiry).to.equal(poll.expiry);
+      expect(rebundled.answers).to.deep.equal(poll.answers);
+      expect(rebundled.question).to.equal(poll.question);
+      expect(rebundled.guildId).to.equal(poll.guildId);
+      expect(rebundled._results).to.be.an.instanceOf(MessagePollManager);
+      expect(rebundled._results).to.deep.equal(poll._results);
+    });
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const poll = new Poll(client, TEST_DATA.POLL, {
+        guildId: TEST_DATA.GUILD_ID,
+      });
+      poll._results._addVote(
+        TEST_DATA.CLIENT_USER.id,
+        TEST_DATA.POLL.answers[0].answer_id,
+      );
       const rebundled = new Poll(
         client,
-        poll.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        poll.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -314,33 +336,7 @@ describe("Poll", function () {
       );
       const rebundled = new Poll(
         client,
-        poll.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-        {
-          guildId: TEST_DATA.GUILD_ID,
-        },
-      );
-      expect(rebundled.rawLayoutType).to.equal(poll.rawLayoutType);
-      expect(rebundled.layoutType).to.equal(poll.layoutType);
-      expect(rebundled.allowMultiselect).to.equal(poll.allowMultiselect);
-      expect(rebundled.expiry).to.equal(poll.expiry);
-      expect(rebundled.answers).to.deep.equal(poll.answers);
-      expect(rebundled.question).to.equal(poll.question);
-      expect(rebundled.guildId).to.equal(poll.guildId);
-      expect(rebundled._results).to.be.an.instanceOf(MessagePollManager);
-      expect(rebundled._results).to.deep.equal(poll._results);
-    });
-    it("should bundle correctly", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const poll = new Poll(client, TEST_DATA.POLL, {
-        guildId: TEST_DATA.GUILD_ID,
-      });
-      poll._results._addVote(
-        TEST_DATA.CLIENT_USER.id,
-        TEST_DATA.POLL.answers[0].answer_id,
-      );
-      const rebundled = new Poll(
-        client,
-        poll.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        poll.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { CategoryChannel } from "../../src/structures.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("CategoryChannel", function () {
   context("check import", function () {
@@ -150,9 +150,7 @@ describe("CategoryChannel", function () {
       TEST_DATA.CATEGORY_CHANNEL,
       { guildId: TEST_DATA.GUILD_ID },
     );
-    expect(
-      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-    ).to.deep.equal({
+    expect(categoryChannel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
       id: TEST_DATA.CATEGORY_CHANNEL.id,
       name: TEST_DATA.CATEGORY_CHANNEL.name,
       type: TEST_DATA.CATEGORY_CHANNEL.type,
@@ -167,9 +165,7 @@ describe("CategoryChannel", function () {
         },
       ],
     });
-    expect(
-      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-    ).to.deep.equal({
+    expect(categoryChannel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
       id: TEST_DATA.CATEGORY_CHANNEL.id,
       name: TEST_DATA.CATEGORY_CHANNEL.name,
       type: TEST_DATA.CATEGORY_CHANNEL.type,
@@ -184,9 +180,7 @@ describe("CategoryChannel", function () {
         },
       ],
     });
-    expect(
-      categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-    ).to.deep.equal({
+    expect(categoryChannel.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
       id: TEST_DATA.CATEGORY_CHANNEL.id,
       name: TEST_DATA.CATEGORY_CHANNEL.name,
       type: TEST_DATA.CATEGORY_CHANNEL.type,
@@ -232,7 +226,7 @@ describe("CategoryChannel", function () {
       );
       const rebundled = new CategoryChannel(
         client,
-        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        categoryChannel.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -255,7 +249,7 @@ describe("CategoryChannel", function () {
       );
       const rebundled = new CategoryChannel(
         client,
-        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        categoryChannel.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -278,7 +272,7 @@ describe("CategoryChannel", function () {
       );
       const rebundled = new CategoryChannel(
         client,
-        categoryChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        categoryChannel.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

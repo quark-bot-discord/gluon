@@ -1,9 +1,5 @@
 import { Locale } from "discord-api-types/v10";
-import {
-  APPLICATION_COMMAND_TYPES,
-  COMMAND_NAME_REGEX,
-  LIMITS,
-} from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to create a choice for a command.
@@ -255,12 +251,6 @@ class CommandOption {
         throw new TypeError("GLUON: Command option type must be provided.");
       if (typeof this.type !== "number")
         throw new TypeError("GLUON: Command option type must be a number.");
-      if (
-        (this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT ||
-          typeof this.type === "undefined") &&
-        !COMMAND_NAME_REGEX.test(this.name)
-      )
-        throw new TypeError("GLUON: Command option name must match the regex.");
       if (!this.description)
         throw new TypeError(
           "GLUON: Command option description must be provided.",

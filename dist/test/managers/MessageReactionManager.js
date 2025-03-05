@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import MessageReactionManager from "../../src/managers/MessageReactionManager.js";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("MessageReactionManager", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -57,15 +57,15 @@ describe("MessageReactionManager", function () {
         TEST_DATA.REACTION,
       );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.CACHE_FORMAT),
       ).to.have.property(TEST_DATA.STANDARD_EMOJI.name);
       const messageReactionManager2 = new MessageReactionManager(
         client,
         guild,
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.CACHE_FORMAT),
       );
       expect(
-        messageReactionManager2.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager2.toJSON(JsonTypes.CACHE_FORMAT),
       ).to.have.property(TEST_DATA.STANDARD_EMOJI.name);
     });
   });
@@ -84,7 +84,7 @@ describe("MessageReactionManager", function () {
         TEST_DATA.REACTION,
       );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.CACHE_FORMAT),
       ).to.have.property(TEST_DATA.STANDARD_EMOJI.name);
     });
     it("should throw an error if userId is not a string", function () {
@@ -155,7 +155,7 @@ describe("MessageReactionManager", function () {
         TEST_DATA.STANDARD_EMOJI.name,
       );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.CACHE_FORMAT),
       ).to.not.have.property(TEST_DATA.STANDARD_EMOJI.name);
     });
     it("should throw an error if userId is not a string", function () {
@@ -216,7 +216,7 @@ describe("MessageReactionManager", function () {
         TEST_DATA.REACTION,
       );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.CACHE_FORMAT),
       ).to.have.property(TEST_DATA.STANDARD_EMOJI.name);
     });
     it("should return the correct storage format", function () {
@@ -233,7 +233,7 @@ describe("MessageReactionManager", function () {
         TEST_DATA.REACTION,
       );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        messageReactionManager.toJSON(JsonTypes.STORAGE_FORMAT),
       ).to.have.property(TEST_DATA.STANDARD_EMOJI.name);
     });
     it("should return the correct discord format", function () {
@@ -249,11 +249,11 @@ describe("MessageReactionManager", function () {
         TEST_DATA.STANDARD_EMOJI.name,
         TEST_DATA.REACTION,
       );
+      expect(messageReactionManager.toJSON(JsonTypes.DISCORD_FORMAT)).to.be.an(
+        "array",
+      );
       expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.be.an("array");
-      expect(
-        messageReactionManager.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)[0],
+        messageReactionManager.toJSON(JsonTypes.DISCORD_FORMAT)[0],
       ).to.have.property("emoji");
     });
   });

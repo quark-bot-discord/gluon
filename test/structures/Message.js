@@ -12,16 +12,14 @@ import {
 import FileUpload from "../../src/util/builder/fileUpload.js";
 import MessageComponents from "../../src/util/builder/messageComponents.js";
 import path from "path";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import Embed from "../../src/util/builder/embedBuilder.js";
 import {
   Message,
   MessageReactionManager,
-  Member,
-  Role,
   Poll,
   Guild,
 } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Message", function () {
   context("check import", function () {
@@ -1018,7 +1016,7 @@ describe("Message", function () {
       TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.GENERIC_MEMBER(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      expect(message.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(message.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 15,
         id: TEST_DATA.MESSAGE_ID,
         type: TEST_DATA.MESSAGE.type,
@@ -1119,7 +1117,7 @@ describe("Message", function () {
         },
         messageReactions: {},
       });
-      expect(message.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(message.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 15,
         id: TEST_DATA.MESSAGE_ID,
         type: TEST_DATA.MESSAGE.type,
@@ -1217,7 +1215,7 @@ describe("Message", function () {
         },
         messageReactions: {},
       });
-      expect(message.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(message.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.MESSAGE_ID,
         type: TEST_DATA.MESSAGE.type,
         channel_id: TEST_DATA.CHANNEL_ID,
@@ -1381,7 +1379,7 @@ describe("Message", function () {
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       const rebundled = new Message(
         client,
-        message.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        message.toJSON(JsonTypes.CACHE_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
           guildId: TEST_DATA.GUILD_ID,
@@ -1430,7 +1428,7 @@ describe("Message", function () {
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       const rebundled = new Message(
         client,
-        message.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        message.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
           guildId: TEST_DATA.GUILD_ID,
@@ -1479,7 +1477,7 @@ describe("Message", function () {
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       const rebundled = new Message(
         client,
-        message.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        message.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           channelId: TEST_DATA.CHANNEL_ID,
           guildId: TEST_DATA.GUILD_ID,

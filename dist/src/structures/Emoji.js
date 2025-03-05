@@ -47,11 +47,11 @@ var _Emoji__client,
   _Emoji_name,
   _Emoji__attributes,
   _Emoji__guild_id;
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an emoji.
  * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
@@ -177,12 +177,12 @@ class Emoji {
         .guilds.get(guildId)
         ?.emojis.set(data.id, this);
       __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE EMOJI ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

@@ -1,7 +1,8 @@
 import { expect } from "chai";
-import { LIMITS, COMPONENT_TYPES } from "../../../src/constants.js";
+import { LIMITS } from "../../../src/constants.js";
 import DropdownBuilder from "../../../src/util/builder/dropdownBuilder.js";
 import DropdownOption from "../../../src/util/builder/dropdownOption.js";
+import { ComponentType } from "discord-api-types/v10";
 
 describe("DropdownBuilder", function () {
   context("check import", function () {
@@ -14,7 +15,7 @@ describe("DropdownBuilder", function () {
   context("check type", function () {
     it("should have the correct type", function () {
       const dropdown = new DropdownBuilder();
-      expect(dropdown.type).to.equal(COMPONENT_TYPES.SELECT_MENU);
+      expect(dropdown.type).to.equal(ComponentType.StringSelect);
     });
   });
 

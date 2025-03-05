@@ -1,5 +1,5 @@
 import User from "./User.js";
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -21,7 +21,7 @@ import type {
   UserDiscordJSON,
   Client as ClientType,
 } from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an scheduled event.
@@ -219,12 +219,12 @@ class ScheduledEvent implements ScheduledEventType {
     if (nocache === false && shouldCache) {
       this.guild.scheduledEvents.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE SCHEDULEDEVENT ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE SCHEDULEDEVENT ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

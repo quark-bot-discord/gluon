@@ -5,8 +5,8 @@ import {
   TEST_GUILDS,
   TEST_ROLES,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { Role } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("Role", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -244,7 +244,7 @@ describe("Role", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
-      expect(role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(role.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 7,
         icon: TEST_DATA.ROLE_ADMIN.icon,
         id: TEST_DATA.ROLE_ID,
@@ -258,7 +258,7 @@ describe("Role", function () {
           premium_subscriber: null,
         },
       });
-      expect(role.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(role.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 7,
         icon: TEST_DATA.ROLE_ADMIN.icon,
         id: TEST_DATA.ROLE_ID,
@@ -272,7 +272,7 @@ describe("Role", function () {
           premium_subscriber: null,
         },
       });
-      expect(role.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(role.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         hoist: TEST_DATA.ROLE_ADMIN.hoist,
         managed: TEST_DATA.ROLE_ADMIN.managed,
         mentionable: TEST_DATA.ROLE_ADMIN.mentionable,
@@ -317,9 +317,31 @@ describe("Role", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      const rebundled = new Role(client, role.toJSON(JsonTypes.CACHE_FORMAT), {
+        guildId: TEST_DATA.GUILD_ID,
+      });
+      expect(rebundled.id).to.equal(role.id);
+      expect(rebundled.name).to.equal(role.name);
+      expect(rebundled.color).to.equal(role.color);
+      expect(rebundled.position).to.equal(role.position);
+      expect(rebundled.permissions).to.equal(role.permissions);
+      expect(rebundled.tags).to.deep.equal(role.tags);
+      expect(rebundled.hoist).to.equal(role.hoist);
+      expect(rebundled.managed).to.equal(role.managed);
+      expect(rebundled.mentionable).to.equal(role.mentionable);
+      expect(rebundled.mention).to.equal(role.mention);
+      expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
+      expect(rebundled.guild.id).to.equal(role.guild.id);
+      expect(rebundled.guildId).to.equal(role.guildId);
+      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
+    });
+    it("should return the correct bundle with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(
         client,
-        role.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        role.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -345,33 +367,7 @@ describe("Role", function () {
       const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
       const rebundled = new Role(
         client,
-        role.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-        {
-          guildId: TEST_DATA.GUILD_ID,
-        },
-      );
-      expect(rebundled.id).to.equal(role.id);
-      expect(rebundled.name).to.equal(role.name);
-      expect(rebundled.color).to.equal(role.color);
-      expect(rebundled.position).to.equal(role.position);
-      expect(rebundled.permissions).to.equal(role.permissions);
-      expect(rebundled.tags).to.deep.equal(role.tags);
-      expect(rebundled.hoist).to.equal(role.hoist);
-      expect(rebundled.managed).to.equal(role.managed);
-      expect(rebundled.mentionable).to.equal(role.mentionable);
-      expect(rebundled.mention).to.equal(role.mention);
-      expect(rebundled.displayIconURL).to.equal(role.displayIconURL);
-      expect(rebundled.guild.id).to.equal(role.guild.id);
-      expect(rebundled.guildId).to.equal(role.guildId);
-      expect(rebundled._originalIconHash).to.equal(role._originalIconHash);
-    });
-    it("should return the correct bundle with a custom toJSON", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const role = TEST_ROLES.GENERIC_ADMIN_ROLE(client);
-      const rebundled = new Role(
-        client,
-        role.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        role.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import MessagePollManager from "../../src/managers/MessagePollManager.js";
 import { TEST_CLIENTS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("MessagePollManager", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -39,9 +39,7 @@ describe("MessagePollManager", function () {
         1: [123456],
       });
       messagePollManager._addVote("123457", 1);
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(messagePollManager.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         1: [String(123456), String(123457)],
       });
     });
@@ -67,9 +65,7 @@ describe("MessagePollManager", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const messagePollManager = new MessagePollManager(client);
       messagePollManager._addVote("123456", 1);
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(messagePollManager.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         1: [String(123456)],
       });
     });
@@ -97,9 +93,7 @@ describe("MessagePollManager", function () {
         1: [123456],
       });
       messagePollManager._removeVote("123456", 1);
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(messagePollManager.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         1: [],
       });
     });
@@ -132,9 +126,7 @@ describe("MessagePollManager", function () {
       const messagePollManager = new MessagePollManager(client, {
         1: [123456],
       });
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(messagePollManager.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         1: [String(123456)],
       });
     });
@@ -143,28 +135,28 @@ describe("MessagePollManager", function () {
       const messagePollManager = new MessagePollManager(client, {
         1: [123456],
       });
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
-        1: [String(123456)],
-      });
+      expect(messagePollManager.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal(
+        {
+          1: [String(123456)],
+        },
+      );
     });
     it("should return the correct discord format", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const messagePollManager = new MessagePollManager(client, {
         1: [123456],
       });
-      expect(
-        messagePollManager.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
-        answer_counts: [
-          {
-            count: 1,
-            id: 1,
-            me_voted: false,
-          },
-        ],
-      });
+      expect(messagePollManager.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal(
+        {
+          answer_counts: [
+            {
+              count: 1,
+              id: 1,
+              me_voted: false,
+            },
+          ],
+        },
+      );
     });
   });
 });

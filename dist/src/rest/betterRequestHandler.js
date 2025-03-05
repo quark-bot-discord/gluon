@@ -72,12 +72,11 @@ import {
   VERSION,
   NAME,
   GLUON_REPOSITORY_URL,
-  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
 import redisClient from "#src/util/general/redisClient.js";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
   constructor(client, token) {
@@ -172,7 +171,7 @@ class BetterRequestHandler {
             _BetterRequestHandler__client,
             "f",
           )._emitDebug(
-            GLUON_DEBUG_LEVELS.WARN,
+            GluonDebugLevels.Warn,
             `RATELIMITED ${data.hash} (bucket reset):${bucket.reset} (latency):${__classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")}  (time until retry):${(bucket.reset + __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")) * 1000 - new Date().getTime()} (current time):${(new Date().getTime() / 1000) | 0}`,
           );
           if (
@@ -189,7 +188,7 @@ class BetterRequestHandler {
               this,
               _BetterRequestHandler__client,
               "f",
-            )._emitDebug(GLUON_DEBUG_LEVELS.DANGER, `KILL QUEUE ${data.hash}`);
+            )._emitDebug(GluonDebugLevels.Danger, `KILL QUEUE ${data.hash}`);
             __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
               data.hash
             ].kill();
@@ -261,7 +260,7 @@ class BetterRequestHandler {
       );
     const hash = hashjs.sha256().update(toHash).digest("hex");
     __classPrivateFieldGet(this, _BetterRequestHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ADD ${hash} to request queue`,
     );
     if (
@@ -540,7 +539,7 @@ class BetterRequestHandler {
         _BetterRequestHandler__client,
         "f",
       )._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `REMOVE ${hash} from request queue (${__classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f")}ms)`,
       );
       if (res.ok) return json;
@@ -557,7 +556,7 @@ class BetterRequestHandler {
         this,
         _BetterRequestHandler__client,
         "f",
-      )._emitDebug(GLUON_DEBUG_LEVELS.WARN, `READD ${hash} to request queue`);
+      )._emitDebug(GluonDebugLevels.Warn, `READD ${hash} to request queue`);
       throw new Error(
         `GLUON: 429 - Hit ratelimit, retry in ${retryNextIn} (stack): ${_stack}`,
       );

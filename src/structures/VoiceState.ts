@@ -1,4 +1,3 @@
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import Member from "./Member.js";
 import util from "util";
 import { Snowflake } from "src/interfaces/gluon.js";
@@ -16,7 +15,7 @@ import type {
   MemberDiscordJSON,
 } from "../../typings/index.d.ts";
 import { APIVoiceState } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a voice state.
@@ -159,12 +158,12 @@ class VoiceState implements VoiceStateType {
     if (nocache === false && shouldCache) {
       this.guild.voiceStates.set(data.user_id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE VOICESTATE ${guildId} ${data.user_id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE VOICESTATE ${guildId} ${data.user_id} (${nocache} ${shouldCache})`,
       );
     }

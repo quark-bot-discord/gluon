@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { APPLICATION_COMMAND_TYPES } from "../../../src/constants.js";
 import Command from "../../../src/util/builder/commandBuilder.js";
 import CommandOption from "../../../src/util/builder/commandOptionBuilder.js";
+import { ApplicationCommandType } from "discord-api-types/v10";
 describe("CommandBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {
@@ -12,7 +12,7 @@ describe("CommandBuilder", function () {
   context("check type", function () {
     it("should have the correct type", function () {
       const command = new Command();
-      expect(command.type).to.equal(APPLICATION_COMMAND_TYPES.CHAT_INPUT);
+      expect(command.type).to.equal(ApplicationCommandType.ChatInput);
     });
   });
   context("check setName", function () {

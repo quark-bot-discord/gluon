@@ -43,10 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildCacheOptions__cache_options;
-import {
-  GLUON_GUILD_CACHING_OPTIONS,
-  TO_JSON_TYPES_ENUM,
-} from "../constants.js";
+import { GluonGuildCachingOptions, JsonTypes } from "#typings/enums.js";
 class GuildCacheOptions {
   constructor(cache_options) {
     _GuildCacheOptions__cache_options.set(this, void 0);
@@ -77,7 +74,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.MESSAGES,
+          GluonGuildCachingOptions.Messages,
         "f",
       );
     else if (option === false)
@@ -85,7 +82,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.MESSAGES,
+          ~GluonGuildCachingOptions.Messages,
         "f",
       );
     return this;
@@ -105,7 +102,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.FILES,
+          GluonGuildCachingOptions.Files,
         "f",
       );
     else if (option === false)
@@ -113,7 +110,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.FILES,
+          ~GluonGuildCachingOptions.Files,
         "f",
       );
     return this;
@@ -133,7 +130,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES,
+          GluonGuildCachingOptions.VoiceStates,
         "f",
       );
     else if (option === false)
@@ -141,7 +138,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES,
+          ~GluonGuildCachingOptions.VoiceStates,
         "f",
       );
     return this;
@@ -161,7 +158,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.MEMBERS,
+          GluonGuildCachingOptions.Members,
         "f",
       );
     else if (option === false)
@@ -169,7 +166,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.MEMBERS,
+          ~GluonGuildCachingOptions.Members,
         "f",
       );
     return this;
@@ -189,7 +186,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.ROLES,
+          GluonGuildCachingOptions.Roles,
         "f",
       );
     else if (option === false)
@@ -197,7 +194,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.ROLES,
+          ~GluonGuildCachingOptions.Roles,
         "f",
       );
     return this;
@@ -217,7 +214,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.CHANNELS,
+          GluonGuildCachingOptions.Channels,
         "f",
       );
     else if (option === false)
@@ -225,7 +222,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.CHANNELS,
+          ~GluonGuildCachingOptions.Channels,
         "f",
       );
     return this;
@@ -245,7 +242,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.EMOJIS,
+          GluonGuildCachingOptions.Emojis,
         "f",
       );
     else if (option === false)
@@ -253,7 +250,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.EMOJIS,
+          ~GluonGuildCachingOptions.Emojis,
         "f",
       );
     return this;
@@ -273,7 +270,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.THREADS,
+          GluonGuildCachingOptions.Threads,
         "f",
       );
     else if (option === false)
@@ -281,7 +278,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.THREADS,
+          ~GluonGuildCachingOptions.Threads,
         "f",
       );
     return this;
@@ -301,7 +298,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.INVITES,
+          GluonGuildCachingOptions.Invites,
         "f",
       );
     else if (option === false)
@@ -309,7 +306,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.INVITES,
+          ~GluonGuildCachingOptions.Invites,
         "f",
       );
     return this;
@@ -329,7 +326,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
-          GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS,
+          GluonGuildCachingOptions.ScheduledEvents,
         "f",
       );
     else if (option === false)
@@ -337,7 +334,7 @@ class GuildCacheOptions {
         this,
         _GuildCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-          ~GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS,
+          ~GluonGuildCachingOptions.ScheduledEvents,
         "f",
       );
     return this;
@@ -348,12 +345,11 @@ class GuildCacheOptions {
    * @readonly
    * @public
    */
-  // @ts-expect-error TS(2300): Duplicate identifier 'messageCaching'.
   get messageCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_GUILD_CACHING_OPTIONS.MESSAGES
+        GluonGuildCachingOptions.Messages) ===
+      GluonGuildCachingOptions.Messages
     );
   }
   /**
@@ -365,22 +361,8 @@ class GuildCacheOptions {
   get fileCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.FILES) ===
-      GLUON_GUILD_CACHING_OPTIONS.FILES
-    );
-  }
-  /**
-   * Returns whether to cache messages or not.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
-  // @ts-expect-error TS(2300): Duplicate identifier 'messageCaching'.
-  get messageCaching() {
-    return (
-      (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_GUILD_CACHING_OPTIONS.MESSAGES
+        GluonGuildCachingOptions.Files) ===
+      GluonGuildCachingOptions.Files
     );
   }
   /**
@@ -392,8 +374,8 @@ class GuildCacheOptions {
   get voiceStateCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES) ===
-      GLUON_GUILD_CACHING_OPTIONS.VOICE_STATES
+        GluonGuildCachingOptions.VoiceStates) ===
+      GluonGuildCachingOptions.VoiceStates
     );
   }
   /**
@@ -405,8 +387,8 @@ class GuildCacheOptions {
   get memberCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.MEMBERS) ===
-      GLUON_GUILD_CACHING_OPTIONS.MEMBERS
+        GluonGuildCachingOptions.Members) ===
+      GluonGuildCachingOptions.Members
     );
   }
   /**
@@ -418,8 +400,8 @@ class GuildCacheOptions {
   get roleCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.ROLES) ===
-      GLUON_GUILD_CACHING_OPTIONS.ROLES
+        GluonGuildCachingOptions.Roles) ===
+      GluonGuildCachingOptions.Roles
     );
   }
   /**
@@ -431,8 +413,8 @@ class GuildCacheOptions {
   get channelCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.CHANNELS) ===
-      GLUON_GUILD_CACHING_OPTIONS.CHANNELS
+        GluonGuildCachingOptions.Channels) ===
+      GluonGuildCachingOptions.Channels
     );
   }
   /**
@@ -444,8 +426,8 @@ class GuildCacheOptions {
   get emojiCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.EMOJIS) ===
-      GLUON_GUILD_CACHING_OPTIONS.EMOJIS
+        GluonGuildCachingOptions.Emojis) ===
+      GluonGuildCachingOptions.Emojis
     );
   }
   /**
@@ -457,8 +439,8 @@ class GuildCacheOptions {
   get threadCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.THREADS) ===
-      GLUON_GUILD_CACHING_OPTIONS.THREADS
+        GluonGuildCachingOptions.Threads) ===
+      GluonGuildCachingOptions.Threads
     );
   }
   /**
@@ -470,8 +452,8 @@ class GuildCacheOptions {
   get inviteCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.INVITES) ===
-      GLUON_GUILD_CACHING_OPTIONS.INVITES
+        GluonGuildCachingOptions.Invites) ===
+      GluonGuildCachingOptions.Invites
     );
   }
   /**
@@ -483,8 +465,8 @@ class GuildCacheOptions {
   get scheduledEventCaching() {
     return (
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
-        GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS) ===
-      GLUON_GUILD_CACHING_OPTIONS.SCHEDULED_EVENTS
+        GluonGuildCachingOptions.ScheduledEvents) ===
+      GluonGuildCachingOptions.ScheduledEvents
     );
   }
   /**
@@ -492,10 +474,10 @@ class GuildCacheOptions {
    * @public
    */
   toString() {
-    return `GuildCacheOptions { ${Object.entries(GLUON_GUILD_CACHING_OPTIONS)
+    return `GuildCacheOptions { ${Object.entries(GluonGuildCachingOptions)
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") & value) === value}`,
+          `${key}: ${(__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
       )
       .join(", ")} }`;
   }
@@ -508,9 +490,9 @@ class GuildCacheOptions {
    */
   toJSON(format) {
     switch (format) {
-      case TO_JSON_TYPES_ENUM.CACHE_FORMAT:
-      case TO_JSON_TYPES_ENUM.STORAGE_FORMAT:
-      case TO_JSON_TYPES_ENUM.DISCORD_FORMAT:
+      case JsonTypes.CACHE_FORMAT:
+      case JsonTypes.STORAGE_FORMAT:
+      case JsonTypes.DISCORD_FORMAT:
       default: {
         return __classPrivateFieldGet(
           this,

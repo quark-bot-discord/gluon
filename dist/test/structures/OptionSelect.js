@@ -5,8 +5,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { OptionSelect } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("OptionSelect", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -192,9 +192,7 @@ describe("OptionSelect", function () {
         channelId: TEST_DATA.CHANNEL_ID,
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(
-        optionSelect.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(optionSelect.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
         type: TEST_DATA.OPTION_SELECT.type,
         guild_id: TEST_DATA.OPTION_SELECT.guild_id,
@@ -248,9 +246,7 @@ describe("OptionSelect", function () {
         },
         values: TEST_DATA.OPTION_SELECT.data.values,
       });
-      expect(
-        optionSelect.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(optionSelect.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
         type: TEST_DATA.OPTION_SELECT.type,
         guild_id: TEST_DATA.OPTION_SELECT.guild_id,
@@ -302,9 +298,7 @@ describe("OptionSelect", function () {
         },
         values: TEST_DATA.OPTION_SELECT.data.values,
       });
-      expect(
-        optionSelect.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(optionSelect.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.OPTION_SELECT.id,
         type: TEST_DATA.OPTION_SELECT.type,
         guild_id: TEST_DATA.OPTION_SELECT.guild_id,

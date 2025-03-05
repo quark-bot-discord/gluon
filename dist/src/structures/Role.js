@@ -54,11 +54,11 @@ var _Role_instances,
   _Role__attributes,
   _Role_tags,
   _Role__formattedIconHash_get;
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a role belonging to a guild.
  */
@@ -189,12 +189,12 @@ class Role {
     if (nocache === false && shouldCache) {
       this.guild.roles.set(data.id, this);
       __classPrivateFieldGet(this, _Role__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE ROLE ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _Role__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE ROLE ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

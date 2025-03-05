@@ -6,8 +6,8 @@ import {
   TEST_GUILDS,
   TEST_MEMBERS,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
-import { Thread, Member } from "../../src/structures.js";
+import { Thread } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("Thread", function () {
   context("check import", function () {
@@ -131,7 +131,7 @@ describe("Thread", function () {
       const thread = new Thread(client, TEST_DATA.THREAD, {
         guildId: TEST_DATA.GUILD_ID,
       });
-      expect(thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal({
+      expect(thread.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         id: TEST_DATA.THREAD.id,
@@ -145,7 +145,7 @@ describe("Thread", function () {
         type: TEST_DATA.THREAD.type,
         permission_overwrites: [],
       });
-      expect(thread.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT)).to.deep.equal({
+      expect(thread.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         id: TEST_DATA.THREAD.id,
@@ -159,7 +159,7 @@ describe("Thread", function () {
         type: TEST_DATA.THREAD.type,
         permission_overwrites: [],
       });
-      expect(thread.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT)).to.deep.equal({
+      expect(thread.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.THREAD.id,
         messages: [],
         name: TEST_DATA.THREAD.name,
@@ -209,7 +209,7 @@ describe("Thread", function () {
     });
     const rebundled = new Thread(
       client,
-      thread.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+      thread.toJSON(JsonTypes.CACHE_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },
@@ -235,7 +235,7 @@ describe("Thread", function () {
     });
     const rebundled = new Thread(
       client,
-      thread.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+      thread.toJSON(JsonTypes.STORAGE_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },
@@ -261,7 +261,7 @@ describe("Thread", function () {
     });
     const rebundled = new Thread(
       client,
-      thread.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+      thread.toJSON(JsonTypes.DISCORD_FORMAT),
       {
         guildId: TEST_DATA.GUILD_ID,
       },

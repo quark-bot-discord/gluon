@@ -49,7 +49,6 @@ var _EventHandler__client,
   _EventHandler_asciiArtSent;
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
 import Emoji from "../structures/Emoji.js";
@@ -72,7 +71,7 @@ import GuildMemberManager from "../managers/GuildMemberManager.js";
 import quark from "../util/art/quark.js";
 import gluon from "../util/art/gluon.js";
 import { ComponentType, InteractionType } from "discord-api-types/v10";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 class EventHandler {
   constructor(client, ws) {
@@ -116,7 +115,7 @@ class EventHandler {
       console.info(gluon());
     }
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "READY",
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -127,7 +126,7 @@ class EventHandler {
   RESUMED(data) {
     __classPrivateFieldGet(this, _EventHandler_shard, "f").resetRetries();
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "RESUMED",
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -137,7 +136,7 @@ class EventHandler {
   GUILD_CREATE(data) {
     let guild;
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_CREATE ${data.id}`,
     );
     if (
@@ -187,7 +186,7 @@ class EventHandler {
   }
   GUILD_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_UPDATE ${data.id}`,
     );
     const oldGuild = getGuild(
@@ -206,7 +205,7 @@ class EventHandler {
   }
   GUILD_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_DELETE ${data.id}`,
     );
     if (data.unavailable != true) {
@@ -226,7 +225,7 @@ class EventHandler {
   }
   GUILD_ROLE_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_CREATE ${data.guild_id}`,
     );
     const role = new Role(
@@ -243,7 +242,7 @@ class EventHandler {
   }
   GUILD_ROLE_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_UPDATE ${data.guild_id}`,
     );
     const oldRole = __classPrivateFieldGet(this, _EventHandler__client, "f")
@@ -264,7 +263,7 @@ class EventHandler {
   }
   GUILD_ROLE_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_DELETE ${data.guild_id}`,
     );
     const role = __classPrivateFieldGet(this, _EventHandler__client, "f")
@@ -281,7 +280,7 @@ class EventHandler {
   }
   CHANNEL_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_CREATE ${data.guild_id}`,
     );
     const channel = cacheChannel(
@@ -296,7 +295,7 @@ class EventHandler {
   }
   CHANNEL_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_UPDATE ${data.guild_id}`,
     );
     const oldChannel = __classPrivateFieldGet(this, _EventHandler__client, "f")
@@ -316,7 +315,7 @@ class EventHandler {
   }
   CHANNEL_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_DELETE ${data.guild_id}`,
     );
     const channel = __classPrivateFieldGet(this, _EventHandler__client, "f")
@@ -333,7 +332,7 @@ class EventHandler {
   }
   CHANNEL_PINS_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -343,7 +342,7 @@ class EventHandler {
   }
   THREAD_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_CREATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -361,7 +360,7 @@ class EventHandler {
   }
   THREAD_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_UPDATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -385,7 +384,7 @@ class EventHandler {
   }
   THREAD_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_DELETE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -405,7 +404,7 @@ class EventHandler {
   }
   THREAD_LIST_SYNC(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_LIST_SYNC ${data.guild_id}`,
     );
     const threads = [];
@@ -425,7 +424,7 @@ class EventHandler {
   }
   GUILD_MEMBER_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_ADD ${data.guild_id}`,
     );
     const member = new Member(
@@ -449,7 +448,7 @@ class EventHandler {
   }
   GUILD_MEMBER_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_REMOVE ${data.guild_id}`,
     );
     const cacheManager = GuildMemberManager.getCacheManager(
@@ -497,7 +496,7 @@ class EventHandler {
   }
   GUILD_MEMBER_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_UPDATE ${data.guild_id}`,
     );
     const cacheManager = GuildMemberManager.getCacheManager(
@@ -529,7 +528,7 @@ class EventHandler {
   }
   GUILD_MEMBERS_CHUNK(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBERS_CHUNK ${data.guild_id}`,
     );
     for (let i = 0; i < data.members.length; i++)
@@ -544,7 +543,7 @@ class EventHandler {
   }
   GUILD_BAN_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_BAN_ADD ${data.guild_id}`,
     );
     const user = new User(
@@ -559,7 +558,7 @@ class EventHandler {
   }
   GUILD_BAN_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_BAN_REMOVE ${data.guild_id}`,
     );
     const user = new User(
@@ -574,7 +573,7 @@ class EventHandler {
   }
   INVITE_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INVITE_CREATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -592,7 +591,7 @@ class EventHandler {
   }
   INVITE_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INVITE_DELETE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -620,7 +619,7 @@ class EventHandler {
   }
   VOICE_STATE_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `VOICE_STATE_UPDATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -655,7 +654,7 @@ class EventHandler {
   }
   VOICE_CHANNEL_STATUS_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -665,7 +664,7 @@ class EventHandler {
   }
   MESSAGE_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_CREATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -686,7 +685,7 @@ class EventHandler {
   }
   MESSAGE_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_UPDATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -734,7 +733,7 @@ class EventHandler {
   }
   MESSAGE_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_DELETE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -762,7 +761,7 @@ class EventHandler {
   }
   MESSAGE_DELETE_BULK(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -790,7 +789,7 @@ class EventHandler {
   }
   INTERACTION_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INTERACTION_CREATE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -877,7 +876,7 @@ class EventHandler {
   }
   GUILD_AUDIT_LOG_ENTRY_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
     );
     const auditLogEntry = new AuditLog(
@@ -894,7 +893,7 @@ class EventHandler {
   }
   ENTITLEMENT_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_CREATE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -904,7 +903,7 @@ class EventHandler {
   }
   ENTITLEMENT_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_UPDATE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -914,7 +913,7 @@ class EventHandler {
   }
   ENTITLEMENT_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_DELETE ${data.user_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -924,7 +923,7 @@ class EventHandler {
   }
   GUILD_SCHEDULED_EVENT_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
     );
     const scheduledEvent = new ScheduledEvent(
@@ -941,7 +940,7 @@ class EventHandler {
   }
   GUILD_SCHEDULED_EVENT_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
     );
     const oldScheduledEvent =
@@ -964,7 +963,7 @@ class EventHandler {
   }
   GUILD_SCHEDULED_EVENT_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
     );
     const scheduledEvent =
@@ -983,7 +982,7 @@ class EventHandler {
   }
   GUILD_SCHEDULED_EVENT_USER_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
     );
     const scheduledEvent =
@@ -1011,7 +1010,7 @@ class EventHandler {
   }
   GUILD_SCHEDULED_EVENT_USER_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
     );
     const scheduledEvent =
@@ -1039,7 +1038,7 @@ class EventHandler {
   }
   AUTO_MODERATION_RULE_CREATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
@@ -1050,7 +1049,7 @@ class EventHandler {
   }
   AUTO_MODERATION_RULE_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
@@ -1061,7 +1060,7 @@ class EventHandler {
   }
   AUTO_MODERATION_RULE_DELETE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_RULE_CREATE' does not ex... Remove this comment to see the full error message
@@ -1072,7 +1071,7 @@ class EventHandler {
   }
   AUTO_MODERATION_ACTION_EXECUTION(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
     );
     // @ts-expect-error TS(2339): Property 'AUTO_MODERATION_ACTION_EXECUTION' does n... Remove this comment to see the full error message
@@ -1083,7 +1082,7 @@ class EventHandler {
   }
   GUILD_EMOJIS_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
     const oldEmojis = getGuild(
@@ -1183,7 +1182,7 @@ class EventHandler {
   }
   WEBHOOKS_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `WEBHOOKS_UPDATE ${data.guild_id}`,
     );
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
@@ -1193,7 +1192,7 @@ class EventHandler {
   }
   MESSAGE_POLL_VOTE_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -1223,7 +1222,7 @@ class EventHandler {
   }
   MESSAGE_POLL_VOTE_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -1253,7 +1252,7 @@ class EventHandler {
   }
   MESSAGE_REACTION_ADD(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
     if (!data.guild_id) {
@@ -1295,7 +1294,7 @@ class EventHandler {
   }
   MESSAGE_REACTION_REMOVE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
     if (!data.guild_id) {

@@ -1,4 +1,4 @@
-import { BUTTON_STYLES, LIMITS } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import resolveEmoji from "../discord/resolveEmoji.js";
 import isValidUrl from "../general/isValidUrl.js";
 import { ButtonStyle, ComponentType } from "discord-api-types/v10";
@@ -108,23 +108,23 @@ class Button {
         );
       if (typeof this.style !== "number")
         throw new TypeError("GLUON: Button style must be a number.");
-      if (this.style === BUTTON_STYLES.LINK && !this.url)
+      if (this.style === ButtonStyle.Link && !this.url)
         throw new TypeError(
           "GLUON: Button url must be provided for link buttons.",
         );
-      if (this.style !== BUTTON_STYLES.LINK && !this.custom_id)
+      if (this.style !== ButtonStyle.Link && !this.custom_id)
         throw new TypeError(
           "GLUON: Button custom id must be provided for non-link buttons.",
         );
-      if (this.style === BUTTON_STYLES.LINK && this.custom_id)
+      if (this.style === ButtonStyle.Link && this.custom_id)
         throw new TypeError(
           "GLUON: Button custom id must not be provided for link buttons.",
         );
-      if (this.style !== BUTTON_STYLES.LINK && this.url)
+      if (this.style !== ButtonStyle.Link && this.url)
         throw new TypeError(
           "GLUON: Button url must not be provided for non-link buttons.",
         );
-      if (this.style === BUTTON_STYLES.LINK && this.emoji)
+      if (this.style === ButtonStyle.Link && this.emoji)
         throw new TypeError(
           "GLUON: Button emoji must not be provided for link buttons.",
         );

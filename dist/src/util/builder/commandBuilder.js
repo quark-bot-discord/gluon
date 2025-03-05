@@ -1,5 +1,5 @@
 import { ApplicationCommandType, Locale } from "discord-api-types/v10";
-import { APPLICATION_COMMAND_TYPES, LIMITS } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import CommandOption from "./commandOptionBuilder.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
@@ -135,18 +135,15 @@ class Command {
         throw new RangeError(
           `GLUON: Command name must be between ${LIMITS.MIN_COMMAND_NAME} and ${LIMITS.MAX_COMMAND_NAME} characters.`,
         );
-      if (
-        !this.description &&
-        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT
-      )
+      if (!this.description && this.type === ApplicationCommandType.ChatInput)
         throw new TypeError("GLUON: Command description must be provided.");
       if (
         typeof this.description !== "string" &&
-        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT
+        this.type === ApplicationCommandType.ChatInput
       )
         throw new TypeError("GLUON: Command description must be a string.");
       if (
-        this.type === APPLICATION_COMMAND_TYPES.CHAT_INPUT &&
+        this.type === ApplicationCommandType.ChatInput &&
         ((this.description &&
           this.description.length < LIMITS.MIN_COMMAND_DESCRIPTION) ||
           (this.description &&

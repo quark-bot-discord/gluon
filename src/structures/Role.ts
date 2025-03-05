@@ -1,4 +1,4 @@
-import { CDN_BASE_URL, GLUON_DEBUG_LEVELS } from "../constants.js";
+import { CDN_BASE_URL } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import util from "util";
@@ -13,7 +13,7 @@ import type {
   GluonCacheOptions as GluonCacheOptionsType,
   Client as ClientType,
 } from "../../typings/index.d.ts";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a role belonging to a guild.
@@ -137,12 +137,12 @@ class Role implements RoleType {
     if (nocache === false && shouldCache) {
       this.guild.roles.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE ROLE ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE ROLE ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }

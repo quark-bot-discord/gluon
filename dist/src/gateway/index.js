@@ -76,15 +76,12 @@ import ZlibSync from "zlib-sync";
 import _heartbeat from "./structures/_heartbeat.js";
 import _identify from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
-import {
-  GATEWAY_RECONNECT_CLOSE_CODES,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
 import { GatewayOpcodes } from "discord-api-types/v10";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 class Shard {
   constructor(
@@ -166,7 +163,7 @@ class Shard {
   halt() {
     __classPrivateFieldSet(this, _Shard_halted, true, "f");
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.DANGER,
+      GluonDebugLevels.Danger,
       "Halting websocket",
     );
   }
@@ -254,7 +251,7 @@ class Shard {
           }
         } catch (error) {
           __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-            GLUON_DEBUG_LEVELS.ERROR,
+            GluonDebugLevels.Error,
             `ERROR at ${data.t}: ${error}`,
           );
           throw error;
@@ -264,7 +261,7 @@ class Shard {
       // Heartbeat
       case GatewayOpcodes.Heartbeat: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           "Heartbeat requested",
         );
         __classPrivateFieldGet(
@@ -278,7 +275,7 @@ class Shard {
       // Reconnect
       case GatewayOpcodes.Reconnect: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           "Reconnect requested",
         );
         // reconnect to websocket with session id
@@ -293,7 +290,7 @@ class Shard {
       // Invalid Session
       case GatewayOpcodes.InvalidSession: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.DANGER,
+          GluonDebugLevels.Danger,
           "Invalid session",
         );
         if (data.d != false)
@@ -326,7 +323,7 @@ class Shard {
           "f",
         );
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           "Hello received",
         );
         __classPrivateFieldSet(this, _Shard_lastReconnect, Date.now(), "f");
@@ -363,14 +360,14 @@ class Shard {
           "f",
         );
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           "Heartbeat acknowledged",
         );
         break;
       }
       default: {
         __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-          GLUON_DEBUG_LEVELS.WARN,
+          GluonDebugLevels.Warn,
           `Unknown opcode: ${data.op}`,
         );
         break;
@@ -414,7 +411,7 @@ class Shard {
     )
       return;
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "Sending heartbeat",
     );
     if (response != true) {
@@ -439,7 +436,7 @@ class Shard {
           __classPrivateFieldGet(this, _Shard_resuming, "f") != true
         ) {
           __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-            GLUON_DEBUG_LEVELS.ERROR,
+            GluonDebugLevels.Error,
             "Heartbeat ACK not received",
           );
           __classPrivateFieldGet(
@@ -453,7 +450,7 @@ class Shard {
   }),
   (_Shard_identify = function _Shard_identify() {
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Identifying with token ${__classPrivateFieldGet(this, _Shard_token, "f")}, shard ${this.shard} (total shards: ${__classPrivateFieldGet(this, _Shard__client, "f").totalShards}) and intents ${__classPrivateFieldGet(this, _Shard__client, "f").intents}`,
     );
     __classPrivateFieldGet(this, _Shard_ws, "f").send(
@@ -469,7 +466,7 @@ class Shard {
   }),
   (_Shard_reconnect = function _Shard_reconnect() {
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "Attempting to reconnect",
     );
     __classPrivateFieldSet(this, _Shard_resuming, true, "f");
@@ -480,7 +477,7 @@ class Shard {
       _Shard_shutDownWebsocket,
     ).call(this, 4901);
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "Shard reconnecting",
     );
   }),
@@ -488,7 +485,7 @@ class Shard {
     __classPrivateFieldSet(this, _Shard_resuming, true, "f");
     __classPrivateFieldSet(this, _Shard_waitingForHeartbeatACK, false, "f");
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Resuming with token ${__classPrivateFieldGet(this, _Shard_token, "f")}, session id ${__classPrivateFieldGet(this, _Shard__sessionId, "f")} and sequence ${__classPrivateFieldGet(this, _Shard__s, "f")}`,
     );
     if (
@@ -508,19 +505,19 @@ class Shard {
   }),
   (_Shard_addListeners = function _Shard_addListeners() {
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "Adding websocket listeners",
     );
     __classPrivateFieldGet(this, _Shard_ws, "f").once("open", () => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         "Websocket opened",
       );
       clearTimeout(__classPrivateFieldGet(this, _Shard_monitorOpened, "f"));
     });
     __classPrivateFieldGet(this, _Shard_ws, "f").once("close", (data) => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-        data < 2000 ? GLUON_DEBUG_LEVELS.INFO : GLUON_DEBUG_LEVELS.ERROR,
+        data < 2000 ? GluonDebugLevels.Info : GluonDebugLevels.Error,
         `Websocket closed with code ${data}`,
       );
       __classPrivateFieldGet(this, _Shard_ws, "f").removeAllListeners();
@@ -547,7 +544,7 @@ class Shard {
           () => {
             var _a;
             __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-              GLUON_DEBUG_LEVELS.WARN,
+              GluonDebugLevels.Warn,
               `Attempt ${__classPrivateFieldGet(this, _Shard_retries, "f")} at re-opening websocket`,
             );
             __classPrivateFieldSet(
@@ -573,7 +570,7 @@ class Shard {
               _Shard_monitorOpened,
               setTimeout(() => {
                 __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-                  GLUON_DEBUG_LEVELS.ERROR,
+                  GluonDebugLevels.Error,
                   `Attempt ${__classPrivateFieldGet(this, _Shard_retries, "f")} failed to re-open websocket, shutting down websocket with code ${data}`,
                 );
                 __classPrivateFieldGet(
@@ -618,7 +615,7 @@ class Shard {
     });
     __classPrivateFieldGet(this, _Shard_ws, "f").on("error", (data) => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.ERROR,
+        GluonDebugLevels.Error,
         data?.stack?.toString(),
       );
       __classPrivateFieldGet(
@@ -633,13 +630,13 @@ class Shard {
     code = 1000,
   ) {
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Closing websocket with code ${code}`,
     );
     __classPrivateFieldGet(this, _Shard_ws, "f").close(code);
     this.terminateSocketTimeout = setTimeout(() => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.ERROR,
+        GluonDebugLevels.Error,
         "Forcibly terminating websocket",
       );
       __classPrivateFieldGet(this, _Shard_ws, "f").terminate();

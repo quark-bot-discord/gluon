@@ -5,8 +5,8 @@ import {
   TEST_DATA,
   TEST_GUILDS,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { VoiceChannel } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("VoiceChannel", function () {
   context("check import", function () {
@@ -132,9 +132,7 @@ describe("VoiceChannel", function () {
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const voiceChannel =
         TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
-      expect(
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
-      ).to.deep.equal({
+      expect(voiceChannel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
@@ -150,9 +148,7 @@ describe("VoiceChannel", function () {
         user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
         permission_overwrites: [],
       });
-      expect(
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(voiceChannel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
@@ -168,9 +164,7 @@ describe("VoiceChannel", function () {
         user_limit: TEST_DATA.VOICE_CHANNEL.user_limit,
         permission_overwrites: [],
       });
-      expect(
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(voiceChannel.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
         messages: [],
@@ -212,7 +206,7 @@ describe("VoiceChannel", function () {
         TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        voiceChannel.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -232,7 +226,7 @@ describe("VoiceChannel", function () {
         TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        voiceChannel.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -252,7 +246,7 @@ describe("VoiceChannel", function () {
         TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new VoiceChannel(
         client,
-        voiceChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        voiceChannel.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

@@ -6,10 +6,7 @@ import ZlibSync from "zlib-sync";
 import _heartbeat from "./structures/_heartbeat.js";
 import _identify from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
-import {
-  GATEWAY_RECONNECT_CLOSE_CODES,
-  GLUON_DEBUG_LEVELS,
-} from "../constants.js";
+import { GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
 import _updatePresence from "./structures/_updatePresence.js";
 import _resume from "./structures/_resume.js";
@@ -20,7 +17,7 @@ import {
   GatewayReceivePayload,
 } from "discord-api-types/v10";
 import { PresenceStatus, PresenceType } from "#src/gateway.js";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 
 /* https://canary.discord.com/developers/docs/topics/gateway#disconnections */
 
@@ -116,7 +113,7 @@ class Shard {
           }
         } catch (error) {
           this.#_client._emitDebug(
-            GLUON_DEBUG_LEVELS.ERROR,
+            GluonDebugLevels.Error,
             `ERROR at ${data.t}: ${error}`,
           );
           throw error;
@@ -126,10 +123,7 @@ class Shard {
 
       // Heartbeat
       case GatewayOpcodes.Heartbeat: {
-        this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
-          "Heartbeat requested",
-        );
+        this.#_client._emitDebug(GluonDebugLevels.Info, "Heartbeat requested");
 
         this.#heartbeat(true);
 
@@ -138,10 +132,7 @@ class Shard {
 
       // Reconnect
       case GatewayOpcodes.Reconnect: {
-        this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
-          "Reconnect requested",
-        );
+        this.#_client._emitDebug(GluonDebugLevels.Info, "Reconnect requested");
 
         // reconnect to websocket with session id
         this.#reconnect();
@@ -151,7 +142,7 @@ class Shard {
 
       // Invalid Session
       case GatewayOpcodes.InvalidSession: {
-        this.#_client._emitDebug(GLUON_DEBUG_LEVELS.DANGER, "Invalid session");
+        this.#_client._emitDebug(GluonDebugLevels.Danger, "Invalid session");
 
         if (data.d != false) this.#resume();
         else
@@ -169,7 +160,7 @@ class Shard {
       case GatewayOpcodes.Hello: {
         this.#heartbeatInterval = data.d.heartbeat_interval;
 
-        this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Hello received");
+        this.#_client._emitDebug(GluonDebugLevels.Info, "Hello received");
 
         this.#lastReconnect = Date.now();
 
@@ -188,7 +179,7 @@ class Shard {
         this.#latencyMs = Date.now() - this.#lastHeartbeatTimestamp;
 
         this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.INFO,
+          GluonDebugLevels.Info,
           "Heartbeat acknowledged",
         );
 
@@ -197,7 +188,7 @@ class Shard {
 
       default: {
         this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.WARN,
+          GluonDebugLevels.Warn,
           `Unknown opcode: ${(data as { op: number }).op}`,
         );
 
@@ -208,7 +199,7 @@ class Shard {
 
   halt() {
     this.#halted = true;
-    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.DANGER, "Halting websocket");
+    this.#_client._emitDebug(GluonDebugLevels.Danger, "Halting websocket");
   }
 
   check() {
@@ -257,7 +248,7 @@ class Shard {
   #heartbeat(response = false) {
     if (this.#resuming == true && response != true) return;
 
-    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Sending heartbeat");
+    this.#_client._emitDebug(GluonDebugLevels.Info, "Sending heartbeat");
 
     if (response != true) {
       this.#waitingForHeartbeatACK = true;
@@ -271,7 +262,7 @@ class Shard {
       setTimeout(() => {
         if (this.#waitingForHeartbeatACK == true && this.#resuming != true) {
           this.#_client._emitDebug(
-            GLUON_DEBUG_LEVELS.ERROR,
+            GluonDebugLevels.Error,
             "Heartbeat ACK not received",
           );
           this.#shutDownWebsocket(4000);
@@ -281,7 +272,7 @@ class Shard {
 
   #identify() {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.#_client.totalShards}) and intents ${this.#_client.intents}`,
     );
 
@@ -295,16 +286,13 @@ class Shard {
   }
 
   #reconnect() {
-    this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
-      "Attempting to reconnect",
-    );
+    this.#_client._emitDebug(GluonDebugLevels.Info, "Attempting to reconnect");
 
     this.#resuming = true;
 
     this.#shutDownWebsocket(4901);
 
-    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Shard reconnecting");
+    this.#_client._emitDebug(GluonDebugLevels.Info, "Shard reconnecting");
   }
 
   #resume() {
@@ -313,7 +301,7 @@ class Shard {
     this.#waitingForHeartbeatACK = false;
 
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Resuming with token ${this.#token}, session id ${this.#_sessionId} and sequence ${this.#_s}`,
     );
 
@@ -328,19 +316,19 @@ class Shard {
 
   #addListeners() {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       "Adding websocket listeners",
     );
 
     this.#ws.once("open", () => {
-      this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "Websocket opened");
+      this.#_client._emitDebug(GluonDebugLevels.Info, "Websocket opened");
 
       clearTimeout(this.#monitorOpened);
     });
 
     this.#ws.once("close", (data: GatewayCloseCodes | 4901) => {
       this.#_client._emitDebug(
-        data < 2000 ? GLUON_DEBUG_LEVELS.INFO : GLUON_DEBUG_LEVELS.ERROR,
+        data < 2000 ? GluonDebugLevels.Info : GluonDebugLevels.Error,
         `Websocket closed with code ${data}`,
       );
 
@@ -369,7 +357,7 @@ class Shard {
       if (this.#retries <= 5)
         setTimeout(() => {
           this.#_client._emitDebug(
-            GLUON_DEBUG_LEVELS.WARN,
+            GluonDebugLevels.Warn,
             `Attempt ${this.#retries} at re-opening websocket`,
           );
 
@@ -381,7 +369,7 @@ class Shard {
 
           this.#monitorOpened = setTimeout(() => {
             this.#_client._emitDebug(
-              GLUON_DEBUG_LEVELS.ERROR,
+              GluonDebugLevels.Error,
               `Attempt ${this.#retries} failed to re-open websocket, shutting down websocket with code ${data}`,
             );
 
@@ -413,10 +401,7 @@ class Shard {
     });
 
     this.#ws.on("error", (data: any) => {
-      this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.ERROR,
-        data?.stack?.toString(),
-      );
+      this.#_client._emitDebug(GluonDebugLevels.Error, data?.stack?.toString());
 
       this.#shutDownWebsocket();
     });
@@ -424,7 +409,7 @@ class Shard {
 
   async #shutDownWebsocket(code = 1000) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `Closing websocket with code ${code}`,
     );
 
@@ -432,7 +417,7 @@ class Shard {
 
     this.terminateSocketTimeout = setTimeout(() => {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.ERROR,
+        GluonDebugLevels.Error,
         "Forcibly terminating websocket",
       );
       this.#ws.terminate();

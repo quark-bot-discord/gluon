@@ -1,10 +1,7 @@
 import { expect } from "chai";
-import {
-  LIMITS,
-  COMPONENT_TYPES,
-  TEXT_INPUT_STYLES,
-} from "../../../src/constants.js";
+import { LIMITS } from "../../../src/constants.js";
 import TextInputBuilder from "../../../src/util/builder/textInputBuilder.js";
+import { ComponentType, TextInputStyle } from "discord-api-types/v10";
 describe("TextInputBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {
@@ -15,7 +12,7 @@ describe("TextInputBuilder", function () {
   context("check type", function () {
     it("should have the correct type", function () {
       const textInput = new TextInputBuilder();
-      expect(textInput.type).to.equal(COMPONENT_TYPES.TEXT_INPUT);
+      expect(textInput.type).to.equal(ComponentType.TextInput);
     });
   });
   context("check setLabel", function () {
@@ -48,8 +45,8 @@ describe("TextInputBuilder", function () {
     });
     it("should set the style of the text input", function () {
       const textInput = new TextInputBuilder();
-      textInput.setStyle(TEXT_INPUT_STYLES.PARAGRAPH);
-      expect(textInput.style).to.equal(TEXT_INPUT_STYLES.PARAGRAPH);
+      textInput.setStyle(TextInputStyle.Paragraph);
+      expect(textInput.style).to.equal(TextInputStyle.Paragraph);
     });
     it("should throw an error if no style is provided", function () {
       const textInput = new TextInputBuilder();
@@ -178,16 +175,16 @@ describe("TextInputBuilder", function () {
         .setLabel("testLabel")
         .setCustomID("testCustomId")
         .setPlaceholder("testPlaceholder")
-        .setStyle(TEXT_INPUT_STYLES.PARAGRAPH)
+        .setStyle(TextInputStyle.Paragraph)
         .setValue("testValue")
         .setMinLength(1)
         .setMaxLength(1);
       expect(textInput.toJSON()).to.deep.equal({
-        type: COMPONENT_TYPES.TEXT_INPUT,
+        type: ComponentType.TextInput,
         label: "testLabel",
         custom_id: "testCustomId",
         placeholder: "testPlaceholder",
-        style: TEXT_INPUT_STYLES.PARAGRAPH,
+        style: TextInputStyle.Paragraph,
         min_length: 1,
         max_length: 1,
         value: "testValue",
@@ -210,7 +207,7 @@ describe("TextInputBuilder", function () {
     it("should throw an error if no custom id is provided", function () {
       const textInput = new TextInputBuilder()
         .setLabel("test")
-        .setStyle(TEXT_INPUT_STYLES.PARAGRAPH);
+        .setStyle(TextInputStyle.Paragraph);
       expect(() => textInput.toJSON()).to.throw(
         TypeError,
         "GLUON: Text input custom id must be provided.",

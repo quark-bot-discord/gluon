@@ -46,10 +46,10 @@ var _GluonCacheOptions__cache_options,
   _GluonCacheOptions_userTTL,
   _GluonCacheOptions_messageTTL;
 import {
-  GLUON_GLOBAL_CACHE_ENUM,
   DEFAULT_USER_EXPIRY_SECONDS,
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
 } from "../constants.js";
+import { GluonGlobalCache } from "#typings/enums.js";
 class GluonCacheOptions {
   constructor({
     userTTL,
@@ -95,14 +95,6 @@ class GluonCacheOptions {
     if (cacheScheduledEvents)
       this.setCacheScheduledEvents(cacheScheduledEvents);
   }
-  /**
-   * Set whether gluon should cache messages by default.
-   * @param {Boolean} value Whether to cache messages or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheMessages(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache messages must be a boolean.");
@@ -111,7 +103,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.MESSAGES,
+          GluonGlobalCache.Messages,
         "f",
       );
     else
@@ -119,32 +111,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.MESSAGES,
+          ~GluonGlobalCache.Messages,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache messages by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheMessages() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.MESSAGES) ===
-      GLUON_GLOBAL_CACHE_ENUM.MESSAGES
+        GluonGlobalCache.Messages) ===
+      GluonGlobalCache.Messages
     );
   }
-  /**
-   * Set whether gluon should cache users by default.
-   * @param {Boolean} value Whether to cache users or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheUsers(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache users must be a boolean.");
@@ -153,7 +131,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.USERS,
+          GluonGlobalCache.Users,
         "f",
       );
     else
@@ -161,32 +139,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.USERS,
+          ~GluonGlobalCache.Users,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache users by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheUsers() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.USERS) ===
-      GLUON_GLOBAL_CACHE_ENUM.USERS
+        GluonGlobalCache.Users) ===
+      GluonGlobalCache.Users
     );
   }
-  /**
-   * Set whether gluon should cache members by default.
-   * @param {Boolean} value Whether to cache members or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheMembers(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache members must be a boolean.");
@@ -195,7 +159,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.MEMBERS,
+          GluonGlobalCache.Members,
         "f",
       );
     else
@@ -203,32 +167,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.MEMBERS,
+          ~GluonGlobalCache.Members,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache members by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheMembers() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.MEMBERS) ===
-      GLUON_GLOBAL_CACHE_ENUM.MEMBERS
+        GluonGlobalCache.Members) ===
+      GluonGlobalCache.Members
     );
   }
-  /**
-   * Set whether gluon should cache channels by default.
-   * @param {Boolean} value Whether to cache channels or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheChannels(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache channels must be a boolean.");
@@ -237,7 +187,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.CHANNELS,
+          GluonGlobalCache.Channels,
         "f",
       );
     else
@@ -245,32 +195,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.CHANNELS,
+          ~GluonGlobalCache.Channels,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache channels by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheChannels() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.CHANNELS) ===
-      GLUON_GLOBAL_CACHE_ENUM.CHANNELS
+        GluonGlobalCache.Channels) ===
+      GluonGlobalCache.Channels
     );
   }
-  /**
-   * Set whether gluon should cache guilds by default.
-   * @param {Boolean} value Whether to cache guilds or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheGuilds(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache guilds must be a boolean.");
@@ -279,7 +215,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.GUILDS,
+          GluonGlobalCache.Guilds,
         "f",
       );
     else
@@ -287,32 +223,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.GUILDS,
+          ~GluonGlobalCache.Guilds,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache guilds by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheGuilds() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.GUILDS) ===
-      GLUON_GLOBAL_CACHE_ENUM.GUILDS
+        GluonGlobalCache.Guilds) ===
+      GluonGlobalCache.Guilds
     );
   }
-  /**
-   * Set whether gluon should cache roles by default.
-   * @param {Boolean} value Whether to cache roles or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheRoles(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache roles must be a boolean.");
@@ -321,7 +243,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.ROLES,
+          GluonGlobalCache.Roles,
         "f",
       );
     else
@@ -329,32 +251,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.ROLES,
+          ~GluonGlobalCache.Roles,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache roles by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheRoles() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.ROLES) ===
-      GLUON_GLOBAL_CACHE_ENUM.ROLES
+        GluonGlobalCache.Roles) ===
+      GluonGlobalCache.Roles
     );
   }
-  /**
-   * Set whether gluon should cache voice states by default.
-   * @param {Boolean} value Whether to cache voice states or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheVoiceStates(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache voice states must be a boolean.");
@@ -363,7 +271,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES,
+          GluonGlobalCache.VoiceStates,
         "f",
       );
     else
@@ -371,32 +279,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES,
+          ~GluonGlobalCache.VoiceStates,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache voice states by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheVoiceStates() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES) ===
-      GLUON_GLOBAL_CACHE_ENUM.VOICE_STATES
+        GluonGlobalCache.VoiceStates) ===
+      GluonGlobalCache.VoiceStates
     );
   }
-  /**
-   * Set whether gluon should cache emojis by default.
-   * @param {Boolean} value Whether to cache emojis or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheEmojis(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache emojis must be a boolean.");
@@ -405,7 +299,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.EMOJIS,
+          GluonGlobalCache.Emojis,
         "f",
       );
     else
@@ -413,32 +307,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.EMOJIS,
+          ~GluonGlobalCache.Emojis,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache emojis by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheEmojis() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.EMOJIS) ===
-      GLUON_GLOBAL_CACHE_ENUM.EMOJIS
+        GluonGlobalCache.Emojis) ===
+      GluonGlobalCache.Emojis
     );
   }
-  /**
-   * Set whether gluon should cache invites by default.
-   * @param {Boolean} value Whether to cache invites or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheInvites(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache invites must be a boolean.");
@@ -447,7 +327,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.INVITES,
+          GluonGlobalCache.Invites,
         "f",
       );
     else
@@ -455,32 +335,18 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.INVITES,
+          ~GluonGlobalCache.Invites,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache invites by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheInvites() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.INVITES) ===
-      GLUON_GLOBAL_CACHE_ENUM.INVITES
+        GluonGlobalCache.Invites) ===
+      GluonGlobalCache.Invites
     );
   }
-  /**
-   * Set whether gluon should cache scheduled events by default.
-   * @param {Boolean} value Whether to cache scheduled events or not.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setCacheScheduledEvents(value) {
     if (typeof value != "boolean")
       throw new TypeError("GLUON: Cache scheduled events must be a boolean.");
@@ -489,7 +355,7 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
-          GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS,
+          GluonGlobalCache.ScheduledEvents,
         "f",
       );
     else
@@ -497,79 +363,41 @@ class GluonCacheOptions {
         this,
         _GluonCacheOptions__cache_options,
         __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-          ~GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS,
+          ~GluonGlobalCache.ScheduledEvents,
         "f",
       );
     return this;
   }
-  /**
-   * Get whether gluon should cache scheduled events by default.
-   * @type {Boolean}
-   * @readonly
-   * @public
-   */
   get cacheScheduledEvents() {
     return (
       (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
-        GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS) ===
-      GLUON_GLOBAL_CACHE_ENUM.SCHEDULED_EVENTS
+        GluonGlobalCache.ScheduledEvents) ===
+      GluonGlobalCache.ScheduledEvents
     );
   }
-  /**
-   * Set the default TTL for users in the cache.
-   * @param {Number} seconds The number of seconds to cache users for.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setUserTTL(seconds) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");
     __classPrivateFieldSet(this, _GluonCacheOptions_userTTL, seconds, "f");
     return this;
   }
-  /**
-   * Get the default TTL for users in the cache.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
   get userTTL() {
     return __classPrivateFieldGet(this, _GluonCacheOptions_userTTL, "f");
   }
-  /**
-   * Set the default TTL for messages in the cache.
-   * @param {Number} seconds The number of seconds to cache messages for.
-   * @returns {GluonCacheOptions}
-   * @public
-   * @throws {TypeError}
-   * @method
-   */
   setMessageTTL(seconds) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: Message TTL must be a number.");
     __classPrivateFieldSet(this, _GluonCacheOptions_messageTTL, seconds, "f");
     return this;
   }
-  /**
-   * Get the default TTL for messages in the cache.
-   * @type {Number}
-   * @readonly
-   * @public
-   */
   get messageTTL() {
     return __classPrivateFieldGet(this, _GluonCacheOptions_messageTTL, "f");
   }
-  /**
-   * @method
-   * @public
-   */
   toString() {
-    return `GluonCacheOptions { ${Object.entries(GLUON_GLOBAL_CACHE_ENUM)
+    return `GluonCacheOptions { ${Object.entries(GluonGlobalCache)
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") & value) === value}`,
+          `${key}: ${(__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
       )
       .join(
         ", ",

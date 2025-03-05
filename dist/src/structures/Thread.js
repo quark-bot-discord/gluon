@@ -43,12 +43,11 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _Thread__client, _Thread__owner_id, _Thread__parent_id;
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GluonCacheOptions from "../managers/GluonCacheOptions.js";
 import GuildCacheOptions from "../managers/GuildCacheOptions.js";
 import Channel from "./GuildChannel.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents a thread within Discord.
  * @extends {Channel}
@@ -119,12 +118,12 @@ class Thread extends Channel {
     ) {
       this.guild.channels.set(data.id, this);
       __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE THREAD ${guildId} ${data.id}`,
       );
     } else {
       __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
       );
     }

@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
 import { ModalResponse } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 
 describe("ModalResponse", function () {
   context("check import", function () {
@@ -110,9 +110,7 @@ describe("ModalResponse", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
-      expect(
-        modalResponse.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(modalResponse.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         channel_id: TEST_DATA.MODAL_RESPONSE.channel_id,
         guild_id: TEST_DATA.MODAL_RESPONSE.guild_id,
         id: TEST_DATA.MODAL_RESPONSE.id,
@@ -141,9 +139,7 @@ describe("ModalResponse", function () {
         values: TEST_DATA.MODAL_RESPONSE.data.components[0].components,
         custom_id: TEST_DATA.MODAL_RESPONSE.data.custom_id,
       });
-      expect(
-        modalResponse.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(modalResponse.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         channel_id: TEST_DATA.MODAL_RESPONSE.channel_id,
         guild_id: TEST_DATA.MODAL_RESPONSE.guild_id,
         id: TEST_DATA.MODAL_RESPONSE.id,

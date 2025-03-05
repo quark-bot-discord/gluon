@@ -1,5 +1,5 @@
-import { ComponentType } from "discord-api-types/v10";
-import { LIMITS, TEXT_INPUT_STYLES } from "../../constants.js";
+import { ComponentType, TextInputStyle } from "discord-api-types/v10";
+import { LIMITS } from "../../constants.js";
 import { JsonTypes } from "../../../typings/enums.js";
 /**
  * Helps to construct a text input interaction.
@@ -166,9 +166,9 @@ class TextInput {
         throw new RangeError(
           `GLUON: Text input placeholder must be less than ${LIMITS.MAX_TEXT_INPUT_PLACEHOLDER} characters.`,
         );
-      if (this.style && !Object.values(TEXT_INPUT_STYLES).includes(this.style))
+      if (this.style && !Object.values(TextInputStyle).includes(this.style))
         throw new TypeError(
-          `GLUON: Text input style must be one of ${Object.values(TEXT_INPUT_STYLES).join(", ")}.`,
+          `GLUON: Text input style must be one of ${Object.values(TextInputStyle).join(", ")}.`,
         );
       if (
         typeof this.required !== "undefined" &&

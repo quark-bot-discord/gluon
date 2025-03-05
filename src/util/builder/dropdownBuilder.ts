@@ -1,4 +1,4 @@
-import { LIMITS, SELECT_MENU_TYPES } from "../../constants.js";
+import { LIMITS } from "../../constants.js";
 import DropdownOption from "./dropdownOption.js";
 import { ChannelType, ComponentType } from "discord-api-types/v10";
 import type {
@@ -231,10 +231,10 @@ class Dropdown implements DropdownBuilderType {
     if (suppressValidation !== true) {
       if (!this.type || typeof this.type != "number")
         throw new TypeError("GLUON: Dropdown type must be a number.");
-      if (this.type && !Object.values(SELECT_MENU_TYPES).includes(this.type))
+      if (this.type && !Object.values(ComponentType).includes(this.type))
         throw new TypeError(
           `GLUON: Select menu type must be one of ${Object.values(
-            SELECT_MENU_TYPES,
+            ComponentType,
           ).join(", ")}.`,
         );
       if (typeof this.custom_id != "string")
@@ -246,7 +246,7 @@ class Dropdown implements DropdownBuilderType {
         throw new RangeError(
           `GLUON: Dropdown custom id must be less than ${LIMITS.MAX_DROPDOWN_CUSTOM_ID} characters.`,
         );
-      if (this.type === SELECT_MENU_TYPES.TEXT && !this.options)
+      if (this.type === ComponentType.StringSelect && !this.options)
         throw new TypeError("GLUON: Dropdown options must be provided.");
       if (this.options && !Array.isArray(this.options))
         throw new TypeError("GLUON: Dropdown options must be an array.");
@@ -263,7 +263,7 @@ class Dropdown implements DropdownBuilderType {
         throw new TypeError(
           "GLUON: Dropdown options must be an array of DropdownOption.",
         );
-      if (this.type === SELECT_MENU_TYPES.CHANNEL && !this.channel_types)
+      if (this.type === ComponentType.ChannelSelect && !this.channel_types)
         throw new TypeError("GLUON: Dropdown channel types must be provided.");
       if (this.channel_types && !Array.isArray(this.channel_types))
         throw new TypeError("GLUON: Dropdown channel types must be an array.");
@@ -293,9 +293,9 @@ class Dropdown implements DropdownBuilderType {
       if (
         this.default_values &&
         [
-          SELECT_MENU_TYPES.USER,
-          SELECT_MENU_TYPES.ROLE,
-          SELECT_MENU_TYPES.MENTIONABLE,
+          ComponentType.UserSelect,
+          ComponentType.RoleSelect,
+          ComponentType.MentionableSelect,
         ].includes(this.type)
       )
         throw new TypeError(

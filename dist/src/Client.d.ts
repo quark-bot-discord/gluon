@@ -10,6 +10,7 @@ import {
   ClientEvents,
 } from "../typings/index.d.js";
 import { TypedEmitter } from "tiny-typed-emitter";
+import { GluonDebugLevels } from "../typings/enums.js";
 declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #private;
   request: any;
@@ -150,7 +151,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    * @public
    */
-  _emitDebug(status: any, message: string): void;
+  _emitDebug(status: GluonDebugLevels, message: string): void;
   /**
    * Counts how many items are in each cache.
    * @returns {Object}

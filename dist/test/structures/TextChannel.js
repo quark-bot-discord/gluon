@@ -8,8 +8,8 @@ import {
   TEST_MEMBERS,
   TEST_ROLES,
 } from "../../src/testData.js";
-import { TO_JSON_TYPES_ENUM } from "../../src/constants.js";
-import { TextChannel, Member, Role } from "../../src/structures.js";
+import { TextChannel } from "../../src/structures.js";
+import { JsonTypes } from "#typings/enums.js";
 describe("TextChannel", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -140,24 +140,7 @@ describe("TextChannel", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      expect(textChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT)).to.deep.equal(
-        {
-          _attributes: 0,
-          _cacheOptions: 1023,
-          id: TEST_DATA.TEXT_CHANNEL.id,
-          messages: [],
-          name: TEST_DATA.TEXT_CHANNEL.name,
-          parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
-          position: TEST_DATA.TEXT_CHANNEL.position,
-          rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
-          topic: TEST_DATA.TEXT_CHANNEL.topic,
-          type: TEST_DATA.TEXT_CHANNEL.type,
-          permission_overwrites: [],
-        },
-      );
-      expect(
-        textChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
-      ).to.deep.equal({
+      expect(textChannel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
         _cacheOptions: 1023,
         id: TEST_DATA.TEXT_CHANNEL.id,
@@ -170,9 +153,20 @@ describe("TextChannel", function () {
         type: TEST_DATA.TEXT_CHANNEL.type,
         permission_overwrites: [],
       });
-      expect(
-        textChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
-      ).to.deep.equal({
+      expect(textChannel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
+        _attributes: 0,
+        _cacheOptions: 1023,
+        id: TEST_DATA.TEXT_CHANNEL.id,
+        messages: [],
+        name: TEST_DATA.TEXT_CHANNEL.name,
+        parent_id: TEST_DATA.TEXT_CHANNEL.parent_id,
+        position: TEST_DATA.TEXT_CHANNEL.position,
+        rate_limit_per_user: TEST_DATA.TEXT_CHANNEL.rate_limit_per_user,
+        topic: TEST_DATA.TEXT_CHANNEL.topic,
+        type: TEST_DATA.TEXT_CHANNEL.type,
+        permission_overwrites: [],
+      });
+      expect(textChannel.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         id: TEST_DATA.TEXT_CHANNEL.id,
         messages: [],
         name: TEST_DATA.TEXT_CHANNEL.name,
@@ -222,7 +216,7 @@ describe("TextChannel", function () {
       const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new TextChannel(
         client,
-        textChannel.toJSON(TO_JSON_TYPES_ENUM.CACHE_FORMAT),
+        textChannel.toJSON(JsonTypes.CACHE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -251,7 +245,7 @@ describe("TextChannel", function () {
       const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new TextChannel(
         client,
-        textChannel.toJSON(TO_JSON_TYPES_ENUM.STORAGE_FORMAT),
+        textChannel.toJSON(JsonTypes.STORAGE_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },
@@ -280,7 +274,7 @@ describe("TextChannel", function () {
       const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const rebundled = new TextChannel(
         client,
-        textChannel.toJSON(TO_JSON_TYPES_ENUM.DISCORD_FORMAT),
+        textChannel.toJSON(JsonTypes.DISCORD_FORMAT),
         {
           guildId: TEST_DATA.GUILD_ID,
         },

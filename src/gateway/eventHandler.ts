@@ -1,6 +1,5 @@
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import AuditLog from "../structures/AuditLog.js";
 import ButtonClick from "../structures/ButtonClick.js";
 import Emoji from "../structures/Emoji.js";
@@ -89,7 +88,7 @@ import type {
   User as UserType,
   Thread as ThreadType,
 } from "typings/index.d.ts";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 
 class EventHandler {
@@ -134,7 +133,7 @@ class EventHandler {
       console.info(gluon());
     }
 
-    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "READY");
+    this.#_client._emitDebug(GluonDebugLevels.Info, "READY");
 
     this.#_client.emit(Events.READY, this.#initialGuilds);
   }
@@ -142,7 +141,7 @@ class EventHandler {
   RESUMED(data: GatewayResumeData) {
     this.#shard.resetRetries();
 
-    this.#_client._emitDebug(GLUON_DEBUG_LEVELS.INFO, "RESUMED");
+    this.#_client._emitDebug(GluonDebugLevels.Info, "RESUMED");
 
     this.#_client.emit(Events.RESUMED);
   }
@@ -150,10 +149,7 @@ class EventHandler {
   GUILD_CREATE(data: GatewayGuildCreateDispatchData) {
     let guild;
 
-    this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
-      `GUILD_CREATE ${data.id}`,
-    );
+    this.#_client._emitDebug(GluonDebugLevels.Info, `GUILD_CREATE ${data.id}`);
 
     if (
       getGuild(this.#_client, data.id)?.unavailable == true &&
@@ -175,10 +171,7 @@ class EventHandler {
   }
 
   GUILD_UPDATE(data: GatewayGuildUpdateDispatchData) {
-    this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
-      `GUILD_UPDATE ${data.id}`,
-    );
+    this.#_client._emitDebug(GluonDebugLevels.Info, `GUILD_UPDATE ${data.id}`);
 
     const oldGuild = getGuild(this.#_client, data.id);
     const newGuild = new Guild(this.#_client, data);
@@ -187,10 +180,7 @@ class EventHandler {
   }
 
   GUILD_DELETE(data: GatewayGuildDeleteDispatchData) {
-    this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
-      `GUILD_DELETE ${data.id}`,
-    );
+    this.#_client._emitDebug(GluonDebugLevels.Info, `GUILD_DELETE ${data.id}`);
 
     if (data.unavailable != true) {
       const guild = getGuild(this.#_client, data.id);
@@ -205,7 +195,7 @@ class EventHandler {
 
   GUILD_ROLE_CREATE(data: GatewayGuildRoleCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_CREATE ${data.guild_id}`,
     );
 
@@ -218,7 +208,7 @@ class EventHandler {
 
   GUILD_ROLE_UPDATE(data: GatewayGuildRoleUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_UPDATE ${data.guild_id}`,
     );
 
@@ -234,7 +224,7 @@ class EventHandler {
 
   GUILD_ROLE_DELETE(data: GatewayGuildRoleDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_ROLE_DELETE ${data.guild_id}`,
     );
 
@@ -248,7 +238,7 @@ class EventHandler {
 
   CHANNEL_CREATE(data: GatewayChannelCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_CREATE ${data.guild_id}`,
     );
 
@@ -259,7 +249,7 @@ class EventHandler {
 
   CHANNEL_UPDATE(data: GatewayChannelUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_UPDATE ${data.guild_id}`,
     );
 
@@ -273,7 +263,7 @@ class EventHandler {
 
   CHANNEL_DELETE(data: GatewayChannelDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_DELETE ${data.guild_id}`,
     );
 
@@ -287,7 +277,7 @@ class EventHandler {
 
   CHANNEL_PINS_UPDATE(data: GatewayChannelPinsUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `CHANNEL_PINS_UPDATE ${data.guild_id}`,
     );
 
@@ -296,7 +286,7 @@ class EventHandler {
 
   THREAD_CREATE(data: GatewayThreadCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_CREATE ${data.guild_id}`,
     );
 
@@ -311,7 +301,7 @@ class EventHandler {
 
   THREAD_UPDATE(data: GatewayThreadUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_UPDATE ${data.guild_id}`,
     );
 
@@ -331,7 +321,7 @@ class EventHandler {
 
   THREAD_DELETE(data: GatewayThreadDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_DELETE ${data.guild_id}`,
     );
 
@@ -349,7 +339,7 @@ class EventHandler {
 
   THREAD_LIST_SYNC(data: GatewayThreadListSyncDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `THREAD_LIST_SYNC ${data.guild_id}`,
     );
 
@@ -365,7 +355,7 @@ class EventHandler {
 
   GUILD_MEMBER_ADD(data: GatewayGuildMemberAddDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_ADD ${data.guild_id}`,
     );
 
@@ -387,7 +377,7 @@ class EventHandler {
 
   GUILD_MEMBER_REMOVE(data: GatewayGuildMemberRemoveDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_REMOVE ${data.guild_id}`,
     );
 
@@ -435,7 +425,7 @@ class EventHandler {
 
   GUILD_MEMBER_UPDATE(data: GatewayGuildMemberUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBER_UPDATE ${data.guild_id}`,
     );
 
@@ -463,7 +453,7 @@ class EventHandler {
 
   GUILD_MEMBERS_CHUNK(data: GatewayGuildMembersChunkDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_MEMBERS_CHUNK ${data.guild_id}`,
     );
 
@@ -476,7 +466,7 @@ class EventHandler {
 
   GUILD_BAN_ADD(data: GatewayGuildBanAddDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_BAN_ADD ${data.guild_id}`,
     );
 
@@ -487,7 +477,7 @@ class EventHandler {
 
   GUILD_BAN_REMOVE(data: GatewayGuildBanRemoveDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_BAN_REMOVE ${data.guild_id}`,
     );
 
@@ -498,7 +488,7 @@ class EventHandler {
 
   INVITE_CREATE(data: GatewayInviteCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INVITE_CREATE ${data.guild_id}`,
     );
 
@@ -513,7 +503,7 @@ class EventHandler {
 
   INVITE_DELETE(data: GatewayInviteDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INVITE_DELETE ${data.guild_id}`,
     );
 
@@ -537,7 +527,7 @@ class EventHandler {
 
   VOICE_STATE_UPDATE(data: GatewayVoiceStateUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `VOICE_STATE_UPDATE ${data.guild_id}`,
     );
 
@@ -563,7 +553,7 @@ class EventHandler {
 
   VOICE_CHANNEL_STATUS_UPDATE(data: any) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
     );
 
@@ -572,7 +562,7 @@ class EventHandler {
 
   MESSAGE_CREATE(data: GatewayMessageCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_CREATE ${data.guild_id}`,
     );
 
@@ -590,7 +580,7 @@ class EventHandler {
 
   MESSAGE_UPDATE(data: GatewayMessageUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_UPDATE ${data.guild_id}`,
     );
 
@@ -632,7 +622,7 @@ class EventHandler {
 
   MESSAGE_DELETE(data: GatewayMessageDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_DELETE ${data.guild_id}`,
     );
 
@@ -660,7 +650,7 @@ class EventHandler {
 
   MESSAGE_DELETE_BULK(data: GatewayMessageDeleteBulkDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_DELETE_BULK ${data.guild_id}`,
     );
 
@@ -693,7 +683,7 @@ class EventHandler {
 
   INTERACTION_CREATE(data: GatewayInteractionCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `INTERACTION_CREATE ${data.guild_id}`,
     );
 
@@ -793,7 +783,7 @@ class EventHandler {
     data: GatewayGuildAuditLogEntryCreateDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_AUDIT_LOG_ENTRY_CREATE ${data.guild_id}`,
     );
 
@@ -806,7 +796,7 @@ class EventHandler {
 
   ENTITLEMENT_CREATE(data: GatewayEntitlementCreateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_CREATE ${data.user_id}`,
     );
 
@@ -815,7 +805,7 @@ class EventHandler {
 
   ENTITLEMENT_UPDATE(data: GatewayEntitlementUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_UPDATE ${data.user_id}`,
     );
 
@@ -824,7 +814,7 @@ class EventHandler {
 
   ENTITLEMENT_DELETE(data: GatewayEntitlementDeleteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ENTITLEMENT_DELETE ${data.user_id}`,
     );
 
@@ -835,7 +825,7 @@ class EventHandler {
     data: GatewayGuildScheduledEventCreateDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_CREATE ${data.guild_id}`,
     );
 
@@ -850,7 +840,7 @@ class EventHandler {
     data: GatewayGuildScheduledEventUpdateDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_UPDATE ${data.guild_id}`,
     );
 
@@ -872,7 +862,7 @@ class EventHandler {
     data: GatewayGuildScheduledEventDeleteDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_DELETE ${data.guild_id}`,
     );
 
@@ -888,7 +878,7 @@ class EventHandler {
     data: GatewayGuildScheduledEventUserAddDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_USER_ADD ${data.guild_id}`,
     );
 
@@ -915,7 +905,7 @@ class EventHandler {
     data: GatewayGuildScheduledEventUserRemoveDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_SCHEDULED_EVENT_USER_REMOVE ${data.guild_id}`,
     );
 
@@ -942,7 +932,7 @@ class EventHandler {
     data: GatewayAutoModerationRuleCreateDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_CREATE ${data.guild_id}`,
     );
 
@@ -954,7 +944,7 @@ class EventHandler {
     data: GatewayAutoModerationRuleUpdateDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_UPDATE ${data.guild_id}`,
     );
 
@@ -966,7 +956,7 @@ class EventHandler {
     data: GatewayAutoModerationRuleDeleteDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_RULE_DELETE ${data.guild_id}`,
     );
 
@@ -978,7 +968,7 @@ class EventHandler {
     data: GatewayAutoModerationActionExecutionDispatchData,
   ) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `AUTO_MODERATION_ACTION_EXECUTION ${data.guild_id}`,
     );
 
@@ -988,7 +978,7 @@ class EventHandler {
 
   GUILD_EMOJIS_UPDATE(data: GatewayGuildEmojisUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `GUILD_EMOJIS_UPDATE ${data.guild_id}`,
     );
 
@@ -1094,7 +1084,7 @@ class EventHandler {
 
   WEBHOOKS_UPDATE(data: GatewayWebhooksUpdateDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `WEBHOOKS_UPDATE ${data.guild_id}`,
     );
 
@@ -1103,7 +1093,7 @@ class EventHandler {
 
   MESSAGE_POLL_VOTE_ADD(data: GatewayMessagePollVoteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_POLL_VOTE_ADD ${data.guild_id}`,
     );
 
@@ -1134,7 +1124,7 @@ class EventHandler {
 
   MESSAGE_POLL_VOTE_REMOVE(data: GatewayMessagePollVoteDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_POLL_VOTE_REMOVE ${data.guild_id}`,
     );
 
@@ -1166,7 +1156,7 @@ class EventHandler {
 
   MESSAGE_REACTION_ADD(data: GatewayMessageReactionAddDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_REACTION_ADD ${data.guild_id}`,
     );
 
@@ -1211,7 +1201,7 @@ class EventHandler {
 
   MESSAGE_REACTION_REMOVE(data: GatewayMessageReactionRemoveDispatchData) {
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `MESSAGE_REACTION_REMOVE ${data.guild_id}`,
     );
 

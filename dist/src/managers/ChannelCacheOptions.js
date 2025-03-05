@@ -43,8 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _ChannelCacheOptions__cache_options;
-import { GLUON_CHANNEL_CACHING_OPTIONS } from "../constants.js";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonChannelCachingOptions, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents the cache options for a channel.
  * All options are enabled by default.
@@ -67,16 +66,16 @@ class ChannelCacheOptions {
       this,
       _ChannelCacheOptions__cache_options,
       cache_options ??
-        GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES |
-          GLUON_CHANNEL_CACHING_OPTIONS.FILES |
-          GLUON_CHANNEL_CACHING_OPTIONS.CONTENT |
-          GLUON_CHANNEL_CACHING_OPTIONS.POLL |
-          GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS |
-          GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS |
-          GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES |
-          GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE |
-          GLUON_CHANNEL_CACHING_OPTIONS.STICKER |
-          GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK,
+        GluonChannelCachingOptions.Messages |
+          GluonChannelCachingOptions.Files |
+          GluonChannelCachingOptions.Content |
+          GluonChannelCachingOptions.Poll |
+          GluonChannelCachingOptions.Reactions |
+          GluonChannelCachingOptions.Embeds |
+          GluonChannelCachingOptions.Attributes |
+          GluonChannelCachingOptions.Reference |
+          GluonChannelCachingOptions.Sticker |
+          GluonChannelCachingOptions.Webhook,
       "f",
     );
   }
@@ -95,7 +94,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+          GluonChannelCachingOptions.Messages,
         "f",
       );
     else if (option === false)
@@ -103,7 +102,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+          ~GluonChannelCachingOptions.Messages,
         "f",
       );
   }
@@ -122,7 +121,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.FILES,
+          GluonChannelCachingOptions.Files,
         "f",
       );
     else if (option === false)
@@ -130,7 +129,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.FILES,
+          ~GluonChannelCachingOptions.Files,
         "f",
       );
   }
@@ -149,7 +148,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.CONTENT,
+          GluonChannelCachingOptions.Content,
         "f",
       );
     else if (option === false)
@@ -157,7 +156,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.CONTENT,
+          ~GluonChannelCachingOptions.Content,
         "f",
       );
   }
@@ -176,7 +175,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.POLL,
+          GluonChannelCachingOptions.Poll,
         "f",
       );
     else if (option === false)
@@ -184,7 +183,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.POLL,
+          ~GluonChannelCachingOptions.Poll,
         "f",
       );
   }
@@ -203,7 +202,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS,
+          GluonChannelCachingOptions.Reactions,
         "f",
       );
     else if (option === false)
@@ -211,7 +210,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS,
+          ~GluonChannelCachingOptions.Reactions,
         "f",
       );
   }
@@ -230,7 +229,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS,
+          GluonChannelCachingOptions.Embeds,
         "f",
       );
     else if (option === false)
@@ -238,7 +237,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS,
+          ~GluonChannelCachingOptions.Embeds,
         "f",
       );
   }
@@ -257,7 +256,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES,
+          GluonChannelCachingOptions.Attributes,
         "f",
       );
     else if (option === false)
@@ -265,7 +264,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES,
+          ~GluonChannelCachingOptions.Attributes,
         "f",
       );
   }
@@ -284,7 +283,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE,
+          GluonChannelCachingOptions.Reference,
         "f",
       );
     else if (option === false)
@@ -292,7 +291,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE,
+          ~GluonChannelCachingOptions.Reference,
         "f",
       );
   }
@@ -311,7 +310,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.STICKER,
+          GluonChannelCachingOptions.Sticker,
         "f",
       );
     else if (option === false)
@@ -319,7 +318,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.STICKER,
+          ~GluonChannelCachingOptions.Sticker,
         "f",
       );
   }
@@ -338,7 +337,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") |
-          GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK,
+          GluonChannelCachingOptions.Webhook,
         "f",
       );
     else if (option === false)
@@ -346,7 +345,7 @@ class ChannelCacheOptions {
         this,
         _ChannelCacheOptions__cache_options,
         __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-          ~GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK,
+          ~GluonChannelCachingOptions.Webhook,
         "f",
       );
   }
@@ -361,7 +360,7 @@ class ChannelCacheOptions {
       this,
       _ChannelCacheOptions__cache_options,
       __classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES,
+        GluonChannelCachingOptions.Messages,
       "f",
     );
   }
@@ -374,8 +373,8 @@ class ChannelCacheOptions {
   get messageCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.MESSAGES
+        GluonChannelCachingOptions.Messages) ===
+      GluonChannelCachingOptions.Messages
     );
   }
   /**
@@ -387,8 +386,8 @@ class ChannelCacheOptions {
   get fileCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.FILES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.FILES
+        GluonChannelCachingOptions.Files) ===
+      GluonChannelCachingOptions.Files
     );
   }
   /**
@@ -400,8 +399,8 @@ class ChannelCacheOptions {
   get contentCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.CONTENT) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.CONTENT
+        GluonChannelCachingOptions.Content) ===
+      GluonChannelCachingOptions.Content
     );
   }
   /**
@@ -413,8 +412,8 @@ class ChannelCacheOptions {
   get pollCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.POLL) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.POLL
+        GluonChannelCachingOptions.Poll) ===
+      GluonChannelCachingOptions.Poll
     );
   }
   /**
@@ -426,8 +425,8 @@ class ChannelCacheOptions {
   get reactionCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REACTIONS
+        GluonChannelCachingOptions.Reactions) ===
+      GluonChannelCachingOptions.Reactions
     );
   }
   /**
@@ -439,8 +438,8 @@ class ChannelCacheOptions {
   get embedCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.EMBEDS
+        GluonChannelCachingOptions.Embeds) ===
+      GluonChannelCachingOptions.Embeds
     );
   }
   /**
@@ -452,8 +451,8 @@ class ChannelCacheOptions {
   get attributeCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.ATTRIBUTES
+        GluonChannelCachingOptions.Attributes) ===
+      GluonChannelCachingOptions.Attributes
     );
   }
   /**
@@ -465,8 +464,8 @@ class ChannelCacheOptions {
   get referenceCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.REFERENCE
+        GluonChannelCachingOptions.Reference) ===
+      GluonChannelCachingOptions.Reference
     );
   }
   /**
@@ -478,8 +477,8 @@ class ChannelCacheOptions {
   get stickerCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.STICKER) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.STICKER
+        GluonChannelCachingOptions.Sticker) ===
+      GluonChannelCachingOptions.Sticker
     );
   }
   /**
@@ -491,8 +490,8 @@ class ChannelCacheOptions {
   get webhookCaching() {
     return (
       (__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") &
-        GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK) ===
-      GLUON_CHANNEL_CACHING_OPTIONS.WEBHOOK
+        GluonChannelCachingOptions.Webhook) ===
+      GluonChannelCachingOptions.Webhook
     );
   }
   /**
@@ -500,12 +499,10 @@ class ChannelCacheOptions {
    * @public
    */
   toString() {
-    return `ChannelCacheOptions { ${Object.entries(
-      GLUON_CHANNEL_CACHING_OPTIONS,
-    )
+    return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & value) === value}`,
+          `${key}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
       )
       .join(", ")} }`;
   }

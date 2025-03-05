@@ -11,7 +11,6 @@ import {
   VERSION,
   NAME,
   GLUON_REPOSITORY_URL,
-  GLUON_DEBUG_LEVELS,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import sleep from "../util/general/sleep.js";
@@ -20,7 +19,7 @@ import type {
   Client as ClientType,
 } from "typings/index.d.ts";
 import redisClient from "#src/util/general/redisClient.js";
-import { Events } from "#typings/enums.js";
+import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 
 class BetterRequestHandler {
@@ -79,7 +78,7 @@ class BetterRequestHandler {
         );
       else {
         this.#_client._emitDebug(
-          GLUON_DEBUG_LEVELS.WARN,
+          GluonDebugLevels.Warn,
           `RATELIMITED ${data.hash} (bucket reset):${
             bucket.reset
           } (latency):${this.#latency}  (time until retry):${
@@ -88,7 +87,7 @@ class BetterRequestHandler {
         );
         if (this.#queues[data.hash].length() > this.#maxQueueSize) {
           this.#_client._emitDebug(
-            GLUON_DEBUG_LEVELS.DANGER,
+            GluonDebugLevels.Danger,
             `KILL QUEUE ${data.hash}`,
           );
           this.#queues[data.hash].kill();
@@ -189,7 +188,7 @@ class BetterRequestHandler {
     const hash = hashjs.sha256().update(toHash).digest("hex");
 
     this.#_client._emitDebug(
-      GLUON_DEBUG_LEVELS.INFO,
+      GluonDebugLevels.Info,
       `ADD ${hash} to request queue`,
     );
 
@@ -365,7 +364,7 @@ class BetterRequestHandler {
       });
 
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
       );
 
@@ -383,7 +382,7 @@ class BetterRequestHandler {
       await sleep(1500);
 
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.WARN,
+        GluonDebugLevels.Warn,
         `READD ${hash} to request queue`,
       );
 

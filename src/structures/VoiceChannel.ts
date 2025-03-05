@@ -1,4 +1,3 @@
-import { GLUON_DEBUG_LEVELS } from "../constants.js";
 import GuildChannel from "./GuildChannel.js";
 import Message from "./Message.js";
 import util from "util";
@@ -14,7 +13,7 @@ import {
   APIGuildStageVoiceChannel,
   APIGuildVoiceChannel,
 } from "discord-api-types/v10";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents a voice channel.
@@ -107,12 +106,12 @@ class VoiceChannel extends GuildChannel implements VoiceChannelType {
     if (nocache === false && shouldCache) {
       this.guild.channels.set(data.id, this);
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `CACHE VOICECHANNEL ${guildId} ${data.id}`,
       );
     } else {
       this.#_client._emitDebug(
-        GLUON_DEBUG_LEVELS.INFO,
+        GluonDebugLevels.Info,
         `NO CACHE VOICECHANNEL ${guildId} ${data.id} (${nocache} ${shouldCache})`,
       );
     }
