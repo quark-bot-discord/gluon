@@ -298,7 +298,7 @@ class Message {
         __classPrivateFieldSet(this, _Message_poll, undefined, "f");
     }
     if (this.channel?._cacheOptions.reactionCaching !== false) {
-      if (existing?.reactions)
+      if (existing?.reactions) {
         /**
          * The message reactions.
          * @type {MessageReactionManager}
@@ -310,7 +310,7 @@ class Message {
           existing.reactions,
           "f",
         );
-      else if ("messageReactions" in data)
+      } else if ("messageReactions" in data) {
         __classPrivateFieldSet(
           this,
           _Message_reactions,
@@ -321,6 +321,17 @@ class Message {
           ),
           "f",
         );
+      } else {
+        __classPrivateFieldSet(
+          this,
+          _Message_reactions,
+          new MessageReactionManager(
+            __classPrivateFieldGet(this, _Message__client, "f"),
+            this.guild,
+          ),
+          "f",
+        );
+      }
     }
     if (this.channel?._cacheOptions.embedCaching !== false) {
       /**

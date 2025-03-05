@@ -245,19 +245,22 @@ class Message implements MessageTypeClass {
     }
 
     if (this.channel?._cacheOptions.reactionCaching !== false) {
-      if (existing?.reactions)
+      if (existing?.reactions) {
         /**
          * The message reactions.
          * @type {MessageReactionManager}
          * @private
          */
         this.#reactions = existing.reactions;
-      else if ("messageReactions" in data)
+      } else if ("messageReactions" in data) {
         this.#reactions = new MessageReactionManager(
           this.#_client,
           this.guild,
           data.messageReactions,
         );
+      } else {
+        this.#reactions = new MessageReactionManager(this.#_client, this.guild);
+      }
     }
 
     if (this.channel?._cacheOptions.embedCaching !== false) {
