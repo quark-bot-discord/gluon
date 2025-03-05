@@ -68,7 +68,7 @@ class Message implements MessageTypeClass {
   #_guild_id: bigint;
   #_channel_id: bigint;
   #_id: bigint;
-  #author!: User;
+  #author: User;
   #attachments: AttachmentType[];
   #content;
   #poll: PollType | undefined;
