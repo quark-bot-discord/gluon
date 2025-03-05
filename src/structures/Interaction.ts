@@ -317,11 +317,11 @@ class Interaction implements InteractionType {
     components,
     quiet,
   }: {
-    content: string;
-    files: FileUpload[];
-    embeds: Embed[];
-    components: MessageComponentsType;
-    quiet: boolean;
+    content?: string;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    components?: MessageComponentsType;
+    quiet?: boolean;
   }) {
     if (!content && !files && !embeds && !components)
       throw new Error(
@@ -474,10 +474,10 @@ class Interaction implements InteractionType {
     embeds,
     components,
   }: {
-    content: string;
-    files: FileUpload[];
-    embeds: Embed[];
-    components: MessageComponentsType;
+    content?: string;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    components?: MessageComponentsType;
   }) {
     return Interaction.edit(this.#_client, this.#token, {
       content,
@@ -511,10 +511,10 @@ class Interaction implements InteractionType {
       embeds,
       components,
     }: {
-      content: string;
-      files: FileUpload[];
-      embeds: Embed[];
-      components: MessageComponentsType;
+      content?: string;
+      files?: FileUpload[];
+      embeds?: Embed[];
+      components?: MessageComponentsType;
     },
   ) {
     if (!client)

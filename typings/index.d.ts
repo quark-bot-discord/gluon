@@ -565,7 +565,7 @@ export class Interaction {
     choices: CommandChoiceBuilderType[];
   }): Promise<void>;
   reply(options: {
-    content: string;
+    content?: string;
     files?: FileUploadType[];
     embeds?: EmbedBuilderType[];
     components?: MessageComponentsType;
@@ -574,10 +574,10 @@ export class Interaction {
   acknowledge(): Promise<InteractionType>;
   delete(): Promise<InteractionType>;
   edit(options: {
-    content: string;
-    files: FileUploadType[];
-    embeds: EmbedBuilderType[];
-    components: MessageComponentsType;
+    content?: string;
+    files?: FileUploadType[];
+    embeds?: EmbedBuilderType[];
+    components?: MessageComponentsType;
   }): Promise<InteractionType>;
   toString(): string;
   toJSON(
@@ -814,7 +814,7 @@ export class Message {
     files?: FileUpload[];
     suppressMentions?: boolean;
   }): Promise<Message>;
-  edit(options?: {
+  edit(options: {
     components?: MessageComponents;
     files?: FileUpload[];
     content?: string;

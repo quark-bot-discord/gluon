@@ -873,11 +873,11 @@ class Message implements MessageTypeClass {
    * @throws {Error | TypeError}
    */
   edit(options: {
-    components?: MessageComponents | undefined;
-    files?: FileUpload[] | undefined;
-    content?: string | undefined;
-    embeds?: Embed[] | undefined;
-    attachments?: Attachment[] | undefined;
+    components?: MessageComponents;
+    files?: FileUpload[];
+    content?: string;
+    embeds?: Embed[];
+    attachments?: Attachment[];
   }) {
     const {
       components = undefined,

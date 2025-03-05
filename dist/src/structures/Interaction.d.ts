@@ -154,11 +154,11 @@ declare class Interaction implements InteractionType {
     components,
     quiet,
   }: {
-    content: string;
-    files: FileUpload[];
-    embeds: Embed[];
-    components: MessageComponentsType;
-    quiet: boolean;
+    content?: string;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    components?: MessageComponentsType;
+    quiet?: boolean;
   }): Promise<this>;
   /**
    * Silently acknowledges an interaction.
@@ -208,10 +208,10 @@ declare class Interaction implements InteractionType {
     embeds,
     components,
   }: {
-    content: string;
-    files: FileUpload[];
-    embeds: Embed[];
-    components: MessageComponentsType;
+    content?: string;
+    files?: FileUpload[];
+    embeds?: Embed[];
+    components?: MessageComponentsType;
   }): Promise<any>;
   /**
    * Edits a response to an interaction. Works up to 15 minutes after the response was sent.
@@ -237,10 +237,10 @@ declare class Interaction implements InteractionType {
       embeds,
       components,
     }: {
-      content: string;
-      files: FileUpload[];
-      embeds: Embed[];
-      components: MessageComponentsType;
+      content?: string;
+      files?: FileUpload[];
+      embeds?: Embed[];
+      components?: MessageComponentsType;
     },
   ): Promise<any>;
   /**
