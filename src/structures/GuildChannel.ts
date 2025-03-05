@@ -47,7 +47,7 @@ class GuildChannel implements GuildChannelType {
   #_id: bigint;
   #_guild_id: bigint;
   #type: ChannelType;
-  #name!: string;
+  #name: string;
   #topic: string | undefined;
   #permission_overwrites: PermissionOverwriteType[] = [];
   #rate_limit_per_user: number | undefined;
@@ -126,7 +126,7 @@ class GuildChannel implements GuildChannelType {
      * @type {String}
      * @private
      */
-    data.name = data.name ?? existing?.name;
+    this.#name = data.name ?? existing?.name;
 
     /**
      * The topic of the channel.

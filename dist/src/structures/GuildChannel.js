@@ -131,7 +131,12 @@ class GuildChannel {
      * @type {String}
      * @private
      */
-    data.name = data.name ?? existing?.name;
+    __classPrivateFieldSet(
+      this,
+      _GuildChannel_name,
+      data.name ?? existing?.name,
+      "f",
+    );
     /**
      * The topic of the channel.
      * @type {String?}
