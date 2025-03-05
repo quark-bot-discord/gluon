@@ -54,7 +54,12 @@ import type {
   MemberStorageJSON,
   MemberCacheJSON,
 } from "#typings/index.d.ts";
-import { APIMessage, MessageType, Snowflake } from "#typings/discord.js";
+import {
+  APIMessage,
+  APIMessageSnapshot,
+  MessageType,
+  Snowflake,
+} from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
@@ -99,7 +104,8 @@ class Message implements MessageTypeClass {
       | APIMessage
       | MessageStorageJSON
       | MessageCacheJSON
-      | MessageDiscordJSON,
+      | MessageDiscordJSON
+      | (APIMessageSnapshot & { id: Snowflake }),
     {
       channelId,
       guildId,
@@ -167,7 +173,7 @@ class Message implements MessageTypeClass {
      * @type {Number?}
      * @private
      */
-    if (data.edited_timestamp)
+    if ("edited_timestamp" in data && data.edited_timestamp)
       this.#edited_timestamp =
         (new Date(data.edited_timestamp).getTime() / 1000) | 0;
     else if (existing?.editedTimestamp)
@@ -175,7 +181,7 @@ class Message implements MessageTypeClass {
 
     // messages only ever need to be cached if logging is enabled
     // but this should always return a "refined" message, so commands can be handled
-    if (data.author)
+    if ("author" in data && data.author)
       /**
        * The message author.
        * @type {User}
@@ -206,7 +212,7 @@ class Message implements MessageTypeClass {
      * @private
      */
     this.#attachments = [];
-    if (data.attachments != undefined)
+    if ("attachments" in data && data.attachments != undefined)
       for (let i = 0; i < data.attachments.length; i++)
         this.#attachments.push(
           new Attachment(this.#_client, data.attachments[i], {
@@ -220,7 +226,10 @@ class Message implements MessageTypeClass {
      * @type {String?}
      * @private
      */
-    if (this.channel?._cacheOptions.contentCaching !== false) {
+    if (
+      "content" in data &&
+      this.channel?._cacheOptions.contentCaching !== false
+    ) {
       this.#content = data.content;
       if (!this.#content && existing && existing.content)
         this.#content = existing.content;
@@ -233,7 +242,7 @@ class Message implements MessageTypeClass {
        * @type {Object?}
        * @private
        */
-      if (data.poll)
+      if ("poll" in data && data.poll)
         this.#poll = new Poll(this.#_client, data.poll, { guildId });
       else if (
         this.#poll == undefined &&
@@ -269,7 +278,8 @@ class Message implements MessageTypeClass {
        * @type {Embed[]}
        * @private
        */
-      if (data.embeds) this.#embeds = data.embeds.map((e) => new Embed(e));
+      if ("embeds" in data && data.embeds)
+        this.#embeds = data.embeds.map((e) => new Embed(e));
       else if (existing && existing.embeds != undefined)
         this.#embeds = existing.embeds;
       else if (this.#embeds == undefined) this.#embeds = [];
@@ -324,7 +334,7 @@ class Message implements MessageTypeClass {
        * @private
        */
       this.#reference = {};
-      if (data.referenced_message)
+      if ("referenced_message" in data && data.referenced_message)
         // @ts-expect-error TS(2339): Property 'message_id' does not exist on type '{}'.
         this.#reference.message_id = BigInt(data.referenced_message.id);
       else if (existing && existing.reference?.messageId)
@@ -346,13 +356,13 @@ class Message implements MessageTypeClass {
      * @type {Number}
      * @private
      */
-    this.#type = data.type;
-    if (
-      typeof this.#type != "number" &&
-      existing &&
-      typeof existing.type == "number"
-    )
+    if ("type" in data) {
+      this.#type = data.type;
+    } else if (existing && typeof existing.type == "number") {
       this.#type = existing.type;
+    } else {
+      this.#type = MessageType.Default; // or any default value
+    }
 
     if (this.channel?._cacheOptions.webhookCaching !== false) {
       /**
@@ -373,7 +383,7 @@ class Message implements MessageTypeClass {
        * @private
        */
       this.#sticker_items = [];
-      if (data.sticker_items != undefined)
+      if ("sticker_items" in data && data.sticker_items != undefined)
         for (let i = 0; i < data.sticker_items.length; i++)
           this.#sticker_items.push(
             new Sticker(this.#_client, data.sticker_items[i]),
@@ -388,9 +398,9 @@ class Message implements MessageTypeClass {
        * @type {Array<Object>?}
        * @private
        */
-      if (data.message_snapshots)
+      if ("message_snapshots" in data && data.message_snapshots) {
         this.#message_snapshots = data.message_snapshots;
-      else if (existing && existing.messageSnapshots != undefined)
+      } else if (existing && existing.messageSnapshots != undefined)
         this.#message_snapshots = existing.messageSnapshots.map((m) =>
           m.toJSON(JsonTypes.DISCORD_FORMAT),
         );
@@ -741,28 +751,26 @@ class Message implements MessageTypeClass {
    * @public
    */
   get messageSnapshots() {
-    return [] as MessageTypeClass[];
-    // return this.#message_snapshots && Array.isArray(this.#message_snapshots)
-    //   ? this.#message_snapshots.map((snapshot) => {
-    //       return new Message(
-    //         this.#_client,
-    //         {
-    //           ...snapshot,
-    //           id: this.id,
-    //           channel_id: this.channelId,
-    //           author: null,
-    //           content: this.content,
-    //           member: null,
-    //         },
-    //         {
-    //           channelId: this.channelId,
-    //           guildId: this.guildId,
-    //           nocache: true,
-    //           ignoreExisting: true,
-    //         },
-    //       );
-    //     })
-    //   : null;
+    return this.#message_snapshots && Array.isArray(this.#message_snapshots)
+      ? this.#message_snapshots.map((snapshot) => {
+          return new Message(
+            this.#_client,
+            {
+              ...snapshot,
+              id: this.id,
+              channel_id: this.channelId,
+              content: this.content,
+              member: null,
+            },
+            {
+              channelId: this.channelId,
+              guildId: this.guildId,
+              nocache: true,
+              ignoreExisting: true,
+            },
+          );
+        })
+      : null;
   }
 
   /**

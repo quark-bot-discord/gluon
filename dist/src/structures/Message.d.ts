@@ -22,7 +22,12 @@ import type {
   Thread as ThreadType,
   TextChannel as TextChannelType,
 } from "#typings/index.d.ts";
-import { APIMessage, MessageType, Snowflake } from "#typings/discord.js";
+import {
+  APIMessage,
+  APIMessageSnapshot,
+  MessageType,
+  Snowflake,
+} from "#typings/discord.js";
 import { JsonTypes } from "#typings/enums.js";
 /**
  * A message belonging to a channel within a guild.
@@ -46,7 +51,10 @@ declare class Message implements MessageTypeClass {
       | APIMessage
       | MessageStorageJSON
       | MessageCacheJSON
-      | MessageDiscordJSON,
+      | MessageDiscordJSON
+      | (APIMessageSnapshot & {
+          id: Snowflake;
+        }),
     {
       channelId,
       guildId,
@@ -243,7 +251,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get messageSnapshots(): MessageTypeClass[];
+  get messageSnapshots(): Message[] | null;
   /**
    * The URL of the message.
    * @type {String}

@@ -248,91 +248,93 @@ describe("Reaction", function () {
   });
 
   context("check bundling", function () {
-    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-    TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    TEST_MEMBERS.GENERIC_MEMBER(client);
-    const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guildId: TEST_DATA.GUILD_ID,
-    });
-    reaction._addReactor(TEST_DATA.MEMBER_ID);
-    const rebundled = new Reaction(client, reaction.toJSON(), {
-      guildId: TEST_DATA.GUILD_ID,
-    });
-    expect(reaction.count).to.equal(rebundled.count);
-    expect(reaction.guildId).to.equal(rebundled.guildId);
-    expect(reaction.guild).to.deep.equal(rebundled.guild);
-    expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
-    expect(reaction.emoji).to.deep.equal(rebundled.emoji);
-    expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
-  });
-  it("should bundle correctly with a custom toJSON", function () {
-    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-    TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    TEST_MEMBERS.GENERIC_MEMBER(client);
-    const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guildId: TEST_DATA.GUILD_ID,
-    });
-    reaction._addReactor(TEST_DATA.MEMBER_ID);
-    const rebundled = new Reaction(
-      client,
-      reaction.toJSON(JsonTypes.CACHE_FORMAT),
-      {
+    it("should bundle correctly", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.GENERIC_MEMBER(client);
+      const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guildId: TEST_DATA.GUILD_ID,
-      },
-    );
-    expect(reaction.count).to.equal(rebundled.count);
-    expect(reaction.reacted).to.deep.equal(rebundled.reacted);
-    expect(reaction.reactedIds).to.deep.equal(rebundled.reactedIds);
-    expect(reaction.guildId).to.equal(rebundled.guildId);
-    expect(reaction.guild).to.deep.equal(rebundled.guild);
-    expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
-    expect(reaction.emoji).to.deep.equal(rebundled.emoji);
-    expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
-  });
-  it("should bundle correctly with a custom toJSON", function () {
-    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-    TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    TEST_MEMBERS.GENERIC_MEMBER(client);
-    const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guildId: TEST_DATA.GUILD_ID,
-    });
-    reaction._addReactor(TEST_DATA.MEMBER_ID);
-    const rebundled = new Reaction(
-      client,
-      reaction.toJSON(JsonTypes.STORAGE_FORMAT),
-      {
+      });
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
+      const rebundled = new Reaction(client, reaction.toJSON(), {
         guildId: TEST_DATA.GUILD_ID,
-      },
-    );
-    expect(reaction.count).to.equal(rebundled.count);
-    expect(reaction.reacted).to.deep.equal(rebundled.reacted);
-    expect(reaction.reactedIds).to.deep.equal(rebundled.reactedIds);
-    expect(reaction.guildId).to.equal(rebundled.guildId);
-    expect(reaction.guild).to.deep.equal(rebundled.guild);
-    expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
-    expect(reaction.emoji).to.deep.equal(rebundled.emoji);
-    expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
-  });
-  it("should bundle correctly with a custom toJSON", function () {
-    const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-    TEST_GUILDS.ALL_CACHES_ENABLED(client);
-    TEST_MEMBERS.GENERIC_MEMBER(client);
-    const reaction = new Reaction(client, TEST_DATA.REACTION, {
-      guildId: TEST_DATA.GUILD_ID,
+      });
+      expect(reaction.count).to.equal(rebundled.count);
+      expect(reaction.guildId).to.equal(rebundled.guildId);
+      expect(reaction.guild).to.deep.equal(rebundled.guild);
+      expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
+      expect(reaction.emoji).to.deep.equal(rebundled.emoji);
+      expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
     });
-    reaction._addReactor(TEST_DATA.MEMBER_ID);
-    const rebundled = new Reaction(
-      client,
-      reaction.toJSON(JsonTypes.DISCORD_FORMAT),
-      {
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.GENERIC_MEMBER(client);
+      const reaction = new Reaction(client, TEST_DATA.REACTION, {
         guildId: TEST_DATA.GUILD_ID,
-      },
-    );
-    expect(reaction.count).to.equal(rebundled.count);
-    expect(reaction.guildId).to.equal(rebundled.guildId);
-    expect(reaction.guild).to.deep.equal(rebundled.guild);
-    expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
-    expect(reaction.emoji).to.deep.equal(rebundled.emoji);
-    expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
+      });
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
+      const rebundled = new Reaction(
+        client,
+        reaction.toJSON(JsonTypes.CACHE_FORMAT),
+        {
+          guildId: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(reaction.count).to.equal(rebundled.count);
+      expect(reaction.reacted).to.deep.equal(rebundled.reacted);
+      expect(reaction.reactedIds).to.deep.equal(rebundled.reactedIds);
+      expect(reaction.guildId).to.equal(rebundled.guildId);
+      expect(reaction.guild).to.deep.equal(rebundled.guild);
+      expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
+      expect(reaction.emoji).to.deep.equal(rebundled.emoji);
+      expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.GENERIC_MEMBER(client);
+      const reaction = new Reaction(client, TEST_DATA.REACTION, {
+        guildId: TEST_DATA.GUILD_ID,
+      });
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
+      const rebundled = new Reaction(
+        client,
+        reaction.toJSON(JsonTypes.STORAGE_FORMAT),
+        {
+          guildId: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(reaction.count).to.equal(rebundled.count);
+      expect(reaction.reacted).to.deep.equal(rebundled.reacted);
+      expect(reaction.reactedIds).to.deep.equal(rebundled.reactedIds);
+      expect(reaction.guildId).to.equal(rebundled.guildId);
+      expect(reaction.guild).to.deep.equal(rebundled.guild);
+      expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
+      expect(reaction.emoji).to.deep.equal(rebundled.emoji);
+      expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
+    });
+    it("should bundle correctly with a custom toJSON", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_MEMBERS.GENERIC_MEMBER(client);
+      const reaction = new Reaction(client, TEST_DATA.REACTION, {
+        guildId: TEST_DATA.GUILD_ID,
+      });
+      reaction._addReactor(TEST_DATA.MEMBER_ID);
+      const rebundled = new Reaction(
+        client,
+        reaction.toJSON(JsonTypes.DISCORD_FORMAT),
+        {
+          guildId: TEST_DATA.GUILD_ID,
+        },
+      );
+      expect(reaction.count).to.equal(rebundled.count);
+      expect(reaction.guildId).to.equal(rebundled.guildId);
+      expect(reaction.guild).to.deep.equal(rebundled.guild);
+      expect(reaction.guild.id).to.deep.equal(rebundled.guild.id);
+      expect(reaction.emoji).to.deep.equal(rebundled.emoji);
+      expect(reaction.emoji.name).to.equal(rebundled.emoji.name);
+    });
   });
 });

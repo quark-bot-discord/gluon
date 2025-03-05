@@ -5,6 +5,7 @@ import chaiAsPromised from "chai-as-promised";
 import { use } from "chai";
 import sinonChai from "sinon-chai";
 import { restore } from "sinon";
+import redisClient from "../dist/src/util/general/redisClient.js";
 
 before(() => {
   server.listen();
@@ -22,4 +23,5 @@ afterEach(() => {
 
 after(() => {
   server.close();
+  redisClient.quit();
 });

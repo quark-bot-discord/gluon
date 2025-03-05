@@ -78,6 +78,7 @@ import MessageComponents from "../util/builder/messageComponents.js";
 import encryptStructure from "../util/gluon/encryptStructure.js";
 import structureHashName from "../util/general/structureHashName.js";
 import decryptStructure from "../util/gluon/decryptStructure.js";
+import { MessageType } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
@@ -168,7 +169,7 @@ class Message {
      * @type {Number?}
      * @private
      */
-    if (data.edited_timestamp)
+    if ("edited_timestamp" in data && data.edited_timestamp)
       __classPrivateFieldSet(
         this,
         _Message_edited_timestamp,
@@ -184,7 +185,7 @@ class Message {
       );
     // messages only ever need to be cached if logging is enabled
     // but this should always return a "refined" message, so commands can be handled
-    if (data.author)
+    if ("author" in data && data.author)
       /**
        * The message author.
        * @type {User}
@@ -237,7 +238,7 @@ class Message {
      * @private
      */
     __classPrivateFieldSet(this, _Message_attachments, [], "f");
-    if (data.attachments != undefined)
+    if ("attachments" in data && data.attachments != undefined)
       for (let i = 0; i < data.attachments.length; i++)
         __classPrivateFieldGet(this, _Message_attachments, "f").push(
           new Attachment(
@@ -260,7 +261,10 @@ class Message {
      * @type {String?}
      * @private
      */
-    if (this.channel?._cacheOptions.contentCaching !== false) {
+    if (
+      "content" in data &&
+      this.channel?._cacheOptions.contentCaching !== false
+    ) {
       __classPrivateFieldSet(this, _Message_content, data.content, "f");
       if (
         !__classPrivateFieldGet(this, _Message_content, "f") &&
@@ -277,7 +281,7 @@ class Message {
        * @type {Object?}
        * @private
        */
-      if (data.poll)
+      if ("poll" in data && data.poll)
         __classPrivateFieldSet(
           this,
           _Message_poll,
@@ -339,7 +343,7 @@ class Message {
        * @type {Embed[]}
        * @private
        */
-      if (data.embeds)
+      if ("embeds" in data && data.embeds)
         __classPrivateFieldSet(
           this,
           _Message_embeds,
@@ -449,7 +453,7 @@ class Message {
        * @private
        */
       __classPrivateFieldSet(this, _Message_reference, {}, "f");
-      if (data.referenced_message)
+      if ("referenced_message" in data && data.referenced_message)
         // @ts-expect-error TS(2339): Property 'message_id' does not exist on type '{}'.
         __classPrivateFieldGet(this, _Message_reference, "f").message_id =
           BigInt(data.referenced_message.id);
@@ -480,13 +484,13 @@ class Message {
      * @type {Number}
      * @private
      */
-    __classPrivateFieldSet(this, _Message_type, data.type, "f");
-    if (
-      typeof __classPrivateFieldGet(this, _Message_type, "f") != "number" &&
-      existing &&
-      typeof existing.type == "number"
-    )
+    if ("type" in data) {
+      __classPrivateFieldSet(this, _Message_type, data.type, "f");
+    } else if (existing && typeof existing.type == "number") {
       __classPrivateFieldSet(this, _Message_type, existing.type, "f");
+    } else {
+      __classPrivateFieldSet(this, _Message_type, MessageType.Default, "f"); // or any default value
+    }
     if (this.channel?._cacheOptions.webhookCaching !== false) {
       /**
        * The id of the webhook this message is from.
@@ -515,7 +519,7 @@ class Message {
        * @private
        */
       __classPrivateFieldSet(this, _Message_sticker_items, [], "f");
-      if (data.sticker_items != undefined)
+      if ("sticker_items" in data && data.sticker_items != undefined)
         for (let i = 0; i < data.sticker_items.length; i++)
           __classPrivateFieldGet(this, _Message_sticker_items, "f").push(
             new Sticker(
@@ -537,14 +541,14 @@ class Message {
        * @type {Array<Object>?}
        * @private
        */
-      if (data.message_snapshots)
+      if ("message_snapshots" in data && data.message_snapshots) {
         __classPrivateFieldSet(
           this,
           _Message_message_snapshots,
           data.message_snapshots,
           "f",
         );
-      else if (existing && existing.messageSnapshots != undefined)
+      } else if (existing && existing.messageSnapshots != undefined)
         __classPrivateFieldSet(
           this,
           _Message_message_snapshots,
@@ -899,28 +903,31 @@ class Message {
    * @public
    */
   get messageSnapshots() {
-    return [];
-    // return this.#message_snapshots && Array.isArray(this.#message_snapshots)
-    //   ? this.#message_snapshots.map((snapshot) => {
-    //       return new Message(
-    //         this.#_client,
-    //         {
-    //           ...snapshot,
-    //           id: this.id,
-    //           channel_id: this.channelId,
-    //           author: null,
-    //           content: this.content,
-    //           member: null,
-    //         },
-    //         {
-    //           channelId: this.channelId,
-    //           guildId: this.guildId,
-    //           nocache: true,
-    //           ignoreExisting: true,
-    //         },
-    //       );
-    //     })
-    //   : null;
+    return __classPrivateFieldGet(this, _Message_message_snapshots, "f") &&
+      Array.isArray(
+        __classPrivateFieldGet(this, _Message_message_snapshots, "f"),
+      )
+      ? __classPrivateFieldGet(this, _Message_message_snapshots, "f").map(
+          (snapshot) => {
+            return new Message(
+              __classPrivateFieldGet(this, _Message__client, "f"),
+              {
+                ...snapshot,
+                id: this.id,
+                channel_id: this.channelId,
+                content: this.content,
+                member: null,
+              },
+              {
+                channelId: this.channelId,
+                guildId: this.guildId,
+                nocache: true,
+                ignoreExisting: true,
+              },
+            );
+          },
+        )
+      : null;
   }
   /**
    * The URL of the message.
