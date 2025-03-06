@@ -45,6 +45,7 @@ var __classPrivateFieldGet =
 var _GuildScheduledEventManager__client, _GuildScheduledEventManager_guild;
 import ScheduledEvent from "../structures/ScheduledEvent.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 class GuildScheduledEventManager extends BaseCacheManager {
   constructor(client, guild) {
     super(client, { structureType: GuildScheduledEventManager });
@@ -169,6 +170,13 @@ class GuildScheduledEventManager extends BaseCacheManager {
   }
   get(id) {
     return super.get(id);
+  }
+  static getScheduledEvent(client, guildId, eventId) {
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.scheduledEvents.get(eventId);
   }
 }
 (_GuildScheduledEventManager__client = new WeakMap()),

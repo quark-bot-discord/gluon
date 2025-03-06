@@ -47,5 +47,10 @@ declare class GuildScheduledEventManager
    */
   set(id: Snowflake, event: ScheduledEventType): void;
   get(id: Snowflake): ScheduledEventType | null;
+  static getScheduledEvent(
+    client: ClientType,
+    guildId: Snowflake,
+    eventId: Snowflake,
+  ): ScheduledEventType | null;
 }
 export default GuildScheduledEventManager;

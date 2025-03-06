@@ -8,6 +8,7 @@ import {
   Client as ClientType,
 } from "#typings/index.d.js";
 import { APIGuildScheduledEvent, Snowflake } from "#typings/discord.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 class GuildScheduledEventManager
   extends BaseCacheManager<ScheduledEventType>
@@ -121,6 +122,20 @@ class GuildScheduledEventManager
 
   get(id: Snowflake) {
     return super.get(id) as ScheduledEventType | null;
+  }
+
+  static getScheduledEvent(
+    client: ClientType,
+    guildId: Snowflake,
+    eventId: Snowflake,
+  ) {
+    const guild = getGuild(client, guildId);
+
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+
+    return guild.scheduledEvents.get(eventId);
   }
 }
 
