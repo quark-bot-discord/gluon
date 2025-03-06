@@ -1128,11 +1128,11 @@ class EventHandler {
       if (!deletedId) {
         throw new Error("GLUON: Deleted emoji not found.");
       }
-      const deletedEmoji = oldEmojis.get(deletedId);
-      getGuild(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        data.guild_id,
-      )?.emojis.delete(deletedId);
+      const deletedEmoji =
+        getGuild(
+          __classPrivateFieldGet(this, _EventHandler__client, "f"),
+          data.guild_id,
+        )?.emojis.flagForDeletion(deletedId) || null;
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
         Events.GUILD_EMOJI_DELETE,
         deletedEmoji,

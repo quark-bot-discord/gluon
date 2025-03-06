@@ -1016,7 +1016,7 @@ class EventHandler {
       // EMOJI DELETED
       let deletedId;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const oldIds = oldEmojis.map(([id, _]) => id);
+      const oldIds = oldEmojis.map(([id, _]) => id) as Snowflake[];
 
       for (let i = 0; i < oldIds.length; i++) {
         let matchingFound = false;
@@ -1037,11 +1037,10 @@ class EventHandler {
         throw new Error("GLUON: Deleted emoji not found.");
       }
 
-      const deletedEmoji = oldEmojis.get(deletedId as Snowflake);
-
-      getGuild(this.#_client, data.guild_id)?.emojis.delete(
-        deletedId as Snowflake,
-      );
+      const deletedEmoji =
+        getGuild(this.#_client, data.guild_id)?.emojis.flagForDeletion(
+          deletedId,
+        ) || null;
 
       this.#_client.emit(Events.GUILD_EMOJI_DELETE, deletedEmoji);
     } else {
