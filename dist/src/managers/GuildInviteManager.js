@@ -47,6 +47,7 @@ import { PERMISSIONS } from "../constants.js";
 import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 /**
  * Manages all invites within a guild.
  */
@@ -145,6 +146,13 @@ class GuildInviteManager extends BaseCacheManager {
   }
   fetchWithRules(key) {
     return super.fetchWithRules(key);
+  }
+  static getInvite(client, guildId, code) {
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.invites.get(code);
   }
 }
 (_GuildInviteManager__client = new WeakMap()),

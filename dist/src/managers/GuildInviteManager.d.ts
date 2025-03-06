@@ -7,6 +7,7 @@ import {
   StructureIdentifiers,
   Client as ClientType,
 } from "../../typings/index.d.js";
+import { Snowflake } from "#typings/discord.js";
 /**
  * Manages all invites within a guild.
  */
@@ -45,5 +46,10 @@ declare class GuildInviteManager
   get(code: string): InviteType | null;
   fetchFromRules(key: string): Promise<InviteType | null>;
   fetchWithRules(key: string): Promise<InviteType | null>;
+  static getInvite(
+    client: ClientType,
+    guildId: Snowflake,
+    code: string,
+  ): InviteType | null;
 }
 export default GuildInviteManager;

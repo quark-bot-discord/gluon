@@ -9,7 +9,8 @@ import {
   StructureIdentifiers,
   Client as ClientType,
 } from "../../typings/index.d.js";
-import { APIExtendedInvite } from "#typings/discord.js";
+import { APIExtendedInvite, Snowflake } from "#typings/discord.js";
+import getGuild from "#src/util/gluon/getGuild.js";
 
 /**
  * Manages all invites within a guild.
@@ -103,6 +104,14 @@ class GuildInviteManager
 
   fetchWithRules(key: string): Promise<InviteType | null> {
     return super.fetchWithRules(key) as Promise<InviteType | null>;
+  }
+
+  static getInvite(client: ClientType, guildId: Snowflake, code: string) {
+    const guild = getGuild(client, guildId);
+    if (!guild) {
+      throw new Error("GLUON: Guild not found in cache.");
+    }
+    return guild.invites.get(code);
   }
 }
 
