@@ -127,7 +127,7 @@ describe("GuildCacheOptions", function () {
       cacheOptions.setInviteCaching(true);
       cacheOptions.setScheduledEventCaching(true);
       expect(cacheOptions.toString()).to.equal(
-        "GuildCacheOptions { MESSAGES: true, FILES: true, VOICE_STATES: true, ROLES: true, EMOJIS: false, INVITES: true, CHANNELS: true, MEMBERS: true, THREADS: true, SCHEDULED_EVENTS: true }",
+        "GuildCacheOptions { MESSAGES: true, FILES: true, VOICESTATES: true, ROLES: true, EMOJIS: false, INVITES: true, CHANNELS: true, MEMBERS: true, THREADS: true, SCHEDULEDEVENTS: true }",
       );
     });
   });

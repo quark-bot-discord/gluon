@@ -395,9 +395,10 @@ class GluonCacheOptions {
   }
   toString() {
     return `GluonCacheOptions { ${Object.entries(GluonGlobalCache)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
+          `${value.toString().toUpperCase()}: ${(__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") & Number(key)) === Number(key)}`,
       )
       .join(
         ", ",

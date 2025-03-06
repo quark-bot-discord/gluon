@@ -24,11 +24,12 @@ import type {
 } from "#typings/index.d.ts";
 import {
   APIMessage,
-  APIMessageSnapshot,
+  APIMessageSnapshotFields,
   MessageType,
   Snowflake,
 } from "#typings/discord.js";
 import { JsonTypes } from "#typings/enums.js";
+import MessageSnapshot from "./MessageSnapshot.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -52,7 +53,7 @@ declare class Message implements MessageTypeClass {
       | MessageStorageJSON
       | MessageCacheJSON
       | MessageDiscordJSON
-      | (APIMessageSnapshot & {
+      | (APIMessageSnapshotFields & {
           id: Snowflake;
         }),
     {
@@ -251,7 +252,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get messageSnapshots(): Message[] | null;
+  get messageSnapshots(): MessageSnapshot[] | null;
   /**
    * The URL of the message.
    * @type {String}

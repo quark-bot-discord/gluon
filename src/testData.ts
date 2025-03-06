@@ -11,6 +11,7 @@ import {
   APIRole,
   APIThreadChannel,
   APIUser,
+  AuditLogOptionsType,
   ChannelType,
   EntitlementType,
   GatewayGuildCreateDispatchData,
@@ -631,7 +632,23 @@ const MESSAGE: APIMessage = {
     channel_id: "123456789112345678",
     guild_id: "619434557472505857",
   },
-  message_snapshots: [],
+  message_snapshots: [
+    {
+      message: {
+        type: 0,
+        content: "test message",
+        timestamp: "2021-01-01T00:00:00.000Z",
+        edited_timestamp: null,
+        mentions: [],
+        mention_roles: [],
+        attachments: [],
+        embeds: [],
+        flags: MessageFlags.Crossposted,
+        components: [],
+        sticker_items: [],
+      },
+    },
+  ],
   referenced_message: {
     id: "123456339013345678",
     type: 0,
@@ -944,7 +961,7 @@ export const TEST_DATA = {
     options: {
       channel_id: "123456789012345678",
       id: "123456789012345678",
-      type: 1,
+      type: AuditLogOptionsType.Member,
     },
     reason: "test",
     context: {

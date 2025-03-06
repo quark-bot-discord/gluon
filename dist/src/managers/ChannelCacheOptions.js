@@ -500,9 +500,10 @@ class ChannelCacheOptions {
    */
   toString() {
     return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]) =>
-          `${value}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & Number(key)) === Number(key)}`,
+          `${value.toString().toUpperCase()}: ${(__classPrivateFieldGet(this, _ChannelCacheOptions__cache_options, "f") & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

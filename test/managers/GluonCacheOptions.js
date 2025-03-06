@@ -233,7 +233,7 @@ describe("GluonCacheOptions", function () {
       });
       const cacheOptionsString = cacheOptions.toString();
       expect(cacheOptionsString).to.equal(
-        "GluonCacheOptions { GUILDS: true, USERS: true, CHANNELS: true, MESSAGES: true, ROLES: true, EMOJIS: true, INVITES: true, VOICE_STATES: true, MEMBERS: true, SCHEDULED_EVENTS: true, USER_TTL: 30, MESSAGE_TTL: 30 }",
+        "GluonCacheOptions { GUILDS: true, USERS: true, CHANNELS: true, MESSAGES: true, ROLES: true, EMOJIS: true, INVITES: true, VOICESTATES: true, MEMBERS: true, SCHEDULEDEVENTS: true, USER_TTL: 30, MESSAGE_TTL: 30 }",
       );
     });
   });

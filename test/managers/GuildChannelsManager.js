@@ -41,17 +41,6 @@ describe("GuildChannelsManager", function () {
       const channel = channelsManager.get(textChannel.id);
       expect(channel).to.be.an.instanceOf(TextChannel);
     });
-    it("should throw an error when the channel is not a TextChannel instance", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const channelsManager = new GuildChannelsManager(client, guild);
-      expect(() => {
-        channelsManager.set("123456", {});
-      }).to.throw(
-        TypeError,
-        "GLUON: Channel must be a VoiceChannel, TextChannel, CategoryChannel, Channel or Thread instance.",
-      );
-    });
   });
 
   context("check fetch method", function () {

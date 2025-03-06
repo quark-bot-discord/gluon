@@ -83,6 +83,7 @@ import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";
+import MessageSnapshot from "./MessageSnapshot.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -545,7 +546,13 @@ class Message {
         __classPrivateFieldSet(
           this,
           _Message_message_snapshots,
-          data.message_snapshots,
+          data.message_snapshots.map((m) => {
+            if ("message" in m && m.message) {
+              return m.message;
+            } else {
+              return m;
+            }
+          }),
           "f",
         );
       } else if (existing && existing.messageSnapshots != undefined)
@@ -909,20 +916,13 @@ class Message {
       )
       ? __classPrivateFieldGet(this, _Message_message_snapshots, "f").map(
           (snapshot) => {
-            return new Message(
+            return new MessageSnapshot(
               __classPrivateFieldGet(this, _Message__client, "f"),
               {
                 ...snapshot,
-                id: this.id,
-                channel_id: this.channelId,
-                content: this.content,
-                member: null,
               },
               {
                 channelId: this.channelId,
-                guildId: this.guildId,
-                nocache: true,
-                ignoreExisting: true,
               },
             );
           },

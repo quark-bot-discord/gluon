@@ -663,7 +663,7 @@ describe("ChannelMessageManager", function () {
       expect(request).to.be.calledOnceWith(
         "postBulkDeleteMessages",
         [channel.id],
-        { messages: [TEST_DATA.MESSAGE_ID] },
+        { messages: [TEST_DATA.MESSAGE_ID], "X-Audit-Log-Reason": "testing" },
       );
     });
     it("should throw an error when the client is not a Client instance", async function () {

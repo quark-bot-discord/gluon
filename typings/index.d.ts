@@ -77,6 +77,7 @@ import {
   StickerFormatType,
   Snowflake,
   TextInputStyle,
+  APIMessageSnapshotFields,
 } from "#typings/discord.js";
 import { HttpMethods, HttpResponse } from "msw";
 import {
@@ -785,8 +786,8 @@ export class Message {
   readonly channel: TextChannel | VoiceChannel | Thread | null;
   readonly author: User;
   readonly member: Member | null;
-  readonly timestamp: UnixMillisecondsTimestamp;
-  readonly editedTimestamp: UnixMillisecondsTimestamp | null;
+  readonly timestamp: UnixTimestamp;
+  readonly editedTimestamp: UnixTimestamp | null;
   readonly mentionEveryone: boolean;
   readonly mentions: boolean;
   readonly mentionRoles: boolean;
@@ -804,7 +805,7 @@ export class Message {
   readonly type: MessageType;
   readonly webhookId: Snowflake | null;
   readonly stickerItems: Array<Sticker>;
-  readonly messageSnapshots: Array<Message> | null;
+  readonly messageSnapshots: Array<MessageSnapshot> | null;
   readonly url: string;
   readonly hashName: string;
   reply(options: {
@@ -839,7 +840,7 @@ export interface MessageStorageJSON {
   embeds: EmbedStorageJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollStorageJSON | null;
-  message_snapshots: Array<MessageStorageJSON> | null;
+  message_snapshots: Array<MessageSnapshotStorageJSON> | null;
   type: MessageType;
   referenced_message?: {
     id: Snowflake | null;
@@ -858,7 +859,7 @@ export interface MessageCacheJSON {
   embeds: EmbedCacheJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollCacheJSON | null;
-  message_snapshots: Array<MessageCacheJSON> | null;
+  message_snapshots: Array<MessageSnapshotCacheJSON> | null;
   type: MessageType;
   referenced_message?: {
     id: Snowflake | null;
@@ -878,7 +879,7 @@ export interface MessageDiscordJSON {
   embeds: EmbedDiscordJSON[];
   edited_timestamp: UnixMillisecondsTimestamp | null;
   poll: PollDiscordJSON | null;
-  message_snapshots: Array<MessageDiscordJSON> | null;
+  message_snapshots: Array<MessageSnapshotDiscordJSON> | null;
   type: MessageType;
   referenced_message?: {
     id: Snowflake | null;
@@ -888,6 +889,57 @@ export interface MessageDiscordJSON {
   mention_everyone: boolean;
   mention_roles: Array<string>;
   mentions: Array<string>;
+}
+
+export class MessageSnapshot {
+  constructor(
+    client: Client,
+    data:
+      | APIMessageSnapshotFields
+      | MessageSnapshotCacheJSON
+      | MessageSnapshotStorageJSON
+      | MessageSnapshotDiscordJSON,
+    { channelId }: { channelId: Snowflake },
+  );
+  public readonly content: string | null;
+  public readonly embeds: Embed[];
+  public readonly attachments: Attachment[];
+  public readonly timestamp: UnixTimestamp;
+  public readonly editedTimestamp: UnixTimestamp | null;
+  public readonly flags?: MessageFlags;
+  toJSON(
+    format?: JsonTypes,
+  ):
+    | MessageSnapshotCacheJSON
+    | MessageSnapshotStorageJSON
+    | MessageSnapshotDiscordJSON;
+}
+
+export interface MessageSnapshotCacheJSON {
+  content: string | null;
+  embeds: EmbedCacheJSON[];
+  attachments: AttachmentCacheJSON[];
+  timestamp: UnixMillisecondsTimestamp;
+  edited_timestamp: UnixMillisecondsTimestamp | null;
+  flags?: number;
+}
+
+export interface MessageSnapshotStorageJSON {
+  content: string | null;
+  embeds: EmbedCacheJSON[];
+  attachments: AttachmentStorageJSON[];
+  timestamp: UnixMillisecondsTimestamp;
+  edited_timestamp: UnixMillisecondsTimestamp | null;
+  flags?: number;
+}
+
+export interface MessageSnapshotDiscordJSON {
+  content: string | null;
+  embeds: EmbedCacheJSON[];
+  attachments: AttachmentDiscordJSON[];
+  timestamp: ISO8601Timestamp;
+  edited_timestamp: ISO8601Timestamp | null;
+  flags?: number;
 }
 
 export class ModalResponse extends Interaction {

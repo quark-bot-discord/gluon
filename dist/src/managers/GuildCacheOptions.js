@@ -475,9 +475,10 @@ class GuildCacheOptions {
    */
   toString() {
     return `GuildCacheOptions { ${Object.entries(GluonGuildCachingOptions)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]) =>
-          `${key}: ${(__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") & Number(value)) === Number(value)}`,
+          `${value.toString().toUpperCase()}: ${(__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

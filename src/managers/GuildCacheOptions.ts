@@ -327,9 +327,10 @@ class GuildCacheOptions implements GuildCacheOptionsType {
    */
   toString() {
     return `GuildCacheOptions { ${Object.entries(GluonGuildCachingOptions)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]: [string, string | GluonGuildCachingOptions]) =>
-          `${key}: ${(this.#_cache_options & Number(value)) === Number(value)}`,
+          `${value.toString().toUpperCase()}: ${(this.#_cache_options & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

@@ -246,7 +246,7 @@ describe("AuditLog", function () {
           delete_member_days: TEST_DATA.AUDIT_LOG.delete_member_days,
           members_removed: TEST_DATA.AUDIT_LOG.members_removed,
           id: TEST_DATA.AUDIT_LOG.options.id,
-          type: TEST_DATA.AUDIT_LOG.options.type,
+          type: AuditLogOptionsType.Member,
           status: TEST_DATA.AUDIT_LOG.status,
         },
         changes: TEST_DATA.AUDIT_LOG.changes,

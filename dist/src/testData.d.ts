@@ -9,6 +9,7 @@ import {
   APIRole,
   APIThreadChannel,
   APIUser,
+  AuditLogOptionsType,
   ChannelType,
   GatewayGuildCreateDispatchData,
 } from "#typings/discord.js";
@@ -160,7 +161,7 @@ export declare const TEST_DATA: {
     options: {
       channel_id: string;
       id: string;
-      type: number;
+      type: AuditLogOptionsType;
     };
     reason: string;
     context: {

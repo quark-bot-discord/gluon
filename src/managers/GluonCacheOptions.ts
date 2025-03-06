@@ -253,9 +253,10 @@ class GluonCacheOptions implements GluonCacheOptionsType {
 
   toString() {
     return `GluonCacheOptions { ${Object.entries(GluonGlobalCache)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]: [string, string | GluonGlobalCache]) =>
-          `${key}: ${(this.#_cache_options & Number(value)) === Number(value)}`,
+          `${value.toString().toUpperCase()}: ${(this.#_cache_options & Number(key)) === Number(key)}`,
       )
       .join(
         ", ",

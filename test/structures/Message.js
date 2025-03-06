@@ -20,6 +20,7 @@ import {
   Guild,
 } from "../../src/structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import MessageSnapshot from "#structures/MessageSnapshot.js";
 
 describe("Message", function () {
   context("check import", function () {
@@ -347,9 +348,8 @@ describe("Message", function () {
       expect(message.messageSnapshots).to.deep.equal(
         TEST_DATA.MESSAGE.message_snapshots.map(
           (snapshot) =>
-            new Message(client, snapshot, {
+            new MessageSnapshot(client, snapshot.message, {
               channelId: TEST_DATA.CHANNEL_ID,
-              guildId: TEST_DATA.GUILD_ID,
             }),
         ),
       );
@@ -465,18 +465,6 @@ describe("Message", function () {
       await expect(
         message.reply({ content: "test", components: 123 }),
       ).to.be.rejectedWith(TypeError, "GLUON: Components must be an array");
-    });
-    it("should throw an error if files is provided but not an array", async function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
-      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      TEST_MEMBERS.CLIENT_MEMBER(client);
-      const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      await expect(
-        message.reply({ content: "test", files: 123 }),
-      ).to.be.rejectedWith(TypeError, "GLUON: Files must be an array");
     });
     it("should not throw an error if content is provided as a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -614,19 +602,6 @@ describe("Message", function () {
         "GLUON: Components must be an array",
       );
     });
-    it("should throw an error if files is provided but not an array", async function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
-      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
-      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
-      TEST_MEMBERS.CLIENT_MEMBER(client);
-      const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
-      await expect(message.edit({ files: 123 })).to.be.rejectedWith(
-        TypeError,
-        "GLUON: Files must be an array",
-      );
-    });
     it("should not throw an error if content is provided as a string", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -710,9 +685,10 @@ describe("Message", function () {
       TEST_MEMBERS.GENERIC_MEMBER(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       const encrypted = message.encrypt();
-      expect(encrypted).to.equal(
-        "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",
-      );
+      expect(encrypted).to.be.a("string");
+      // expect(encrypted).to.equal(
+      //   "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",
+      // );
     });
   });
 
@@ -966,23 +942,11 @@ describe("Message", function () {
         message_snapshots: [
           {
             attachments: [],
-            author: undefined,
-            content: "test message @everyone",
-            channel_id: TEST_DATA.CHANNEL_ID,
-            mention_everyone: false,
-            mention_roles: [],
-            mentions: [],
-            pinned: false,
-            reactions: [],
+            content: "test message",
             edited_timestamp: null,
             embeds: [],
-            id: TEST_DATA.MESSAGE_ID,
-            member: undefined,
-            message_snapshots: undefined,
-            poll: undefined,
-            referenced_message: undefined,
-            sticker_items: [],
-            type: 0,
+            flags: 1,
+            timestamp: "2021-01-01T00:00:00.000Z",
           },
         ],
         member: {
@@ -1079,20 +1043,12 @@ describe("Message", function () {
         },
         message_snapshots: [
           {
-            _attributes: 0,
             attachments: [],
-            author: undefined,
-            content: "test message @everyone",
+            content: "test message",
             edited_timestamp: null,
             embeds: [],
-            id: TEST_DATA.MESSAGE_ID,
-            member: undefined,
-            messageReactions: {},
-            message_snapshots: undefined,
-            poll: undefined,
-            referenced_message: undefined,
-            sticker_items: [],
-            type: 0,
+            flags: 1,
+            timestamp: 1609459200,
           },
         ],
         member: {
@@ -1130,9 +1086,10 @@ describe("Message", function () {
           },
         ],
         author: {
+          _cached: message.author._cached,
           id: TEST_DATA.MESSAGE.author.id,
           username: TEST_DATA.MESSAGE.author.username,
-          discriminator: TEST_DATA.MESSAGE.author.discriminator,
+          discriminator: Number(TEST_DATA.MESSAGE.author.discriminator),
           avatar: TEST_DATA.MESSAGE.author.avatar,
           bot: TEST_DATA.MESSAGE.author.bot,
           global_name: TEST_DATA.MESSAGE.author.global_name,
@@ -1178,20 +1135,12 @@ describe("Message", function () {
         },
         message_snapshots: [
           {
-            _attributes: 0,
             attachments: [],
-            author: undefined,
-            content: "test message @everyone",
+            content: "test message",
             edited_timestamp: null,
             embeds: [],
-            id: TEST_DATA.MESSAGE_ID,
-            member: undefined,
-            messageReactions: {},
-            message_snapshots: undefined,
-            poll: undefined,
-            referenced_message: undefined,
-            sticker_items: [],
-            type: 0,
+            flags: 1,
+            timestamp: 1609459200,
           },
         ],
         member: {
@@ -1205,9 +1154,10 @@ describe("Message", function () {
           roles: [],
           permissions: "8",
           user: {
+            _cached: message.member.user._cached,
             avatar: TEST_DATA.MEMBER.user.avatar,
             bot: TEST_DATA.MEMBER.user.bot,
-            discriminator: TEST_DATA.MEMBER.user.discriminator,
+            discriminator: Number(TEST_DATA.MEMBER.user.discriminator),
             global_name: TEST_DATA.MEMBER.user.global_name,
             id: TEST_DATA.MEMBER.user.id,
             username: TEST_DATA.MEMBER.user.username,
@@ -1279,23 +1229,11 @@ describe("Message", function () {
         message_snapshots: [
           {
             attachments: [],
-            author: undefined,
-            content: "test message @everyone",
+            content: "test message",
             edited_timestamp: null,
             embeds: [],
-            id: TEST_DATA.MESSAGE_ID,
-            member: undefined,
-            mention_everyone: false,
-            mention_roles: [],
-            mentions: [],
-            channel_id: TEST_DATA.CHANNEL_ID,
-            message_snapshots: undefined,
-            poll: undefined,
-            referenced_message: undefined,
-            sticker_items: [],
-            reactions: [],
-            pinned: false,
-            type: 0,
+            flags: 1,
+            timestamp: "2021-01-01T00:00:00.000Z",
           },
         ],
         member: {

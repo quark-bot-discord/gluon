@@ -351,9 +351,10 @@ class ChannelCacheOptions implements ChannelCacheOptionsType {
    */
   toString() {
     return `ChannelCacheOptions { ${Object.entries(GluonChannelCachingOptions)
+      .filter(([key]) => !isNaN(Number(key)))
       .map(
         ([key, value]: [string, string | GluonChannelCachingOptions]) =>
-          `${value}: ${(this.#_cache_options & Number(key)) === Number(key)}`,
+          `${value.toString().toUpperCase()}: ${(this.#_cache_options & Number(key)) === Number(key)}`,
       )
       .join(", ")} }`;
   }

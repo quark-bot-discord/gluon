@@ -43,6 +43,23 @@ describe("TextChannel", function () {
     });
   });
 
+  context("check send", function () {
+    it("should throw an error if no parameters are passed", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_ROLES.GENERIC_ADMIN_ROLE(client);
+      TEST_DATA.CLIENT_MEMBER.roles = [TEST_DATA.ROLE_ADMIN.id];
+      TEST_MEMBERS.CLIENT_MEMBER(client);
+      const channel = new TextChannel(client, TEST_DATA.TEXT_CHANNEL, {
+        guildId: TEST_DATA.TEXT_CHANNEL.guild_id,
+      });
+      await expect(channel.send({})).to.be.rejectedWith(
+        Error,
+        "GLUON: Must provide content, embeds, components or files",
+      );
+    });
+  });
+
   context("check bulkDelete", function () {
     it("should be a function", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

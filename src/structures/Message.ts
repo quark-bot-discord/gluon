@@ -53,10 +53,13 @@ import type {
   MemberDiscordJSON,
   MemberStorageJSON,
   MemberCacheJSON,
+  MessageSnapshotCacheJSON,
+  MessageSnapshotDiscordJSON,
+  MessageSnapshotStorageJSON,
 } from "#typings/index.d.ts";
 import {
   APIMessage,
-  APIMessageSnapshot,
+  APIMessageSnapshotFields,
   MessageType,
   Snowflake,
 } from "#typings/discord.js";
@@ -64,6 +67,7 @@ import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";
+import MessageSnapshot from "./MessageSnapshot.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -84,7 +88,12 @@ class Message implements MessageTypeClass {
   #type: MessageType;
   #webhook_id: bigint | undefined;
   #sticker_items: StickerType[] | undefined;
-  #message_snapshots;
+  #message_snapshots:
+    | APIMessageSnapshotFields[]
+    | MessageSnapshotDiscordJSON[]
+    | MessageSnapshotStorageJSON[]
+    | MessageSnapshotCacheJSON[]
+    | undefined;
   #edited_timestamp: UnixTimestamp | undefined;
   #flags: number;
   /**
@@ -105,7 +114,7 @@ class Message implements MessageTypeClass {
       | MessageStorageJSON
       | MessageCacheJSON
       | MessageDiscordJSON
-      | (APIMessageSnapshot & { id: Snowflake }),
+      | (APIMessageSnapshotFields & { id: Snowflake }),
     {
       channelId,
       guildId,
@@ -399,11 +408,24 @@ class Message implements MessageTypeClass {
        * @private
        */
       if ("message_snapshots" in data && data.message_snapshots) {
-        this.#message_snapshots = data.message_snapshots;
+        this.#message_snapshots = data.message_snapshots.map((m) => {
+          if ("message" in m && m.message) {
+            return m.message as APIMessageSnapshotFields;
+          } else {
+            return m as
+              | MessageSnapshotCacheJSON
+              | MessageSnapshotDiscordJSON
+              | MessageSnapshotStorageJSON;
+          }
+        }) as
+          | MessageSnapshotCacheJSON[]
+          | MessageSnapshotDiscordJSON[]
+          | MessageSnapshotStorageJSON[]
+          | APIMessageSnapshotFields[];
       } else if (existing && existing.messageSnapshots != undefined)
         this.#message_snapshots = existing.messageSnapshots.map((m) =>
           m.toJSON(JsonTypes.DISCORD_FORMAT),
-        );
+        ) as MessageSnapshotDiscordJSON[];
     }
 
     const shouldCache = this.channel
@@ -753,20 +775,13 @@ class Message implements MessageTypeClass {
   get messageSnapshots() {
     return this.#message_snapshots && Array.isArray(this.#message_snapshots)
       ? this.#message_snapshots.map((snapshot) => {
-          return new Message(
+          return new MessageSnapshot(
             this.#_client,
             {
               ...snapshot,
-              id: this.id,
-              channel_id: this.channelId,
-              content: this.content,
-              member: null,
             },
             {
               channelId: this.channelId,
-              guildId: this.guildId,
-              nocache: true,
-              ignoreExisting: true,
             },
           );
         })
@@ -1445,7 +1460,7 @@ class Message implements MessageTypeClass {
             | null,
           message_snapshots: this.messageSnapshots?.map((m) =>
             m.toJSON(format),
-          ) as MessageStorageJSON[] | MessageCacheJSON[],
+          ) as MessageSnapshotStorageJSON[] | MessageSnapshotCacheJSON[],
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
@@ -1479,7 +1494,7 @@ class Message implements MessageTypeClass {
           poll: this.poll?.toJSON(format) as PollDiscordJSON | null,
           message_snapshots: this.messageSnapshots?.map((m) =>
             m.toJSON(format),
-          ) as MessageDiscordJSON[],
+          ) as MessageSnapshotDiscordJSON[],
           type: this.type,
           referenced_message: this.reference?.messageId
             ? {
