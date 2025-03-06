@@ -106,6 +106,7 @@ declare class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @method
    */
   delete(key: string): boolean;
+  flagForDeletion(key: string): NonNullable<T> | null;
   /**
    * Clears the cache.
    * @returns {void}

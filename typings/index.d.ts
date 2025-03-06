@@ -1587,6 +1587,7 @@ export class BaseCacheManager<T> {
     callbackfn: (value: T, key: string, map: Map<string, T>) => void,
   ): void;
   has(key: string): boolean;
+  flagForDeletion(key: string): T | null;
   map(
     callbackfn: (
       value: [string, T],
@@ -1659,6 +1660,7 @@ export class ChannelMessageManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): Message | null;
   map(
     callbackfn: (
       value: [Snowflake, Message],
@@ -1743,6 +1745,7 @@ export class GuildChannelsManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  flagForDeletion(key: Snowflake): AllChannels | null;
   map(
     callbackfn: (
       value: [Snowflake, AllChannels],
@@ -1788,6 +1791,7 @@ export class GuildEmojisManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  flagForDeletion(key: Snowflake): Emoji | null;
   map(
     callbackfn: (
       value: [Snowflake, Emoji],
@@ -1814,6 +1818,7 @@ export class GuildInviteManager extends BaseCacheManager {
     callbackfn: (value: Invite, key: string, map: Map<string, Invite>) => void,
   ): void;
   has(key: string): boolean;
+  flagForDeletion(key: Snowflake): Invite | null;
   map(
     callbackfn: (
       value: [string, Invite],
@@ -1836,6 +1841,7 @@ export class GuildManager extends BaseCacheManager {
   delete(key: Snowflake): boolean;
   clear(): void;
   _intervalCallback(): { i: StructureIdentifiers };
+  flagForDeletion(key: Snowflake): Guild | null;
   size: number;
   forEach(
     callbackfn: (
@@ -1875,6 +1881,7 @@ export class GuildMemberManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): Member | null;
   map(
     callbackfn: (
       value: [Snowflake, Member],
@@ -1908,6 +1915,7 @@ export class GuildRoleManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: string): boolean;
+  flagForDeletion(key: Snowflake): Role | null;
   map(
     callbackfn: (
       value: [Snowflake, Role],
@@ -1939,6 +1947,7 @@ export class GuildScheduledEventManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): ScheduledEvent | null;
   map(
     callbackfn: (
       value: [Snowflake, ScheduledEvent],
@@ -1974,6 +1983,7 @@ export class GuildVoiceStatesManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): VoiceState | null;
   map(
     callbackfn: (
       value: [Snowflake, VoiceState],
@@ -2053,6 +2063,7 @@ export class UserManager extends BaseCacheManager {
     ) => void,
   ): void;
   has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): User | null;
   map(
     callbackfn: (
       value: [Snowflake, User],

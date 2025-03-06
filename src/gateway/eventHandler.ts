@@ -183,9 +183,7 @@ class EventHandler {
     this.#_client._emitDebug(GluonDebugLevels.Info, `GUILD_DELETE ${data.id}`);
 
     if (data.unavailable != true) {
-      const guild = getGuild(this.#_client, data.id);
-
-      this.#_client.guilds.delete(data.id);
+      const guild = this.#_client.guilds.flagForDeletion(data.id);
 
       if (!guild) return;
 
@@ -228,10 +226,9 @@ class EventHandler {
       `GUILD_ROLE_DELETE ${data.guild_id}`,
     );
 
-    const role = this.#_client.guilds
-      .get(data.guild_id)
-      ?.roles.get(data.role_id);
-    getGuild(this.#_client, data.guild_id)?.roles.delete(data.role_id);
+    const role = getGuild(this.#_client, data.guild_id)?.roles.flagForDeletion(
+      data.role_id,
+    );
 
     this.#_client.emit(Events.GUILD_ROLE_DELETE, role ?? null);
   }
@@ -267,10 +264,10 @@ class EventHandler {
       `CHANNEL_DELETE ${data.guild_id}`,
     );
 
-    const channel = this.#_client.guilds
-      .get(data.guild_id)
-      ?.channels.get(data.id);
-    getGuild(this.#_client, data.guild_id)?.channels.delete(data.id);
+    const channel = getGuild(
+      this.#_client,
+      data.guild_id,
+    )?.channels.flagForDeletion(data.id);
 
     this.#_client.emit(Events.CHANNEL_DELETE, channel ?? null);
   }
@@ -329,10 +326,10 @@ class EventHandler {
       throw new Error("GLUON: Gluon does not support DMs.");
     }
 
-    const thread = this.#_client.guilds
-      .get(data.guild_id)
-      ?.channels.get(data.id) as ThreadType | null;
-    getGuild(this.#_client, data.guild_id)?.channels.delete(data.id);
+    const thread = getGuild(
+      this.#_client,
+      data.guild_id,
+    )?.channels.flagForDeletion(data.id) as ThreadType | null;
 
     this.#_client.emit(Events.THREAD_DELETE, thread);
   }
@@ -513,9 +510,7 @@ class EventHandler {
 
     const guild = getGuild(this.#_client, data.guild_id);
 
-    const invite = guild?.invites?.get(data.code) || null;
-
-    guild?.invites?.delete(data.code);
+    const invite = guild?.invites?.flagForDeletion(data.code);
 
     const partialInvite = new Invite(this.#_client, data, {
       guildId: data.guild_id,
@@ -867,9 +862,9 @@ class EventHandler {
     );
 
     const scheduledEvent =
-      getGuild(this.#_client, data.guild_id)?.scheduledEvents.get(data.id) ||
-      null;
-    getGuild(this.#_client, data.guild_id)?.scheduledEvents.delete(data.id);
+      getGuild(this.#_client, data.guild_id)?.scheduledEvents.flagForDeletion(
+        data.id,
+      ) || null;
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_DELETE, scheduledEvent);
   }

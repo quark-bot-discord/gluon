@@ -209,13 +209,11 @@ class EventHandler {
       `GUILD_DELETE ${data.id}`,
     );
     if (data.unavailable != true) {
-      const guild = getGuild(
-        __classPrivateFieldGet(this, _EventHandler__client, "f"),
-        data.id,
-      );
-      __classPrivateFieldGet(this, _EventHandler__client, "f").guilds.delete(
-        data.id,
-      );
+      const guild = __classPrivateFieldGet(
+        this,
+        _EventHandler__client,
+        "f",
+      ).guilds.flagForDeletion(data.id);
       if (!guild) return;
       __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
         Events.GUILD_DELETE,
@@ -266,13 +264,10 @@ class EventHandler {
       GluonDebugLevels.Info,
       `GUILD_ROLE_DELETE ${data.guild_id}`,
     );
-    const role = __classPrivateFieldGet(this, _EventHandler__client, "f")
-      .guilds.get(data.guild_id)
-      ?.roles.get(data.role_id);
-    getGuild(
+    const role = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
-    )?.roles.delete(data.role_id);
+    )?.roles.flagForDeletion(data.role_id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
       Events.GUILD_ROLE_DELETE,
       role ?? null,
@@ -318,13 +313,10 @@ class EventHandler {
       GluonDebugLevels.Info,
       `CHANNEL_DELETE ${data.guild_id}`,
     );
-    const channel = __classPrivateFieldGet(this, _EventHandler__client, "f")
-      .guilds.get(data.guild_id)
-      ?.channels.get(data.id);
-    getGuild(
+    const channel = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
-    )?.channels.delete(data.id);
+    )?.channels.flagForDeletion(data.id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
       Events.CHANNEL_DELETE,
       channel ?? null,
@@ -390,13 +382,10 @@ class EventHandler {
     if (!data.guild_id) {
       throw new Error("GLUON: Gluon does not support DMs.");
     }
-    const thread = __classPrivateFieldGet(this, _EventHandler__client, "f")
-      .guilds.get(data.guild_id)
-      ?.channels.get(data.id);
-    getGuild(
+    const thread = getGuild(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
-    )?.channels.delete(data.id);
+    )?.channels.flagForDeletion(data.id);
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
       Events.THREAD_DELETE,
       thread,
@@ -601,8 +590,7 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data.guild_id,
     );
-    const invite = guild?.invites?.get(data.code) || null;
-    guild?.invites?.delete(data.code);
+    const invite = guild?.invites?.flagForDeletion(data.code);
     const partialInvite = new Invite(
       __classPrivateFieldGet(this, _EventHandler__client, "f"),
       data,
@@ -970,11 +958,7 @@ class EventHandler {
       getGuild(
         __classPrivateFieldGet(this, _EventHandler__client, "f"),
         data.guild_id,
-      )?.scheduledEvents.get(data.id) || null;
-    getGuild(
-      __classPrivateFieldGet(this, _EventHandler__client, "f"),
-      data.guild_id,
-    )?.scheduledEvents.delete(data.id);
+      )?.scheduledEvents.flagForDeletion(data.id) || null;
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
       Events.GUILD_SCHEDULED_EVENT_DELETE,
       scheduledEvent,

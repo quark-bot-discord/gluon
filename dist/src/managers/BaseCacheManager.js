@@ -272,6 +272,12 @@ class BaseCacheManager {
       key,
     );
   }
+  flagForDeletion(key) {
+    const value = this.get(key);
+    if (!value) return null;
+    this.set(key, value, 60);
+    return value;
+  }
   /**
    * Clears the cache.
    * @returns {void}
