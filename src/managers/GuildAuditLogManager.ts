@@ -121,18 +121,17 @@ class GuildAuditLogManager
     after?: Snowflake;
   } = {}) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const logs = this.map(([_, log]) => log).sort((a, b) =>
-      Number(BigInt(b.id) - BigInt(a.id)),
-    );
-    if (type) logs.filter((log) => log.actionType === type);
-    if (user_id)
-      logs.filter(
-        (log) => log.targetId === user_id || log.executorId === user_id,
-      );
-    if (before) logs.filter((log) => BigInt(log.id) < BigInt(before));
-    if (after) logs.filter((log) => BigInt(log.id) > BigInt(after));
-    if (limit && limit > 0) logs.slice(0, limit - 1);
-    return logs;
+    return this.map(([_, log]) => log)
+      .sort((a, b) => Number(BigInt(b.id) - BigInt(a.id)))
+      .filter((log) => {
+        if (typeof type === "number" && log.actionType !== type) return false;
+        if (user_id && log.targetId !== user_id && log.executorId !== user_id)
+          return false;
+        if (before && BigInt(log.id) >= BigInt(before)) return false;
+        if (after && BigInt(log.id) <= BigInt(after)) return false;
+        return true;
+      })
+      .slice(0, limit);
   }
 
   set(key: Snowflake, value: AuditLogType, expiry: number = 5 * 60) {
