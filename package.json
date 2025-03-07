@@ -38,11 +38,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "npm run build && mocha \"dist/test/**/*.js\" --file test/setup.js",
-    "coverage": "c8 --reporter=text mocha \"test/**/*.js\" --file test/setup.js",
+    "test": "npm run build && mocha \"dist/**/*.spec.js\" --file setup.spec.js",
+    "coverage": "c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js",
     "example": "node ./example/bot.js",
     "prepare": "husky",
-    "build": "tsc"
+    "build": "rm -rf dist/ && tsc"
   },
   "repository": {
     "type": "git",
@@ -79,6 +79,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.5",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@typescript-eslint/parser": "^8.26.0",

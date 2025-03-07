@@ -18,16 +18,10 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "typings/*": ["typings/*"],
-      "src/*": ["src/*"]
+      "#typings/*": ["typings/*"],
+      "#src/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "test/**/*",
-    "index.js",
-    "package.json",
-    "typings/**/*"
-  ],
-  "exclude": ["node_modules", "dist", "test/setup.js"]
+  "include": ["src/**/*", "index.js", "package.json", "typings/**/*"],
+  "exclude": ["node_modules", "dist/", "setup.spec.js"]
 }
