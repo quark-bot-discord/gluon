@@ -32,6 +32,7 @@ import type {
   FileUpload,
   MessageComponents as MessageComponentsType,
   Client as ClientType,
+  GuildAuditLogManager as GuildAuditLogManagerType,
 } from "#typings/index.d.ts";
 import { JsonTypes } from "#typings/enums.js";
 /**
@@ -277,6 +278,7 @@ declare class Guild implements GuildType {
    * @public
    */
   get scheduledEvents(): GuildScheduledEventManagerType;
+  get auditLogs(): GuildAuditLogManagerType;
   /**
    * The emojis in the guild.
    * @type {GuildEmojisManager}

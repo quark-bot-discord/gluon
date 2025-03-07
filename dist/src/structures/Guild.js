@@ -65,6 +65,7 @@ var _Guild_instances,
   _Guild_emojis,
   _Guild_invites,
   _Guild_scheduled_events,
+  _Guild_audit_logs,
   _Guild__formattedIconHash_get;
 import { CDN_BASE_URL, NAME, PERMISSIONS } from "../constants.js";
 import GuildChannelsManager from "../managers/GuildChannelsManager.js";
@@ -98,6 +99,7 @@ import {
   Locale,
 } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
+import GuildAuditLogManager from "#src/managers/GuildAuditLogManager.js";
 /**
  * Represents a Discord guild.
  * @see {@link https://discord.com/developers/docs/resources/guild}
@@ -135,6 +137,7 @@ class Guild {
     _Guild_emojis.set(this, void 0);
     _Guild_invites.set(this, void 0);
     _Guild_scheduled_events.set(this, void 0);
+    _Guild_audit_logs.set(this, void 0);
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof data !== "object")
@@ -363,6 +366,17 @@ class Guild {
       existing
         ? existing.invites
         : new GuildInviteManager(
+            __classPrivateFieldGet(this, _Guild__client, "f"),
+            this,
+          ),
+      "f",
+    );
+    __classPrivateFieldSet(
+      this,
+      _Guild_audit_logs,
+      existing
+        ? existing.auditLogs
+        : new GuildAuditLogManager(
             __classPrivateFieldGet(this, _Guild__client, "f"),
             this,
           ),
@@ -835,6 +849,25 @@ class Guild {
             nocache,
           },
         );
+    if (
+      "audit_logs" in data &&
+      AuditLog.shouldCache(
+        __classPrivateFieldGet(this, _Guild__client, "f")._cacheOptions,
+        this._cacheOptions,
+      ) == true
+    ) {
+      for (let i = 0; i < data.audit_logs.length; i++) {
+        const auditLog = data.audit_logs[i];
+        new AuditLog(
+          __classPrivateFieldGet(this, _Guild__client, "f"),
+          auditLog,
+          {
+            guildId: data.id,
+            nocache,
+          },
+        );
+      }
+    }
     if (
       "voice_states" in data &&
       VoiceState.shouldCache(
@@ -1314,6 +1347,9 @@ class Guild {
    */
   get scheduledEvents() {
     return __classPrivateFieldGet(this, _Guild_scheduled_events, "f");
+  }
+  get auditLogs() {
+    return __classPrivateFieldGet(this, _Guild_audit_logs, "f");
   }
   /**
    * The emojis in the guild.
@@ -1912,6 +1948,7 @@ class Guild {
   (_Guild_emojis = new WeakMap()),
   (_Guild_invites = new WeakMap()),
   (_Guild_scheduled_events = new WeakMap()),
+  (_Guild_audit_logs = new WeakMap()),
   (_Guild_instances = new WeakSet()),
   (_Guild__formattedIconHash_get = function _Guild__formattedIconHash_get() {
     if (!__classPrivateFieldGet(this, _Guild__icon, "f")) return null;
@@ -1958,6 +1995,7 @@ class Guild {
           roles: this.roles.toJSON(format),
           emojis: this.emojis.toJSON(format),
           invites: this.invites.toJSON(format),
+          audit_logs: this.auditLogs?.toJSON(format),
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -1990,6 +2028,7 @@ class Guild {
           roles: this.roles.toJSON(format),
           emojis: this.emojis.toJSON(format),
           invites: this.invites.toJSON(format),
+          audit_logs: this.auditLogs?.toJSON(format),
         };
       }
     }

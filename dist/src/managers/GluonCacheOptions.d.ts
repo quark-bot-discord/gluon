@@ -48,6 +48,8 @@ declare class GluonCacheOptions implements GluonCacheOptionsType {
   get cacheInvites(): boolean;
   setCacheScheduledEvents(value: boolean): this;
   get cacheScheduledEvents(): boolean;
+  setCacheAuditLogs(value: boolean): this;
+  get cacheAuditLogs(): boolean;
   setUserTTL(seconds: number): this;
   get userTTL(): number;
   setMessageTTL(seconds: number): this;

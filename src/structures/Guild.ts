@@ -69,8 +69,13 @@ import type {
   MemberStorageJSON,
   MemberCacheJSON,
   Client as ClientType,
+  GuildAuditLogManager as GuildAuditLogManagerType,
+  AuditLogCacheJSON,
+  AuditLogStorageJSON,
+  AuditLogDiscordJSON,
 } from "#typings/index.d.ts";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
+import GuildAuditLogManager from "#src/managers/GuildAuditLogManager.js";
 
 /**
  * Represents a Discord guild.
@@ -99,6 +104,7 @@ class Guild implements GuildType {
   #emojis!: GuildEmojisManagerType;
   #invites!: GuildInviteManagerType;
   #scheduled_events!: GuildScheduledEventManagerType;
+  #audit_logs!: GuildAuditLogManagerType;
   /**
    * Creates the structure for a guild.
    * @param {Client} client The client instance.
@@ -284,6 +290,10 @@ class Guild implements GuildType {
     this.#invites = existing
       ? existing.invites
       : new GuildInviteManager(this.#_client, this);
+
+    this.#audit_logs = existing
+      ? existing.auditLogs
+      : new GuildAuditLogManager(this.#_client, this);
 
     /**
      * The system channel id of the guild.
@@ -586,6 +596,20 @@ class Guild implements GuildType {
           guildId: data.id,
           nocache,
         });
+
+    if (
+      "audit_logs" in data &&
+      AuditLog.shouldCache(this.#_client._cacheOptions, this._cacheOptions) ==
+        true
+    ) {
+      for (let i = 0; i < data.audit_logs.length; i++) {
+        const auditLog = data.audit_logs[i];
+        new AuditLog(this.#_client, auditLog, {
+          guildId: data.id,
+          nocache,
+        });
+      }
+    }
 
     if (
       "voice_states" in data &&
@@ -1012,6 +1036,10 @@ class Guild implements GuildType {
    */
   get scheduledEvents() {
     return this.#scheduled_events;
+  }
+
+  get auditLogs() {
+    return this.#audit_logs;
   }
 
   /**
@@ -1724,6 +1752,9 @@ class Guild implements GuildType {
           invites: this.invites.toJSON(format) as
             | InviteCacheJSON[]
             | InviteStorageJSON[],
+          audit_logs: this.auditLogs?.toJSON(format) as
+            | AuditLogCacheJSON[]
+            | AuditLogStorageJSON[],
         };
       }
       case JsonTypes.DISCORD_FORMAT:
@@ -1758,6 +1789,7 @@ class Guild implements GuildType {
           roles: this.roles.toJSON(format) as RoleDiscordJSON[],
           emojis: this.emojis.toJSON(format) as EmojiDiscordJSON[],
           invites: this.invites.toJSON(format) as InviteDiscordJSON[],
+          audit_logs: this.auditLogs?.toJSON(format) as AuditLogDiscordJSON[],
         };
       }
     }

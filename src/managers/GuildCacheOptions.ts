@@ -191,6 +191,17 @@ class GuildCacheOptions implements GuildCacheOptionsType {
     return this;
   }
 
+  setAuditLogCaching(option: boolean) {
+    if (typeof option !== "boolean")
+      throw new TypeError("GLUON: Audit log caching must be a boolean");
+
+    if (option === true)
+      this.#_cache_options |= GluonGuildCachingOptions.AuditLogs;
+    else if (option === false)
+      this.#_cache_options &= ~GluonGuildCachingOptions.AuditLogs;
+    return this;
+  }
+
   /**
    * Returns whether to cache files or not.
    * @type {Boolean}
@@ -318,6 +329,13 @@ class GuildCacheOptions implements GuildCacheOptionsType {
     return (
       (this.#_cache_options & GluonGuildCachingOptions.ScheduledEvents) ===
       GluonGuildCachingOptions.ScheduledEvents
+    );
+  }
+
+  get auditLogCaching() {
+    return (
+      (this.#_cache_options & GluonGuildCachingOptions.AuditLogs) ===
+      GluonGuildCachingOptions.AuditLogs
     );
   }
 

@@ -61,7 +61,7 @@ var _AuditLog__client,
   _AuditLog_changes;
 import User from "./User.js";
 import util from "util";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 /**
  * Represents an audit log entry.
  * @see {@link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object}
@@ -75,7 +75,7 @@ class AuditLog {
    * @param {Array<Object>?} [options.users] Resolved users who are involved with the audit log entries.
    * @param {String} options.guildId The ID of the guild that this audit log belongs to.
    */
-  constructor(client, data, { users, guildId }) {
+  constructor(client, data, { users, guildId, nocache = false }) {
     _AuditLog__client.set(this, void 0);
     _AuditLog__id.set(this, void 0);
     _AuditLog__guild_id.set(this, void 0);
@@ -122,6 +122,9 @@ class AuditLog {
      * @private
      */
     __classPrivateFieldSet(this, _AuditLog__guild_id, BigInt(guildId), "f");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
     /**
      * The type of action that occurred.
      * @type {Number}
@@ -309,6 +312,22 @@ class AuditLog {
        * @private
        */
       __classPrivateFieldSet(this, _AuditLog_changes, data.changes, "f");
+    const shouldCache = AuditLog.shouldCache(
+      __classPrivateFieldGet(this, _AuditLog__client, "f")._cacheOptions,
+      this.guild._cacheOptions,
+    );
+    if (nocache === false && shouldCache) {
+      this.guild.auditLogs.set(data.id, this);
+      __classPrivateFieldGet(this, _AuditLog__client, "f")._emitDebug(
+        GluonDebugLevels.Info,
+        `CACHE AUDITLOG ${guildId} ${data.id}`,
+      );
+    } else {
+      __classPrivateFieldGet(this, _AuditLog__client, "f")._emitDebug(
+        GluonDebugLevels.Info,
+        `NO CACHE AUDITLOG ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
   /**
    * The id of the audit log entry.
@@ -482,6 +501,20 @@ class AuditLog {
    */
   get changes() {
     return __classPrivateFieldGet(this, _AuditLog_changes, "f");
+  }
+  /**
+   * Determines whether the emoji should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(gluonCacheOptions, guildCacheOptions) {
+    if (gluonCacheOptions.cacheAuditLogs === false) return false;
+    if (guildCacheOptions.auditLogCaching === false) return false;
+    return true;
   }
   /**
    * @method

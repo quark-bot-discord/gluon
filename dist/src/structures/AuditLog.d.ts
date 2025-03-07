@@ -7,6 +7,8 @@ import type {
   AuditLog as AuditLogType,
   Client as ClientType,
   AllChannels,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
 } from "../../typings/index.d.ts";
 import {
   APIAuditLogEntry,
@@ -39,9 +41,11 @@ declare class AuditLog implements AuditLogType {
     {
       users,
       guildId,
+      nocache,
     }: {
       users?: APIUser[];
       guildId: Snowflake;
+      nocache?: boolean;
     },
   );
   /**
@@ -170,6 +174,19 @@ declare class AuditLog implements AuditLogType {
    * @public
    */
   get changes(): import("#typings/discord.js").APIAuditLogChange[] | undefined;
+  /**
+   * Determines whether the emoji should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ): boolean;
   /**
    * @method
    * @public

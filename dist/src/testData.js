@@ -1337,6 +1337,7 @@ export const TEST_GUILDS = {
     guild._cacheOptions.setVoiceStateCaching(true);
     guild._cacheOptions.setScheduledEventCaching(true);
     guild._cacheOptions.setInviteCaching(true);
+    guild._cacheOptions.setAuditLogCaching(true);
     return guild;
   },
   NO_CACHES_ENABLED: (client) => {
@@ -1351,6 +1352,7 @@ export const TEST_GUILDS = {
     guild._cacheOptions.setVoiceStateCaching(false);
     guild._cacheOptions.setScheduledEventCaching(false);
     guild._cacheOptions.setInviteCaching(false);
+    guild._cacheOptions.setAuditLogCaching(false);
     return guild;
   },
 };

@@ -84,6 +84,7 @@ export declare enum GluonGlobalCache {
   VoiceStates = 8,
   Members = 9,
   ScheduledEvents = 10,
+  AuditLogs = 11,
 }
 export declare enum GluonGuildCachingOptions {
   Messages = 1,
@@ -96,6 +97,7 @@ export declare enum GluonGuildCachingOptions {
   Members = 128,
   Threads = 256,
   ScheduledEvents = 512,
+  AuditLogs = 1024,
 }
 export declare enum GluonChannelCachingOptions {
   Messages = 1,

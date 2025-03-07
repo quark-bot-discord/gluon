@@ -83,6 +83,7 @@ declare class GuildCacheOptions implements GuildCacheOptionsType {
    * @public
    */
   setScheduledEventCaching(option: boolean): this;
+  setAuditLogCaching(option: boolean): this;
   /**
    * Returns whether to cache files or not.
    * @type {Boolean}
@@ -153,6 +154,7 @@ declare class GuildCacheOptions implements GuildCacheOptionsType {
    * @public
    */
   get scheduledEventCaching(): boolean;
+  get auditLogCaching(): boolean;
   /**
    * @method
    * @public

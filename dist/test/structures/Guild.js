@@ -384,6 +384,7 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON()).to.deep.equal({
+        audit_logs: [],
         channels: [],
         emojis: [],
         icon: null,
@@ -419,7 +420,7 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 75800900,
-        _cache_options: 1023,
+        _cache_options: 2047,
         channels: [],
         emojis: [],
         icon: null,
@@ -438,10 +439,11 @@ describe("Guild", function () {
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
         unavailable: false,
         voice_states: [],
+        audit_logs: [],
       });
       expect(guild.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 75800900,
-        _cache_options: 1023,
+        _cache_options: 2047,
         channels: [],
         emojis: [],
         icon: null,
@@ -460,6 +462,7 @@ describe("Guild", function () {
         system_channel_id: TEST_DATA.GUILD.system_channel_id,
         unavailable: false,
         voice_states: [],
+        audit_logs: [],
       });
       expect(guild.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal({
         channels: [],
@@ -488,6 +491,7 @@ describe("Guild", function () {
         verification_level: 0,
         unavailable: false,
         voice_states: [],
+        audit_logs: [],
         default_message_notifications: 0,
         explicit_content_filter: 0,
       });

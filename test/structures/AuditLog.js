@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { TEST_CLIENTS, TEST_DATA } from "../../src/testData.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../src/testData.js";
 import { AuditLog } from "../../src/structures.js";
 import { JsonTypes } from "#typings/enums.js";
 import { AuditLogOptionsType } from "discord-api-types/v10";
@@ -14,6 +14,7 @@ describe("AuditLog", function () {
   context("check structure", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -40,6 +41,7 @@ describe("AuditLog", function () {
   context("check id", function () {
     it("should have the correct id", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -50,6 +52,7 @@ describe("AuditLog", function () {
   context("check actionType", function () {
     it("should have the correct actionType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -60,6 +63,7 @@ describe("AuditLog", function () {
   context("check reason", function () {
     it("should have the correct reason", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -70,6 +74,7 @@ describe("AuditLog", function () {
   context("check targetId", function () {
     it("should have the correct targetId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -80,6 +85,7 @@ describe("AuditLog", function () {
   context("check channelId", function () {
     it("should have the correct channelId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -92,6 +98,7 @@ describe("AuditLog", function () {
   context("check executorId", function () {
     it("should have the correct executorId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -102,6 +109,7 @@ describe("AuditLog", function () {
   context("check count", function () {
     it("should have the correct count", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -112,6 +120,7 @@ describe("AuditLog", function () {
   context("check deleteMemberDays", function () {
     it("should have the correct deleteMemberDays", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -124,6 +133,7 @@ describe("AuditLog", function () {
   context("check membersRemoved", function () {
     it("should have the correct membersRemoved", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -136,6 +146,7 @@ describe("AuditLog", function () {
   context("check specialId", function () {
     it("should have the correct specialId", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -146,6 +157,7 @@ describe("AuditLog", function () {
   context("check specialType", function () {
     it("should have the correct specialType", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -156,6 +168,7 @@ describe("AuditLog", function () {
   context("check status", function () {
     it("should have the correct status", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -166,6 +179,7 @@ describe("AuditLog", function () {
   context("check changes", function () {
     it("should have the correct changes", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -176,6 +190,7 @@ describe("AuditLog", function () {
   context("check toString", function () {
     it("should return the correct string", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -188,6 +203,7 @@ describe("AuditLog", function () {
   context("check toJSON", function () {
     it("should return the correct JSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -212,6 +228,7 @@ describe("AuditLog", function () {
     });
     it("should return a valid JSON with a custom toJSON", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });
@@ -274,6 +291,7 @@ describe("AuditLog", function () {
   context("check bundling", function () {
     it("should bundle correctly", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      TEST_GUILDS.ALL_CACHES_ENABLED(client);
       const auditLog = new AuditLog(client, TEST_DATA.AUDIT_LOG, {
         guildId: TEST_DATA.GUILD_ID,
       });

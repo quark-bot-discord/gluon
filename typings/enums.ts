@@ -88,6 +88,7 @@ export enum GluonGlobalCache {
   VoiceStates = 8,
   Members = 9,
   ScheduledEvents = 10,
+  AuditLogs = 11,
 }
 
 export enum GluonGuildCachingOptions {
@@ -111,6 +112,8 @@ export enum GluonGuildCachingOptions {
   Threads = 1 << 8,
   // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
   ScheduledEvents = 1 << 9,
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  AuditLogs = 1 << 10,
 }
 
 export enum GluonChannelCachingOptions {

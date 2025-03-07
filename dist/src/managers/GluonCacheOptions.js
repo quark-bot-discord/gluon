@@ -375,6 +375,34 @@ class GluonCacheOptions {
       GluonGlobalCache.ScheduledEvents
     );
   }
+  setCacheAuditLogs(value) {
+    if (typeof value != "boolean")
+      throw new TypeError("GLUON: Cache audit logs must be a boolean.");
+    if (value === true)
+      __classPrivateFieldSet(
+        this,
+        _GluonCacheOptions__cache_options,
+        __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") |
+          GluonGlobalCache.AuditLogs,
+        "f",
+      );
+    else
+      __classPrivateFieldSet(
+        this,
+        _GluonCacheOptions__cache_options,
+        __classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
+          ~GluonGlobalCache.AuditLogs,
+        "f",
+      );
+    return this;
+  }
+  get cacheAuditLogs() {
+    return (
+      (__classPrivateFieldGet(this, _GluonCacheOptions__cache_options, "f") &
+        GluonGlobalCache.AuditLogs) ===
+      GluonGlobalCache.AuditLogs
+    );
+  }
   setUserTTL(seconds) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");

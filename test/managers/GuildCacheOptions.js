@@ -131,8 +131,9 @@ describe("GuildCacheOptions", function () {
       cacheOptions.setEmojiCaching(false);
       cacheOptions.setInviteCaching(true);
       cacheOptions.setScheduledEventCaching(true);
+      cacheOptions.setAuditLogCaching(true);
       expect(cacheOptions.toString()).to.equal(
-        "GuildCacheOptions { MESSAGES: true, FILES: true, VOICESTATES: true, ROLES: true, EMOJIS: false, INVITES: true, CHANNELS: true, MEMBERS: true, THREADS: true, SCHEDULEDEVENTS: true }",
+        "GuildCacheOptions { MESSAGES: true, FILES: true, VOICESTATES: true, ROLES: true, EMOJIS: false, INVITES: true, CHANNELS: true, MEMBERS: true, THREADS: true, SCHEDULEDEVENTS: true, AUDITLOGS: true }",
       );
     });
   });

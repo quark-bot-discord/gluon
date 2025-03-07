@@ -412,6 +412,7 @@ export class Guild {
   public readonly invites: GuildInviteManager;
   public readonly scheduledEvents: GuildScheduledEventManager;
   public readonly voiceStates: GuildVoiceStatesManager;
+  public readonly auditLogs: GuildAuditLogManager;
   public readonly _originalIconHash: string | null;
   public readonly memberCount: number;
   public readonly ownerId: Snowflake;
@@ -481,6 +482,7 @@ export interface GuildStorageJSON {
   roles: RoleStorageJSON[];
   emojis: EmojiStorageJSON[];
   invites: InviteStorageJSON[];
+  audit_logs: AuditLogStorageJSON[];
 }
 
 export interface GuildCacheJSON {
@@ -504,6 +506,7 @@ export interface GuildCacheJSON {
   roles: RoleCacheJSON[];
   emojis: EmojiCacheJSON[];
   invites: InviteCacheJSON[];
+  audit_logs: AuditLogCacheJSON[];
 }
 
 export interface GuildDiscordJSON {
@@ -532,6 +535,7 @@ export interface GuildDiscordJSON {
   roles: RoleDiscordJSON[];
   emojis: EmojiDiscordJSON[];
   invites: InviteDiscordJSON[];
+  audit_logs: AuditLogDiscordJSON[];
 }
 
 export class Interaction {
@@ -1608,7 +1612,8 @@ export type StructureIdentifiers =
   | "roles"
   | "events"
   | "voicestates"
-  | "users";
+  | "users"
+  | "auditlogs";
 
 export interface StaticManagerType<T> {
   identifier: StructureIdentifiers;
@@ -1684,6 +1689,7 @@ export interface GluonCacheOptions {
   cacheEmojis: boolean;
   cacheInvites: boolean;
   cacheScheduledEvents: boolean;
+  cacheAuditLogs: boolean;
   userTTL: number;
   messageTTL: number;
   setCacheMessages(value: boolean): GluonCacheOptions;
@@ -1696,6 +1702,7 @@ export interface GluonCacheOptions {
   setCacheEmojis(value: boolean): GluonCacheOptions;
   setCacheInvites(value: boolean): GluonCacheOptions;
   setCacheScheduledEvents(value: boolean): GluonCacheOptions;
+  setCacheAuditLogs(value: boolean): GluonCacheOptions;
   setUserTTL(seconds: number): GluonCacheOptions;
   setMessageTTL(seconds: number): GluonCacheOptions;
   toString(): string;
@@ -1712,6 +1719,7 @@ export interface GuildCacheOptions {
   setThreadCaching(option: boolean): GuildCacheOptions;
   setInviteCaching(option: boolean): GuildCacheOptions;
   setScheduledEventCaching(option: boolean): GuildCacheOptions;
+  setAuditLogCaching(option: boolean): GuildCacheOptions;
   messageCaching: boolean;
   fileCaching: boolean;
   voiceStateCaching: boolean;
@@ -1722,6 +1730,7 @@ export interface GuildCacheOptions {
   threadCaching: boolean;
   inviteCaching: boolean;
   scheduledEventCaching: boolean;
+  auditLogCaching: boolean;
   toString(): string;
   toJSON(format?: JsonTypes): number;
 }
@@ -2075,6 +2084,63 @@ export class UserManager extends BaseCacheManager {
   toJSON(
     format?: JsonTypes,
   ): UserCacheJSON[] | UserDiscordJSON[] | UserStorageJSON[];
+}
+
+export class GuildAuditLogManager extends BaseCacheManager {
+  constructor(client: Client, guild: Guild);
+  get(key: Snowflake): AuditLog | null;
+  fetchFromRules(key: Snowflake): Promise<AuditLog | null>;
+  fetchWithRules(key: Snowflake): Promise<AuditLog | null>;
+  set(key: Snowflake, value: AuditLog, expiry?: number): void;
+  delete(key: Snowflake): boolean;
+  clear(): void;
+  _intervalCallback(): { i: StructureIdentifiers };
+  size: number;
+  forEach(
+    callbackfn: (
+      value: AuditLog,
+      key: Snowflake,
+      map: Map<Snowflake, AuditLog>,
+    ) => void,
+  ): void;
+  has(key: Snowflake): boolean;
+  flagForDeletion(key: Snowflake): AuditLog | null;
+  map(
+    callbackfn: (
+      value: [Snowflake, AuditLog],
+      index: number,
+      array: [Snowflake, AuditLog][],
+    ) => unknown,
+  ): unknown[];
+  fetch({
+    limit,
+    type,
+    user_id,
+    before,
+    after,
+  }: {
+    limit?: number;
+    type?: AuditLogEvent;
+    user_id?: Snowflake;
+    before?: Snowflake;
+    after?: Snowflake;
+  } = {}): Promise<AuditLog[] | null>;
+  search({
+    limit,
+    type,
+    user_id,
+    before,
+    after,
+  }: {
+    limit?: number;
+    type?: AuditLogEvent;
+    user_id?: Snowflake;
+    before?: Snowflake;
+    after?: Snowflake;
+  } = {}): AuditLog[];
+  toJSON(
+    format?: JsonTypes,
+  ): AuditLogCacheJSON[] | AuditLogDiscordJSON[] | AuditLogStorageJSON[];
 }
 
 export class ActionRowBuilder {
@@ -2578,7 +2644,8 @@ export type DataManagers =
   | GuildRoleManager
   | GuildScheduledEventManager
   | GuildVoiceStatesManager
-  | UserManager;
+  | UserManager
+  | GuildAuditLogManager;
 
 export interface GluonCacheRuleSetStructure<T> {
   [key: string]: {

@@ -90,6 +90,7 @@ export var GluonGlobalCache;
   GluonGlobalCache[(GluonGlobalCache["Members"] = 9)] = "Members";
   GluonGlobalCache[(GluonGlobalCache["ScheduledEvents"] = 10)] =
     "ScheduledEvents";
+  GluonGlobalCache[(GluonGlobalCache["AuditLogs"] = 11)] = "AuditLogs";
 })(GluonGlobalCache || (GluonGlobalCache = {}));
 export var GluonGuildCachingOptions;
 (function (GluonGuildCachingOptions) {
@@ -122,6 +123,9 @@ export var GluonGuildCachingOptions;
   GluonGuildCachingOptions[
     (GluonGuildCachingOptions["ScheduledEvents"] = 512)
   ] = "ScheduledEvents";
+  // eslint-disable-next-line @typescript-eslint/prefer-literal-enum-member
+  GluonGuildCachingOptions[(GluonGuildCachingOptions["AuditLogs"] = 1024)] =
+    "AuditLogs";
 })(GluonGuildCachingOptions || (GluonGuildCachingOptions = {}));
 export var GluonChannelCachingOptions;
 (function (GluonChannelCachingOptions) {

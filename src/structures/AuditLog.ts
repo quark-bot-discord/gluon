@@ -7,6 +7,8 @@ import type {
   AuditLog as AuditLogType,
   Client as ClientType,
   AllChannels,
+  GluonCacheOptions as GluonCacheOptionsType,
+  GuildCacheOptions as GuildCacheOptionsType,
 } from "../../typings/index.d.ts";
 import {
   APIAuditLogEntry,
@@ -14,7 +16,7 @@ import {
   AuditLogOptionsType,
   Snowflake,
 } from "#typings/discord.js";
-import { JsonTypes } from "../../typings/enums.js";
+import { GluonDebugLevels, JsonTypes } from "../../typings/enums.js";
 
 /**
  * Represents an audit log entry.
@@ -54,7 +56,11 @@ class AuditLog implements AuditLogType {
       | AuditLogCacheJSON
       | AuditLogDiscordJSON
       | AuditLogStorageJSON,
-    { users, guildId }: { users?: APIUser[]; guildId: Snowflake },
+    {
+      users,
+      guildId,
+      nocache = false,
+    }: { users?: APIUser[]; guildId: Snowflake; nocache?: boolean },
   ) {
     if (!client)
       throw new TypeError("GLUON: Client must be an instance of Client");
@@ -88,6 +94,10 @@ class AuditLog implements AuditLogType {
      * @private
      */
     this.#_guild_id = BigInt(guildId);
+
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
 
     /**
      * The type of action that occurred.
@@ -223,6 +233,24 @@ class AuditLog implements AuditLogType {
        * @private
        */
       this.#changes = data.changes;
+
+    const shouldCache = AuditLog.shouldCache(
+      this.#_client._cacheOptions,
+      this.guild._cacheOptions,
+    );
+
+    if (nocache === false && shouldCache) {
+      this.guild.auditLogs.set(data.id, this);
+      this.#_client._emitDebug(
+        GluonDebugLevels.Info,
+        `CACHE AUDITLOG ${guildId} ${data.id}`,
+      );
+    } else {
+      this.#_client._emitDebug(
+        GluonDebugLevels.Info,
+        `NO CACHE AUDITLOG ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+      );
+    }
   }
 
   /**
@@ -404,6 +432,24 @@ class AuditLog implements AuditLogType {
    */
   get changes() {
     return this.#changes;
+  }
+
+  /**
+   * Determines whether the emoji should be cached.
+   * @param {GluonCacheOptions} gluonCacheOptions The cache options for the client.
+   * @param {GuildCacheOptions} guildCacheOptions The cache options for the guild.
+   * @returns {Boolean}
+   * @public
+   * @static
+   * @method
+   */
+  static shouldCache(
+    gluonCacheOptions: GluonCacheOptionsType,
+    guildCacheOptions: GuildCacheOptionsType,
+  ) {
+    if (gluonCacheOptions.cacheAuditLogs === false) return false;
+    if (guildCacheOptions.auditLogCaching === false) return false;
+    return true;
   }
 
   /**

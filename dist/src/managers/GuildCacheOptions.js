@@ -339,6 +339,27 @@ class GuildCacheOptions {
       );
     return this;
   }
+  setAuditLogCaching(option) {
+    if (typeof option !== "boolean")
+      throw new TypeError("GLUON: Audit log caching must be a boolean");
+    if (option === true)
+      __classPrivateFieldSet(
+        this,
+        _GuildCacheOptions__cache_options,
+        __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") |
+          GluonGuildCachingOptions.AuditLogs,
+        "f",
+      );
+    else if (option === false)
+      __classPrivateFieldSet(
+        this,
+        _GuildCacheOptions__cache_options,
+        __classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
+          ~GluonGuildCachingOptions.AuditLogs,
+        "f",
+      );
+    return this;
+  }
   /**
    * Returns whether to cache files or not.
    * @type {Boolean}
@@ -467,6 +488,13 @@ class GuildCacheOptions {
       (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
         GluonGuildCachingOptions.ScheduledEvents) ===
       GluonGuildCachingOptions.ScheduledEvents
+    );
+  }
+  get auditLogCaching() {
+    return (
+      (__classPrivateFieldGet(this, _GuildCacheOptions__cache_options, "f") &
+        GluonGuildCachingOptions.AuditLogs) ===
+      GluonGuildCachingOptions.AuditLogs
     );
   }
   /**

@@ -225,6 +225,23 @@ class GluonCacheOptions implements GluonCacheOptionsType {
     );
   }
 
+  setCacheAuditLogs(value: boolean) {
+    if (typeof value != "boolean")
+      throw new TypeError("GLUON: Cache audit logs must be a boolean.");
+
+    if (value === true) this.#_cache_options |= GluonGlobalCache.AuditLogs;
+    else this.#_cache_options &= ~GluonGlobalCache.AuditLogs;
+
+    return this;
+  }
+
+  get cacheAuditLogs() {
+    return (
+      (this.#_cache_options & GluonGlobalCache.AuditLogs) ===
+      GluonGlobalCache.AuditLogs
+    );
+  }
+
   setUserTTL(seconds: number) {
     if (typeof seconds != "number")
       throw new TypeError("GLUON: User TTL must be a number.");
