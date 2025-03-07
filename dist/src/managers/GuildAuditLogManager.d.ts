@@ -41,5 +41,6 @@ declare class GuildAuditLogManager
     before?: Snowflake;
     after?: Snowflake;
   }): AuditLogType[];
+  set(key: Snowflake, value: AuditLogType, expiry?: number): void;
 }
 export default GuildAuditLogManager;

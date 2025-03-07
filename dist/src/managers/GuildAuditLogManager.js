@@ -139,6 +139,9 @@ class GuildAuditLogManager extends BaseCacheManager {
     if (limit) logs.slice(0, limit);
     return logs;
   }
+  set(key, value, expiry = 5 * 60) {
+    return super.set(key, value, expiry);
+  }
 }
 (_GuildAuditLogManager__client = new WeakMap()),
   (_GuildAuditLogManager_guild = new WeakMap());

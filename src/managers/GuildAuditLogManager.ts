@@ -131,6 +131,10 @@ class GuildAuditLogManager
     if (limit) logs.slice(0, limit);
     return logs;
   }
+
+  set(key: Snowflake, value: AuditLogType, expiry: number = 5 * 60) {
+    return super.set(key, value, expiry);
+  }
 }
 
 export default GuildAuditLogManager;
