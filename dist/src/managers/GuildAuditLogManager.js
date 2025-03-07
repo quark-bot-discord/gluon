@@ -129,7 +129,9 @@ class GuildAuditLogManager extends BaseCacheManager {
   }
   search({ limit, type, user_id, before, after } = {}) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const logs = this.map(([_, log]) => log);
+    const logs = this.map(([_, log]) => log).sort((a, b) =>
+      Number(BigInt(b.id) - BigInt(a.id)),
+    );
     if (type) logs.filter((log) => log.actionType === type);
     if (user_id)
       logs.filter(
