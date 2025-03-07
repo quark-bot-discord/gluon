@@ -137,7 +137,7 @@ class GuildAuditLogManager extends BaseCacheManager {
       );
     if (before) logs.filter((log) => BigInt(log.id) < BigInt(before));
     if (after) logs.filter((log) => BigInt(log.id) > BigInt(after));
-    if (limit) logs.slice(0, limit);
+    if (limit && limit > 0) logs.slice(0, limit - 1);
     return logs;
   }
   set(key, value, expiry = 5 * 60) {
