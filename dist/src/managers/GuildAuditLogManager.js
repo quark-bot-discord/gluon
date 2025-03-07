@@ -128,7 +128,8 @@ class GuildAuditLogManager extends BaseCacheManager {
     );
   }
   search({ limit, type, user_id, before, after } = {}) {
-    const logs = this.map((log) => log);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const logs = this.map(([_, log]) => log);
     if (type) logs.filter((log) => log.actionType === type);
     if (user_id)
       logs.filter(
