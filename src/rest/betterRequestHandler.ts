@@ -13,7 +13,7 @@ import {
   GLUON_REPOSITORY_URL,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
-import sleep from "../util/general/sleep.js";
+import { sleep } from "../util/general/sleep.js";
 import type {
   EndpointIndexItem,
   Client as ClientType,

@@ -1,4 +1,4 @@
-import cacheChannel from "../util/gluon/cacheChannel.js";
+import { cacheChannel } from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   GuildChannelsManager as GuildChannelsManagerType,

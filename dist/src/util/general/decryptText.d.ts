@@ -6,5 +6,5 @@
  * @returns {String}
  * @see {@link https://stackoverflow.com/questions/32038267/getting-error-wrong-final-block-length-when-decrypting-aes256-cipher}
  */
-declare function decryptText(text: any, key: any, iv: any): string;
+declare function decryptText(text: string, key: string, iv: string): string;
 export default decryptText;

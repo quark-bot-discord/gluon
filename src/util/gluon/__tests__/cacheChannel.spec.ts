@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import cacheChannel from "../cacheChannel.js";
+import { cacheChannel } from "../cacheChannel.js";
 import CategoryChannel from "../../../structures/CategoryChannel.js";
 import TextChannel from "../../../structures/TextChannel.js";
 import Thread from "../../../structures/Thread.js";

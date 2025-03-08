@@ -1,1 +1,1 @@
-export default function sleep(period: any): Promise<unknown>;
+export declare function sleep(period: number): Promise<unknown>;

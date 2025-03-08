@@ -6,7 +6,7 @@ import GuildMemberManager from "../managers/GuildMemberManager.js";
 import GuildRoleManager from "../managers/GuildRoleManager.js";
 import GuildScheduledEventManager from "../managers/GuildScheduledEventManager.js";
 import GuildVoiceStatesManager from "../managers/GuildVoiceStatesManager.js";
-import cacheChannel from "../util/gluon/cacheChannel.js";
+import { cacheChannel } from "../util/gluon/cacheChannel.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import AuditLog from "./AuditLog.js";
 import Emoji from "./Emoji.js";

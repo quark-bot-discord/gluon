@@ -1,11 +1,16 @@
 /**
- * Gives a valid Discord emoji structure when given an emoji mention.
- * @param {String} text Emoji mention. e.g. <:bitcoin:844240546246950922>
- * @returns {Object}
+ * Resolves a string containing a Discord emoji into an object with its details.
+ *
+ * @param text - The string containing the emoji to resolve.
+ * @returns An object containing the emoji's name, id, and whether it is animated, or null if no valid emoji is found.
+ *
+ * @example
+ * ```typescript
+ * const emoji = resolveEmoji("<:smile:1234567890>");
+ * // emoji = { id: "1234567890", name: "smile", animated: false }
+ * ```
  */
 function resolveEmoji(text) {
-  if (typeof text !== "string")
-    throw new TypeError("GLUON: The emoji must be a string.");
   const emojis = text.match(/<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g);
   if (!emojis || emojis.length == 0) {
     if (/\p{Extended_Pictographic}/u.test(text))

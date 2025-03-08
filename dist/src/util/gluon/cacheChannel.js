@@ -21,7 +21,7 @@ import { ChannelType } from "#typings/discord.js";
  *   - `CategoryChannel` for category channels
  *   - `TextChannel` for all other channel types
  */
-function cacheChannel(client, data, guildId, nocache = false) {
+export function cacheChannel(client, data, guildId, nocache = false) {
   switch (data.type) {
     case ChannelType.GuildVoice:
     case ChannelType.GuildStageVoice: {
@@ -40,5 +40,4 @@ function cacheChannel(client, data, guildId, nocache = false) {
     }
   }
 }
-export default cacheChannel;
 //# sourceMappingURL=cacheChannel.js.map

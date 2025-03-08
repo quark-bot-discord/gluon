@@ -74,7 +74,7 @@ import {
   GLUON_REPOSITORY_URL,
 } from "../constants.js";
 import endpoints from "./endpoints.js";
-import sleep from "../util/general/sleep.js";
+import { sleep } from "../util/general/sleep.js";
 import redisClient from "#src/util/general/redisClient.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;

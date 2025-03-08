@@ -115,14 +115,6 @@ describe("DropdownOption", function () {
       expect(dropdownOption.emoji.name).to.equal("👍");
     });
 
-    it("should throw an error if no emoji is provided", function () {
-      const dropdownOption = new DropdownOption();
-      expect(() => dropdownOption.setEmoji()).to.throw(
-        TypeError,
-        "GLUON: The emoji must be a string.",
-      );
-    });
-
     it("should throw an error if the emoji invalid", function () {
       const dropdownOption = new DropdownOption();
       expect(() => dropdownOption.setEmoji("test")).to.throw(

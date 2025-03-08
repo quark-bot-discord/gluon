@@ -59,13 +59,6 @@ describe("ButtonBuilder", () => {
       expect(button.emoji.name).to.equal("bitcoin");
       expect(button.emoji.animated).to.equal(false);
     });
-    it("should throw an error if no emoji is provided", function () {
-      const button = new Button();
-      expect(() => button.setEmoji()).to.throw(
-        TypeError,
-        "GLUON: The emoji must be a string.",
-      );
-    });
     it("should throw an error if string is not an emoji", function () {
       const button = new Button();
       expect(() => button.setEmoji("test")).to.throw(

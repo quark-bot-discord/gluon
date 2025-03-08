@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _GuildChannelsManager__client, _GuildChannelsManager_guild;
-import cacheChannel from "../util/gluon/cacheChannel.js";
+import { cacheChannel } from "../util/gluon/cacheChannel.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 /**

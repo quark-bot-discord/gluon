@@ -25,7 +25,7 @@ import type { AllChannels, Client as ClientType } from "typings/index.d.ts";
  *   - `CategoryChannel` for category channels
  *   - `TextChannel` for all other channel types
  */
-declare function cacheChannel(
+export declare function cacheChannel(
   client: ClientType,
   data:
     | APIGuildVoiceChannel
@@ -36,4 +36,3 @@ declare function cacheChannel(
   guildId: Snowflake,
   nocache?: boolean,
 ): AllChannels;
-export default cacheChannel;

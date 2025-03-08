@@ -47,7 +47,7 @@ import Interaction from "./Interaction.js";
 import util from "util";
 import Member from "./Member.js";
 import Role from "./Role.js";
-// import cacheChannel from "../util/gluon/cacheChannel.js";
+// import { cacheChannel } from "../util/gluon/cacheChannel.js";
 import User from "./User.js";
 import { JsonTypes } from "../../typings/enums.js";
 /**

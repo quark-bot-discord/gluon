@@ -1,14 +1,13 @@
 import { LIMITS } from "../../constants.js";
 
 /**
- * Whether the string provided contains a valid message link.
- * @param {String} text A url to a Discord message.
- * @returns {String?} The link to a message, if it is present.
+ * Verifies if the given text contains a valid Discord message link.
+ *
+ * @param text - The text to be verified.
+ * @returns The matched Discord message link if found, otherwise `null`.
+ * @throws RangeError - If the text length exceeds the maximum allowed limit.
  */
-function verifyMessageLink(text: any) {
-  if (typeof text !== "string")
-    throw new TypeError("GLUON: The text must be a string.");
-
+export function verifyMessageLink(text: string) {
   if (text.length === 0) return null;
 
   if (text.length > LIMITS.MAX_NITRO_MESSAGE_CONTENT)
@@ -23,5 +22,3 @@ function verifyMessageLink(text: any) {
   if (messageLink) return messageLink[0];
   else return null;
 }
-
-export default verifyMessageLink;

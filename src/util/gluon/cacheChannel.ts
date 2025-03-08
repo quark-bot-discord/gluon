@@ -31,7 +31,7 @@ import type { AllChannels, Client as ClientType } from "typings/index.d.ts";
  *   - `CategoryChannel` for category channels
  *   - `TextChannel` for all other channel types
  */
-function cacheChannel(
+export function cacheChannel(
   client: ClientType,
   data:
     | APIGuildVoiceChannel
@@ -63,5 +63,3 @@ function cacheChannel(
     }
   }
 }
-
-export default cacheChannel;

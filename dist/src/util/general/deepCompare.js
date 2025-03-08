@@ -4,7 +4,7 @@
  * @param {Object} object1
  * @returns {Array<String>}
  */
-function deepCompare(object0, object1) {
+export function deepCompare(object0, object1) {
   if (typeof object0 != "object")
     throw new TypeError("GLUON: First argument must be an object.");
   if (typeof object1 != "object")
@@ -19,5 +19,4 @@ function deepCompare(object0, object1) {
   }
   return updatedFields;
 }
-export default deepCompare;
 //# sourceMappingURL=deepCompare.js.map
