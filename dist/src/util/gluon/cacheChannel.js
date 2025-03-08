@@ -4,12 +4,22 @@ import Thread from "../../structures/Thread.js";
 import VoiceChannel from "../../structures/VoiceChannel.js";
 import { ChannelType } from "#typings/discord.js";
 /**
- * Automatically determines the channel type and caches the channel appropriately.
- * @param {Client} client The client instance.
- * @param {Object} data The raw channel data from Discord.
- * @param {String} guildId The id of the guild that the channel belongs to.
- * @param {Boolean?} nocache Whether the channel should be cached.
- * @returns {VoiceChannel | Thread | TextChannel}
+ * Caches a channel based on its type and returns the appropriate channel instance.
+ *
+ * @param client - The client instance used to create the channel.
+ * @param data - The data of the channel to be cached. This can be one of several types:
+ *   - `APIGuildVoiceChannel`
+ *   - `APIGuildStageVoiceChannel`
+ *   - `APIThreadChannel`
+ *   - `APIGuildCategoryChannel`
+ *   - `GatewayChannelCreateDispatchData`
+ * @param guildId - The ID of the guild to which the channel belongs.
+ * @param nocache - Optional flag to indicate whether the channel should not be cached. Defaults to `false`.
+ * @returns An instance of the appropriate channel type:
+ *   - `VoiceChannel` for voice and stage voice channels
+ *   - `Thread` for announcement, public, and private threads
+ *   - `CategoryChannel` for category channels
+ *   - `TextChannel` for all other channel types
  */
 function cacheChannel(client, data, guildId, nocache = false) {
   switch (data.type) {

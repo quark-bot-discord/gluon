@@ -14,25 +14,6 @@ describe("DecryptStructure", function () {
     });
   });
 
-  context("check invalid input", function () {
-    it("should throw an error if no data is provided", function () {
-      expect(() =>
-        decryptStructure(
-          undefined,
-          TEST_DATA.MESSAGE_ID,
-          TEST_DATA.CHANNEL_ID,
-          TEST_DATA.GUILD_ID,
-        ),
-      ).to.throw(TypeError, "GLUON: Encrypted structure must be provided.");
-    });
-    it("should throw an error if no keys are provided", function () {
-      expect(() => decryptStructure("abc")).to.throw(
-        TypeError,
-        "GLUON: A decryption key must be provided.",
-      );
-    });
-  });
-
   context("check valid output", function () {
     it("should return an object", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

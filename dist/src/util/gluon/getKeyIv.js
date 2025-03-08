@@ -1,14 +1,13 @@
 import hash from "hash.js";
 /**
- * Returns a key and iv for encryption and decryption.
- * @param  {...String} args The arguments to generate the key and iv.
- * @returns {Object}
+ * Generates a key and initialization vector (IV) based on the provided arguments.
+ *
+ * @param {...string[]} args - The arguments used to generate the key and IV.
+ * @returns {Object} An object containing the generated key and IV.
+ * @returns {string} key - The generated key, a 32-character hexadecimal string.
+ * @returns {string} iv - The generated IV, a 16-character hexadecimal string.
  */
-function getKeyIv(...args) {
-  if (!args || args.length === 0)
-    throw new TypeError("GLUON: At least one argument must be provided.");
-  if (!args.every((arg) => typeof arg === "string"))
-    throw new TypeError("GLUON: Arguments must be strings.");
+export function getKeyIv(...args) {
   const key = hash
     .sha512()
     .update(
@@ -23,5 +22,4 @@ function getKeyIv(...args) {
     .slice(0, 16);
   return { key, iv };
 }
-export default getKeyIv;
 //# sourceMappingURL=getKeyIv.js.map

@@ -9,9 +9,6 @@ export default function getChannel(
   guildId: string,
   channelId: string,
 ): AllChannels | null {
-  if (!client) throw new TypeError("GLUON: Client must be a Client instance.");
-  if (typeof guildId !== "string")
-    throw new TypeError("GLUON: Guild ID must be a string.");
   const guild = getGuild(client, guildId);
   if (!guild) {
     throw new Error("GLUON: Guild not found in cache.");

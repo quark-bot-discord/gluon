@@ -1,5 +1,5 @@
 import decryptText from "../general/decryptText.js";
-import getKeyIv from "./getKeyIv.js";
+import { getKeyIv } from "./getKeyIv.js";
 
 /**
  * Decrypts a message and returns the message structure for it.
@@ -7,17 +7,10 @@ import getKeyIv from "./getKeyIv.js";
  * @param {...String} decryptionKeys The decryption keys to use.
  * @returns {Message}
  */
-function decryptStructure(encryptedStructure: any, ...decryptionKeys: any[]) {
-  if (typeof encryptedStructure !== "string")
-    throw new TypeError("GLUON: Encrypted structure must be provided.");
-
-  if (
-    !decryptionKeys ||
-    decryptionKeys.length === 0 ||
-    !decryptionKeys.every((key) => typeof key === "string")
-  )
-    throw new TypeError("GLUON: A decryption key must be provided.");
-
+function decryptStructure(
+  encryptedStructure: string,
+  ...decryptionKeys: string[]
+) {
   const { key, iv } = getKeyIv(...decryptionKeys);
 
   const decryptedStructure = decryptText(encryptedStructure, key, iv);

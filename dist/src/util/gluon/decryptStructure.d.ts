@@ -5,7 +5,7 @@
  * @returns {Message}
  */
 declare function decryptStructure(
-  encryptedStructure: any,
-  ...decryptionKeys: any[]
+  encryptedStructure: string,
+  ...decryptionKeys: string[]
 ): any;
 export default decryptStructure;

@@ -15,28 +15,11 @@ describe("getMember", function () {
     guildId = guild.id;
     memberId = member.id;
   });
-  it("should throw a TypeError if client is not provided", function () {
-    expect(() => getMember(null, guildId, memberId)).to.throw(
-      TypeError,
-      "GLUON: Client must be a Client instance.",
-    );
-  });
-  it("should throw a TypeError if guildId is not a string", function () {
-    expect(() => getMember(client, 123, memberId)).to.throw(
-      TypeError,
-      "GLUON: Guild ID must be a string.",
-    );
-  });
-  it("should throw a TypeError if memberId is not a string", function () {
-    expect(() => getMember(client, guildId, 123)).to.throw(
-      TypeError,
-      "GLUON: Member ID must be a string.",
-    );
-  });
-  it("should return null if guild is not found", function () {
+  it("should throw an error if guild is not found", function () {
     sinon.replace(client.guilds, "get", sinon.fake.returns(null));
-    const result = getMember(client, guildId, memberId);
-    return expect(result).to.be.null;
+    expect(() => getMember(client, guildId, memberId)).to.throw(
+      "GLUON: Guild not found in cache.",
+    );
   });
   it("should return the member if found", function () {
     const result = getMember(client, guildId, memberId);

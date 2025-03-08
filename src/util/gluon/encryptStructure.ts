@@ -1,29 +1,22 @@
 import { JsonTypes } from "#typings/enums.js";
-import encryptText from "../general/encryptText.js";
-import getKeyIv from "./getKeyIv.js";
+import { encryptText } from "../general/encryptText.js";
+import { getKeyIv } from "./getKeyIv.js";
+
+export interface EncryptStructure {
+  toJSON(format: JsonTypes): object;
+}
 
 /**
- * Encrypts a structure and returns an encrypted string.
- * @param {Object} structure The structure to encrypt.
- * @param {...String} encryptionKeys The encryption keys to use.
- * @returns {String}
+ * Encrypts a given structure using the provided encryption keys.
+ *
+ * @param structure - The structure to be encrypted, which must implement the `EncryptStructure` interface.
+ * @param encryptionKeys - A list of encryption keys used to generate the encryption key and initialization vector (IV).
+ * @returns The encrypted text representation of the structure.
  */
-function encryptStructure(structure: any, ...encryptionKeys: any[]) {
-  if (!structure) throw new TypeError("GLUON: Structure must be provided.");
-
-  if (!(structure instanceof Object))
-    throw new TypeError("GLUON: Structure must be a valid structure.");
-
-  if (typeof structure.toJSON !== "function")
-    throw new TypeError("GLUON: Structure must have a toJSON method.");
-
-  if (
-    !encryptionKeys ||
-    encryptionKeys.length === 0 ||
-    !encryptionKeys.every((key) => typeof key === "string")
-  )
-    throw new TypeError("GLUON: An encryption key must be provided.");
-
+function encryptStructure(
+  structure: EncryptStructure,
+  ...encryptionKeys: string[]
+) {
   const stringifyableObject = structure.toJSON(JsonTypes.STORAGE_FORMAT);
   const structureString = JSON.stringify(stringifyableObject);
 

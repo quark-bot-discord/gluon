@@ -1,11 +1,16 @@
+import { JsonTypes } from "#typings/enums.js";
+export interface EncryptStructure {
+  toJSON(format: JsonTypes): object;
+}
 /**
- * Encrypts a structure and returns an encrypted string.
- * @param {Object} structure The structure to encrypt.
- * @param {...String} encryptionKeys The encryption keys to use.
- * @returns {String}
+ * Encrypts a given structure using the provided encryption keys.
+ *
+ * @param structure - The structure to be encrypted, which must implement the `EncryptStructure` interface.
+ * @param encryptionKeys - A list of encryption keys used to generate the encryption key and initialization vector (IV).
+ * @returns The encrypted text representation of the structure.
  */
 declare function encryptStructure(
-  structure: any,
-  ...encryptionKeys: any[]
+  structure: EncryptStructure,
+  ...encryptionKeys: string[]
 ): string;
 export default encryptStructure;

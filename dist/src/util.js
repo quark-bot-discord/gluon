@@ -10,7 +10,7 @@ export { default as deepCompare } from "./util/general/deepCompare.js";
 export { default as Dropdown } from "./util/builder/dropdownBuilder.js";
 export { default as DropdownOption } from "./util/builder/dropdownOption.js";
 export { default as Embed } from "./util/builder/embedBuilder.js";
-export { default as encryptText } from "./util/general/encryptText.js";
+export { encryptText } from "./util/general/encryptText.js";
 export { default as getTimestamp } from "./util/discord/getTimestampFromSnowflake.js";
 export { default as hexToInt } from "./util/general/hexToInt.js";
 export { default as MessageComponents } from "./util/builder/messageComponents.js";

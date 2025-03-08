@@ -1,29 +1,9 @@
 import { expect } from "chai";
-import getKeyIv from "../getKeyIv.js";
+import { getKeyIv } from "../getKeyIv.js";
 describe("GetKeyIv", function () {
   context("check import", function () {
     it("should be a function", function () {
       expect(getKeyIv).to.be.a("function");
-    });
-  });
-  context("check invalid input", function () {
-    it("should throw an error if no key is provided", function () {
-      expect(() => getKeyIv()).to.throw(
-        TypeError,
-        "GLUON: At least one argument must be provided.",
-      );
-    });
-    it("should throw an error if key is not a string", function () {
-      expect(() => getKeyIv(123456)).to.throw(
-        TypeError,
-        "GLUON: Arguments must be strings.",
-      );
-    });
-    it("should throw an error if iv is not a string", function () {
-      expect(() => getKeyIv("key", 123456)).to.throw(
-        TypeError,
-        "GLUON: Arguments must be strings.",
-      );
     });
   });
   context("check valid output", function () {
