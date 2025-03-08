@@ -1,4 +1,4 @@
-import packageJSON from "../package.json" assert { type: "json" };
+import packageJSON from "../package.json" with { type: "json" };
 export const BASE_URL = "https://discord.com";
 export const API_BASE_URL = "https://discord.com/api";
 export const CDN_BASE_URL = "https://cdn.discordapp.com";

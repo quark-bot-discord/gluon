@@ -393,7 +393,7 @@ class Shard {
         if (this.zlib.err) throw new Error(this.zlib.msg ?? undefined);
 
         if (this.zlib.result) {
-          data = Buffer.from(this.zlib.result);
+          data = Buffer.from(this.zlib.result as ArrayBuffer);
         } else {
           throw new Error("Zlib error");
         }
