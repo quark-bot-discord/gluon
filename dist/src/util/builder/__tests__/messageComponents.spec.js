@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { LIMITS } from "../../../constants.js";
+import { JsonTypes, LIMITS } from "../../../constants.js";
 import ActionRow from "../actionRowBuilder.js";
 import MessageComponents from "../messageComponents.js";
 import Button from "../buttonBuilder.js";
@@ -24,13 +24,6 @@ describe("MessageComponents", function () {
       const actionRow = new ActionRow().addComponent(button);
       messageComponents.addActionRow(actionRow);
       expect(messageComponents.actionRows).to.have.lengthOf(1);
-    });
-    it("should throw an error if no action row is provided", function () {
-      const messageComponents = new MessageComponents();
-      expect(() => messageComponents.addActionRow()).to.throw(
-        TypeError,
-        "GLUON: Action row must be provided.",
-      );
     });
     it("should throw an error if the number of action rows is greater than the limit", function () {
       const messageComponents = new MessageComponents();
@@ -58,7 +51,7 @@ describe("MessageComponents", function () {
       const messageComponents = new MessageComponents();
       expect(messageComponents).to.respondTo("toJSON");
     });
-    it("should return the correct Discord format for message components", function () {
+    it("should return the correct default format for message components", function () {
       const messageComponents = new MessageComponents();
       const button = new Button()
         .setCustomID("test")
@@ -67,6 +60,81 @@ describe("MessageComponents", function () {
       const actionRow = new ActionRow().addComponent(button);
       messageComponents.addActionRow(actionRow);
       expect(messageComponents.toJSON()).to.deep.equal([
+        {
+          type: 1,
+          components: [
+            {
+              type: 2,
+              custom_id: "test",
+              label: "testLabel",
+              style: 1,
+              disabled: undefined,
+              emoji: undefined,
+              url: undefined,
+            },
+          ],
+        },
+      ]);
+    });
+    it("should return the correct Discord format for message components", function () {
+      const messageComponents = new MessageComponents();
+      const button = new Button()
+        .setCustomID("test")
+        .setLabel("testLabel")
+        .setStyle(1);
+      const actionRow = new ActionRow().addComponent(button);
+      messageComponents.addActionRow(actionRow);
+      expect(messageComponents.toJSON(JsonTypes.DISCORD_FORMAT)).to.deep.equal([
+        {
+          type: 1,
+          components: [
+            {
+              type: 2,
+              custom_id: "test",
+              label: "testLabel",
+              style: 1,
+              disabled: undefined,
+              emoji: undefined,
+              url: undefined,
+            },
+          ],
+        },
+      ]);
+    });
+    it("should return the correct cache format for message components", function () {
+      const messageComponents = new MessageComponents();
+      const button = new Button()
+        .setCustomID("test")
+        .setLabel("testLabel")
+        .setStyle(1);
+      const actionRow = new ActionRow().addComponent(button);
+      messageComponents.addActionRow(actionRow);
+      expect(messageComponents.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal([
+        {
+          type: 1,
+          components: [
+            {
+              type: 2,
+              custom_id: "test",
+              label: "testLabel",
+              style: 1,
+              disabled: undefined,
+              emoji: undefined,
+              url: undefined,
+            },
+          ],
+        },
+      ]);
+    });
+    it("should return the correct storage format for message components", function () {
+      const messageComponents = new MessageComponents();
+      const button = new Button()
+        .setCustomID("test")
+        .setLabel("testLabel")
+        .setStyle(1);
+      const actionRow = new ActionRow().addComponent(button);
+      messageComponents.addActionRow(actionRow);
+      expect(messageComponents.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal([
         {
           type: 1,
           components: [

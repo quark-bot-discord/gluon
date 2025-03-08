@@ -9,7 +9,7 @@ import {
   TEST_MESSAGES,
   TEST_ROLES,
 } from "../../testData.js";
-import FileUpload from "../../util/builder/fileUpload.js";
+import { FileUpload } from "../../util/builder/fileUpload.js";
 import MessageComponents from "../../util/builder/messageComponents.js";
 import path from "path";
 import Embed from "../../util/builder/embedBuilder.js";

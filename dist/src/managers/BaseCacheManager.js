@@ -70,10 +70,6 @@ class BaseCacheManager {
     _BaseCacheManager_cache.set(this, void 0);
     _BaseCacheManager_expiryBucket.set(this, void 0);
     _BaseCacheManager_structureType.set(this, void 0);
-    if (!client)
-      throw new TypeError("GLUON: Client must be a Client instance.");
-    if (!structureType)
-      throw new TypeError("GLUON: Structure type must be provided.");
     /**
      * The cache for this manager.
      * @type {Map<String, Object>}
@@ -143,8 +139,6 @@ class BaseCacheManager {
    * @throws {TypeError}
    */
   get(key) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     const value = __classPrivateFieldGet(
       this,
       _BaseCacheManager_cache,
@@ -163,8 +157,6 @@ class BaseCacheManager {
    * @async
    */
   fetchFromRules(key) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return __classPrivateFieldGet(
       this,
       _BaseCacheManager_instances,
@@ -182,8 +174,6 @@ class BaseCacheManager {
    * @throws {TypeError}
    */
   async fetchWithRules(key) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     const value = this.get(key);
     if (value) return value;
     else
@@ -205,10 +195,6 @@ class BaseCacheManager {
    * @throws {TypeError}
    */
   set(key, value, expiry = 0) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
-    if (typeof expiry !== "number")
-      throw new TypeError("GLUON: Expiry must be a number.");
     __classPrivateFieldGet(
       this,
       _BaseCacheManager_instances,
@@ -266,8 +252,6 @@ class BaseCacheManager {
    * @method
    */
   delete(key) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").delete(
       key,
     );
@@ -339,8 +323,6 @@ class BaseCacheManager {
    * @throws {TypeError}
    */
   has(key) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return __classPrivateFieldGet(this, _BaseCacheManager_cache, "f").has(key);
   }
   map(callbackfn) {

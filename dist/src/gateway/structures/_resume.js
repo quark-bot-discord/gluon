@@ -1,6 +1,14 @@
 import { GatewayOpcodes } from "#typings/discord.js";
 import erlpack from "erlpack";
-function _resume(token, session_id, seq) {
+/**
+ * Creates a buffer containing the resume payload for the gateway.
+ *
+ * @param token - The authentication token.
+ * @param session_id - The session ID to resume.
+ * @param seq - The last sequence number received.
+ * @returns A buffer containing the packed resume payload.
+ */
+export function _resume(token, session_id, seq) {
   const payload = {
     op: GatewayOpcodes.Resume,
     d: {
@@ -11,5 +19,4 @@ function _resume(token, session_id, seq) {
   };
   return erlpack.pack(payload);
 }
-export default _resume;
 //# sourceMappingURL=_resume.js.map

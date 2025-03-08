@@ -39,7 +39,7 @@
   },
   "scripts": {
     "test": "npm run build && mocha \"dist/**/*.spec.js\" --file setup.spec.js",
-    "coverage": "c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js",
+    "coverage": "npm run build && c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js",
     "example": "node ./example/bot.js",
     "prepare": "husky",
     "build": "rm -rf dist/ && tsc"

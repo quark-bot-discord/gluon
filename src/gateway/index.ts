@@ -3,13 +3,13 @@
 import WebSocket from "ws";
 import erlpack from "erlpack";
 import ZlibSync from "zlib-sync";
-import _heartbeat from "./structures/_heartbeat.js";
-import _identify from "./structures/_identify.js";
+import { _heartbeat } from "./structures/_heartbeat.js";
+import { _identify } from "./structures/_identify.js";
 import EventHandler from "./eventHandler.js";
 import { GATEWAY_RECONNECT_CLOSE_CODES } from "../constants.js";
 import generateWebsocketURL from "../util/gluon/generateWebsocketURL.js";
-import _updatePresence from "./structures/_updatePresence.js";
-import _resume from "./structures/_resume.js";
+import { _updatePresence } from "./structures/_updatePresence.js";
+import { _resume } from "./structures/_resume.js";
 import type { Client as ClientType } from "typings/index.d.ts";
 import {
   ActivityType,

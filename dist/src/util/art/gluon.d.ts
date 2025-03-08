@@ -1,1 +1,1 @@
-export default function gluon(): string;
+export declare function gluon(): string;

@@ -45,7 +45,7 @@ var __classPrivateFieldGet =
 var _FileUpload_name, _FileUpload_stream, _FileUpload_path, _FileUpload_size;
 import { LIMITS } from "../../constants.js";
 import { JsonTypes } from "../../../typings/enums.js";
-class FileUpload {
+export class FileUpload {
   constructor() {
     _FileUpload_name.set(this, void 0);
     _FileUpload_stream.set(this, void 0);
@@ -59,8 +59,6 @@ class FileUpload {
    */
   setName(name) {
     if (!name) throw new TypeError("GLUON: File name must be provided.");
-    if (typeof name !== "string")
-      throw new TypeError("GLUON: File name must be a string.");
     if (name.length > LIMITS.MAX_FILE_NAME_LENGTH)
       throw new RangeError(
         `GLUON: File name must be less than ${LIMITS.MAX_FILE_NAME_LENGTH} characters.`,
@@ -74,7 +72,6 @@ class FileUpload {
    * @returns {FileUpload}
    */
   setStream(stream) {
-    if (!stream) throw new TypeError("GLUON: File stream must be provided.");
     __classPrivateFieldSet(this, _FileUpload_stream, stream, "f");
     return this;
   }
@@ -85,8 +82,6 @@ class FileUpload {
    */
   setPath(path) {
     if (!path) throw new TypeError("GLUON: File path must be provided.");
-    if (typeof path !== "string")
-      throw new TypeError("GLUON: File path must be a string.");
     __classPrivateFieldSet(this, _FileUpload_path, path, "f");
     return this;
   }
@@ -96,9 +91,6 @@ class FileUpload {
    * @returns {FileUpload}
    */
   setSize(size) {
-    if (!size) throw new TypeError("GLUON: File size must be provided.");
-    if (typeof size !== "number")
-      throw new TypeError("GLUON: File size must be a number.");
     __classPrivateFieldSet(this, _FileUpload_size, size, "f");
     return this;
   }
@@ -176,5 +168,4 @@ class FileUpload {
   (_FileUpload_stream = new WeakMap()),
   (_FileUpload_path = new WeakMap()),
   (_FileUpload_size = new WeakMap());
-export default FileUpload;
 //# sourceMappingURL=fileUpload.js.map

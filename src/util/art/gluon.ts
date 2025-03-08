@@ -1,6 +1,6 @@
 import { GLUON_VERSION } from "../../constants.js";
 
-export default function gluon() {
+export function gluon() {
   return `
  ██████  ██      ██    ██  ██████  ███    ██ 
 ██       ██      ██    ██ ██    ██ ████   ██ 

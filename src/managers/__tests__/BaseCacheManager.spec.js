@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* global setTimeout */
 import { expect } from "chai";
 import BaseCacheManager from "../BaseCacheManager.js";
 import { TEST_CLIENTS, TEST_GUILDS } from "../../testData.js";
@@ -25,6 +27,10 @@ describe("BaseCacheManager", function () {
       expect(baseCacheManager).to.have.property("delete");
       expect(baseCacheManager).to.have.property("clear");
       expect(baseCacheManager).to.have.property("_intervalCallback");
+      expect(baseCacheManager).to.have.property("fetchFromRules");
+      expect(baseCacheManager).to.have.property("fetchWithRules");
+      expect(baseCacheManager).to.have.property("has");
+      expect(baseCacheManager).to.have.property("map");
       expect(baseCacheManager).to.have.property("size");
       expect(baseCacheManager).to.have.property("forEach");
       expect(baseCacheManager).to.have.property("toJSON");
@@ -192,6 +198,54 @@ describe("BaseCacheManager", function () {
     });
   });
 
+  context("check fetchFromRules", function () {
+    it("should fetch the correct value from the cache rules", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const externalCache = new Map();
+      new GluonCacheRule()
+        .setStructureType(GuildEmojisManager)
+        .setName("test")
+        .setHandlerFunction((value) => {
+          return externalCache.set("key", value);
+        })
+        .setRetrieveFunction((key) => {
+          return externalCache.get(key);
+        })
+        .applyRule();
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: GuildEmojisManager,
+      });
+      baseCacheManager.set("key", "value", 1);
+      const expiryDate = new Date(Date.now() + 1 * 1000);
+      const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
+      baseCacheManager.expireBucket(bucket);
+      expect(await baseCacheManager.fetchFromRules("key")).to.equal("value");
+    });
+
+    it("should return null if it fails to fetch from the cache rules", async function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const externalCache = new Map();
+      new GluonCacheRule()
+        .setStructureType(GuildEmojisManager)
+        .setName("test")
+        .setHandlerFunction((value) => {
+          return externalCache.set("key", value);
+        })
+        .setRetrieveFunction((key) => {
+          return externalCache.get(key);
+        })
+        .applyRule();
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: GuildEmojisManager,
+      });
+      baseCacheManager.set("key", "value", 1);
+      const expiryDate = new Date(Date.now() + 1 * 1000);
+      const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
+      baseCacheManager.expireBucket(bucket);
+      expect(await baseCacheManager.fetchFromRules("key3")).to.be.null;
+    });
+  });
+
   context("check forEach", function () {
     it("should iterate over the cache", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -208,6 +262,22 @@ describe("BaseCacheManager", function () {
     });
   });
 
+  context("check map", function () {
+    it("should map the cache", function () {
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      const guildEmojisManager = new GuildEmojisManager(client, guild);
+      const baseCacheManager = new BaseCacheManager(client, {
+        structureType: guildEmojisManager,
+      });
+      baseCacheManager.set("key", "value");
+      const mapped = baseCacheManager.map((value, key) => {
+        return { key, value };
+      });
+      expect(mapped).to.deep.equal([{ key: 0, value: ["key", "value"] }]);
+    });
+  });
+
   context("check has", function () {
     it("should return the correct value", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
@@ -218,18 +288,6 @@ describe("BaseCacheManager", function () {
       });
       baseCacheManager.set("key", "value");
       expect(baseCacheManager.has("key")).to.be.true;
-    });
-    it("should throw an error when the key is not a string", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      const guildEmojisManager = new GuildEmojisManager(client, guild);
-      const baseCacheManager = new BaseCacheManager(client, {
-        structureType: guildEmojisManager,
-      });
-      expect(() => baseCacheManager.has(1)).to.throw(
-        TypeError,
-        "GLUON: Key must be a string.",
-      );
     });
   });
 

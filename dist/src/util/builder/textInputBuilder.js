@@ -33,8 +33,6 @@ class TextInput {
    * @see {@link https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles}
    */
   setStyle(style) {
-    if (!style)
-      throw new TypeError("GLUON: Text input style must be provided.");
     this.style = style;
     return this;
   }

@@ -19,8 +19,8 @@ import { deepCompare } from "../util/general/deepCompare.js";
 import ModalResponse from "../structures/ModalResponse.js";
 import ChannelMessageManager from "../managers/ChannelMessageManager.js";
 import GuildMemberManager from "../managers/GuildMemberManager.js";
-import quark from "../util/art/quark.js";
-import gluon from "../util/art/gluon.js";
+import { quark } from "../util/art/quark.js";
+import { gluon } from "../util/art/gluon.js";
 import {
   APIApplicationCommandAutocompleteGuildInteraction,
   APIChatInputApplicationCommandGuildInteraction,

@@ -1,71 +1,94 @@
 import { expect } from "chai";
-import { TEST_DATA } from "../../../testData.js";
-import FileUpload from "../fileUpload.js";
-import Stream from "stream";
-describe("File", function () {
-  context("check import", function () {
-    it("should be a function", function () {
-      expect(File).to.be.a("function");
-    });
+import { Stream } from "stream";
+import { FileUpload } from "../fileUpload.js";
+import { LIMITS } from "../../../constants.js";
+import { JsonTypes } from "#typings/enums.js";
+describe("FileUpload", function () {
+  let fileUpload;
+  beforeEach(function () {
+    fileUpload = new FileUpload();
   });
-  context("check setName", function () {
-    it("should have method setName", function () {
-      const file = new FileUpload();
-      expect(file).to.respondTo("setName");
-    });
+  describe("setName", function () {
     it("should set the name of the file", function () {
-      const file = new FileUpload();
-      const readableStream = new Stream.Readable();
-      file.setStream(readableStream);
-      file.setName(TEST_DATA.FILE_NAME);
-      expect(file.toJSON().name).to.equal(TEST_DATA.FILE_NAME);
+      const name = "testFile.txt";
+      fileUpload.setName(name);
+      expect(fileUpload.name).to.equal(name);
     });
-    it("should throw an error if no name is provided", function () {
-      const file = new FileUpload();
-      expect(() => file.setName()).to.throw(
-        TypeError,
+    it("should throw an error if name is not provided", function () {
+      expect(() => fileUpload.setName("")).to.throw(
         "GLUON: File name must be provided.",
       );
     });
-    it("should throw an error if the name is not a string", function () {
-      const file = new FileUpload();
-      expect(() => file.setName(123)).to.throw(
-        TypeError,
-        "GLUON: File name must be a string.",
+    it("should throw an error if name length exceeds the limit", function () {
+      const longName = "a".repeat(LIMITS.MAX_FILE_NAME_LENGTH + 1);
+      expect(() => fileUpload.setName(longName)).to.throw(
+        `GLUON: File name must be less than ${LIMITS.MAX_FILE_NAME_LENGTH} characters.`,
       );
     });
   });
-  context("check setStream", function () {
-    it("should have method setStream", function () {
-      const file = new FileUpload();
-      expect(file).to.respondTo("setStream");
-    });
+  describe("setStream", function () {
     it("should set the stream of the file", function () {
-      const file = new FileUpload();
-      const readableStream = new Stream.Readable();
-      file.setStream(readableStream);
-      file.setName(TEST_DATA.FILE_NAME);
-      expect(file.toJSON().stream).to.equal(readableStream);
+      const stream = new Stream();
+      fileUpload.setStream(stream);
+      expect(fileUpload.stream).to.equal(stream);
     });
-    it("should throw an error if no stream is provided", function () {
-      const file = new FileUpload();
-      expect(() => file.setStream()).to.throw(
-        TypeError,
-        "GLUON: File stream must be provided.",
+  });
+  describe("setPath", function () {
+    it("should set the path of the file", function () {
+      const path = "/path/to/file.txt";
+      fileUpload.setPath(path);
+      expect(fileUpload.attachment).to.equal(path);
+    });
+    it("should throw an error if path is not provided", function () {
+      expect(() => fileUpload.setPath("")).to.throw(
+        "GLUON: File path must be provided.",
       );
     });
   });
-  context("check file structure", function () {
-    it("should match the expected structure when a stream is provided", function () {
-      const readableStream = new Stream.Readable();
-      const file = new FileUpload()
-        .setName(TEST_DATA.FILE_NAME)
-        .setStream(readableStream);
-      expect(file.toJSON()).to.be.an("object");
-      expect(file.toJSON()).to.have.property("stream");
-      expect(file.toJSON()).to.have.property("name");
-      expect(file.toJSON().stream).to.equal(readableStream);
-      expect(file.toJSON().name).to.equal(TEST_DATA.FILE_NAME);
+  describe("setSize", function () {
+    it("should set the size of the file", function () {
+      const size = 1024;
+      fileUpload.setSize(size);
+      expect(fileUpload.size).to.equal(size);
+    });
+  });
+  describe("toJSON", function () {
+    it("should return JSON representation with stream", function () {
+      const name = "testFile.txt";
+      const size = 1024;
+      const stream = new Stream();
+      fileUpload.setName(name).setSize(size).setStream(stream);
+      const json = fileUpload.toJSON(JsonTypes.CACHE_FORMAT);
+      expect(json).to.deep.equal({ name, size, stream });
+    });
+    it("should return JSON representation with path", function () {
+      const name = "testFile.txt";
+      const size = 1024;
+      const path = "/path/to/file.txt";
+      fileUpload.setName(name).setSize(size).setPath(path);
+      const json = fileUpload.toJSON(JsonTypes.CACHE_FORMAT);
+      expect(json).to.deep.equal({ name, size, attachment: path });
+    });
+    it("should throw an error if name is not provided and validation is not suppressed", function () {
+      expect(() => fileUpload.toJSON(JsonTypes.CACHE_FORMAT)).to.throw(
+        "GLUON: File name must be provided.",
+      );
+    });
+    it("should throw an error if neither stream nor path is provided and validation is not suppressed", function () {
+      fileUpload.setName("testFile.txt").setSize(1024);
+      expect(() => fileUpload.toJSON(JsonTypes.CACHE_FORMAT)).to.throw(
+        "GLUON: File stream or path must be provided.",
+      );
+    });
+    it("should not throw an error if validation is suppressed", function () {
+      const json = fileUpload.toJSON(JsonTypes.CACHE_FORMAT, {
+        suppressValidation: true,
+      });
+      expect(json).to.deep.equal({
+        attachment: undefined,
+        name: undefined,
+        size: undefined,
+      });
     });
   });
 });

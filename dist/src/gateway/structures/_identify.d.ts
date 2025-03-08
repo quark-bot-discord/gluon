@@ -1,13 +1,13 @@
 /**
- * Creates an identify payload for the gateway.
- * @param {String} token The authorization token.
- * @param {Array<Number>} shard An array of shard ids which this process is managing.
- * @param {Number} intents The intents to use.
- * @returns {Buffer}
+ * Constructs and returns a Buffer containing the identification payload for the gateway.
+ *
+ * @param token - The authentication token for the gateway.
+ * @param shard - An array containing the shard ID and the total number of shards.
+ * @param intents - The bitwise value representing the intents for the gateway connection.
+ * @returns A Buffer containing the packed identification payload.
  */
-declare function _identify(
+export declare function _identify(
   token: string,
   shard: [number, number],
   intents: number,
 ): Buffer;
-export default _identify;

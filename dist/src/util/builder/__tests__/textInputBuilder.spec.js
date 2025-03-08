@@ -48,13 +48,6 @@ describe("TextInputBuilder", function () {
       textInput.setStyle(TextInputStyle.Paragraph);
       expect(textInput.style).to.equal(TextInputStyle.Paragraph);
     });
-    it("should throw an error if no style is provided", function () {
-      const textInput = new TextInputBuilder();
-      expect(() => textInput.setStyle()).to.throw(
-        TypeError,
-        "GLUON: Text input style must be provided.",
-      );
-    });
   });
   context("check setCustomID", function () {
     it("should have method setCustomID", function () {

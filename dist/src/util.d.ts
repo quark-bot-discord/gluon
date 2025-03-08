@@ -19,7 +19,7 @@ export { default as TextInput } from "./util/builder/textInputBuilder.js";
 export { verifyMessageLink } from "./util/discord/verifyMessageLink.js";
 export { default as escapedString } from "./util/discord/escapedString.js";
 export { default as combinePermissions } from "./util/discord/combinePermissions.js";
-export { default as FileUpload } from "./util/builder/fileUpload.js";
+export { FileUpload } from "./util/builder/fileUpload.js";
 export { default as isValidUrl } from "./util/general/isValidUrl.js";
 export { default as GluonCacheRule } from "./util/gluon/gluonCacheRule.js";
 export { default as encryptStructure } from "./util/gluon/encryptStructure.js";

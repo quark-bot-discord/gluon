@@ -3,7 +3,7 @@ import { LIMITS } from "../../constants.js";
 import type { FileUpload as FileUploadType } from "typings/index.d.ts";
 import { JsonTypes } from "../../../typings/enums.js";
 
-class FileUpload implements FileUploadType {
+export class FileUpload implements FileUploadType {
   #name: string | undefined;
   #stream: Stream | undefined;
   #path: string | undefined;
@@ -15,8 +15,6 @@ class FileUpload implements FileUploadType {
    */
   setName(name: string) {
     if (!name) throw new TypeError("GLUON: File name must be provided.");
-    if (typeof name !== "string")
-      throw new TypeError("GLUON: File name must be a string.");
     if (name.length > LIMITS.MAX_FILE_NAME_LENGTH)
       throw new RangeError(
         `GLUON: File name must be less than ${LIMITS.MAX_FILE_NAME_LENGTH} characters.`,
@@ -31,7 +29,6 @@ class FileUpload implements FileUploadType {
    * @returns {FileUpload}
    */
   setStream(stream: Stream) {
-    if (!stream) throw new TypeError("GLUON: File stream must be provided.");
     this.#stream = stream;
     return this;
   }
@@ -43,8 +40,6 @@ class FileUpload implements FileUploadType {
    */
   setPath(path: string) {
     if (!path) throw new TypeError("GLUON: File path must be provided.");
-    if (typeof path !== "string")
-      throw new TypeError("GLUON: File path must be a string.");
     this.#path = path;
     return this;
   }
@@ -55,9 +50,6 @@ class FileUpload implements FileUploadType {
    * @returns {FileUpload}
    */
   setSize(size: number) {
-    if (!size) throw new TypeError("GLUON: File size must be provided.");
-    if (typeof size !== "number")
-      throw new TypeError("GLUON: File size must be a number.");
     this.#size = size;
     return this;
   }
@@ -133,5 +125,3 @@ class FileUpload implements FileUploadType {
     }
   }
 }
-
-export default FileUpload;

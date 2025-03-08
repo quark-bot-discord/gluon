@@ -34,11 +34,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
       structureType: StaticManagerType<T>;
     },
   ) {
-    if (!client)
-      throw new TypeError("GLUON: Client must be a Client instance.");
-    if (!structureType)
-      throw new TypeError("GLUON: Structure type must be provided.");
-
     /**
      * The cache for this manager.
      * @type {Map<String, Object>}
@@ -104,8 +99,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @throws {TypeError}
    */
   get(key: string) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     const value = this.#cache.get(key);
     if (value) return value;
     else return null;
@@ -121,8 +114,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @async
    */
   fetchFromRules(key: string) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return this.#_callFetches(key);
   }
 
@@ -136,8 +127,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @throws {TypeError}
    */
   async fetchWithRules(key: string) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     const value = this.get(key);
     if (value) return value;
     else return this.#_callFetches(key);
@@ -154,10 +143,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @throws {TypeError}
    */
   set(key: string, value: T, expiry = 0) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
-    if (typeof expiry !== "number")
-      throw new TypeError("GLUON: Expiry must be a number.");
     this.#addToExpiryBucket(key, expiry);
     this.#cache.set(key, value);
   }
@@ -237,8 +222,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @method
    */
   delete(key: string) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.delete(key);
   }
 
@@ -343,8 +326,6 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @throws {TypeError}
    */
   has(key: string) {
-    if (typeof key !== "string")
-      throw new TypeError("GLUON: Key must be a string.");
     return this.#cache.has(key);
   }
 

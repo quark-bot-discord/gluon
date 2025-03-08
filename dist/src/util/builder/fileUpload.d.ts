@@ -1,7 +1,7 @@
 import { Stream } from "stream";
 import type { FileUpload as FileUploadType } from "typings/index.d.ts";
 import { JsonTypes } from "../../../typings/enums.js";
-declare class FileUpload implements FileUploadType {
+export declare class FileUpload implements FileUploadType {
   #private;
   /**
    * The name of the file.
@@ -70,4 +70,3 @@ declare class FileUpload implements FileUploadType {
         size: number;
       };
 }
-export default FileUpload;

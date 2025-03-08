@@ -1,11 +1,16 @@
 import { GatewayOpcodes } from "#typings/discord.js";
 import erlpack from "erlpack";
-function _heartbeat(d) {
+/**
+ * Generates a heartbeat payload for the gateway.
+ *
+ * @param d - The heartbeat interval or null.
+ * @returns A Buffer containing the packed heartbeat payload.
+ */
+export function _heartbeat(d) {
   const payload = {
     op: GatewayOpcodes.Heartbeat,
     d: d ? d : null,
   };
   return erlpack.pack(payload);
 }
-export default _heartbeat;
 //# sourceMappingURL=_heartbeat.js.map
