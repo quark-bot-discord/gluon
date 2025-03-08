@@ -4,30 +4,24 @@ import getMember from "../getMember.js";
 import type {
   Client as ClientType,
   Member as MemberType,
+  Guild as GuildType,
 } from "#typings/index.d.ts";
 import { Snowflake } from "#typings/discord.js";
+import { TEST_CLIENTS, TEST_GUILDS, TEST_MEMBERS } from "#src/testData.js";
 
 describe("getMember", function () {
   let client: ClientType;
   let guildId: Snowflake;
   let memberId: Snowflake;
-  let guild: any;
+  let guild: GuildType;
   let member: MemberType;
 
   beforeEach(function () {
-    member = { id: "memberId" } as MemberType;
-    guild = {
-      members: {
-        get: sinon.stub().returns(member),
-      },
-    };
-    client = {
-      guilds: {
-        get: sinon.stub().returns(guild),
-      },
-    } as unknown as ClientType;
-    guildId = "guildId" as Snowflake;
-    memberId = "memberId" as Snowflake;
+    client = TEST_CLIENTS.ALL_CACHES_ENABLED();
+    guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
+    member = TEST_MEMBERS.GENERIC_MEMBER(client);
+    guildId = guild.id;
+    memberId = member.id;
   });
 
   it("should throw a TypeError if client is not provided", function () {
@@ -52,9 +46,9 @@ describe("getMember", function () {
   });
 
   it("should return null if guild is not found", function () {
-    (client.guilds.get as sinon.SinonStub).returns(null);
+    sinon.replace(client.guilds, "get", sinon.fake.returns(null));
     const result = getMember(client, guildId, memberId);
-    expect(result).to.be.null;
+    return expect(result).to.be.null;
   });
 
   it("should return the member if found", function () {
@@ -63,8 +57,8 @@ describe("getMember", function () {
   });
 
   it("should return null if member is not found", function () {
-    (guild.members.get as sinon.SinonStub).returns(null);
+    sinon.replace(guild.members, "get", sinon.fake.returns(null));
     const result = getMember(client, guildId, memberId);
-    expect(result).to.be.null;
+    return expect(result).to.be.null;
   });
 });
