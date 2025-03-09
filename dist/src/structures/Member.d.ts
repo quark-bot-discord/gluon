@@ -78,7 +78,7 @@ declare class Member implements MemberType {
    * @readonly
    * @public
    */
-  get guild(): import("#typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild;
   /**
    * The nickname of the member.
    * @type {String?}

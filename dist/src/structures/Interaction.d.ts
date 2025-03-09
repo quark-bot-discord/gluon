@@ -69,7 +69,7 @@ declare class Interaction implements InteractionType {
    * @readonly
    * @public
    */
-  get guild(): import("../../typings/index.d.ts").Guild | null;
+  get guild(): import("../../typings/index.d.ts").Guild;
   /**
    * The id of the channel that this interaction belongs to.
    * @type {String}

@@ -196,11 +196,15 @@ class Interaction {
    * @public
    */
   get guild() {
-    return (
-      __classPrivateFieldGet(this, _Interaction__client, "f").guilds.get(
-        this.guildId,
-      ) || null
-    );
+    const guild = __classPrivateFieldGet(
+      this,
+      _Interaction__client,
+      "f",
+    ).guilds.get(this.guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found in cache.`);
+    }
+    return guild;
   }
   /**
    * The id of the channel that this interaction belongs to.

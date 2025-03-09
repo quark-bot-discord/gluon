@@ -273,7 +273,11 @@ class Member implements MemberType {
    * @public
    */
   get guild() {
-    return this.#_client.guilds.get(this.guildId) || null;
+    const guild = this.#_client.guilds.get(this.guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+    return guild;
   }
 
   /**

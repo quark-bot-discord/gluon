@@ -567,7 +567,7 @@ export class Interaction {
   public readonly token: string;
   public readonly type: InteractionTypes;
   public readonly guildId: Snowflake;
-  public readonly guild?: Guild | null;
+  public readonly guild: Guild;
   public readonly channelId?: Snowflake;
   public readonly channel?: AllChannelTypes | null;
   public readonly member?: MemberType | null;
@@ -703,7 +703,7 @@ export class Member {
   );
   public readonly id: Snowflake;
   public readonly guildId: Snowflake;
-  public readonly guild: Guild | null;
+  public readonly guild: Guild;
   public readonly nick: string | null;
   public readonly joinedAt?: UnixTimestamp;
   public readonly timeoutUntil: UnixTimestamp | null;

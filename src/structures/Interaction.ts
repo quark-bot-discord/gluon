@@ -161,7 +161,11 @@ class Interaction implements InteractionType {
    * @public
    */
   get guild() {
-    return this.#_client.guilds.get(this.guildId) || null;
+    const guild = this.#_client.guilds.get(this.guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found in cache.`);
+    }
+    return guild;
   }
 
   /**

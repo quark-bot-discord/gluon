@@ -332,11 +332,13 @@ class Member {
    * @public
    */
   get guild() {
-    return (
-      __classPrivateFieldGet(this, _Member__client, "f").guilds.get(
-        this.guildId,
-      ) || null
+    const guild = __classPrivateFieldGet(this, _Member__client, "f").guilds.get(
+      this.guildId,
     );
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
+    }
+    return guild;
   }
   /**
    * The nickname of the member.
