@@ -431,6 +431,7 @@ export class Guild {
   public readonly rulesChannel: TextChannel | null;
   public readonly preferredLocale: Locale;
   public readonly premiumSubscriptionCount: number;
+  public readonly displayIconURL: string | null;
   public readonly _cacheOptions: GuildCacheOptions;
   fetchAuditLogs({
     limit,
