@@ -10,6 +10,7 @@ import {
   TEST_MEMBERS,
 } from "../../testData.js";
 import { Message } from "../../structures.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 describe("ChannelMessageManager", function () {
   context("check import", function () {
@@ -730,8 +731,8 @@ describe("ChannelMessageManager", function () {
         [TEST_DATA.MESSAGE_ID],
       );
       await expect(purgeChannelMessages).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_MESSAGES",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageMessages",
       );
     });
   });

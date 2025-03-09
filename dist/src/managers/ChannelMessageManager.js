@@ -52,6 +52,7 @@ import BaseCacheManager from "./BaseCacheManager.js";
 import { ChannelType } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 /**
  * Manages all messages within a channel.
  */
@@ -150,8 +151,9 @@ class ChannelMessageManager extends BaseCacheManager {
         ).permissions,
         PERMISSIONS.VIEW_CHANNEL,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (
@@ -163,8 +165,9 @@ class ChannelMessageManager extends BaseCacheManager {
         ).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
     if (typeof options === "object") {
       return ChannelMessageManager.fetchMessages(
         __classPrivateFieldGet(this, _ChannelMessageManager__client, "f"),
@@ -326,15 +329,17 @@ class ChannelMessageManager extends BaseCacheManager {
     }
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
     const fromCache = ChannelMessageManager.getMessage(
       client,
       guildId,
@@ -402,15 +407,17 @@ class ChannelMessageManager extends BaseCacheManager {
     }
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
     let providedFilters = 0;
     if (around) providedFilters++;
     if (before) providedFilters++;
@@ -495,8 +502,9 @@ class ChannelMessageManager extends BaseCacheManager {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
     const body = {};
     // @ts-expect-error TS(2339): Property 'messages' does not exist on type '{}'.
     body.messages = messages;

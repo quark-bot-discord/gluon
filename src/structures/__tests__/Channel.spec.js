@@ -15,6 +15,7 @@ import ChannelCacheOptions from "../../managers/ChannelCacheOptions.js";
 import Role from "../Role.js";
 import { PERMISSIONS } from "../../constants.js";
 import { JsonTypes } from "#typings/enums.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 describe("Channel", function () {
   context("check import", function () {
@@ -363,8 +364,8 @@ describe("Channel", function () {
       });
       guild.channels.set(TEST_DATA.TEXT_CHANNEL.id, channel);
       await expect(channel.send({ content: "test" })).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: SEND_MESSAGES",
+        GluonPermissionsError,
+        "GLUON: Missing permission SendMessages",
       );
     });
     it("should call makeRequest with the correct parameters", async function () {

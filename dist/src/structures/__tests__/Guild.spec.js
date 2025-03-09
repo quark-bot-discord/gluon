@@ -26,6 +26,7 @@ import {
   GuildSystemChannelFlags,
   GuildVerificationLevel,
 } from "discord-api-types/v10";
+import { GluonPermissionsError } from "#typings/errors.js";
 describe("Guild", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -526,8 +527,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.ban()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: BAN_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission BanMembers",
       );
     });
     it("should throw an error if no user id is provided", async function () {
@@ -649,8 +650,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.unban()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: BAN_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission BanMembers",
       );
     });
     it("should throw an error if no user id is provided", async function () {
@@ -733,8 +734,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.kick()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: KICK_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission KickMembers",
       );
     });
     it("should throw an error if no user id is provided", async function () {
@@ -817,8 +818,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.removeMemberRole()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_ROLES",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageRoles",
       );
     });
     it("should throw an error if no user id is provided", async function () {
@@ -924,8 +925,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchAuditLogs()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: VIEW_AUDIT_LOG",
+        GluonPermissionsError,
+        "GLUON: Missing permission ViewAuditLog",
       );
     });
     it("should throw an error if limit is provided but it is not a number", async function () {
@@ -1060,8 +1061,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchInvites()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_GUILD",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageGuild",
       );
     });
     it("should not be rejected if the input is valid", async function () {
@@ -1130,8 +1131,8 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       TEST_MEMBERS.CLIENT_MEMBER(client);
       await expect(guild.fetchBan()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: BAN_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission BanMembers",
       );
     });
     it("should throw an error if no user id is provided", async function () {

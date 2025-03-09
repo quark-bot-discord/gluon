@@ -11,6 +11,7 @@ import {
 } from "../../typings/index.d.js";
 import { APIExtendedInvite, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * Manages all invites within a guild.
@@ -64,8 +65,9 @@ class GuildInviteManager
         (await this.#guild.me()).permissions,
         PERMISSIONS.MANAGE_GUILD,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
+    ) {
+      throw new GluonPermissionsError("ManageGuild");
+    }
 
     const data = (await this.#_client.request.makeRequest("getGuildInvites", [
       this.#guild.id,

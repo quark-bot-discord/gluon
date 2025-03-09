@@ -68,6 +68,7 @@ import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";
 import MessageSnapshot from "./MessageSnapshot.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * A message belonging to a channel within a guild.
@@ -1042,8 +1043,9 @@ class Message implements MessageTypeClass {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("SendMessages");
+    }
 
     const body = {};
 
@@ -1142,8 +1144,9 @@ class Message implements MessageTypeClass {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("SendMessages");
+    }
 
     const body = {};
 
@@ -1381,8 +1384,9 @@ class Message implements MessageTypeClass {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
 
     const body = {};
 

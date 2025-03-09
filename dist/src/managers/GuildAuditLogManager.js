@@ -47,6 +47,7 @@ import BaseCacheManager from "./BaseCacheManager.js";
 import { checkPermission } from "#src/util.js";
 import { PERMISSIONS } from "#src/constants.js";
 import { AuditLog } from "#src/structures.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 class GuildAuditLogManager extends BaseCacheManager {
   constructor(client, guild) {
     super(client, { structureType: GuildAuditLogManager });
@@ -67,8 +68,9 @@ class GuildAuditLogManager extends BaseCacheManager {
         ).permissions,
         PERMISSIONS.VIEW_AUDIT_LOG,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
+    ) {
+      throw new GluonPermissionsError("ViewAuditLog");
+    }
     if (typeof limit !== "undefined" && typeof limit !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: limit");
     if (typeof limit === "number" && (limit < 1 || limit > 100))

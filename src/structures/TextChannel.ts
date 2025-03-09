@@ -17,6 +17,7 @@ import {
   Snowflake,
 } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * Represents a text channel within Discord.
@@ -119,8 +120,9 @@ class TextChannel extends GuildChannel implements TextChannelType {
         this.checkPermission(await this.guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
 
     if (
       !Array.isArray(messages) ||

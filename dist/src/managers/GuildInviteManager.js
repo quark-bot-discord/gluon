@@ -48,6 +48,7 @@ import Invite from "../structures/Invite.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import getGuild from "#src/util/gluon/getGuild.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 /**
  * Manages all invites within a guild.
  */
@@ -98,8 +99,9 @@ class GuildInviteManager extends BaseCacheManager {
         ).permissions,
         PERMISSIONS.MANAGE_GUILD,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
+    ) {
+      throw new GluonPermissionsError("ManageGuild");
+    }
     const data = await __classPrivateFieldGet(
       this,
       _GuildInviteManager__client,

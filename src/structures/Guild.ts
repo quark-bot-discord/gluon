@@ -76,6 +76,7 @@ import type {
 } from "#typings/index.d.ts";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import GuildAuditLogManager from "#src/managers/GuildAuditLogManager.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * Represents a Discord guild.
@@ -1117,8 +1118,9 @@ class Guild implements GuildType {
   ) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
-    )
-      throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("BanMembers");
+    }
 
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
@@ -1164,8 +1166,9 @@ class Guild implements GuildType {
   async unban(user_id: Snowflake, { reason }: { reason?: string } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
-    )
-      throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("BanMembers");
+    }
 
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
@@ -1202,8 +1205,9 @@ class Guild implements GuildType {
   async kick(user_id: Snowflake, { reason }: { reason?: string } = {}) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.KICK_MEMBERS)
-    )
-      throw new Error("MISSING PERMISSIONS: KICK_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("KickMembers");
+    }
 
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
@@ -1245,8 +1249,9 @@ class Guild implements GuildType {
   ) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_ROLES)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
 
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
@@ -1304,8 +1309,9 @@ class Guild implements GuildType {
         (await this.me()).permissions,
         PERMISSIONS.VIEW_AUDIT_LOG,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
+    ) {
+      throw new GluonPermissionsError("ViewAuditLog");
+    }
 
     if (typeof limit !== "undefined" && typeof limit !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: limit");
@@ -1380,8 +1386,9 @@ class Guild implements GuildType {
   async fetchInvites() {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.MANAGE_GUILD)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_GUILD");
+    ) {
+      throw new GluonPermissionsError("ManageGuild");
+    }
 
     return this.#_client.request.makeRequest("getGuildInvites", [this.id]);
   }
@@ -1418,8 +1425,9 @@ class Guild implements GuildType {
   async fetchBan(user_id: Snowflake) {
     if (
       !checkPermission((await this.me()).permissions, PERMISSIONS.BAN_MEMBERS)
-    )
-      throw new Error("MISSING PERMISSIONS: BAN_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("BanMembers");
+    }
 
     if (typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");

@@ -1,4 +1,5 @@
 import { HttpMethods } from "msw";
+import { PermissionFlagsBits } from "./discord.js";
 
 export class GluonRequestError extends Error {
   public code: number;
@@ -33,5 +34,15 @@ export class GluonRatelimitEncountered extends GluonRequestError {
   ) {
     super(code, method, endpoint, requestStack);
     this.retryIn = retryIn;
+  }
+}
+
+export class GluonPermissionsError extends Error {
+  public permission: keyof typeof PermissionFlagsBits;
+  public permissionBit: bigint;
+  constructor(permission: keyof typeof PermissionFlagsBits) {
+    super(`GLUON: Missing permission ${permission}`);
+    this.permission = permission;
+    this.permissionBit = PermissionFlagsBits[permission];
   }
 }

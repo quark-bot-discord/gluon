@@ -10,6 +10,7 @@ import { APIAuditLog, AuditLogEvent, Snowflake } from "#typings/discord.js";
 import { checkPermission } from "#src/util.js";
 import { PERMISSIONS } from "#src/constants.js";
 import { AuditLog } from "#src/structures.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 class GuildAuditLogManager
   extends BaseCacheManager<AuditLogType>
@@ -42,8 +43,9 @@ class GuildAuditLogManager
         (await this.#guild.me()).permissions,
         PERMISSIONS.VIEW_AUDIT_LOG,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_AUDIT_LOG");
+    ) {
+      throw new GluonPermissionsError("ViewAuditLog");
+    }
 
     if (typeof limit !== "undefined" && typeof limit !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: limit");

@@ -69,6 +69,7 @@ import structureHashName from "../util/general/structureHashName.js";
 import { GuildMemberFlags } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 /**
  * Represents a guild member.
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
@@ -642,8 +643,9 @@ class Member {
         (await this.guild.me()).permissions,
         PERMISSIONS.MODERATE_MEMBERS,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("ModerateMembers");
+    }
     if (typeof timeout_until !== "number")
       throw new TypeError("GLUON: Timeout until must be a UNIX timestamp.");
     if (typeof reason !== "undefined" && typeof reason !== "string")
@@ -680,8 +682,9 @@ class Member {
         (await this.guild.me()).permissions,
         PERMISSIONS.MODERATE_MEMBERS,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("ModerateMembers");
+    }
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason must be a string.");
     const body = {};
@@ -715,8 +718,9 @@ class Member {
         (await this.guild.me()).permissions,
         PERMISSIONS.MANAGE_ROLES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
     if (
       !Array.isArray(roles) ||
       !roles.every((role) => typeof role === "string")
@@ -821,8 +825,9 @@ class Member {
     }
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
     const body = {};
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;
@@ -861,8 +866,9 @@ class Member {
     }
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
     const body = {};
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;

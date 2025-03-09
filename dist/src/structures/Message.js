@@ -84,6 +84,7 @@ import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import getMember from "#src/util/gluon/getMember.js";
 import MessageSnapshot from "./MessageSnapshot.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 /**
  * A message belonging to a channel within a guild.
  */
@@ -1136,8 +1137,9 @@ class Message {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("SendMessages");
+    }
     const body = {};
     // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     if (content) body.content = content;
@@ -1208,8 +1210,9 @@ class Message {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.SEND_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: SEND_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("SendMessages");
+    }
     const body = {};
     // @ts-expect-error TS(2339): Property 'content' does not exist on type '{}'.
     body.content = content;
@@ -1392,8 +1395,9 @@ class Message {
         channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
     const body = {};
     // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (reason) body["X-Audit-Log-Reason"] = reason;

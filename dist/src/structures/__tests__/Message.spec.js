@@ -21,6 +21,7 @@ import {
 } from "../../structures.js";
 import { JsonTypes } from "#typings/enums.js";
 import MessageSnapshot from "#structures/MessageSnapshot.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 describe("Message", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -383,8 +384,8 @@ describe("Message", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       await expect(message.reply({ content: "test" })).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: SEND_MESSAGES",
+        GluonPermissionsError,
+        "GLUON: Missing permission SendMessages",
       );
     });
     it("should throw an error if no input is provided", async function () {
@@ -516,8 +517,8 @@ describe("Message", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const message = TEST_MESSAGES.GENERIC_MESSAGE(client);
       await expect(message.edit({ content: "test" })).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: SEND_MESSAGES",
+        GluonPermissionsError,
+        "GLUON: Missing permission SendMessages",
       );
     });
     // it("should throw an error if no input is provided", async function () {
@@ -742,7 +743,10 @@ describe("Message", function () {
           TEST_DATA.CHANNEL_ID,
           TEST_DATA.MESSAGE_ID,
         ),
-      ).to.be.rejectedWith(Error, "MISSING PERMISSIONS: MANAGE_MESSAGES");
+      ).to.be.rejectedWith(
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageMessages",
+      );
     });
     it("should call makeRequest with the correct arguments", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

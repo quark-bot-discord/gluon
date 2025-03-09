@@ -9,6 +9,7 @@ import {
 } from "../../testData.js";
 import { Member } from "../../structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 describe("Member", function () {
   context("check import", function () {
@@ -108,8 +109,8 @@ describe("Member", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       await expect(member.addRole(TEST_DATA.ROLE_ID)).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_ROLES",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageRoles",
       );
     });
     it("should throw an error if the role is not a string", async function () {
@@ -186,8 +187,8 @@ describe("Member", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       await expect(member.removeRole(TEST_DATA.ROLE_ID)).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_ROLES",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageRoles",
       );
     });
     it("should throw an error if the role is not a string", async function () {
@@ -265,8 +266,8 @@ describe("Member", function () {
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       const timeoutUntil = ((new Date().getTime() / 1000) | 0) + 3600;
       await expect(member.timeoutAdd(timeoutUntil)).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MODERATE_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission ModerateMembers",
       );
     });
     it("should throw an error if the timeoutUntil is not a number", async function () {
@@ -343,8 +344,8 @@ describe("Member", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       await expect(member.timeoutRemove(TEST_DATA.ROLE_ID)).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MODERATE_MEMBERS",
+        GluonPermissionsError,
+        "GLUON: Missing permission ModerateMembers",
       );
     });
     it("should throw an error if a reason is provided and it is not a string", async function () {
@@ -410,7 +411,10 @@ describe("Member", function () {
       const member = TEST_MEMBERS.GENERIC_MEMBER(client);
       await expect(
         member.massUpdateRoles([TEST_DATA.ROLE_ID]),
-      ).to.be.rejectedWith(Error, "MISSING PERMISSIONS: MANAGE_ROLES");
+      ).to.be.rejectedWith(
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageRoles",
+      );
     });
     it("should throw an error if the roles is not an array", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

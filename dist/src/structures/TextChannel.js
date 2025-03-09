@@ -49,6 +49,7 @@ import Message from "./Message.js";
 import checkPermission from "../util/discord/checkPermission.js";
 import util from "util";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 /**
  * Represents a text channel within Discord.
  * @extends {Channel}
@@ -133,8 +134,9 @@ class TextChannel extends GuildChannel {
         this.checkPermission(await this.guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
     if (
       !Array.isArray(messages) ||
       !messages.every((m) => typeof m === "string")

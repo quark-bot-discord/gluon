@@ -13,6 +13,7 @@ import {
 import { ChannelType, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * Manages all messages within a channel.
@@ -129,15 +130,17 @@ class ChannelMessageManager
         (await this.#guild.me()).permissions,
         PERMISSIONS.VIEW_CHANNEL,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (await this.#guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
     if (typeof options === "object") {
       return ChannelMessageManager.fetchMessages(
         this.#_client,
@@ -311,15 +314,17 @@ class ChannelMessageManager
 
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
 
     const fromCache = ChannelMessageManager.getMessage(
       client,
@@ -404,15 +409,17 @@ class ChannelMessageManager
 
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.VIEW_CHANNEL)
-    )
-      throw new Error("MISSING PERMISSIONS: VIEW_CHANNEL");
+    ) {
+      throw new GluonPermissionsError("ViewChannel");
+    }
     if (
       !checkPermission(
         (await guild.me()).permissions,
         PERMISSIONS.READ_MESSAGE_HISTORY,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: READ_MESSAGE_HISTORY");
+    ) {
+      throw new GluonPermissionsError("ReadMessageHistory");
+    }
 
     let providedFilters = 0;
     if (around) providedFilters++;
@@ -510,8 +517,9 @@ class ChannelMessageManager
         channel.checkPermission(await guild.me()),
         PERMISSIONS.MANAGE_MESSAGES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_MESSAGES");
+    ) {
+      throw new GluonPermissionsError("ManageMessages");
+    }
 
     const body = {};
 

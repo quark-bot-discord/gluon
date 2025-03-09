@@ -32,6 +32,7 @@ import {
 } from "#typings/discord.js";
 import { GluonDebugLevels, JsonTypes } from "#typings/enums.js";
 import getGuild from "#src/util/gluon/getGuild.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 
 /**
  * Represents a guild member.
@@ -606,8 +607,9 @@ class Member implements MemberType {
         (await this.guild.me()).permissions,
         PERMISSIONS.MODERATE_MEMBERS,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("ModerateMembers");
+    }
 
     if (typeof timeout_until !== "number")
       throw new TypeError("GLUON: Timeout until must be a UNIX timestamp.");
@@ -652,8 +654,9 @@ class Member implements MemberType {
         (await this.guild.me()).permissions,
         PERMISSIONS.MODERATE_MEMBERS,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MODERATE_MEMBERS");
+    ) {
+      throw new GluonPermissionsError("ModerateMembers");
+    }
 
     if (typeof reason !== "undefined" && typeof reason !== "string")
       throw new TypeError("GLUON: Reason must be a string.");
@@ -697,8 +700,9 @@ class Member implements MemberType {
         (await this.guild.me()).permissions,
         PERMISSIONS.MANAGE_ROLES,
       )
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
 
     if (
       !Array.isArray(roles) ||
@@ -830,8 +834,9 @@ class Member implements MemberType {
 
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
 
     const body = {};
 
@@ -883,8 +888,9 @@ class Member implements MemberType {
 
     if (
       !checkPermission((await guild.me()).permissions, PERMISSIONS.MANAGE_ROLES)
-    )
-      throw new Error("MISSING PERMISSIONS: MANAGE_ROLES");
+    ) {
+      throw new GluonPermissionsError("ManageRoles");
+    }
 
     const body = {};
 

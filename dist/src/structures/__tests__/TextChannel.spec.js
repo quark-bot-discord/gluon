@@ -10,6 +10,7 @@ import {
 } from "../../testData.js";
 import { TextChannel } from "../../structures.js";
 import { JsonTypes } from "#typings/enums.js";
+import { GluonPermissionsError } from "#typings/errors.js";
 describe("TextChannel", function () {
   context("check import", function () {
     it("should be a function", function () {
@@ -69,8 +70,8 @@ describe("TextChannel", function () {
       TEST_MEMBERS.CLIENT_MEMBER(client);
       const textChannel = TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       await expect(textChannel.bulkDelete()).to.be.rejectedWith(
-        Error,
-        "MISSING PERMISSIONS: MANAGE_MESSAGES",
+        GluonPermissionsError,
+        "GLUON: Missing permission ManageMessages",
       );
     });
     it("should return an error if messages is not an array of strings", async function () {
