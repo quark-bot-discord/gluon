@@ -107,5 +107,28 @@ describe("BetterRequestHandler", function () {
     expect(options.body).to.equal(JSON.stringify({ key: "value" }));
     expect(result).to.deep.equal({ success: true });
   });
+  it("should make a PATCH request with correct data format", async function () {
+    fetchStub.resolves(
+      new Response(JSON.stringify({ success: true }), { status: 200 }),
+    );
+    const result = await requestHandler.makeRequest(
+      "patchGuildMember",
+      [TEST_DATA.GUILD_ID, TEST_DATA.MEMBER_ID],
+      {
+        key: "value",
+        "X-Audit-Log-Reason": "reason",
+      },
+    );
+    expect(fetchStub.calledOnce).to.be.true;
+    const [url, options] = fetchStub.firstCall.args;
+    expect(url).to.equal(
+      `${API_BASE_URL}/v${VERSION}/guilds/${TEST_DATA.GUILD_ID}/members/${TEST_DATA.MEMBER_ID}`,
+    );
+    expect(options.method).to.equal("PATCH");
+    expect(options.headers.Authorization).to.equal("Bot test-token");
+    expect(options.headers["Content-Type"]).to.equal("application/json");
+    expect(options.headers["X-Audit-Log-Reason"]).to.equal("reason");
+    expect(result).to.deep.equal({ success: true });
+  });
 });
 //# sourceMappingURL=betterRequestHandler.spec.js.map
