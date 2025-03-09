@@ -287,9 +287,6 @@ class Member {
             BigInt(data.roles[i]),
           );
     }
-    if (!__classPrivateFieldGet(this, _Member__client, "f").user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
     const memberIsClient =
       this.id === __classPrivateFieldGet(this, _Member__client, "f").user.id;
     const shouldCache = Member.shouldCache(

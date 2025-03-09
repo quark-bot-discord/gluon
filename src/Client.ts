@@ -40,9 +40,9 @@ import { GluonDebugLevels, JsonTypes } from "../typings/enums.js";
 
 class Client extends TypedEmitter<ClientEvents> implements ClientType {
   request: any;
-  user: UserType | null;
+  #user: UserType | null;
   // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
-  #token;
+  #token: string;
   #intents;
   #_cacheOptions;
   #_defaultGuildCacheOptions;
@@ -220,7 +220,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
      * The client user.
      * @type {User?}
      */
-    this.user = null;
+    this.#user = null;
 
     if (initCache?.clientUser) this.user = new User(this, initCache.clientUser);
 
@@ -281,6 +281,19 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
    */
   get intents() {
     return this.#intents;
+  }
+
+  get user() {
+    if (!this.#user) {
+      throw new Error(
+        "GLUON: Client user is not set. Please login before accessing this property.",
+      );
+    }
+    return this.#user;
+  }
+
+  set user(user: UserType) {
+    this.#user = user;
   }
 
   /**

@@ -2844,7 +2844,7 @@ export interface ClientEvents {
 
 export class Client extends TypedEmitter<ClientEvents> {
   request: any;
-  user: User | null;
+  user: User;
   constructor(options: ClientOptions);
   get shardIds(): number[];
   get totalShards(): number;

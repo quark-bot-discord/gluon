@@ -14,7 +14,6 @@ import { GluonDebugLevels } from "../typings/enums.js";
 declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #private;
   request: any;
-  user: UserType | null;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -82,6 +81,8 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @public
    */
   get intents(): number;
+  get user(): UserType;
+  set user(user: UserType);
   /**
    * The user manager for this client.
    * @type {UserManager}

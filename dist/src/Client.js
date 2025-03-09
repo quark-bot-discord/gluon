@@ -42,7 +42,8 @@ var __classPrivateFieldGet =
           ? f.value
           : state.get(receiver);
   };
-var _Client_token,
+var _Client_user,
+  _Client_token,
   _Client_intents,
   _Client__cacheOptions,
   _Client__defaultGuildCacheOptions,
@@ -128,6 +129,7 @@ class Client extends TypedEmitter {
     softRestartFunction,
   }) {
     super();
+    _Client_user.set(this, void 0);
     // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
     _Client_token.set(this, void 0);
     _Client_intents.set(this, void 0);
@@ -261,7 +263,7 @@ class Client extends TypedEmitter {
      * The client user.
      * @type {User?}
      */
-    this.user = null;
+    __classPrivateFieldSet(this, _Client_user, null, "f");
     if (initCache?.clientUser) this.user = new User(this, initCache.clientUser);
     /**
      * The user manager for this client.
@@ -319,6 +321,17 @@ class Client extends TypedEmitter {
    */
   get intents() {
     return __classPrivateFieldGet(this, _Client_intents, "f");
+  }
+  get user() {
+    if (!__classPrivateFieldGet(this, _Client_user, "f")) {
+      throw new Error(
+        "GLUON: Client user is not set. Please login before accessing this property.",
+      );
+    }
+    return __classPrivateFieldGet(this, _Client_user, "f");
+  }
+  set user(user) {
+    __classPrivateFieldSet(this, _Client_user, user, "f");
   }
   /**
    * The user manager for this client.
@@ -759,7 +772,8 @@ class Client extends TypedEmitter {
       });
   }
 }
-(_Client_token = new WeakMap()),
+(_Client_user = new WeakMap()),
+  (_Client_token = new WeakMap()),
   (_Client_intents = new WeakMap()),
   (_Client__cacheOptions = new WeakMap()),
   (_Client__defaultGuildCacheOptions = new WeakMap()),

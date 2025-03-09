@@ -224,10 +224,6 @@ class Member implements MemberType {
         if (data.roles[i] != guildId) this.#_roles.push(BigInt(data.roles[i]));
     }
 
-    if (!this.#_client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
-
     const memberIsClient = this.id === this.#_client.user.id;
 
     const shouldCache = Member.shouldCache(

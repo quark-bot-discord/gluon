@@ -375,10 +375,6 @@ class Interaction implements InteractionType {
       // @ts-expect-error TS(2339): Property 'flags' does not exist on type '{}'.
       if (quiet == true) body.flags = 64;
 
-      if (!this.#_client.user) {
-        throw new Error("GLUON: Client has not logged in yet");
-      }
-
       await this.#_client.request.makeRequest(
         "postExecuteWebhook",
         [this.#_client.user.id, this.#token],
@@ -444,10 +440,6 @@ class Interaction implements InteractionType {
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
-
-    if (!client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
 
     return client.request.makeRequest("deleteOriginalInteractionResponse", [
       client.user.id,
@@ -535,10 +527,6 @@ class Interaction implements InteractionType {
     if (components)
       // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
       body.components = Array.isArray(components) != true ? components : [];
-
-    if (!client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
 
     return client.request.makeRequest(
       "patchOriginalInteractionResponse",

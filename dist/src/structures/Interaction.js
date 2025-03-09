@@ -388,9 +388,6 @@ class Interaction {
         body.components = Array.isArray(components) != true ? components : [];
       // @ts-expect-error TS(2339): Property 'flags' does not exist on type '{}'.
       if (quiet == true) body.flags = 64;
-      if (!__classPrivateFieldGet(this, _Interaction__client, "f").user) {
-        throw new Error("GLUON: Client has not logged in yet");
-      }
       await __classPrivateFieldGet(
         this,
         _Interaction__client,
@@ -470,9 +467,6 @@ class Interaction {
       throw new TypeError("GLUON: Client must be an instance of Client");
     if (typeof interactionToken !== "string")
       throw new TypeError("GLUON: Interaction token must be a string");
-    if (!client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
     return client.request.makeRequest("deleteOriginalInteractionResponse", [
       client.user.id,
       interactionToken,
@@ -538,9 +532,6 @@ class Interaction {
     if (components)
       // @ts-expect-error TS(2339): Property 'components' does not exist on type '{}'.
       body.components = Array.isArray(components) != true ? components : [];
-    if (!client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
     return client.request.makeRequest(
       "patchOriginalInteractionResponse",
       [client.user.id, interactionToken],

@@ -1089,10 +1089,6 @@ class Guild implements GuildType {
    * @throws {Error}
    */
   async me() {
-    if (!this.#_client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
-
     const cached = this.members.get(this.#_client.user.id);
 
     if (cached) return cached;

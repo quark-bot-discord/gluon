@@ -1406,9 +1406,6 @@ class Guild {
    * @throws {Error}
    */
   async me() {
-    if (!__classPrivateFieldGet(this, _Guild__client, "f").user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
     const cached = this.members.get(
       __classPrivateFieldGet(this, _Guild__client, "f").user.id,
     );

@@ -868,7 +868,7 @@ class EventHandler {
       );
     }
 
-    const user = this.#_client.users.get(data.user_id) as UserType | null;
+    const user = this.#_client.users.get(data.user_id);
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_ADD, data, user);
   }
@@ -895,7 +895,7 @@ class EventHandler {
       );
     }
 
-    const user = this.#_client.users.get(data.user_id) as UserType | null;
+    const user = this.#_client.users.get(data.user_id);
 
     this.#_client.emit(Events.GUILD_SCHEDULED_EVENT_USER_REMOVE, data, user);
   }

@@ -122,9 +122,6 @@ class MessagePollManager implements MessagePollManagerType {
     | MessagePollManagerCacheJSON
     | MessagePollManagerStorageJSON
     | MessagePollManagerDiscordJSON {
-    if (!this.#_client.user) {
-      throw new Error("GLUON: Client has not logged in yet");
-    }
     switch (format) {
       case JsonTypes.CACHE_FORMAT:
       case JsonTypes.STORAGE_FORMAT: {

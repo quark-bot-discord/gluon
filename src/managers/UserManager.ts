@@ -90,7 +90,7 @@ class UserManager
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
-    const cached = await client.users.get(userId);
+    const cached = client.users.get(userId);
     if (cached) return cached;
 
     const data = await client.request.makeRequest("getUser", [userId]);
