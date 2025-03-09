@@ -38,8 +38,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "npm run build && mocha \"dist/**/*.spec.js\" --file setup.spec.js",
-    "coverage": "npm run build && c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js",
+    "test": "npm run build && mocha \"dist/**/*.spec.js\" --file setup.spec.js --exit",
+    "coverage": "npm run build && c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js --exit",
     "example": "node ./example/bot.js",
     "prepare": "husky",
     "build": "rm -rf dist/ && tsc"
@@ -106,6 +106,7 @@
     "sinon": "^18.0.0",
     "sinon-chai": "^4.0.0",
     "source-map-support": "^0.5.21",
+    "testdouble": "^3.20.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.25.0"

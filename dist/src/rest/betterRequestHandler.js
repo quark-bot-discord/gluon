@@ -54,18 +54,14 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_endpoints,
   _BetterRequestHandler_queueWorker,
   _BetterRequestHandler_queues,
-  _BetterRequestHandler_localRatelimitCache,
-  _BetterRequestHandler_redis,
   _BetterRequestHandler_latencyMs,
-  _BetterRequestHandler_handleBucket,
   _BetterRequestHandler_http;
 import fetch from "node-fetch";
 import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
-import NodeCache from "node-cache";
 import FastQ from "fastq";
-import getBucket from "./getBucket.js";
+import { getBucket, handleBucket } from "./bucket.js";
 import {
   GLUON_VERSION,
   API_BASE_URL,
@@ -75,7 +71,6 @@ import {
 } from "../constants.js";
 import endpoints from "./endpoints.js";
 import { sleep } from "../util/general/sleep.js";
-import redisClient from "#src/util/general/redisClient.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
@@ -91,22 +86,13 @@ class BetterRequestHandler {
     _BetterRequestHandler_fuzz.set(this, void 0);
     _BetterRequestHandler_endpoints.set(this, void 0);
     _BetterRequestHandler_queueWorker.set(this, void 0);
-    _BetterRequestHandler_queues.set(this, void 0);
-    _BetterRequestHandler_localRatelimitCache.set(this, void 0);
-    _BetterRequestHandler_redis.set(this, void 0);
+    _BetterRequestHandler_queues.set(this, {});
     _BetterRequestHandler_latencyMs.set(this, 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
-    __classPrivateFieldSet(this, _BetterRequestHandler_redis, redisClient, "f");
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_requestURL,
       `${API_BASE_URL}/v${VERSION}`,
-      "f",
-    );
-    __classPrivateFieldSet(
-      this,
-      _BetterRequestHandler_localRatelimitCache,
-      new NodeCache({ stdTTL: 60, checkperiod: 60 }),
       "f",
     );
     __classPrivateFieldSet(this, _BetterRequestHandler_token, token, "f");
@@ -130,15 +116,7 @@ class BetterRequestHandler {
       this,
       _BetterRequestHandler_queueWorker,
       async (data) => {
-        const bucket = await getBucket(
-          __classPrivateFieldGet(this, _BetterRequestHandler__client, "f"),
-          __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler_localRatelimitCache,
-            "f",
-          ),
-          data.hash,
-        );
+        const bucket = await getBucket(data.hash);
         if (
           !bucket ||
           bucket.remaining !== 0 ||
@@ -232,7 +210,6 @@ class BetterRequestHandler {
       },
       "f",
     );
-    __classPrivateFieldSet(this, _BetterRequestHandler_queues, {}, "f");
   }
   /**
    * The latency of the request handler.
@@ -315,57 +292,8 @@ class BetterRequestHandler {
   (_BetterRequestHandler_endpoints = new WeakMap()),
   (_BetterRequestHandler_queueWorker = new WeakMap()),
   (_BetterRequestHandler_queues = new WeakMap()),
-  (_BetterRequestHandler_localRatelimitCache = new WeakMap()),
-  (_BetterRequestHandler_redis = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
   (_BetterRequestHandler_instances = new WeakSet()),
-  (_BetterRequestHandler_handleBucket =
-    async function _BetterRequestHandler_handleBucket(
-      ratelimitBucket,
-      ratelimitRemaining,
-      ratelimitReset,
-      hash,
-      retryAfter = 0,
-    ) {
-      if (!ratelimitBucket) return;
-      if (!ratelimitRemaining) return;
-      if (!ratelimitReset) return;
-      const bucket = {
-        remaining: retryAfter !== 0 ? 0 : parseInt(ratelimitRemaining),
-        reset:
-          retryAfter !== 0
-            ? new Date().getTime() / 1000 + retryAfter
-            : Math.ceil(parseFloat(ratelimitReset)),
-      };
-      let expireFromCache =
-        Math.ceil(bucket.reset - new Date().getTime() / 1000) + 60;
-      if (expireFromCache < 0) expireFromCache = 60;
-      else if (expireFromCache > 2592000) expireFromCache = 2592000;
-      try {
-        await __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_redis,
-          "f",
-        ).set(
-          `${NAME.toLowerCase()}.paths.${hash}`,
-          JSON.stringify(bucket),
-          "EX",
-          expireFromCache,
-        );
-        __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_localRatelimitCache,
-          "f",
-        ).set(`${NAME.toLowerCase()}.paths.${hash}`, bucket, expireFromCache);
-      } catch (error) {
-        __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_localRatelimitCache,
-          "f",
-        ).set(`${NAME.toLowerCase()}.paths.${hash}`, bucket, expireFromCache);
-        throw error;
-      }
-    }),
   (_BetterRequestHandler_http = async function _BetterRequestHandler_http(
     hash,
     request,
@@ -379,15 +307,7 @@ class BetterRequestHandler {
       "f",
     )[request];
     const path = actualRequest.path(...(params ?? []));
-    const bucket = await getBucket(
-      __classPrivateFieldGet(this, _BetterRequestHandler__client, "f"),
-      __classPrivateFieldGet(
-        this,
-        _BetterRequestHandler_localRatelimitCache,
-        "f",
-      ),
-      hash,
-    );
+    const bucket = await getBucket(hash);
     if (
       !bucket ||
       bucket.remaining !== 0 ||
@@ -510,13 +430,7 @@ class BetterRequestHandler {
         json = null;
       }
       try {
-        await __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_instances,
-          "m",
-          _BetterRequestHandler_handleBucket,
-        ).call(
-          this,
+        await handleBucket(
           res.headers.get("x-ratelimit-bucket"),
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),

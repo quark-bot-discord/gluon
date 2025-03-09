@@ -2,9 +2,8 @@ import fetch from "node-fetch";
 import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
-import NodeCache from "node-cache";
 import FastQ from "fastq";
-import getBucket from "./getBucket.js";
+import { getBucket, handleBucket } from "./bucket.js";
 import {
   GLUON_VERSION,
   API_BASE_URL,
@@ -19,7 +18,6 @@ import type {
   Client as ClientType,
   FileUpload,
 } from "typings/index.d.ts";
-import redisClient from "#src/util/general/redisClient.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
 
@@ -44,18 +42,12 @@ class BetterRequestHandler {
   #fuzz;
   #endpoints;
   #queueWorker;
-  #queues;
-  #localRatelimitCache;
-  #redis;
+  #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
   #latencyMs: number = 0;
   constructor(client: ClientType, token: string) {
     this.#_client = client;
 
-    this.#redis = redisClient;
-
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
-
-    this.#localRatelimitCache = new NodeCache({ stdTTL: 60, checkperiod: 60 });
 
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
@@ -68,11 +60,7 @@ class BetterRequestHandler {
     this.#endpoints = endpoints;
 
     this.#queueWorker = async (data: QueueItemData) => {
-      const bucket = await getBucket(
-        this.#_client,
-        this.#localRatelimitCache,
-        data.hash,
-      );
+      const bucket = await getBucket(data.hash);
       if (
         !bucket ||
         bucket.remaining !== 0 ||
@@ -119,8 +107,6 @@ class BetterRequestHandler {
         );
       }
     };
-
-    this.#queues = {} as { [key: string]: FastQ.queueAsPromised<any> };
   }
 
   /**
@@ -130,55 +116,6 @@ class BetterRequestHandler {
    */
   get latency() {
     return this.#latencyMs;
-  }
-
-  async #handleBucket(
-    ratelimitBucket: string | null,
-    ratelimitRemaining: string | null,
-    ratelimitReset: string | null,
-    hash: string,
-    retryAfter = 0,
-  ) {
-    if (!ratelimitBucket) return;
-    if (!ratelimitRemaining) return;
-    if (!ratelimitReset) return;
-
-    const bucket = {
-      remaining: retryAfter !== 0 ? 0 : parseInt(ratelimitRemaining),
-      reset:
-        retryAfter !== 0
-          ? new Date().getTime() / 1000 + retryAfter
-          : Math.ceil(parseFloat(ratelimitReset)),
-    };
-
-    let expireFromCache =
-      Math.ceil(bucket.reset - new Date().getTime() / 1000) + 60;
-
-    if (expireFromCache < 0) expireFromCache = 60;
-    else if (expireFromCache > 2592000) expireFromCache = 2592000;
-
-    try {
-      await this.#redis.set(
-        `${NAME.toLowerCase()}.paths.${hash}`,
-        JSON.stringify(bucket),
-        "EX",
-        expireFromCache,
-      );
-
-      this.#localRatelimitCache.set(
-        `${NAME.toLowerCase()}.paths.${hash}`,
-        bucket,
-        expireFromCache,
-      );
-    } catch (error) {
-      this.#localRatelimitCache.set(
-        `${NAME.toLowerCase()}.paths.${hash}`,
-        bucket,
-        expireFromCache,
-      );
-
-      throw error;
-    }
   }
 
   async makeRequest(
@@ -246,11 +183,7 @@ class BetterRequestHandler {
 
     const path = actualRequest.path(...(params ?? []));
 
-    const bucket = await getBucket(
-      this.#_client,
-      this.#localRatelimitCache,
-      hash,
-    );
+    const bucket = await getBucket(hash);
 
     if (
       !bucket ||
@@ -367,7 +300,7 @@ class BetterRequestHandler {
       }
 
       try {
-        await this.#handleBucket(
+        await handleBucket(
           res.headers.get("x-ratelimit-bucket"),
           res.headers.get("x-ratelimit-remaining"),
           res.headers.get("x-ratelimit-reset"),
