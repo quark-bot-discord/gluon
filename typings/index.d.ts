@@ -452,6 +452,20 @@ export class Guild {
   calculateMessageCacheCount(): number;
   calculateMemberCacheCount(): number;
   me(): Promise<Member>;
+  ban(
+    user_id: Snowflake,
+    { reason, seconds }: { reason?: string; seconds?: number } = {},
+  ): Promise<void>;
+  unban(
+    user_id: Snowflake,
+    { reason }: { reason?: string } = {},
+  ): Promise<void>;
+  kick(user_id: Snowflake, { reason }: { reason?: string } = {}): Promise<void>;
+  removeMemberRole(
+    user_id: Snowflake,
+    role_id: Snowflake,
+    { reason }: { reason?: string } = {},
+  ): Promise<void>;
   _intervalCallback(): void;
   _incrementMemberCount(): void;
   _decrementMemberCount(): void;
