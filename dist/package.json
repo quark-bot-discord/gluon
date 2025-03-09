@@ -29,6 +29,9 @@
       "types": "./dist/typings/discord.d.ts",
       "default": "./dist/typings/discord.js"
     },
+    "./@types": {
+      "types": "./typings/index.d.ts"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
