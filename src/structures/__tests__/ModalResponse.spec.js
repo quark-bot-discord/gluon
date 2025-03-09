@@ -1,5 +1,10 @@
 import { expect } from "chai";
-import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "../../testData.js";
+import {
+  TEST_CHANNELS,
+  TEST_CLIENTS,
+  TEST_DATA,
+  TEST_GUILDS,
+} from "../../testData.js";
 import { ModalResponse } from "../../structures.js";
 import { JsonTypes } from "#typings/enums.js";
 
@@ -14,6 +19,7 @@ describe("ModalResponse", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const modalResponse = new ModalResponse(client, TEST_DATA.MODAL_RESPONSE);
       expect(modalResponse).to.have.property("id");
       expect(modalResponse).to.have.property("type");

@@ -293,6 +293,20 @@ export declare const TEST_DATA: {
     };
     token: string;
     version: number;
+    channel: {
+      id: string;
+      type: number;
+      guild_id: string;
+      name: string;
+      position: number;
+      permission_overwrites: never[];
+      rate_limit_per_user: number;
+      nsfw: boolean;
+      topic: string;
+      last_message_id: null;
+      parent_id: string;
+      last_pin_timestamp: null;
+    };
   };
   OPTION_SELECT: {
     application_id: string;
@@ -349,6 +363,20 @@ export declare const TEST_DATA: {
       timestamp: string;
       edited_timestamp: null;
       flags: number;
+    };
+    channel: {
+      id: string;
+      type: number;
+      guild_id: string;
+      name: string;
+      position: number;
+      permission_overwrites: never[];
+      rate_limit_per_user: number;
+      nsfw: boolean;
+      topic: string;
+      last_message_id: null;
+      parent_id: string;
+      last_pin_timestamp: null;
     };
     token: string;
     version: number;

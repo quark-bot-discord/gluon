@@ -53,7 +53,7 @@ const BUTTON_CLICK: APIMessageComponentGuildInteraction = {
     component_type: 2,
   },
   guild_id: "619434557472505857",
-  channel_id: "123456789012345677",
+  channel_id: "123456789112345678",
   member: {
     user: {
       id: "123456789012345678",
@@ -84,7 +84,7 @@ const BUTTON_CLICK: APIMessageComponentGuildInteraction = {
     id: "123456789012345678",
     type: 0,
     content: "test message",
-    channel_id: "123456789012345677",
+    channel_id: "123456789112345678",
     author: {
       id: "123456789012345678",
       username: "test",
@@ -111,7 +111,7 @@ const BUTTON_CLICK: APIMessageComponentGuildInteraction = {
   },
   app_permissions: "434534",
   channel: {
-    id: "123456789012345677",
+    id: "123456789112345678",
     type: 0,
     guild_id: "619434557472505857",
     position: 0,
@@ -1076,7 +1076,7 @@ export const TEST_DATA = {
       ],
     },
     guild_id: "619434557472505857",
-    channel_id: "123456789012345677",
+    channel_id: "123456789112345678",
     member: {
       avatar: null,
       flags: 0,
@@ -1099,6 +1099,20 @@ export const TEST_DATA = {
     // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
     type: 5,
     version: 1,
+    channel: {
+      id: "123456789112345678",
+      type: 0,
+      guild_id: "619434557472505857",
+      name: "test-channel",
+      position: 0,
+      permission_overwrites: [],
+      rate_limit_per_user: 0,
+      nsfw: false,
+      topic: "test topic",
+      last_message_id: null,
+      parent_id: "123456789021345978",
+      last_pin_timestamp: null,
+    },
   },
   OPTION_SELECT: {
     application_id: "123456789",
@@ -1159,6 +1173,20 @@ export const TEST_DATA = {
       // @ts-expect-error TS(1117): An object literal cannot have multiple properties ... Remove this comment to see the full error message
       content: "test message",
       flags: 0,
+    },
+    channel: {
+      id: "123456789112345678",
+      type: 0,
+      guild_id: "619434557472505857",
+      name: "test-channel",
+      position: 0,
+      permission_overwrites: [],
+      rate_limit_per_user: 0,
+      nsfw: false,
+      topic: "test topic",
+      last_message_id: null,
+      parent_id: "123456789021345978",
+      last_pin_timestamp: null,
     },
     token: "test",
     version: 1,

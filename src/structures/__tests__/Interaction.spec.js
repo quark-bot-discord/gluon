@@ -20,6 +20,7 @@ describe("Interaction", function () {
     it("should have the correct structure", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
+      TEST_CHANNELS.TEXT_CHANNEL_ALL_CACHES_ENABLED(client);
       const interaction = new Interaction(client, TEST_DATA.INTERACTION);
       expect(interaction).to.have.property("id");
       expect(interaction).to.have.property("type");

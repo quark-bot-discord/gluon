@@ -86,7 +86,7 @@ class Interaction implements InteractionType {
      * @type {BigInt}
      * @private
      */
-    this.#_channel_id = data.channel_id ? BigInt(data.channel_id) : undefined;
+    this.#_channel_id = data.channel ? BigInt(data.channel.id) : undefined;
 
     /**
      * The member that triggered the interaction, if it was run in a guild.
@@ -175,6 +175,13 @@ class Interaction implements InteractionType {
    * @public
    */
   get channelId() {
+    if (!this.#_channel_id) {
+      throw new Error(
+        `GLUON: Channel id not found for interaction ${
+          this.id
+        } in guild ${this.guildId}.`,
+      );
+    }
     return String(this.#_channel_id);
   }
 
@@ -185,7 +192,15 @@ class Interaction implements InteractionType {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) || null;
+    const channel = this.guild?.channels.get(this.channelId);
+    if (!channel) {
+      throw new Error(
+        `GLUON: Channel ${this.channelId} not found in cache for interaction ${
+          this.id
+        } in guild ${this.guildId}.`,
+      );
+    }
+    return channel;
   }
 
   /**

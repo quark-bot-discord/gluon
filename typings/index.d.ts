@@ -568,8 +568,8 @@ export class Interaction {
   public readonly type: InteractionTypes;
   public readonly guildId: Snowflake;
   public readonly guild: Guild;
-  public readonly channelId?: Snowflake;
-  public readonly channel?: AllChannelTypes | null;
+  public readonly channelId: Snowflake;
+  public readonly channel: AllChannelTypes;
   public readonly member?: MemberType | null;
   public readonly memberId?: Snowflake;
   textPrompt({

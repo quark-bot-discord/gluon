@@ -83,7 +83,7 @@ declare class Interaction implements InteractionType {
    * @readonly
    * @public
    */
-  get channel(): import("../../typings/index.d.ts").AllChannels | null;
+  get channel(): import("../../typings/index.d.ts").AllChannels;
   /**
    * The member that triggered the interaction, if it was run in a guild.
    * @type {Member?}
