@@ -77,7 +77,6 @@ declare class EventHandler {
   INVITE_CREATE(data: GatewayInviteCreateDispatchData): void;
   INVITE_DELETE(data: GatewayInviteDeleteDispatchData): void;
   VOICE_STATE_UPDATE(data: GatewayVoiceStateUpdateDispatchData): void;
-  VOICE_CHANNEL_STATUS_UPDATE(data: any): void;
   MESSAGE_CREATE(data: GatewayMessageCreateDispatchData): void;
   MESSAGE_UPDATE(data: GatewayMessageUpdateDispatchData): void;
   MESSAGE_DELETE(data: GatewayMessageDeleteDispatchData): void;

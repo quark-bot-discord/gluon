@@ -17,10 +17,21 @@ import { sleep } from "../util/general/sleep.js";
 import type {
   EndpointIndexItem,
   Client as ClientType,
+  FileUpload,
 } from "typings/index.d.ts";
 import redisClient from "#src/util/general/redisClient.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 const AbortController = globalThis.AbortController;
+
+interface QueueItemData {
+  hash: string;
+  request: keyof typeof endpoints;
+  params: string[];
+  body: { [key: string]: boolean | string | number | unknown } & {
+    files?: FileUpload[];
+  };
+  _stack: string;
+}
 
 class BetterRequestHandler {
   #token;
@@ -36,8 +47,7 @@ class BetterRequestHandler {
   #queues;
   #localRatelimitCache;
   #redis;
-  // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
-  #latencyMs;
+  #latencyMs: number = 0;
   constructor(client: ClientType, token: string) {
     this.#_client = client;
 
@@ -57,7 +67,7 @@ class BetterRequestHandler {
 
     this.#endpoints = endpoints;
 
-    this.#queueWorker = async (data: any) => {
+    this.#queueWorker = async (data: QueueItemData) => {
       const bucket = await getBucket(
         this.#_client,
         this.#localRatelimitCache,
@@ -123,13 +133,15 @@ class BetterRequestHandler {
   }
 
   async #handleBucket(
-    ratelimitBucket: any,
-    ratelimitRemaining: any,
-    ratelimitReset: any,
+    ratelimitBucket: string | null,
+    ratelimitRemaining: string | null,
+    ratelimitReset: string | null,
     hash: string,
     retryAfter = 0,
   ) {
     if (!ratelimitBucket) return;
+    if (!ratelimitRemaining) return;
+    if (!ratelimitReset) return;
 
     const bucket = {
       remaining: retryAfter !== 0 ? 0 : parseInt(ratelimitRemaining),
@@ -172,7 +184,9 @@ class BetterRequestHandler {
   async makeRequest(
     request: keyof typeof endpoints,
     params: string[],
-    body: any,
+    body: { [key: string]: boolean | string | number | unknown } & {
+      files?: FileUpload[];
+    },
   ) {
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
 
@@ -199,15 +213,17 @@ class BetterRequestHandler {
     let retries = 5;
 
     while (retries--) {
-      const _stack = new Error().stack;
-      const result = await this.#queues[hash].push({
+      const _stack = new Error().stack as string;
+      const data: QueueItemData = {
         hash,
         request,
         params,
         body,
         _stack,
-      });
+      };
+      const result = await this.#queues[hash].push(data);
       if (this.#queues[hash].idle()) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [hash]: _, ...rest } = this.#queues;
         this.#queues = rest;
       }
@@ -217,9 +233,16 @@ class BetterRequestHandler {
     throw new Error("GLUON: Request ran out of retries");
   }
 
-  async #http(hash: any, request: any, params: any, body: any, _stack: any) {
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-    const actualRequest = this.#endpoints[request];
+  async #http(
+    hash: string,
+    request: keyof typeof endpoints,
+    params: string[],
+    body: { [key: string]: boolean | string | number | unknown } & {
+      files?: FileUpload[];
+    },
+    _stack: string,
+  ) {
+    const actualRequest = this.#endpoints[request] as EndpointIndexItem;
 
     const path = actualRequest.path(...(params ?? []));
 
@@ -235,7 +258,7 @@ class BetterRequestHandler {
       (bucket.remaining === 0 &&
         new Date().getTime() / 1000 > bucket.reset + this.#latency)
     ) {
-      const serialize = (obj: any) => {
+      const serialize = (obj: Record<string, number | boolean | string>) => {
         const str = [];
         for (const p in obj)
           if (Object.prototype.hasOwnProperty.call(obj, p))
@@ -257,7 +280,7 @@ class BetterRequestHandler {
             `${i}_${body.files[i].name}`,
             body.files[i].stream
               ? body.files[i].stream
-              : createReadStream(body.files[i].attachment),
+              : createReadStream(body.files[i].attachment as string),
             body.files[i].name,
           );
         delete body.files;
@@ -302,7 +325,7 @@ class BetterRequestHandler {
               body &&
               (actualRequest.method === "GET" ||
                 actualRequest.method === "DELETE")
-                ? `?${serialize(body)}`
+                ? `?${serialize(body as Record<string, number | boolean | string>)}`
                 : ""
             }`,
             {

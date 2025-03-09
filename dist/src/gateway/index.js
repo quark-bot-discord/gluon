@@ -43,7 +43,7 @@ var __classPrivateFieldGet =
           : state.get(receiver);
   };
 var _Shard_instances,
-  _Shard_token,
+  _Shard__token,
   _Shard__client,
   _Shard__sessionId,
   _Shard__s,
@@ -98,7 +98,7 @@ class Shard {
     this.zlib = new ZlibSync.Inflate({
       chunkSize: 128 * 1024,
     });
-    _Shard_token.set(this, void 0);
+    _Shard__token.set(this, void 0);
     _Shard__client.set(this, void 0);
     _Shard__sessionId.set(this, void 0);
     _Shard__s.set(this, void 0);
@@ -120,7 +120,7 @@ class Shard {
     // @ts-expect-error TS(7008): Member '#lastHeartbeatTimestamp' implicitly has an... Remove this comment to see the full error message
     _Shard_lastHeartbeatTimestamp.set(this, void 0);
     _Shard_eventHandler.set(this, void 0);
-    __classPrivateFieldSet(this, _Shard_token, token, "f");
+    __classPrivateFieldSet(this, _Shard__token, token, "f");
     this.shard = shardId;
     __classPrivateFieldSet(this, _Shard__client, client, "f");
     __classPrivateFieldSet(
@@ -214,7 +214,7 @@ class Shard {
     __classPrivateFieldSet(this, _Shard_resumeGatewayUrl, url, "f");
   }
 }
-(_Shard_token = new WeakMap()),
+(_Shard__token = new WeakMap()),
   (_Shard__client = new WeakMap()),
   (_Shard__sessionId = new WeakMap()),
   (_Shard__s = new WeakMap()),
@@ -451,11 +451,11 @@ class Shard {
   (_Shard_identify = function _Shard_identify() {
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
       GluonDebugLevels.Info,
-      `Identifying with token ${__classPrivateFieldGet(this, _Shard_token, "f")}, shard ${this.shard} (total shards: ${__classPrivateFieldGet(this, _Shard__client, "f").totalShards}) and intents ${__classPrivateFieldGet(this, _Shard__client, "f").intents}`,
+      `Identifying with token ${__classPrivateFieldGet(this, _Shard__token, "f")}, shard ${this.shard} (total shards: ${__classPrivateFieldGet(this, _Shard__client, "f").totalShards}) and intents ${__classPrivateFieldGet(this, _Shard__client, "f").intents}`,
     );
     __classPrivateFieldGet(this, _Shard_ws, "f").send(
       _identify(
-        __classPrivateFieldGet(this, _Shard_token, "f"),
+        __classPrivateFieldGet(this, _Shard__token, "f"),
         [
           this.shard,
           __classPrivateFieldGet(this, _Shard__client, "f").totalShards,
@@ -486,7 +486,7 @@ class Shard {
     __classPrivateFieldSet(this, _Shard_waitingForHeartbeatACK, false, "f");
     __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
       GluonDebugLevels.Info,
-      `Resuming with token ${__classPrivateFieldGet(this, _Shard_token, "f")}, session id ${__classPrivateFieldGet(this, _Shard__sessionId, "f")} and sequence ${__classPrivateFieldGet(this, _Shard__s, "f")}`,
+      `Resuming with token ${__classPrivateFieldGet(this, _Shard__token, "f")}, session id ${__classPrivateFieldGet(this, _Shard__sessionId, "f")} and sequence ${__classPrivateFieldGet(this, _Shard__s, "f")}`,
     );
     if (
       !__classPrivateFieldGet(this, _Shard__sessionId, "f") ||
@@ -496,7 +496,7 @@ class Shard {
     }
     __classPrivateFieldGet(this, _Shard_ws, "f").send(
       _resume(
-        __classPrivateFieldGet(this, _Shard_token, "f"),
+        __classPrivateFieldGet(this, _Shard__token, "f"),
         __classPrivateFieldGet(this, _Shard__sessionId, "f"),
         __classPrivateFieldGet(this, _Shard__s, "f"),
       ),
@@ -616,7 +616,7 @@ class Shard {
     __classPrivateFieldGet(this, _Shard_ws, "f").on("error", (data) => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
         GluonDebugLevels.Error,
-        data?.stack?.toString(),
+        data?.stack?.toString() ?? data?.message ?? "Unknown error",
       );
       __classPrivateFieldGet(
         this,

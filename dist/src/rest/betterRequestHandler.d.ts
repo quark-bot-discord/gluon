@@ -1,5 +1,5 @@
 import endpoints from "./endpoints.js";
-import type { Client as ClientType } from "typings/index.d.ts";
+import type { Client as ClientType, FileUpload } from "typings/index.d.ts";
 declare class BetterRequestHandler {
   #private;
   constructor(client: ClientType, token: string);
@@ -8,11 +8,15 @@ declare class BetterRequestHandler {
    * @type {Number}
    * @readonly
    */
-  get latency(): any;
+  get latency(): number;
   makeRequest(
     request: keyof typeof endpoints,
     params: string[],
-    body: any,
+    body: {
+      [key: string]: boolean | string | number | unknown;
+    } & {
+      files?: FileUpload[];
+    },
   ): Promise<any>;
 }
 export default BetterRequestHandler;

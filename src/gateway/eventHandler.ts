@@ -138,6 +138,7 @@ class EventHandler {
     this.#_client.emit(Events.READY, this.#initialGuilds);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   RESUMED(data: GatewayResumeData) {
     this.#shard.resetRetries();
 
@@ -387,31 +388,16 @@ class EventHandler {
       .fetchWithRules(data.user.id)
       .then((member: MemberType | null) => {
         const guild = getGuild(this.#_client, data.guild_id);
-        if (member) guild?.members.delete(data.user.id);
-        else {
-          // const user = new User(this.#_client, data.user, { nocache: true });
-          // member = new Member(
-          //   this.#_client,
-          //   {},
-          //   {
-          //     userId: data.user.id,
-          //     guildId: data.guild_id,
-          //     user,
-          //     nocache: true,
-          //   },
-          // );
-          throw new Error("GLUON: NOT IMPLEMENTED");
+        if (!guild) {
+          throw new Error(`GLUON: Guild ${data.guild_id} not found.`);
+        }
+        const user = new User(this.#_client, data.user, { nocache: true });
+        guild._decrementMemberCount();
+        if (member) {
+          guild.members.delete(data.user.id);
         }
 
-        if (!member.guild) {
-          throw new Error(
-            `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
-          );
-        }
-
-        member.guild._decrementMemberCount();
-
-        this.#_client.emit(Events.GUILD_MEMBER_REMOVE, member);
+        this.#_client.emit(Events.GUILD_MEMBER_REMOVE, member, user);
         return member;
       })
       .catch((error: Error) => {
@@ -517,7 +503,7 @@ class EventHandler {
       nocache: true,
     });
 
-    this.#_client.emit(Events.INVITE_DELETE, partialInvite, invite);
+    this.#_client.emit(Events.INVITE_DELETE, partialInvite, invite ?? null);
   }
 
   VOICE_STATE_UPDATE(data: GatewayVoiceStateUpdateDispatchData) {
@@ -544,15 +530,6 @@ class EventHandler {
     }
 
     this.#_client.emit(Events.VOICE_STATE_UPDATE, oldVoiceState, newVoiceState);
-  }
-
-  VOICE_CHANNEL_STATUS_UPDATE(data: any) {
-    this.#_client._emitDebug(
-      GluonDebugLevels.Info,
-      `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
-    );
-
-    this.#_client.emit(Events.VOICE_CHANNEL_STATUS_UPDATE, data);
   }
 
   MESSAGE_CREATE(data: GatewayMessageCreateDispatchData) {

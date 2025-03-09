@@ -2721,7 +2721,7 @@ export interface ClientOptions {
   shardIds?: number[];
   sessionData?: SessionData[];
   initCache?: InitCache;
-  softRestartFunction?: Function;
+  softRestartFunction?: () => void;
 }
 
 export interface SessionData {
@@ -2758,7 +2758,7 @@ export interface ClientEvents {
     oldMember: Member | null,
     newMember: Member,
   ) => void;
-  [Events.GUILD_MEMBER_REMOVE]: (member: any) => void;
+  [Events.GUILD_MEMBER_REMOVE]: (member: Member | null, user: User) => void;
   [Events.BUTTON_CLICK]: (interaction: ButtonClick) => void;
   [Events.MENU_SELECT]: (interaction: OptionSelect) => void;
   [Events.MODAL_RESPONSE]: (interaction: ModalResponse) => void;
@@ -2768,7 +2768,6 @@ export interface ClientEvents {
     oldVoiceState: VoiceState | null,
     newVoiceState: VoiceState | null,
   ) => void;
-  [Events.VOICE_CHANNEL_STATUS_UPDATE]: (data: any) => void;
   [Events.CHANNEL_CREATE]: (channel: AllChannels) => void;
   [Events.CHANNEL_UPDATE]: (
     oldChannel: AllChannels | null,
@@ -2783,7 +2782,10 @@ export interface ClientEvents {
   [Events.THREAD_DELETE]: (thread: Thread | null) => void;
   [Events.THREAD_LIST_SYNC]: (threads: Thread[]) => void;
   [Events.INVITE_CREATE]: (invite: Invite) => void;
-  [Events.INVITE_DELETE]: (partialInvite: any, invite: any) => void;
+  [Events.INVITE_DELETE]: (
+    partialInvite: Invite,
+    invite: Invite | null,
+  ) => void;
   [Events.GUILD_ROLE_CREATE]: (role: Role) => void;
   [Events.GUILD_ROLE_UPDATE]: (oldRole: Role | null, newRole: Role) => void;
   [Events.GUILD_ROLE_DELETE]: (role: Role | null) => void;

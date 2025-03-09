@@ -29,7 +29,7 @@ export default {
     },
   },
   postCreateMessage: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/messages`;
     },
     method: "POST",
@@ -42,7 +42,7 @@ export default {
     },
   },
   patchEditMessage: {
-    path: (channel_id: any, message_id: any) => {
+    path: (channel_id: string, message_id: string) => {
       return `/channels/${channel_id}/messages/${message_id}`;
     },
     method: "PATCH",
@@ -55,7 +55,7 @@ export default {
     },
   },
   putCreateGuildBan: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/bans/${user_id}`;
     },
     method: "PUT",
@@ -67,7 +67,7 @@ export default {
     },
   },
   getGuildAuditLog: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/audit-logs`;
     },
     method: "GET",
@@ -78,7 +78,7 @@ export default {
     },
   },
   getChannelMessages: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/messages`;
     },
     method: "GET",
@@ -89,7 +89,7 @@ export default {
     },
   },
   getChannelMessage: {
-    path: (channel_id: any, message_id: any) => {
+    path: (channel_id: string, message_id: string) => {
       return `/channels/${channel_id}/messages/${message_id}`;
     },
     method: "GET",
@@ -100,7 +100,7 @@ export default {
     },
   },
   getGuildInvites: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/invites`;
     },
     method: "GET",
@@ -111,7 +111,7 @@ export default {
     },
   },
   postInteractionResponse: {
-    path: (interaction_id: any, interaction_token: any) => {
+    path: (interaction_id: string, interaction_token: string) => {
       return `/interactions/${interaction_id}/${interaction_token}/callback`;
     },
     method: "POST",
@@ -122,7 +122,7 @@ export default {
     },
   },
   patchOriginalInteractionResponse: {
-    path: (interaction_id: any, interaction_token: any) => {
+    path: (interaction_id: string, interaction_token: string) => {
       return `/webhooks/${interaction_id}/${interaction_token}/messages/@original`;
     },
     method: "PATCH",
@@ -133,7 +133,7 @@ export default {
     },
   },
   deleteOriginalInteractionResponse: {
-    path: (application_id: any, interaction_token: any) => {
+    path: (application_id: string, interaction_token: string) => {
       return `/webhooks/${application_id}/${interaction_token}/messages/@original`;
     },
     method: "DELETE",
@@ -144,7 +144,7 @@ export default {
     },
   },
   postBulkDeleteMessages: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/messages/bulk-delete`;
     },
     method: "POST",
@@ -156,7 +156,7 @@ export default {
     },
   },
   postExecuteWebhook: {
-    path: (webhook_id: any, webhook_token: any) => {
+    path: (webhook_id: string, webhook_token: string) => {
       return `/webhooks/${webhook_id}/${webhook_token}`;
     },
     method: "POST",
@@ -167,7 +167,7 @@ export default {
     },
   },
   getGuildChannels: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/channels`;
     },
     method: "GET",
@@ -183,7 +183,7 @@ export default {
     },
   },
   postFollowNewsChannel: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/followers`;
     },
     method: "POST",
@@ -194,7 +194,7 @@ export default {
     },
   },
   getSearchGuildMembers: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/members/search`;
     },
     method: "GET",
@@ -205,7 +205,7 @@ export default {
     },
   },
   getGuildMember: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/members/${user_id}`;
     },
     method: "GET",
@@ -216,7 +216,7 @@ export default {
     },
   },
   patchGuildMember: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/members/${user_id}`;
     },
     method: "PATCH",
@@ -228,7 +228,7 @@ export default {
     },
   },
   getGuildBan: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/bans/${user_id}`;
     },
     method: "GET",
@@ -239,7 +239,7 @@ export default {
     },
   },
   deleteChannelMessage: {
-    path: (channel_id: any, message_id: any) => {
+    path: (channel_id: string, message_id: string) => {
       return `/channels/${channel_id}/messages/${message_id}`;
     },
     method: "DELETE",
@@ -251,7 +251,7 @@ export default {
     },
   },
   deleteGuildMember: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/members/${user_id}`;
     },
     method: "DELETE",
@@ -263,7 +263,7 @@ export default {
     },
   },
   deleteRemoveGuildBan: {
-    path: (guild_id: any, user_id: any) => {
+    path: (guild_id: string, user_id: string) => {
       return `/guilds/${guild_id}/bans/${user_id}`;
     },
     method: "DELETE",
@@ -275,7 +275,7 @@ export default {
     },
   },
   putAddGuildMemberRole: {
-    path: (guild_id: any, user_id: any, role_id: any) => {
+    path: (guild_id: string, user_id: string, role_id: string) => {
       return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
     },
     method: "PUT",
@@ -287,7 +287,7 @@ export default {
     },
   },
   deleteRemoveMemberRole: {
-    path: (guild_id: any, user_id: any, role_id: any) => {
+    path: (guild_id: string, user_id: string, role_id: string) => {
       return `/guilds/${guild_id}/members/${user_id}/roles/${role_id}`;
     },
     method: "DELETE",
@@ -299,7 +299,7 @@ export default {
     },
   },
   getUser: {
-    path: (user_id: any) => {
+    path: (user_id: string) => {
       return `/users/${user_id}`;
     },
     method: "GET",
@@ -310,7 +310,7 @@ export default {
     },
   },
   getChannelWebhooks: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/webhooks`;
     },
     method: "GET",
@@ -321,7 +321,7 @@ export default {
     },
   },
   getWebhook: {
-    path: (webhook_id: any) => {
+    path: (webhook_id: string) => {
       return `/webhooks/${webhook_id}`;
     },
     method: "GET",
@@ -332,7 +332,7 @@ export default {
     },
   },
   deleteWebhook: {
-    path: (webhook_id: any) => {
+    path: (webhook_id: string) => {
       return `/webhooks/${webhook_id}`;
     },
     method: "DELETE",
@@ -343,7 +343,7 @@ export default {
     },
   },
   postCreateWebhook: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/webhooks`;
     },
     method: "POST",
@@ -354,7 +354,7 @@ export default {
     },
   },
   patchModifyWebhook: {
-    path: (webhook_id: any) => {
+    path: (webhook_id: string) => {
       return `/webhooks/${webhook_id}`;
     },
     method: "PATCH",
@@ -365,7 +365,7 @@ export default {
     },
   },
   deleteLeaveGuild: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/users/@me/guilds/${guild_id}`;
     },
     method: "DELETE",
@@ -376,7 +376,7 @@ export default {
     },
   },
   getListGuildScheduledEvents: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/scheduled-events`;
     },
     method: "GET",
@@ -387,7 +387,7 @@ export default {
     },
   },
   getGuildScheduledEvent: {
-    path: (guild_id: any, scheduled_event_id: any) => {
+    path: (guild_id: string, scheduled_event_id: string) => {
       return `/guilds/${guild_id}/scheduled-events/${scheduled_event_id}`;
     },
     method: "GET",
@@ -398,7 +398,7 @@ export default {
     },
   },
   bulkOverwriteGlobalApplicationCommands: {
-    path: (application_id: any) => {
+    path: (application_id: string) => {
       return `/applications/${application_id}/commands`;
     },
     method: "PUT",
@@ -409,7 +409,7 @@ export default {
     },
   },
   getRoles: {
-    path: (guild_id: any) => {
+    path: (guild_id: string) => {
       return `/guilds/${guild_id}/roles`;
     },
     method: "GET",
@@ -420,7 +420,7 @@ export default {
     },
   },
   getEmoji: {
-    path: (guild_id: any, emoji_id: any) => {
+    path: (guild_id: string, emoji_id: string) => {
       return `/guilds/${guild_id}/emojis/${emoji_id}`;
     },
     method: "GET",
@@ -431,7 +431,7 @@ export default {
     },
   },
   getChannelPins: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}/pins`;
     },
     method: "GET",
@@ -442,7 +442,7 @@ export default {
     },
   },
   getChannel: {
-    path: (channel_id: any) => {
+    path: (channel_id: string) => {
       return `/channels/${channel_id}`;
     },
     method: "GET",
@@ -453,7 +453,7 @@ export default {
     },
   },
   getClientEmojis: {
-    path: (client_id: any) => {
+    path: (client_id: string) => {
       return `/applications/${client_id}/emojis`;
     },
     method: "GET",
@@ -464,7 +464,7 @@ export default {
     },
   },
   postAddClientEmoji: {
-    path: (client_id: any) => {
+    path: (client_id: string) => {
       return `/applications/${client_id}/emojis`;
     },
     method: "POST",

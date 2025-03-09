@@ -28,7 +28,7 @@ class Shard {
   zlib: ZlibSync.Inflate = new ZlibSync.Inflate({
     chunkSize: 128 * 1024,
   });
-  #token;
+  #_token;
   #_client;
   #_sessionId;
   #_s;
@@ -59,7 +59,7 @@ class Shard {
     sequence: number | null = null,
     resumeGatewayUrl: string | null = null,
   ) {
-    this.#token = token;
+    this.#_token = token;
     this.shard = shardId;
 
     this.#_client = client;
@@ -274,12 +274,12 @@ class Shard {
   #identify() {
     this.#_client._emitDebug(
       GluonDebugLevels.Info,
-      `Identifying with token ${this.#token}, shard ${this.shard} (total shards: ${this.#_client.totalShards}) and intents ${this.#_client.intents}`,
+      `Identifying with token ${this.#_token}, shard ${this.shard} (total shards: ${this.#_client.totalShards}) and intents ${this.#_client.intents}`,
     );
 
     this.#ws.send(
       _identify(
-        this.#token,
+        this.#_token,
         [this.shard, this.#_client.totalShards],
         this.#_client.intents,
       ),
@@ -303,14 +303,14 @@ class Shard {
 
     this.#_client._emitDebug(
       GluonDebugLevels.Info,
-      `Resuming with token ${this.#token}, session id ${this.#_sessionId} and sequence ${this.#_s}`,
+      `Resuming with token ${this.#_token}, session id ${this.#_sessionId} and sequence ${this.#_s}`,
     );
 
     if (!this.#_sessionId || !this.#_s) {
       throw new Error("GLUON: Session ID or sequence not found");
     }
 
-    this.#ws.send(_resume(this.#token, this.#_sessionId, this.#_s));
+    this.#ws.send(_resume(this.#_token, this.#_sessionId, this.#_s));
 
     this.#resuming = false;
   }
@@ -401,8 +401,11 @@ class Shard {
       } else this.zlib.push(data, false);
     });
 
-    this.#ws.on("error", (data: any) => {
-      this.#_client._emitDebug(GluonDebugLevels.Error, data?.stack?.toString());
+    this.#ws.on("error", (data: Error) => {
+      this.#_client._emitDebug(
+        GluonDebugLevels.Error,
+        data?.stack?.toString() ?? data?.message ?? "Unknown error",
+      );
 
       this.#shutDownWebsocket();
     });

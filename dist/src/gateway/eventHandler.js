@@ -123,6 +123,7 @@ class EventHandler {
       __classPrivateFieldGet(this, _EventHandler_initialGuilds, "f"),
     );
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   RESUMED(data) {
     __classPrivateFieldGet(this, _EventHandler_shard, "f").resetRetries();
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
@@ -451,30 +452,22 @@ class EventHandler {
           __classPrivateFieldGet(this, _EventHandler__client, "f"),
           data.guild_id,
         );
-        if (member) guild?.members.delete(data.user.id);
-        else {
-          // const user = new User(this.#_client, data.user, { nocache: true });
-          // member = new Member(
-          //   this.#_client,
-          //   {},
-          //   {
-          //     userId: data.user.id,
-          //     guildId: data.guild_id,
-          //     user,
-          //     nocache: true,
-          //   },
-          // );
-          throw new Error("GLUON: NOT IMPLEMENTED");
+        if (!guild) {
+          throw new Error(`GLUON: Guild ${data.guild_id} not found.`);
         }
-        if (!member.guild) {
-          throw new Error(
-            `GLUON: Guild ${data.guild_id} not found for member ${member.id}`,
-          );
+        const user = new User(
+          __classPrivateFieldGet(this, _EventHandler__client, "f"),
+          data.user,
+          { nocache: true },
+        );
+        guild._decrementMemberCount();
+        if (member) {
+          guild.members.delete(data.user.id);
         }
-        member.guild._decrementMemberCount();
         __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
           Events.GUILD_MEMBER_REMOVE,
           member,
+          user,
         );
         return member;
       })
@@ -602,7 +595,7 @@ class EventHandler {
     __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
       Events.INVITE_DELETE,
       partialInvite,
-      invite,
+      invite ?? null,
     );
   }
   VOICE_STATE_UPDATE(data) {
@@ -638,16 +631,6 @@ class EventHandler {
       Events.VOICE_STATE_UPDATE,
       oldVoiceState,
       newVoiceState,
-    );
-  }
-  VOICE_CHANNEL_STATUS_UPDATE(data) {
-    __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
-      GluonDebugLevels.Info,
-      `VOICE_CHANNEL_STATUS_UPDATE ${data.guild_id}`,
-    );
-    __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-      Events.VOICE_CHANNEL_STATUS_UPDATE,
-      data,
     );
   }
   MESSAGE_CREATE(data) {

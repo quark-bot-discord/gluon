@@ -94,8 +94,7 @@ class BetterRequestHandler {
     _BetterRequestHandler_queues.set(this, void 0);
     _BetterRequestHandler_localRatelimitCache.set(this, void 0);
     _BetterRequestHandler_redis.set(this, void 0);
-    // @ts-expect-error TS(7008): Member '#latencyMs' implicitly has an 'any' type.
-    _BetterRequestHandler_latencyMs.set(this, void 0);
+    _BetterRequestHandler_latencyMs.set(this, 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
     __classPrivateFieldSet(this, _BetterRequestHandler_redis, redisClient, "f");
     __classPrivateFieldSet(
@@ -275,22 +274,24 @@ class BetterRequestHandler {
     let retries = 5;
     while (retries--) {
       const _stack = new Error().stack;
-      const result = await __classPrivateFieldGet(
-        this,
-        _BetterRequestHandler_queues,
-        "f",
-      )[hash].push({
+      const data = {
         hash,
         request,
         params,
         body,
         _stack,
-      });
+      };
+      const result = await __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler_queues,
+        "f",
+      )[hash].push(data);
       if (
         __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
           hash
         ].idle()
       ) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [hash]: _, ...rest } = __classPrivateFieldGet(
           this,
           _BetterRequestHandler_queues,
@@ -327,6 +328,8 @@ class BetterRequestHandler {
       retryAfter = 0,
     ) {
       if (!ratelimitBucket) return;
+      if (!ratelimitRemaining) return;
+      if (!ratelimitReset) return;
       const bucket = {
         remaining: retryAfter !== 0 ? 0 : parseInt(ratelimitRemaining),
         reset:
@@ -370,7 +373,6 @@ class BetterRequestHandler {
     body,
     _stack,
   ) {
-    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     const actualRequest = __classPrivateFieldGet(
       this,
       _BetterRequestHandler_endpoints,
