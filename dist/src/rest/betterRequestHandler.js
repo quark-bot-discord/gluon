@@ -72,6 +72,10 @@ import {
 import endpoints from "./endpoints.js";
 import { sleep } from "../util/general/sleep.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
+import {
+  GluonRatelimitEncountered,
+  GluonRequestError,
+} from "#typings/errors.js";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
   constructor(client, token) {
@@ -458,11 +462,17 @@ class BetterRequestHandler {
         GluonDebugLevels.Info,
         `REMOVE ${hash} from request queue (${__classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f")}ms)`,
       );
-      if (res.ok) return json;
-      else
-        throw new Error(
-          `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(...(params ?? []))} ${json ? JSON.stringify(json) : ""} FAILED (stack): ${_stack}`,
+      if (res.ok) {
+        return json;
+      } else {
+        throw new GluonRequestError(
+          res.status,
+          actualRequest.method,
+          actualRequest.path(...(params ?? [])),
+          _stack,
+          JSON.stringify(json),
         );
+      }
     } else {
       const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) +
@@ -473,8 +483,12 @@ class BetterRequestHandler {
         _BetterRequestHandler__client,
         "f",
       )._emitDebug(GluonDebugLevels.Warn, `READD ${hash} to request queue`);
-      throw new Error(
-        `GLUON: 429 - Hit ratelimit, retry in ${retryNextIn} (stack): ${_stack}`,
+      throw new GluonRatelimitEncountered(
+        429,
+        actualRequest.method,
+        actualRequest.path(...(params ?? [])),
+        _stack,
+        retryNextIn,
       );
     }
   });

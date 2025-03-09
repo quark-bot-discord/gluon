@@ -19,6 +19,10 @@ import type {
   FileUpload,
 } from "typings/index.d.ts";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
+import {
+  GluonRatelimitEncountered,
+  GluonRequestError,
+} from "#typings/errors.js";
 const AbortController = globalThis.AbortController;
 
 interface QueueItemData {
@@ -324,13 +328,17 @@ class BetterRequestHandler {
         `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
       );
 
-      if (res.ok) return json;
-      else
-        throw new Error(
-          `GLUON: ${res.status} ${actualRequest.method} ${actualRequest.path(
-            ...(params ?? []),
-          )} ${json ? JSON.stringify(json) : ""} FAILED (stack): ${_stack}`,
+      if (res.ok) {
+        return json;
+      } else {
+        throw new GluonRequestError(
+          res.status,
+          actualRequest.method,
+          actualRequest.path(...(params ?? [])),
+          _stack,
+          JSON.stringify(json),
         );
+      }
     } else {
       const retryNextIn =
         Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
@@ -342,8 +350,12 @@ class BetterRequestHandler {
         `READD ${hash} to request queue`,
       );
 
-      throw new Error(
-        `GLUON: 429 - Hit ratelimit, retry in ${retryNextIn} (stack): ${_stack}`,
+      throw new GluonRatelimitEncountered(
+        429,
+        actualRequest.method,
+        actualRequest.path(...(params ?? [])),
+        _stack,
+        retryNextIn,
       );
     }
   }
