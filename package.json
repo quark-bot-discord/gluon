@@ -32,6 +32,10 @@
     "./@types": {
       "types": "./typings/index.d.ts"
     },
+    "./@errors": {
+      "types": "./dist/typings/errors.d.ts",
+      "default": "./dist/typings/errors.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
