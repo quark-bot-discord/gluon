@@ -147,9 +147,6 @@ class Message {
      * @private
      */
     __classPrivateFieldSet(this, _Message__guild_id, BigInt(guildId), "f");
-    if (!this.guild) {
-      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
-    }
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
@@ -751,11 +748,15 @@ class Message {
    * @public
    */
   get guild() {
-    return (
-      __classPrivateFieldGet(this, _Message__client, "f").guilds.get(
-        this.guildId,
-      ) || null
-    );
+    const guild = __classPrivateFieldGet(
+      this,
+      _Message__client,
+      "f",
+    ).guilds.get(this.guildId);
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found in cache.`);
+    }
+    return guild;
   }
   /**
    * The guild that this message belongs to.
@@ -773,7 +774,11 @@ class Message {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId);
+    const channel = this.guild.channels.get(this.channelId);
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${this.channelId} not found in cache.`);
+    }
+    return channel;
   }
   /**
    * The channel that this message belongs to.

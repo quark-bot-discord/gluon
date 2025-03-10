@@ -155,10 +155,6 @@ class Message implements MessageTypeClass {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (!this.guild) {
-      throw new Error(`GLUON: Guild ${guildId} cannot be found in cache`);
-    }
-
     /**
      * The id of the channel that this message belongs to.
      * @type {BigInt}
@@ -604,7 +600,13 @@ class Message implements MessageTypeClass {
    * @public
    */
   get guild() {
-    return this.#_client.guilds.get(this.guildId) || null;
+    const guild = this.#_client.guilds.get(this.guildId);
+
+    if (!guild) {
+      throw new Error(`GLUON: Guild ${this.guildId} not found in cache.`);
+    }
+
+    return guild;
   }
 
   /**
@@ -624,11 +626,17 @@ class Message implements MessageTypeClass {
    * @public
    */
   get channel() {
-    return this.guild?.channels.get(this.channelId) as
+    const channel = this.guild.channels.get(this.channelId) as
       | TextChannelType
       | VoiceChannelType
       | ThreadType
       | null;
+
+    if (!channel) {
+      throw new Error(`GLUON: Channel ${this.channelId} not found in cache.`);
+    }
+
+    return channel;
   }
 
   /**

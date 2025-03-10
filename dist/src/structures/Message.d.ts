@@ -144,7 +144,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get guild(): import("#typings/index.d.ts").Guild | null;
+  get guild(): import("#typings/index.d.ts").Guild;
   /**
    * The guild that this message belongs to.
    * @type {String}
@@ -158,7 +158,7 @@ declare class Message implements MessageTypeClass {
    * @readonly
    * @public
    */
-  get channel(): TextChannelType | VoiceChannelType | ThreadType | null;
+  get channel(): TextChannelType | VoiceChannelType | ThreadType;
   /**
    * The channel that this message belongs to.
    * @type {String}

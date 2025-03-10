@@ -800,9 +800,10 @@ export class Message {
     },
   );
   readonly id: Snowflake;
-  readonly guildId: Snowflake | null;
+  readonly guildId: Snowflake;
+  readonly guild: Guild;
   readonly channelId: Snowflake;
-  readonly channel: TextChannel | VoiceChannel | Thread | null;
+  readonly channel: TextChannel | VoiceChannel | Thread;
   readonly author: User;
   readonly authorId: Snowflake;
   readonly member: Member | null;
