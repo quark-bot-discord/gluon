@@ -440,6 +440,7 @@ describe("Channel", function () {
       expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
       expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
     });
+
     it("should bundle correctly with custom toJSON", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -468,6 +469,7 @@ describe("Channel", function () {
       expect(rebundled._cacheOptions).to.be.an.instanceOf(ChannelCacheOptions);
       expect(rebundled.messages).to.be.an.instanceOf(ChannelMessageManager);
     });
+
     it("should bundle correctly with custom toJSON", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);

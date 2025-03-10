@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect } from "chai";
 import { spy } from "sinon";
 import ChannelMessageManager from "../ChannelMessageManager.js";
@@ -139,6 +140,7 @@ describe("ChannelMessageManager", function () {
       expect(request.firstCall.args[2]).to.be.undefined;
     });
   });
+
   it("should return the correct value when multiple messages are fetched", async function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -155,6 +157,7 @@ describe("ChannelMessageManager", function () {
     expect(messages).to.be.an("array");
     expect(messages[0]).to.be.an.instanceOf(Message);
   });
+
   it("should call makeRequest with the correct arguments when multiple messages are fetched", async function () {
     const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
     const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);

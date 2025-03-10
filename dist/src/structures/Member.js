@@ -459,13 +459,18 @@ class Member {
     );
   }
   /**
-   * The user object for this member.
-   * @type {User}
-   * @readonly
-   * @public
+   * Gets the user associated with this member.
+   *
+   * @throws {Error} If the user cannot be found.
+   * @returns The user associated with this member.
    */
   get user() {
-    return __classPrivateFieldGet(this, _Member_user, "f") ?? undefined;
+    if (!__classPrivateFieldGet(this, _Member_user, "f")) {
+      throw new Error(
+        `GLUON: User ${__classPrivateFieldGet(this, _Member__id, "f")} cannot be found`,
+      );
+    }
+    return __classPrivateFieldGet(this, _Member_user, "f");
   }
   /**
    * The hash of the member's avatar, as it was received from Discord.

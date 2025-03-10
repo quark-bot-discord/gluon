@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect } from "chai";
 import { spy } from "sinon";
 import {
@@ -12,6 +13,7 @@ import {
 import { FileUpload } from "../../util/builder/fileUpload.js";
 import MessageComponents from "../../util/builder/messageComponents.js";
 import path from "path";
+import process from "process";
 import Embed from "../../util/builder/embedBuilder.js";
 import {
   Message,

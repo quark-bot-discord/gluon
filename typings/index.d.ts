@@ -712,7 +712,7 @@ export class Member {
   public readonly highestRolePosition: number;
   public readonly permissions: PermissionsBitfield | null;
   public readonly rejoined: boolean;
-  public readonly user?: User;
+  public readonly user: User;
   public readonly _originalAvatarHash: string | null;
   public readonly displayAvatarURL: string | null;
   public readonly displayAvatarURLNoFallback: string | null;

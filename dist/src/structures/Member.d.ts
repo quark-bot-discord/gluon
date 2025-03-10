@@ -136,12 +136,12 @@ declare class Member implements MemberType {
    */
   get rejoined(): boolean;
   /**
-   * The user object for this member.
-   * @type {User}
-   * @readonly
-   * @public
+   * Gets the user associated with this member.
+   *
+   * @throws {Error} If the user cannot be found.
+   * @returns The user associated with this member.
    */
-  get user(): User | UserType | undefined;
+  get user(): User | UserType;
   /**
    * The hash of the member's avatar, as it was received from Discord.
    * @readonly

@@ -3,7 +3,7 @@ import { LIMITS } from "../../../constants.js";
 import Button from "../buttonBuilder.js";
 import { ButtonStyle, ComponentType } from "#typings/discord.js";
 
-describe("ButtonBuilder", () => {
+describe("ButtonBuilder", function () {
   context("check import", function () {
     it("should be an object", function () {
       const button = new Button();

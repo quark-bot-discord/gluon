@@ -408,13 +408,16 @@ class Member implements MemberType {
   }
 
   /**
-   * The user object for this member.
-   * @type {User}
-   * @readonly
-   * @public
+   * Gets the user associated with this member.
+   *
+   * @throws {Error} If the user cannot be found.
+   * @returns The user associated with this member.
    */
   get user() {
-    return this.#user ?? undefined;
+    if (!this.#user) {
+      throw new Error(`GLUON: User ${this.#_id} cannot be found`);
+    }
+    return this.#user;
   }
 
   /**
