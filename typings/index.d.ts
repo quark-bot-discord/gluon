@@ -804,6 +804,7 @@ export class Message {
   readonly channelId: Snowflake;
   readonly channel: TextChannel | VoiceChannel | Thread | null;
   readonly author: User;
+  readonly authorId: Snowflake;
   readonly member: Member | null;
   readonly timestamp: UnixTimestamp;
   readonly editedTimestamp: UnixTimestamp | null;
