@@ -600,11 +600,6 @@ class Client extends TypedEmitter {
    * @async
    */
   async fetchEmojis() {
-    if (!this.user?.id) {
-      throw new Error(
-        "GLUON: Cannot fetch emojis before the client is logged in.",
-      );
-    }
     return this.request.makeRequest("getClientEmojis", [this.user.id]);
   }
   /**

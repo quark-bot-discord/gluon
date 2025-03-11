@@ -39,7 +39,7 @@ class Shard {
   #waitingForHeartbeatACK;
   // @ts-expect-error TS(7008): Member '#monitorOpened' implicitly has an 'any' ty... Remove this comment to see the full error message
   #monitorOpened;
-  #ws;
+  #ws: WebSocket;
   #resumeGatewayUrl: string | null;
   #retries: number;
   #halted;

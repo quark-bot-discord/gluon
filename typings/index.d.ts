@@ -87,7 +87,7 @@ import {
   UnixTimestamp,
 } from "#typings/gluon.ts";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { Events, JsonTypes } from "./enums.ts";
+import { Events, JsonTypes, WebsocketStates } from "./enums.ts";
 
 export class Attachment {
   public constructor(
@@ -3091,4 +3091,34 @@ export abstract class BaseStructure<T> {
     return this.toString();
   }
   abstract toJSON(format?: JsonTypes): T;
+}
+
+export interface ClientProcessData {
+  totalShards: number;
+  shardsManaged: number[];
+  shards: ShardCheckData[];
+  guildCount: number;
+  memberCount: number;
+  cacheCounts: ClientCacheCounts;
+  guilds: Snowflake[];
+  processId: string;
+  restLatency: number;
+}
+
+export interface ClientCacheCounts {
+  users: number;
+  guilds: number;
+  messages: number;
+  members: number;
+  channels: number;
+  roles: number;
+  emojis: number;
+  voiceStates: number;
+}
+
+export interface ShardCheckData {
+  shard: number;
+  websocketState: WebsocketStates;
+  lastReconnect: UnixMillisecondsTimestamp;
+  latency: number;
 }

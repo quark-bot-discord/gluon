@@ -23,7 +23,12 @@ import generateWebsocketURL from "./util/gluon/generateWebsocketURL.js";
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
 import Command from "./util/builder/commandBuilder.js";
-import { APIGatewayBotInfo, ChannelType, Snowflake } from "#typings/discord.js";
+import {
+  APIEmoji,
+  APIGatewayBotInfo,
+  ChannelType,
+  Snowflake,
+} from "#typings/discord.js";
 import {
   Client as ClientType,
   User as UserType,
@@ -34,6 +39,8 @@ import {
   CommandBuilder,
   ClientOptions,
   ClientEvents,
+  ClientCacheCounts,
+  ClientProcessData,
 } from "../typings/index.d.js";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { GluonDebugLevels, JsonTypes } from "../typings/enums.js";
@@ -356,7 +363,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    * @returns {Object}
    */
-  checkProcess() {
+  checkProcess(): ClientProcessData {
     const guildIds: Snowflake[] = [];
     this.guilds.forEach((guild: GuildType) => guildIds.push(guild.id));
     const processInformation = {
@@ -433,7 +440,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @public
    * @method
    */
-  getCacheCounts() {
+  getCacheCounts(): ClientCacheCounts {
     let totalMessages = 0;
     let totalMembers = 0;
     let totalChannels = 0;
@@ -441,8 +448,8 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     let totalEmojis = 0;
     let totalVoiceStates = 0;
 
-    this.guilds.forEach((guild: GuildType) => {
-      guild.channels.forEach((channel: AllChannels) => {
+    this.guilds.forEach((guild) => {
+      guild.channels.forEach((channel) => {
         switch (channel.type) {
           case ChannelType.AnnouncementThread:
           case ChannelType.PublicThread:
@@ -575,13 +582,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    * @async
    */
-  async fetchEmojis() {
-    if (!this.user?.id) {
-      throw new Error(
-        "GLUON: Cannot fetch emojis before the client is logged in.",
-      );
-    }
-
+  async fetchEmojis(): Promise<APIEmoji[]> {
     return this.request.makeRequest("getClientEmojis", [this.user.id]);
   }
 

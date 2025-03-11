@@ -1,5 +1,6 @@
 import GluonCacheOptions from "./managers/GluonCacheOptions.js";
 import GuildCacheOptions from "./managers/GuildCacheOptions.js";
+import { APIEmoji } from "#typings/discord.js";
 import {
   Client as ClientType,
   User as UserType,
@@ -8,6 +9,8 @@ import {
   CommandBuilder,
   ClientOptions,
   ClientEvents,
+  ClientCacheCounts,
+  ClientProcessData,
 } from "../typings/index.d.js";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { GluonDebugLevels } from "../typings/enums.js";
@@ -124,26 +127,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    * @returns {Object}
    */
-  checkProcess(): {
-    totalShards: number;
-    shardsManaged: number[];
-    shards: never[];
-    guildCount: number;
-    memberCount: number;
-    cacheCounts: {
-      users: number;
-      guilds: number;
-      messages: number;
-      members: number;
-      channels: number;
-      roles: number;
-      emojis: number;
-      voiceStates: number;
-    };
-    guilds: string[];
-    processId: string;
-    restLatency: number;
-  };
+  checkProcess(): ClientProcessData;
   /**
    * Outputs a debug message if NODE_ENV=development.
    * @param {Number} status The debug status level.
@@ -159,16 +143,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @public
    * @method
    */
-  getCacheCounts(): {
-    users: number;
-    guilds: number;
-    messages: number;
-    members: number;
-    channels: number;
-    roles: number;
-    emojis: number;
-    voiceStates: number;
-  };
+  getCacheCounts(): ClientCacheCounts;
   /**
    * Returns the cache options for this client.
    * @type {GluonCacheOptions}
@@ -221,7 +196,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    * @async
    */
-  fetchEmojis(): Promise<any>;
+  fetchEmojis(): Promise<APIEmoji[]>;
   /**
    * Creates an emoji for this client.
    * @param {Object} emoji The emoji to create.
