@@ -888,6 +888,7 @@ export interface MessageCacheJSON {
   };
   sticker_items: Array<StickerCacheJSON>;
   messageReactions: MessageReactionManagerCacheJSON;
+  mirrored?: boolean;
 }
 
 export interface MessageDiscordJSON {
