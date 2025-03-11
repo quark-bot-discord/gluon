@@ -1692,6 +1692,17 @@ export class ChannelMessageManager extends BaseCacheManager {
       array: [Snowflake, Message][],
     ) => unknown,
   ): unknown[];
+  fetchPinned(): Promise<Message[]>;
+  fetch(
+    options:
+      | {
+          around?: Snowflake;
+          before?: Snowflake;
+          after?: Snowflake;
+          limit?: number;
+        }
+      | Snowflake,
+  ): Promise<Message | Message[]>;
   toJSON(
     format?: JsonTypes,
   ): MessageDiscordJSON[] | MessageStorageJSON[] | MessageCacheJSON[];

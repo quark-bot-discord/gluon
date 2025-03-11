@@ -176,7 +176,7 @@ class ChannelMessageManager
     const messages = [];
     for (let i = 0; i < data.length; i++)
       messages.push(
-        new Message(this.#_client as ClientType, data[i], {
+        new Message(this.#_client, data[i], {
           channelId: data[i].channel_id,
           guildId: this.#channel.guildId,
         }),
