@@ -11,6 +11,11 @@ jobs:
         node: [20]
     steps:
       - uses: actions/checkout@v4
+      - uses: shogo82148/actions-setup-redis@v1
+        with:
+          redis-version: "7.x"
+      - run: redis-cli ping
+      - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
