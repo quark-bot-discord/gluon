@@ -78,6 +78,7 @@ import {
   Snowflake,
   TextInputStyle,
   APIMessageSnapshotFields,
+  APIApplicationCommand,
 } from "#typings/discord.js";
 import { HttpMethods, HttpResponse } from "msw";
 import {
@@ -2873,15 +2874,17 @@ export class Client extends TypedEmitter<ClientEvents> {
   get initialized(): boolean;
   softRestartFunction(): void;
   halt(): void;
-  checkProcess(): object;
+  checkProcess(): ClientProcessData;
   _emitDebug(status: number, message: string): void;
-  getCacheCounts(): object;
+  getCacheCounts(): ClientCacheCounts;
   get _cacheOptions(): GluonCacheOptions;
   get _defaultGuildCacheOptions(): GuildCacheOptions;
   getMemberCount(): number;
-  bundleCache(): object[];
-  registerCommands(commands: CommandBuilder[]): Promise<object[]>;
-  fetchEmojis(): Promise<object[]>;
+  bundleCache(): GuildCacheJSON[];
+  registerCommands(
+    commands: CommandBuilder[],
+  ): Promise<APIApplicationCommand[]>;
+  fetchEmojis(): Promise<APIEmoji[]>;
   createEmoji(emoji: { name: string; image: string }): Promise<void>;
   setStatus(status: {
     name: string;

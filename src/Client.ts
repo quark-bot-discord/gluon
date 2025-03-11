@@ -41,6 +41,7 @@ import {
   ClientEvents,
   ClientCacheCounts,
   ClientProcessData,
+  GuildCacheJSON,
 } from "../typings/index.d.js";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { GluonDebugLevels, JsonTypes } from "../typings/enums.js";
@@ -539,7 +540,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    */
   bundleCache() {
-    return this.guilds.toJSON(JsonTypes.CACHE_FORMAT);
+    return this.guilds.toJSON(JsonTypes.CACHE_FORMAT) as GuildCacheJSON[];
   }
 
   /**

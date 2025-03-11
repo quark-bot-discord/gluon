@@ -11,6 +11,7 @@ import {
   ClientEvents,
   ClientCacheCounts,
   ClientProcessData,
+  GuildCacheJSON,
 } from "../typings/index.d.js";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { GluonDebugLevels } from "../typings/enums.js";
@@ -173,10 +174,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @public
    * @method
    */
-  bundleCache():
-    | import("../typings/index.d.js").GuildStorageJSON[]
-    | import("../typings/index.d.js").GuildCacheJSON[]
-    | import("../typings/index.d.js").GuildDiscordJSON[];
+  bundleCache(): GuildCacheJSON[];
   /**
    * Registers commands, overwriting all previous ones.
    * @param {Array<Command>} commands Array of commands to register.
