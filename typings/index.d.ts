@@ -2788,7 +2788,11 @@ export interface ClientEvents {
     oldMember: Member | null,
     newMember: Member,
   ) => void;
-  [Events.GUILD_MEMBER_REMOVE]: (member: Member | null, user: User) => void;
+  [Events.GUILD_MEMBER_REMOVE]: (
+    member: Member | null,
+    user: User,
+    guildId: Snowflake,
+  ) => void;
   [Events.BUTTON_CLICK]: (interaction: ButtonClick) => void;
   [Events.MENU_SELECT]: (interaction: OptionSelect) => void;
   [Events.MODAL_RESPONSE]: (interaction: ModalResponse) => void;

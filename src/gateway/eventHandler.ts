@@ -397,7 +397,12 @@ class EventHandler {
           guild.members.delete(data.user.id);
         }
 
-        this.#_client.emit(Events.GUILD_MEMBER_REMOVE, member, user);
+        this.#_client.emit(
+          Events.GUILD_MEMBER_REMOVE,
+          member,
+          user,
+          data.guild_id,
+        );
         return member;
       })
       .catch((error: Error) => {

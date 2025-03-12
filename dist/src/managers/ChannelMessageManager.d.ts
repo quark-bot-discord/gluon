@@ -70,7 +70,7 @@ declare class ChannelMessageManager
           limit?: number;
         }
       | Snowflake,
-  ): Promise<Message | MessageType | Message[]>;
+  ): Promise<MessageType | Message[]>;
   /**
    * Fetches all the pinned messages that belong to the channel.
    * @returns {Promise<Array<Message>>}
@@ -124,25 +124,12 @@ declare class ChannelMessageManager
     channelId: Snowflake,
     messageId: Snowflake,
   ): MessageType | null;
-  /**
-   * Fetches a message from the channel.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} channelId The ID of the channel.
-   * @param {String} messageId The ID of the message.
-   * @returns {Message}
-   * @public
-   * @async
-   * @static
-   * @method
-   * @throws {TypeError | Error}
-   */
   static fetchMessage(
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
     messageId: Snowflake,
-  ): Promise<Message | MessageType>;
+  ): Promise<MessageType>;
   /**
    * Fetches a collection of messages from the channel.
    * @param {Client} client The client instance.

@@ -468,6 +468,7 @@ class EventHandler {
           Events.GUILD_MEMBER_REMOVE,
           member,
           user,
+          data.guild_id,
         );
         return member;
       })

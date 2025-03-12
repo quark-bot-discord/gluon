@@ -278,25 +278,12 @@ class ChannelMessageManager
     return cacheManager.get(messageId);
   }
 
-  /**
-   * Fetches a message from the channel.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} channelId The ID of the channel.
-   * @param {String} messageId The ID of the message.
-   * @returns {Message}
-   * @public
-   * @async
-   * @static
-   * @method
-   * @throws {TypeError | Error}
-   */
   static async fetchMessage(
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
     messageId: Snowflake,
-  ) {
+  ): Promise<MessageType> {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
