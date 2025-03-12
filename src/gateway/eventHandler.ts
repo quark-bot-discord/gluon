@@ -85,7 +85,6 @@ import type {
   Message as MessageType,
   Member as MemberType,
   Client as ClientType,
-  User as UserType,
   Thread as ThreadType,
 } from "typings/index.d.ts";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
