@@ -119,13 +119,10 @@ class GuildMemberManager
     return super.get(id) as MemberType | null;
   }
 
-  /**
-   * Returns the cache manager.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @returns {GuildMemberManager}
-   */
-  static getCacheManager(client: ClientType, guildId: Snowflake) {
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+  ): GuildMemberManagerType {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -140,23 +137,11 @@ class GuildMemberManager
     return guild.members;
   }
 
-  /**
-   * Fetches a member, checking the cache first.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The id of the guild the member belongs to.
-   * @param {String} userId The id of the member to fetch.
-   * @returns {Promise<Member>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   * @static
-   */
   static async fetchMember(
     client: ClientType,
     guildId: Snowflake,
     userId: Snowflake,
-  ) {
+  ): Promise<MemberType> {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
@@ -184,17 +169,6 @@ class GuildMemberManager
     });
   }
 
-  /**
-   * Gets a member from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} userId The ID of the user.
-   * @returns {Member?}
-   * @public
-   * @method
-   * @static
-   * @throws {TypeError}
-   */
   static getMember(client: ClientType, guildId: Snowflake, userId: Snowflake) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");

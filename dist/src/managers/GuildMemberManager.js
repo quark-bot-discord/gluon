@@ -143,12 +143,6 @@ class GuildMemberManager extends BaseCacheManager {
   get(id) {
     return super.get(id);
   }
-  /**
-   * Returns the cache manager.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @returns {GuildMemberManager}
-   */
   static getCacheManager(client, guildId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -160,18 +154,6 @@ class GuildMemberManager extends BaseCacheManager {
     }
     return guild.members;
   }
-  /**
-   * Fetches a member, checking the cache first.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The id of the guild the member belongs to.
-   * @param {String} userId The id of the member to fetch.
-   * @returns {Promise<Member>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   * @static
-   */
   static async fetchMember(client, guildId, userId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -194,17 +176,6 @@ class GuildMemberManager extends BaseCacheManager {
       guildId,
     });
   }
-  /**
-   * Gets a member from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} userId The ID of the user.
-   * @returns {Member?}
-   * @public
-   * @method
-   * @static
-   * @throws {TypeError}
-   */
   static getMember(client, guildId, userId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");

@@ -1,4 +1,3 @@
-import Member from "../structures/Member.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   GuildMemberManager as GuildMemberManagerType,
@@ -41,7 +40,7 @@ declare class GuildMemberManager
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(user_id: Snowflake): Promise<Member | MemberType>;
+  fetch(user_id: Snowflake): Promise<MemberType>;
   /**
    * Searches for members via a search query.
    * @param {String} query The search query.
@@ -64,44 +63,15 @@ declare class GuildMemberManager
    */
   set(id: Snowflake, member: MemberType): void;
   get(id: Snowflake): MemberType | null;
-  /**
-   * Returns the cache manager.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @returns {GuildMemberManager}
-   */
   static getCacheManager(
     client: ClientType,
     guildId: Snowflake,
   ): GuildMemberManagerType;
-  /**
-   * Fetches a member, checking the cache first.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The id of the guild the member belongs to.
-   * @param {String} userId The id of the member to fetch.
-   * @returns {Promise<Member>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   * @static
-   */
   static fetchMember(
     client: ClientType,
     guildId: Snowflake,
     userId: Snowflake,
-  ): Promise<Member | MemberType>;
-  /**
-   * Gets a member from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} userId The ID of the user.
-   * @returns {Member?}
-   * @public
-   * @method
-   * @static
-   * @throws {TypeError}
-   */
+  ): Promise<MemberType>;
   static getMember(
     client: ClientType,
     guildId: Snowflake,
