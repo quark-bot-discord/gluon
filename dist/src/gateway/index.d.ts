@@ -5,7 +5,7 @@ declare class Shard {
   #private;
   shard: number;
   terminateSocketTimeout: NodeJS.Timeout | null;
-  zlib: ZlibSync.Inflate;
+  zlib?: ZlibSync.Inflate;
   constructor(
     client: ClientType,
     token: string,

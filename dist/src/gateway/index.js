@@ -95,9 +95,6 @@ class Shard {
   ) {
     _Shard_instances.add(this);
     this.terminateSocketTimeout = null;
-    this.zlib = new ZlibSync.Inflate({
-      chunkSize: 128 * 1024,
-    });
     _Shard__token.set(this, void 0);
     _Shard__client.set(this, void 0);
     _Shard__sessionId.set(this, void 0);
@@ -508,6 +505,9 @@ class Shard {
       GluonDebugLevels.Info,
       "Adding websocket listeners",
     );
+    this.zlib = new ZlibSync.Inflate({
+      chunkSize: 128 * 1024,
+    });
     __classPrivateFieldGet(this, _Shard_ws, "f").once("open", () => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
         GluonDebugLevels.Info,
@@ -598,10 +598,10 @@ class Shard {
       if (data instanceof ArrayBuffer) data = Buffer.from(data);
       else if (Array.isArray(data)) data = Buffer.concat(data);
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
-        this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-        if (this.zlib.err) throw new Error(this.zlib.msg ?? undefined);
-        if (this.zlib.result) {
-          data = Buffer.from(this.zlib.result);
+        this.zlib?.push(data, ZlibSync.Z_SYNC_FLUSH);
+        if (this.zlib?.err) throw new Error(this.zlib.msg ?? undefined);
+        if (this.zlib?.result) {
+          data = Buffer.from(this.zlib?.result);
         } else {
           throw new Error("Zlib error");
         }
@@ -611,7 +611,7 @@ class Shard {
           "m",
           _Shard_handleIncoming,
         ).call(this, erlpack.unpack(data));
-      } else this.zlib.push(data, false);
+      } else this.zlib?.push(data, false);
     });
     __classPrivateFieldGet(this, _Shard_ws, "f").on("error", (data) => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(
