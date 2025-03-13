@@ -25,9 +25,7 @@ import { Events, GluonDebugLevels } from "#typings/enums.js";
 class Shard {
   shard: number;
   terminateSocketTimeout: NodeJS.Timeout | null = null;
-  zlib: ZlibSync.Inflate = new ZlibSync.Inflate({
-    chunkSize: 128 * 1024,
-  });
+  zlib?: ZlibSync.Inflate;
   #_token;
   #_client;
   #_sessionId;
@@ -321,6 +319,10 @@ class Shard {
       "Adding websocket listeners",
     );
 
+    this.zlib = new ZlibSync.Inflate({
+      chunkSize: 128 * 1024,
+    });
+
     this.#ws.once("open", () => {
       this.#_client._emitDebug(GluonDebugLevels.Info, "Websocket opened");
 
@@ -389,16 +391,16 @@ class Shard {
       else if (Array.isArray(data)) data = Buffer.concat(data);
 
       if (data.length >= 4 && data.readUInt32BE(data.length - 4) === 0xffff) {
-        this.zlib.push(data, ZlibSync.Z_SYNC_FLUSH);
-        if (this.zlib.err) throw new Error(this.zlib.msg ?? undefined);
+        this.zlib?.push(data, ZlibSync.Z_SYNC_FLUSH);
+        if (this.zlib?.err) throw new Error(this.zlib.msg ?? undefined);
 
-        if (this.zlib.result) {
-          data = Buffer.from(this.zlib.result as ArrayBuffer);
+        if (this.zlib?.result) {
+          data = Buffer.from(this.zlib?.result as ArrayBuffer);
         } else {
           throw new Error("Zlib error");
         }
         return this.#handleIncoming(erlpack.unpack(data));
-      } else this.zlib.push(data, false);
+      } else this.zlib?.push(data, false);
     });
 
     this.#ws.on("error", (data: Error) => {
