@@ -13,17 +13,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build
-        uses: andstor/jsdoc-action@v1.2.1
+        uses: erikyo/tsdoc-action@v1
         with:
-          source_dir: ./src
-          output_dir: ./out
-          config_file: jsdoc.json
-          template: docdash
+          source_dir: ./src/*
+          output_dir: ./docs
           front_page: README.md
+          install_module: typedoc-material-theme
+          theme: typedoc-material-theme
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
+          publish_dir: ./docs
           cname: gluon.quark.bot
