@@ -12,6 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: CXXFLAGS=-std=c++17 npm ci
+      - run: CXXFLAGS=-std=c++17 npm run build --if-present
+
       - name: Build
         uses: erikyo/tsdoc-action@v1
         with:
