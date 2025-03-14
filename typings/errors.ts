@@ -20,6 +20,7 @@ export class GluonRequestError extends Error {
     this.endpoint = endpoint;
     this.requestStack = requestStack;
     this.json = json;
+    this.stack = this.stack + "\n" + requestStack;
   }
 }
 
@@ -34,6 +35,7 @@ export class GluonRatelimitEncountered extends GluonRequestError {
   ) {
     super(code, method, endpoint, requestStack);
     this.retryIn = retryIn;
+    this.stack = this.stack + "\n" + requestStack;
   }
 }
 
