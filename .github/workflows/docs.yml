@@ -25,8 +25,7 @@ jobs:
           source_dir: ./src/*
           output_dir: ./docs
           front_page: README.md
-          install_module: typedoc-material-theme
-          theme: typedoc-material-theme
+          config_file: tsdoc.json
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.3
