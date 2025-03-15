@@ -264,7 +264,13 @@ class Client extends TypedEmitter {
      * @type {User?}
      */
     __classPrivateFieldSet(this, _Client_user, null, "f");
-    if (initCache?.clientUser) this.user = new User(this, initCache.clientUser);
+    if (initCache?.clientUser)
+      __classPrivateFieldSet(
+        this,
+        _Client_user,
+        new User(this, initCache.clientUser),
+        "f",
+      );
     /**
      * The user manager for this client.
      * @type {UserManager}

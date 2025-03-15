@@ -230,7 +230,8 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
      */
     this.#user = null;
 
-    if (initCache?.clientUser) this.user = new User(this, initCache.clientUser);
+    if (initCache?.clientUser)
+      this.#user = new User(this, initCache.clientUser);
 
     /**
      * The user manager for this client.
