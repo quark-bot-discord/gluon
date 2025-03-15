@@ -260,6 +260,11 @@ class Client extends TypedEmitter {
      */
     __classPrivateFieldSet(this, _Client__sessionData, sessionData, "f");
     /**
+     * The user manager for this client.
+     * @type {UserManager}
+     */
+    __classPrivateFieldSet(this, _Client_users, new UserManager(this), "f");
+    /**
      * The client user.
      * @type {User?}
      */
@@ -271,11 +276,6 @@ class Client extends TypedEmitter {
         new User(this, initCache.clientUser),
         "f",
       );
-    /**
-     * The user manager for this client.
-     * @type {UserManager}
-     */
-    __classPrivateFieldSet(this, _Client_users, new UserManager(this), "f");
     /**
      * The guild manager for this client.
      * @type {GuildManager}

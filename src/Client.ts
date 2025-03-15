@@ -225,6 +225,12 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     this.#_sessionData = sessionData;
 
     /**
+     * The user manager for this client.
+     * @type {UserManager}
+     */
+    this.#users = new UserManager(this);
+
+    /**
      * The client user.
      * @type {User?}
      */
@@ -232,12 +238,6 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
 
     if (initCache?.clientUser)
       this.#user = new User(this, initCache.clientUser);
-
-    /**
-     * The user manager for this client.
-     * @type {UserManager}
-     */
-    this.#users = new UserManager(this);
 
     /**
      * The guild manager for this client.
