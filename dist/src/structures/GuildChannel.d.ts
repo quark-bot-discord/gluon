@@ -4,6 +4,7 @@ import { FileUpload } from "src/util.js";
 import {
   APIGuildTextChannel,
   APIGuildVoiceChannel,
+  APIWebhook,
   ChannelType,
   GuildTextChannelType,
   Snowflake,
@@ -236,7 +237,10 @@ declare class GuildChannel implements GuildChannelType {
    * @async
    * @method
    */
-  static fetchWebhooks(client: ClientType, channelId: Snowflake): any;
+  static fetchWebhooks(
+    client: ClientType,
+    channelId: Snowflake,
+  ): Promise<APIWebhook[]>;
   /**
    * Returns the permissions for a member in this channel.
    * @param {Member} member The member to check the permissions for.

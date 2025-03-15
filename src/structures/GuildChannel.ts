@@ -10,6 +10,7 @@ import { FileUpload } from "src/util.js";
 import {
   APIGuildTextChannel,
   APIGuildVoiceChannel,
+  APIWebhook,
   ChannelType,
   GuildTextChannelType,
   OverwriteType,
@@ -519,7 +520,10 @@ class GuildChannel implements GuildChannelType {
    * @async
    * @method
    */
-  static fetchWebhooks(client: ClientType, channelId: Snowflake) {
+  static fetchWebhooks(
+    client: ClientType,
+    channelId: Snowflake,
+  ): Promise<APIWebhook[]> {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof channelId !== "string")
