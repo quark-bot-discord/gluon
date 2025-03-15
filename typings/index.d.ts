@@ -1703,6 +1703,8 @@ export class ChannelMessageManager extends BaseCacheManager {
         }
       | Snowflake,
   ): Promise<Message | Message[]>;
+  guild: Guild;
+  channel: GuildChannel;
   toJSON(
     format?: JsonTypes,
   ): MessageDiscordJSON[] | MessageStorageJSON[] | MessageCacheJSON[];
