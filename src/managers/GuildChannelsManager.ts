@@ -142,7 +142,10 @@ class GuildChannelsManager
    * @static
    * @method
    */
-  static getCacheManager(client: ClientType, guildId: Snowflake) {
+  static getCacheManager(
+    client: ClientType,
+    guildId: Snowflake,
+  ): GuildChannelsManagerType {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof guildId !== "string")
