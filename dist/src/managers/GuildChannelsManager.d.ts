@@ -54,43 +54,15 @@ declare class GuildChannelsManager
    * @override
    */
   set(id: Snowflake, channel: AllChannels, expiry?: number): void;
-  /**
-   * Returns the channel for a guild.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild to get the channel from.
-   * @param {String} channelId The ID of the channel to get.
-   * @returns {VoiceChannel | TextChannel | Thread | CategoryChannel | null}
-   */
   static getChannel(
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
   ): AllChannels | null;
-  /**
-   * Returns the cache manager for a guild.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild the cache manager belongs to.
-   * @returns {GuildChannelsManager}
-   * @throws {TypeError}
-   * @public
-   * @static
-   * @method
-   */
   static getCacheManager(
     client: ClientType,
     guildId: Snowflake,
   ): GuildChannelsManagerType;
-  /**
-   * Fetches a channel, checking the cache first.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The id of the guild the channel belongs to.
-   * @param {String} channelId The id of the channel to fetch.
-   * @returns {Promise<TextChannel | VoiceChannel>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
   static fetchChannel(
     client: ClientType,
     guildId: Snowflake,
