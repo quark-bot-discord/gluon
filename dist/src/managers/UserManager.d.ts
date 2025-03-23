@@ -1,4 +1,3 @@
-import User from "../structures/User.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   UserManager as UserManagerType,
@@ -32,7 +31,7 @@ declare class UserManager
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(userId: Snowflake): Promise<User | UserType>;
+  fetch(userId: Snowflake): Promise<UserType>;
   /**
    * Adds a user to the cache.
    * @param {String} id The ID of the user to cache.
@@ -45,19 +44,6 @@ declare class UserManager
    */
   set(id: Snowflake, user: UserType): void;
   get(id: Snowflake): UserType | null;
-  /**
-   * Fetches a particular user.
-   * @param {Client} client The client instance.
-   * @param {String} userId The id of the user to fetch.
-   * @returns {Promise<User>} The fetched user.
-   * @public
-   * @async
-   * @method
-   * @throws {TypeError | Error}
-   */
-  static fetchUser(
-    client: ClientType,
-    userId: Snowflake,
-  ): Promise<User | UserType>;
+  static fetchUser(client: ClientType, userId: Snowflake): Promise<UserType>;
 }
 export default UserManager;

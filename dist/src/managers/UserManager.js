@@ -104,16 +104,6 @@ class UserManager extends BaseCacheManager {
   get(id) {
     return super.get(id);
   }
-  /**
-   * Fetches a particular user.
-   * @param {Client} client The client instance.
-   * @param {String} userId The id of the user to fetch.
-   * @returns {Promise<User>} The fetched user.
-   * @public
-   * @async
-   * @method
-   * @throws {TypeError | Error}
-   */
   static async fetchUser(client, userId) {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");

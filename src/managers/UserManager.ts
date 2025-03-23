@@ -76,17 +76,10 @@ class UserManager
     return super.get(id) as UserType | null;
   }
 
-  /**
-   * Fetches a particular user.
-   * @param {Client} client The client instance.
-   * @param {String} userId The id of the user to fetch.
-   * @returns {Promise<User>} The fetched user.
-   * @public
-   * @async
-   * @method
-   * @throws {TypeError | Error}
-   */
-  static async fetchUser(client: ClientType, userId: Snowflake) {
+  static async fetchUser(
+    client: ClientType,
+    userId: Snowflake,
+  ): Promise<UserType> {
     if (typeof userId !== "string")
       throw new TypeError("GLUON: User ID must be a string.");
 
