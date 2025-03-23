@@ -4,7 +4,7 @@ import { GluonGuildCachingOptions, JsonTypes } from "#typings/enums.js";
 class GuildCacheOptions implements GuildCacheOptionsType {
   #_cache_options;
 
-  constructor(cache_options: number) {
+  constructor(cache_options?: number) {
     /**
      * The cache options for this guild.
      * @type {Number}

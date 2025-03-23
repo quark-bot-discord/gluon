@@ -233,7 +233,7 @@ class GuildChannel implements GuildChannelType {
     this.#_cacheOptions = existing?._cacheOptions
       ? existing._cacheOptions
       : new ChannelCacheOptions(
-          "_cacheOptions" in data ? data._cacheOptions : undefined,
+          "_cache_options" in data ? data._cache_options : undefined,
         );
 
     /**
@@ -614,7 +614,7 @@ class GuildChannel implements GuildChannelType {
           position: this.position,
           parent_id: this.parentId ?? undefined,
           _attributes: this.#_attributes,
-          _cacheOptions: this._cacheOptions.toJSON(format),
+          _cache_options: this._cacheOptions.toJSON(format),
           messages: this.messages.toJSON(format) as
             | MessageStorageJSON[]
             | MessageCacheJSON[],

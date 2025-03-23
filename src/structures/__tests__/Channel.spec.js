@@ -307,7 +307,7 @@ describe("Channel", function () {
       });
       expect(channel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         id: TEST_DATA.TEXT_CHANNEL.id,
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,
@@ -320,7 +320,7 @@ describe("Channel", function () {
       });
       expect(channel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         id: TEST_DATA.TEXT_CHANNEL.id,
         name: TEST_DATA.TEXT_CHANNEL.name,
         type: TEST_DATA.TEXT_CHANNEL.type,

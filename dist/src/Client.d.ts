@@ -18,6 +18,8 @@ import { GluonDebugLevels } from "../typings/enums.js";
 declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #private;
   request: any;
+  readonly _cacheOptions: GluonCacheOptions;
+  readonly _defaultGuildCacheOptions: GuildCacheOptions;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -145,20 +147,6 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
    * @method
    */
   getCacheCounts(): ClientCacheCounts;
-  /**
-   * Returns the cache options for this client.
-   * @type {GluonCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _cacheOptions(): GluonCacheOptions;
-  /**
-   * Returns the global guild cache options for this client.
-   * @type {GuildCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _defaultGuildCacheOptions(): GuildCacheOptions;
   get initialized(): boolean;
   get ready(): boolean;
   /**

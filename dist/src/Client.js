@@ -45,8 +45,6 @@ var __classPrivateFieldGet =
 var _Client_user,
   _Client_token,
   _Client_intents,
-  _Client__cacheOptions,
-  _Client__defaultGuildCacheOptions,
   _Client__sessionData,
   _Client_shards,
   _Client_shardIds,
@@ -133,8 +131,6 @@ class Client extends TypedEmitter {
     // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
     _Client_token.set(this, void 0);
     _Client_intents.set(this, void 0);
-    _Client__cacheOptions.set(this, void 0);
-    _Client__defaultGuildCacheOptions.set(this, void 0);
     _Client__sessionData.set(this, void 0);
     // @ts-expect-error TS(7008): Member '#shards' implicitly has an 'any[]' type.
     _Client_shards.set(this, void 0);
@@ -203,44 +199,21 @@ class Client extends TypedEmitter {
      * @private
      */
     __classPrivateFieldSet(this, _Client_intents, intents, "f");
-    /**
-     * The cache options for this client.
-     * @type {GluonCacheOptions}
-     * @private
-     * @readonly
-     * @see {@link GluonCacheOptions}
-     */
-    __classPrivateFieldSet(
-      this,
-      _Client__cacheOptions,
-      new GluonCacheOptions({
-        cacheMessages,
-        cacheUsers,
-        cacheMembers,
-        cacheChannels,
-        cacheGuilds,
-        cacheVoiceStates,
-        cacheRoles,
-        cacheScheduledEvents,
-        cacheEmojis,
-        cacheInvites,
-        userTTL: defaultUserExpiry,
-        messageTTL: defaultMessageExpiry,
-      }),
-      "f",
-    );
-    /**
-     * The default guild cache options for this client.
-     * @type {GuildCacheOptions}
-     * @private
-     */
-    // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
-    __classPrivateFieldSet(
-      this,
-      _Client__defaultGuildCacheOptions,
-      new GuildCacheOptions(),
-      "f",
-    );
+    this._cacheOptions = new GluonCacheOptions({
+      cacheMessages,
+      cacheUsers,
+      cacheMembers,
+      cacheChannels,
+      cacheGuilds,
+      cacheVoiceStates,
+      cacheRoles,
+      cacheScheduledEvents,
+      cacheEmojis,
+      cacheInvites,
+      userTTL: defaultUserExpiry,
+      messageTTL: defaultMessageExpiry,
+    });
+    this._defaultGuildCacheOptions = new GuildCacheOptions();
     /**
      * An array of the shard ids that this client is handling.
      * @type {Number[]?}
@@ -281,9 +254,11 @@ class Client extends TypedEmitter {
      * @type {GuildManager}
      */
     __classPrivateFieldSet(this, _Client_guilds, new GuildManager(this), "f");
-    if (initCache?.guilds)
-      for (let i = 0; i < initCache.guilds.length; i++)
+    if (initCache?.guilds) {
+      for (let i = 0; i < initCache.guilds.length; i++) {
         new Guild(this, initCache.guilds[i]);
+      }
+    }
     __classPrivateFieldSet(
       this,
       _Client_softRestartFunction,
@@ -522,24 +497,6 @@ class Client extends TypedEmitter {
       voiceStates: totalVoiceStates,
     };
   }
-  /**
-   * Returns the cache options for this client.
-   * @type {GluonCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _cacheOptions() {
-    return __classPrivateFieldGet(this, _Client__cacheOptions, "f");
-  }
-  /**
-   * Returns the global guild cache options for this client.
-   * @type {GuildCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _defaultGuildCacheOptions() {
-    return __classPrivateFieldGet(this, _Client__defaultGuildCacheOptions, "f");
-  }
   get initialized() {
     return __classPrivateFieldGet(this, _Client_initialized, "f");
   }
@@ -776,8 +733,6 @@ class Client extends TypedEmitter {
 (_Client_user = new WeakMap()),
   (_Client_token = new WeakMap()),
   (_Client_intents = new WeakMap()),
-  (_Client__cacheOptions = new WeakMap()),
-  (_Client__defaultGuildCacheOptions = new WeakMap()),
   (_Client__sessionData = new WeakMap()),
   (_Client_shards = new WeakMap()),
   (_Client_shardIds = new WeakMap()),

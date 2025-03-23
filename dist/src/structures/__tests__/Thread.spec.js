@@ -125,7 +125,7 @@ describe("Thread", function () {
       });
       expect(thread.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         id: TEST_DATA.THREAD.id,
         messages: [],
         name: TEST_DATA.THREAD.name,
@@ -139,7 +139,7 @@ describe("Thread", function () {
       });
       expect(thread.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         id: TEST_DATA.THREAD.id,
         messages: [],
         name: TEST_DATA.THREAD.name,

@@ -293,7 +293,7 @@ class GuildChannel {
       existing?._cacheOptions
         ? existing._cacheOptions
         : new ChannelCacheOptions(
-            "_cacheOptions" in data ? data._cacheOptions : undefined,
+            "_cache_options" in data ? data._cache_options : undefined,
           ),
       "f",
     );
@@ -664,7 +664,7 @@ class GuildChannel {
             _GuildChannel__attributes,
             "f",
           ),
-          _cacheOptions: this._cacheOptions.toJSON(format),
+          _cache_options: this._cacheOptions.toJSON(format),
           messages: this.messages.toJSON(format),
           permission_overwrites: this.permissionOverwrites.map((p) =>
             p.toJSON(format),

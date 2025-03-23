@@ -114,7 +114,8 @@ declare class Thread extends Channel implements ThreadType {
         topic?: string;
         rate_limit_per_user?: number;
         position?: number;
-        nsfw: boolean;
+        _attributes: number;
+        _cache_options: number;
         messages: import("#typings/index.d.ts").MessageCacheJSON[];
         permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
@@ -141,7 +142,7 @@ declare class Thread extends Channel implements ThreadType {
         rate_limit_per_user?: number;
         position?: number;
         _attributes: number;
-        _cacheOptions: number;
+        _cache_options: number;
         messages: import("#typings/index.d.ts").MessageStorageJSON[];
         permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };

@@ -771,13 +771,13 @@ class Guild {
       this,
       _Guild__cacheOptions,
       new GuildCacheOptions(
-        // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
-        data._cacheOptions ||
-          __classPrivateFieldGet(
-            this,
-            _Guild__client,
-            "f",
-          )._defaultGuildCacheOptions.toJSON(),
+        "_cache_options" in data
+          ? data._cache_options
+          : __classPrivateFieldGet(
+              this,
+              _Guild__client,
+              "f",
+            )._defaultGuildCacheOptions.toJSON(),
       ),
       "f",
     );

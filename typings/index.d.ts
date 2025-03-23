@@ -316,7 +316,7 @@ export interface GuildChannelStorageJSON {
   position?: number;
   parent_id?: Snowflake | null;
   _attributes: number;
-  _cacheOptions: number;
+  _cache_options: number;
   messages: MessageStorageJSON[];
   permission_overwrites: PermissionOverwriteStorageJSON[];
 }
@@ -329,7 +329,8 @@ export interface GuildChannelCacheJSON {
   rate_limit_per_user?: number;
   position?: number;
   parent_id?: Snowflake | null;
-  nsfw: boolean;
+  _attributes: number;
+  _cache_options: number;
   messages: MessageCacheJSON[];
   permission_overwrites: PermissionOverwriteCacheJSON[];
 }

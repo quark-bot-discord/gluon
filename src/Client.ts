@@ -35,7 +35,6 @@ import {
   Guild as GuildType,
   UserManager as UserManagerType,
   GuildManager as GuildManagerType,
-  AllChannels,
   CommandBuilder,
   ClientOptions,
   ClientEvents,
@@ -52,8 +51,8 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
   // @ts-expect-error TS(7008): Member '#token' implicitly has an 'any' type.
   #token: string;
   #intents;
-  #_cacheOptions;
-  #_defaultGuildCacheOptions;
+  public readonly _cacheOptions;
+  public readonly _defaultGuildCacheOptions;
   #_sessionData;
   // @ts-expect-error TS(7008): Member '#shards' implicitly has an 'any[]' type.
   #shards;
@@ -173,14 +172,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
      */
     this.#intents = intents;
 
-    /**
-     * The cache options for this client.
-     * @type {GluonCacheOptions}
-     * @private
-     * @readonly
-     * @see {@link GluonCacheOptions}
-     */
-    this.#_cacheOptions = new GluonCacheOptions({
+    this._cacheOptions = new GluonCacheOptions({
       cacheMessages,
       cacheUsers,
       cacheMembers,
@@ -195,13 +187,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
       messageTTL: defaultMessageExpiry,
     });
 
-    /**
-     * The default guild cache options for this client.
-     * @type {GuildCacheOptions}
-     * @private
-     */
-    // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
-    this.#_defaultGuildCacheOptions = new GuildCacheOptions();
+    this._defaultGuildCacheOptions = new GuildCacheOptions();
 
     /**
      * An array of the shard ids that this client is handling.
@@ -245,9 +231,11 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
      */
     this.#guilds = new GuildManager(this);
 
-    if (initCache?.guilds)
-      for (let i = 0; i < initCache.guilds.length; i++)
-        new Guild(this as ClientType, initCache.guilds[i]);
+    if (initCache?.guilds) {
+      for (let i = 0; i < initCache.guilds.length; i++) {
+        new Guild(this, initCache.guilds[i]);
+      }
+    }
 
     this.#softRestartFunction = softRestartFunction;
   }
@@ -488,26 +476,6 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
       emojis: totalEmojis,
       voiceStates: totalVoiceStates,
     };
-  }
-
-  /**
-   * Returns the cache options for this client.
-   * @type {GluonCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _cacheOptions() {
-    return this.#_cacheOptions;
-  }
-
-  /**
-   * Returns the global guild cache options for this client.
-   * @type {GuildCacheOptions}
-   * @readonly
-   * @public
-   */
-  get _defaultGuildCacheOptions() {
-    return this.#_defaultGuildCacheOptions;
   }
 
   get initialized() {

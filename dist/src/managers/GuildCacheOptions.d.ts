@@ -2,7 +2,7 @@ import { GuildCacheOptions as GuildCacheOptionsType } from "../../typings/index.
 import { JsonTypes } from "#typings/enums.js";
 declare class GuildCacheOptions implements GuildCacheOptionsType {
   #private;
-  constructor(cache_options: number);
+  constructor(cache_options?: number);
   /**
    * Whether to cache messages or not.
    * @param {Boolean} option Whether to cache messages or not.

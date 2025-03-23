@@ -171,7 +171,6 @@ declare class Invite implements InviteType {
     | {
         code: string;
         channel:
-          | import("#typings/index.d.ts").GuildChannelCacheJSON
           | import("#typings/index.d.ts").GuildChannelDiscordJSON
           | import("#typings/index.d.ts").GuildChannelStorageJSON
           | import("#typings/index.d.ts").CategoryChannelCacheJSON
@@ -186,7 +185,6 @@ declare class Invite implements InviteType {
     | {
         code: string;
         channel:
-          | import("#typings/index.d.ts").GuildChannelCacheJSON
           | import("#typings/index.d.ts").GuildChannelDiscordJSON
           | import("#typings/index.d.ts").GuildChannelStorageJSON
           | import("#typings/index.d.ts").CategoryChannelCacheJSON

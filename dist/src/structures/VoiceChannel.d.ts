@@ -94,7 +94,8 @@ declare class VoiceChannel extends GuildChannel implements VoiceChannelType {
         rate_limit_per_user?: number;
         position?: number;
         parent_id?: Snowflake | null;
-        nsfw: boolean;
+        _attributes: number;
+        _cache_options: number;
         messages: import("#typings/index.d.ts").MessageCacheJSON[];
         permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteCacheJSON[];
       }
@@ -125,7 +126,7 @@ declare class VoiceChannel extends GuildChannel implements VoiceChannelType {
         position?: number;
         parent_id?: Snowflake | null;
         _attributes: number;
-        _cacheOptions: number;
+        _cache_options: number;
         messages: import("#typings/index.d.ts").MessageStorageJSON[];
         permission_overwrites: import("#typings/index.d.ts").PermissionOverwriteStorageJSON[];
       };

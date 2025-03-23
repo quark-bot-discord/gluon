@@ -547,8 +547,9 @@ class Guild implements GuildType {
      * @private
      */
     this.#_cacheOptions = new GuildCacheOptions(
-      // @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
-      data._cacheOptions || this.#_client._defaultGuildCacheOptions.toJSON(),
+      "_cache_options" in data
+        ? data._cache_options
+        : this.#_client._defaultGuildCacheOptions.toJSON(),
     );
 
     const shouldCache = Guild.shouldCache(this.#_client._cacheOptions);

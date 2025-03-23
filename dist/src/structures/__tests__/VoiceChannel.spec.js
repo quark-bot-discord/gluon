@@ -125,7 +125,7 @@ describe("VoiceChannel", function () {
         TEST_CHANNELS.VOICE_CHANNEL_ALL_CACHES_ENABLED(client);
       expect(voiceChannel.toJSON(JsonTypes.CACHE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
         messages: [],
@@ -141,7 +141,7 @@ describe("VoiceChannel", function () {
       });
       expect(voiceChannel.toJSON(JsonTypes.STORAGE_FORMAT)).to.deep.equal({
         _attributes: 0,
-        _cacheOptions: 1023,
+        _cache_options: 1023,
         bitrate: TEST_DATA.VOICE_CHANNEL.bitrate,
         id: TEST_DATA.VOICE_CHANNEL.id,
         messages: [],

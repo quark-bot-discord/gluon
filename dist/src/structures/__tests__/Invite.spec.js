@@ -209,7 +209,7 @@ describe("Invite", function () {
         code: TEST_DATA.INVITE.code,
         channel: {
           _attributes: 0,
-          _cacheOptions: 1023,
+          _cache_options: 1023,
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
@@ -237,7 +237,7 @@ describe("Invite", function () {
         code: TEST_DATA.INVITE.code,
         channel: {
           _attributes: 0,
-          _cacheOptions: 1023,
+          _cache_options: 1023,
           id: TEST_DATA.INVITE.channel.id,
           messages: [],
           name: TEST_DATA.INVITE.channel.name,
