@@ -82,15 +82,6 @@ class GuildRoleManager extends BaseCacheManager {
   fetchWithRules(key) {
     return super.fetchWithRules(key);
   }
-  /**
-   * Fetches a role that belongs to this guild.
-   * @param {String} roleId The id of the role to fetch.
-   * @returns {Promise<Role>} The fetched role.
-   * @async
-   * @public
-   * @method
-   * @throws {TypeError | Error}
-   */
   async fetch(roleId) {
     if (typeof roleId !== "string")
       throw new TypeError("GLUON: Role ID must be a string.");
@@ -120,16 +111,6 @@ class GuildRoleManager extends BaseCacheManager {
     }
     return matchedRole;
   }
-  /**
-   * Adds a role to the cache.
-   * @param {String} id The ID of the role to cache
-   * @param {Role} role The role to cache.
-   * @returns {Role}
-   * @public
-   * @method
-   * @throws {TypeError}
-   * @override
-   */
   set(id, role) {
     if (!(role instanceof Role))
       throw new TypeError("GLUON: Role must be an instance of Role.");
@@ -138,17 +119,6 @@ class GuildRoleManager extends BaseCacheManager {
   get(id) {
     return super.get(id);
   }
-  /**
-   * Returns a role from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @param {String} roleId The ID of the role.
-   * @returns {Role?}
-   * @public
-   * @static
-   * @method
-   * @throws {TypeError}
-   */
   static getRole(client, guildId, roleId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -162,16 +132,6 @@ class GuildRoleManager extends BaseCacheManager {
     }
     return guild.roles.get(roleId);
   }
-  /**
-   * Returns the cache manager.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild.
-   * @returns {GuildRoleManager}
-   * @public
-   * @static
-   * @method
-   * @throws {TypeError}
-   */
   static getCacheManager(client, guildId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -183,17 +143,6 @@ class GuildRoleManager extends BaseCacheManager {
     }
     return guild.roles;
   }
-  /**
-   * Fetches a role, checking the cache first.
-   * @param {String} guildId The id of the guild the role belongs to.
-   * @param {String?} roleId The id of the role to fetch, or null to return all roles.
-   * @returns {Promise<Role | Array<Role>>}
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   * @static
-   */
   static async fetchRole(client, guildId, roleId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -209,7 +158,8 @@ class GuildRoleManager extends BaseCacheManager {
         client,
         guildId,
       ).toJSON();
-      if (cachedRoles && cachedRoles.length !== 0) return cachedRoles;
+      if (cachedRoles && cachedRoles.length !== 0)
+        return cachedRoles.map((role) => new Role(client, role, { guildId }));
     }
     const data = await client.request.makeRequest("getRoles", [guildId]);
     if (!roleId) return data.map((role) => new Role(client, role, { guildId }));
@@ -217,6 +167,9 @@ class GuildRoleManager extends BaseCacheManager {
     for (let i = 0; i < data.length; i++) {
       const role = new Role(client, data[i], { guildId });
       if (role.id === roleId) matchedRole = role;
+    }
+    if (!matchedRole) {
+      throw new Error(`GLUON: Role ${roleId} not found.`);
     }
     return matchedRole;
   }
