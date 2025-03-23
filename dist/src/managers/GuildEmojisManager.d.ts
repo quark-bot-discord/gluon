@@ -1,4 +1,3 @@
-import Emoji from "../structures/Emoji.js";
 import BaseCacheManager from "./BaseCacheManager.js";
 import {
   GuildEmojisManager as GuildEmojisManagerType,
@@ -34,24 +33,12 @@ declare class GuildEmojisManager
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(emojiId: Snowflake): Promise<Emoji | EmojiType>;
-  /**
-   * Fetches a particular emoji that belongs to this guild, checking the cache first.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild to fetch the emoji from.
-   * @param {String} emojiId The ID of the emoji to fetch.
-   * @returns {Promise<Emoji>} The fetched emoji.
-   * @public
-   * @method
-   * @static
-   * @async
-   * @throws {TypeError}
-   */
+  fetch(emojiId: Snowflake): Promise<EmojiType>;
   static fetchEmoji(
     client: ClientType,
     guildId: Snowflake,
     emojiId: Snowflake,
-  ): Promise<Emoji | EmojiType>;
+  ): Promise<EmojiType>;
   /**
    * Gets an emoji from the cache.
    * @param {Client} client The client instance.
