@@ -95,10 +95,6 @@ class GuildScheduledEventManager
       [this.#guild.id, scheduledEventId],
     )) as APIGuildScheduledEvent;
 
-    if (!data) {
-      return null;
-    }
-
     return new ScheduledEvent(this.#_client, data, {
       guildId: this.#guild.id,
     }) as ScheduledEventType;

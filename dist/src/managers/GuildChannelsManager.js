@@ -112,7 +112,6 @@ class GuildChannelsManager extends BaseCacheManager {
       _GuildChannelsManager__client,
       "f",
     ).request.makeRequest("getChannel", [channel_id]);
-    if (!data) return null;
     return cacheChannel(
       __classPrivateFieldGet(this, _GuildChannelsManager__client, "f"),
       data,

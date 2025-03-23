@@ -1,11 +1,11 @@
-import { ButtonStyle } from "#typings/discord.js";
-import Client from "../src/Client.js";
-import { INTENTS } from "../src/constants.js";
-import ActionRow from "../src/util/builder/actionRowBuilder.js";
-import Button from "../src/util/builder/buttonBuilder.js";
-import Embed from "../src/util/builder/embedBuilder.js";
-import { FileUpload } from "../src/util/builder/fileUpload.js";
-import MessageComponents from "../src/util/builder/messageComponents.js";
+import { ButtonStyle } from "discord-api-types/v10";
+import Client from "../dist/src/Client.js";
+import { INTENTS } from "../dist/src/constants.js";
+import ActionRow from "../dist/src/util/builder/actionRowBuilder.js";
+import Button from "../dist/src/util/builder/buttonBuilder.js";
+import Embed from "../dist/src/util/builder/embedBuilder.js";
+import { FileUpload } from "../dist/src/util/builder/fileUpload.js";
+import MessageComponents from "../dist/src/util/builder/messageComponents.js";
 const client = new Client({
   cacheGuilds: true,
   cacheMessages: true,
@@ -72,7 +72,7 @@ client.on("debug", (data) => {
   console.log(data);
 });
 
-client.on("messageCreate", (message) => {
+client.on("messageCreate", async (message) => {
   console.log("messageCreate");
   console.log(message);
   // console.log(message.toJSON());
@@ -111,6 +111,9 @@ client.on("messageCreate", (message) => {
     message.channel.send({
       files: [file],
     });
+  }
+  if (message.content == "ping") {
+    await message.guild.channels.fetch("abcdef");
   }
 });
 

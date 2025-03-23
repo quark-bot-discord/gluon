@@ -27,7 +27,7 @@ declare class GuildAuditLogManager
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
-  }): Promise<AuditLog[] | null>;
+  }): Promise<AuditLog[]>;
   search({
     limit,
     type,

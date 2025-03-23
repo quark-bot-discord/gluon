@@ -88,8 +88,6 @@ class GuildChannelsManager
       channel_id,
     ]);
 
-    if (!data) return null;
-
     return cacheChannel(this.#_client, data, this.#guild.id);
   }
 

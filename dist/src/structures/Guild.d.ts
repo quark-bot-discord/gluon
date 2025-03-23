@@ -421,7 +421,7 @@ declare class Guild implements GuildType {
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
-  }): Promise<AuditLog[] | null>;
+  }): Promise<AuditLog[]>;
   /**
    * Fetches the guild invites.
    * @returns {Promise<Object[]?>}

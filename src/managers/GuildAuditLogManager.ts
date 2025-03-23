@@ -96,9 +96,9 @@ class GuildAuditLogManager
       data.audit_log_entries[0] &&
       data.audit_log_entries[0].action_type != type
     )
-      return null;
+      return [];
 
-    if (!data || data.audit_log_entries.length == 0) return null;
+    if (!data || data.audit_log_entries.length == 0) return [];
 
     return data.audit_log_entries.map(
       (e) =>

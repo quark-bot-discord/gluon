@@ -42,7 +42,7 @@ declare class GuildChannelsManager
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(channel_id: Snowflake): Promise<AllChannels | null>;
+  fetch(channel_id: Snowflake): Promise<AllChannels>;
   /**
    * Adds a channel to the cache.
    * @param {String} id The ID of the channel to cache.

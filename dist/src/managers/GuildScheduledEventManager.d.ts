@@ -34,7 +34,7 @@ declare class GuildScheduledEventManager
    * @public
    * @throws {TypeError | Error}
    */
-  fetch(scheduledEventId: Snowflake): Promise<ScheduledEventType | null>;
+  fetch(scheduledEventId: Snowflake): Promise<ScheduledEventType>;
   /**
    * Cache a scheduled event.
    * @param {String} id The ID of the event to cache.

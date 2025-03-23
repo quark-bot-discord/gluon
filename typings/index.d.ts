@@ -447,7 +447,7 @@ export class Guild {
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
-  }): Promise<AuditLog[] | null>;
+  }): Promise<AuditLog[]>;
   fetchInvites(): Promise<APIInvite[]>;
   fetchChannels(): Promise<AnyChannelType[]>;
   fetchBan(userId: Snowflake): Promise<APIBan>;
@@ -1771,7 +1771,7 @@ export interface GuildCacheOptions {
 export class GuildChannelsManager extends BaseCacheManager {
   constructor(client: Client, guild: Guild);
   get(key: Snowflake): AllChannels | null;
-  fetch(key: Snowflake): Promise<AllChannels | null>;
+  fetch(key: Snowflake): Promise<AllChannels>;
   fetchFromRules(key: Snowflake): Promise<AllChannels | null>;
   fetchWithRules(key: Snowflake): Promise<AllChannels | null>;
   set(key: Snowflake, value: AllChannels, expiry?: number): void;
@@ -1817,7 +1817,7 @@ export type AllChannelJSON =
 export class GuildEmojisManager extends BaseCacheManager {
   constructor(client: Client, guild: Guild);
   get(key: Snowflake): Emoji | null;
-  fetch(key: Snowflake): Promise<Emoji | null>;
+  fetch(key: Snowflake): Promise<Emoji>;
   fetchFromRules(key: Snowflake): Promise<Emoji | null>;
   fetchWithRules(key: Snowflake): Promise<Emoji | null>;
   set(key: Snowflake, value: Emoji, expiry?: number): void;
@@ -1931,9 +1931,8 @@ export class GuildMemberManager extends BaseCacheManager {
       array: [Snowflake, Member][],
     ) => unknown,
   ): unknown[];
-  fetch(key: Snowflake): Promise<Member | null>;
+  fetch(key: Snowflake): Promise<Member>;
   search(query: string): Promise<Member[]>;
-  fetch(key: Snowflake): Promise<Member | null>;
   toJSON(
     format?: JsonTypes,
   ): MemberCacheJSON[] | MemberStorageJSON[] | MemberDiscordJSON[];
@@ -1965,7 +1964,7 @@ export class GuildRoleManager extends BaseCacheManager {
       array: [Snowflake, Role][],
     ) => unknown,
   ): unknown[];
-  fetch(key: Snowflake): Promise<Role | null>;
+  fetch(key: Snowflake): Promise<Role>;
   toJSON(
     format?: JsonTypes,
   ): RoleStorageJSON[] | RoleCacheJSON[] | RoleDiscordJSON[];
@@ -1998,7 +1997,7 @@ export class GuildScheduledEventManager extends BaseCacheManager {
     ) => unknown,
   ): unknown[];
   list(): Promise<ScheduledEvent[]>;
-  fetch(key: Snowflake): Promise<ScheduledEvent | null>;
+  fetch(key: Snowflake): Promise<ScheduledEvent>;
   toJSON(
     format?: JsonTypes,
   ):
@@ -2113,7 +2112,7 @@ export class UserManager extends BaseCacheManager {
       array: [Snowflake, User][],
     ) => unknown,
   ): unknown[];
-  fetch(key: Snowflake): Promise<User | null>;
+  fetch(key: Snowflake): Promise<User>;
   toJSON(
     format?: JsonTypes,
   ): UserCacheJSON[] | UserDiscordJSON[] | UserStorageJSON[];
@@ -2157,7 +2156,7 @@ export class GuildAuditLogManager extends BaseCacheManager {
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
-  } = {}): Promise<AuditLog[] | null>;
+  } = {}): Promise<AuditLog[]>;
   search({
     limit,
     type,

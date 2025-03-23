@@ -83,7 +83,11 @@ class GuildRoleManager
       if (role.id == roleId) matchedRole = role;
     }
 
-    return matchedRole ?? null;
+    if (!matchedRole) {
+      throw new Error(`GLUON: Role ${roleId} not found.`);
+    }
+
+    return matchedRole;
   }
 
   /**

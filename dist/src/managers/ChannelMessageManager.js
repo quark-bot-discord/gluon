@@ -130,15 +130,6 @@ class ChannelMessageManager extends BaseCacheManager {
   async fetchWithRules(key) {
     return super.fetchWithRules(key);
   }
-  /**
-   * Fetches a collection of messages or a singular message from the channel.
-   * @param {Object | String} options Either an object of {@link https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params|options} or a message id.
-   * @returns {Promise<Array<Message>> | Promise<Message>}
-   * @public
-   * @async
-   * @method
-   * @throws {TypeError | Error}
-   */
   async fetch(options) {
     if (
       !checkPermission(

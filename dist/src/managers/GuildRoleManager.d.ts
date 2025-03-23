@@ -34,7 +34,7 @@ declare class GuildRoleManager
    * @method
    * @throws {TypeError | Error}
    */
-  fetch(roleId: Snowflake): Promise<Role | RoleType | null>;
+  fetch(roleId: Snowflake): Promise<Role | RoleType>;
   /**
    * Adds a role to the cache.
    * @param {String} id The ID of the role to cache

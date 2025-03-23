@@ -138,9 +138,6 @@ class GuildScheduledEventManager extends BaseCacheManager {
       __classPrivateFieldGet(this, _GuildScheduledEventManager_guild, "f").id,
       scheduledEventId,
     ]);
-    if (!data) {
-      return null;
-    }
     return new ScheduledEvent(
       __classPrivateFieldGet(this, _GuildScheduledEventManager__client, "f"),
       data,

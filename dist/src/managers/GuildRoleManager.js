@@ -115,7 +115,10 @@ class GuildRoleManager extends BaseCacheManager {
       );
       if (role.id == roleId) matchedRole = role;
     }
-    return matchedRole ?? null;
+    if (!matchedRole) {
+      throw new Error(`GLUON: Role ${roleId} not found.`);
+    }
+    return matchedRole;
   }
   /**
    * Adds a role to the cache.
