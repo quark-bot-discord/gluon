@@ -117,17 +117,6 @@ class GuildEmojisManager extends BaseCacheManager {
     ]);
     return new Emoji(client, data, { guildId });
   }
-  /**
-   * Gets an emoji from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild to get the emoji from.
-   * @param {String} emojiId The ID of the emoji to get.
-   * @returns {Emoji?}
-   * @public
-   * @method
-   * @static
-   * @throws {TypeError}
-   */
   static getEmoji(client, guildId, emojiId) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");

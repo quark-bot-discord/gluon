@@ -39,17 +39,6 @@ declare class GuildEmojisManager
     guildId: Snowflake,
     emojiId: Snowflake,
   ): Promise<EmojiType>;
-  /**
-   * Gets an emoji from the cache.
-   * @param {Client} client The client instance.
-   * @param {String} guildId The ID of the guild to get the emoji from.
-   * @param {String} emojiId The ID of the emoji to get.
-   * @returns {Emoji?}
-   * @public
-   * @method
-   * @static
-   * @throws {TypeError}
-   */
   static getEmoji(
     client: ClientType,
     guildId: Snowflake,
