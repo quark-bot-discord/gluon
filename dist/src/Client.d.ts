@@ -65,6 +65,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
     sessionData,
     initCache,
     softRestartFunction,
+    ip,
   }: ClientOptions);
   /**
    * The ids of the shards that this client is managing.

@@ -63,6 +63,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #softRestartFunction;
   #ready = false;
   #initialized = false;
+  #ip;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -108,6 +109,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     sessionData,
     initCache,
     softRestartFunction,
+    ip,
   }: ClientOptions) {
     super();
 
@@ -171,6 +173,8 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
      * @private
      */
     this.#intents = intents;
+
+    this.#ip = ip;
 
     this._cacheOptions = new GluonCacheOptions({
       cacheMessages,
@@ -647,7 +651,9 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     /* sets the token and starts logging the bot in to the gateway, shard by shard */
     this.#token = token;
 
-    this.request = new BetterRequestHandler(this, this.#token);
+    this.request = new BetterRequestHandler(this, this.#token, {
+      ip: this.#ip,
+    });
 
     this.request
       .makeRequest("getGatewayBot")

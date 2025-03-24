@@ -53,7 +53,8 @@ var _Client_user,
   _Client_guilds,
   _Client_softRestartFunction,
   _Client_ready,
-  _Client_initialized;
+  _Client_initialized,
+  _Client_ip;
 /* i think one process should be able to handle multiple shards (ideally max_concurrency's worth) */
 import {
   DEFAULT_MESSAGE_EXPIRY_SECONDS,
@@ -125,6 +126,7 @@ class Client extends TypedEmitter {
     sessionData,
     initCache,
     softRestartFunction,
+    ip,
   }) {
     super();
     _Client_user.set(this, void 0);
@@ -141,6 +143,7 @@ class Client extends TypedEmitter {
     _Client_softRestartFunction.set(this, void 0);
     _Client_ready.set(this, false);
     _Client_initialized.set(this, false);
+    _Client_ip.set(this, void 0);
     if (typeof cacheMessages !== "boolean")
       throw new TypeError("GLUON: Cache messages is not a boolean.");
     if (typeof cacheUsers !== "boolean")
@@ -199,6 +202,7 @@ class Client extends TypedEmitter {
      * @private
      */
     __classPrivateFieldSet(this, _Client_intents, intents, "f");
+    __classPrivateFieldSet(this, _Client_ip, ip, "f");
     this._cacheOptions = new GluonCacheOptions({
       cacheMessages,
       cacheUsers,
@@ -650,6 +654,9 @@ class Client extends TypedEmitter {
     this.request = new BetterRequestHandler(
       this,
       __classPrivateFieldGet(this, _Client_token, "f"),
+      {
+        ip: __classPrivateFieldGet(this, _Client_ip, "f"),
+      },
     );
     this.request
       .makeRequest("getGatewayBot")
@@ -741,6 +748,7 @@ class Client extends TypedEmitter {
   (_Client_guilds = new WeakMap()),
   (_Client_softRestartFunction = new WeakMap()),
   (_Client_ready = new WeakMap()),
-  (_Client_initialized = new WeakMap());
+  (_Client_initialized = new WeakMap()),
+  (_Client_ip = new WeakMap());
 export default Client;
 //# sourceMappingURL=Client.js.map

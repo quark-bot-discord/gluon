@@ -2,7 +2,13 @@ import endpoints from "./endpoints.js";
 import type { Client as ClientType, FileUpload } from "typings/index.d.ts";
 declare class BetterRequestHandler {
   #private;
-  constructor(client: ClientType, token: string);
+  constructor(
+    client: ClientType,
+    token: string,
+    options?: {
+      ip?: string;
+    },
+  );
   /**
    * The latency of the request handler.
    * @type {Number}

@@ -2754,6 +2754,7 @@ export interface ClientOptions {
   sessionData?: SessionData[];
   initCache?: InitCache;
   softRestartFunction?: () => void;
+  ip?: string;
 }
 
 export interface SessionData {

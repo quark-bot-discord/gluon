@@ -23,6 +23,7 @@ import {
   GluonRatelimitEncountered,
   GluonRequestError,
 } from "#typings/errors.js";
+import https from "https";
 const AbortController = globalThis.AbortController;
 
 interface QueueItemData {
@@ -48,8 +49,11 @@ class BetterRequestHandler {
   #queueWorker;
   #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
   #latencyMs: number = 0;
-  constructor(client: ClientType, token: string) {
+  #agent;
+  constructor(client: ClientType, token: string, options?: { ip?: string }) {
     this.#_client = client;
+
+    this.#agent = new https.Agent({ localAddress: options?.ip });
 
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
 
@@ -277,6 +281,7 @@ class BetterRequestHandler {
                   : undefined,
               compress: true,
               signal: controller.signal,
+              agent: this.#agent,
             },
           );
 

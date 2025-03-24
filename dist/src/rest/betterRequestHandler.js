@@ -55,6 +55,7 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_queueWorker,
   _BetterRequestHandler_queues,
   _BetterRequestHandler_latencyMs,
+  _BetterRequestHandler_agent,
   _BetterRequestHandler_http;
 import fetch from "node-fetch";
 import FormData from "form-data";
@@ -76,9 +77,10 @@ import {
   GluonRatelimitEncountered,
   GluonRequestError,
 } from "#typings/errors.js";
+import https from "https";
 const AbortController = globalThis.AbortController;
 class BetterRequestHandler {
-  constructor(client, token) {
+  constructor(client, token, options) {
     _BetterRequestHandler_instances.add(this);
     _BetterRequestHandler_token.set(this, void 0);
     _BetterRequestHandler_authorization.set(this, void 0);
@@ -92,7 +94,14 @@ class BetterRequestHandler {
     _BetterRequestHandler_queueWorker.set(this, void 0);
     _BetterRequestHandler_queues.set(this, {});
     _BetterRequestHandler_latencyMs.set(this, 0);
+    _BetterRequestHandler_agent.set(this, void 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
+    __classPrivateFieldSet(
+      this,
+      _BetterRequestHandler_agent,
+      new https.Agent({ localAddress: options?.ip }),
+      "f",
+    );
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_requestURL,
@@ -297,6 +306,7 @@ class BetterRequestHandler {
   (_BetterRequestHandler_queueWorker = new WeakMap()),
   (_BetterRequestHandler_queues = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
+  (_BetterRequestHandler_agent = new WeakMap()),
   (_BetterRequestHandler_instances = new WeakSet()),
   (_BetterRequestHandler_http = async function _BetterRequestHandler_http(
     hash,
@@ -404,6 +414,11 @@ class BetterRequestHandler {
                   : undefined,
               compress: true,
               signal: controller.signal,
+              agent: __classPrivateFieldGet(
+                this,
+                _BetterRequestHandler_agent,
+                "f",
+              ),
             },
           );
           __classPrivateFieldSet(
