@@ -1,14 +1,5 @@
 version = 1
 
-[[analyzers]]
-name = "javascript"
-
-  [analyzers.meta]
-  environment = [
-    "nodejs",
-    "mocha"
-  ]
-
 exclude_patterns = [
   "**/node_modules/",
   "dist/**"
@@ -17,3 +8,12 @@ exclude_patterns = [
 test_patterns = [
   "**/__tests__/**",
 ]
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  environment = [
+    "nodejs",
+    "mocha"
+  ]
