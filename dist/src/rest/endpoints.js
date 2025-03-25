@@ -12,7 +12,7 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json({
         url: "wss://gateway.discord.gg",
@@ -32,7 +32,7 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: async ({ params, request } = {}) => {
+    mockResponse: async ({ request }) => {
       if (request.headers.get("content-type") !== "application/json")
         await request.formData();
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
@@ -45,7 +45,7 @@ export default {
     },
     method: "PATCH",
     majorParams: [0],
-    mockResponse: async ({ params, request } = {}) => {
+    mockResponse: async ({ request }) => {
       if (request.headers.get("content-type") !== "application/json")
         await request.formData();
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
@@ -59,7 +59,7 @@ export default {
     method: "PUT",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -70,7 +70,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json({ audit_log_entries: [TEST_DATA.AUDIT_LOG] });
     },
@@ -81,7 +81,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.MESSAGE]);
     },
@@ -92,7 +92,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.MESSAGE);
     },
@@ -103,7 +103,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.INVITE]);
     },
@@ -114,7 +114,7 @@ export default {
     },
     method: "POST",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -125,7 +125,7 @@ export default {
     },
     method: "PATCH",
     majorParams: [0, 1],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -136,7 +136,7 @@ export default {
     },
     method: "DELETE",
     majorParams: [0, 1],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -148,7 +148,7 @@ export default {
     method: "POST",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -159,7 +159,7 @@ export default {
     },
     method: "POST",
     majorParams: [0, 1],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -170,7 +170,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([
         TEST_DATA.TEXT_CHANNEL,
@@ -186,7 +186,7 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.FOLLOWED_CHANNEL);
     },
@@ -197,7 +197,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.MEMBER]);
     },
@@ -208,7 +208,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.MEMBER);
     },
@@ -220,7 +220,7 @@ export default {
     method: "PATCH",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.MEMBER);
     },
@@ -231,7 +231,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.BAN);
     },
@@ -243,7 +243,7 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -255,7 +255,7 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -267,7 +267,7 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -279,7 +279,7 @@ export default {
     method: "PUT",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -291,7 +291,7 @@ export default {
     method: "DELETE",
     useHeaders: ["X-Audit-Log-Reason"],
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -302,7 +302,7 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.USER);
     },
@@ -313,7 +313,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.WEBHOOK]);
     },
@@ -324,7 +324,7 @@ export default {
     },
     method: "GET",
     majorParams: [],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.WEBHOOK);
     },
@@ -335,7 +335,7 @@ export default {
     },
     method: "DELETE",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -346,7 +346,7 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.WEBHOOK);
     },
@@ -357,7 +357,7 @@ export default {
     },
     method: "PATCH",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.WEBHOOK);
     },
@@ -368,7 +368,7 @@ export default {
     },
     method: "DELETE",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
     },
@@ -379,7 +379,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.SCHEDULED_EVENT]);
     },
@@ -390,7 +390,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.SCHEDULED_EVENT);
     },
@@ -401,7 +401,7 @@ export default {
     },
     method: "PUT",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.SLASH_COMMAND]);
     },
@@ -412,7 +412,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.ROLE_ADMIN]);
     },
@@ -423,7 +423,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.EMOJI);
     },
@@ -434,7 +434,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.MESSAGE]);
     },
@@ -445,7 +445,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.TEXT_CHANNEL);
     },
@@ -456,7 +456,7 @@ export default {
     },
     method: "GET",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json([TEST_DATA.EMOJI]);
     },
@@ -467,7 +467,7 @@ export default {
     },
     method: "POST",
     majorParams: [0],
-    mockResponse: ({ params } = {}) => {
+    mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.EMOJI);
     },

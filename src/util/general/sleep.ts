@@ -1,3 +1,3 @@
 export function sleep(period: number) {
-  return new Promise((resolve, reject) => setTimeout(resolve, period));
+  return new Promise((resolve) => setTimeout(resolve, period));
 }
