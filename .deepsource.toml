@@ -8,3 +8,12 @@ name = "javascript"
     "nodejs",
     "mocha"
   ]
+
+exclude_patterns = [
+  "**/node_modules/",
+  "dist/**"
+]
+
+test_patterns = [
+  "**/__tests__/**",
+]
