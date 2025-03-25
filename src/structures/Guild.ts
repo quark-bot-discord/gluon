@@ -24,6 +24,7 @@ import { UnixTimestamp } from "#typings/gluon.js";
 import {
   APIAuditLog,
   APIGuild,
+  APIWebhook,
   AuditLogEvent,
   GatewayGuildCreateDispatchData,
   GuildDefaultMessageNotifications,
@@ -1578,7 +1579,10 @@ class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: ClientType, webhookId: Snowflake) {
+  static fetchWebhook(
+    client: ClientType,
+    webhookId: Snowflake,
+  ): Promise<APIWebhook> {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")

@@ -2,6 +2,7 @@ import AuditLog from "./AuditLog.js";
 import util from "util";
 import {
   APIGuild,
+  APIWebhook,
   AuditLogEvent,
   GatewayGuildCreateDispatchData,
   GuildDefaultMessageNotifications,
@@ -547,7 +548,10 @@ declare class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client: ClientType, webhookId: Snowflake): any;
+  static fetchWebhook(
+    client: ClientType,
+    webhookId: Snowflake,
+  ): Promise<APIWebhook>;
   /**
    * Posts a webhook with the provided webhook id and token.
    * @param {Client} client The client instance.
