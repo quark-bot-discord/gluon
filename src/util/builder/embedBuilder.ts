@@ -152,7 +152,7 @@ class Embed implements EmbedType {
         );
       if (data.image) this.setImage(data.image.url);
       if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
-      if (data.video && data.video.url) this.setVideo(data.video.url);
+      if (data.video?.url) this.setVideo(data.video.url);
     }
   }
 
@@ -481,22 +481,19 @@ class Embed implements EmbedType {
       if (this.footer && typeof this.footer.text !== "string")
         throw new TypeError("GLUON: Embed footer text must be a string.");
       if (
-        this.footer &&
-        this.footer.text &&
+        this.footer?.text &&
         this.footer.text.length > LIMITS.MAX_EMBED_FOOTER_TEXT
       )
         throw new RangeError(
           `GLUON: Embed footer text must be less than ${LIMITS.MAX_EMBED_FOOTER_TEXT} characters.`,
         );
       if (
-        this.footer &&
-        this.footer.icon_url &&
+        this.footer?.icon_url &&
         typeof this.footer.icon_url !== "string"
       )
         throw new TypeError("GLUON: Embed footer icon url must be a string.");
       if (
-        this.footer &&
-        this.footer.icon_url &&
+        this.footer?.icon_url &&
         isValidUrl(this.footer.icon_url) === false
       )
         throw new TypeError(
@@ -507,30 +504,26 @@ class Embed implements EmbedType {
       if (this.author && typeof this.author.name !== "string")
         throw new TypeError("GLUON: Embed author name must be a string.");
       if (
-        this.author &&
-        this.author.name &&
+        this.author?.name &&
         this.author.name.length > LIMITS.MAX_EMBED_AUTHOR_NAME
       )
         throw new RangeError(
           `GLUON: Embed author name must be less than ${LIMITS.MAX_EMBED_AUTHOR_NAME} characters.`,
         );
-      if (this.author && this.author.url && typeof this.author.url !== "string")
+      if (this.author?.url && typeof this.author.url !== "string")
         throw new TypeError("GLUON: Embed author url must be a string.");
       if (
-        this.author &&
-        this.author.url &&
+        this.author?.url &&
         isValidUrl(this.author.url) === false
       )
         throw new TypeError("GLUON: Embed author url must be a valid url.");
       if (
-        this.author &&
-        this.author.icon_url &&
+        this.author?.icon_url &&
         typeof this.author.icon_url !== "string"
       )
         throw new TypeError("GLUON: Embed author icon url must be a string.");
       if (
-        this.author &&
-        this.author.icon_url &&
+        this.author?.icon_url &&
         isValidUrl(this.author.icon_url) === false
       )
         throw new TypeError(
@@ -558,15 +551,14 @@ class Embed implements EmbedType {
         throw new TypeError("GLUON: Embed image must be an object.");
       if (this.image && typeof this.image.url !== "string")
         throw new TypeError("GLUON: Embed image url must be a string.");
-      if (this.image && this.image.url && isValidUrl(this.image.url) === false)
+      if (this.image?.url && isValidUrl(this.image.url) === false)
         throw new TypeError("GLUON: Embed image url must be a valid url.");
       if (this.thumbnail && typeof this.thumbnail !== "object")
         throw new TypeError("GLUON: Embed thumbnail must be an object.");
       if (this.thumbnail && typeof this.thumbnail.url !== "string")
         throw new TypeError("GLUON: Embed thumbnail url must be a string.");
       if (
-        this.thumbnail &&
-        this.thumbnail.url &&
+        this.thumbnail?.url &&
         isValidUrl(this.thumbnail.url) === false
       )
         throw new TypeError("GLUON: Embed thumbnail url must be a valid url.");
@@ -574,7 +566,7 @@ class Embed implements EmbedType {
         throw new TypeError("GLUON: Embed video must be an object.");
       if (this.video && typeof this.video.url !== "string")
         throw new TypeError("GLUON: Embed video url must be a string.");
-      if (this.video && this.video.url && isValidUrl(this.video.url) === false)
+      if (this.video?.url && isValidUrl(this.video.url) === false)
         throw new TypeError("GLUON: Embed video url must be a valid url.");
     }
     switch (format) {
