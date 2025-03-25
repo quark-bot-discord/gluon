@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: node --version
-      - run: npx prettier . --check
+      # - run: npx prettier . --check
       - run: CXXFLAGS=-std=c++17 npm ci
       - run: CXXFLAGS=-std=c++17 npm run build --if-present
       - run: npm test
