@@ -1579,14 +1579,24 @@ class Guild implements GuildType {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(
+  static async fetchWebhook(
     client: ClientType,
     webhookId: Snowflake,
+    guild?: GuildType,
   ): Promise<APIWebhook> {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (
+      guild &&
+      !checkPermission(
+        (await guild.me()).permissions,
+        PERMISSIONS.MANAGE_WEBHOOKS,
+      )
+    ) {
+      throw new GluonPermissionsError("ManageWebhooks");
+    }
     return client.request.makeRequest("getWebhook", [webhookId]);
   }
 

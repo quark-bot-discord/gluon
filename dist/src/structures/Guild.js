@@ -1816,11 +1816,20 @@ class Guild {
    * @throws {TypeError}
    * @static
    */
-  static fetchWebhook(client, webhookId) {
+  static async fetchWebhook(client, webhookId, guild) {
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
     if (typeof webhookId !== "string")
       throw new TypeError("GLUON: Webhook ID is not a string.");
+    if (
+      guild &&
+      !checkPermission(
+        (await guild.me()).permissions,
+        PERMISSIONS.MANAGE_WEBHOOKS,
+      )
+    ) {
+      throw new GluonPermissionsError("ManageWebhooks");
+    }
     return client.request.makeRequest("getWebhook", [webhookId]);
   }
   /**

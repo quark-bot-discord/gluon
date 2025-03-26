@@ -551,6 +551,7 @@ declare class Guild implements GuildType {
   static fetchWebhook(
     client: ClientType,
     webhookId: Snowflake,
+    guild?: GuildType,
   ): Promise<APIWebhook>;
   /**
    * Posts a webhook with the provided webhook id and token.
