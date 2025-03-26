@@ -21,7 +21,7 @@ export function _updatePresence(
   name: string,
   type: ActivityType = ActivityType.Playing,
   status: PresenceUpdateStatus = PresenceUpdateStatus.Online,
-  afk: boolean = false,
+  afk = false,
   since: UnixTimestamp | null = null,
 ) {
   const activities = [];
