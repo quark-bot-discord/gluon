@@ -399,8 +399,10 @@ class Shard {
         } else {
           throw new Error("Zlib error");
         }
-        return this.#handleIncoming(erlpack.unpack(data));
-      } else this.zlib?.push(data, false);
+        this.#handleIncoming(erlpack.unpack(data));
+      } else {
+        this.zlib?.push(data, false);
+      }
     });
 
     this.#ws.on("error", (data: Error) => {

@@ -605,13 +605,15 @@ class Shard {
         } else {
           throw new Error("Zlib error");
         }
-        return __classPrivateFieldGet(
+        __classPrivateFieldGet(
           this,
           _Shard_instances,
           "m",
           _Shard_handleIncoming,
         ).call(this, erlpack.unpack(data));
-      } else this.zlib?.push(data, false);
+      } else {
+        this.zlib?.push(data, false);
+      }
     });
     __classPrivateFieldGet(this, _Shard_ws, "f").on("error", (data) => {
       __classPrivateFieldGet(this, _Shard__client, "f")._emitDebug(

@@ -808,7 +808,7 @@ class Guild {
     )
       for (let i = 0; i < data.members.length; i++) {
         const member = data.members[i];
-        if (member && member.user && typeof member.user.id === "string") {
+        if (member?.user && typeof member.user.id === "string") {
           new Member(
             __classPrivateFieldGet(this, _Guild__client, "f"),
             member,
