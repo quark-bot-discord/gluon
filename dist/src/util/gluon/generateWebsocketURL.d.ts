@@ -1,2 +1,2 @@
-declare function generateWebsocketURL(url: any): string;
+declare function generateWebsocketURL(url: string): string;
 export default generateWebsocketURL;

@@ -25,7 +25,7 @@ declare class GuildRoleManager
   constructor(client: ClientType, guild: GuildType);
   fetchFromRules(key: string): Promise<RoleType | null>;
   fetchWithRules(key: string): Promise<RoleType | null>;
-  fetch(roleId: Snowflake): Promise<Role | RoleType>;
+  fetch(roleId: Snowflake): Promise<RoleType | Role>;
   set(id: Snowflake, role: RoleType): void;
   get(id: Snowflake): RoleType | null;
   static getRole(

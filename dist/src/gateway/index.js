@@ -555,6 +555,9 @@ class Shard {
               _a),
               "f",
             );
+            if (!__classPrivateFieldGet(this, _Shard_resumeGatewayUrl, "f")) {
+              throw new Error("GLUON: Resume gateway URL not found");
+            }
             __classPrivateFieldSet(
               this,
               _Shard_ws,

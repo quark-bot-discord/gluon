@@ -4,4 +4,4 @@
  * @param {Object} object1
  * @returns {Array<String>}
  */
-export declare function deepCompare(object0: any, object1: any): string[];
+export declare function deepCompare(object0: object, object1: object): string[];

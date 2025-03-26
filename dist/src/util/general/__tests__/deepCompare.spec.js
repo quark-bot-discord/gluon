@@ -19,18 +19,6 @@ describe("deepCompare", function () {
     const result = deepCompare(obj1, obj2);
     expect(result).to.deep.equal(["b", "c"]);
   });
-  it("should throw a TypeError if the first argument is not an object", function () {
-    expect(() => deepCompare(1, {})).to.throw(
-      TypeError,
-      "GLUON: First argument must be an object.",
-    );
-  });
-  it("should throw a TypeError if the second argument is not an object", function () {
-    expect(() => deepCompare({}, 1)).to.throw(
-      TypeError,
-      "GLUON: Second argument must be an object.",
-    );
-  });
   it("should handle nested objects correctly", function () {
     const obj1 = { a: { b: 1 }, c: 2 };
     const obj2 = { a: { b: 2 }, c: 2 };

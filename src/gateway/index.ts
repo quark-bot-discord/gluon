@@ -366,6 +366,10 @@ class Shard {
 
           this.#retries++;
 
+          if (!this.#resumeGatewayUrl) {
+            throw new Error("GLUON: Resume gateway URL not found");
+          }
+
           this.#ws = new WebSocket(
             generateWebsocketURL(this.#resumeGatewayUrl),
           );

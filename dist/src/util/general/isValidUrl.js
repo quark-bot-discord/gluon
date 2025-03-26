@@ -6,6 +6,7 @@
 function isValidUrl(url) {
   try {
     return Boolean(new URL(url));
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return false;
   }

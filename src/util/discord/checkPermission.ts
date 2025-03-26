@@ -8,8 +8,8 @@ import { PERMISSIONS } from "../../constants.js";
  * @returns {Boolean}
  */
 function checkPermission(
-  memberPermission: any,
-  permission: any,
+  memberPermission: string | null,
+  permission: string,
   adminOverride = true,
 ) {
   if (typeof memberPermission != "string")

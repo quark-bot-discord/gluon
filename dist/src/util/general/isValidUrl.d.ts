@@ -3,5 +3,5 @@
  * @param {String} url The URL to validate.
  * @returns {Boolean}
  */
-declare function isValidUrl(url: any): boolean;
+declare function isValidUrl(url: string): boolean;
 export default isValidUrl;

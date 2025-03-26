@@ -3,10 +3,11 @@
  * @param {String} url The URL to validate.
  * @returns {Boolean}
  */
-function isValidUrl(url: any) {
+function isValidUrl(url: string) {
   try {
     return Boolean(new URL(url));
-  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e: unknown) {
     return false;
   }
 }

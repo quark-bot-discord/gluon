@@ -6,8 +6,8 @@
  * @returns {Boolean}
  */
 declare function checkPermission(
-  memberPermission: any,
-  permission: any,
+  memberPermission: string | null,
+  permission: string,
   adminOverride?: boolean,
 ): boolean;
 export default checkPermission;

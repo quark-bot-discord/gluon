@@ -4,7 +4,7 @@
  * @param {Object} object1
  * @returns {Array<String>}
  */
-export function deepCompare(object0: any, object1: any) {
+export function deepCompare(object0: object, object1: object) {
   if (typeof object0 != "object")
     throw new TypeError("GLUON: First argument must be an object.");
   if (typeof object1 != "object")
@@ -19,7 +19,12 @@ export function deepCompare(object0: any, object1: any) {
   const updatedFields = [];
 
   for (let i = 0; i < keys.length; i++) {
-    if (object0[keys[i]] != object1[keys[i]]) updatedFields.push(keys[i]);
+    if (
+      object0[keys[i] as keyof typeof object0] !=
+      object1[keys[i] as keyof typeof object1]
+    ) {
+      updatedFields.push(keys[i]);
+    }
   }
 
   return updatedFields;

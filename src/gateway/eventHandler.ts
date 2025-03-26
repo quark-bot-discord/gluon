@@ -1037,6 +1037,10 @@ class EventHandler {
           (e) => e.id == oldEmojisArray[i].id,
         );
 
+        if (!correspondingNewEmoji) {
+          throw new Error("GLUON: Updated emoji not found.");
+        }
+
         const differences = deepCompare(
           oldEmojisArray[i],
           correspondingNewEmoji,
