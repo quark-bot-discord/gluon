@@ -572,7 +572,7 @@ class Guild implements GuildType {
     )
       for (let i = 0; i < data.members.length; i++) {
         const member = data.members[i];
-        if (member && member.user && typeof member.user.id === "string") {
+        if (member?.user && typeof member.user.id === "string") {
           new Member(this.#_client, member, {
             userId: member.user.id,
             guildId: data.id,
