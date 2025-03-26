@@ -266,7 +266,7 @@ class Emoji implements EmojiType {
    * @static
    * @method
    */
-  static getUrl(id: Snowflake, animated: boolean = false) {
+  static getUrl(id: Snowflake, animated = false) {
     if (typeof id !== "string")
       throw new TypeError("GLUON: Emoji id must be a string.");
     if (typeof animated !== "boolean")

@@ -48,7 +48,7 @@ class BetterRequestHandler {
   #endpoints;
   #queueWorker;
   #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
-  #latencyMs: number = 0;
+  #latencyMs = 0;
   #agent;
   constructor(client: ClientType, token: string, options?: { ip?: string }) {
     this.#_client = client;

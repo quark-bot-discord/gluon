@@ -21,7 +21,7 @@ class Command {
   description_localizations?: CommandDescriptionLocalizations;
   name?: string;
   name_localizations?: CommandNameLocalizations;
-  nsfw: boolean = false;
+  nsfw = false;
   options: CommandOptionBuilder[] = [];
   type: ApplicationCommandType = ApplicationCommandType.ChatInput;
 

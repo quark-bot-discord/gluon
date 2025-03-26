@@ -17,7 +17,7 @@ import { JsonTypes } from "../../../typings/enums.js";
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure}
  */
 class CommandOption implements CommandOptionBuilderType {
-  autocomplete: boolean = false;
+  autocomplete = false;
   channel_types?: ChannelType[];
   choices: CommandChoiceBuilderType[] = [];
   defaultLocale: Locale;
