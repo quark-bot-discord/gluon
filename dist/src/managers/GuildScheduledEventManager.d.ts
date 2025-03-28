@@ -52,5 +52,10 @@ declare class GuildScheduledEventManager
     guildId: Snowflake,
     eventId: Snowflake,
   ): ScheduledEventType | null;
+  static fetchScheduledEvent(
+    client: ClientType,
+    guildId: Snowflake,
+    scheduledEventId: Snowflake,
+  ): Promise<ScheduledEventType>;
 }
 export default GuildScheduledEventManager;

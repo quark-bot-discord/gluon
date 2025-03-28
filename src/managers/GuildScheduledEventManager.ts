@@ -83,21 +83,12 @@ class GuildScheduledEventManager
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(scheduledEventId: Snowflake) {
-    if (typeof scheduledEventId !== "string")
-      throw new TypeError("GLUON: Scheduled event ID must be a string.");
-
-    const cachedEvent = this.get(scheduledEventId);
-    if (cachedEvent) return cachedEvent;
-
-    const data = (await this.#_client.request.makeRequest(
-      "getGuildScheduledEvent",
-      [this.#guild.id, scheduledEventId],
-    )) as APIGuildScheduledEvent;
-
-    return new ScheduledEvent(this.#_client, data, {
-      guildId: this.#guild.id,
-    }) as ScheduledEventType;
+  fetch(scheduledEventId: Snowflake) {
+    return GuildScheduledEventManager.fetchScheduledEvent(
+      this.#_client,
+      this.#guild.id,
+      scheduledEventId,
+    );
   }
 
   /**
@@ -132,6 +123,31 @@ class GuildScheduledEventManager
     }
 
     return guild.scheduledEvents.get(eventId);
+  }
+
+  static async fetchScheduledEvent(
+    client: ClientType,
+    guildId: Snowflake,
+    scheduledEventId: Snowflake,
+  ) {
+    if (typeof scheduledEventId !== "string")
+      throw new TypeError("GLUON: Scheduled event ID must be a string.");
+
+    const cachedEvent = GuildScheduledEventManager.getScheduledEvent(
+      client,
+      guildId,
+      scheduledEventId,
+    );
+    if (cachedEvent) return cachedEvent;
+
+    const data = (await client.request.makeRequest("getGuildScheduledEvent", [
+      guildId,
+      scheduledEventId,
+    ])) as APIGuildScheduledEvent;
+
+    return new ScheduledEvent(client, data, {
+      guildId,
+    }) as ScheduledEventType;
   }
 }
 

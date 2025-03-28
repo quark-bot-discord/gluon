@@ -125,29 +125,11 @@ class GuildScheduledEventManager extends BaseCacheManager {
    * @public
    * @throws {TypeError | Error}
    */
-  async fetch(scheduledEventId) {
-    if (typeof scheduledEventId !== "string")
-      throw new TypeError("GLUON: Scheduled event ID must be a string.");
-    const cachedEvent = this.get(scheduledEventId);
-    if (cachedEvent) return cachedEvent;
-    const data = await __classPrivateFieldGet(
-      this,
-      _GuildScheduledEventManager__client,
-      "f",
-    ).request.makeRequest("getGuildScheduledEvent", [
+  fetch(scheduledEventId) {
+    return GuildScheduledEventManager.fetchScheduledEvent(
+      __classPrivateFieldGet(this, _GuildScheduledEventManager__client, "f"),
       __classPrivateFieldGet(this, _GuildScheduledEventManager_guild, "f").id,
       scheduledEventId,
-    ]);
-    return new ScheduledEvent(
-      __classPrivateFieldGet(this, _GuildScheduledEventManager__client, "f"),
-      data,
-      {
-        guildId: __classPrivateFieldGet(
-          this,
-          _GuildScheduledEventManager_guild,
-          "f",
-        ).id,
-      },
     );
   }
   /**
@@ -174,6 +156,23 @@ class GuildScheduledEventManager extends BaseCacheManager {
       throw new Error("GLUON: Guild not found in cache.");
     }
     return guild.scheduledEvents.get(eventId);
+  }
+  static async fetchScheduledEvent(client, guildId, scheduledEventId) {
+    if (typeof scheduledEventId !== "string")
+      throw new TypeError("GLUON: Scheduled event ID must be a string.");
+    const cachedEvent = GuildScheduledEventManager.getScheduledEvent(
+      client,
+      guildId,
+      scheduledEventId,
+    );
+    if (cachedEvent) return cachedEvent;
+    const data = await client.request.makeRequest("getGuildScheduledEvent", [
+      guildId,
+      scheduledEventId,
+    ]);
+    return new ScheduledEvent(client, data, {
+      guildId,
+    });
   }
 }
 (_GuildScheduledEventManager__client = new WeakMap()),
