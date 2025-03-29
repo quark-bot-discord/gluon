@@ -251,7 +251,7 @@ class Shard {
             GluonDebugLevels.Error,
             `ERROR at ${data.t}: ${error}`,
           );
-          throw error;
+          // throw error;
         }
         break;
       }
