@@ -45,7 +45,6 @@ var __classPrivateFieldGet =
 var _EventHandler__client,
   _EventHandler_shard,
   _EventHandler_initialGuilds,
-  _EventHandler_initialisedSent,
   _EventHandler_asciiArtSent;
 /* eslint-disable no-empty-function */
 /* eslint-disable class-methods-use-this */
@@ -79,12 +78,10 @@ class EventHandler {
     _EventHandler_shard.set(this, void 0);
     // @ts-expect-error TS(7008): Member '#initialGuilds' implicitly has an 'any[]' ... Remove this comment to see the full error message
     _EventHandler_initialGuilds.set(this, void 0);
-    _EventHandler_initialisedSent.set(this, void 0);
     _EventHandler_asciiArtSent.set(this, void 0);
     __classPrivateFieldSet(this, _EventHandler__client, client, "f");
     __classPrivateFieldSet(this, _EventHandler_shard, ws, "f");
     __classPrivateFieldSet(this, _EventHandler_initialGuilds, [], "f");
-    __classPrivateFieldSet(this, _EventHandler_initialisedSent, false, "f");
     __classPrivateFieldSet(this, _EventHandler_asciiArtSent, false, "f");
   }
   READY(data) {
@@ -173,17 +170,6 @@ class EventHandler {
         ),
         1,
       );
-    if (
-      __classPrivateFieldGet(this, _EventHandler_initialGuilds, "f").length ==
-        0 &&
-      __classPrivateFieldGet(this, _EventHandler_initialisedSent, "f") == false
-    ) {
-      __classPrivateFieldSet(this, _EventHandler_initialisedSent, true, "f");
-      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
-        Events.INITIALISED,
-      );
-      __classPrivateFieldGet(this, _EventHandler__client, "f").setInitialized();
-    }
   }
   GUILD_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
@@ -1308,7 +1294,6 @@ class EventHandler {
 (_EventHandler__client = new WeakMap()),
   (_EventHandler_shard = new WeakMap()),
   (_EventHandler_initialGuilds = new WeakMap()),
-  (_EventHandler_initialisedSent = new WeakMap()),
   (_EventHandler_asciiArtSent = new WeakMap());
 export default EventHandler;
 //# sourceMappingURL=eventHandler.js.map

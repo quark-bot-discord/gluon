@@ -95,7 +95,6 @@ class EventHandler {
   #shard;
   // @ts-expect-error TS(7008): Member '#initialGuilds' implicitly has an 'any[]' ... Remove this comment to see the full error message
   #initialGuilds;
-  #initialisedSent;
   #asciiArtSent;
   constructor(client: ClientType, ws: any) {
     this.#_client = client;
@@ -103,8 +102,6 @@ class EventHandler {
     this.#shard = ws;
 
     this.#initialGuilds = [];
-
-    this.#initialisedSent = false;
 
     this.#asciiArtSent = false;
   }
@@ -162,12 +159,6 @@ class EventHandler {
     if (!this.#initialGuilds.includes(data.id))
       this.#_client.emit(Events.GUILD_CREATE, guild);
     else this.#initialGuilds.splice(this.#initialGuilds.indexOf(data.id), 1);
-
-    if (this.#initialGuilds.length == 0 && this.#initialisedSent == false) {
-      this.#initialisedSent = true;
-      this.#_client.emit(Events.INITIALISED);
-      this.#_client.setInitialized();
-    }
   }
 
   GUILD_UPDATE(data: GatewayGuildUpdateDispatchData) {

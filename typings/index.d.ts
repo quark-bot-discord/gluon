@@ -2859,7 +2859,6 @@ export interface ClientEvents {
     data: GatewayGuildScheduledEventUserRemoveDispatchData,
     user: User | null,
   ) => void;
-  [Events.INITIALISED]: () => void;
   [Events.MESSAGE_POLL_VOTE_ADD]: (
     data: GatewayMessagePollVoteDispatchData,
   ) => void;
