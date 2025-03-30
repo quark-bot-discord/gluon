@@ -47,9 +47,11 @@ class Embed {
       if (data.author)
         this.setAuthor(data.author.name, data.author.url, data.author.icon_url);
       if (data.fields && Array.isArray(data.fields))
-        data.fields.map((field) =>
-          this.addField(field.name, field.value, field.inline),
-        );
+        data.fields.forEach((field) => {
+          if (field.name && field.value) {
+            this.addField(field.name, field.value, field.inline);
+          }
+        });
       if (data.image) this.setImage(data.image.url);
       if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
       if (data.video?.url) this.setVideo(data.video.url);
@@ -206,12 +208,7 @@ class Embed {
       throw new RangeError(
         `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
       );
-    if (
-      !name ||
-      !value ||
-      typeof name !== "string" ||
-      typeof value !== "string"
-    )
+    if (typeof name !== "string" || typeof value !== "string")
       throw new TypeError(
         "GLUON: Embed field name and value must be provided.",
       );

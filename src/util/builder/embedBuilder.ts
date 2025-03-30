@@ -147,9 +147,11 @@ class Embed implements EmbedType {
       if (data.author)
         this.setAuthor(data.author.name, data.author.url, data.author.icon_url);
       if (data.fields && Array.isArray(data.fields))
-        data.fields.map((field) =>
-          this.addField(field.name, field.value, field.inline),
-        );
+        data.fields.forEach((field) => {
+          if (field.name && field.value) {
+            this.addField(field.name, field.value, field.inline);
+          }
+        });
       if (data.image) this.setImage(data.image.url);
       if (data.thumbnail) this.setThumbnail(data.thumbnail.url);
       if (data.video?.url) this.setVideo(data.video.url);
@@ -333,12 +335,7 @@ class Embed implements EmbedType {
         `GLUON: Embed fields cannot exceed ${LIMITS.MAX_EMBED_FIELDS} fields.`,
       );
 
-    if (
-      !name ||
-      !value ||
-      typeof name !== "string" ||
-      typeof value !== "string"
-    )
+    if (typeof name !== "string" || typeof value !== "string")
       throw new TypeError(
         "GLUON: Embed field name and value must be provided.",
       );
@@ -487,15 +484,9 @@ class Embed implements EmbedType {
         throw new RangeError(
           `GLUON: Embed footer text must be less than ${LIMITS.MAX_EMBED_FOOTER_TEXT} characters.`,
         );
-      if (
-        this.footer?.icon_url &&
-        typeof this.footer.icon_url !== "string"
-      )
+      if (this.footer?.icon_url && typeof this.footer.icon_url !== "string")
         throw new TypeError("GLUON: Embed footer icon url must be a string.");
-      if (
-        this.footer?.icon_url &&
-        isValidUrl(this.footer.icon_url) === false
-      )
+      if (this.footer?.icon_url && isValidUrl(this.footer.icon_url) === false)
         throw new TypeError(
           "GLUON: Embed footer icon url must be a valid url.",
         );
@@ -512,20 +503,11 @@ class Embed implements EmbedType {
         );
       if (this.author?.url && typeof this.author.url !== "string")
         throw new TypeError("GLUON: Embed author url must be a string.");
-      if (
-        this.author?.url &&
-        isValidUrl(this.author.url) === false
-      )
+      if (this.author?.url && isValidUrl(this.author.url) === false)
         throw new TypeError("GLUON: Embed author url must be a valid url.");
-      if (
-        this.author?.icon_url &&
-        typeof this.author.icon_url !== "string"
-      )
+      if (this.author?.icon_url && typeof this.author.icon_url !== "string")
         throw new TypeError("GLUON: Embed author icon url must be a string.");
-      if (
-        this.author?.icon_url &&
-        isValidUrl(this.author.icon_url) === false
-      )
+      if (this.author?.icon_url && isValidUrl(this.author.icon_url) === false)
         throw new TypeError(
           "GLUON: Embed author icon url must be a valid url.",
         );
@@ -557,10 +539,7 @@ class Embed implements EmbedType {
         throw new TypeError("GLUON: Embed thumbnail must be an object.");
       if (this.thumbnail && typeof this.thumbnail.url !== "string")
         throw new TypeError("GLUON: Embed thumbnail url must be a string.");
-      if (
-        this.thumbnail?.url &&
-        isValidUrl(this.thumbnail.url) === false
-      )
+      if (this.thumbnail?.url && isValidUrl(this.thumbnail.url) === false)
         throw new TypeError("GLUON: Embed thumbnail url must be a valid url.");
       if (this.video && typeof this.video !== "object")
         throw new TypeError("GLUON: Embed video must be an object.");
