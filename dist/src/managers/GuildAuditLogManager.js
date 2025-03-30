@@ -75,7 +75,7 @@ class GuildAuditLogManager extends BaseCacheManager {
       throw new TypeError("GLUON: INVALID_TYPE: limit");
     if (typeof limit === "number" && (limit < 1 || limit > 100))
       throw new RangeError("GLUON: VALUE_OUT_OF_RANGE: limit");
-    if (typeof type !== "undefined" && typeof type !== "string")
+    if (typeof type !== "undefined" && typeof type !== "number")
       throw new TypeError("GLUON: INVALID_TYPE: type");
     if (typeof user_id !== "undefined" && typeof user_id !== "string")
       throw new TypeError("GLUON: INVALID_TYPE: user_id");
