@@ -51,7 +51,7 @@ export declare enum Events {
   GUILD_SCHEDULED_EVENT_DELETE = "guildScheduledEventDelete",
   GUILD_SCHEDULED_EVENT_USER_ADD = "guildScheduledEventUserAdd",
   GUILD_SCHEDULED_EVENT_USER_REMOVE = "guildScheduledEventUserRemove",
-  INITIALISED = "initialised",
+  GUILD_INITIALIZED = "guildInitialized",
   MESSAGE_POLL_VOTE_ADD = "messagePollVoteAdd",
   MESSAGE_POLL_VOTE_REMOVE = "messagePollVoteRemove",
   MESSAGE_REACTION_ADD = "messageReactionAdd",

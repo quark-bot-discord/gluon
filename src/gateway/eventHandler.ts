@@ -158,7 +158,10 @@ class EventHandler {
 
     if (!this.#initialGuilds.includes(data.id))
       this.#_client.emit(Events.GUILD_CREATE, guild);
-    else this.#initialGuilds.splice(this.#initialGuilds.indexOf(data.id), 1);
+    else {
+      this.#initialGuilds.splice(this.#initialGuilds.indexOf(data.id), 1);
+      this.#_client.emit(Events.GUILD_INITIALIZED, guild);
+    }
   }
 
   GUILD_UPDATE(data: GatewayGuildUpdateDispatchData) {

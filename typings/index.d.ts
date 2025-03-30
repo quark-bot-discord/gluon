@@ -2823,6 +2823,7 @@ export interface ClientEvents {
     partialInvite: Invite,
     invite: Invite | null,
   ) => void;
+  [Events.GUILD_INITIALIZED]: (guild: Guild) => void;
   [Events.GUILD_ROLE_CREATE]: (role: Role) => void;
   [Events.GUILD_ROLE_UPDATE]: (oldRole: Role | null, newRole: Role) => void;
   [Events.GUILD_ROLE_DELETE]: (role: Role | null) => void;

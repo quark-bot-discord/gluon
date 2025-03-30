@@ -53,7 +53,7 @@ export var Events;
   Events["GUILD_SCHEDULED_EVENT_DELETE"] = "guildScheduledEventDelete";
   Events["GUILD_SCHEDULED_EVENT_USER_ADD"] = "guildScheduledEventUserAdd";
   Events["GUILD_SCHEDULED_EVENT_USER_REMOVE"] = "guildScheduledEventUserRemove";
-  Events["INITIALISED"] = "initialised";
+  Events["GUILD_INITIALIZED"] = "guildInitialized";
   Events["MESSAGE_POLL_VOTE_ADD"] = "messagePollVoteAdd";
   Events["MESSAGE_POLL_VOTE_REMOVE"] = "messagePollVoteRemove";
   Events["MESSAGE_REACTION_ADD"] = "messageReactionAdd";

@@ -163,13 +163,18 @@ class EventHandler {
         Events.GUILD_CREATE,
         guild,
       );
-    else
+    else {
       __classPrivateFieldGet(this, _EventHandler_initialGuilds, "f").splice(
         __classPrivateFieldGet(this, _EventHandler_initialGuilds, "f").indexOf(
           data.id,
         ),
         1,
       );
+      __classPrivateFieldGet(this, _EventHandler__client, "f").emit(
+        Events.GUILD_INITIALIZED,
+        guild,
+      );
+    }
   }
   GUILD_UPDATE(data) {
     __classPrivateFieldGet(this, _EventHandler__client, "f")._emitDebug(
