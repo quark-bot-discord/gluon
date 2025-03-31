@@ -116,9 +116,6 @@ class GuildChannel {
      * @private
      */
     __classPrivateFieldSet(this, _GuildChannel__guild_id, BigInt(guildId), "f");
-    if (!this.guild) {
-      throw new Error(`Guild not found in cache: ${guildId}`);
-    }
     /**
      * The type of channel.
      * @type {Number}
@@ -297,19 +294,25 @@ class GuildChannel {
           ),
       "f",
     );
-    /**
-     * The message manager for this channel.
-     * @type {ChannelMessageManager}
-     * @private
-     */
-    __classPrivateFieldSet(
-      this,
-      _GuildChannel_messages,
-      existing?.messages
-        ? existing.messages
-        : new ChannelMessageManager(client, this.guild, this),
-      "f",
-    );
+    if (guildId !== "0" && !this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    } else if (guildId !== "0" && this.guild) {
+      /**
+       * The message manager for this channel.
+       * @type {ChannelMessageManager}
+       * @private
+       */
+      __classPrivateFieldSet(
+        this,
+        _GuildChannel_messages,
+        existing?.messages
+          ? existing.messages
+          : new ChannelMessageManager(client, this.guild, this),
+        "f",
+      );
+    } else {
+      __classPrivateFieldSet(this, _GuildChannel_messages, {}, "f");
+    }
   }
   /**
    * Sends a message to this channel.

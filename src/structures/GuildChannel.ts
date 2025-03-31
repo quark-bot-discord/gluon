@@ -105,10 +105,6 @@ class GuildChannel implements GuildChannelType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (!this.guild) {
-      throw new Error(`Guild not found in cache: ${guildId}`);
-    }
-
     /**
      * The type of channel.
      * @type {Number}
@@ -236,14 +232,20 @@ class GuildChannel implements GuildChannelType {
           "_cache_options" in data ? data._cache_options : undefined,
         );
 
-    /**
-     * The message manager for this channel.
-     * @type {ChannelMessageManager}
-     * @private
-     */
-    this.#messages = existing?.messages
-      ? existing.messages
-      : new ChannelMessageManager(client, this.guild, this);
+    if (guildId !== "0" && !this.guild) {
+      throw new Error(`Guild not found in cache: ${guildId}`);
+    } else if (guildId !== "0" && this.guild) {
+      /**
+       * The message manager for this channel.
+       * @type {ChannelMessageManager}
+       * @private
+       */
+      this.#messages = existing?.messages
+        ? existing.messages
+        : new ChannelMessageManager(client, this.guild, this);
+    } else {
+      this.#messages = {} as unknown as ChannelMessageManagerType;
+    }
   }
 
   /**
