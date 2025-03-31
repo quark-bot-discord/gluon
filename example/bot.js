@@ -128,9 +128,10 @@ client.on("messageDelete", (message) => {
   console.log(message?.content);
 });
 
-client.login("ODQ5NzM0MjM0MzM5NjcyMDg0.YLferA.RYFIAP-qz_U-wJB-qXmTD87p5gA");
 client.on("buttonClick", (interaction) => {
   console.log("buttonClick");
   console.log(interaction);
   interaction.reply("hello world!", { quiet: true });
 });
+
+client.login("ODQ5NzM0MjM0MzM5NjcyMDg0.YLferA.RYFIAP-qz_U-wJB-qXmTD87p5gA");
