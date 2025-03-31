@@ -1,4 +1,3 @@
-// Updated BetterRequestHandler with Redis-backed rate limit handling, exponential backoff, and debug metrics
 var __classPrivateFieldSet =
   (this && this.__classPrivateFieldSet) ||
   function (receiver, state, value, kind, f) {
@@ -75,14 +74,10 @@ import {
 import endpoints from "./endpoints.js";
 import { sleep } from "../util/general/sleep.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
-import {
-  GluonRatelimitEncountered,
-  GluonRequestError,
-} from "#typings/errors.js";
+import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
 const AbortController = globalThis.AbortController;
 const redis = new Redis();
-const GLOBAL_KEY = "gluon:discord:global_rate_limit";
 function toQueryParams(obj) {
   const result = {};
   for (const key in obj) {
@@ -138,22 +133,38 @@ class BetterRequestHandler {
       endpoints,
       "f",
     );
+    this.GLOBAL_KEY = `gluon:${__classPrivateFieldGet(this, _BetterRequestHandler_token, "f").slice(0, 8)}:global_rate_limit`;
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_queueWorker,
       async (data) => {
         const now = Date.now();
-        const globalReset = await redis.get(GLOBAL_KEY);
+        const globalReset = await redis.get(this.GLOBAL_KEY);
         if (globalReset && now < parseInt(globalReset)) {
-          await sleep(parseInt(globalReset) - now);
+          const delay = parseInt(globalReset) - now;
+          const lockKey = `lock:${this.GLOBAL_KEY}`;
+          const didAcquireLock = await redis.set(
+            lockKey,
+            "1",
+            "PX",
+            delay,
+            "NX",
+          );
+          if (didAcquireLock) {
+            await sleep(delay);
+            await redis.del(lockKey);
+          } else {
+            await sleep(delay + 50); // Let the lock holder handle the wait
+          }
         }
         const bucket = await getBucket(data.hash);
+        const bucketResetMs = bucket ? Math.ceil(bucket.reset * 1000) : 0;
         if (
           !bucket ||
           bucket.remaining > 0 ||
-          now / 1000 >
-            bucket.reset +
-              __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")
+          now >
+            bucketResetMs +
+              __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f")
         ) {
           return __classPrivateFieldGet(
             this,
@@ -291,6 +302,7 @@ class BetterRequestHandler {
     body,
     _stack,
   ) {
+    const originalBody = { ...body }; // Clone body to preserve original for retries
     const actualRequest = __classPrivateFieldGet(
       this,
       _BetterRequestHandler_endpoints,
@@ -311,13 +323,13 @@ class BetterRequestHandler {
       form = new FormData();
       body.files.forEach((f, i) =>
         form?.append(
-          `${i}_${f.name}`,
+          `files[${i}]`,
           f.stream || createReadStream(f.attachment),
           f.name,
         ),
       );
       delete body.files;
-      form.append("payload_json", JSON.stringify(body));
+      form.append("payload_json", JSON.stringify({ ...body }));
       Object.assign(headers, form.getHeaders());
     } else if (
       actualRequest.method !== "GET" &&
@@ -416,16 +428,20 @@ class BetterRequestHandler {
       json = null;
     }
     if (res.status === 429) {
-      const retryAfter = (json?.retry_after || 1) * 1000;
-      if (json?.global) await redis.set(GLOBAL_KEY, Date.now() + retryAfter);
+      const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
+      if (json?.global)
+        await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
       await sleep(retryAfter);
-      throw new GluonRatelimitEncountered(
-        res.status,
-        actualRequest.method,
-        path,
+      const data = {
+        hash,
+        request,
+        params,
+        body: originalBody,
         _stack,
-        retryAfter / 1000,
-      );
+      };
+      return __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+        hash
+      ].push(data);
     }
     await handleBucket(
       res.headers.get("x-ratelimit-bucket"),

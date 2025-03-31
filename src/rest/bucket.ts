@@ -7,39 +7,43 @@ export interface Bucket {
 }
 
 export async function getBucket(hash: string): Promise<Bucket | null> {
+  const key = `gluon.paths.${hash}`;
   try {
-    const rawBucket = await redisClient.get(`gluon.paths.${hash}`);
+    const rawBucket = await redisClient.get(key);
+
     if (rawBucket) {
       try {
         return JSON.parse(rawBucket);
       } catch (err) {
-        console.error("Failed to parse Redis bucket:", err);
+        console.error("[Bucket] Failed to parse Redis value:", err);
       }
     }
   } catch (error) {
-    console.error("Redis error (getBucket):", error);
+    console.error("[Bucket] Redis error in getBucket:", error);
   }
 
-  return localRatelimitCache.get(`gluon.paths.${hash}`) ?? null;
+  const fallback = localRatelimitCache.get<Bucket>(key) ?? null;
+  if (fallback) {
+    console.warn("[Bucket] Using local cache for bucket:", hash);
+  }
+
+  return fallback;
 }
 
 export async function setBucket(hash: string, bucket: Bucket): Promise<void> {
+  const key = `gluon.paths.${hash}`;
+
   let expireFromCache =
     Math.ceil((bucket.reset * 1000 - Date.now()) / 1000) + 60;
   if (expireFromCache < 0) expireFromCache = 60;
   if (expireFromCache > 2592000) expireFromCache = 2592000;
 
   try {
-    await redisClient.set(
-      `gluon.paths.${hash}`,
-      JSON.stringify(bucket),
-      "EX",
-      expireFromCache,
-    );
-    localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
+    await redisClient.set(key, JSON.stringify(bucket), "EX", expireFromCache);
+    localRatelimitCache.set(key, bucket, expireFromCache);
   } catch (error) {
-    console.error("Redis error (setBucket):", error);
-    localRatelimitCache.set(`gluon.paths.${hash}`, bucket, expireFromCache);
+    console.error("[Bucket] Redis error in setBucket:", error);
+    localRatelimitCache.set(key, bucket, expireFromCache);
     throw error;
   }
 }
@@ -51,13 +55,23 @@ export async function handleBucket(
   hash: string,
   retryAfter = 0,
 ): Promise<void> {
-  if (!ratelimitBucket || !ratelimitRemaining || !ratelimitReset) return;
+  if (!ratelimitBucket || !ratelimitRemaining || !ratelimitReset) {
+    console.warn("[Bucket] Missing headers: ", {
+      ratelimitBucket,
+      ratelimitRemaining,
+      ratelimitReset,
+    });
+    return;
+  }
+
+  const remaining = parseInt(ratelimitRemaining);
+  const reset = retryAfter
+    ? Date.now() / 1000 + retryAfter
+    : parseFloat(ratelimitReset);
 
   const bucket: Bucket = {
-    remaining: retryAfter ? 0 : parseInt(ratelimitRemaining),
-    reset: retryAfter
-      ? Date.now() / 1000 + retryAfter
-      : parseFloat(ratelimitReset),
+    remaining: isNaN(remaining) ? 1 : remaining,
+    reset: Number.isFinite(reset) ? reset : Date.now() / 1000 + 1,
   };
 
   await setBucket(hash, bucket);

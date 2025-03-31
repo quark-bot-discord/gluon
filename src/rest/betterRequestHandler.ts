@@ -20,10 +20,7 @@ import type {
   FileUpload,
 } from "typings/index.d.ts";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
-import {
-  GluonRatelimitEncountered,
-  GluonRequestError,
-} from "#typings/errors.js";
+import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
 const AbortController = globalThis.AbortController;
 
@@ -34,7 +31,6 @@ interface JsonResponse {
 }
 
 const redis = new Redis();
-const GLOBAL_KEY = "gluon:discord:global_rate_limit";
 
 interface QueueItemData {
   hash: string;
@@ -70,6 +66,7 @@ class BetterRequestHandler {
   #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
   #latencyMs = 0;
   #agent;
+  GLOBAL_KEY: string;
 
   constructor(client: ClientType, token: string, options?: { ip?: string }) {
     this.#_client = client;
@@ -82,20 +79,27 @@ class BetterRequestHandler {
     this.#maxQueueSize = 100;
     this.#fuzz = 500;
     this.#endpoints = endpoints;
+    this.GLOBAL_KEY = `gluon:${this.#token.slice(0, 8)}:global_rate_limit`;
 
     this.#queueWorker = async (data: QueueItemData) => {
       const now = Date.now();
-      const globalReset = await redis.get(GLOBAL_KEY);
+      const globalReset = await redis.get(this.GLOBAL_KEY);
       if (globalReset && now < parseInt(globalReset)) {
-        await sleep(parseInt(globalReset) - now);
+        const delay = parseInt(globalReset) - now;
+        const lockKey = `lock:${this.GLOBAL_KEY}`;
+        const didAcquireLock = await redis.set(lockKey, "1", "PX", delay, "NX");
+
+        if (didAcquireLock) {
+          await sleep(delay);
+          await redis.del(lockKey);
+        } else {
+          await sleep(delay + 50); // Let the lock holder handle the wait
+        }
       }
 
       const bucket = await getBucket(data.hash);
-      if (
-        !bucket ||
-        bucket.remaining > 0 ||
-        now / 1000 > bucket.reset + this.#latency
-      ) {
+      const bucketResetMs = bucket ? Math.ceil(bucket.reset * 1000) : 0;
+      if (!bucket || bucket.remaining > 0 || now > bucketResetMs + this.#fuzz) {
         return this.#http(
           data.hash,
           data.request,
@@ -181,6 +185,8 @@ class BetterRequestHandler {
     },
     _stack: string,
   ) {
+    const originalBody = { ...body }; // Clone body to preserve original for retries
+
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
     const path = actualRequest.path(...(params ?? []));
     const headers: Record<string, string> = {
@@ -194,13 +200,13 @@ class BetterRequestHandler {
       form = new FormData();
       body.files.forEach((f, i) =>
         form?.append(
-          `${i}_${f.name}`,
+          `files[${i}]`,
           f.stream || createReadStream(f.attachment as string),
           f.name,
         ),
       );
       delete body.files;
-      form.append("payload_json", JSON.stringify(body));
+      form.append("payload_json", JSON.stringify({ ...body }));
       Object.assign(headers, form.getHeaders());
     } else if (
       actualRequest.method !== "GET" &&
@@ -279,16 +285,18 @@ class BetterRequestHandler {
     }
 
     if (res.status === 429) {
-      const retryAfter = (json?.retry_after || 1) * 1000;
-      if (json?.global) await redis.set(GLOBAL_KEY, Date.now() + retryAfter);
+      const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
+      if (json?.global)
+        await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
       await sleep(retryAfter);
-      throw new GluonRatelimitEncountered(
-        res.status,
-        actualRequest.method,
-        path,
+      const data: QueueItemData = {
+        hash,
+        request,
+        params,
+        body: originalBody,
         _stack,
-        retryAfter / 1000,
-      );
+      };
+      return this.#queues[hash].push(data);
     }
 
     await handleBucket(
