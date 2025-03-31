@@ -709,6 +709,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
             guild._intervalCallback();
           });
 
+          this.guilds._intervalCallback();
           this.users._intervalCallback();
         }, DEFAULT_POLLING_TIME); // every 1 minute 1000 * 60
 
