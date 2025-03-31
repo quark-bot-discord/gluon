@@ -101,26 +101,26 @@ class Emoji implements EmojiType {
      */
     this.#_guild_id = BigInt(guildId);
 
-    if (!this.guild) {
+    if (guildId !== "0" && !this.guild) {
       throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
-    }
-
-    const shouldCache = Emoji.shouldCache(
-      this.#_client._cacheOptions,
-      this.guild._cacheOptions,
-    );
-
-    if (nocache === false && shouldCache && data.id) {
-      this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
-      this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `CACHE EMOJI ${guildId} ${data.id}`,
+    } else if (guildId !== "0" && this.guild) {
+      const shouldCache = Emoji.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
       );
-    } else {
-      this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
-      );
+
+      if (nocache === false && shouldCache && data.id) {
+        this.#_client.guilds.get(guildId)?.emojis.set(data.id, this);
+        this.#_client._emitDebug(
+          GluonDebugLevels.Info,
+          `CACHE EMOJI ${guildId} ${data.id}`,
+        );
+      } else {
+        this.#_client._emitDebug(
+          GluonDebugLevels.Info,
+          `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+        );
+      }
     }
   }
 

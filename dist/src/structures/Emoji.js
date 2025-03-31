@@ -165,26 +165,27 @@ class Emoji {
      * @private
      */
     __classPrivateFieldSet(this, _Emoji__guild_id, BigInt(guildId), "f");
-    if (!this.guild) {
+    if (guildId !== "0" && !this.guild) {
       throw new Error(`GLUON: Guild ${this.guildId} cannot be found in cache`);
-    }
-    const shouldCache = Emoji.shouldCache(
-      __classPrivateFieldGet(this, _Emoji__client, "f")._cacheOptions,
-      this.guild._cacheOptions,
-    );
-    if (nocache === false && shouldCache && data.id) {
-      __classPrivateFieldGet(this, _Emoji__client, "f")
-        .guilds.get(guildId)
-        ?.emojis.set(data.id, this);
-      __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
-        GluonDebugLevels.Info,
-        `CACHE EMOJI ${guildId} ${data.id}`,
+    } else if (guildId !== "0" && this.guild) {
+      const shouldCache = Emoji.shouldCache(
+        __classPrivateFieldGet(this, _Emoji__client, "f")._cacheOptions,
+        this.guild._cacheOptions,
       );
-    } else {
-      __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
-        GluonDebugLevels.Info,
-        `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
-      );
+      if (nocache === false && shouldCache && data.id) {
+        __classPrivateFieldGet(this, _Emoji__client, "f")
+          .guilds.get(guildId)
+          ?.emojis.set(data.id, this);
+        __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
+          GluonDebugLevels.Info,
+          `CACHE EMOJI ${guildId} ${data.id}`,
+        );
+      } else {
+        __classPrivateFieldGet(this, _Emoji__client, "f")._emitDebug(
+          GluonDebugLevels.Info,
+          `NO CACHE EMOJI ${guildId} ${data.id} (${nocache} ${shouldCache})`,
+        );
+      }
     }
   }
   /**
