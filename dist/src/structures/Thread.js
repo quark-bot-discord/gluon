@@ -76,6 +76,9 @@ class Thread extends Channel {
       throw new TypeError("GLUON: Guild ID must be a string");
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
+    if (!this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
+    }
     /**
      * The client instance.
      * @type {Client}
@@ -104,29 +107,25 @@ class Thread extends Channel {
       data.parent_id ? BigInt(data.parent_id) : null,
       "f",
     );
-    if (guildId !== "0" && !this.guild) {
-      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
-    } else if (guildId !== "0" && this.guild) {
-      const shouldCache = Thread.shouldCache(
-        __classPrivateFieldGet(this, _Thread__client, "f")._cacheOptions,
-        this.guild._cacheOptions,
+    const shouldCache = Thread.shouldCache(
+      __classPrivateFieldGet(this, _Thread__client, "f")._cacheOptions,
+      this.guild._cacheOptions,
+    );
+    if (
+      nocache === false &&
+      (!("archived" in data) || data.archived !== true) &&
+      shouldCache
+    ) {
+      this.guild.channels.set(data.id, this);
+      __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
+        GluonDebugLevels.Info,
+        `CACHE THREAD ${guildId} ${data.id}`,
       );
-      if (
-        nocache === false &&
-        (!("archived" in data) || data.archived !== true) &&
-        shouldCache
-      ) {
-        this.guild.channels.set(data.id, this);
-        __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
-          GluonDebugLevels.Info,
-          `CACHE THREAD ${guildId} ${data.id}`,
-        );
-      } else {
-        __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
-          GluonDebugLevels.Info,
-          `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
-        );
-      }
+    } else {
+      __classPrivateFieldGet(this, _Thread__client, "f")._emitDebug(
+        GluonDebugLevels.Info,
+        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
+      );
     }
   }
   /**
