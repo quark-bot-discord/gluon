@@ -1,3 +1,4 @@
+// Updated BetterRequestHandler with Redis-backed rate limit handling, exponential backoff, and debug metrics
 var __classPrivateFieldSet =
   (this && this.__classPrivateFieldSet) ||
   function (receiver, state, value, kind, f) {
@@ -62,6 +63,7 @@ import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
 import FastQ from "fastq";
+import { Redis } from "ioredis";
 import { getBucket, handleBucket } from "./bucket.js";
 import {
   GLUON_VERSION,
@@ -79,6 +81,17 @@ import {
 } from "#typings/errors.js";
 import https from "https";
 const AbortController = globalThis.AbortController;
+const redis = new Redis();
+const GLOBAL_KEY = "gluon:discord:global_rate_limit";
+function toQueryParams(obj) {
+  const result = {};
+  for (const key in obj) {
+    const val = obj[key];
+    if (val === undefined || val === null) continue;
+    result[key] = String(val);
+  }
+  return result;
+}
 class BetterRequestHandler {
   constructor(client, token, options) {
     _BetterRequestHandler_instances.add(this);
@@ -129,83 +142,19 @@ class BetterRequestHandler {
       this,
       _BetterRequestHandler_queueWorker,
       async (data) => {
+        const now = Date.now();
+        const globalReset = await redis.get(GLOBAL_KEY);
+        if (globalReset && now < parseInt(globalReset)) {
+          await sleep(parseInt(globalReset) - now);
+        }
         const bucket = await getBucket(data.hash);
         if (
           !bucket ||
-          bucket.remaining !== 0 ||
-          (bucket.remaining === 0 &&
-            new Date().getTime() / 1000 >
-              bucket.reset +
-                __classPrivateFieldGet(
-                  this,
-                  _BetterRequestHandler_latency,
-                  "f",
-                ))
-        )
-          return __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler_instances,
-            "m",
-            _BetterRequestHandler_http,
-          ).call(
-            this,
-            data.hash,
-            data.request,
-            data.params,
-            data.body,
-            data._stack,
-          );
-        else {
-          __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler__client,
-            "f",
-          )._emitDebug(
-            GluonDebugLevels.Warn,
-            `RATELIMITED ${data.hash} (bucket reset):${bucket.reset} (latency):${__classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")}  (time until retry):${(bucket.reset + __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")) * 1000 - new Date().getTime()} (current time):${(new Date().getTime() / 1000) | 0}`,
-          );
-          if (
-            __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-              data.hash
-            ].length() >
-            __classPrivateFieldGet(
-              this,
-              _BetterRequestHandler_maxQueueSize,
-              "f",
-            )
-          ) {
-            __classPrivateFieldGet(
-              this,
-              _BetterRequestHandler__client,
-              "f",
-            )._emitDebug(GluonDebugLevels.Danger, `KILL QUEUE ${data.hash}`);
-            __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-              data.hash
-            ].kill();
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [data.hash]: _, ...rest } = __classPrivateFieldGet(
-              this,
-              _BetterRequestHandler_queues,
-              "f",
-            );
-            __classPrivateFieldSet(
-              this,
-              _BetterRequestHandler_queues,
-              rest,
-              "f",
-            );
-          }
-          await sleep(
-            (bucket.reset +
-              __classPrivateFieldGet(
-                this,
-                _BetterRequestHandler_latency,
-                "f",
-              )) *
-              1000 -
-              new Date().getTime() +
-              __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f"),
-          );
+          bucket.remaining > 0 ||
+          now / 1000 >
+            bucket.reset +
+              __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")
+        ) {
           return __classPrivateFieldGet(
             this,
             _BetterRequestHandler_instances,
@@ -220,15 +169,52 @@ class BetterRequestHandler {
             data._stack,
           );
         }
+        if (
+          __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+            data.hash
+          ].length() >
+          __classPrivateFieldGet(this, _BetterRequestHandler_maxQueueSize, "f")
+        ) {
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler__client,
+            "f",
+          )._emitDebug(GluonDebugLevels.Danger, `KILL QUEUE ${data.hash}`);
+          __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+            data.hash
+          ].kill();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [data.hash]: _, ...rest } = __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler_queues,
+            "f",
+          );
+          __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
+        }
+        await sleep(
+          (bucket.reset +
+            __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")) *
+            1000 -
+            now +
+            __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f"),
+        );
+        return __classPrivateFieldGet(
+          this,
+          _BetterRequestHandler_instances,
+          "m",
+          _BetterRequestHandler_http,
+        ).call(
+          this,
+          data.hash,
+          data.request,
+          data.params,
+          data.body,
+          data._stack,
+        );
       },
       "f",
     );
   }
-  /**
-   * The latency of the request handler.
-   * @type {Number}
-   * @readonly
-   */
   get latency() {
     return __classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f");
   }
@@ -261,37 +247,27 @@ class BetterRequestHandler {
           1,
         );
     }
-    let retries = 5;
-    while (retries--) {
-      const _stack = new Error().stack;
-      const data = {
-        hash,
-        request,
-        params,
-        body,
-        _stack,
-      };
-      const result = await __classPrivateFieldGet(
+    const _stack = new Error().stack;
+    const data = { hash, request, params, body, _stack };
+    const result = await __classPrivateFieldGet(
+      this,
+      _BetterRequestHandler_queues,
+      "f",
+    )[hash].push(data);
+    if (
+      __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+        hash
+      ].idle()
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [hash]: _, ...rest } = __classPrivateFieldGet(
         this,
         _BetterRequestHandler_queues,
         "f",
-      )[hash].push(data);
-      if (
-        __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-          hash
-        ].idle()
-      ) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { [hash]: _, ...rest } = __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_queues,
-          "f",
-        );
-        __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
-      }
-      return result;
+      );
+      __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
     }
-    throw new Error("GLUON: Request ran out of retries");
+    return result;
   }
 }
 (_BetterRequestHandler_token = new WeakMap()),
@@ -321,191 +297,164 @@ class BetterRequestHandler {
       "f",
     )[request];
     const path = actualRequest.path(...(params ?? []));
-    const bucket = await getBucket(hash);
-    if (
-      !bucket ||
-      bucket.remaining !== 0 ||
-      (bucket.remaining === 0 &&
-        new Date().getTime() / 1000 >
-          bucket.reset +
-            __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f"))
-    ) {
-      const serialize = (obj) => {
-        const str = [];
-        for (const p in obj)
-          if (Object.prototype.hasOwnProperty.call(obj, p))
-            str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
-        return str.join("&");
-      };
-      const headers = {
-        Authorization: __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_authorization,
-          "f",
+    const headers = {
+      Authorization: __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler_authorization,
+        "f",
+      ),
+      "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
+      Accept: "application/json",
+    };
+    let form;
+    if (body?.files) {
+      form = new FormData();
+      body.files.forEach((f, i) =>
+        form?.append(
+          `${i}_${f.name}`,
+          f.stream || createReadStream(f.attachment),
+          f.name,
         ),
-        "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
-        Accept: "application/json",
-      };
-      let form;
-      if (body?.files) {
-        form = new FormData();
-        for (let i = 0; i < body.files.length; i++)
-          form.append(
-            `${i}_${body.files[i].name}`,
-            body.files[i].stream
-              ? body.files[i].stream
-              : createReadStream(body.files[i].attachment),
-            body.files[i].name,
-          );
-        delete body.files;
-        form.append("payload_json", JSON.stringify(body));
-        Object.assign(headers, form.getHeaders());
-      } else if (
-        actualRequest.method !== "GET" &&
-        actualRequest.method !== "DELETE"
-      )
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        headers["Content-Type"] = "application/json";
-      if (
-        body &&
-        actualRequest.useHeaders &&
-        actualRequest.useHeaders.length !== 0
-      )
-        for (const [key, value] of Object.entries(body))
-          if (actualRequest.useHeaders.includes(key)) {
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            headers[key] = encodeURIComponent(value);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [key]: _, ...rest } = body;
-            body = rest;
-          }
-      let res;
-      let e;
-      const requestTime = Date.now();
-      const controller = new AbortController();
-      const timeout = setTimeout(() => {
-        controller.abort();
-      }, 30000);
-      for (
-        let i = 0;
-        i <=
-        __classPrivateFieldGet(this, _BetterRequestHandler_maxRetries, "f");
-        i++
-      )
-        try {
-          /* actually make the request */
-          res = await fetch(
-            `${__classPrivateFieldGet(this, _BetterRequestHandler_requestURL, "f")}${path}${
-              body &&
-              (actualRequest.method === "GET" ||
-                actualRequest.method === "DELETE")
-                ? `?${serialize(body)}`
-                : ""
-            }`,
-            {
-              method: actualRequest.method,
-              headers,
-              body: form
-                ? form
-                : body &&
-                    actualRequest.method !== "GET" &&
-                    actualRequest.method !== "DELETE"
-                  ? JSON.stringify(body)
-                  : undefined,
-              compress: true,
-              signal: controller.signal,
-              agent: __classPrivateFieldGet(
-                this,
-                _BetterRequestHandler_agent,
-                "f",
-              ),
-            },
-          );
-          __classPrivateFieldSet(
-            this,
-            _BetterRequestHandler_latencyMs,
-            Date.now() - requestTime,
-            "f",
-          );
-          __classPrivateFieldSet(
-            this,
-            _BetterRequestHandler_latency,
-            Math.ceil((Date.now() - requestTime) / 1000),
-            "f",
-          );
-          break;
-        } catch (error) {
-          console.error(error);
-          e = error;
-        } finally {
-          clearTimeout(timeout);
+      );
+      delete body.files;
+      form.append("payload_json", JSON.stringify(body));
+      Object.assign(headers, form.getHeaders());
+    } else if (
+      actualRequest.method !== "GET" &&
+      actualRequest.method !== "DELETE"
+    ) {
+      headers["Content-Type"] = "application/json";
+    }
+    if (
+      body &&
+      actualRequest.useHeaders &&
+      actualRequest.useHeaders.length !== 0
+    ) {
+      for (const [key, value] of Object.entries(body)) {
+        if (actualRequest.useHeaders.includes(key)) {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+          headers[key] = encodeURIComponent(value);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [key]: _, ...rest } = body;
+          body = rest;
         }
-      if (!res) throw e;
-      let json;
-      try {
-        json = await res.json();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_) {
-        json = null;
       }
+    }
+    let res;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    const url =
+      `${__classPrivateFieldGet(this, _BetterRequestHandler_requestURL, "f")}${path}` +
+      (body &&
+      (actualRequest.method === "GET" || actualRequest.method === "DELETE")
+        ? `?${new URLSearchParams(toQueryParams(body)).toString()}`
+        : "");
+    for (
+      let i = 0;
+      i <= __classPrivateFieldGet(this, _BetterRequestHandler_maxRetries, "f");
+      i++
+    ) {
       try {
-        await handleBucket(
-          res.headers.get("x-ratelimit-bucket"),
-          res.headers.get("x-ratelimit-remaining"),
-          res.headers.get("x-ratelimit-reset"),
-          hash,
-          // @ts-expect-error TS(2571): Object is of type 'unknown'.
-          res.status === 429 ? json.retry_after : 0,
-        );
-      } catch (error) {
-        console.error(error);
-      }
-      __classPrivateFieldGet(this, _BetterRequestHandler__client, "f").emit(
-        Events.REQUEST_COMPLETED,
-        {
-          status: res.status,
+        const requestTime = Date.now();
+        res = await fetch(url, {
           method: actualRequest.method,
-          endpoint: actualRequest.path(...(params ?? [])),
-          hash,
-        },
-      );
-      __classPrivateFieldGet(
-        this,
-        _BetterRequestHandler__client,
-        "f",
-      )._emitDebug(
-        GluonDebugLevels.Info,
-        `REMOVE ${hash} from request queue (${__classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f")}ms)`,
-      );
-      if (res.ok) {
-        return json;
-      } else {
-        throw new GluonRequestError(
-          res.status,
-          actualRequest.method,
-          actualRequest.path(...(params ?? [])),
-          _stack,
-          JSON.stringify(json),
+          headers,
+          body: form
+            ? form
+            : body &&
+                actualRequest.method !== "GET" &&
+                actualRequest.method !== "DELETE"
+              ? JSON.stringify(body)
+              : undefined,
+          compress: true,
+          signal: controller.signal,
+          agent: __classPrivateFieldGet(this, _BetterRequestHandler_agent, "f"),
+        });
+        clearTimeout(timeout);
+        __classPrivateFieldSet(
+          this,
+          _BetterRequestHandler_latencyMs,
+          Date.now() - requestTime,
+          "f",
         );
+        __classPrivateFieldSet(
+          this,
+          _BetterRequestHandler_latency,
+          Math.ceil(
+            __classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f") /
+              1000,
+          ),
+          "f",
+        );
+        break;
+      } catch (err) {
+        if (
+          i ===
+          __classPrivateFieldGet(this, _BetterRequestHandler_maxRetries, "f")
+        )
+          throw err;
+        await sleep(2 ** i * 100 + Math.random() * 100);
       }
-    } else {
-      const retryNextIn =
-        Math.ceil(bucket.reset - new Date().getTime() / 1000) +
-        __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f");
-      await sleep(1500);
+    }
+    if (!res) {
       __classPrivateFieldGet(
         this,
         _BetterRequestHandler__client,
         "f",
-      )._emitDebug(GluonDebugLevels.Warn, `READD ${hash} to request queue`);
+      )._emitDebug(GluonDebugLevels.Danger, `NO RESPONSE ${hash}`);
+      throw new GluonRequestError(0, actualRequest.method, path, _stack);
+    }
+    let json = null;
+    try {
+      json = await res.json();
+    } catch (err) {
+      __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler__client,
+        "f",
+      )._emitDebug(GluonDebugLevels.Danger, `NO JSON ${hash} ${err}`);
+      json = null;
+    }
+    if (res.status === 429) {
+      const retryAfter = (json?.retry_after || 1) * 1000;
+      if (json?.global) await redis.set(GLOBAL_KEY, Date.now() + retryAfter);
+      await sleep(retryAfter);
       throw new GluonRatelimitEncountered(
-        429,
+        res.status,
         actualRequest.method,
-        actualRequest.path(...(params ?? [])),
+        path,
         _stack,
-        retryNextIn,
+        retryAfter / 1000,
       );
     }
+    await handleBucket(
+      res.headers.get("x-ratelimit-bucket"),
+      res.headers.get("x-ratelimit-remaining"),
+      res.headers.get("x-ratelimit-reset"),
+      hash,
+      res.status === 429 ? json?.retry_after : 0,
+    );
+    __classPrivateFieldGet(this, _BetterRequestHandler__client, "f").emit(
+      Events.REQUEST_COMPLETED,
+      {
+        status: res.status,
+        method: actualRequest.method,
+        endpoint: path,
+        hash,
+      },
+    );
+    __classPrivateFieldGet(this, _BetterRequestHandler__client, "f")._emitDebug(
+      GluonDebugLevels.Info,
+      `REMOVE ${hash} from request queue (${__classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f")}ms)`,
+    );
+    if (res.ok) return json;
+    throw new GluonRequestError(
+      res.status,
+      actualRequest.method,
+      path,
+      _stack,
+      JSON.stringify(json),
+    );
   });
 export default BetterRequestHandler;
 //# sourceMappingURL=betterRequestHandler.js.map

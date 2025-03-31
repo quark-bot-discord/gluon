@@ -9,11 +9,6 @@ declare class BetterRequestHandler {
       ip?: string;
     },
   );
-  /**
-   * The latency of the request handler.
-   * @type {Number}
-   * @readonly
-   */
   get latency(): number;
   makeRequest(
     request: keyof typeof endpoints,

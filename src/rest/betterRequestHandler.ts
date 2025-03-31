@@ -3,6 +3,7 @@ import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
 import FastQ from "fastq";
+import { Redis } from "ioredis";
 import { getBucket, handleBucket } from "./bucket.js";
 import {
   GLUON_VERSION,
@@ -26,6 +27,15 @@ import {
 import https from "https";
 const AbortController = globalThis.AbortController;
 
+interface JsonResponse {
+  retry_after?: number;
+  global?: boolean;
+  [key: string]: unknown;
+}
+
+const redis = new Redis();
+const GLOBAL_KEY = "gluon:discord:global_rate_limit";
+
 interface QueueItemData {
   hash: string;
   request: keyof typeof endpoints;
@@ -34,6 +44,16 @@ interface QueueItemData {
     files?: FileUpload[];
   };
   _stack: string;
+}
+
+function toQueryParams(obj: Record<string, unknown>): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const key in obj) {
+    const val = obj[key];
+    if (val === undefined || val === null) continue;
+    result[key] = String(val);
+  }
+  return result;
 }
 
 class BetterRequestHandler {
@@ -50,62 +70,32 @@ class BetterRequestHandler {
   #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
   #latencyMs = 0;
   #agent;
+
   constructor(client: ClientType, token: string, options?: { ip?: string }) {
     this.#_client = client;
-
     this.#agent = new https.Agent({ localAddress: options?.ip });
-
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
-
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
-
     this.#latency = 1;
     this.#maxRetries = 3;
     this.#maxQueueSize = 100;
     this.#fuzz = 500;
-
     this.#endpoints = endpoints;
 
     this.#queueWorker = async (data: QueueItemData) => {
+      const now = Date.now();
+      const globalReset = await redis.get(GLOBAL_KEY);
+      if (globalReset && now < parseInt(globalReset)) {
+        await sleep(parseInt(globalReset) - now);
+      }
+
       const bucket = await getBucket(data.hash);
       if (
         !bucket ||
-        bucket.remaining !== 0 ||
-        (bucket.remaining === 0 &&
-          new Date().getTime() / 1000 > bucket.reset + this.#latency)
-      )
-        return this.#http(
-          data.hash,
-          data.request,
-          data.params,
-          data.body,
-          data._stack,
-        );
-      else {
-        this.#_client._emitDebug(
-          GluonDebugLevels.Warn,
-          `RATELIMITED ${data.hash} (bucket reset):${
-            bucket.reset
-          } (latency):${this.#latency}  (time until retry):${
-            (bucket.reset + this.#latency) * 1000 - new Date().getTime()
-          } (current time):${(new Date().getTime() / 1000) | 0}`,
-        );
-        if (this.#queues[data.hash].length() > this.#maxQueueSize) {
-          this.#_client._emitDebug(
-            GluonDebugLevels.Danger,
-            `KILL QUEUE ${data.hash}`,
-          );
-          this.#queues[data.hash].kill();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { [data.hash]: _, ...rest } = this.#queues;
-          this.#queues = rest;
-        }
-        await sleep(
-          (bucket.reset + this.#latency) * 1000 -
-            new Date().getTime() +
-            this.#fuzz,
-        );
+        bucket.remaining > 0 ||
+        now / 1000 > bucket.reset + this.#latency
+      ) {
         return this.#http(
           data.hash,
           data.request,
@@ -114,14 +104,29 @@ class BetterRequestHandler {
           data._stack,
         );
       }
+
+      if (this.#queues[data.hash].length() > this.#maxQueueSize) {
+        this.#_client._emitDebug(
+          GluonDebugLevels.Danger,
+          `KILL QUEUE ${data.hash}`,
+        );
+        this.#queues[data.hash].kill();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { [data.hash]: _, ...rest } = this.#queues;
+        this.#queues = rest;
+      }
+
+      await sleep((bucket.reset + this.#latency) * 1000 - now + this.#fuzz);
+      return this.#http(
+        data.hash,
+        data.request,
+        data.params,
+        data.body,
+        data._stack,
+      );
     };
   }
 
-  /**
-   * The latency of the request handler.
-   * @type {Number}
-   * @readonly
-   */
   get latency() {
     return this.#latencyMs;
   }
@@ -134,7 +139,6 @@ class BetterRequestHandler {
     },
   ) {
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
-
     const toHash =
       actualRequest.method +
       actualRequest.path(
@@ -155,27 +159,17 @@ class BetterRequestHandler {
       this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
     }
 
-    let retries = 5;
+    const _stack = new Error().stack as string;
+    const data: QueueItemData = { hash, request, params, body, _stack };
+    const result = await this.#queues[hash].push(data);
 
-    while (retries--) {
-      const _stack = new Error().stack as string;
-      const data: QueueItemData = {
-        hash,
-        request,
-        params,
-        body,
-        _stack,
-      };
-      const result = await this.#queues[hash].push(data);
-      if (this.#queues[hash].idle()) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { [hash]: _, ...rest } = this.#queues;
-        this.#queues = rest;
-      }
-      return result;
+    if (this.#queues[hash].idle()) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [hash]: _, ...rest } = this.#queues;
+      this.#queues = rest;
     }
 
-    throw new Error("GLUON: Request ran out of retries");
+    return result;
   }
 
   async #http(
@@ -188,181 +182,143 @@ class BetterRequestHandler {
     _stack: string,
   ) {
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
-
     const path = actualRequest.path(...(params ?? []));
+    const headers: Record<string, string> = {
+      Authorization: this.#authorization,
+      "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
+      Accept: "application/json",
+    };
 
-    const bucket = await getBucket(hash);
+    let form: FormData | undefined;
+    if (body?.files) {
+      form = new FormData();
+      body.files.forEach((f, i) =>
+        form?.append(
+          `${i}_${f.name}`,
+          f.stream || createReadStream(f.attachment as string),
+          f.name,
+        ),
+      );
+      delete body.files;
+      form.append("payload_json", JSON.stringify(body));
+      Object.assign(headers, form.getHeaders());
+    } else if (
+      actualRequest.method !== "GET" &&
+      actualRequest.method !== "DELETE"
+    ) {
+      headers["Content-Type"] = "application/json";
+    }
 
     if (
-      !bucket ||
-      bucket.remaining !== 0 ||
-      (bucket.remaining === 0 &&
-        new Date().getTime() / 1000 > bucket.reset + this.#latency)
+      body &&
+      actualRequest.useHeaders &&
+      actualRequest.useHeaders.length !== 0
     ) {
-      const serialize = (obj: Record<string, number | boolean | string>) => {
-        const str = [];
-        for (const p in obj)
-          if (Object.prototype.hasOwnProperty.call(obj, p))
-            str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
-        return str.join("&");
-      };
-
-      const headers = {
-        Authorization: this.#authorization,
-        "User-Agent": `DiscordBot (${GLUON_REPOSITORY_URL}, ${GLUON_VERSION}) ${NAME}`,
-        Accept: "application/json",
-      };
-
-      let form;
-      if (body?.files) {
-        form = new FormData();
-        for (let i = 0; i < body.files.length; i++)
-          form.append(
-            `${i}_${body.files[i].name}`,
-            body.files[i].stream
-              ? body.files[i].stream
-              : createReadStream(body.files[i].attachment as string),
-            body.files[i].name,
-          );
-        delete body.files;
-        form.append("payload_json", JSON.stringify(body));
-        Object.assign(headers, form.getHeaders());
-      } else if (
-        actualRequest.method !== "GET" &&
-        actualRequest.method !== "DELETE"
-      )
-        // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-        headers["Content-Type"] = "application/json";
-
-      if (
-        body &&
-        actualRequest.useHeaders &&
-        actualRequest.useHeaders.length !== 0
-      )
-        for (const [key, value] of Object.entries(body))
-          if (actualRequest.useHeaders.includes(key)) {
-            // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
-            headers[key] = encodeURIComponent(value);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { [key]: _, ...rest } = body;
-            body = rest;
-          }
-
-      let res;
-      let e;
-
-      const requestTime = Date.now();
-
-      const controller = new AbortController();
-      const timeout = setTimeout(() => {
-        controller.abort();
-      }, 30000);
-
-      for (let i = 0; i <= this.#maxRetries; i++)
-        try {
-          /* actually make the request */
-          res = await fetch(
-            `${this.#requestURL}${path}${
-              body &&
-              (actualRequest.method === "GET" ||
-                actualRequest.method === "DELETE")
-                ? `?${serialize(body as Record<string, number | boolean | string>)}`
-                : ""
-            }`,
-            {
-              method: actualRequest.method,
-              headers,
-              body: form
-                ? form
-                : body &&
-                    actualRequest.method !== "GET" &&
-                    actualRequest.method !== "DELETE"
-                  ? JSON.stringify(body)
-                  : undefined,
-              compress: true,
-              signal: controller.signal,
-              agent: this.#agent,
-            },
-          );
-
-          this.#latencyMs = Date.now() - requestTime;
-          this.#latency = Math.ceil((Date.now() - requestTime) / 1000);
-
-          break;
-        } catch (error) {
-          console.error(error);
-
-          e = error;
-        } finally {
-          clearTimeout(timeout);
+      for (const [key, value] of Object.entries(body)) {
+        if (actualRequest.useHeaders.includes(key)) {
+          // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+          headers[key] = encodeURIComponent(value);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { [key]: _, ...rest } = body;
+          body = rest;
         }
+      }
+    }
 
-      if (!res) throw e;
+    let res;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    const url =
+      `${this.#requestURL}${path}` +
+      (body &&
+      (actualRequest.method === "GET" || actualRequest.method === "DELETE")
+        ? `?${new URLSearchParams(toQueryParams(body)).toString()}`
+        : "");
 
-      let json;
-
+    for (let i = 0; i <= this.#maxRetries; i++) {
       try {
-        json = await res.json();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_) {
-        json = null;
+        const requestTime = Date.now();
+        res = await fetch(url, {
+          method: actualRequest.method,
+          headers,
+          body: form
+            ? form
+            : body &&
+                actualRequest.method !== "GET" &&
+                actualRequest.method !== "DELETE"
+              ? JSON.stringify(body)
+              : undefined,
+          compress: true,
+          signal: controller.signal,
+          agent: this.#agent,
+        });
+        clearTimeout(timeout);
+        this.#latencyMs = Date.now() - requestTime;
+        this.#latency = Math.ceil(this.#latencyMs / 1000);
+        break;
+      } catch (err) {
+        if (i === this.#maxRetries) throw err;
+        await sleep(2 ** i * 100 + Math.random() * 100);
       }
+    }
 
-      try {
-        await handleBucket(
-          res.headers.get("x-ratelimit-bucket"),
-          res.headers.get("x-ratelimit-remaining"),
-          res.headers.get("x-ratelimit-reset"),
-          hash,
-          // @ts-expect-error TS(2571): Object is of type 'unknown'.
-          res.status === 429 ? json.retry_after : 0,
-        );
-      } catch (error) {
-        console.error(error);
-      }
+    if (!res) {
+      this.#_client._emitDebug(GluonDebugLevels.Danger, `NO RESPONSE ${hash}`);
+      throw new GluonRequestError(0, actualRequest.method, path, _stack);
+    }
 
-      this.#_client.emit(Events.REQUEST_COMPLETED, {
-        status: res.status,
-        method: actualRequest.method,
-        endpoint: actualRequest.path(...(params ?? [])),
-        hash,
-      });
-
+    let json: JsonResponse | null = null;
+    try {
+      json = (await res.json()) as JsonResponse;
+    } catch (err) {
       this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
+        GluonDebugLevels.Danger,
+        `NO JSON ${hash} ${err}`,
       );
+      json = null;
+    }
 
-      if (res.ok) {
-        return json;
-      } else {
-        throw new GluonRequestError(
-          res.status,
-          actualRequest.method,
-          actualRequest.path(...(params ?? [])),
-          _stack,
-          JSON.stringify(json),
-        );
-      }
-    } else {
-      const retryNextIn =
-        Math.ceil(bucket.reset - new Date().getTime() / 1000) + this.#latency;
-
-      await sleep(1500);
-
-      this.#_client._emitDebug(
-        GluonDebugLevels.Warn,
-        `READD ${hash} to request queue`,
-      );
-
+    if (res.status === 429) {
+      const retryAfter = (json?.retry_after || 1) * 1000;
+      if (json?.global) await redis.set(GLOBAL_KEY, Date.now() + retryAfter);
+      await sleep(retryAfter);
       throw new GluonRatelimitEncountered(
-        429,
+        res.status,
         actualRequest.method,
-        actualRequest.path(...(params ?? [])),
+        path,
         _stack,
-        retryNextIn,
+        retryAfter / 1000,
       );
     }
+
+    await handleBucket(
+      res.headers.get("x-ratelimit-bucket"),
+      res.headers.get("x-ratelimit-remaining"),
+      res.headers.get("x-ratelimit-reset"),
+      hash,
+      res.status === 429 ? json?.retry_after : 0,
+    );
+
+    this.#_client.emit(Events.REQUEST_COMPLETED, {
+      status: res.status,
+      method: actualRequest.method,
+      endpoint: path,
+      hash,
+    });
+    this.#_client._emitDebug(
+      GluonDebugLevels.Info,
+      `REMOVE ${hash} from request queue (${this.#latencyMs}ms)`,
+    );
+
+    if (res.ok) return json;
+
+    throw new GluonRequestError(
+      res.status,
+      actualRequest.method,
+      path,
+      _stack,
+      JSON.stringify(json),
+    );
   }
 }
 
