@@ -54,10 +54,6 @@ class Thread extends Channel implements ThreadType {
     if (typeof nocache !== "boolean")
       throw new TypeError("GLUON: No cache must be a boolean");
 
-    if (!this.guild) {
-      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
-    }
-
     /**
      * The client instance.
      * @type {Client}
@@ -79,26 +75,30 @@ class Thread extends Channel implements ThreadType {
      */
     this.#_parent_id = data.parent_id ? BigInt(data.parent_id) : null;
 
-    const shouldCache = Thread.shouldCache(
-      this.#_client._cacheOptions,
-      this.guild._cacheOptions,
-    );
+    if (guildId !== "0" && !this.guild) {
+      throw new Error(`GLUON: Guild ${guildId} not found for thread.`);
+    } else if (guildId !== "0" && this.guild) {
+      const shouldCache = Thread.shouldCache(
+        this.#_client._cacheOptions,
+        this.guild._cacheOptions,
+      );
 
-    if (
-      nocache === false &&
-      (!("archived" in data) || data.archived !== true) &&
-      shouldCache
-    ) {
-      this.guild.channels.set(data.id, this);
-      this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `CACHE THREAD ${guildId} ${data.id}`,
-      );
-    } else {
-      this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
-      );
+      if (
+        nocache === false &&
+        (!("archived" in data) || data.archived !== true) &&
+        shouldCache
+      ) {
+        this.guild.channels.set(data.id, this);
+        this.#_client._emitDebug(
+          GluonDebugLevels.Info,
+          `CACHE THREAD ${guildId} ${data.id}`,
+        );
+      } else {
+        this.#_client._emitDebug(
+          GluonDebugLevels.Info,
+          `NO CACHE THREAD ${guildId} ${data.id} (${nocache} ${"archived" in data ? data.archived : "N/A"} ${shouldCache})`,
+        );
+      }
     }
   }
 
