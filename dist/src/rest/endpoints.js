@@ -1,8 +1,7 @@
 /* of course, stick to this format of "methodPath1Path2" */
 /* the arguments passed to the path() function should simply become the parameters of the request */
-const HttpResponse = !process.env.NODE_ENV
-  ? (await import("msw")).HttpResponse
-  : {};
+const HttpResponse =
+  process.env.NODE_ENV === "testing" ? (await import("msw")).HttpResponse : {};
 import { TEST_DATA } from "../testData.js";
 /* for example, (guild_id) => { return `/guilds/${guild_id}` } */
 export default {
