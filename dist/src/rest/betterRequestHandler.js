@@ -47,13 +47,10 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_authorization,
   _BetterRequestHandler__client,
   _BetterRequestHandler_requestURL,
-  _BetterRequestHandler_latency,
   _BetterRequestHandler_maxRetries,
-  _BetterRequestHandler_maxQueueSize,
   _BetterRequestHandler_fuzz,
   _BetterRequestHandler_endpoints,
   _BetterRequestHandler_queueWorker,
-  _BetterRequestHandler_queues,
   _BetterRequestHandler_latencyMs,
   _BetterRequestHandler_agent,
   _BetterRequestHandler_http;
@@ -61,7 +58,6 @@ import fetch from "node-fetch";
 import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
-import FastQ from "fastq";
 import { Redis } from "ioredis";
 import { getBucket, handleBucket } from "./bucket.js";
 import {
@@ -76,6 +72,7 @@ import { sleep } from "../util/general/sleep.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
+import { randomUUID } from "crypto";
 const AbortController = globalThis.AbortController;
 const redis = new Redis();
 function toQueryParams(obj) {
@@ -94,13 +91,10 @@ class BetterRequestHandler {
     _BetterRequestHandler_authorization.set(this, void 0);
     _BetterRequestHandler__client.set(this, void 0);
     _BetterRequestHandler_requestURL.set(this, void 0);
-    _BetterRequestHandler_latency.set(this, void 0);
     _BetterRequestHandler_maxRetries.set(this, void 0);
-    _BetterRequestHandler_maxQueueSize.set(this, void 0);
     _BetterRequestHandler_fuzz.set(this, void 0);
     _BetterRequestHandler_endpoints.set(this, void 0);
     _BetterRequestHandler_queueWorker.set(this, void 0);
-    _BetterRequestHandler_queues.set(this, {});
     _BetterRequestHandler_latencyMs.set(this, 0);
     _BetterRequestHandler_agent.set(this, void 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
@@ -123,9 +117,7 @@ class BetterRequestHandler {
       `Bot ${__classPrivateFieldGet(this, _BetterRequestHandler_token, "f")}`,
       "f",
     );
-    __classPrivateFieldSet(this, _BetterRequestHandler_latency, 1, "f");
     __classPrivateFieldSet(this, _BetterRequestHandler_maxRetries, 3, "f");
-    __classPrivateFieldSet(this, _BetterRequestHandler_maxQueueSize, 100, "f");
     __classPrivateFieldSet(this, _BetterRequestHandler_fuzz, 500, "f");
     __classPrivateFieldSet(
       this,
@@ -138,35 +130,66 @@ class BetterRequestHandler {
       this,
       _BetterRequestHandler_queueWorker,
       async (data) => {
-        const now = Date.now();
+        const nowMs = Date.now();
+        // Check global lock
         const globalReset = await redis.get(this.GLOBAL_KEY);
-        if (globalReset && now < parseInt(globalReset)) {
-          const delay = parseInt(globalReset) - now;
-          const lockKey = `lock:${this.GLOBAL_KEY}`;
-          const didAcquireLock = await redis.set(
-            lockKey,
-            "1",
-            "PX",
-            delay,
-            "NX",
+        if (globalReset && nowMs < parseInt(globalReset)) {
+          const wait =
+            parseInt(globalReset) -
+            nowMs +
+            __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f");
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler__client,
+            "f",
+          )._emitDebug(
+            GluonDebugLevels.Warn,
+            `Global ratelimit: sleeping ${wait}ms`,
           );
-          if (didAcquireLock) {
-            await sleep(delay);
-            await redis.del(lockKey);
-          } else {
-            await sleep(delay + 50); // Let the lock holder handle the wait
-          }
+          await sleep(wait);
         }
+        // Acquire lock for this bucket (distributed mutex)
+        const lockKey = `gluon:lock:${data.hash}`;
+        const lockId = randomUUID();
         const bucket = await getBucket(data.hash);
-        const bucketResetMs = bucket ? Math.ceil(bucket.reset * 1000) : 0;
-        if (
-          !bucket ||
-          bucket.remaining > 0 ||
-          now >
-            bucketResetMs +
-              __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f")
-        ) {
+        const estimatedReset = bucket
+          ? bucket.reset * 1000 -
+            nowMs +
+            __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f")
+          : 15000;
+        const safeTTL = Math.max(5000, Math.min(estimatedReset, 30000));
+        const lock = await redis.set(lockKey, lockId, "PX", safeTTL, "NX");
+        if (!lock) {
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler__client,
+            "f",
+          )._emitDebug(GluonDebugLevels.Warn, `Bucket locked: ${data.hash}`);
+          await sleep(100 + Math.random() * 100); // jitter to avoid stampede
           return __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler_queueWorker,
+            "f",
+          ).call(this, data); // retry
+        }
+        try {
+          const bucket = await getBucket(data.hash);
+          const nowSec = Date.now() / 1000;
+          if (bucket && bucket.remaining === 0 && nowSec < bucket.reset) {
+            const delay =
+              Math.ceil((bucket.reset - nowSec) * 1000) +
+              __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f");
+            __classPrivateFieldGet(
+              this,
+              _BetterRequestHandler__client,
+              "f",
+            )._emitDebug(
+              GluonDebugLevels.Warn,
+              `Bucket ratelimited: ${data.hash}, sleeping ${delay}ms`,
+            );
+            await sleep(delay);
+          }
+          return await __classPrivateFieldGet(
             this,
             _BetterRequestHandler_instances,
             "m",
@@ -179,49 +202,12 @@ class BetterRequestHandler {
             data.body,
             data._stack,
           );
+        } finally {
+          const currentLock = await redis.get(lockKey);
+          if (currentLock === lockId) {
+            await redis.del(lockKey);
+          }
         }
-        if (
-          __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-            data.hash
-          ].length() >
-          __classPrivateFieldGet(this, _BetterRequestHandler_maxQueueSize, "f")
-        ) {
-          __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler__client,
-            "f",
-          )._emitDebug(GluonDebugLevels.Danger, `KILL QUEUE ${data.hash}`);
-          __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-            data.hash
-          ].kill();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { [data.hash]: _, ...rest } = __classPrivateFieldGet(
-            this,
-            _BetterRequestHandler_queues,
-            "f",
-          );
-          __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
-        }
-        await sleep(
-          (bucket.reset +
-            __classPrivateFieldGet(this, _BetterRequestHandler_latency, "f")) *
-            1000 -
-            now +
-            __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f"),
-        );
-        return __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler_instances,
-          "m",
-          _BetterRequestHandler_http,
-        ).call(
-          this,
-          data.hash,
-          data.request,
-          data.params,
-          data.body,
-          data._stack,
-        );
       },
       "f",
     );
@@ -249,35 +235,13 @@ class BetterRequestHandler {
       GluonDebugLevels.Info,
       `ADD ${hash} to request queue`,
     );
-    if (
-      !__classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash]
-    ) {
-      __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash] =
-        FastQ.promise(
-          __classPrivateFieldGet(this, _BetterRequestHandler_queueWorker, "f"),
-          1,
-        );
-    }
     const _stack = new Error().stack;
     const data = { hash, request, params, body, _stack };
     const result = await __classPrivateFieldGet(
       this,
-      _BetterRequestHandler_queues,
+      _BetterRequestHandler_queueWorker,
       "f",
-    )[hash].push(data);
-    if (
-      __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-        hash
-      ].idle()
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [hash]: _, ...rest } = __classPrivateFieldGet(
-        this,
-        _BetterRequestHandler_queues,
-        "f",
-      );
-      __classPrivateFieldSet(this, _BetterRequestHandler_queues, rest, "f");
-    }
+    ).call(this, data);
     return result;
   }
 }
@@ -285,13 +249,10 @@ class BetterRequestHandler {
   (_BetterRequestHandler_authorization = new WeakMap()),
   (_BetterRequestHandler__client = new WeakMap()),
   (_BetterRequestHandler_requestURL = new WeakMap()),
-  (_BetterRequestHandler_latency = new WeakMap()),
   (_BetterRequestHandler_maxRetries = new WeakMap()),
-  (_BetterRequestHandler_maxQueueSize = new WeakMap()),
   (_BetterRequestHandler_fuzz = new WeakMap()),
   (_BetterRequestHandler_endpoints = new WeakMap()),
   (_BetterRequestHandler_queueWorker = new WeakMap()),
-  (_BetterRequestHandler_queues = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
   (_BetterRequestHandler_agent = new WeakMap()),
   (_BetterRequestHandler_instances = new WeakSet()),
@@ -321,15 +282,19 @@ class BetterRequestHandler {
     let form;
     if (body?.files) {
       form = new FormData();
-      body.files.forEach((f, i) =>
-        form?.append(
+      const clonedBody = { ...body }; // avoid mutating original
+      clonedBody.files?.forEach((f, i) => {
+        if (f.stream?.readableEnded) {
+          throw new Error("Cannot retry: file stream already ended");
+        }
+        return form?.append(
           `files[${i}]`,
           f.stream || createReadStream(f.attachment),
           f.name,
-        ),
-      );
-      delete body.files;
-      form.append("payload_json", JSON.stringify({ ...body }));
+        );
+      });
+      delete clonedBody.files;
+      form.append("payload_json", JSON.stringify({ ...clonedBody }));
       Object.assign(headers, form.getHeaders());
     } else if (
       actualRequest.method !== "GET" &&
@@ -382,20 +347,10 @@ class BetterRequestHandler {
           signal: controller.signal,
           agent: __classPrivateFieldGet(this, _BetterRequestHandler_agent, "f"),
         });
-        clearTimeout(timeout);
         __classPrivateFieldSet(
           this,
           _BetterRequestHandler_latencyMs,
           Date.now() - requestTime,
-          "f",
-        );
-        __classPrivateFieldSet(
-          this,
-          _BetterRequestHandler_latency,
-          Math.ceil(
-            __classPrivateFieldGet(this, _BetterRequestHandler_latencyMs, "f") /
-              1000,
-          ),
           "f",
         );
         break;
@@ -406,6 +361,8 @@ class BetterRequestHandler {
         )
           throw err;
         await sleep(2 ** i * 100 + Math.random() * 100);
+      } finally {
+        clearTimeout(timeout);
       }
     }
     if (!res) {
@@ -428,6 +385,14 @@ class BetterRequestHandler {
       json = null;
     }
     if (res.status === 429) {
+      __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler__client,
+        "f",
+      )._emitDebug(
+        GluonDebugLevels.Warn,
+        `RATELIMITED ${hash} ${res.status} ${JSON.stringify(json)}`,
+      );
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
@@ -439,9 +404,11 @@ class BetterRequestHandler {
         body: originalBody,
         _stack,
       };
-      return __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
-        hash
-      ].push(data);
+      return __classPrivateFieldGet(
+        this,
+        _BetterRequestHandler_queueWorker,
+        "f",
+      ).call(this, data); // retry
     }
     await handleBucket(
       res.headers.get("x-ratelimit-bucket"),

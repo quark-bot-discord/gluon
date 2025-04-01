@@ -2,7 +2,6 @@ import fetch from "node-fetch";
 import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
-import FastQ from "fastq";
 import { Redis } from "ioredis";
 import { getBucket, handleBucket } from "./bucket.js";
 import {
@@ -22,6 +21,7 @@ import type {
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
+import { randomUUID } from "crypto";
 const AbortController = globalThis.AbortController;
 
 interface JsonResponse {
@@ -57,13 +57,10 @@ class BetterRequestHandler {
   #authorization;
   #_client;
   #requestURL;
-  #latency;
   #maxRetries;
-  #maxQueueSize;
   #fuzz;
   #endpoints;
-  #queueWorker;
-  #queues: { [key: string]: FastQ.queueAsPromised<QueueItemData> } = {};
+  #queueWorker: (data: QueueItemData) => Promise<JsonResponse | null>;
   #latencyMs = 0;
   #agent;
   GLOBAL_KEY: string;
@@ -74,60 +71,69 @@ class BetterRequestHandler {
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
-    this.#latency = 1;
     this.#maxRetries = 3;
-    this.#maxQueueSize = 100;
     this.#fuzz = 500;
     this.#endpoints = endpoints;
     this.GLOBAL_KEY = `gluon:${this.#token.slice(0, 8)}:global_rate_limit`;
 
     this.#queueWorker = async (data: QueueItemData) => {
-      const now = Date.now();
-      const globalReset = await redis.get(this.GLOBAL_KEY);
-      if (globalReset && now < parseInt(globalReset)) {
-        const delay = parseInt(globalReset) - now;
-        const lockKey = `lock:${this.GLOBAL_KEY}`;
-        const didAcquireLock = await redis.set(lockKey, "1", "PX", delay, "NX");
+      const nowMs = Date.now();
 
-        if (didAcquireLock) {
-          await sleep(delay);
-          await redis.del(lockKey);
-        } else {
-          await sleep(delay + 50); // Let the lock holder handle the wait
-        }
+      // Check global lock
+      const globalReset = await redis.get(this.GLOBAL_KEY);
+      if (globalReset && nowMs < parseInt(globalReset)) {
+        const wait = parseInt(globalReset) - nowMs + this.#fuzz;
+        this.#_client._emitDebug(
+          GluonDebugLevels.Warn,
+          `Global ratelimit: sleeping ${wait}ms`,
+        );
+        await sleep(wait);
       }
 
+      // Acquire lock for this bucket (distributed mutex)
+      const lockKey = `gluon:lock:${data.hash}`;
+      const lockId = randomUUID();
       const bucket = await getBucket(data.hash);
-      const bucketResetMs = bucket ? Math.ceil(bucket.reset * 1000) : 0;
-      if (!bucket || bucket.remaining > 0 || now > bucketResetMs + this.#fuzz) {
-        return this.#http(
+      const estimatedReset = bucket
+        ? bucket.reset * 1000 - nowMs + this.#fuzz
+        : 15000;
+      const safeTTL = Math.max(5000, Math.min(estimatedReset, 30000));
+      const lock = await redis.set(lockKey, lockId, "PX", safeTTL, "NX");
+      if (!lock) {
+        this.#_client._emitDebug(
+          GluonDebugLevels.Warn,
+          `Bucket locked: ${data.hash}`,
+        );
+        await sleep(100 + Math.random() * 100); // jitter to avoid stampede
+        return this.#queueWorker(data); // retry
+      }
+
+      try {
+        const bucket = await getBucket(data.hash);
+        const nowSec = Date.now() / 1000;
+
+        if (bucket && bucket.remaining === 0 && nowSec < bucket.reset) {
+          const delay = Math.ceil((bucket.reset - nowSec) * 1000) + this.#fuzz;
+          this.#_client._emitDebug(
+            GluonDebugLevels.Warn,
+            `Bucket ratelimited: ${data.hash}, sleeping ${delay}ms`,
+          );
+          await sleep(delay);
+        }
+
+        return await this.#http(
           data.hash,
           data.request,
           data.params,
           data.body,
           data._stack,
         );
+      } finally {
+        const currentLock = await redis.get(lockKey);
+        if (currentLock === lockId) {
+          await redis.del(lockKey);
+        }
       }
-
-      if (this.#queues[data.hash].length() > this.#maxQueueSize) {
-        this.#_client._emitDebug(
-          GluonDebugLevels.Danger,
-          `KILL QUEUE ${data.hash}`,
-        );
-        this.#queues[data.hash].kill();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { [data.hash]: _, ...rest } = this.#queues;
-        this.#queues = rest;
-      }
-
-      await sleep((bucket.reset + this.#latency) * 1000 - now + this.#fuzz);
-      return this.#http(
-        data.hash,
-        data.request,
-        data.params,
-        data.body,
-        data._stack,
-      );
     };
   }
 
@@ -159,19 +165,9 @@ class BetterRequestHandler {
       `ADD ${hash} to request queue`,
     );
 
-    if (!this.#queues[hash]) {
-      this.#queues[hash] = FastQ.promise(this.#queueWorker, 1);
-    }
-
     const _stack = new Error().stack as string;
     const data: QueueItemData = { hash, request, params, body, _stack };
-    const result = await this.#queues[hash].push(data);
-
-    if (this.#queues[hash].idle()) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [hash]: _, ...rest } = this.#queues;
-      this.#queues = rest;
-    }
+    const result = await this.#queueWorker(data);
 
     return result;
   }
@@ -198,15 +194,19 @@ class BetterRequestHandler {
     let form: FormData | undefined;
     if (body?.files) {
       form = new FormData();
-      body.files.forEach((f, i) =>
-        form?.append(
+      const clonedBody = { ...body }; // avoid mutating original
+      clonedBody.files?.forEach((f, i) => {
+        if (f.stream?.readableEnded) {
+          throw new Error("Cannot retry: file stream already ended");
+        }
+        return form?.append(
           `files[${i}]`,
           f.stream || createReadStream(f.attachment as string),
           f.name,
-        ),
-      );
-      delete body.files;
-      form.append("payload_json", JSON.stringify({ ...body }));
+        );
+      });
+      delete clonedBody.files;
+      form.append("payload_json", JSON.stringify({ ...clonedBody }));
       Object.assign(headers, form.getHeaders());
     } else if (
       actualRequest.method !== "GET" &&
@@ -258,13 +258,13 @@ class BetterRequestHandler {
           signal: controller.signal,
           agent: this.#agent,
         });
-        clearTimeout(timeout);
         this.#latencyMs = Date.now() - requestTime;
-        this.#latency = Math.ceil(this.#latencyMs / 1000);
         break;
       } catch (err) {
         if (i === this.#maxRetries) throw err;
         await sleep(2 ** i * 100 + Math.random() * 100);
+      } finally {
+        clearTimeout(timeout);
       }
     }
 
@@ -285,6 +285,10 @@ class BetterRequestHandler {
     }
 
     if (res.status === 429) {
+      this.#_client._emitDebug(
+        GluonDebugLevels.Warn,
+        `RATELIMITED ${hash} ${res.status} ${JSON.stringify(json)}`,
+      );
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
@@ -296,7 +300,7 @@ class BetterRequestHandler {
         body: originalBody,
         _stack,
       };
-      return this.#queues[hash].push(data);
+      return this.#queueWorker(data); // retry
     }
 
     await handleBucket(

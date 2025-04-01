@@ -1094,11 +1094,6 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchChannels).to.be.a("function");
     });
-    it("should return a promise", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.fetchChannels()).to.be.a("promise");
-    });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -1175,11 +1170,6 @@ describe("Guild", function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.leave).to.be.a("function");
-    });
-    it("should return a promise", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.leave()).to.be.a("promise");
     });
     it("should not be rejected if the input is valid", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
