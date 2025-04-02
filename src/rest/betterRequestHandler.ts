@@ -99,6 +99,8 @@ class BetterRequestHandler {
         `Processing ${data.hash} (${data.request})`,
       );
 
+      await sleep(Math.random() * 20 + 10); // smooth out request wavefronts
+
       const nowMs = Date.now();
       // Check global lock
       const globalReset = await redis.get(this.GLOBAL_KEY);
@@ -329,7 +331,23 @@ class BetterRequestHandler {
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
-      await sleep(retryAfter + Math.random() * 250);
+      const maxRetryDelay = 15000; // 15 seconds safety ceiling
+      if (retryAfter > maxRetryDelay) {
+        this.#_client._emitDebug(
+          GluonDebugLevels.Warn,
+          `Retry-after too long (${retryAfter}ms), aborting request.`,
+        );
+        throw new GluonRequestError(
+          res.status,
+          actualRequest.method,
+          path,
+          _stack,
+          JSON.stringify(json),
+        );
+      }
+
+      const jitter = Math.random() * 250;
+      await sleep(retryAfter + jitter);
       const data: QueueItemData = {
         hash,
         request,
@@ -344,13 +362,26 @@ class BetterRequestHandler {
       GluonDebugLevels.Info,
       `[Request] bucket: ${res.headers.get("x-ratelimit-bucket")} remaining: ${res.headers.get("x-ratelimit-remaining")} reset: ${res.headers.get("x-ratelimit-reset")}`,
     );
-    await handleBucket(
-      res.headers.get("x-ratelimit-bucket"),
-      res.headers.get("x-ratelimit-remaining"),
-      res.headers.get("x-ratelimit-reset"),
-      hash,
-      res.status === 429 ? json?.retry_after : 0,
-    );
+    const resetAfterHeader = res.headers.get("x-ratelimit-reset-after");
+    if (resetAfterHeader) {
+      const resetAfterSeconds = parseFloat(resetAfterHeader);
+      const serverResetTime = Date.now() / 1000 + resetAfterSeconds;
+      await handleBucket(
+        res.headers.get("x-ratelimit-bucket"),
+        res.headers.get("x-ratelimit-remaining"),
+        serverResetTime.toString(),
+        hash,
+        res.status === 429 ? json?.retry_after : 0,
+      );
+    } else {
+      await handleBucket(
+        res.headers.get("x-ratelimit-bucket"),
+        res.headers.get("x-ratelimit-remaining"),
+        res.headers.get("x-ratelimit-reset"),
+        hash,
+        res.status === 429 ? json?.retry_after : 0,
+      );
+    }
 
     this.#_client.emit(Events.REQUEST_COMPLETED, {
       status: res.status,
