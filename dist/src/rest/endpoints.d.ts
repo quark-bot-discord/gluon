@@ -172,7 +172,7 @@ declare const _default: {
   deleteWebhook: {
     path: (webhook_id: string) => string;
     method: string;
-    majorParams: number[];
+    majorParams: never[];
     mockResponse: () => any;
   };
   postCreateWebhook: {
@@ -184,7 +184,7 @@ declare const _default: {
   patchModifyWebhook: {
     path: (webhook_id: string) => string;
     method: string;
-    majorParams: number[];
+    majorParams: never[];
     mockResponse: () => any;
   };
   deleteLeaveGuild: {

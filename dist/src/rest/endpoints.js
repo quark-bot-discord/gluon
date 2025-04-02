@@ -333,7 +333,7 @@ export default {
       return `/webhooks/${webhook_id}`;
     },
     method: "DELETE",
-    majorParams: [0],
+    majorParams: [],
     mockResponse: () => {
       // @ts-expect-error TS(2351): This expression is not constructable.
       return new HttpResponse(undefined, { status: 204 });
@@ -355,7 +355,7 @@ export default {
       return `/webhooks/${webhook_id}`;
     },
     method: "PATCH",
-    majorParams: [0],
+    majorParams: [],
     mockResponse: () => {
       // @ts-expect-error TS(2339): Property 'json' does not exist on type '{}'.
       return HttpResponse.json(TEST_DATA.WEBHOOK);
