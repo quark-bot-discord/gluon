@@ -53,6 +53,8 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_queueWorker,
   _BetterRequestHandler_latencyMs,
   _BetterRequestHandler_agent,
+  _BetterRequestHandler_ip,
+  _BetterRequestHandler_rpsLimit,
   _BetterRequestHandler_http;
 import fetch from "node-fetch";
 import FormData from "form-data";
@@ -97,6 +99,8 @@ class BetterRequestHandler {
     _BetterRequestHandler_queueWorker.set(this, void 0);
     _BetterRequestHandler_latencyMs.set(this, 0);
     _BetterRequestHandler_agent.set(this, void 0);
+    _BetterRequestHandler_ip.set(this, void 0);
+    _BetterRequestHandler_rpsLimit.set(this, void 0);
     __classPrivateFieldSet(this, _BetterRequestHandler__client, client, "f");
     __classPrivateFieldSet(
       this,
@@ -104,6 +108,7 @@ class BetterRequestHandler {
       new https.Agent({ localAddress: options?.ip }),
       "f",
     );
+    __classPrivateFieldSet(this, _BetterRequestHandler_ip, options?.ip, "f");
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_requestURL,
@@ -119,6 +124,12 @@ class BetterRequestHandler {
     );
     __classPrivateFieldSet(this, _BetterRequestHandler_maxRetries, 3, "f");
     __classPrivateFieldSet(this, _BetterRequestHandler_fuzz, 500, "f");
+    __classPrivateFieldSet(
+      this,
+      _BetterRequestHandler_rpsLimit,
+      options?.rpsLimit || 50,
+      "f",
+    );
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_endpoints,
@@ -189,6 +200,35 @@ class BetterRequestHandler {
             );
             await sleep(delay);
           }
+          // Enforce global RPS limit
+          const baseKey = __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler_ip,
+            "f",
+          )
+            ? `gluon:rps:ip:${__classPrivateFieldGet(this, _BetterRequestHandler_ip, "f") || "unknown"}`
+            : `gluon:rps:token:${__classPrivateFieldGet(this, _BetterRequestHandler_token, "f").slice(0, 10)}`;
+          const currentCount = await redis.incr(baseKey);
+          if (currentCount === 1) await redis.expire(baseKey, 1);
+          if (
+            currentCount >
+            __classPrivateFieldGet(this, _BetterRequestHandler_rpsLimit, "f")
+          ) {
+            __classPrivateFieldGet(
+              this,
+              _BetterRequestHandler__client,
+              "f",
+            )._emitDebug(
+              GluonDebugLevels.Warn,
+              `RPS limit hit: ${currentCount} reqs/s`,
+            );
+            await sleep(100 + Math.random() * 100);
+            return await __classPrivateFieldGet(
+              this,
+              _BetterRequestHandler_queueWorker,
+              "f",
+            ).call(this, data);
+          }
           return await __classPrivateFieldGet(
             this,
             _BetterRequestHandler_instances,
@@ -255,6 +295,8 @@ class BetterRequestHandler {
   (_BetterRequestHandler_queueWorker = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
   (_BetterRequestHandler_agent = new WeakMap()),
+  (_BetterRequestHandler_ip = new WeakMap()),
+  (_BetterRequestHandler_rpsLimit = new WeakMap()),
   (_BetterRequestHandler_instances = new WeakSet()),
   (_BetterRequestHandler_http = async function _BetterRequestHandler_http(
     hash,
@@ -263,6 +305,11 @@ class BetterRequestHandler {
     body,
     _stack,
   ) {
+    console.log(
+      `Request: ${request} ${params} ${JSON.stringify(body)}`,
+      `Hash: ${hash}`,
+      `Stack: ${_stack}`,
+    );
     const originalBody = { ...body }; // Clone body to preserve original for retries
     const actualRequest = __classPrivateFieldGet(
       this,
@@ -410,6 +457,11 @@ class BetterRequestHandler {
         "f",
       ).call(this, data); // retry
     }
+    console.log(
+      res.headers.get("x-ratelimit-bucket"),
+      res.headers.get("x-ratelimit-remaining"),
+      res.headers.get("x-ratelimit-reset"),
+    );
     await handleBucket(
       res.headers.get("x-ratelimit-bucket"),
       res.headers.get("x-ratelimit-remaining"),

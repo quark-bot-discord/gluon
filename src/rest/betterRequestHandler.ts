@@ -63,16 +63,24 @@ class BetterRequestHandler {
   #queueWorker: (data: QueueItemData) => Promise<JsonResponse | null>;
   #latencyMs = 0;
   #agent;
+  #ip: string | undefined;
+  #rpsLimit: number;
   GLOBAL_KEY: string;
 
-  constructor(client: ClientType, token: string, options?: { ip?: string }) {
+  constructor(
+    client: ClientType,
+    token: string,
+    options?: { ip?: string; rpsLimit?: number },
+  ) {
     this.#_client = client;
     this.#agent = new https.Agent({ localAddress: options?.ip });
+    this.#ip = options?.ip;
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
     this.#maxRetries = 3;
     this.#fuzz = 500;
+    this.#rpsLimit = options?.rpsLimit || 50;
     this.#endpoints = endpoints;
     this.GLOBAL_KEY = `gluon:${this.#token.slice(0, 8)}:global_rate_limit`;
 
@@ -119,6 +127,21 @@ class BetterRequestHandler {
             `Bucket ratelimited: ${data.hash}, sleeping ${delay}ms`,
           );
           await sleep(delay);
+        }
+
+        // Enforce global RPS limit
+        const baseKey = this.#ip
+          ? `gluon:rps:ip:${this.#ip || "unknown"}`
+          : `gluon:rps:token:${this.#token.slice(0, 10)}`;
+        const currentCount = await redis.incr(baseKey);
+        if (currentCount === 1) await redis.expire(baseKey, 1);
+        if (currentCount > this.#rpsLimit) {
+          this.#_client._emitDebug(
+            GluonDebugLevels.Warn,
+            `RPS limit hit: ${currentCount} reqs/s`,
+          );
+          await sleep(100 + Math.random() * 100);
+          return await this.#queueWorker(data);
         }
 
         return await this.#http(
@@ -181,6 +204,11 @@ class BetterRequestHandler {
     },
     _stack: string,
   ) {
+    console.log(
+      `Request: ${request} ${params} ${JSON.stringify(body)}`,
+      `Hash: ${hash}`,
+      `Stack: ${_stack}`,
+    );
     const originalBody = { ...body }; // Clone body to preserve original for retries
 
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
@@ -302,7 +330,11 @@ class BetterRequestHandler {
       };
       return this.#queueWorker(data); // retry
     }
-
+    console.log(
+      res.headers.get("x-ratelimit-bucket"),
+      res.headers.get("x-ratelimit-remaining"),
+      res.headers.get("x-ratelimit-reset"),
+    );
     await handleBucket(
       res.headers.get("x-ratelimit-bucket"),
       res.headers.get("x-ratelimit-remaining"),
