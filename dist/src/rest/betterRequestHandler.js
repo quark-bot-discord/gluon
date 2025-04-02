@@ -73,9 +73,15 @@ import { sleep } from "../util/general/sleep.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
-import { randomUUID } from "crypto";
+import Redlock from "redlock";
 const AbortController = globalThis.AbortController;
 const redis = new Redis();
+// @ts-expect-error TS(2345): Argument of type 'Redis' is not assignable to parameter of type 'RedisClientType'.
+const redlock = new Redlock([redis], {
+  retryCount: 3,
+  retryDelay: 100, // ms between retries
+  retryJitter: 100, // add randomness to avoid stampede
+});
 function toQueryParams(obj) {
   const result = {};
   for (const key in obj) {
@@ -175,23 +181,35 @@ class BetterRequestHandler {
           await sleep(wait);
         }
         // Acquire lock for this bucket (distributed mutex)
-        const lockKey = `gluon:lock:${data.hash}`;
-        const lockId = randomUUID();
         const bucket = await getBucket(data.hash);
+        let lock;
         const estimatedReset = bucket
           ? bucket.reset * 1000 -
             nowMs +
             __classPrivateFieldGet(this, _BetterRequestHandler_fuzz, "f")
           : 15000;
         const safeTTL = Math.max(5000, Math.min(estimatedReset, 30000));
-        const lock = await redis.set(lockKey, lockId, "PX", safeTTL, "NX");
-        if (!lock) {
+        try {
+          lock = await redlock.acquire([`gluon:lock:${data.hash}`], safeTTL);
           __classPrivateFieldGet(
             this,
             _BetterRequestHandler__client,
             "f",
-          )._emitDebug(GluonDebugLevels.Warn, `Bucket locked: ${data.hash}`);
-          await sleep(100 + Math.random() * 100); // jitter to avoid stampede
+          )._emitDebug(
+            GluonDebugLevels.Info,
+            `Redlock acquired for ${data.hash} with TTL ${safeTTL}ms`,
+          );
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler__client,
+            "f",
+          )._emitDebug(
+            GluonDebugLevels.Warn,
+            `Bucket locked (redlock): ${data.hash}`,
+          );
+          await sleep(100 + Math.random() * 100);
           return __classPrivateFieldGet(
             this,
             _BetterRequestHandler_queueWorker,
@@ -251,17 +269,28 @@ class BetterRequestHandler {
             data._stack,
           );
         } finally {
-          const currentLock = await redis.get(lockKey);
-          if (currentLock === lockId) {
-            __classPrivateFieldGet(
-              this,
-              _BetterRequestHandler__client,
-              "f",
-            )._emitDebug(
-              GluonDebugLevels.Info,
-              `Releasing lock for ${data.hash}`,
-            );
-            await redis.del(lockKey);
+          if (lock) {
+            try {
+              // @ts-expect-error TS(2532): Object is possibly 'undefined'.
+              await lock.release();
+              __classPrivateFieldGet(
+                this,
+                _BetterRequestHandler__client,
+                "f",
+              )._emitDebug(
+                GluonDebugLevels.Info,
+                `Redlock released for ${data.hash}`,
+              );
+            } catch (err) {
+              __classPrivateFieldGet(
+                this,
+                _BetterRequestHandler__client,
+                "f",
+              )._emitDebug(
+                GluonDebugLevels.Warn,
+                `Failed to release redlock for ${data.hash}: ${err.message}`,
+              );
+            }
           }
         }
       },

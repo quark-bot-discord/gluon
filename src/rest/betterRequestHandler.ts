@@ -21,7 +21,7 @@ import type {
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
-import { randomUUID } from "crypto";
+import Redlock from "redlock";
 const AbortController = globalThis.AbortController;
 
 interface JsonResponse {
@@ -31,6 +31,12 @@ interface JsonResponse {
 }
 
 const redis = new Redis();
+// @ts-expect-error TS(2345): Argument of type 'Redis' is not assignable to parameter of type 'RedisClientType'.
+const redlock = new Redlock([redis], {
+  retryCount: 3,
+  retryDelay: 100, // ms between retries
+  retryJitter: 100, // add randomness to avoid stampede
+});
 
 interface QueueItemData {
   hash: string;
@@ -112,20 +118,26 @@ class BetterRequestHandler {
       }
 
       // Acquire lock for this bucket (distributed mutex)
-      const lockKey = `gluon:lock:${data.hash}`;
-      const lockId = randomUUID();
       const bucket = await getBucket(data.hash);
+      let lock;
       const estimatedReset = bucket
         ? bucket.reset * 1000 - nowMs + this.#fuzz
         : 15000;
       const safeTTL = Math.max(5000, Math.min(estimatedReset, 30000));
-      const lock = await redis.set(lockKey, lockId, "PX", safeTTL, "NX");
-      if (!lock) {
+
+      try {
+        lock = await redlock.acquire([`gluon:lock:${data.hash}`], safeTTL);
+        this.#_client._emitDebug(
+          GluonDebugLevels.Info,
+          `Redlock acquired for ${data.hash} with TTL ${safeTTL}ms`,
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_) {
         this.#_client._emitDebug(
           GluonDebugLevels.Warn,
-          `Bucket locked: ${data.hash}`,
+          `Bucket locked (redlock): ${data.hash}`,
         );
-        await sleep(100 + Math.random() * 100); // jitter to avoid stampede
+        await sleep(100 + Math.random() * 100);
         return this.#queueWorker(data); // retry
       }
 
@@ -162,13 +174,20 @@ class BetterRequestHandler {
           data._stack,
         );
       } finally {
-        const currentLock = await redis.get(lockKey);
-        if (currentLock === lockId) {
-          this.#_client._emitDebug(
-            GluonDebugLevels.Info,
-            `Releasing lock for ${data.hash}`,
-          );
-          await redis.del(lockKey);
+        if (lock) {
+          try {
+            // @ts-expect-error TS(2532): Object is possibly 'undefined'.
+            await lock.release();
+            this.#_client._emitDebug(
+              GluonDebugLevels.Info,
+              `Redlock released for ${data.hash}`,
+            );
+          } catch (err) {
+            this.#_client._emitDebug(
+              GluonDebugLevels.Warn,
+              `Failed to release redlock for ${data.hash}: ${(err as Error).message}`,
+            );
+          }
         }
       }
     };
