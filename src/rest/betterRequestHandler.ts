@@ -52,6 +52,17 @@ function toQueryParams(obj: Record<string, unknown>): Record<string, string> {
   return result;
 }
 
+async function incrWithExpire(key: string, expireSeconds = 1): Promise<number> {
+  const lua = `
+    local current = redis.call('INCR', KEYS[1])
+    if tonumber(current) == 1 then
+      redis.call('EXPIRE', KEYS[1], ARGV[1])
+    end
+    return current
+  `;
+  return redis.eval(lua, 1, key, expireSeconds) as Promise<number>;
+}
+
 class BetterRequestHandler {
   #token;
   #authorization;
@@ -133,8 +144,7 @@ class BetterRequestHandler {
 
         // Enforce global RPS limit
         const baseKey = `gluon:rps:token:${this.#token.slice(0, 10)}`;
-        const currentCount = await redis.incr(baseKey);
-        if (currentCount === 1) await redis.expire(baseKey, 1);
+        const currentCount = await incrWithExpire(baseKey);
         if (currentCount > this.#rpsLimit) {
           this.#_client._emitDebug(
             GluonDebugLevels.Warn,

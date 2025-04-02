@@ -85,6 +85,16 @@ function toQueryParams(obj) {
   }
   return result;
 }
+async function incrWithExpire(key, expireSeconds = 1) {
+  const lua = `
+    local current = redis.call('INCR', KEYS[1])
+    if tonumber(current) == 1 then
+      redis.call('EXPIRE', KEYS[1], ARGV[1])
+    end
+    return current
+  `;
+  return redis.eval(lua, 1, key, expireSeconds);
+}
 class BetterRequestHandler {
   constructor(client, token, options) {
     _BetterRequestHandler_instances.add(this);
@@ -207,8 +217,7 @@ class BetterRequestHandler {
           }
           // Enforce global RPS limit
           const baseKey = `gluon:rps:token:${__classPrivateFieldGet(this, _BetterRequestHandler_token, "f").slice(0, 10)}`;
-          const currentCount = await redis.incr(baseKey);
-          if (currentCount === 1) await redis.expire(baseKey, 1);
+          const currentCount = await incrWithExpire(baseKey);
           if (
             currentCount >
             __classPrivateFieldGet(this, _BetterRequestHandler_rpsLimit, "f")
