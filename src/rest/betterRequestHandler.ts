@@ -63,7 +63,6 @@ class BetterRequestHandler {
   #queueWorker: (data: QueueItemData) => Promise<JsonResponse | null>;
   #latencyMs = 0;
   #agent;
-  #ip: string | undefined;
   #rpsLimit: number;
   GLOBAL_KEY: string;
 
@@ -74,7 +73,6 @@ class BetterRequestHandler {
   ) {
     this.#_client = client;
     this.#agent = new https.Agent({ localAddress: options?.ip });
-    this.#ip = options?.ip;
     this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
@@ -85,8 +83,12 @@ class BetterRequestHandler {
     this.GLOBAL_KEY = `gluon:${this.#token.slice(0, 8)}:global_rate_limit`;
 
     this.#queueWorker = async (data: QueueItemData) => {
-      const nowMs = Date.now();
+      this.#_client._emitDebug(
+        GluonDebugLevels.Info,
+        `Processing ${data.hash} (${data.request})`,
+      );
 
+      const nowMs = Date.now();
       // Check global lock
       const globalReset = await redis.get(this.GLOBAL_KEY);
       if (globalReset && nowMs < parseInt(globalReset)) {
@@ -130,21 +132,19 @@ class BetterRequestHandler {
         }
 
         // Enforce global RPS limit
-        const baseKey = this.#ip
-          ? `gluon:rps:ip:${this.#ip || "unknown"}`
-          : `gluon:rps:token:${this.#token.slice(0, 10)}`;
+        const baseKey = `gluon:rps:token:${this.#token.slice(0, 10)}`;
         const currentCount = await redis.incr(baseKey);
         if (currentCount === 1) await redis.expire(baseKey, 1);
         if (currentCount > this.#rpsLimit) {
           this.#_client._emitDebug(
             GluonDebugLevels.Warn,
-            `RPS limit hit: ${currentCount} reqs/s`,
+            `RPS limit hit: ${currentCount} reqs/s (${data.hash})`,
           );
           await sleep(100 + Math.random() * 100);
-          return await this.#queueWorker(data);
+          return this.#queueWorker(data);
         }
 
-        return await this.#http(
+        return this.#http(
           data.hash,
           data.request,
           data.params,
@@ -154,6 +154,10 @@ class BetterRequestHandler {
       } finally {
         const currentLock = await redis.get(lockKey);
         if (currentLock === lockId) {
+          this.#_client._emitDebug(
+            GluonDebugLevels.Info,
+            `Releasing lock for ${data.hash}`,
+          );
           await redis.del(lockKey);
         }
       }
@@ -204,11 +208,6 @@ class BetterRequestHandler {
     },
     _stack: string,
   ) {
-    console.log(
-      `Request: ${request} ${params} ${JSON.stringify(body)}`,
-      `Hash: ${hash}`,
-      `Stack: ${_stack}`,
-    );
     const originalBody = { ...body }; // Clone body to preserve original for retries
 
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
@@ -330,10 +329,10 @@ class BetterRequestHandler {
       };
       return this.#queueWorker(data); // retry
     }
-    console.log(
-      res.headers.get("x-ratelimit-bucket"),
-      res.headers.get("x-ratelimit-remaining"),
-      res.headers.get("x-ratelimit-reset"),
+
+    this.#_client._emitDebug(
+      GluonDebugLevels.Info,
+      `[Request] bucket: ${res.headers.get("x-ratelimit-bucket")} remaining: ${res.headers.get("x-ratelimit-remaining")} reset: ${res.headers.get("x-ratelimit-reset")}`,
     );
     await handleBucket(
       res.headers.get("x-ratelimit-bucket"),

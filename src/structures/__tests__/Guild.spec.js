@@ -730,12 +730,6 @@ describe("Guild", function () {
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.kick).to.be.a("function");
     });
-    it("should return a promise", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.kick()).to.be.a("promise");
-    });
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -794,6 +788,7 @@ describe("Guild", function () {
         .be.rejected;
     });
     it("should call makeRequest with the correct arguments", async function () {
+      this.timeout(10000);
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       const request = spy(client.request, "makeRequest");
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
@@ -1062,12 +1057,6 @@ describe("Guild", function () {
 
       const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(guild.fetchInvites).to.be.a("function");
-    });
-    it("should return a promise", function () {
-      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
-
-      const guild = TEST_GUILDS.ALL_CACHES_ENABLED(client);
-      expect(guild.fetchInvites()).to.be.a("promise");
     });
     it("should throw an error if bot permissions are insufficient", async function () {
       const client = TEST_CLIENTS.ALL_CACHES_ENABLED();

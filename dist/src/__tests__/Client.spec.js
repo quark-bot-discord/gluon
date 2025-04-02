@@ -7,7 +7,7 @@ import UserManager from "#src/managers/UserManager.js";
 import GuildManager from "#src/managers/GuildManager.js";
 import GluonCacheOptions from "#src/managers/GluonCacheOptions.js";
 import GuildCacheOptions from "#src/managers/GuildCacheOptions.js";
-import { TEST_DATA, TEST_GUILDS } from "#src/testData.js";
+import { TEST_CLIENTS, TEST_DATA, TEST_GUILDS } from "#src/testData.js";
 import Command from "#src/util/builder/commandBuilder.js";
 import User from "#src/structures/User.js";
 describe("Client", function () {
@@ -261,10 +261,7 @@ describe("Client", function () {
       expect(client.getMemberCount).to.be.a("function");
     });
     it("should return the member count", function () {
-      const client = new Client({
-        intents: INTENTS.GUILDS,
-        cacheGuilds: true,
-      });
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       TEST_GUILDS.ALL_CACHES_ENABLED(client);
       expect(client.getMemberCount()).to.equal(500);
     });
@@ -307,9 +304,7 @@ describe("Client", function () {
       );
     });
     it("should call bulkOverwriteGlobalApplicationCommands with the correct arguments", function () {
-      const client = new Client({
-        intents: INTENTS.GUILDS,
-      });
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.request = { makeRequest: () => {} };
       const request = spy(client.request, "makeRequest");
       const command = new Command().setName("test").setDescription("test");
@@ -331,9 +326,7 @@ describe("Client", function () {
       expect(client.fetchEmojis).to.be.a("function");
     });
     it("should call getGuildEmojis with the correct arguments", async function () {
-      const client = new Client({
-        intents: INTENTS.GUILDS,
-      });
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.request = { makeRequest: () => {} };
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const request = spy(client.request, "makeRequest");
@@ -368,9 +361,7 @@ describe("Client", function () {
       ).to.be.rejectedWith("GLUON: Image is not a string.");
     });
     it("should call createGuildEmoji with the correct arguments", async function () {
-      const client = new Client({
-        intents: INTENTS.GUILDS,
-      });
+      const client = TEST_CLIENTS.ALL_CACHES_ENABLED();
       client.request = { makeRequest: () => {} };
       client.user = new User(client, TEST_DATA.CLIENT_USER);
       const request = spy(client.request, "makeRequest");

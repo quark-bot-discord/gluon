@@ -45,7 +45,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "npm run build && MOCK_REQUESTS=true mocha \"dist/**/*.spec.js\" --file setup.spec.js --exit",
+    "test": "npm run build && MOCK_REQUESTS=true NODE_ENV=development mocha \"dist/**/*.spec.js\" --file setup.spec.js --exit",
     "coverage": "npm run build && c8 --reporter=text mocha \"dist/**/*.spec.js\" --file setup.spec.js --exit",
     "example": "node ./example/bot.js",
     "prepare": "husky",
