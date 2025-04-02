@@ -137,7 +137,7 @@ class BetterRequestHandler {
           GluonDebugLevels.Warn,
           `Bucket locked (redlock): ${data.hash}`,
         );
-        await sleep(100 + Math.random() * 100);
+        await sleep(200 + Math.random() * 300);
         return this.#queueWorker(data); // retry
       }
 
@@ -162,7 +162,7 @@ class BetterRequestHandler {
             GluonDebugLevels.Warn,
             `RPS limit hit: ${currentCount} reqs/s (${data.hash})`,
           );
-          await sleep(100 + Math.random() * 100);
+          await sleep(200 + Math.random() * 300);
           return this.#queueWorker(data);
         }
 
@@ -318,7 +318,7 @@ class BetterRequestHandler {
         break;
       } catch (err) {
         if (i === this.#maxRetries) throw err;
-        await sleep(2 ** i * 100 + Math.random() * 100);
+        await sleep(2 ** i * 200 + Math.random() * 300);
       } finally {
         clearTimeout(timeout);
       }
@@ -348,7 +348,7 @@ class BetterRequestHandler {
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
-      await sleep(retryAfter);
+      await sleep(retryAfter + Math.random() * 250);
       const data: QueueItemData = {
         hash,
         request,
