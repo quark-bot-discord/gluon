@@ -51,6 +51,7 @@ var _BetterRequestHandler_instances,
   _BetterRequestHandler_fuzz,
   _BetterRequestHandler_endpoints,
   _BetterRequestHandler_queueWorker,
+  _BetterRequestHandler_queues,
   _BetterRequestHandler_latencyMs,
   _BetterRequestHandler_agent,
   _BetterRequestHandler_rpsLimit,
@@ -74,6 +75,7 @@ import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
 import { randomUUID } from "crypto";
+import FastQ from "fastq";
 const AbortController = globalThis.AbortController;
 const redis = new Redis();
 function toQueryParams(obj) {
@@ -106,6 +108,7 @@ class BetterRequestHandler {
     _BetterRequestHandler_fuzz.set(this, void 0);
     _BetterRequestHandler_endpoints.set(this, void 0);
     _BetterRequestHandler_queueWorker.set(this, void 0);
+    _BetterRequestHandler_queues.set(this, {});
     _BetterRequestHandler_latencyMs.set(this, 0);
     _BetterRequestHandler_agent.set(this, void 0);
     _BetterRequestHandler_rpsLimit.set(this, void 0);
@@ -195,9 +198,9 @@ class BetterRequestHandler {
           await sleep(200 + Math.random() * 300);
           return __classPrivateFieldGet(
             this,
-            _BetterRequestHandler_queueWorker,
+            _BetterRequestHandler_queues,
             "f",
-          ).call(this, data); // retry
+          )[data.hash].push(data); // retry
         }
         try {
           const bucket = await getBucket(data.hash);
@@ -232,11 +235,12 @@ class BetterRequestHandler {
               `RPS limit hit: ${currentCount} reqs/s (${data.hash})`,
             );
             await sleep(200 + Math.random() * 300);
+            // eslint-disable-next-line security/detect-object-injection
             return __classPrivateFieldGet(
               this,
-              _BetterRequestHandler_queueWorker,
+              _BetterRequestHandler_queues,
               "f",
-            ).call(this, data);
+            )[data.hash].push(data);
           }
           return __classPrivateFieldGet(
             this,
@@ -294,11 +298,34 @@ class BetterRequestHandler {
     );
     const _stack = new Error().stack;
     const data = { hash, request, params, body, _stack };
+    if (
+      !__classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash]
+    ) {
+      __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[hash] =
+        FastQ.promise(
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler_queueWorker,
+            "f",
+          ).bind(this),
+          1,
+        );
+    }
     const result = await __classPrivateFieldGet(
       this,
-      _BetterRequestHandler_queueWorker,
+      _BetterRequestHandler_queues,
       "f",
-    ).call(this, data);
+    )[hash].push(data);
+    if (
+      __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+        hash
+      ].idle()
+    ) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete __classPrivateFieldGet(this, _BetterRequestHandler_queues, "f")[
+        hash
+      ];
+    }
     return result;
   }
 }
@@ -310,6 +337,7 @@ class BetterRequestHandler {
   (_BetterRequestHandler_fuzz = new WeakMap()),
   (_BetterRequestHandler_endpoints = new WeakMap()),
   (_BetterRequestHandler_queueWorker = new WeakMap()),
+  (_BetterRequestHandler_queues = new WeakMap()),
   (_BetterRequestHandler_latencyMs = new WeakMap()),
   (_BetterRequestHandler_agent = new WeakMap()),
   (_BetterRequestHandler_rpsLimit = new WeakMap()),
@@ -412,6 +440,19 @@ class BetterRequestHandler {
         );
         break;
       } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") {
+          __classPrivateFieldGet(
+            this,
+            _BetterRequestHandler__client,
+            "f",
+          )._emitDebug(GluonDebugLevels.Danger, `Request timed out ${hash}`);
+          throw new GluonRequestError(0, actualRequest.method, path, _stack);
+        }
+        __classPrivateFieldGet(
+          this,
+          _BetterRequestHandler__client,
+          "f",
+        )._emitDebug(GluonDebugLevels.Warn, `Request failed ${hash} ${err}`);
         if (
           i ===
           __classPrivateFieldGet(this, _BetterRequestHandler_maxRetries, "f")

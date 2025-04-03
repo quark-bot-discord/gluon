@@ -22,6 +22,8 @@ import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
 import { randomUUID } from "crypto";
+import fastq from "fastq/index.js";
+import FastQ from "fastq";
 const AbortController = globalThis.AbortController;
 
 interface JsonResponse {
@@ -72,6 +74,7 @@ class BetterRequestHandler {
   #fuzz;
   #endpoints;
   #queueWorker: (data: QueueItemData) => Promise<JsonResponse | null>;
+  #queues: Record<string, fastq.queueAsPromised<QueueItemData>> = {};
   #latencyMs = 0;
   #agent;
   #rpsLimit: number;
@@ -128,7 +131,7 @@ class BetterRequestHandler {
           `Bucket locked: ${data.hash}`,
         );
         await sleep(200 + Math.random() * 300);
-        return this.#queueWorker(data); // retry
+        return this.#queues[data.hash].push(data); // retry
       }
 
       try {
@@ -153,7 +156,8 @@ class BetterRequestHandler {
             `RPS limit hit: ${currentCount} reqs/s (${data.hash})`,
           );
           await sleep(200 + Math.random() * 300);
-          return this.#queueWorker(data);
+          // eslint-disable-next-line security/detect-object-injection
+          return this.#queues[data.hash].push(data);
         }
 
         return this.#http(
@@ -206,7 +210,15 @@ class BetterRequestHandler {
 
     const _stack = new Error().stack as string;
     const data: QueueItemData = { hash, request, params, body, _stack };
-    const result = await this.#queueWorker(data);
+
+    if (!this.#queues[hash]) {
+      this.#queues[hash] = FastQ.promise(this.#queueWorker.bind(this), 1);
+    }
+    const result = await this.#queues[hash].push(data);
+    if (this.#queues[hash].idle()) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete this.#queues[hash];
+    }
 
     return result;
   }
