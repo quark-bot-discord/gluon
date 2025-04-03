@@ -14,6 +14,7 @@ import { ChannelType, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
 import getChannel from "#src/util/gluon/getChannel.js";
 import { GluonPermissionsError } from "#typings/errors.js";
+import { getTimestamp } from "#src/util.js";
 
 /**
  * Manages all messages within a channel.
@@ -408,6 +409,37 @@ class ChannelMessageManager
       throw new Error(
         "GLUON: Only one of around, before, or after may be provided.",
       );
+
+    const channel = getChannel(client, guildId, channelId);
+    if (!channel) {
+      throw new Error(`Channel not found in cache: ${channelId}`);
+    }
+    if (channel.type === ChannelType.GuildCategory) {
+      throw new Error("GLUON: Cannot fetch messages from a category channel.");
+    }
+
+    const cachedMessages = channel.messages.toJSON();
+    const cachedMessagesToReturn = cachedMessages.filter((message) => {
+      if (around)
+        return Math.abs(getTimestamp(message.id) - getTimestamp(around)) < 100;
+      if (before) return message.id < before;
+      if (after) return message.id > after;
+      return false;
+    });
+
+    if (cachedMessagesToReturn.length > 0) {
+      if (limit) {
+        return cachedMessagesToReturn
+          .map(
+            (m) =>
+              new Message(client, m, { channelId, guildId, nocache: true }),
+          )
+          .slice(0, limit);
+      }
+      return cachedMessagesToReturn.map(
+        (m) => new Message(client, m, { channelId, guildId, nocache: true }),
+      );
+    }
 
     const body = {};
 
