@@ -9,6 +9,7 @@ declare class BetterRequestHandler {
     options?: {
       ip?: string;
       rpsLimit?: number;
+      apiBaseUrl?: string;
     },
   );
   get latency(): number;

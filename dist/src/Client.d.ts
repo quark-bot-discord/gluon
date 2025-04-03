@@ -67,6 +67,7 @@ declare class Client extends TypedEmitter<ClientEvents> implements ClientType {
     softRestartFunction,
     ip,
     rpsLimit,
+    baseUrl,
   }: ClientOptions);
   /**
    * The ids of the shards that this client is managing.

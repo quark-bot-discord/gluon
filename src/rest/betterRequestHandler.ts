@@ -83,11 +83,11 @@ class BetterRequestHandler {
   constructor(
     client: ClientType,
     token: string,
-    options?: { ip?: string; rpsLimit?: number },
+    options?: { ip?: string; rpsLimit?: number; apiBaseUrl?: string },
   ) {
     this.#_client = client;
     this.#agent = new https.Agent({ localAddress: options?.ip });
-    this.#requestURL = `${API_BASE_URL}/v${VERSION}`;
+    this.#requestURL = `${options?.apiBaseUrl ?? API_BASE_URL}/v${VERSION}`;
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
     this.#maxRetries = 3;

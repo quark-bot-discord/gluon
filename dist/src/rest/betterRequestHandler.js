@@ -122,7 +122,7 @@ class BetterRequestHandler {
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_requestURL,
-      `${API_BASE_URL}/v${VERSION}`,
+      `${options?.apiBaseUrl ?? API_BASE_URL}/v${VERSION}`,
       "f",
     );
     __classPrivateFieldSet(this, _BetterRequestHandler_token, token, "f");

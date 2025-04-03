@@ -2756,6 +2756,7 @@ export interface ClientOptions {
   softRestartFunction?: () => void;
   ip?: string;
   rpsLimit?: number;
+  baseUrl?: string;
 }
 
 export interface SessionData {

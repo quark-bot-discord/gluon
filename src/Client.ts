@@ -65,6 +65,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
   #initialized = false;
   #ip;
   #rpsLimit;
+  #baseUrl;
   /**
    * Creates the client and sets the default options.
    * @constructor
@@ -112,6 +113,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     softRestartFunction,
     ip,
     rpsLimit,
+    baseUrl,
   }: ClientOptions) {
     super();
 
@@ -178,6 +180,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
 
     this.#ip = ip;
     this.#rpsLimit = rpsLimit;
+    this.#baseUrl = baseUrl;
 
     this._cacheOptions = new GluonCacheOptions({
       cacheMessages,
@@ -657,6 +660,7 @@ class Client extends TypedEmitter<ClientEvents> implements ClientType {
     this.request = new BetterRequestHandler(this, this.#token, {
       ip: this.#ip,
       rpsLimit: this.#rpsLimit,
+      apiBaseUrl: this.#baseUrl,
     });
 
     this.request
