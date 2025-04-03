@@ -69,6 +69,7 @@ import { sleep } from "../util/general/sleep.js";
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
+import http from "http";
 const AbortController = globalThis.AbortController;
 const redis = new Redis();
 function toQueryParams(obj) {
@@ -95,7 +96,9 @@ class BetterRequestHandler {
     __classPrivateFieldSet(
       this,
       _BetterRequestHandler_agent,
-      new https.Agent({ localAddress: options?.ip }),
+      !options?.apiBaseUrl || options?.apiBaseUrl?.startsWith("https")
+        ? new https.Agent({ localAddress: options?.ip })
+        : new http.Agent({ localAddress: options?.ip }),
       "f",
     );
     __classPrivateFieldSet(

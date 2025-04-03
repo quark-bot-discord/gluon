@@ -20,6 +20,7 @@ import type {
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
+import http from "http";
 const AbortController = globalThis.AbortController;
 
 interface JsonResponse {
@@ -57,7 +58,10 @@ class BetterRequestHandler {
     options?: { ip?: string; rpsLimit?: number; apiBaseUrl?: string },
   ) {
     this.#_client = client;
-    this.#agent = new https.Agent({ localAddress: options?.ip });
+    this.#agent =
+      !options?.apiBaseUrl || options?.apiBaseUrl?.startsWith("https")
+        ? new https.Agent({ localAddress: options?.ip })
+        : new http.Agent({ localAddress: options?.ip });
     this.#requestURL = `${options?.apiBaseUrl ?? API_BASE_URL}/v${VERSION}`;
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
