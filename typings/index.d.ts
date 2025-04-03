@@ -89,6 +89,7 @@ import {
 } from "#typings/gluon.ts";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { Events, JsonTypes, WebsocketStates } from "./enums.ts";
+import { PartialAerospikeBinValue } from "aerospike";
 
 export class Attachment {
   public constructor(
@@ -1590,36 +1591,23 @@ export interface VoiceStateDiscordJSON {
   request_to_speak_timestamp: UnixMillisecondsTimestamp | null;
 }
 
-export class BaseCacheManager<T> {
+export class BaseCacheManager<T, V extends PartialAerospikeBinValue> {
   constructor(
     client: Client,
+    guildId: Snowflake,
     {
       structureType,
     }: {
       structureType: StaticManagerType;
     },
   );
-  get(key: string): T | null;
-  fetchFromRules(key: string): Promise<T | null>;
-  fetchWithRules(key: string): Promise<T | null>;
+  get(key: string): Promise<T | null>;
   set(key: string, value: T, expiry: number): void;
-  delete(key: string): boolean;
-  clear(): void;
-  _intervalCallback(): { i: StructureIdentifiers };
-  size: number;
-  forEach(
-    callbackfn: (value: T, key: string, map: Map<string, T>) => void,
-  ): void;
-  has(key: string): boolean;
-  flagForDeletion(key: string): T | null;
-  map(
-    callbackfn: (
-      value: [string, T],
-      index: number,
-      array: [string, T][],
-    ) => unknown,
-  ): T[];
-  toJSON(format?: JsonTypes): unknown;
+  delete(key: string): void;
+  size: Promise<number>;
+  forEach(callbackfn: (value: V, key: string) => void): Promise<void>;
+  flagForDeletion(key: string): Promise<T | null>;
+  // toJSON(format?: JsonTypes): unknown;
 }
 
 export type StructureIdentifiers =
@@ -1637,7 +1625,6 @@ export type StructureIdentifiers =
 
 export interface StaticManagerType<T> {
   identifier: StructureIdentifiers;
-  rules: GluonCacheRuleSetStructure<T>;
 }
 
 export class ChannelCacheOptions {
@@ -1667,32 +1654,8 @@ export class ChannelCacheOptions {
   toJSON(format?: JsonTypes): number;
 }
 
-export class ChannelMessageManager extends BaseCacheManager {
+export class ChannelMessageManager extends BaseCacheManager<Message> {
   constructor(client: Client, guild: Guild, channel: GuildChannel);
-  get(key: Snowflake): Message | null;
-  fetchFromRules(key: Snowflake): Promise<Message | null>;
-  fetchWithRules(key: Snowflake): Promise<Message | null>;
-  set(key: Snowflake, value: Message, expiry?: number): void;
-  delete(key: Snowflake): boolean;
-  clear(): void;
-  _intervalCallback(): { i: StructureIdentifiers };
-  size: number;
-  forEach(
-    callbackfn: (
-      value: Message,
-      key: Snowflake,
-      map: Map<Snowflake, Message>,
-    ) => void,
-  ): void;
-  has(key: Snowflake): boolean;
-  flagForDeletion(key: Snowflake): Message | null;
-  map(
-    callbackfn: (
-      value: [Snowflake, Message],
-      index: number,
-      array: [Snowflake, Message][],
-    ) => unknown,
-  ): unknown[];
   fetchPinned(): Promise<Message[]>;
   fetch(
     options:
@@ -1706,9 +1669,6 @@ export class ChannelMessageManager extends BaseCacheManager {
   ): Promise<Message | Message[]>;
   guild: Guild;
   channel: Exclude<AllChannels, CategoryChannel>;
-  toJSON(
-    format?: JsonTypes,
-  ): MessageDiscordJSON[] | MessageStorageJSON[] | MessageCacheJSON[];
 }
 
 export interface GluonCacheOptions {
@@ -1768,34 +1728,8 @@ export interface GuildCacheOptions {
   toJSON(format?: JsonTypes): number;
 }
 
-export class GuildChannelsManager extends BaseCacheManager {
+export class GuildChannelsManager extends BaseCacheManager<AllChannels> {
   constructor(client: Client, guild: Guild);
-  get(key: Snowflake): AllChannels | null;
-  fetch(key: Snowflake): Promise<AllChannels>;
-  fetchFromRules(key: Snowflake): Promise<AllChannels | null>;
-  fetchWithRules(key: Snowflake): Promise<AllChannels | null>;
-  set(key: Snowflake, value: AllChannels, expiry?: number): void;
-  delete(key: Snowflake): boolean;
-  clear(): void;
-  _intervalCallback(): { i: StructureIdentifiers };
-  size: number;
-  forEach(
-    callbackfn: (
-      value: AllChannels,
-      key: Snowflake,
-      map: Map<Snowflake, AllChannels>,
-    ) => void,
-  ): void;
-  has(key: string): boolean;
-  flagForDeletion(key: Snowflake): AllChannels | null;
-  map(
-    callbackfn: (
-      value: [Snowflake, AllChannels],
-      index: number,
-      array: [Snowflake, AllChannels][],
-    ) => unknown,
-  ): unknown[];
-  toJSON(format?: JsonTypes): AllChannelJSON[];
 }
 
 export type AllChannels = TextChannel | VoiceChannel | Thread | CategoryChannel;
@@ -2118,32 +2052,8 @@ export class UserManager extends BaseCacheManager {
   ): UserCacheJSON[] | UserDiscordJSON[] | UserStorageJSON[];
 }
 
-export class GuildAuditLogManager extends BaseCacheManager {
+export class GuildAuditLogManager extends BaseCacheManager<AuditLog> {
   constructor(client: Client, guild: Guild);
-  get(key: Snowflake): AuditLog | null;
-  fetchFromRules(key: Snowflake): Promise<AuditLog | null>;
-  fetchWithRules(key: Snowflake): Promise<AuditLog | null>;
-  set(key: Snowflake, value: AuditLog, expiry?: number): void;
-  delete(key: Snowflake): boolean;
-  clear(): void;
-  _intervalCallback(): { i: StructureIdentifiers };
-  size: number;
-  forEach(
-    callbackfn: (
-      value: AuditLog,
-      key: Snowflake,
-      map: Map<Snowflake, AuditLog>,
-    ) => void,
-  ): void;
-  has(key: Snowflake): boolean;
-  flagForDeletion(key: Snowflake): AuditLog | null;
-  map(
-    callbackfn: (
-      value: [Snowflake, AuditLog],
-      index: number,
-      array: [Snowflake, AuditLog][],
-    ) => unknown,
-  ): unknown[];
   fetch({
     limit,
     type,
@@ -2169,10 +2079,7 @@ export class GuildAuditLogManager extends BaseCacheManager {
     user_id?: Snowflake;
     before?: Snowflake;
     after?: Snowflake;
-  } = {}): AuditLog[];
-  toJSON(
-    format?: JsonTypes,
-  ): AuditLogCacheJSON[] | AuditLogDiscordJSON[] | AuditLogStorageJSON[];
+  } = {}): Promise<AuditLog[]>;
 }
 
 export class ActionRowBuilder {
@@ -3099,7 +3006,7 @@ export type MessageJsonStructures =
   | MessageStorageJSON;
 
 export abstract class BaseStructure<T> {
-  protected client;
+  // protected client;
   readonly id;
   constructor(client: Client, id: Snowflake) {
     this.client = client;
@@ -3111,9 +3018,9 @@ export abstract class BaseStructure<T> {
       .join(" ")
       .toLowerCase()} ${this.id}]`;
   }
-  [util.inspect.custom]() {
-    return this.toString();
-  }
+  // [util.inspect.custom]() {
+  //   return this.toString();
+  // }
   abstract toJSON(format?: JsonTypes): T;
 }
 

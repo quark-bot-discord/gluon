@@ -427,12 +427,6 @@ class GuildChannel implements GuildChannelType {
     return this.#_cacheOptions;
   }
 
-  /**
-   * The messages in this channel.
-   * @type {ChannelMessageManager}
-   * @readonly
-   * @public
-   */
   get messages() {
     return this.#messages;
   }

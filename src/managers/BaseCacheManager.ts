@@ -2,20 +2,31 @@
 // import { GLUON_VERSION, NAME } from "../constants.js";
 import type {
   BaseCacheManager as BaseCacheManagerType,
-  GluonCacheRuleSetStructure,
   StaticManagerType,
   Client as ClientType,
+  BaseStructure,
 } from "../../typings/index.d.ts";
 import { JsonTypes } from "../../typings/enums.js";
+import {
+  aerospikeCount,
+  aerospikeDelete,
+  aerospikeForEach,
+  aerospikeGet,
+  aerospikeSet,
+} from "#src/util/data/aerospikeStore.js";
+import { Snowflake } from "#typings/discord.js";
+import { PartialAerospikeBinValue } from "aerospike";
 
 /**
  * The base cache manager for all cache managers.
  */
-class BaseCacheManager<T> implements BaseCacheManagerType<T> {
-  #cache: Map<string, T>;
-  #expiryBucket;
+class BaseCacheManager<
+  T extends BaseStructure<V>,
+  V extends PartialAerospikeBinValue,
+> implements BaseCacheManagerType<T, V>
+{
   #structureType: StaticManagerType<T>;
-  static rules: GluonCacheRuleSetStructure<any> = {};
+  #parentId: Snowflake;
 
   /**
    * Creates a cache manager.
@@ -28,6 +39,7 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    */
   constructor(
     client: ClientType,
+    guildId: Snowflake,
     {
       structureType,
     }: {
@@ -35,25 +47,13 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
     },
   ) {
     /**
-     * The cache for this manager.
-     * @type {Map<String, Object>}
-     * @private
-     */
-    this.#cache = new Map() as Map<string, T>;
-
-    /**
-     * The expiry bucket for this manager.
-     * @type {Map<String, Set<String>>}
-     * @private
-     */
-    this.#expiryBucket = new Map();
-
-    /**
      * The structure type for this manager.
      * @type {Object}
      * @private
      */
     this.#structureType = structureType;
+
+    this.#parentId = guildId;
   }
 
   /**
@@ -98,38 +98,10 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @method
    * @throws {TypeError}
    */
-  get(key: string) {
-    const value = this.#cache.get(key);
+  async get(key: string) {
+    const value = await aerospikeGet<T>(this.#structureType.identifier, key);
     if (value) return value;
     else return null;
-  }
-
-  /**
-   * Fetches a value from the rules cache.
-   * @param {String} key The key to fetch.
-   * @returns {Object?} The fetched value.
-   * @public
-   * @method
-   * @throws {TypeError}
-   * @async
-   */
-  fetchFromRules(key: string) {
-    return this.#_callFetches(key);
-  }
-
-  /**
-   * Fetches a value from the cache or from the rules cache.
-   * @param {String} key The key to fetch.
-   * @returns {Object?} The fetched value.
-   * @public
-   * @method
-   * @async
-   * @throws {TypeError}
-   */
-  async fetchWithRules(key: string) {
-    const value = this.get(key);
-    if (value) return value;
-    else return this.#_callFetches(key);
   }
 
   /**
@@ -143,75 +115,17 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @throws {TypeError}
    */
   set(key: string, value: T, expiry = 0) {
-    this.#addToExpiryBucket(key, expiry);
-    this.#cache.set(key, value);
-  }
-
-  /**
-   * Adds a key to the expiry bucket.
-   * @param {String} key The key to add to the expiry bucket.
-   * @param {Number} expiry The expiry time in seconds.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  #addToExpiryBucket(key: string, expiry: number) {
-    if (expiry === 0) return;
-    const expiryDate = new Date(Date.now() + expiry * 1000);
-    const bucket = `${expiryDate.getUTCDate()}_${expiryDate.getUTCHours()}_${expiryDate.getUTCMinutes()}`;
-    if (!this.#expiryBucket.has(bucket)) {
-      this.#expiryBucket.set(bucket, new Set());
-    }
-    this.#expiryBucket.get(bucket).add(key);
-  }
-
-  /**
-   * Expires a bucket.
-   * @param {String} bucket The bucket to expire.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  expireBucket(bucket: string) {
-    if (!this.#expiryBucket.has(bucket)) return;
-    for (const key of this.#expiryBucket.get(bucket)) {
-      try {
-        const value = this.#cache.get(key);
-        if (value) this.#_callRules(value);
-      } catch (e) {
-        console.error(e);
-      }
-      this.delete(key);
-    }
-    this.#expiryBucket.delete(bucket);
-  }
-
-  /**
-   * Clears stale buckets.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  #clearStaleBuckets() {
-    const now = new Date();
-    const buckets = [...this.#expiryBucket.keys()];
-    for (const bucket of buckets) {
-      const [date, hour, minute] = bucket.split("_").map(Number);
-      if (now.getUTCDate() > date) {
-        this.expireBucket(bucket);
-        continue;
-      } else if (now.getUTCDate() === date && now.getUTCHours() > hour) {
-        this.expireBucket(bucket);
-        continue;
-      } else if (
-        now.getUTCDate() === date &&
-        now.getUTCHours() === hour &&
-        now.getUTCMinutes() > minute
-      ) {
-        this.expireBucket(bucket);
-        continue;
-      }
-    }
+    aerospikeSet<V>(
+      this.#parentId,
+      this.#structureType.identifier,
+      key,
+      value.toJSON(JsonTypes.CACHE_FORMAT),
+      expiry,
+    )
+      .then(() => null)
+      .catch((err) => {
+        throw new Error(`GLUON: Failed to set value in cache: ${err}`);
+      });
   }
 
   /**
@@ -222,76 +136,18 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @method
    */
   delete(key: string) {
-    return this.#cache.delete(key);
+    aerospikeDelete(this.#structureType.identifier, key)
+      .then(() => null)
+      .catch((err) => {
+        throw new Error(`GLUON: Failed to delete value from cache: ${err}`);
+      });
   }
 
-  flagForDeletion(key: string) {
-    const value = this.get(key);
+  async flagForDeletion(key: string) {
+    const value = await this.get(key);
     if (!value) return null;
     this.set(key, value, 60);
     return value;
-  }
-
-  /**
-   * Clears the cache.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  clear() {
-    return this.#cache.clear();
-  }
-
-  /**
-   * The callback for expiring buckets.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  _intervalCallback() {
-    const now = new Date();
-    const bucket = `${now.getUTCDate()}_${now.getUTCHours()}_${now.getUTCMinutes()}`;
-    this.expireBucket(bucket);
-    if (now.getUTCMinutes() === 0) this.#clearStaleBuckets();
-    return {
-      i: this.#structureType.identifier,
-    };
-  }
-
-  /**
-   * Calls the rules on a value.
-   * @param {Object} value The value to call the rules on.
-   * @returns {void}
-   * @public
-   * @method
-   */
-  #_callRules(value: unknown) {
-    const rules = Object.values(BaseCacheManager.rules);
-    for (const rule of rules) {
-      if (rule.structure === this.#structureType) {
-        rule.store(value);
-      }
-    }
-  }
-
-  /**
-   * Calls all the custom fetches.
-   * @param {String} id The ID to fetch.
-   * @returns {Object}
-   * @public
-   * @method
-   * @async
-   */
-  async #_callFetches(id: string): Promise<T | null> {
-    const rules = Object.values(BaseCacheManager.rules);
-    let fetchValue;
-    for (const rule of rules) {
-      if (rule.structure === this.#structureType)
-        // @ts-expect-error TS(2571): Object is of type 'unknown'.
-        fetchValue = await rule.retrieve(id, this);
-      if (fetchValue) return fetchValue;
-    }
-    return null;
   }
 
   /**
@@ -301,7 +157,7 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @public
    */
   get size() {
-    return this.#cache.size;
+    return aerospikeCount(this.#parentId, this.#structureType.identifier);
   }
 
   /**
@@ -311,54 +167,33 @@ class BaseCacheManager<T> implements BaseCacheManagerType<T> {
    * @public
    * @method
    */
-  forEach(callbackfn: unknown) {
-    return this.#cache.forEach(
-      callbackfn as (value: T, key: string, map: Map<string, T>) => void,
+  async forEach(callbackfn: (value: V, key: string) => void) {
+    return aerospikeForEach<V>(
+      this.#parentId,
+      this.#structureType.identifier,
+      callbackfn,
     );
   }
 
-  /**
-   * Checks if a key exists in the cache.
-   * @param {String} key The key to check.
-   * @returns {Boolean} Whether the key exists or not.
-   * @public
-   * @method
-   * @throws {TypeError}
-   */
-  has(key: string) {
-    return this.#cache.has(key);
-  }
-
-  map(
-    callbackfn: (
-      value: [string, T],
-      index: number,
-      array: [string, T][],
-    ) => unknown,
-  ): T[] {
-    const arr = Array.from(this.#cache.entries());
-    return arr.map(callbackfn) as T[];
-  }
-
-  /**
-   * Returns the JSON representation of this structure.
-   * @param {Number} [format] The format to return the data in.
-   * @returns {Object}
-   * @public
-   * @method
-   */
-  toJSON(format?: JsonTypes) {
-    switch (format) {
-      case JsonTypes.STORAGE_FORMAT:
-      case JsonTypes.CACHE_FORMAT:
-      case JsonTypes.DISCORD_FORMAT:
-      default: {
-        return [...this.#cache.values()].map((value) =>
-          (value as any).toJSON(format),
-        );
-      }
-    }
-  }
+  // /**
+  //  * Returns the JSON representation of this structure.
+  //  * @param {Number} [format] The format to return the data in.
+  //  * @returns {Object}
+  //  * @public
+  //  * @method
+  //  */
+  // toJSON(format?: JsonTypes) {
+  //   switch (format) {
+  //     case JsonTypes.STORAGE_FORMAT:
+  //     case JsonTypes.CACHE_FORMAT:
+  //     case JsonTypes.DISCORD_FORMAT:
+  //     default: {
+  //       return [...this.#cache.values()].map((value) =>
+  //         (value as T).toJSON(format),
+  //       );
+  //     }
+  //   }
+  // }
 }
 
 export default BaseCacheManager;

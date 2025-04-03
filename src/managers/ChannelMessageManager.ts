@@ -9,6 +9,9 @@ import {
   Guild as GuildType,
   GuildChannel as GuildChannelType,
   Client as ClientType,
+  MessageStorageJSON,
+  MessageCacheJSON,
+  MessageDiscordJSON,
 } from "#typings/index.d.js";
 import { ChannelType, Snowflake } from "#typings/discord.js";
 import getGuild from "#src/util/gluon/getGuild.js";
@@ -20,7 +23,10 @@ import { getTimestamp } from "#src/util.js";
  * Manages all messages within a channel.
  */
 class ChannelMessageManager
-  extends BaseCacheManager<MessageType>
+  extends BaseCacheManager<
+    MessageType,
+    MessageStorageJSON | MessageCacheJSON | MessageDiscordJSON
+  >
   implements ChannelMessageManagerType
 {
   #_client;
@@ -37,7 +43,7 @@ class ChannelMessageManager
    * @public
    */
   constructor(client: ClientType, guild: GuildType, channel: GuildChannelType) {
-    super(client, { structureType: ChannelMessageManager });
+    super(client, channel.id, { structureType: ChannelMessageManager });
 
     if (!client)
       throw new TypeError("GLUON: Client must be a Client instance.");
@@ -85,26 +91,6 @@ class ChannelMessageManager
    */
   get channel() {
     return this.#channel;
-  }
-
-  get(key: Snowflake) {
-    return super.get(key) as MessageType | null;
-  }
-
-  /**
-   * Fetches a message from the cache or from the rules.
-   * @param {Snowflake} key The ID of the message to fetch.
-   * @returns {Promise<Message | null>}
-   * @public
-   * @async
-   * @method
-   */
-  async fetchFromRules(key: Snowflake): Promise<MessageType | null> {
-    return super.fetchFromRules(key) as Promise<MessageType | null>;
-  }
-
-  async fetchWithRules(key: Snowflake): Promise<MessageType | null> {
-    return super.fetchWithRules(key) as Promise<MessageType | null>;
   }
 
   async fetch(
@@ -203,7 +189,7 @@ class ChannelMessageManager
    * @method
    * @throws {TypeError}
    */
-  static getCacheManager(
+  static async getCacheManager(
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
@@ -221,7 +207,7 @@ class ChannelMessageManager
       throw new Error(`Guild not found in cache: ${guildId}`);
     }
 
-    const channel = guild.channels.get(channelId);
+    const channel = await guild.channels.get(channelId);
 
     if (!channel) {
       throw new Error(`Channel not found in cache: ${channelId}`);
@@ -233,7 +219,7 @@ class ChannelMessageManager
       );
     }
 
-    return channel.messages;
+    return channel.messages as ChannelMessageManager;
   }
 
   /**
@@ -248,7 +234,7 @@ class ChannelMessageManager
    * @method
    * @throws {TypeError}
    */
-  static getMessage(
+  static async getMessage(
     client: ClientType,
     guildId: Snowflake,
     channelId: Snowflake,
@@ -305,7 +291,7 @@ class ChannelMessageManager
       throw new GluonPermissionsError("ReadMessageHistory");
     }
 
-    const fromCache = ChannelMessageManager.getMessage(
+    const fromCache = await ChannelMessageManager.getMessage(
       client,
       guildId,
       channelId,
@@ -418,7 +404,10 @@ class ChannelMessageManager
       throw new Error("GLUON: Cannot fetch messages from a category channel.");
     }
 
-    const cachedMessages = channel.messages.toJSON();
+    const cachedMessages: MessageStorageJSON[] = [];
+    await (channel.messages as ChannelMessageManager).forEach((message) => {
+      cachedMessages.push(message as MessageStorageJSON);
+    });
     const cachedMessagesToReturn = cachedMessages
       .filter((message) => {
         if (around)

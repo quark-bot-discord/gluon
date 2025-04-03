@@ -5,6 +5,9 @@ import type {
   Guild as GuildType,
   AuditLog as AuditLogType,
   StructureIdentifiers,
+  AuditLogCacheJSON,
+  AuditLogStorageJSON,
+  AuditLogDiscordJSON,
 } from "#typings/index.d.ts";
 import { APIAuditLog, AuditLogEvent, Snowflake } from "#typings/discord.js";
 import { checkPermission } from "#src/util.js";
@@ -13,14 +16,17 @@ import { AuditLog } from "#src/structures.js";
 import { GluonPermissionsError } from "#typings/errors.js";
 
 class GuildAuditLogManager
-  extends BaseCacheManager<AuditLogType>
+  extends BaseCacheManager<
+    AuditLogType,
+    AuditLogCacheJSON | AuditLogStorageJSON | AuditLogDiscordJSON
+  >
   implements GuildAuditLogManagerType
 {
   #_client;
   #guild;
   static identifier = "auditlogs" as StructureIdentifiers;
   constructor(client: ClientType, guild: GuildType) {
-    super(client, { structureType: GuildAuditLogManager });
+    super(client, guild.id, { structureType: GuildAuditLogManager });
     this.#_client = client;
     this.#guild = guild;
   }
@@ -109,7 +115,7 @@ class GuildAuditLogManager
     );
   }
 
-  search({
+  async search({
     limit,
     type,
     user_id,
@@ -122,8 +128,20 @@ class GuildAuditLogManager
     before?: Snowflake;
     after?: Snowflake;
   } = {}) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return this.map(([_, log]) => log)
+    const cachedAuditLogs: AuditLogStorageJSON[] = [];
+
+    await this.forEach((log) => {
+      cachedAuditLogs.push(log);
+    });
+
+    return cachedAuditLogs
+      .map(
+        (log) =>
+          new AuditLog(this.#_client, log, {
+            guildId: this.#guild.id,
+            nocache: true,
+          }),
+      )
       .sort((a, b) => Number(BigInt(b.id) - BigInt(a.id)))
       .filter((log) => {
         if (typeof type === "number" && log.actionType !== type) return false;
@@ -134,10 +152,6 @@ class GuildAuditLogManager
         return true;
       })
       .slice(0, limit);
-  }
-
-  set(key: Snowflake, value: AuditLogType, expiry: number = 5 * 60) {
-    return super.set(key, value, expiry);
   }
 }
 
