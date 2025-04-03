@@ -220,8 +220,6 @@ class BetterRequestHandler {
     },
     _stack: string,
   ) {
-    const originalBody = { ...body }; // Clone body to preserve original for retries
-
     const actualRequest = this.#endpoints[request] as EndpointIndexItem;
     const path = actualRequest.path(...(params ?? []));
     const headers: Record<string, string> = {
@@ -300,6 +298,17 @@ class BetterRequestHandler {
         this.#latencyMs = Date.now() - requestTime;
         break;
       } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") {
+          this.#_client._emitDebug(
+            GluonDebugLevels.Danger,
+            `Request timed out ${hash}`,
+          );
+          throw new GluonRequestError(0, actualRequest.method, path, _stack);
+        }
+        this.#_client._emitDebug(
+          GluonDebugLevels.Warn,
+          `Request failed ${hash} ${err}`,
+        );
         if (i === this.#maxRetries) throw err;
         await sleep(2 ** i * 200 + Math.random() * 300);
       } finally {
@@ -331,31 +340,14 @@ class BetterRequestHandler {
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
-      const maxRetryDelay = 15000; // 15 seconds safety ceiling
-      if (retryAfter > maxRetryDelay) {
-        this.#_client._emitDebug(
-          GluonDebugLevels.Warn,
-          `Retry-after too long (${retryAfter}ms), aborting request.`,
-        );
-        throw new GluonRequestError(
-          res.status,
-          actualRequest.method,
-          path,
-          _stack,
-          JSON.stringify(json),
-        );
-      }
 
-      const jitter = Math.random() * 250;
-      await sleep(retryAfter + jitter);
-      const data: QueueItemData = {
-        hash,
-        request,
-        params,
-        body: originalBody,
+      throw new GluonRequestError(
+        res.status,
+        actualRequest.method,
+        path,
         _stack,
-      };
-      return this.#queueWorker(data); // retry
+        JSON.stringify(json),
+      );
     }
 
     this.#_client._emitDebug(

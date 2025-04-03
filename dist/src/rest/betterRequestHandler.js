@@ -321,7 +321,6 @@ class BetterRequestHandler {
     body,
     _stack,
   ) {
-    const originalBody = { ...body }; // Clone body to preserve original for retries
     const actualRequest = __classPrivateFieldGet(
       this,
       _BetterRequestHandler_endpoints,
@@ -454,38 +453,13 @@ class BetterRequestHandler {
       const retryAfter = Math.ceil(Number(json?.retry_after ?? 1)) * 1000;
       if (json?.global)
         await redis.set(this.GLOBAL_KEY, Date.now() + retryAfter);
-      const maxRetryDelay = 15000; // 15 seconds safety ceiling
-      if (retryAfter > maxRetryDelay) {
-        __classPrivateFieldGet(
-          this,
-          _BetterRequestHandler__client,
-          "f",
-        )._emitDebug(
-          GluonDebugLevels.Warn,
-          `Retry-after too long (${retryAfter}ms), aborting request.`,
-        );
-        throw new GluonRequestError(
-          res.status,
-          actualRequest.method,
-          path,
-          _stack,
-          JSON.stringify(json),
-        );
-      }
-      const jitter = Math.random() * 250;
-      await sleep(retryAfter + jitter);
-      const data = {
-        hash,
-        request,
-        params,
-        body: originalBody,
+      throw new GluonRequestError(
+        res.status,
+        actualRequest.method,
+        path,
         _stack,
-      };
-      return __classPrivateFieldGet(
-        this,
-        _BetterRequestHandler_queueWorker,
-        "f",
-      ).call(this, data); // retry
+        JSON.stringify(json),
+      );
     }
     __classPrivateFieldGet(this, _BetterRequestHandler__client, "f")._emitDebug(
       GluonDebugLevels.Info,
