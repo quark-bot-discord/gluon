@@ -3,7 +3,6 @@ import FormData from "form-data";
 import { createReadStream } from "fs";
 import hashjs from "hash.js";
 import { Redis } from "ioredis";
-import { getBucket, handleBucket } from "./bucket.js";
 import {
   GLUON_VERSION,
   API_BASE_URL,
@@ -21,9 +20,6 @@ import type {
 import { Events, GluonDebugLevels } from "#typings/enums.js";
 import { GluonRequestError } from "#typings/errors.js";
 import https from "https";
-import { randomUUID } from "crypto";
-import fastq from "fastq/index.js";
-import FastQ from "fastq";
 const AbortController = globalThis.AbortController;
 
 interface JsonResponse {
@@ -33,16 +29,6 @@ interface JsonResponse {
 }
 
 const redis = new Redis();
-
-interface QueueItemData {
-  hash: string;
-  request: keyof typeof endpoints;
-  params: string[];
-  body: { [key: string]: boolean | string | number | unknown } & {
-    files?: FileUpload[];
-  };
-  _stack: string;
-}
 
 function toQueryParams(obj: Record<string, unknown>): Record<string, string> {
   const result: Record<string, string> = {};
@@ -54,30 +40,15 @@ function toQueryParams(obj: Record<string, unknown>): Record<string, string> {
   return result;
 }
 
-async function incrWithExpire(key: string, expireSeconds = 1): Promise<number> {
-  const lua = `
-    local current = redis.call('INCR', KEYS[1])
-    if tonumber(current) == 1 then
-      redis.call('EXPIRE', KEYS[1], ARGV[1])
-    end
-    return current
-  `;
-  return redis.eval(lua, 1, key, expireSeconds) as Promise<number>;
-}
-
 class BetterRequestHandler {
   #token;
   #authorization;
   #_client;
   #requestURL;
   #maxRetries;
-  #fuzz;
   #endpoints;
-  #queueWorker: (data: QueueItemData) => Promise<JsonResponse | null>;
-  #queues: Record<string, fastq.queueAsPromised<QueueItemData>> = {};
   #latencyMs = 0;
   #agent;
-  #rpsLimit: number;
   GLOBAL_KEY: string;
 
   constructor(
@@ -91,93 +62,8 @@ class BetterRequestHandler {
     this.#token = token;
     this.#authorization = `Bot ${this.#token}`;
     this.#maxRetries = 3;
-    this.#fuzz = 500;
-    this.#rpsLimit = options?.rpsLimit || 50;
     this.#endpoints = endpoints;
     this.GLOBAL_KEY = `gluon:${this.#token.slice(0, 8)}:global_rate_limit`;
-
-    this.#queueWorker = async (data: QueueItemData) => {
-      this.#_client._emitDebug(
-        GluonDebugLevels.Info,
-        `Processing ${data.hash} (${data.request})`,
-      );
-
-      await sleep(Math.random() * 20 + 10); // smooth out request wavefronts
-
-      const nowMs = Date.now();
-      // Check global lock
-      const globalReset = await redis.get(this.GLOBAL_KEY);
-      if (globalReset && nowMs < parseInt(globalReset)) {
-        const wait = parseInt(globalReset) - nowMs + this.#fuzz;
-        this.#_client._emitDebug(
-          GluonDebugLevels.Warn,
-          `Global ratelimit: sleeping ${wait}ms`,
-        );
-        await sleep(wait);
-      }
-
-      // Acquire lock for this bucket (distributed mutex)
-      const lockKey = `gluon:lock:${data.hash}`;
-      const lockId = randomUUID();
-      const bucket = await getBucket(data.hash);
-      const estimatedReset = bucket
-        ? bucket.reset * 1000 - nowMs + this.#fuzz
-        : 15000;
-      const safeTTL = Math.max(5000, Math.min(estimatedReset, 30000));
-      const lock = await redis.set(lockKey, lockId, "PX", safeTTL, "NX");
-      if (!lock) {
-        this.#_client._emitDebug(
-          GluonDebugLevels.Warn,
-          `Bucket locked: ${data.hash}`,
-        );
-        await sleep(200 + Math.random() * 300);
-        return this.#queues[data.hash].push(data); // retry
-      }
-
-      try {
-        const bucket = await getBucket(data.hash);
-        const nowSec = Date.now() / 1000;
-
-        if (bucket && bucket.remaining === 0 && nowSec < bucket.reset) {
-          const delay = Math.ceil((bucket.reset - nowSec) * 1000) + this.#fuzz;
-          this.#_client._emitDebug(
-            GluonDebugLevels.Warn,
-            `Bucket ratelimited: ${data.hash}, sleeping ${delay}ms`,
-          );
-          await sleep(delay);
-        }
-
-        // Enforce global RPS limit
-        const baseKey = `gluon:rps:token:${this.#token.slice(0, 10)}`;
-        const currentCount = await incrWithExpire(baseKey);
-        if (currentCount > this.#rpsLimit) {
-          this.#_client._emitDebug(
-            GluonDebugLevels.Warn,
-            `RPS limit hit: ${currentCount} reqs/s (${data.hash})`,
-          );
-          await sleep(200 + Math.random() * 300);
-          // eslint-disable-next-line security/detect-object-injection
-          return this.#queues[data.hash].push(data);
-        }
-
-        return this.#http(
-          data.hash,
-          data.request,
-          data.params,
-          data.body,
-          data._stack,
-        );
-      } finally {
-        const currentLock = await redis.get(lockKey);
-        if (currentLock === lockId) {
-          this.#_client._emitDebug(
-            GluonDebugLevels.Info,
-            `Releasing lock for ${data.hash}`,
-          );
-          await redis.del(lockKey);
-        }
-      }
-    };
   }
 
   get latency() {
@@ -209,18 +95,8 @@ class BetterRequestHandler {
     );
 
     const _stack = new Error().stack as string;
-    const data: QueueItemData = { hash, request, params, body, _stack };
 
-    if (!this.#queues[hash]) {
-      this.#queues[hash] = FastQ.promise(this.#queueWorker.bind(this), 1);
-    }
-    const result = await this.#queues[hash].push(data);
-    if (this.#queues[hash].idle()) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete this.#queues[hash];
-    }
-
-    return result;
+    return this.#http(hash, request, params, body, _stack);
   }
 
   async #http(
@@ -366,26 +242,6 @@ class BetterRequestHandler {
       GluonDebugLevels.Info,
       `[Request] bucket: ${res.headers.get("x-ratelimit-bucket")} remaining: ${res.headers.get("x-ratelimit-remaining")} reset: ${res.headers.get("x-ratelimit-reset")}`,
     );
-    const resetAfterHeader = res.headers.get("x-ratelimit-reset-after");
-    if (resetAfterHeader) {
-      const resetAfterSeconds = parseFloat(resetAfterHeader);
-      const serverResetTime = Date.now() / 1000 + resetAfterSeconds;
-      await handleBucket(
-        res.headers.get("x-ratelimit-bucket"),
-        res.headers.get("x-ratelimit-remaining"),
-        serverResetTime.toString(),
-        hash,
-        res.status === 429 ? json?.retry_after : 0,
-      );
-    } else {
-      await handleBucket(
-        res.headers.get("x-ratelimit-bucket"),
-        res.headers.get("x-ratelimit-remaining"),
-        res.headers.get("x-ratelimit-reset"),
-        hash,
-        res.status === 429 ? json?.retry_after : 0,
-      );
-    }
 
     this.#_client.emit(Events.REQUEST_COMPLETED, {
       status: res.status,
