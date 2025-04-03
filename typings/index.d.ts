@@ -2755,6 +2755,7 @@ export interface ClientOptions {
   initCache?: InitCache;
   softRestartFunction?: () => void;
   ip?: string;
+  rpsLimit?: number;
 }
 
 export interface SessionData {
