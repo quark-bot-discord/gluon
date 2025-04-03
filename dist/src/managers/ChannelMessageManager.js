@@ -413,13 +413,19 @@ class ChannelMessageManager extends BaseCacheManager {
       throw new Error("GLUON: Cannot fetch messages from a category channel.");
     }
     const cachedMessages = channel.messages.toJSON();
-    const cachedMessagesToReturn = cachedMessages.filter((message) => {
-      if (around)
-        return Math.abs(getTimestamp(message.id) - getTimestamp(around)) < 100;
-      if (before) return message.id < before;
-      if (after) return message.id > after;
-      return false;
-    });
+    const cachedMessagesToReturn = cachedMessages
+      .filter((message) => {
+        if (around)
+          return (
+            Math.abs(getTimestamp(message.id) - getTimestamp(around)) < 100
+          );
+        if (before) return message.id < before;
+        if (after) return message.id > after;
+        return false;
+      })
+      .sort((a, b) => {
+        return getTimestamp(b.id) - getTimestamp(a.id);
+      });
     if (cachedMessagesToReturn.length > 0) {
       if (limit) {
         return cachedMessagesToReturn
